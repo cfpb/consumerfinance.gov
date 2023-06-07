@@ -1,0 +1,56 @@
+{% extends "v1/layouts/base.html" %}
+
+{% block title %}Page preview comparison{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+
+<div class="content_wrapper">
+    <div class="content_main">
+        {% if paginator.num_pages > 1 %}
+            <div class="block block__flush-top block__flush-bottom block__padded-bottom">
+                {{ pagination.render( paginator.num_pages, page_obj.number ) }}
+            </div>
+        {% endif %}
+
+        {% for page in page_obj %}
+        <div>
+            <h2>
+                <a href="{{ page.url }}">{{ page.url }}</a>
+                <small>
+                <a href="{{ url('wagtailadmin_pages:edit', args=[page.pk]) }}"
+                   target="_blank"
+                >({{ page.pk }})</a>
+                </small>
+            </h2>
+        </div>
+        <div class="content-l"
+            {% if changes_alter_preview( page ) %}
+            style="background-color: #f9e0e0"
+            {% endif %}
+        >
+            <div class="content-l_col content-l_col-1-2">
+                {{ render_snapshot( page ) }}
+            </div>
+
+            <div class="content-l_col content-l_col-1-2">
+                {{ render_snapshot( page, patch_fields=true ) }}
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+
+        {% if paginator.num_pages > 1 %}
+            <div class="block block__flush-top block__flush-bottom block__padded-top">
+                {{ pagination.render( paginator.num_pages, page_obj.number ) }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block wagtailuserbar %}{% endblock %}
+
+{% block footer %}{% endblock %}

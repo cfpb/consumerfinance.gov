@@ -18,7 +18,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import cdn_is_configured, manage_cdn
+from v1.admin_views import PagePreviewComparison, cdn_is_configured, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -381,6 +381,26 @@ def register_page_preview_fields_report_url():
             r"^reports/page-preview-fields/$",
             PagePreviewFieldsReportView.as_view(),
             name="page_preview_fields_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_page_preview_comparison_menu_item():
+    return MenuItem(
+        "Page Preview Comparison",
+        reverse("page_preview_comparison"),
+        classnames="icon icon-view",
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_page_preview_comparison_url():
+    return [
+        re_path(
+            r"^reports/page-preview-comparison/$",
+            PagePreviewComparison.as_view(),
+            name="page_preview_comparison",
         ),
     ]
 

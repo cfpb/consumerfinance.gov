@@ -1,16 +1,22 @@
 import logging
+import re
+from functools import cached_property
 
 from django.conf import settings
 from django.contrib import messages
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render
+from django.template import loader
+from django.views.generic import ListView
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
+from wagtail.models import Site
 
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm
-from v1.models.caching import AkamaiBackend, CDNHistory
+from v1.models import AbstractFilterPage, CDNHistory
+from v1.models.caching import AkamaiBackend
 
 
 logger = logging.getLogger(__name__)
@@ -103,3 +109,78 @@ def manage_cdn(request):
             "history": history,
         },
     )
+
+
+class PagePreviewComparison(ListView):
+    paginate_by = 100
+    template_name = "v1/page_preview_comparison.html"
+
+    def get_queryset(self):
+        return (
+            AbstractFilterPage.objects.in_site(
+                Site.objects.get(is_default_site=True)
+            )
+            .prefetch_related("tags")
+            .prefetch_related("categories")
+            .order_by("title")
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context.update(
+            {
+                "render_snapshot": self.render_snapshot,
+                "changes_alter_preview": self.changes_alter_preview,
+            }
+        )
+
+        return context
+
+    @cached_property
+    def post_preview_snapshot(self):
+        return loader.get_template("v1/includes/organisms/post-preview.html")
+
+    def clean(self, s):
+        s = re.sub(r"\s+", " ", s)
+        s = re.sub(r' data-block-key="\w+"', "", s)
+        return s
+
+    def changes_alter_preview(self, page):
+        html = self.render_snapshot(page)
+        patched_html = self.render_snapshot(page, patch_fields=True)
+        return self.clean(html) != self.clean(patched_html)
+
+    def render_snapshot(self, page, patch_fields=False):
+        # preview subheading, charfield
+        # preview description, richtextfield
+
+        old_preview_title = page.preview_title
+        old_preview_subheading = page.preview_subheading
+        old_preview_description = page.preview_description
+        old_preview_image = page.preview_image
+
+        if patch_fields:
+            page.preview_title = page.seo_title
+            page.preview_subheading = None
+            page.preview_description = (
+                f"<p>{page.search_description}</p>"
+                if page.search_description
+                else ""
+            )
+            page.preview_image = None
+
+        html = self.post_preview_snapshot.template.module.render(
+            post=page,
+            controls={},
+            show_date=False,
+            show_tags=False,
+        )
+
+        if patch_fields:
+            page.preview_title = old_preview_title
+            page.preview_subheading = old_preview_subheading
+            page.preview_description = old_preview_description
+            page.preview_image = old_preview_image
+
+        return html
