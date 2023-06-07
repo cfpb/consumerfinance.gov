@@ -1,5 +1,10 @@
 @import (reference) 'cfpb-core.less';
 
+//Fix share&print icons not right aligning on some pages
+html[lang='ar'] .u-layout-grid_main {
+  direction: rtl;
+}
+
 .u-divider {
   content: '';
   display: block;
@@ -56,5 +61,38 @@ html[lang='ar'] ul.m-translation-links {
       top: 2px;
       .u-divider();
     }
+  }
+}
+
+//fix issue with padding/margin and verticle rule appearing to the left of print icon
+html[lang='ar'] .m-social-media {
+  display: inline-block;
+  direction: rtl;
+
+  &_print {
+    padding-left: 0;
+    border-left: none;
+    padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    border-right: 1px solid @black;
+  }
+
+  & .m-list .m-list_item:last-child {
+    margin-right: 0.6875em;
+  }
+
+  //Position share & print text above social media icons and remove right margin
+  @media screen and (max-width: 420px) {
+    & .m-list {
+      width: 100%;
+      padding-top: 0.6875em;
+    }
+
+    & .m-list .m-list_item:first-child {
+      margin-right: 0;
+    }
+  }
+
+  .m-social-media_heading {
+    padding-right: 0;
   }
 }
