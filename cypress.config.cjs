@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const getCompareSnapshotsPlugin = require('cypress-visual-regression/dist/plugin');
 
 module.exports = defineConfig({
   video: false,
@@ -13,6 +14,9 @@ module.exports = defineConfig({
     specPattern: 'test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
+    setupNodeEvents(on, config) {
+      getCompareSnapshotsPlugin(on, config);
+    },
   },
   component: {
     specPattern: 'test/cypress/component/**/*.cy.{js,jsx,ts,tsx}',
@@ -20,5 +24,8 @@ module.exports = defineConfig({
   },
   env: {
     ENVIRONMENT: 'local-machine',
+    SNAPSHOT_BASE_DIRECTORY: `test/cypress/visual-regression/base`,
+    SNAPSHOT_DIFF_DIRECTORY: `test/cypress/visual-regression/diff`,
+    type: 'actual',
   },
 });

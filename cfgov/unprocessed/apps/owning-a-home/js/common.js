@@ -9,7 +9,7 @@ const BASE_CLASS = 'o-email-signup';
 const emailSignup = document.body.querySelector('.' + BASE_CLASS);
 
 if (emailSignup) {
-  const language = document.body.querySelector('.content').lang;
+  const language = document.documentElement.lang || 'en-US';
   const formSubmit = new FormSubmit(emailSignup, BASE_CLASS, {
     validator: (fields) =>
       validateEmail(fields.email, '', { language: language }).msg,

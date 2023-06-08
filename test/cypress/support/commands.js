@@ -26,6 +26,9 @@
 
 import nextTabbable from './nextTabbable';
 
+const compareSnapshotCommand = require('cypress-visual-regression/dist/command');
+compareSnapshotCommand();
+
 /**
  * Emulates Tab key navigation.
  */

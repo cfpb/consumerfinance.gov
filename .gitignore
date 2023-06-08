@@ -126,6 +126,7 @@ nosetests.xml
 coverage.xml
 .snyk
 test/cypress/screenshots/
+test/cypress/visual-regression/
 
 # Temp data backups #
 ###############
