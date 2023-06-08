@@ -9,7 +9,7 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0247_alter_cfgovcontentowner_slug'),
+        ('v1', '0246_issue_spotlight_category'),
         ('ask_cfpb', '0003_remove_answerpage_share_and_print'),
     ]
 
