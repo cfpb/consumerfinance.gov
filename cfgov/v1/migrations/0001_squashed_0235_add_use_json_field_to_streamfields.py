@@ -26,7 +26,6 @@ import jobmanager.blocks
 import v1.atomic_elements.molecules
 import v1.atomic_elements.tables
 import v1.blocks
-import v1.models.filterable_list_mixins
 import v1.models.snippets
 import v1.util.ref
 
@@ -263,7 +262,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
+            bases=('v1.cfgovpage',),
         ),
         migrations.CreateModel(
             name='HomePage',
@@ -297,7 +296,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
+            bases=('v1.cfgovpage',),
         ),
         migrations.AddField(
             model_name='resource',
@@ -772,7 +771,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.CategoryFilterableMixin, 'v1.sublandingfilterablepage'),
+            bases=('v1.sublandingfilterablepage',),
         ),
         migrations.AlterField(
             model_name='cfgovpage',

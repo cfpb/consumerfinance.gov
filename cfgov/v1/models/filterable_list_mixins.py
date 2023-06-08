@@ -1,5 +1,7 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import models
 
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.routable_page.models import route
 from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
@@ -8,10 +10,10 @@ from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
-from v1.util.ref import get_category_children
+from v1.util.ref import filterable_list_page_types, get_category_children
 
 
-class FilterableListMixin(ShareableRoutablePageMixin):
+class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
     filterable_per_page_limit = 25
@@ -23,6 +25,60 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     filterable_categories = None
     """Used for activity-log and newsroom to determine
        which pages to render when sitewide"""
+
+    DEFAULT_ORDERING = "-start_date"
+    filtered_ordering = models.CharField(
+        max_length=30,
+        choices=[
+            ("-start_date", "Date"),
+            ("title.raw", "Alphabetical"),
+        ],
+        default=DEFAULT_ORDERING,
+    )
+    filter_children_only = models.BooleanField(
+        default=True,
+    )
+
+    show_filtered_dates = models.BooleanField(default=True)
+    filtered_date_label = models.CharField(
+        null=True,
+        blank=True,
+        max_length=30,
+    )
+    show_filtered_categories = models.BooleanField(default=True)
+    show_filtered_tags = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
+    filtering_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("filtered_ordering", heading="Order results by"),
+                FieldPanel(
+                    "filter_children_only",
+                    heading="Only include child pages in results",
+                ),
+            ],
+            heading="Filtering behavior",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("show_filtered_dates", heading="Show dates"),
+                FieldPanel(
+                    "filtered_date_label",
+                    heading=(
+                        'Date label, e.g. "Published", "Issued", "Released"'
+                    ),
+                ),
+                FieldPanel(
+                    "show_filtered_categories", heading="Show categories"
+                ),
+                FieldPanel("show_filtered_tags", heading="Show tags"),
+            ],
+            heading="Results display",
+        ),
+    ]
 
     @staticmethod
     def get_model_class():
@@ -39,22 +95,10 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         return FilterablePagesDocumentSearch
 
     def get_filterable_search(self):
-        # Look for a FilterableList block in the content field.
-        block = self.content.first_block_by_name("filter_controls")
-        value = block.value if block else {}
-
-        # By default, filterable pages only search their direct children.
-        # But this can be overriden by a setting on a FilterableList block
-        # added to the page's content StreamField.
-        children_only = value.get("filter_children", True)
-
-        # Default filterable list ordering can also be overridden.
-        ordering = value.get("ordering", FilterableList.DEFAULT_ORDERING)
-
         # If searching globally, use the root page of this page's Wagtail
         # Site. If the page doesn't live under a Site (for example, it is
         # in the Trash), use the default Site.
-        if not children_only:
+        if not self.filter_children_only:
             site = self.get_site()
 
             if not site:
@@ -66,7 +110,9 @@ class FilterableListMixin(ShareableRoutablePageMixin):
 
         search_cls = self.get_search_class()
         return search_cls(
-            search_root, children_only=children_only, ordering=ordering
+            search_root,
+            children_only=self.filter_children_only,
+            ordering=self.filtered_ordering,
         )
 
     def get_cache_key_prefix(self):

@@ -54,9 +54,13 @@ class BrowseFilterablePage(FilterableListMixin, AbstractBrowsePage):
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
+            ObjectList(
+                FilterableListMixin.filtering_panels, heading="Filtering"
+            ),
             ObjectList(AbstractBrowsePage.sidefoot_panels, heading="SideFoot"),
             ObjectList(
-                AbstractBrowsePage.settings_panels, heading="Configuration"
+                AbstractBrowsePage.settings_panels,
+                heading="Configuration",
             ),
         ]
     )
