@@ -11,13 +11,11 @@ export default `<main class="content content__1-3 o-fig" id="main">
         ></path>
       </svg>
 
-      <a class="breadcrumbs_link" href="/compliance/compliance-resources/">
+      <a href="/compliance/compliance-resources/">
         Compliance resources
       </a>
 
-      <a
-        class="breadcrumbs_link"
-        href="/compliance/compliance-resources/small-business-lending/"
+      <a href="/compliance/compliance-resources/small-business-lending/"
       >
         1071 Filing Instruction Guides
       </a>

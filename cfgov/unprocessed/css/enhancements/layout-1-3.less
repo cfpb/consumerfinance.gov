@@ -3,14 +3,6 @@
   .u-layout-grid__1-3 {
     // Mobile
     .u-layout-grid {
-      &_wrapper {
-        grid-auto-rows: minmax(0, auto) auto-fit 1fr;
-        grid-template-areas:
-          'c-breadcrumbs'
-          'c-secondary-nav'
-          'c-main';
-      }
-
       &_breadcrumbs,
       &_secondary-nav {
         margin-left: unit(-15px / @base-font-size-px, rem);
@@ -98,9 +90,7 @@
   .u-layout-grid__1-3.u-layout-grid__rtl {
     // Desktop
     .respond-to-min( @bp-med-min, {
-
       .u-layout-grid {
-
         &_wrapper {
           grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
           grid-auto-columns: 3fr 1fr;

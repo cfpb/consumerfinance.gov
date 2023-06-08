@@ -2,7 +2,7 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   video: false,
-  screenshotOnRunFailure: false,
+  screenshotOnRunFailure: true,
   fixturesFolder: 'test/cypress/fixtures',
   videosFolder: 'test/cypress/videos',
   screenshotsFolder: 'test/cypress/screenshots',
