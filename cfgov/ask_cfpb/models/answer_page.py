@@ -173,10 +173,10 @@ class AnswerPage(CFGOVPage):
         PortalTopic,
         blank=True,
         help_text=(
-            "Limit to 1 portal topic if possible. If ",
-            "multiple topics are selected, the breadcrumb ",
-            "will either be the primary portal topic, if ",
-            "selected, or the Ask CFPB landing page if not.",
+            "Limit to 1 portal topic if possible. If "
+            "multiple topics are selected, the breadcrumb "
+            "will either be the primary portal topic, if "
+            "selected, or the Ask CFPB landing page if not."
         ),
     )
     primary_portal_topic = ParentalKey(
@@ -186,9 +186,9 @@ class AnswerPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name="primary_portal_topic",
         help_text=(
-            "Use if more than one portal topic is checked, ",
-            "if one of those topics should be used as the ",
-            "page breadcrumb instead of the Ask CFPB landing page.",
+            "Use if more than one portal topic is checked, "
+            "if one of those topics should be used as the "
+            "page breadcrumb instead of the Ask CFPB landing page."
         ),
     )
     portal_category = ParentalManyToManyField(PortalCategory, blank=True)
