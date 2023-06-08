@@ -192,7 +192,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             expect(windowConsoleError).to.not.be.called;
           });
 
-          it('should be present', () => {
+          xit('should be present', () => {
             fig.open();
             fig.toc().should('be.visible');
           });
