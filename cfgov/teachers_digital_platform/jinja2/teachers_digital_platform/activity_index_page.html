@@ -8,18 +8,6 @@
     <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
 {%- endblock css %}
 
-{% if page and not breadcrumb_items %}
-{% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}
-
-{{ breadcrumb_items | length }}
-{% if breadcrumb_items | length > 0 %}
-    <div class="content_wrapper">
-        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-        {{ breadcrumbs.render(breadcrumb_items) }}
-    </div>
-{% endif %}
-
 {% block body_content scoped %}
 <div class="tdp-activity-search wrapper content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
     <div class="content_main content__1-3">
