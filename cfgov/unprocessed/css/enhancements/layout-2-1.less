@@ -24,6 +24,18 @@
 
   // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.
   .u-layout-grid__2-1 {
+    // Mobile
+    // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
+    .m-hero,
+    .u-layout-grid_hero {
+      position: relative;
+
+      // Create the hero background bleed.
+      &:after {
+        .u-hero-background();
+      }
+    }
+
     // Tablet and above
     .respond-to-min(@bp-sm-min, {
       .u-layout-grid {
@@ -37,17 +49,6 @@
         &_main,
         &_sidebar {
           padding-top: unit(45px / @base-font-size-px, rem);
-        }
-      }
-
-      // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
-      .m-hero,
-      .u-layout-grid_hero {
-        position: relative;
-
-        // Create the hero background bleed.
-        &:after {
-          .u-hero-background();
         }
       }
     });
