@@ -117,7 +117,6 @@
             {% if event.venue_image_type != 'none' %}
                 <div class="o-post-preview_image-container">
                     {% if event.venue_image_type == 'map' %}
-                        {% from 'v1/includes/macros/util/format/url.html' import location_image_url as location_image_url %}
                         <img class="o-post-preview_image"
                              src="{{ event.location_image_url() }}"
                              alt="">
