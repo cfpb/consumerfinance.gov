@@ -108,55 +108,56 @@ export const r2 = {
 };
 
 export const r3 = {
-    "data": {
-        "months_past_birthday": 5,
-        "early retirement age": "",
-        "full retirement age": "66 and 2 months",
-        "benefits": {
-            "age 62": 0,
-            "age 63": 0,
-            "age 64": 0,
-            "age 65": 0,
-            "age 66": 0,
-            "age 67": 1380,
-            "age 68": 1444,
-            "age 69": 1554,
-            "age 70": 1664
-        },
-        "params": {
-            "dobmon": 11,
-            "dobday": 11,
-            "yob": 1955,
-            "earnings": 34567,
-            "lastYearEarn": "",
-            "lastEarn": "",
-            "retiremonth": 4,
-            "retireyear": 2023,
-            "dollars": 1,
-            "prgf": 2
-        },
-        "disability": "You have reached full retirement age and are not eligible for disability benefits.",
-        "survivor benefits": {
-            "child": "",
-            "spouse caring for child": "",
-            "spouse at full retirement age": "",
-            "family maximum": ""
-        },
-        "lifetime": {
-            "age62": 0,
-            "age63": 0,
-            "age64": 0,
-            "age65": 0,
-            "age66": 0,
-            "age67": 291180,
-            "age68": 294576,
-            "age69": 298368,
-            "age70": 299520
-        }
+  data: {
+    months_past_birthday: 5,
+    'early retirement age': '',
+    'full retirement age': '66 and 2 months',
+    benefits: {
+      'age 62': 0,
+      'age 63': 0,
+      'age 64': 0,
+      'age 65': 0,
+      'age 66': 0,
+      'age 67': 1380,
+      'age 68': 1444,
+      'age 69': 1554,
+      'age 70': 1664,
     },
-    "current_age": 67,
-    "error": "",
-    "note": "Age 67 is past your full benefit claiming age.",
-    "past_fra": true,
-    "params_adjusted": false
-}
+    params: {
+      dobmon: 11,
+      dobday: 11,
+      yob: 1955,
+      earnings: 34567,
+      lastYearEarn: '',
+      lastEarn: '',
+      retiremonth: 4,
+      retireyear: 2023,
+      dollars: 1,
+      prgf: 2,
+    },
+    disability:
+      'You have reached full retirement age and are not eligible for disability benefits.',
+    'survivor benefits': {
+      child: '',
+      'spouse caring for child': '',
+      'spouse at full retirement age': '',
+      'family maximum': '',
+    },
+    lifetime: {
+      age62: 0,
+      age63: 0,
+      age64: 0,
+      age65: 0,
+      age66: 0,
+      age67: 291180,
+      age68: 294576,
+      age69: 298368,
+      age70: 299520,
+    },
+  },
+  current_age: 67,
+  error: '',
+  note: 'Age 67 is past your full benefit claiming age.',
+  past_fra: true,
+  params_adjusted: false,
+};
