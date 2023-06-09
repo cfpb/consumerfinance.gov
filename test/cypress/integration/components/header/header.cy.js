@@ -54,8 +54,8 @@ describe('Header', () => {
       menuDesktop.firstTab().click();
       menuDesktop.firstPanel().should('not.have.class', 'u-is-animating');
       // Then the global search content should not be visible.
-      globalSearch.content().should('not.have.class', 'u-is-animating');
       globalSearch.content().should('not.be.visible');
+      globalSearch.content().should('not.have.class', 'u-is-animating');
     });
   });
 
