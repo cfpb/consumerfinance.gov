@@ -1,4 +1,4 @@
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
@@ -6,11 +6,10 @@ from wagtail.contrib.routable_page.models import route
 from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
-from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
-from v1.util.ref import filterable_list_page_types, get_category_children
+from v1.util.ref import get_category_children
 
 
 class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
@@ -23,8 +22,10 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
     """Determines whether we tell crawlers to index the page or not."""
 
     filterable_categories = None
-    """Used for activity-log and newsroom to determine
-       which pages to render when sitewide"""
+    """Used to determine which pages to render when filtering site-wide."""
+
+    filterable_results_compact = False
+    """Use a compact display to render filtered results."""
 
     DEFAULT_ORDERING = "-start_date"
     filtered_ordering = models.CharField(
@@ -130,42 +131,23 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
             filterable_search=filterable_search,
             cache_key_prefix=self.get_cache_key_prefix(),
         )
-        filter_data = self.process_form(request, form)
+        results_page = self.process_form(request, form)
 
         context.update(
             {
-                "filter_data": filter_data,
-                "has_active_filters": has_active_filters,
+                "form": form,
                 "has_unfiltered_results": has_unfiltered_results,
+                "has_active_filters": has_active_filters,
+                "results_page": results_page,
             }
         )
 
         return context
 
     def process_form(self, request, form):
-        filter_data = {}
-        if form.is_valid():
-            paginator = Paginator(
-                form.get_page_set(), self.filterable_per_page_limit
-            )
-            page = request.GET.get("page")
-
-            # Get the page number in the request and get the page from the
-            # paginator to serve.
-            try:
-                pages = paginator.page(page)
-            except PageNotAnInteger:
-                pages = paginator.page(1)
-            except EmptyPage:
-                pages = paginator.page(paginator.num_pages)
-
-            filter_data["page_set"] = pages
-        else:
-            paginator = Paginator([], self.filterable_per_page_limit)
-            filter_data["page_set"] = paginator.page(1)
-
-        filter_data["form"] = form
-        return filter_data
+        results = form.get_page_set() if form.is_valid() else []
+        paginator = Paginator(results, self.filterable_per_page_limit)
+        return paginator.get_page(request.GET.get("page"))
 
     def set_do_not_index(self, field, value):
         """Do not index queries unless they consist of a single topic field."""

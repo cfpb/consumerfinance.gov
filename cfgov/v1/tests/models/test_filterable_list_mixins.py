@@ -1,4 +1,3 @@
-import json
 from io import StringIO
 from unittest import mock
 
@@ -7,7 +6,6 @@ from django.test import RequestFactory, TestCase
 from wagtail.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
-from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -15,7 +13,7 @@ from v1.models.filterable_list_mixins import FilterableListMixin
 
 class TestFilterableListMixin(TestCase):
     def setUp(self):
-        self.mixin = FilterableListMixin()
+        self.mixin = BrowseFilterablePage()
         self.factory = RequestFactory()
 
     # FilterableListMixin.filterable_per_page_limit tests
@@ -33,16 +31,6 @@ class TestFilterableListMixin(TestCase):
         request_string = "/?categories=test1&categories=test2"
         data = self.mixin.get_form_data(self.factory.get(request_string).GET)
         assert data[0]["categories"] == ["test1", "test2"]
-
-    # FilterableListMixin.get_context tests
-    def test_get_context_raises_exception_for_super_obj_has_no_get_context(
-        self,
-    ):
-        self.assertRaises(
-            AttributeError,
-            self.mixin.get_context,
-            request=self.factory.get("/"),
-        )
 
     @mock.patch("v1.models.filterable_list_mixins.Paginator")
     def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
@@ -97,7 +85,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
     def test_index_route(self):
         response = self.client.get("/test/")
         self.assertEqual(
-            response.context_data["filter_data"]["page_set"][0].title, "Test"
+            response.context_data["results_page"][0].title, "Test"
         )
 
     def test_feed_route(self):
@@ -146,106 +134,46 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
 
     def test_search_default_children_only(self, _):
-        page = BrowseFilterablePage(
-            title="test",
-            content=json.dumps(
-                [
-                    {"type": "filter_controls", "value": {}},
-                ]
-            ),
-        )
-
+        page = BrowseFilterablePage(title="test")
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
 
     def test_search_children_only_true(self, _):
-        page = BrowseFilterablePage(
-            title="test",
-            content=json.dumps(
-                [
-                    {
-                        "type": "filter_controls",
-                        "value": {
-                            "filter_children": True,
-                        },
-                    },
-                ]
-            ),
-        )
-
+        page = BrowseFilterablePage(title="test", filter_children_only=True)
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
 
     def test_search_children_only_false_uses_default_site_if_not_in_site(
         self, _
     ):
-        page = BrowseFilterablePage(
-            title="test",
-            content=json.dumps(
-                [
-                    {
-                        "type": "filter_controls",
-                        "value": {
-                            "filter_children": False,
-                        },
-                    },
-                ]
-            ),
-        )
-
+        page = BrowseFilterablePage(title="test", filter_children_only=False)
         search = page.get_filterable_search()
         self.assertEqual(
             search.search_root,
             Site.objects.get(is_default_site=True).root_page,
         )
         self.assertEqual(search.children_only, False)
-        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
 
     def test_search_children_only_false_uses_site_root(self, _):
-        page = BrowseFilterablePage(
-            title="test",
-            content=json.dumps(
-                [
-                    {
-                        "type": "filter_controls",
-                        "value": {
-                            "filter_children": False,
-                        },
-                    },
-                ]
-            ),
-        )
-
+        page = BrowseFilterablePage(title="test", filter_children_only=False)
         Page.objects.get(pk=1).add_child(instance=page)
         Site.objects.create(root_page=page)
 
         search = page.get_filterable_search()
         self.assertEqual(search.search_root.specific, page)
         self.assertEqual(search.children_only, False)
-        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
 
     def test_search_different_ordering(self, _):
-        page = BrowseFilterablePage(
-            title="test",
-            content=json.dumps(
-                [
-                    {
-                        "type": "filter_controls",
-                        "value": {
-                            "ordering": "title",
-                        },
-                    },
-                ]
-            ),
-        )
-
+        page = BrowseFilterablePage(title="test", filtered_ordering="title")
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)

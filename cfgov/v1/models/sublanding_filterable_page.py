@@ -55,7 +55,7 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "v1/sublanding-page/index.html"
+    template = "v1/sublanding-page/filterable.html"
 
     page_description = (
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
@@ -64,7 +64,7 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "v1/sublanding-page/index.html"
+    template = "v1/sublanding-page/filterable.html"
     filterable_categories = ["Research Hub"]
 
 
@@ -72,3 +72,4 @@ class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
     template = "v1/activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100
+    filterable_results_compact = True
