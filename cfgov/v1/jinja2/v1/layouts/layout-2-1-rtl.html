@@ -11,9 +11,9 @@
 {% endif %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__2-1
-                 {% if language == 'ar' %} u-layout-grid__rtl {% endif %}
-          id="main">
+    <main class="u-layout-grid u-layout-grid__2-1"
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
         <div class="u-layout-grid_wrapper">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
