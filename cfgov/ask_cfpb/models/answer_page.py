@@ -172,12 +172,7 @@ class AnswerPage(CFGOVPage):
     portal_topic = ParentalManyToManyField(
         PortalTopic,
         blank=True,
-        help_text=(
-            "Limit to 1 portal topic if possible. If "
-            "multiple topics are selected, the breadcrumb "
-            "will either be the primary portal topic, if "
-            "selected, or the Ask CFPB landing page if not."
-        ),
+        help_text="Limit to 1 portal topic if possible",
     )
     primary_portal_topic = ParentalKey(
         PortalTopic,
@@ -186,9 +181,8 @@ class AnswerPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name="primary_portal_topic",
         help_text=(
-            "Use if more than one portal topic is checked, "
-            "if one of those topics should be used as the "
-            "page breadcrumb instead of the Ask CFPB landing page."
+            "Use only if assigning more than one portal topic, "
+            "to control which topic is used as a breadcrumb."
         ),
     )
     portal_category = ParentalManyToManyField(PortalCategory, blank=True)
@@ -333,9 +327,7 @@ class AnswerPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         # self.get_meta_description() is not called here because it is called
         # and added to the context by CFGOVPage's get_context() method.
-        portal_topic = self.primary_portal_topic
-        if portal_topic is None and self.portal_topic.count() == 1:
-            portal_topic = self.portal_topic.first()
+        portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super().get_context(request)
         context["related_questions"] = self.related_questions.all()
         context["last_edited"] = self.last_edited

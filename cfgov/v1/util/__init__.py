@@ -8,9 +8,4 @@ from v1.util.ref import (
     page_type_choices,
     related_posts_category_lookup,
 )
-from v1.util.util import (
-    ERROR_MESSAGES,
-    all_valid_destinations_for_request,
-    get_unique_id,
-    valid_destination_for_request,
-)
+from v1.util.util import ERROR_MESSAGES, get_unique_id
