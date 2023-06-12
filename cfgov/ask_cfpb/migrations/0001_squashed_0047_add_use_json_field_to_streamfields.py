@@ -26,14 +26,12 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0212_emailsignup_snippet'),
-        ('v1', '0234_clean_orphaned_revisions'),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailredirects', '0008_add_verbose_name_plural'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
         ('wagtailcore', '0069_log_entry_jsonfield'),
-        ('v1', '0198_recreated'),
     ]
 
     operations = [
