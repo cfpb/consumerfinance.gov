@@ -56,7 +56,7 @@
             {% endif %}
         {%- endblock %}
         {% block body_content scoped %}
-        <aside class="u-layout-grid_secondary-nav">
+        <aside class="u-layout-grid_secondary-nav u-layout-grid_secondary-nav__sticky">
             {% import 'v1/includes/organisms/secondary-nav-fig.html' as secondary_nav with context %}
             {{ secondary_nav.render(version_status, effective_start_date, effective_end_date) }}
         </aside>
