@@ -68,7 +68,7 @@ const init = () => {
       }
     });
 
-  SecondaryNav.init()[0];
+  SecondaryNav.init();
 
   /* Only proceed if IntersectionObserver is supported (everything except IE)
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
