@@ -2,12 +2,6 @@
 @import '../node_modules/ctrl-f/dist/css/index.css';
 
 .o-fig {
-  // Make the side navigation sticky
-  .o-fig_sidebar {
-    position: sticky;
-    top: unit(45px / @base-font-size-px, rem);
-  }
-
   // Desktop
   .respond-to-min( @bp-med-min, {
     // Expand it to full height on desktop with optional scrolling
@@ -119,7 +113,7 @@
   .o-secondary-nav_content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
-    &:after {
+    > .o-secondary-nav_list {
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
