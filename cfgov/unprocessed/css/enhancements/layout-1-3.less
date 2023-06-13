@@ -3,13 +3,9 @@
   .u-layout-grid__1-3 {
     // Mobile
     .u-layout-grid {
-      &_breadcrumbs,
       &_secondary-nav {
         margin-left: unit(-15px / @base-font-size-px, rem);
         margin-right: unit(-15px / @base-font-size-px, rem);
-      }
-
-      &_secondary-nav {
         margin-bottom: unit(30px / @base-font-size-px, rem);
       }
     }
@@ -17,13 +13,9 @@
     // Tablet
     .respond-to-range( @bp-sm-min, @bp-sm-max, {
       .u-layout-grid {
-        &_breadcrumbs,
         &_secondary-nav {
           margin-left: unit(-30px / @base-font-size-px, rem);
           margin-right: unit(-30px / @base-font-size-px, rem);
-        }
-
-        &_secondary-nav {
           margin-bottom: unit(45px / @base-font-size-px, rem);
         }
       }
@@ -114,7 +106,6 @@
         }
 
         &_secondary-nav {
-          //padding-left: unit(30px / @base-font-size-px, rem);
           margin-left: unit(30px / @base-font-size-px, rem);
         }
       }
