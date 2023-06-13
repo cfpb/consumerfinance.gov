@@ -13,7 +13,7 @@ import v1.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('regulations3k', '0036_add_use_json_field_to_streamfields'),
+        ('regulations3k', '0001_squashed_0036_add_use_json_field_to_streamfields'),
     ]
 
     operations = [
