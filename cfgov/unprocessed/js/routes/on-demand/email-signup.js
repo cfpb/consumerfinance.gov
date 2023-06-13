@@ -6,7 +6,7 @@ import { email as validateEmail } from '../../modules/util/validators.js';
 import FormSubmit from '../../organisms/FormSubmit.js';
 
 const BASE_CLASS = 'o-email-signup';
-const language = document.body.querySelector('.content').lang;
+const language = document.documentElement.lang || 'en';
 const emailSignUps = document.body.querySelectorAll('.' + BASE_CLASS);
 const emailSignUpsLength = emailSignUps.length;
 let formSubmit;
