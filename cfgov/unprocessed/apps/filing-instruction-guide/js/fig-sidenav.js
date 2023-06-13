@@ -18,6 +18,8 @@ import {
   scrollIntoViewWithOffset,
 } from './fig-sidenav-utils.js';
 
+let secondaryNav;
+
 /**
  * Default scroll into view with an 60 pixel offset.
  * @param {HTMLElement} target - A link with an href attribute.
@@ -37,9 +39,8 @@ const defaultScrollOffset = (target) => {
 const handleMobileNav = (event) => {
   event.preventDefault();
   if (event.target.matches('.o-secondary-nav_link')) {
-    // This would ideally be secondaryNav.collapse() but there's a buggy race condition
-    // with that method that makes collapsing unreliable
-    document.querySelector('.o-secondary-nav_header').click();
+    secondaryNav.collapse();
+
     // Scrolling before the expandable closes causes jitters on some devices.
     setTimeout(() => {
       defaultScrollOffset(event.target);
@@ -68,7 +69,7 @@ const init = () => {
       }
     });
 
-  SecondaryNav.init();
+  secondaryNav = SecondaryNav.init()[0];
 
   /* Only proceed if IntersectionObserver is supported (everything except IE)
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
