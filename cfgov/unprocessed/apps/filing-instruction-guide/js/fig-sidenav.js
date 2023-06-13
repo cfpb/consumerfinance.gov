@@ -3,7 +3,6 @@
 
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 
-import { SecondaryNav } from '../../../js/organisms/SecondaryNav.js';
 import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import {
@@ -17,6 +16,8 @@ import {
   handleIntersect,
   scrollIntoViewWithOffset,
 } from './fig-sidenav-utils.js';
+
+let secondaryNav;
 
 /**
  * Default scroll into view with an 60 pixel offset.
@@ -37,9 +38,8 @@ const defaultScrollOffset = (target) => {
 const handleMobileNav = (event) => {
   event.preventDefault();
   if (event.target.matches('.o-secondary-nav_link')) {
-    // This would ideally be secondaryNav.collapse() but there's a buggy race condition
-    // with that method that makes collapsing unreliable
-    document.querySelector('.o-secondary-nav_header').click();
+    secondaryNav.collapse();
+
     // Scrolling before the expandable closes causes jitters on some devices.
     setTimeout(() => {
       defaultScrollOffset(event.target);
@@ -51,9 +51,11 @@ const handleMobileNav = (event) => {
 
 /**
  * init - Initialize everything on page load.
+ * @param {SecondaryNav} secondaryNavArg - A SecondaryNav instance.
  */
-const init = () => {
+const init = (secondaryNavArg) => {
   figSidenavUtilsInit();
+  secondaryNav = secondaryNavArg;
 
   /* If the browser window is no greater than 900px, enable the mobile nav
    functionality. Otherwise, disable it. This event is triggered whenever
@@ -67,8 +69,6 @@ const init = () => {
         appRoot.removeEventListener('click', handleMobileNav);
       }
     });
-
-  SecondaryNav.init();
 
   /* Only proceed if IntersectionObserver is supported (everything except IE)
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
