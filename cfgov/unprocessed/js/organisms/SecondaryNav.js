@@ -16,7 +16,6 @@ const BASE_CLASS = 'o-secondary-nav';
 
 /**
  * SecondaryNav
- *
  * @class
  * @classdesc Initializes a new SecondaryNav molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -35,7 +34,6 @@ function SecondaryNav(element) {
 
   /**
    * Set up and create the multiselect.
-   *
    * @returns {SecondaryNav} An instance.
    */
   function init() {
