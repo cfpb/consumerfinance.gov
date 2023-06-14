@@ -1,17 +1,6 @@
 @import (reference) '../../../css/main.less';
 @import '../node_modules/ctrl-f/dist/css/index.css';
 
-.o-fig {
-  // Desktop
-  .respond-to-min( @bp-med-min, {
-    // Expand it to full height on desktop with optional scrolling
-    .o-fig_sidebar {
-      max-height: 100vh;
-      overflow-y: auto;
-    }
-  } );
-}
-
 .o-fig_main {
   // Bump up all heading sizes to improve readability
   h1 {
@@ -128,13 +117,13 @@
   } );
 
   .o-secondary-nav_link {
-    padding-left: unit(40px / @base-font-size-px, em);
-    text-indent: unit(-30px / @base-font-size-px, em);
+    padding-left: unit(24px / @base-font-size-px, em);
+    text-indent: unit(-18px / @base-font-size-px, em);
   }
 
   .o-secondary-nav_list__parents > .o-secondary-nav_link {
-    padding-left: unit(30px / @base-font-size-px, em);
-    text-indent: unit(-18px / @base-font-size-px, em);
+    padding-left: unit(10px / @base-font-size-px, em);
+    text-indent: unit(-10px / @base-font-size-px, em);
   }
 
   h4 {
