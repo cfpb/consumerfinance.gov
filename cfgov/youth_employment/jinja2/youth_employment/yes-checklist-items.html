@@ -1,3 +1,14 @@
+{% macro slugify(string) -%}
+   {{ string |
+      lower |
+      replace(' ', '-') |
+      replace(',', '') |
+      replace('.', '') |
+      replace('!', '') |
+      replace('?', '')
+   }}
+{%- endmacro %}
+
 {% import "v1/includes/atoms/checkbox.html" as checkbox with context %}
 
 {{
