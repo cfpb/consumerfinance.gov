@@ -14,11 +14,30 @@
 
 /**
  * @type {Cypress.PluginConfig}
- * @param {object} on - hook into various events Cypress emits
- * @param {object} config - the resolved Cypress config
+ * @param {object} on - hook into various events Cypress emits.
+ * @param {object} config - the resolved Cypress config.
  */
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  /* `on` is used to hook into various events Cypress emits
-     `config` is the resolved Cypress config */
+  // Workaround to show devtools in failure screenshots.
+  // See https://github.com/cypress-io/cypress/issues/2024#issuecomment-754571301
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // auto open devtools
+      launchOptions.args.push('--auto-open-devtools-for-tabs');
+    }
+
+    if (browser.family === 'firefox') {
+      // auto open devtools
+      launchOptions.args.push('-devtools');
+    }
+
+    if (browser.name === 'electron') {
+      // auto open devtools
+      launchOptions.preferences.devTools = true;
+    }
+
+    // whatever you return here becomes the launchOptions
+    return launchOptions;
+  });
 };
