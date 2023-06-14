@@ -12,7 +12,7 @@ module.exports = defineConfig({
     // setupNodeEvents can be defined in either
     // the e2e or component configuration.
     setupNodeEvents(on, config) {
-      on('before:browser:launch', (browser = {}, launchOptions = {}) => {
+      on('before:browser:launch', (browser = {}, launchOptions) => {
         // Log browser info. This could be useful when comparing local to CI.
         // console.log('Launching browser', browser);
 
