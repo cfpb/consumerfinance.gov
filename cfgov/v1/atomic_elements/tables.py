@@ -70,7 +70,7 @@ class AtomicTableBlock(TableBlock):
     class Meta:
         default = None
         icon = "table"
-        template = "v1/includes/organisms/tables/base.html"
+        template = "v1/includes/organisms/tables/atomic.html"
         label = "Table"
 
 
