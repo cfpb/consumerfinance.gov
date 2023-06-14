@@ -13,6 +13,8 @@ module.exports = defineConfig({
     specPattern: 'test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
+    // setupNodeEvents can be defined in either
+    // the e2e or component configuration.
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser = {}, launchOptions = {}) => {
         // Log browser info. This could be useful when comparing local to CI.
@@ -30,6 +32,9 @@ module.exports = defineConfig({
         // Whatever you return here becomes the launchOptions.
         return launchOptions;
       });
+
+      // IMPORTANT return the updated config object.
+      return config;
     },
   },
   component: {
