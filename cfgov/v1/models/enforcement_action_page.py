@@ -220,10 +220,6 @@ class EnforcementActionPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("notification", molecules.Notification()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
         ],
         blank=True,
         use_json_field=True,
