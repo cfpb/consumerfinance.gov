@@ -21,23 +21,23 @@
 module.exports = (on, config) => {
   // Workaround to show devtools in failure screenshots.
   // See https://github.com/cypress-io/cypress/issues/2024#issuecomment-754571301
-  on('before:browser:launch', (browser = {}, launchOptions) => {
+  on('before:browser:launch', (browser = {}, launchOptions = {}) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // auto open devtools
+      // Auto open devtools.
       launchOptions.args.push('--auto-open-devtools-for-tabs');
     }
 
     if (browser.family === 'firefox') {
-      // auto open devtools
+      // Auto open devtools.
       launchOptions.args.push('-devtools');
     }
 
     if (browser.name === 'electron') {
-      // auto open devtools
+      // Auto open devtools.
       launchOptions.preferences.devTools = true;
     }
 
-    // whatever you return here becomes the launchOptions
+    // Whatever you return here becomes the launchOptions.
     return launchOptions;
   });
 };
