@@ -18,19 +18,13 @@ module.exports = defineConfig({
         // Log browser info. This could be useful when comparing local to CI.
         // console.log('Launching browser', browser);
 
-        if (browser.family === 'chromium' && browser.name !== 'electron') {
-          // Auto open devtools.
-          launchOptions.args.push('--auto-open-devtools-for-tabs');
-        }
-
-        if (browser.family === 'firefox') {
-          // Auto open devtools.
+        // Auto open devtools.
+        if (browser.family === 'chromium') {
+          if (browser.name === 'electron')
+            launchOptions.preferences.devTools = true;
+          else launchOptions.args.push('--auto-open-devtools-for-tabs');
+        } else if (browser.family === 'firefox') {
           launchOptions.args.push('-devtools');
-        }
-
-        if (browser.name === 'electron') {
-          // Auto open devtools.
-          launchOptions.preferences.devTools = true;
         }
 
         // Whatever you return here becomes the launchOptions.
