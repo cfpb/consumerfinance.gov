@@ -23,6 +23,10 @@ def migrate_filterable_list(page_or_revision, data):
 
 class Migration(migrations.Migration):
     dependencies = [
+        (
+            "wagtailcore",
+            "0075_populate_latest_revision_and_revision_object_str",
+        ),
         ("v1", "0241_remove_filterable_5050"),
     ]
 
