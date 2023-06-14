@@ -16,7 +16,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser = {}, launchOptions = {}) => {
         // Log browser info. This could be useful when comparing local to CI.
-        console.log('Launching browser', browser);
+        // console.log('Launching browser', browser);
 
         if (browser.family === 'chromium' && browser.name !== 'electron') {
           // Auto open devtools.
