@@ -74,7 +74,7 @@ def migrate(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("v1", "0247_filterable_list_mixin"),
+        ("v1", "0248_filterable_list_mixin"),
     ]
 
     operations = [

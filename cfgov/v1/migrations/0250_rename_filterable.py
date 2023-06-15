@@ -30,7 +30,7 @@ def forward_mapper(page_or_revision, data):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("v1", "0248_populate_filterable"),
+        ("v1", "0249_populate_filterable"),
     ]
 
     operations = [
