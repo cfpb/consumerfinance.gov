@@ -12,10 +12,7 @@ from teachers_digital_platform.models.activity_index_page import (
 )
 from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.caching import AkamaiBackend
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_list_mixins import FilterableListMixin
 from v1.util.ref import get_category_children
 
 
@@ -46,20 +43,20 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         page.get_ancestors().type(FilterableListMixin).specific().all()
     )
 
-    # Next, see if it belongs to any CategoryFilterableMixin filterable lists
+    # Next, see if it belongs to any FilterableListMixin pages configured
+    # to include any of this page's categories.
     page_categories = page.categories.values_list("name", flat=True)
     category_filterable_list_pages = (
-        category_filterable_list_page
-        for category_filterable_list_page in CFGOVPage.objects.type(
-            CategoryFilterableMixin
+        filterable_page
+        for filterable_page in CFGOVPage.objects.type(
+            FilterableListMixin
         ).specific()
-        if any(
+        if filterable_page.filterable_categories
+        and any(
             category
             for category in page_categories
             if category
-            in get_category_children(
-                category_filterable_list_page.filterable_categories
-            )
+            in get_category_children(filterable_page.filterable_categories)
         )
     )
 

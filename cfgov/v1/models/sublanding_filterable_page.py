@@ -4,10 +4,7 @@ from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_list_mixins import FilterableListMixin
 
 
 class SublandingFilterableContent(StreamBlock):
@@ -63,12 +60,12 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
     )
 
 
-class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
+class ResearchHubPage(SublandingFilterablePage):
     template = "v1/sublanding-page/filterable.html"
     filterable_categories = ["Research Hub"]
 
 
-class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
+class ActivityLogPage(SublandingFilterablePage):
     template = "v1/activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100

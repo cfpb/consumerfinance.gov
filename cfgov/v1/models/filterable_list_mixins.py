@@ -22,7 +22,7 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
     """Determines whether we tell crawlers to index the page or not."""
 
     filterable_categories = None
-    """Used to determine which pages to render when filtering site-wide."""
+    """Used to restrict filterable results to certain page categories."""
 
     filterable_results_compact = False
     """Use a compact display to render filtered results."""
@@ -110,11 +110,18 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
             search_root = self
 
         search_cls = self.get_search_class()
-        return search_cls(
+        search = search_cls(
             search_root,
             children_only=self.filter_children_only,
             ordering=self.filtered_ordering,
         )
+
+        if self.filterable_categories:
+            search.filter_categories(
+                get_category_children(self.filterable_categories)
+            )
+
+        return search
 
     def get_cache_key_prefix(self):
         return self.url
@@ -127,7 +134,6 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
         has_unfiltered_results = filterable_search.count() > 0
         form = self.get_form_class()(
             form_data,
-            filterable_categories=self.filterable_categories,
             filterable_search=filterable_search,
             cache_key_prefix=self.get_cache_key_prefix(),
         )
@@ -202,21 +208,3 @@ class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
     def feed_route(self, request, *args, **kwargs):
         context = self.get_context(request)
         return FilterableFeed(self, context)(request)
-
-
-class CategoryFilterableMixin:
-    filterable_categories = []
-    """Determines page categories to be filtered; see filterable_pages."""
-
-    def get_filterable_search(self):
-        """Return the queryset of pages to be filtered by this page.
-
-        The class property filterable_categories can be set to a list of page
-        categories from the set in v1.util.ref.categories. If set, this page
-        will only filter pages that are tagged with a tag in those categories.
-        By default this is an empty list and all page tags are eligible.
-        """
-        search = super().get_filterable_search()
-        category_names = get_category_children(self.filterable_categories)
-        search.filter_categories(categories=category_names)
-        return search

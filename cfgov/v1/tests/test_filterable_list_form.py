@@ -65,11 +65,10 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
             FilterablePagesDocument.Index.name, stdout=StringIO()
         )
 
-    def setUpFilterableForm(self, data=None, filterable_categories=None):
+    def setUpFilterableForm(self, data=None):
         site_root = Site.objects.get(is_default_site=True).root_page
         form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(site_root),
-            filterable_categories=filterable_categories,
+            filterable_search=FilterablePagesDocumentSearch(site_root)
         )
         form.is_bound = True
         form.cleaned_data = data
@@ -170,15 +169,6 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
             ],
         )
 
-    def test_filterable_categories_sets_initial_category_list(self):
-        form = self.setUpFilterableForm(
-            data={"categories": []},
-            filterable_categories=("Blog", "Newsroom", "Research Report"),
-        )
-        page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.category_blog)
-
     def test_first_page_date(self):
         form = self.setUpFilterableForm()
         self.assertEqual(form.first_page_date(), self.blog1.date_published)
@@ -218,7 +208,6 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         site_root = Site.objects.get(is_default_site=True).root_page
         form = EventArchiveFilterForm(
             filterable_search=EventFilterablePagesDocumentSearch(site_root),
-            filterable_categories=None,
         )
         form.is_bound = True
         form.cleaned_data = {"categories": []}
@@ -244,7 +233,6 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
             filterable_search=EnforcementActionFilterablePagesDocumentSearch(
                 site_root
             ),
-            filterable_categories=None,
         )
         form.is_bound = True
         form.cleaned_data = {"categories": [], "statuses": [], "products": []}

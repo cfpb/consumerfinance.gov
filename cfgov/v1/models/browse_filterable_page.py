@@ -9,10 +9,7 @@ from v1.documents import (
 )
 from v1.models.browse_page import AbstractBrowsePage
 from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_list_mixins import FilterableListMixin
 from v1.models.learn_page import EventPage
 
 
@@ -109,6 +106,6 @@ class EventArchivePage(BrowseFilterablePage):
         return EventFilterablePagesDocumentSearch
 
 
-class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
+class NewsroomLandingPage(BrowseFilterablePage):
     template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]
