@@ -28,9 +28,6 @@
 
    value.has_data:        Boolean indicating if the table has data.
 
-   value.empty_table_msg: String containing message to display if table has no
-                          data.
-
    value.first_row_is_table_header: Boolean indicating if the first row is the
                           table header.
 
@@ -128,6 +125,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% elif value.empty_table_msg %}
-    <h3>{{ value.empty_table_msg }}</h3>
 {% endif %}
