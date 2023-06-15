@@ -35,6 +35,7 @@ from v1.template_debug import (
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    table_test_cases,
     translation_links_test_cases,
     video_player_test_cases,
 )
@@ -589,6 +590,14 @@ register_template_debug(
     "related_posts",
     "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "table",
+    "v1/includes/organisms/tables/base.html",
+    table_test_cases,
 )
 
 

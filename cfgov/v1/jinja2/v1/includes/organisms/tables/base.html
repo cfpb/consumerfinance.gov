@@ -1,0 +1,60 @@
+{# ==========================================================================
+
+Table - https://cfpb.github.io/design-system/components/tables
+
+Creates table markup when given:
+
+value.data:     Wagtail StreamValue for TypedTableBlock, or an equivalent
+                dictionary structure like this:
+
+                {
+                    columns: [
+                        {'heading': 'Column 1'},
+                        {'heading': 'Column 2'},
+                        ...
+                    ],
+                    rows [
+                        ['a', 'b', ...],
+                        ['c', 'd', ...],
+                        ...
+                    ]
+                }
+
+value.options:  Enabled configuration options as a list of strings.
+                For example: ['stack_on_mobile'].
+                See list of supported options below.
+
+Supported configuration options:
+
+stack_on_mobile:    Stack the table columns on mobile.
+
+========================================================================== #}
+
+{%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
+
+<table class="o-table
+    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}"
+>
+    {% if value.data.columns | selectattr('heading') | list -%}
+    <thead>
+        <tr>
+            {% for col in value.data.columns %}
+                <th scope="col">{{ col.heading }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {%- endif %}
+    <tbody>
+        {% for row in value.data.rows %}
+            <tr>
+                {% for block in row %}
+                    <td
+                        {% if stack_on_mobile %}data-label="
+                            {{- value.data.columns[loop.index0].heading -}}
+                        "{% endif %}
+                    >{% include_block block %}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
