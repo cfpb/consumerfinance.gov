@@ -24,3 +24,16 @@ import './assertions';
 
 // Require skip-test
 require('@cypress/skip-test/support');
+
+// Ensure there are no errors or warnings in the dev console.
+Cypress.on('window:before:load', (win) => {
+  cy.spy(win.console, 'error');
+  cy.spy(win.console, 'warn');
+});
+
+afterEach(() => {
+  cy.window().then((win) => {
+    expect(win.console.error).to.have.callCount(0);
+    expect(win.console.warn).to.have.callCount(0);
+  });
+});
