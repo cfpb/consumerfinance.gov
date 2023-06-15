@@ -3,7 +3,7 @@
 In order to provide a broad, configurable search and filtering interface across areas of our site, we have implemented a custom StreamField block, [FilterableList](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L802), that allows a user to specify what filters are available, how to order results, and which pages should be included in the search.
 
 - [How It Works](#how-it-works)
-  - [FilterableListMixin](#filterablelistmixin)
+  - [AbstractFilterablePage](#abstractfilterablepage)
 - [Forms](#forms)
   - [FilterableListForm](#filterablelistform)
   - [EnforcementActionsFilterForm](#enforcementactionsfilterform)
@@ -16,11 +16,11 @@ In order to provide a broad, configurable search and filtering interface across 
 
 ## How It Works
 
-The journey on how a page gets a filterable form is not necessarily a straight or simple path, but it is something that is important to know. The page class must both support the `FilterableList` block within its content StreamField and must also inherit from `FilterableListMixin`.
+The journey on how a page gets a filterable form is not necessarily a straight or simple path, but it is something that is important to know. The page class must both support the `FilterableList` block within its content StreamField and must also inherit from `AbstractFilterablePage`.
 
-### FilterableListMixin
+### AbstractFilterablePage
 
-Pges must extend from the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15) class. This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_root` and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
+Pges must extend from the `AbstractFilterablePage` class. This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_root` and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
 
 Page classes may optionally define `filterable_categories` as a list of categories used to limit search results. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
 

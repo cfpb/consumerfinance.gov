@@ -8,61 +8,61 @@ from wagtail.models import Page, Site
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage, BrowseFilterablePage
-from v1.models.filterable_list_mixins import FilterableListMixin
+from v1.models.filterable_page import AbstractFilterablePage
 
 
-class TestFilterableListMixin(TestCase):
+class TestAbstractFilterablePage(TestCase):
     def setUp(self):
-        self.mixin = BrowseFilterablePage()
+        self.page = BrowseFilterablePage()
         self.factory = RequestFactory()
 
-    # FilterableListMixin.filterable_per_page_limit tests
+    # AbstractFilterablePage.filterable_per_page_limit tests
     def test_per_page_limit_returns_integer(self):
         self.assertIsInstance(
-            FilterableListMixin.filterable_per_page_limit, int
+            AbstractFilterablePage.filterable_per_page_limit, int
         )
 
     def test_get_form_data_returns_GET_data(self):
         request_string = "/?title=test"
-        data = self.mixin.get_form_data(self.factory.get(request_string).GET)
+        data = self.page.get_form_data(self.factory.get(request_string).GET)
         assert data[0]["title"] == "test"
 
     def test_get_form_data_returns_GET_data_as_list_for_multiple_values(self):
         request_string = "/?categories=test1&categories=test2"
-        data = self.mixin.get_form_data(self.factory.get(request_string).GET)
+        data = self.page.get_form_data(self.factory.get(request_string).GET)
         assert data[0]["categories"] == ["test1", "test2"]
 
-    @mock.patch("v1.models.filterable_list_mixins.Paginator")
+    @mock.patch("v1.models.filterable_page.Paginator")
     def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
         mock_request = mock.Mock()
         mock_request.GET = self.factory.get("/").GET
         mock_form = mock.Mock()
-        self.mixin.process_form(mock_request, mock_form)
+        self.page.process_form(mock_request, mock_form)
         assert mock_form.is_valid.called
 
-    # FilterableListMixin.set_do_not_index tests
+    # AbstractFilterablePage.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
-        assert self.mixin.do_not_index is False
+        assert self.page.do_not_index is False
 
     def test_do_not_index_is_false_if_no_query(self):
         request_string = ""
-        self.mixin.get_form_data(self.factory.get(request_string).GET)
-        assert self.mixin.do_not_index is False
+        self.page.get_form_data(self.factory.get(request_string).GET)
+        assert self.page.do_not_index is False
 
     def test_do_not_index_is_true_if_query(self):
         request_string = "/?categories=test1&topic=test2"
-        self.mixin.get_form_data(self.factory.get(request_string).GET)
-        assert self.mixin.do_not_index is True
+        self.page.get_form_data(self.factory.get(request_string).GET)
+        assert self.page.do_not_index is True
 
     def test_do_not_index_is_false_if_query_is_single_topic(self):
         request_string = "/?topic=test1"
-        self.mixin.get_form_data(self.factory.get(request_string).GET)
-        assert self.mixin.do_not_index is False
+        self.page.get_form_data(self.factory.get(request_string).GET)
+        assert self.page.do_not_index is False
 
     def test_do_not_index_is_true_if_query_is_multiple_topics(self):
         request_string = "/?topic=test1&topic=test2"
-        self.mixin.get_form_data(self.factory.get(request_string).GET)
-        assert self.mixin.do_not_index is False
+        self.page.get_form_data(self.factory.get(request_string).GET)
+        assert self.page.do_not_index is False
 
 
 class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
@@ -134,21 +134,27 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
+        self.assertEqual(
+            search.ordering, AbstractFilterablePage.DEFAULT_ORDERING
+        )
 
     def test_search_default_children_only(self, _):
         page = BrowseFilterablePage(title="test")
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
+        self.assertEqual(
+            search.ordering, AbstractFilterablePage.DEFAULT_ORDERING
+        )
 
     def test_search_children_only_true(self, _):
         page = BrowseFilterablePage(title="test", filter_children_only=True)
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
-        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
+        self.assertEqual(
+            search.ordering, AbstractFilterablePage.DEFAULT_ORDERING
+        )
 
     def test_search_children_only_false_uses_default_site_if_not_in_site(
         self, _
@@ -160,7 +166,9 @@ class FilterableListSearchTestCase(TestCase):
             Site.objects.get(is_default_site=True).root_page,
         )
         self.assertEqual(search.children_only, False)
-        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
+        self.assertEqual(
+            search.ordering, AbstractFilterablePage.DEFAULT_ORDERING
+        )
 
     def test_search_children_only_false_uses_site_root(self, _):
         page = BrowseFilterablePage(title="test", filter_children_only=False)
@@ -170,7 +178,9 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root.specific, page)
         self.assertEqual(search.children_only, False)
-        self.assertEqual(search.ordering, FilterableListMixin.DEFAULT_ORDERING)
+        self.assertEqual(
+            search.ordering, AbstractFilterablePage.DEFAULT_ORDERING
+        )
 
     def test_search_different_ordering(self, _):
         page = BrowseFilterablePage(title="test", filtered_ordering="title")

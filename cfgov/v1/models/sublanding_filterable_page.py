@@ -4,7 +4,7 @@ from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
-from v1.models.filterable_list_mixins import FilterableListMixin
+from v1.models.filterable_page import AbstractFilterablePage
 
 
 class SublandingFilterableContent(StreamBlock):
@@ -24,7 +24,7 @@ class SublandingFilterableContent(StreamBlock):
         }
 
 
-class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
+class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
     header = StreamField(
         [
             ("hero", molecules.Hero()),
@@ -45,7 +45,7 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         [
             ObjectList(content_panels, heading="General Content"),
             ObjectList(
-                FilterableListMixin.filtering_panels, heading="Filtering"
+                AbstractFilterablePage.filtering_panels, heading="Filtering"
             ),
             ObjectList(CFGOVPage.sidefoot_panels, heading="Sidebar"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),

@@ -12,8 +12,8 @@ from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
 
 
-class FilterableListMixin(ShareableRoutablePageMixin, models.Model):
-    """Wagtail Page mixin that allows for filtering of other pages."""
+class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
+    """Wagtail Page class that allows for filtering of other pages."""
 
     filterable_per_page_limit = 25
     """Number of results to return per page."""
