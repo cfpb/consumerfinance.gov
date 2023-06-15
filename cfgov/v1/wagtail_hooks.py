@@ -30,6 +30,7 @@ from v1.models.snippets import (
 )
 from v1.template_debug import (
     call_to_action_test_cases,
+    crc_table_test_cases,
     featured_content_test_cases,
     heading_test_cases,
     notification_test_cases,
@@ -560,6 +561,14 @@ register_template_debug(
     "call_to_action",
     "v1/includes/molecules/call-to-action.html",
     call_to_action_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "crc_table",
+    "v1/includes/organisms/tables/consumer-reporting-company.html",
+    crc_table_test_cases,
 )
 
 

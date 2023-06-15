@@ -26,15 +26,19 @@ value.options:  Enabled configuration options as a list of strings.
 
 Supported configuration options:
 
+is_full_width:      Display the table at full width.
+
 stack_on_mobile:    Stack the table columns on mobile.
 
 ========================================================================== #}
 
+{%- set is_full_width = 'is_full_width' in (value.options or []) -%}
 {%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
 <table class="o-table
-    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}"
->
+    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
+    {{- ' u-w100pct' if is_full_width else '' -}}
+">
     {% if value.data.columns | selectattr('heading') | list -%}
     <thead>
         <tr>
