@@ -21,15 +21,7 @@
 {% import 'v1/includes/molecules/notification.html' as notification with context %}
 
 <div class="o-filterable-list-results">
-    {%- if not has_unfiltered_results %}
-        {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
-
-        {{ notification.render(
-            'information',
-            true,
-            'There are no results to display.'
-        ) }}
-    {%- else -%}
+    {%- if has_unfiltered_results %}
         {# SHOW A NOTIFICATION IF THERE ARE ANY ERRORS. #}
 
         {% set notification_opts = {
@@ -122,5 +114,13 @@
                 {% endif %}
             </section>
         {% endif %}
+    {%- else -%}
+        {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
+
+        {{ notification.render(
+            'information',
+            true,
+            'There are no results to display.'
+        ) }}
     {% endif %}
 </div>
