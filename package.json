@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "cypress": "11.1.0",
+    "cypress-fail-fast": "7.0.1",
     "eslint": "8.42.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.27.5",

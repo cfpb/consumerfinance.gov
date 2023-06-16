@@ -14,6 +14,8 @@ module.exports = defineConfig({
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
     setupNodeEvents(on, config) {
+      require('cypress-fail-fast/plugin')(on, config);
+
       on('before:browser:launch', (browser, launchOptions) => {
         if (browser.name === 'chrome') {
           launchOptions.args.push('--disable-extensions');
