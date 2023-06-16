@@ -1,6 +1,5 @@
 from django.urls import path, re_path
 from django.urls.conf import include
-from django.views.generic import TemplateView
 
 from wagtailsharing.views import ServeView
 
@@ -10,9 +9,6 @@ from teachers_digital_platform import views
 _tdp = "teachers_digital_platform"
 
 urlpatterns = [
-    re_path(
-        r"^journey", TemplateView.as_view(template_name=f"{_tdp}/bb-tool.html")
-    ),
     path(r"", lambda request: ServeView.as_view()(request, request.path)),
     # Handle all results (expects signed cookie "resultsUrl")
     re_path(
