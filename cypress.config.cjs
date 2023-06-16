@@ -13,6 +13,15 @@ module.exports = defineConfig({
     specPattern: 'test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.name === 'chrome') {
+          launchOptions.args.push('--disable-extensions');
+        }
+
+        return launchOptions;
+      });
+    },
   },
   component: {
     specPattern: 'test/cypress/component/**/*.cy.{js,jsx,ts,tsx}',
