@@ -1,0 +1,126 @@
+{# ==========================================================================
+
+   Filterable list results
+
+   ==========================================================================
+
+   Create a list of filtered results given:
+
+   page: Wagtail page object that inherits from AbstractFilterablePage.
+
+   form: Django form object that was used to filter results.
+
+   has_unfiltered_results: Whether the filterable list has anything to filter.
+
+   has_active_filters: Whether the form had any filters applied.
+
+   results_page: Paginated page of results.
+
+   ========================================================================== #}
+
+{% import 'v1/includes/molecules/notification.html' as notification with context %}
+
+<div class="o-filterable-list-results">
+    {%- if has_unfiltered_results %}
+        {# SHOW A NOTIFICATION IF THERE ARE ANY ERRORS. #}
+
+        {% set notification_opts = {
+            'type': 'information',
+            'is_visible': false,
+            'message': '',
+            'explanation': ''
+        } %}
+
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {% do notification_opts.update({
+                        'type': 'error',
+                        'is_visible': true,
+                        'message': notification_opts.message + field.label + ': ' + error + '<br>' | safe
+                    }) %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        {% if form.is_valid() %}
+            {% set count = results_page.paginator.count %}
+            {% if count == 0 %}
+                {% do notification_opts.update({
+                    'type': 'warning',
+                    'is_visible': true,
+                    'message': 'Sorry, there were no results based on your filter selections.',
+                    'explanation': 'Please reset the filter or change your selections and try again.'
+                }) %}
+            {% else %}
+                {% do notification_opts.update({
+                    'type': 'success',
+                    'is_visible': true,
+                    'message': count ~ ' filtered result' ~ count | pluralize('s')
+                }) %}
+            {% endif %}
+        {% endif %}
+
+        <div class="block
+                    block__padded
+                    block__sub
+                    {%- if not has_active_filters %}
+                    u-hidden
+                    {%- endif %}"
+             data-cy="filterable-list-notification">
+            {{ notification.render(
+                notification_opts.type,
+                notification_opts.is_visible,
+                notification_opts.message,
+                notification_opts.explanation
+            ) }}
+        </div>
+
+        {# ADD THE FILTER RESULTS, IF THERE ARE ANY. #}
+
+        {% if results_page.paginator.count %}
+            <section class="block
+                            block__sub
+                            {%- if has_active_filters %}
+                            block__flush-top
+                            {%- endif %}"
+                     data-cy="filterable-list-results">
+                {% if page.filterable_results_compact %}
+                    {% import 'v1/activity-log/_activity-list.html' as activity_list with context %}
+                    {{ activity_list.render( results_page ) }}
+                {% else %}
+                    {% import 'v1/includes/organisms/post-preview.html' as post_preview %}
+                    {% for post in results_page %}
+                        {{ post_preview.render(
+                            post,
+                            show_categories=page.show_filtered_categories,
+                            show_date=page.show_filtered_dates,
+                            date_label=page.filtered_date_label,
+                            show_tags=page.show_filtered_tags
+                        ) }}
+                    {% endfor %}
+                {% endif %}
+
+                {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
+
+                {% if results_page.paginator.num_pages > 1 %}
+                    <div class="block block__flush-top block__flush-bottom block__padded-top">
+                        {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+                        {{ pagination.render(
+                            results_page.paginator.num_pages,
+                            results_page.number
+                        ) }}
+                    </div>
+                {% endif %}
+            </section>
+        {% endif %}
+    {%- else -%}
+        {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
+
+        {{ notification.render(
+            'information',
+            true,
+            'There are no results to display.'
+        ) }}
+    {% endif %}
+</div>
