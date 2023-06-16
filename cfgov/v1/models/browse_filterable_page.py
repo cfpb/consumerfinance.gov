@@ -9,10 +9,7 @@ from v1.documents import (
 )
 from v1.models.browse_page import AbstractBrowsePage
 from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_page import AbstractFilterablePage
 from v1.models.learn_page import EventPage
 
 
@@ -31,7 +28,7 @@ class BrowseFilterableContent(StreamBlock):
         }
 
 
-class BrowseFilterablePage(FilterableListMixin, AbstractBrowsePage):
+class BrowseFilterablePage(AbstractFilterablePage, AbstractBrowsePage):
     header = StreamField(
         [
             ("text_introduction", molecules.TextIntroduction()),
@@ -54,9 +51,13 @@ class BrowseFilterablePage(FilterableListMixin, AbstractBrowsePage):
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
+            ObjectList(
+                AbstractFilterablePage.filtering_panels, heading="Filtering"
+            ),
             ObjectList(AbstractBrowsePage.sidefoot_panels, heading="SideFoot"),
             ObjectList(
-                AbstractBrowsePage.settings_panels, heading="Configuration"
+                AbstractBrowsePage.settings_panels,
+                heading="Configuration",
             ),
         ]
     )
@@ -105,6 +106,6 @@ class EventArchivePage(BrowseFilterablePage):
         return EventFilterablePagesDocumentSearch
 
 
-class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
+class NewsroomLandingPage(BrowseFilterablePage):
     template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]

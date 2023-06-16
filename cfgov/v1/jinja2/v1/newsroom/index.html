@@ -27,6 +27,11 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
+
+    <div class="block">
+        {% include "v1/includes/organisms/filterable-list-results.html" %}
+    </div>
+
     <aside class="o-prefooter">
         {% if page.sidefoot %}
             {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
