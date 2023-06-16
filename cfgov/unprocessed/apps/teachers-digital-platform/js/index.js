@@ -10,7 +10,6 @@ import surveys from './tdp-surveys.js';
 
 const app = {
   init: () => {
-
     /**
      * This must come before searchInit() because it will also initialize
      * cfExpandables.
