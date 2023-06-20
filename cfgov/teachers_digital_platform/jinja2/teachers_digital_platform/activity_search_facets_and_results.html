@@ -2,9 +2,9 @@
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 {% from 'teachers_digital_platform/tdp_expandable.html' import expandable with context %}
 
-{% macro build_filter_section(name) %}
+{% macro build_filter_section(name, label) %}
     <div class="filter-section">
-        {% set label = name | capitalize | replace('_', ' ') %}
+        {% set label = label or name | capitalize | replace('_', ' ') %}
         {% set items = facets[name] %}
         {% set expandable_settings = {
             'label': label,
@@ -57,8 +57,8 @@
         <input type="hidden" name="page" inputmode="numeric" value="1">
 
         {% if facets.grade_level %}{{build_filter_section('grade_level')}}{% endif %}
-        {% if facets.topic %}{{build_filter_section('topic')}}{% endif %}
         {% if facets.activity_duration %}{{build_filter_section('activity_duration')}}{% endif %}
+        {% if facets.council_for_economic_education %}{{build_filter_section('council_for_economic_education', 'Topic')}}{% endif %}
 
         <input type="hidden" value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}" name="q">
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
