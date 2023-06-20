@@ -13,15 +13,15 @@
 
 {% block content scoped %}
     <main class="u-layout-grid u-layout-grid__1-3
-                 {% if language == 'ar' %} u-layout-grid__rtl {% endif %}
                  {% block content_modifiers -%}{%- endblock %}"
-          id="main">
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
         <div class="u-layout-grid_wrapper">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
                 <div class="u-layout-grid_breadcrumbs">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}

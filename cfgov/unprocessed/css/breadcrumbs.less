@@ -1,29 +1,25 @@
 .breadcrumbs {
-  .grid_column( 1, 1 );
-
-  padding-top: unit(@grid_gutter-width / 14px, em);
-  font-size: unit(14px / @base-font-size-px, em);
+  // Mobile size.
+  display: flex;
+  flex-wrap: wrap;
+  gap: unit(10px / @base-font-size-px, rem);
+  align-items: center;
+  font-size: unit(14px / @base-font-size-px, rem);
+  padding-top: unit(15px / @base-font-size-px, rem);
+  padding-bottom: unit(15px / @base-font-size-px, rem);
+  margin-left: unit(20px / @base-font-size-px, rem);
+  margin-right: unit(20px / @base-font-size-px, rem);
 
   .cf-icon-svg {
     fill: @pacific;
-    margin-right: 0.25em;
+    margin-left: unit(-20px / @base-font-size-px, rem);
   }
 
-  .respond-to-max( @bp-sm-max, {
-    padding-top: unit( @grid_gutter-width / 2 / 14px, em );
-    padding-bottom: unit( @grid_gutter-width / 2 / 14px, em );
+  // Desktop size.
+  .respond-to-min( @bp-med-min, {
+    padding-top: unit(30px / @base-font-size-px, rem);
+    padding-bottom: 0;
   } );
-
-  &_link,
-  &_text {
-    padding-left: 4px;
-
-    &:not(:last-child):after {
-      padding-left: 4px;
-      color: @text;
-      content: ' /';
-    }
-  }
 }
 
 // Hide on print.
@@ -32,3 +28,26 @@
     display: none;
   }
 } );
+
+// Right-to-left (RTL) layout.
+html[lang='ar'] {
+  .breadcrumbs {
+    margin-right: unit(20px / @base-font-size-px, rem);
+    margin-left: unit(20px / @base-font-size-px, rem);
+
+    .cf-icon-svg {
+      margin-right: unit(-20px / @base-font-size-px, rem);
+      margin-left: initial;
+    }
+  }
+}
+
+// TODO: When the layout-2-1 template is converted to use `u-layout-grid_wrapper`, this can be removed.
+.content_wrapper .breadcrumbs {
+  margin-left: unit(35px / @base-font-size-px, rem);
+
+  // Tablet size only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+    margin-left: unit(50px / @base-font-size-px, rem);
+  });
+}

@@ -15,7 +15,7 @@ import v1.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filing_instruction_guide', '0011_add_use_json_field_to_streamfields'),
+        ('filing_instruction_guide', '0001_squashed_0011_add_use_json_field_to_streamfields'),
     ]
 
     operations = [

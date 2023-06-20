@@ -53,9 +53,11 @@ describe('Header', () => {
       // When I click on the first mega-menu trigger
       menuDesktop.firstTab().click();
       menuDesktop.firstPanel().should('not.have.class', 'u-is-animating');
+      // Scroll to top so global search is visible.
+      cy.scrollTo('top');
       // Then the global search content should not be visible.
-      globalSearch.content().should('not.have.class', 'u-is-animating');
       globalSearch.content().should('not.be.visible');
+      globalSearch.content().should('not.have.class', 'u-is-animating');
     });
   });
 

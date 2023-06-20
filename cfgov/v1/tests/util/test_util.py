@@ -2,8 +2,6 @@ from datetime import date
 
 from django.test import TestCase
 
-from v1.models import CFGOVPage, HomePage
-from v1.tests.wagtail_pages import helpers
 from v1.util import util
 
 
@@ -22,21 +20,3 @@ class TestExtendedStrftime(TestCase):
         test_date = date(2018, 9, 5)
         formatted_date = util.extended_strftime(test_date, "%b %d, %Y")
         self.assertEqual(formatted_date, "Sep 05, 2018")
-
-
-class TestGetPageFromPath(TestCase):
-    def test_no_root_returns_correctly(self):
-        page = CFGOVPage(title="Test page")
-        helpers.save_new_page(page)
-
-        self.assertEqual(util.get_page_from_path("/test-page/"), page)
-
-    def test_with_root_returns_correctly(self):
-        page = CFGOVPage(title="Test page 2")
-        helpers.save_new_page(page)
-        root = HomePage.objects.get(title="CFGov")
-
-        self.assertEqual(util.get_page_from_path("/test-page-2/", root), page)
-
-    def test_bad_path_returns_correctly(self):
-        self.assertEqual(util.get_page_from_path("/does-not-exist/"), None)
