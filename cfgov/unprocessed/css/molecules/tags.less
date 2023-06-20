@@ -1,11 +1,13 @@
+@import (reference) 'cfpb-core.less';
+
 /* ==========================================================================
    consumerfinance.gov
-   meta
+   tags
    ========================================================================== */
 
 /* topdoc
   name: Tags
-  family: cfgov-meta
+  family: cfgov-tags
   patterns:
     - name: Default example
       markup: |
@@ -70,8 +72,7 @@
         </div>
     - name: Hide heading modifier
       markup: |
-        <div class="tags tags__hide-heading">
-            <h4 class="tags_heading u-visually-hidden">Topics:</h4>
+        <div class="tags">
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
@@ -130,101 +131,123 @@
             </ul>
         </div>
   tags:
-    - cfgov-meta
+    - cfgov-tags
 */
 
-.tags {
-  .respond-to-min(@bp-sm-min, {
-    position: relative;
-    // 58px here comes from the .tags_heading width.
-        padding-left: unit((58px + 8px) / @base-font-size-px, em);
-  });
+@bullet-font-size: 17px;
 
+.m-tags {
+  // Mobile.
   &_heading {
     .h4();
     display: block;
-    // Bottom margin is eyeballed to 20px from the baseline.
-    margin: 0 0 unit(16px / @font-size, em);
     color: @black;
-
-    .respond-to-min(@bp-sm-min, {
-      position: absolute;
-      left: 0;
-      width: unit(58px / @font-size, em);
-      margin: 0;
-    });
   }
 
   &_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     padding-left: 0;
-    border-top: 1px dotted @gold-80;
     list-style-type: none;
-
-    .respond-to-min(@bp-sm-min, {
-      border-top: none;
-    });
   }
 
   &_tag {
-    border-bottom: 1px dotted @gold-80;
-    margin-bottom: 0;
-    line-height: 1;
+    .h6();
+    // Override h6 margin.
+    margin: 0;
+    border-top: 1px dotted @gold-80;
 
-    .respond-to-min(@bp-sm-min, {
-      display: inline-block;
-      margin-right: unit(15px / @base-font-size-px, em);
-      // Eyeballed to be 15px of vertical space between each.
-            margin-bottom: unit(8px / @base-font-size-px, em);
-      border-bottom: none;
-    });
+    &:last-child {
+      border-bottom: 1px dotted @gold-80;
+    }
+
+    &:hover {
+      cursor: pointer;
+      border-top: 1px solid @gold-80;
+      border-bottom: 1px solid @gold-80;
+    }
   }
-
-  @bullet-font-size: 17px;
 
   &_link {
     position: relative;
-    .h6();
-    display: block;
-    // Eyeballed to 15px including line-height.
-    padding: 14px 0 10px;
-    margin: 0 0 0 unit(@bullet-font-size / @font-size, em);
-    // Match the height of the bullet.
-    line-height: unit(@bullet-font-size / @font-size, em);
-
-    .u-link__colors(@gray, @gray, @gray, @gray, @gray,
-    @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
-
-    .respond-to-max(@bp-sm-max, {
-      .u-link__no-border();
-    });
-
-    .respond-to-min(@bp-sm-min, {
-      padding: 0;
-    });
+    line-height: @bullet-font-size;
+    .u-link__colors(
+      @gray, @gray, @gray, @gray, @gray,
+      @gold-80, @gold-80, @gold-80, @gold-80, @gold-80
+    );
+    margin-left: @bullet-font-size;
   }
 
   &_bullet {
     position: absolute;
     left: -1em;
-    // Display block + width makes this whole area clickable.
-    display: block;
-    width: 1em;
     color: @gold-80;
-    // 12px is the font size of .tags_link.
-    font-size: unit(@bullet-font-size / 12px, em);
+    font-size: unit(@bullet-font-size / @base-font-size-px, rem);
+    margin-right: unit(5px / @base-font-size-px, rem);
   }
 
-  &__hide-heading {
-    padding-left: 0;
-
-    .tags_heading {
-      margin: 0;
+  // Mobile only.
+  .respond-to-max( @bp-xs-max, {
+    &_tag {
+      padding-top: unit(10px / @base-font-size-px, rem);
+      padding-bottom: unit(10px / @base-font-size-px, rem);
     }
-  }
+
+    &_link {
+      .u-link__no-border();
+    }
+  });
+
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    display: flex;
+    align-items: baseline;
+    gap: unit(15px / @base-font-size-px, rem);
+
+    &_list {
+      flex-direction: row;
+      gap: unit(15px / @base-font-size-px, rem);
+    }
+
+    &_tag,
+    &_tag:last-child,
+    &_tag:hover {
+      border: none;
+    }
+  } );
 
   .respond-to-print({
     display: none;
   });
+}
+
+// Negate the border of the sibling when hovering.
+.m-tags_tag:hover + .m-tags_tag {
+  border-top: none;
+}
+
+// Right-to-left (RTL) adjustments for arabic pages.
+html[lang='ar'] {
+  .m-tags {
+    &_list {
+      padding-right: 0;
+    }
+
+    &_link {
+      margin-right: @bullet-font-size;
+      margin-left: 0;
+    }
+
+    &_bullet {
+      position: absolute;
+      right: -1em;
+      left: initial;
+      color: @gold-80;
+      margin-left: unit(5px / @base-font-size-px, rem);
+      margin-right: 0;
+    }
+  }
 }
 
 /* topdoc

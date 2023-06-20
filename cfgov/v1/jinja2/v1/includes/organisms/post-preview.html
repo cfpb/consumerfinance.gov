@@ -186,7 +186,7 @@
 
             {% if show_tags and post.tags.exists() %}
                 {%- import 'v1/includes/tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags(), hide_heading=true) }}
+                {{ tags.render(post.related_metadata_tags(), show_heading=false) }}
             {% endif %}
         </div>
         {% endcache %}
