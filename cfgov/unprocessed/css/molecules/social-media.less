@@ -36,56 +36,67 @@
 */
 
 .m-social-media {
-  display: inline-block;
-
-  // This could be wrapped in the `m-social-media__share` modifier,
-  // but it's ok on its own too.
-  &_heading {
-    .heading-5();
-    display: inline-block;
-    // 0.25em subtracted to compensate for inline spacing
-    padding-right: unit(@grid_gutter-width / @font-size - 0.25em, em);
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
-
-  .m-list {
-    display: inline-block;
-    vertical-align: middle;
-
-    .m-list_item {
-      // 0.25em subtracted to compensate for inline spacing
-      margin-right: unit(
-        (@grid_gutter-width / 2) / @base-font-size-px - 0.25em,
-        em
-      );
-      margin-bottom: 0;
-    }
-
-    .m-list_item:last-child {
-      margin-right: 0;
-    }
-  }
-
-  &_icon {
+  //icon CSS needs to be separate to cover footer icons as well
+  .m-social-media_icon {
     color: @gray-dark;
-    font-size: unit(@grid_gutter-width / @base-font-size-px, em);
+    font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
     line-height: 1;
     .u-link__colors( @gray-dark, @pacific-80 );
     .u-link__no-border();
   }
 
-  &_print {
-    padding-left: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    border-left: 1px solid @black;
-  }
+  &__share {
+    display: inline-block;
 
-  // Hide on print.
-  .respond-to-print( {
-    & {
-      display: none;
+    .m-social-media_heading {
+      .heading-5();
+      display: inline-block;
+      // 0.25em subtracted to compensate for inline spacing
+      padding-right: unit(15px / @base-font-size-px - 0.25rem, rem);
+      margin: 0;
+      vertical-align: middle;
     }
-  } );
+
+    .m-list {
+      display: inline-block;
+      vertical-align: middle;
+
+      .m-list_item {
+        // 0.25em subtracted to compensate for inline spacing
+        padding-right: unit(15px / @base-font-size-px - 0.25rem, rem);
+        margin: 0;
+      }
+
+      .m-social-media_print {
+        padding-left: unit(15px / @base-font-size-px - 0.25rem, rem);
+        border-left: 1px solid @black;
+      }
+    }
+
+    // Hide on print.
+    .respond-to-print( {
+      & {
+        display: none;
+      }
+    } );
+
+    // Position share & print text above social media icons
+    // for rtl on small screens
+    .respond-to-max( @bp-xs-max,  {
+      .m-social-media_heading {
+        padding-bottom: unit(15px / @base-font-size-px - 0.25rem, rem);
+      }
+    
+      & .m-list {
+        width: 100%;
+      }
+      
+      .m-list_item:first-child {
+        // 0.25em subtracted to compensate for inline spacing
+        padding-right: 0;
+      }
+    } );
+  }
 }
 
 .no-js .m-social-media_print {
@@ -93,33 +104,18 @@
 }
 
 //fix issue with padding/margin and verticle rule appearing to the left of print icon
-html[lang='ar'] .m-social-media {
-  &_heading {
+html[lang='ar'] .m-social-media__share {
+  .m-social-media_heading {
     padding-right: 0;
   }
 
-  .m-list_item:last-child {
-    margin-right: unit(15px / @base-font-size-px, rem);
-  }
-
-  &_print {
+  .m-social-media_print {
     padding-left: 0;
     border-left: none;
-    padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    margin-right: unit(15px / @base-font-size-px - 0.25rem, rem);
+    padding-right: unit(15px / @base-font-size-px - 0.25rem, rem);
     border-right: 1px solid @black;
   }
-
-  //Position share & print text above social media icons and remove right margin
-  .respond-to-max( @bp-xs-max,  {
-    & .m-list {
-      width: 100%;
-      padding-top: unit(15px / @base-font-size-px, rem);
-
-      & .m-list_item:first-child {
-        margin-right: 0;
-      }
-    }    
-  } );
 }
 
 /* topdoc
