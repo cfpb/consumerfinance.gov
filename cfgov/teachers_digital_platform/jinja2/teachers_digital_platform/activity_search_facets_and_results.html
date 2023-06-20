@@ -12,22 +12,42 @@
             'is_midtone': true
         } %}
         {% call() expandable(expandable_settings) %}
-        <div class="o-form_group">
-            <fieldset class="o-form_fieldset">
-                <ul class="m-list m-list__unstyled">
-                    {% for facet in items %}
-                    <li>
-                        <div class="m-form-field m-form-field__checkbox">
-                          <input type="checkbox" class="a-checkbox" aria-label="{{ facet.title }}" id="{{name}}--{{ facet.title | trim | slugify }}" name="{{name}}" value="{{ facet.id }}"{% if facet.selected %} checked="checked"{% endif %}>
-                          <label class="a-label" for="{{name}}--{{ facet.title | trim | slugify }}">{{ facet.title }}</label>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </fieldset>
-        </div>
+          {{build_form_group(name, items)}}
         {% endcall %}
     </div>
+{% endmacro %}
+
+{% macro build_form_group(name, items) %}
+    <div class="o-form_group">
+        <fieldset class="o-form_fieldset">
+            <ul class="m-list m-list__unstyled">
+                {% for facet in items %}
+                <li>
+                    <div class="m-form-field m-form-field__checkbox">
+                      <input type="checkbox" class="a-checkbox" aria-label="{{ facet.title }}" id="{{name}}--{{ facet.title | trim | slugify }}" name="{{name}}" value="{{ facet.id }}"{% if facet.selected %} checked="checked"{% endif %}>
+                      <label class="a-label" for="{{name}}--{{ facet.title | trim | slugify }}">{{ facet.title }}</label>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endmacro %}
+
+{% macro  build_nested_filter_tags(facets, type) %}
+    {% for facet in facets %}
+        {% if facet.selected %}
+            {% set input_id = '#' + type | trim | replace("_","-") + "--" + facet.title | trim | slugify %}
+            {{ tag.render({
+                'label': facet.title,
+                'value': input_id,
+                'behavior': 'clear-filter'
+            }) }}
+        {% endif %}
+        {% if facet.children %}
+            {{ build_nested_filter_tags(facet.children, type) }}
+        {% endif %}
+    {% endfor %}
 {% endmacro %}
 
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
@@ -57,8 +77,24 @@
         <input type="hidden" name="page" inputmode="numeric" value="1">
 
         {% if facets.grade_level %}{{build_filter_section('grade_level')}}{% endif %}
-        {% if facets.topic %}{{build_filter_section('topic')}}{% endif %}
         {% if facets.activity_duration %}{{build_filter_section('activity_duration')}}{% endif %}
+        {% if facets.topic %}
+          <div class="filter-section">
+            {% set items = facets.topic %}
+            {% set expandable_settings = {
+                'label': 'Topic',
+                'is_expanded': true,
+                'is_midtone': true
+            } %}
+            {% call() expandable(expandable_settings) %}
+              {% for topic in items %}
+              <h5>{{topic.title}}</h5>
+              {{build_form_group('topic', topic.children)}}
+              <br/>
+              {% endfor %}
+            {% endcall %}
+          </div>
+        {% endif %}
 
         <input type="hidden" value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}" name="q">
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
@@ -92,7 +128,10 @@
                 </span>
                 <div class="results_filters-tags">
                     {% for facet_name, facet_items in facets | items %}
-                        {% for facet in facet_items %}
+                        {% if facet_name == 'topic'%}
+                          {{ build_nested_filter_tags(facet_items, facet_name) }}
+                        {% else %}
+                          {% for facet in facet_items %}
                             {% if facet.selected %}
                                 {% set input_id = '#' + facet_name | trim + "--" + facet.title | trim | slugify %}
                                 {{ tag.render({
@@ -100,8 +139,9 @@
                                     'value': input_id,
                                     'behavior': 'clear-filter'
                                 }) }}
-                            {% endif %}
+                                {% endif %}
                         {% endfor %}
+                            {% endif %}
                     {% endfor %}
                     <button class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
                             data-js-hook="behavior_clear-all">
