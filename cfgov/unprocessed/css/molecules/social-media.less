@@ -36,7 +36,16 @@
 */
 
 .m-social-media {
-  //icon CSS needs to be separate to cover footer icons as well
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: unit(10px / @base-font-size-px, rem);
+
+  .m-list {
+    display: inline-flex;
+    gap: unit(10px / @base-font-size-px, rem);
+  }
+
   .m-social-media_icon {
     color: @gray-dark;
     font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
@@ -45,28 +54,14 @@
     .u-link__no-border();
   }
 
+  //Only for elements in "share" (m-social-media__share) section
   &__share {
-    display: inline-block;
-
     .m-social-media_heading {
       .heading-5();
-      display: inline-block;
-      // 0.25em subtracted to compensate for inline spacing
-      padding-right: unit(10px / @base-font-size-px, rem);
-      margin: 0;
-      vertical-align: middle;
+      margin: auto 0;
     }
 
     .m-list {
-      display: inline-block;
-      vertical-align: middle;
-
-      .m-list_item {
-        // 0.25em subtracted to compensate for inline spacing
-        padding-right: unit(10px / @base-font-size-px, rem);
-        margin: 0;
-      }
-
       .m-social-media_print {
         padding-left: unit(10px / @base-font-size-px, rem);
         border-left: 1px solid @black;
@@ -79,23 +74,6 @@
         display: none;
       }
     } );
-
-    // Position share & print text above social media icons
-    // for rtl on small screens
-    .respond-to-max( @bp-xs-max,  {
-      .m-social-media_heading {
-        padding-bottom: unit(10px / @base-font-size-px, rem);
-      }
-    
-      & .m-list {
-        width: 100%;
-      }
-      
-      .m-list_item:first-child {
-        // 0.25em subtracted to compensate for inline spacing
-        padding-right: 0;
-      }
-    } );
   }
 }
 
@@ -103,20 +81,26 @@
   display: none;
 }
 
-//fix issue with padding/margin and verticle rule appearing to the left of print icon
+//fix issue with padding and vertical rule appearing to the left of print icon
 html[lang='ar'] .m-social-media__share {
-  .m-social-media_heading {
-    padding-right: 0;
-  }
-
   .m-social-media_print {
     padding-left: 0;
     border-left: none;
-    margin-right: unit(10px / @base-font-size-px, rem);
     padding-right: unit(10px / @base-font-size-px, rem);
     border-right: 1px solid @black;
   }
+
+  .m-list_item:first-child {
+    margin-right: 0;
+  }
 }
+
+// Position share & print text and icons on one line on large screens
+.respond-to-min( @bp-sm-min,  {
+  .m-social-media__share {
+    flex-direction: row;
+  }
+} );
 
 /* topdoc
     name: EOF
