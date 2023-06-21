@@ -53,4 +53,15 @@ export class PfcFinancialPathToGraduation {
     cy.get(`label[for="costs-offer-radio_${name}"]`).click();
     cy.get('#costs-offer-button').click();
   }
+
+  enterProgramDetails() {
+    this.enter('Harvard University');
+    this.searchResults().should('be.visible');
+    this.clickSearchResult('Harvard University');
+    this.selectProgram('type', 'certificate');
+    this.selectProgram('years-spent', 'n');
+    this.selectProgram('length', '1');
+    this.selectProgram('housing', 'on-campus');
+    this.selectProgram('dependency', 'dependent');
+  }
 }
