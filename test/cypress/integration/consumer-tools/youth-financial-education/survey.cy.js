@@ -48,11 +48,6 @@ function testSharing(test) {
 
 describe('Youth Financial Education Survey', () => {
   describe('Starting over', () => {
-    beforeEach(() => {
-      cy.clearCookies();
-      cy.window().then((win) => win.sessionStorage.clear());
-    });
-
     it('has the modal', () => {
       survey.open('3-5/p1/');
       survey.selectAnswers([0, 0, 0, 0, 0, 0]);
@@ -110,10 +105,6 @@ describe('Youth Financial Education Survey', () => {
   });
 
   describe('Completion', () => {
-    beforeEach(() => {
-      Cypress.Cookies.preserveOnce('wizard_survey_wizard', 'resultUrl');
-    });
-
     const tests = [
       {
         name: 'Grade 3-5 choosing first',
@@ -147,17 +138,17 @@ describe('Youth Financial Education Survey', () => {
 
     for (const test of tests) {
       // Order matters here
-      it(`can fill survey ${test.name}`, () => testFillingSurvey(test));
-      it(`can score survey ${test.name}`, () => testResultsPage(test));
-      it(`can print survey ${test.name}`, () => results.print());
-      it(`can share survey ${test.name}`, () => testSharing(test));
+      it(test.name, () => {
+        testFillingSurvey(test);
+        testResultsPage(test);
+        results.print();
+        testSharing(test);
+      });
     }
   });
 
   describe('Redirects', () => {
     it('should reject direct requests for results', () => {
-      cy.clearCookies();
-
       cy.url().then((url) => {
         /**
          * The wagtail page that gets redirected to is only available on the
@@ -183,10 +174,6 @@ describe('Youth Financial Education Survey', () => {
     });
 
     it('should reject jumping later into survey', () => {
-      cy.window().then((win) => {
-        win.sessionStorage.clear();
-      });
-
       cy.visit(
         '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/p2/'
       );
