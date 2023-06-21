@@ -41,7 +41,7 @@
   flex-direction: column;
   gap: unit(10px / @base-font-size-px, rem);
 
-  .m-list {
+  .m-social-media_icons {
     display: inline-flex;
     gap: unit(10px / @base-font-size-px, rem);
   }
@@ -61,17 +61,16 @@
       margin: auto 0;
     }
 
-    .m-list {
-      .m-social-media_print {
-        padding-left: unit(10px / @base-font-size-px, rem);
-        border-left: 1px solid @black;
-      }
+    .m-social-media_print {
+      padding-left: unit(10px / @base-font-size-px, rem);
+      border-left: 1px solid @black;
     }
 
-    // Hide on print.
-    .respond-to-print( {
-      & {
-        display: none;
+    // Position share & print text and icons on one line
+    //Desktop
+    .respond-to-min( @bp-sm-min,  {
+      .m-social-media__share {
+        flex-direction: row;
       }
     } );
   }
@@ -80,6 +79,11 @@
 .no-js .m-social-media_print {
   display: none;
 }
+
+// Hide on print.
+.respond-to-print( {
+    display: none;
+  } );
 
 //fix issue with padding and vertical rule appearing to the left of print icon
 html[lang='ar'] .m-social-media__share {
@@ -94,13 +98,6 @@ html[lang='ar'] .m-social-media__share {
     margin-right: 0;
   }
 }
-
-// Position share & print text and icons on one line on large screens
-.respond-to-min( @bp-sm-min,  {
-  .m-social-media__share {
-    flex-direction: row;
-  }
-} );
 
 /* topdoc
     name: EOF
