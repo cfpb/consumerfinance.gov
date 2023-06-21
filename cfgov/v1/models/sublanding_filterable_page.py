@@ -32,7 +32,9 @@ class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
         blank=True,
         use_json_field=True,
     )
-    content = StreamField(SublandingFilterableContent, use_json_field=True)
+    content = StreamField(
+        SublandingFilterableContent, blank=True, use_json_field=True
+    )
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
