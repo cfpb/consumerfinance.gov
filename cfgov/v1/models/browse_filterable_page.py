@@ -38,6 +38,7 @@ class BrowseFilterablePage(AbstractFilterablePage, AbstractBrowsePage):
     )
     content = StreamField(
         BrowseFilterableContent,
+        blank=True,
         use_json_field=True,
     )
 
