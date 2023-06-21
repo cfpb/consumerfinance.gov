@@ -6,7 +6,7 @@
       markup: |
         <div class="m-social-media m-social-media__share">
             <h5 class="m-social-media_heading">Share this</h5>
-            <ul class="m-list">
+            <ul class="m-social-media_icons m-list m-list__unstyled m-list__horizontal">
                 <li class="m-list_item">
                     <a class="m-social-media_icon" href="#">
                         {{ svg_icon('email') }}
@@ -23,7 +23,7 @@
           -----------------------
           .m-social-media.m-social-media__share
             .m-social-media_heading
-            ul.m-list
+            ul.m-social-media_icons.m-list.m-list__unstyled.m-list__horizontal
               li.m-list_item
                 .m-social-media_icon
                   .cf-icon-svg
@@ -36,17 +36,17 @@
 */
 
 .m-social-media {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  gap: unit(10px / @base-font-size-px, rem);
+  row-gap: unit(10px / @base-font-size-px, rem);
+  column-gap: unit(30px / @base-font-size-px, rem);
 
-  .m-social-media_icons {
-    display: inline-flex;
+  &_icons {
+    display: flex;
     gap: unit(10px / @base-font-size-px, rem);
   }
 
-  .m-social-media_icon {
+  &_icon {
     color: @gray-dark;
     font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
     line-height: 1;
@@ -54,7 +54,7 @@
     .u-link__no-border();
   }
 
-  //Only for elements in "share" (m-social-media__share) section
+  // Only for elements in "share" (m-social-media__share) section.
   &__share {
     .m-social-media_heading {
       .heading-5();
@@ -65,27 +65,20 @@
       padding-left: unit(10px / @base-font-size-px, rem);
       border-left: 1px solid @black;
     }
-
-    // Position share & print text and icons on one line
-    //Desktop
-    .respond-to-min( @bp-sm-min,  {
-      .m-social-media__share {
-        flex-direction: row;
-      }
-    } );
   }
-}
 
-.no-js .m-social-media_print {
-  display: none;
-}
-
-// Hide on print.
-.respond-to-print( {
+  // Hide on print.
+  .respond-to-print( {
     display: none;
   } );
 
-//fix issue with padding and vertical rule appearing to the left of print icon
+  // Hide print when JS is off.
+  .no-js &_print {
+    display: none;
+  }
+}
+
+// Right-to-left (RTL) layout.
 html[lang='ar'] .m-social-media__share {
   .m-social-media_print {
     padding-left: 0;
@@ -94,6 +87,7 @@ html[lang='ar'] .m-social-media__share {
     border-right: 1px solid @black;
   }
 
+  // TODO: Scrutinize usage of unordered list and see if it can be removed.
   .m-list_item:first-child {
     margin-right: 0;
   }
