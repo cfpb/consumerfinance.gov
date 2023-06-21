@@ -1,9 +1,26 @@
 export class AdminPage {
-  open() {
-    cy.visit('/login/');
+  login() {
+    cy.session(
+      'login',
+      () => {
+        this.open();
+        this.submitLoginForm();
+      },
+      {
+        validate() {
+          cy.getCookie('sessionid').should('exist');
+        },
+      }
+    );
+
+    this.open();
   }
 
-  login() {
+  open() {
+    cy.visit('/admin/');
+  }
+
+  submitLoginForm() {
     cy.get('#id_username').type('admin');
     cy.get('#id_password').type('admin');
     cy.get('form').submit();
@@ -227,6 +244,8 @@ export class AdminPage {
   editFirstTableCell() {
     cy.get('.htCore td').first().as('firstTableCell');
 
+    cy.get('@firstTableCell').scrollIntoView({ duration: 1000 });
+
     /* We need to click near the top left of the cell. */
     cy.get('@firstTableCell').dblclick(5, 5, { force: true });
     this.getTableEditor();
@@ -234,8 +253,9 @@ export class AdminPage {
 
   selectTableEditorButton(name) {
     // Type a slash to open the popup menu.
-    cy.get('.public-DraftEditor-content:visible', { timeout: 1000 })
-      .clear()
+    cy.get('@tableEditor')
+      .find('.public-DraftEditor-content')
+      .focus()
       .type('/');
 
     // Then click on the item we want.
