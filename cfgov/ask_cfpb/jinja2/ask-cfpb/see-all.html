@@ -75,7 +75,7 @@
             {% endfor %}
 
             <div class="block block__sub">
-                {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+                {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
             </div>
         </section>
         {% if not page.portal_category %}

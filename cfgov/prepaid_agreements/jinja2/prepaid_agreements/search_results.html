@@ -157,7 +157,7 @@
     <div class="results_paginator">
         {% if paginator.num_pages > 1 %}
             <div class="block block__flush-top">
-                {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+                {{ pagination.render( paginator.num_pages, current_page, '', '' ) }}
             </div>
         {% endif %}
     </div>
