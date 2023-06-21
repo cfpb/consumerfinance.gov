@@ -20,6 +20,9 @@ module.exports = defineConfig({
     specPattern: 'test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
+    setupNodeEvents(on, config) {
+      require('cypress-fail-fast/plugin')(on, config);
+    },
   },
   component: {
     specPattern: 'test/cypress/component/**/*.cy.{js,jsx,ts,tsx}',
