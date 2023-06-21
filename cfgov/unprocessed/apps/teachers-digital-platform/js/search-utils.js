@@ -31,6 +31,7 @@ function serializeFormFields(fields) {
     }
     return field;
   });
+  fields = fields.filter((v) => v !== 'q=');
   return fields.join('&');
 }
 
@@ -74,7 +75,7 @@ function hideLoading(el) {
  * @returns {string} New URL.
  */
 function updateUrl(base, params) {
-  const url = `${base}?${params}`;
+  const url = params ? `${base}?${params}` : base;
   window.history.replaceState(null, null, url);
   return url;
 }
