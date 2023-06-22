@@ -78,3 +78,10 @@ jobs:
         name: cypress_failure_screenshots
         path: ./test/cypress/screenshots/
         retention-days: 1
+    - name: Store any Cypress videos
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: cypress_videos
+        path: ./test/cypress/videos/
+        retention-days: 1
