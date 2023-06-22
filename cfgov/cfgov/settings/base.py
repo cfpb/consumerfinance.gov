@@ -372,10 +372,10 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    if os.environ.get("AWS_S3_CUSTOM_DOMAIN"):
-        AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+    MEDIA_URL = os.path.join(
+        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
+    )
 
 
 # GovDelivery

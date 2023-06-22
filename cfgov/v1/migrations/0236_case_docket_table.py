@@ -11,7 +11,7 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
     ]
 
     operations = [

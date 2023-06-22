@@ -1,18 +1,19 @@
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
+from django.db import models
 
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.routable_page.models import route
 from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
-from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
 
 
-class FilterableListMixin(ShareableRoutablePageMixin):
-    """Wagtail Page mixin that allows for filtering of other pages."""
+class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
+    """Wagtail Page class that allows for filtering of other pages."""
 
     filterable_per_page_limit = 25
     """Number of results to return per page."""
@@ -21,8 +22,64 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     """Determines whether we tell crawlers to index the page or not."""
 
     filterable_categories = None
-    """Used for activity-log and newsroom to determine
-       which pages to render when sitewide"""
+    """Used to restrict filterable results to certain page categories."""
+
+    filterable_results_compact = False
+    """Use a compact display to render filtered results."""
+
+    DEFAULT_ORDERING = "-start_date"
+    filtered_ordering = models.CharField(
+        max_length=30,
+        choices=[
+            ("-start_date", "Date"),
+            ("title.raw", "Alphabetical"),
+        ],
+        default=DEFAULT_ORDERING,
+    )
+    filter_children_only = models.BooleanField(
+        default=True,
+    )
+
+    show_filtered_dates = models.BooleanField(default=True)
+    filtered_date_label = models.CharField(
+        null=True,
+        blank=True,
+        max_length=30,
+    )
+    show_filtered_categories = models.BooleanField(default=True)
+    show_filtered_tags = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
+    filtering_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("filtered_ordering", heading="Order results by"),
+                FieldPanel(
+                    "filter_children_only",
+                    heading="Only include child pages in results",
+                ),
+            ],
+            heading="Filtering behavior",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("show_filtered_dates", heading="Show dates"),
+                FieldPanel(
+                    "filtered_date_label",
+                    heading=(
+                        'Date label, e.g. "Published", "Issued", "Released"'
+                    ),
+                ),
+                FieldPanel(
+                    "show_filtered_categories", heading="Show categories"
+                ),
+                FieldPanel("show_filtered_tags", heading="Show tags"),
+            ],
+            heading="Results display",
+        ),
+    ]
 
     @staticmethod
     def get_model_class():
@@ -39,22 +96,10 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         return FilterablePagesDocumentSearch
 
     def get_filterable_search(self):
-        # Look for a FilterableList block in the content field.
-        block = self.content.first_block_by_name("filter_controls")
-        value = block.value if block else {}
-
-        # By default, filterable pages only search their direct children.
-        # But this can be overriden by a setting on a FilterableList block
-        # added to the page's content StreamField.
-        children_only = value.get("filter_children", True)
-
-        # Default filterable list ordering can also be overridden.
-        ordering = value.get("ordering", FilterableList.DEFAULT_ORDERING)
-
         # If searching globally, use the root page of this page's Wagtail
         # Site. If the page doesn't live under a Site (for example, it is
         # in the Trash), use the default Site.
-        if not children_only:
+        if not self.filter_children_only:
             site = self.get_site()
 
             if not site:
@@ -65,9 +110,18 @@ class FilterableListMixin(ShareableRoutablePageMixin):
             search_root = self
 
         search_cls = self.get_search_class()
-        return search_cls(
-            search_root, children_only=children_only, ordering=ordering
+        search = search_cls(
+            search_root,
+            children_only=self.filter_children_only,
+            ordering=self.filtered_ordering,
         )
+
+        if self.filterable_categories:
+            search.filter_categories(
+                get_category_children(self.filterable_categories)
+            )
+
+        return search
 
     def get_cache_key_prefix(self):
         return self.url
@@ -80,46 +134,26 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         has_unfiltered_results = filterable_search.count() > 0
         form = self.get_form_class()(
             form_data,
-            filterable_categories=self.filterable_categories,
             filterable_search=filterable_search,
             cache_key_prefix=self.get_cache_key_prefix(),
         )
-        filter_data = self.process_form(request, form)
+        results_page = self.process_form(request, form)
 
         context.update(
             {
-                "filter_data": filter_data,
-                "has_active_filters": has_active_filters,
+                "form": form,
                 "has_unfiltered_results": has_unfiltered_results,
+                "has_active_filters": has_active_filters,
+                "results_page": results_page,
             }
         )
 
         return context
 
     def process_form(self, request, form):
-        filter_data = {}
-        if form.is_valid():
-            paginator = Paginator(
-                form.get_page_set(), self.filterable_per_page_limit
-            )
-            page = request.GET.get("page")
-
-            # Get the page number in the request and get the page from the
-            # paginator to serve.
-            try:
-                pages = paginator.page(page)
-            except PageNotAnInteger:
-                pages = paginator.page(1)
-            except EmptyPage:
-                pages = paginator.page(paginator.num_pages)
-
-            filter_data["page_set"] = pages
-        else:
-            paginator = Paginator([], self.filterable_per_page_limit)
-            filter_data["page_set"] = paginator.page(1)
-
-        filter_data["form"] = form
-        return filter_data
+        results = form.get_page_set() if form.is_valid() else []
+        paginator = Paginator(results, self.filterable_per_page_limit)
+        return paginator.get_page(request.GET.get("page"))
 
     def set_do_not_index(self, field, value):
         """Do not index queries unless they consist of a single topic field."""
@@ -174,21 +208,3 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     def feed_route(self, request, *args, **kwargs):
         context = self.get_context(request)
         return FilterableFeed(self, context)(request)
-
-
-class CategoryFilterableMixin:
-    filterable_categories = []
-    """Determines page categories to be filtered; see filterable_pages."""
-
-    def get_filterable_search(self):
-        """Return the queryset of pages to be filtered by this page.
-
-        The class property filterable_categories can be set to a list of page
-        categories from the set in v1.util.ref.categories. If set, this page
-        will only filter pages that are tagged with a tag in those categories.
-        By default this is an empty list and all page tags are eligible.
-        """
-        search = super().get_filterable_search()
-        category_names = get_category_children(self.filterable_categories)
-        search.filter_categories(categories=category_names)
-        return search

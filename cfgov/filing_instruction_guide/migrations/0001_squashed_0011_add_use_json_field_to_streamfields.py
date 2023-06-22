@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0202_add_research_hub_filterable_page'),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
     ]
 
     operations = [

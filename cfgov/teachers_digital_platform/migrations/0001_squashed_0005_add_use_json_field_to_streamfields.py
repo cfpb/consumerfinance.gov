@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtaildocs', '0010_document_file_hash'),
-        ('v1', '0198_recreated'),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
         ('wagtaildocs', '0007_merge'),
         ('wagtailimages', '0019_delete_filter'),
     ]
