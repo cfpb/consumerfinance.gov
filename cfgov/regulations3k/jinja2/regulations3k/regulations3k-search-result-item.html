@@ -7,12 +7,12 @@
       <a href="{{ result.url }}">{{ result.label }}</a>
     </h4>
     <p>{{ result.snippet }}</p>
-    <div class="tags tags__hide-heading">
-        <span class="u-visually-hidden">Topics:</span>
-        <ul class="tags_list">
-            <li class="tags_tag">
-                <span class="tags_link">
-                    <span class="tags_bullet" aria-hidden="true">•</span>
+    {# TODO: Make this use the tags.render() macro. #}
+    <div class="m-tags">
+        <ul class="m-tags_list" aria-label="Topics">
+            <li class="m-tags_tag">
+                <span class="m-tags_link">
+                    <span class="m-tags_bullet" aria-hidden="true">•</span>
                     {{ reg_name }}
                 </span>
             </li>
