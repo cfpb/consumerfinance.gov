@@ -70,7 +70,7 @@ const appView = {
   },
 
   _handleCopyLinkBtnKeypress: (event) => {
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       appView._handleCopyLinkBtn(event);
     }
   },
@@ -148,8 +148,6 @@ function _addButtonListeners() {
   );
   appView._copyLinkBtn.forEach((elem) => {
     elem.addEventListener('click', appView._handleCopyLinkBtn);
-  });
-  appView._copyLinkBtn.forEach((elem) => {
     elem.addEventListener('keyup', appView._handleCopyLinkBtnKeypress);
   });
   appView._includeParentPlusBtn.addEventListener(
