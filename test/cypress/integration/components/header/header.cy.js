@@ -45,7 +45,7 @@ describe('Header', () => {
       menuDesktop.secondPanel().should('not.be.visible');
     });
 
-    xit('clicking from the global search to the mega-menu', () => {
+    it('clicking from the global search to the mega-menu', () => {
       // When I click on the global search trigger.
       globalSearch.trigger().click();
       // Then the global search content should be visible.
