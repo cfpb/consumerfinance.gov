@@ -13,22 +13,6 @@ describe('Header', () => {
       cy.viewport(1200, 800);
       cy.visit('/');
     });
-    it('on page load', () => {
-      // Then the header organism should display the content
-      header.headerContent().should('be.visible');
-      // And the header organism should display the logo
-      header.headerLogo().should('be.visible');
-      // And the header organism shouldn't display the overlay
-      header.overlay().should('not.be.visible');
-      // And should display the global search
-      globalSearch.trigger().should('be.visible');
-      // And the header organism should display the global eyebrow horizontal
-      header.globalEyebrowHorizontal().should('be.visible');
-      // And the header organism should display the global header Cta
-      header.globalHeaderCta().should('be.visible');
-      // And the header organism should display the mega menu content link
-      menuDesktop.firstPanel().should('not.be.visible');
-    });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the first mega-menu trigger
       menuDesktop.firstTab().click();
@@ -59,13 +43,6 @@ describe('Header', () => {
       globalSearch.content().should('not.be.visible');
       globalSearch.content().should('not.have.class', 'u-is-animating');
     });
-  });
-
-  describe('on mobile', () => {
-    beforeEach(() => {
-      cy.viewport(480, 800);
-      cy.visit('/');
-    });
     it('on page load', () => {
       // Then the header organism should display the content
       header.headerContent().should('be.visible');
@@ -78,9 +55,16 @@ describe('Header', () => {
       // And the header organism should display the global eyebrow horizontal
       header.globalEyebrowHorizontal().should('be.visible');
       // And the header organism should display the global header Cta
-      header.globalHeaderCta().should('not.be.visible');
+      header.globalHeaderCta().should('be.visible');
       // And the header organism should display the mega menu content link
-      menuMobile.firstPanel().should('not.be.inViewport');
+      menuDesktop.firstPanel().should('not.be.visible');
+    });
+  });
+
+  describe('on mobile', () => {
+    beforeEach(() => {
+      cy.viewport(480, 800);
+      cy.visit('/');
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the root hamburger menu.
@@ -123,6 +107,22 @@ describe('Header', () => {
       // Then the mega-menu content should not be visible.
       menuMobile.firstPanel().should('not.be.inViewport');
       menuMobile.secondPanel().should('not.be.visible');
+    });
+    it('on page load', () => {
+      // Then the header organism should display the content
+      header.headerContent().should('be.visible');
+      // And the header organism should display the logo
+      header.headerLogo().should('be.visible');
+      // And the header organism shouldn't display the overlay
+      header.overlay().should('not.be.visible');
+      // And should display the global search
+      globalSearch.trigger().should('be.visible');
+      // And the header organism should display the global eyebrow horizontal
+      header.globalEyebrowHorizontal().should('be.visible');
+      // And the header organism should display the global header Cta
+      header.globalHeaderCta().should('not.be.visible');
+      // And the header organism should display the mega menu content link
+      menuMobile.firstPanel().should('not.be.inViewport');
     });
   });
 });
