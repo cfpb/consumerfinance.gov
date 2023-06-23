@@ -2,6 +2,7 @@ from django.utils.safestring import mark_safe
 
 
 table_defaults = {
+    "heading": "",
     "data": {
         "columns": [
             {"heading": "Column 1"},
@@ -17,7 +18,7 @@ table_defaults = {
 
 table_test_cases = {
     "Default": {},
-    "No headings": {
+    "No header row": {
         "data": {
             "rows": table_defaults["data"]["rows"],
         }
@@ -27,6 +28,9 @@ table_test_cases = {
     },
     "Stack on mobile": {
         "options": ["stack_on_mobile"],
+    },
+    "With heading": {
+        "heading": mark_safe("<h3>This is a table</h3>"),
     },
 }
 
