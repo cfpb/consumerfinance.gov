@@ -44,18 +44,17 @@
                         </a>
                     </span>
                 </div>
-                <div class="tags tags__hide-heading">
-                    <span class="u-visually-hidden">Topics:</span>
-                    <ul class="tags_list">
-                        <li class="tags_tag">
-                            <a class="tags_link" href="/about-us/blog/?filter_tags=FOIA&amp;filter_topics=FOIA">
-                                <span class="tags_bullet" aria-hidden="true">•</span>
+                <div class="m-tags">
+                    <ul class="m-tags_list">
+                        <li class="m-tags_tag">
+                            <a class="m-tags_link" href="/about-us/blog/?filter_tags=FOIA&amp;filter_topics=FOIA">
+                                <span class="m-tags_bullet" aria-hidden="true">•</span>
                                 FOIA
                             </a>
                         </li>
-                        <li class="tags_tag">
-                            <a class="tags_link" href="/about-us/blog/?filter_tags=Mortgage&amp;filter_topics=Mortgage">
-                                <span class="tags_bullet" aria-hidden="true">•</span>
+                        <li class="m-tags_tag">
+                            <a class="m-tags_link" href="/about-us/blog/?filter_tags=Mortgage&amp;filter_topics=Mortgage">
+                                <span class="m-tags_bullet" aria-hidden="true">•</span>
                                 Mortgage
                             </a>
                         </li>
@@ -77,7 +76,7 @@
             p.post_dek
             div.o-post-preview_byline-group
               span
-            div.tags
+            div.m-tags
   tags:
     - cfgov-organisms
 */
@@ -208,7 +207,7 @@
   }
 
   &_byline-group,
-  .tags {
+  .m-tags {
     display: block;
     margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   }

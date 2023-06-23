@@ -1,0 +1,256 @@
+@import (reference) 'cfpb-core.less';
+
+/* ==========================================================================
+   consumerfinance.gov
+   tags
+   ========================================================================== */
+
+/* topdoc
+  name: Tags
+  family: cfgov-tags
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="tags">
+            <h4 class="tags_heading">Topics:</h4>
+            <ul class="tags_list">
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+            </ul>
+        </div>
+    - name: Hide heading modifier
+      markup: |
+        <div class="tags">
+            <ul class="tags_list">
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                        College loans
+                    </a>
+                </li>
+            </ul>
+        </div>
+  tags:
+    - cfgov-tags
+*/
+
+@bullet-font-size: 17px;
+
+.m-tags {
+  // Mobile.
+  &_heading {
+    .h4();
+    display: block;
+    color: @black;
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-left: 0;
+    list-style-type: none;
+  }
+
+  &_tag {
+    .h6();
+    // Override h6 margin.
+    margin: 0;
+    border-top: 1px dotted @gold-80;
+
+    &:last-child {
+      border-bottom: 1px dotted @gold-80;
+    }
+
+    &:hover {
+      cursor: pointer;
+      border-top: 1px solid @gold-80;
+      border-bottom: 1px solid @gold-80;
+    }
+  }
+
+  &_link {
+    position: relative;
+    line-height: @bullet-font-size;
+    .u-link__colors(
+      @gray, @gray, @gray, @gray, @gray,
+      @gold-80, @gold-80, @gold-80, @gold-80, @gold-80
+    );
+    margin-left: @bullet-font-size;
+  }
+
+  &_bullet {
+    position: absolute;
+    left: -1em;
+    color: @gold-80;
+    font-size: unit(@bullet-font-size / @base-font-size-px, rem);
+    margin-right: unit(5px / @base-font-size-px, rem);
+  }
+
+  // Mobile only.
+  .respond-to-max( @bp-xs-max, {
+    &_tag {
+      padding-top: unit(10px / @base-font-size-px, rem);
+      padding-bottom: unit(10px / @base-font-size-px, rem);
+    }
+
+    &_link {
+      .u-link__no-border();
+    }
+  });
+
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    display: flex;
+    align-items: baseline;
+    gap: unit(15px / @base-font-size-px, rem);
+
+    &_list {
+      flex-direction: row;
+      gap: unit(15px / @base-font-size-px, rem);
+    }
+
+    &_tag,
+    &_tag:last-child,
+    &_tag:hover {
+      border: none;
+    }
+  } );
+
+  .respond-to-print({
+    display: none;
+  });
+}
+
+// Negate the border of the sibling when hovering.
+.m-tags_tag:hover + .m-tags_tag {
+  border-top: none;
+}
+
+// Right-to-left (RTL) adjustments for arabic pages.
+html[lang='ar'] {
+  .m-tags {
+    &_list {
+      padding-right: 0;
+    }
+
+    &_link {
+      margin-right: @bullet-font-size;
+      margin-left: 0;
+    }
+
+    &_bullet {
+      position: absolute;
+      right: -1em;
+      left: initial;
+      color: @gold-80;
+      margin-left: unit(5px / @base-font-size-px, rem);
+      margin-right: 0;
+    }
+  }
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
