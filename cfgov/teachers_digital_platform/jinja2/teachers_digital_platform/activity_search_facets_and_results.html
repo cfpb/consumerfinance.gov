@@ -54,14 +54,18 @@
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
 
 {% if page.results.total_results and page.results.total_results > 0 %}
-    <div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
+    {# TODO REMOVE THIS #}
+          {% set total_activities = 75 %}
+          {% set fake_results = 75 if page.results.total_results == 274 else page.results.total_results %}
+          {% set fake_results = fake_results if fake_results < 76 else (fake_results / 4) | round |int %}
+        <div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ fake_results }}">
         <h3>
-            {% if page.results.total_activities > page.results.total_results %}
-                Showing {{ page.results.total_results }}
-                match{% if page.results.total_results > 1 %}es{% endif %}
+            {% if total_activities > fake_results %}
+                Showing {{ fake_results }}
+                match{% if fake_results > 1 %}es{% endif %}
                 out of
             {% endif %}
-            {{ page.results.total_activities }} activities
+            {{ total_activities }} activities
         </h3>
     </div>
 {% else %}
@@ -107,14 +111,17 @@
     <a class="u-visually-hidden" id="content_main"></a>
     <div class="results_header">
         {% if page.results.total_results and page.results.total_results > 0 %}
-            <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
+          {% set total_activities = 75 %}
+          {% set fake_results = 75 if page.results.total_results == 274 else page.results.total_results %}
+          {% set fake_results = fake_results if fake_results < 76 else (fake_results / 4) | round |int %}
+            <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ fake_results }}">
                 <h3>
-                    {% if page.results.total_activities > page.results.total_results %}
-                        Showing {{ page.results.total_results }}
-                        match{% if page.results.total_results > 1 %}es{% endif %}
+                    {% if total_activities > fake_results %}
+                        Showing {{ fake_results }}
+                        match{% if fake_results > 1 %}es{% endif %}
                         out of
                     {% endif %}
-                    {{ page.results.total_activities }} activities
+                    {{ total_activities }} activities
                 </h3>
             </div>
         {% else %}
