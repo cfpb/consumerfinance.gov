@@ -63,21 +63,13 @@ export class AdminPage {
   }
 
   searchContact(contact_heading) {
-    cy.get('#changelist-search')
-      .type(contact_heading)
-      .type('{enter}')
-      .then(() => {
-        // we need to wait for results to be populated
-        cy.wait(1000);
-      });
+    cy.get('#changelist-search').type(contact_heading);
+    cy.get('#changelist-search').type('{enter}');
   }
 
   removeContact() {
-    cy.get('a[href^="/admin/v1/contact/delete/"]:first')
-      .click({ force: true })
-      .then(() => {
-        cy.get('[value="Yes, delete"]').click();
-      });
+    cy.get('a[href^="/admin/v1/contact/delete/"]:first').click({ force: true });
+    cy.get('[value="Yes, delete"]').click();
   }
 
   addMortgageData(name) {
@@ -126,7 +118,8 @@ export class AdminPage {
   }
 
   setRegulationEffectiveDate(name) {
-    cy.get('#id_effective_date').clear().type(name);
+    cy.get('#id_effective_date').clear();
+    cy.get('#id_effective_date').type(name);
   }
 
   openMegaMenu() {
@@ -150,7 +143,8 @@ export class AdminPage {
 
   clickBlock(name) {
     const block = `.action-add-block-${name}`;
-    cy.get(block).scrollIntoView().should('be.visible');
+    cy.get(block).scrollIntoView();
+    cy.get(block).should('be.visible');
     return cy.get(block).click();
   }
 
@@ -253,10 +247,8 @@ export class AdminPage {
 
   selectTableEditorButton(name) {
     // Type a slash to open the popup menu.
-    cy.get('@tableEditor')
-      .find('.public-DraftEditor-content')
-      .focus()
-      .type('/');
+    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
+    cy.get('@tableEditor').find('.public-DraftEditor-content').type('/');
 
     // Then click on the item we want.
     cy.get('.Draftail-ComboBox__option-text').contains(name).click();
@@ -273,14 +265,10 @@ export class AdminPage {
   }
 
   typeTableEditorTextbox(text) {
-    return (
-      cy
-        .get('@tableEditor')
-        .find('.public-DraftEditor-content')
-        .focus()
-        .type(text)
-        // We need to wait for a bit or the typed text won't be captured
-        .wait(500)
-    );
+    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
+    return cy
+      .get('@tableEditor')
+      .find('.public-DraftEditor-content')
+      .type(text);
   }
 }
