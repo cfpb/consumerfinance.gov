@@ -2301,10 +2301,10 @@ eslint-plugin-import@2.27.5:
     semver "^6.3.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-jsdoc@46.2.6:
-  version "46.2.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-46.2.6.tgz#f25590d371859f20691d65b5dcd4cbe370d65564"
-  integrity sha512-zIaK3zbSrKuH12bP+SPybPgcHSM6MFzh3HFeaODzmsF1N8C1l8dzJ22cW1aq4g0+nayU1VMjmNf7hg0dpShLrA==
+eslint-plugin-jsdoc@46.3.0:
+  version "46.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-46.3.0.tgz#9e19138b108f7289d5a5d5bacdfb75242f5ebcb7"
+  integrity sha512-nfSvsR8YJRZyKrWwcXPSQyQC8jllfdEjcRhTXFr7RxfB5Wyl7AxrfjCUz72WwalkXMF4u+R6F/oDoW46ah69HQ==
   dependencies:
     "@es-joy/jsdoccomment" "~0.39.4"
     are-docs-informative "^0.0.2"
@@ -4978,10 +4978,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1184.0:
-  version "1.1184.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1184.0.tgz#6deea62ec34ff837df5dd07299435bbce4e610b5"
-  integrity sha512-UtvKyXQLfIsDDpjfgBXU3aiEP5JycOd2HVm6W3wCC5QBTvIQRbYG4y66xlZ7bhCWybOyktHsDgrfBNYE51Etig==
+snyk@1.1186.0:
+  version "1.1186.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1186.0.tgz#c39abb71f721ec73216e8aac81a7ee5781e1b1f1"
+  integrity sha512-32nw9W2sD9xTk1RbB1wHcoa0As9hyFgJOd5/fVomkw/5NKIoXYq16JnxQaJf3VKjY5HPvFAAxF9b6oUmh7RcLw==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"
