@@ -101,6 +101,9 @@
             {% endcall %}
           </div>
         {% endif %}
+        {% if facets.teaching_strategy %}{{build_filter_section('teaching_strategy')}}{% endif %}
+        {% if facets.student_characteristics %}{{build_filter_section('student_characteristics')}}{% endif %}
+        {% if facets.activity_type %}{{build_filter_section('activity_type')}}{% endif %}
 
         <input type="hidden" value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}" name="q">
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
