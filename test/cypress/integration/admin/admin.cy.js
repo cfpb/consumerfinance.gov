@@ -114,9 +114,9 @@ describe('Admin', () => {
       admin.editFirstTableCell();
     });
 
-    it('should be able to create and edit a table', () => {
+    it('should be able to create and edit a table', async () => {
       const text = 'test cell text';
-      admin.typeTableEditorTextbox(text);
+      await admin.typeTableEditorTextbox(text);
       admin.closeTableEditor();
       admin.searchFirstTableCell(text).should('be.visible');
     });
@@ -130,8 +130,8 @@ describe('Admin', () => {
       admin.closeTableEditor();
     });
 
-    it('should be able to save an empty cell', () => {
-      admin.typeTableEditorTextbox('{selectall} ');
+    it('should be able to save an empty cell', async () => {
+      await admin.typeTableEditorTextbox('{selectall} ');
       admin.closeTableEditor();
       admin.getFirstTableCell().should('be.empty');
     });
