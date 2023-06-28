@@ -59,7 +59,7 @@ const deviceAgnosticSpecs = () => {
     cy.focused().parent().should('have.class', 'ctrl-f-search-result');
   });
 
-  xit('should close after following a result', () => {
+  it('should close after following a result', () => {
     fig.getSearchResults().should('be.visible');
     fig.getFirstSearchResult().trigger('click');
     fig.getSearchResults().should('not.be.visible');
@@ -118,14 +118,14 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
 
             deviceAgnosticSpecs();
 
-            xit('should open the search modal when the search input is clicked', () => {
+            it('should open the search modal when the search input is clicked', () => {
               fig.open();
               fig.toggleToc();
               fig.getSearchButton().trigger('click');
               fig.getSearchModal().should('be.visible');
             });
 
-            xit('should close the TOC after following a result', () => {
+            it('should close the TOC after following a result', () => {
               cy.visit(fig.url() + '?search=true');
               fig.getSearchInput().type('filing');
               fig.getFirstSearchResult().trigger('click');

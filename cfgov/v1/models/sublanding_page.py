@@ -137,11 +137,5 @@ class SublandingPage(CFGOVPage):
 
     @property
     def has_hero(self):
-        """Returns boolean indicating whether the page includes a hero module.
-
-        TODO: On Wagtail 4.0, this functionality can be removed in favor of
-        using the built-in page.header.first_block_by_name("hero"):
-
-        https://docs.wagtail.org/en/stable/topics/streamfield.html#streamfield-retrieving-blocks-by-name
-        """
-        return bool(len(self.header))
+        """Returns boolean indicating whether the page includes a hero."""
+        return bool(self.header.first_block_by_name("hero"))

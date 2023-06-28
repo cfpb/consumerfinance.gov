@@ -25,9 +25,8 @@
 {% for post in posts %}
     {{ post_preview.render(
         post,
-        controls=none,
         url=pageurl(post.get_parent().specific),
-        post_date_description=value.post_date_description
+        date_label=value.post_date_description
     ) }}
 {% endfor %}
 </div>
