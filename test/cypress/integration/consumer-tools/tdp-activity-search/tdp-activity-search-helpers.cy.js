@@ -5,12 +5,6 @@ export class ActivitySearch {
     );
   }
 
-  toggleFilter(label) {
-    cy.get('.content_sidebar').within(() => {
-      cy.contains(label).click();
-    });
-  }
-
   selectFilter(name, value) {
     cy.get(`input[name="${name}"][value="${value}"]`).check({ force: true });
   }
@@ -19,8 +13,8 @@ export class ActivitySearch {
     return cy.get('.results_filters-clear');
   }
 
-  resultsFilterTag(filterName) {
-    return cy.get(`[data-value="#building-block--${filterName}"]`);
+  resultsFilterTag() {
+    return cy.get('[data-value="#grade_level--elementary-school-k-1"]');
   }
 
   resultsCountEmpty() {
