@@ -132,19 +132,19 @@
                 <div class="results_filters-tags">
                     {% for facet_name, facet_items in facets | items %}
                         {% if facet_name == 'topic'%}
-                          {{ build_nested_filter_tags(facet_items, facet_name) }}
+                            {{ build_nested_filter_tags(facet_items, facet_name) }}
                         {% else %}
-                          {% for facet in facet_items %}
-                            {% if facet.selected %}
-                                {% set input_id = '#' + facet_name | trim + "--" + facet.title | trim | slugify %}
-                                {{ tag.render({
-                                    'label': facet.title,
-                                    'value': input_id,
-                                    'behavior': 'clear-filter'
-                                }) }}
+                            {% for facet in facet_items %}
+                                {% if facet.selected %}
+                                    {% set input_id = '#' + facet_name | trim + "--" + facet.title | trim | slugify %}
+                                    {{ tag.render({
+                                         'label': facet.title,
+                                         'value': input_id,
+                                         'behavior': 'clear-filter'
+                                    }) }}
                                 {% endif %}
-                        {% endfor %}
-                            {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
                     <button class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
                             data-js-hook="behavior_clear-all">
