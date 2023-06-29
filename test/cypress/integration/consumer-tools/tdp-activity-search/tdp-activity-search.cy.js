@@ -5,6 +5,7 @@ const search = new ActivitySearch();
 describe('Activity Search', () => {
   it('should filter results', () => {
     search.open();
+    search.toggleFilter('Grade level');
     search.selectFilter('grade_level', '4');
     cy.url().should('include', 'grade_level=4');
     search.clearFilters().should('be.visible');
@@ -13,6 +14,7 @@ describe('Activity Search', () => {
 
   it('should clear results filters', () => {
     search.open();
+    search.toggleFilter('Grade level');
     search.selectFilter('grade_level', '4');
     search.resultsFilterTag().should('be.visible');
     search.clearFilters().click();

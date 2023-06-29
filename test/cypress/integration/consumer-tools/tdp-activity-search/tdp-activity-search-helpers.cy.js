@@ -5,6 +5,12 @@ export class ActivitySearch {
     );
   }
 
+  toggleFilter(label) {
+    cy.get('.content_sidebar').within(() => {
+      cy.contains(label).click();
+    });
+  }
+
   selectFilter(name, value) {
     cy.get(`input[name="${name}"][value="${value}"]`).check({ force: true });
   }
