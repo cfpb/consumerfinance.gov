@@ -5,12 +5,6 @@ export class ActivitySearch {
     );
   }
 
-  toggleFilter(label) {
-    cy.get('.content_sidebar').within(() => {
-      cy.contains(label).click();
-    });
-  }
-
   selectFilter(name, value) {
     cy.get(`input[name="${name}"][value="${value}"]`).check({ force: true });
   }
@@ -20,7 +14,7 @@ export class ActivitySearch {
   }
 
   resultsFilterTag() {
-    return cy.get('[data-value="#grade_level--elementary-school-k-1"]');
+    return cy.get('[data-value="#activity_duration--15-20-minutes"]');
   }
 
   resultsCountEmpty() {

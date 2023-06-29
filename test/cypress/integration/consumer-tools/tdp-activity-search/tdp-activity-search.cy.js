@@ -5,17 +5,15 @@ const search = new ActivitySearch();
 describe('Activity Search', () => {
   it('should filter results', () => {
     search.open();
-    search.toggleFilter('Grade level');
-    search.selectFilter('grade_level', '4');
-    cy.url().should('include', 'grade_level=4');
+    search.selectFilter('activity_duration', '1');
+    cy.url().should('include', 'activity_duration=1');
     search.clearFilters().should('be.visible');
     search.resultsFilterTag().should('be.visible');
   });
 
   it('should clear results filters', () => {
     search.open();
-    search.toggleFilter('Grade level');
-    search.selectFilter('grade_level', '4');
+    search.selectFilter('activity_duration', '1');
     search.resultsFilterTag().should('be.visible');
     search.clearFilters().click();
     search.resultsFilterTag().should('not.exist');
