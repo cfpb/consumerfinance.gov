@@ -82,4 +82,4 @@ function ClearableInput(element) {
   return this;
 }
 
-export default ClearableInput;
+export { ClearableInput };

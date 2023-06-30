@@ -1,5 +1,5 @@
 import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
-import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
+import { MegaMenu } from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
 describe('MegaMenuMobile', () => {
