@@ -26,7 +26,6 @@ import jobmanager.blocks
 import v1.atomic_elements.molecules
 import v1.atomic_elements.tables
 import v1.blocks
-import v1.models.filterable_list_mixins
 import v1.models.snippets
 import v1.util.ref
 
@@ -46,7 +45,7 @@ class Migration(migrations.Migration):
         ('wagtailcore', '0040_page_draft_title'),
         ('taggit', '0002_auto_20150616_2121'),
         ('wagtaildocs', '0007_merge'),
-        ('login', '0002_populate_login_models'),
+        ('login', '0001_squashed_0003_simplify_password_logic'),
         ('wagtailcore', '0066_collection_management_permissions'),
     ]
 
@@ -263,7 +262,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
+            bases=('v1.cfgovpage',),
         ),
         migrations.CreateModel(
             name='HomePage',
@@ -297,7 +296,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
+            bases=('v1.cfgovpage',),
         ),
         migrations.AddField(
             model_name='resource',
@@ -772,7 +771,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.models.filterable_list_mixins.CategoryFilterableMixin, 'v1.sublandingfilterablepage'),
+            bases=('v1.sublandingfilterablepage',),
         ),
         migrations.AlterField(
             model_name='cfgovpage',

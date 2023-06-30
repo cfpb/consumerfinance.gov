@@ -13,7 +13,7 @@ import v1.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('form_explainer', '0006_add_use_json_field_to_streamfields'),
+        ('form_explainer', '0001_squashed_0006_add_use_json_field_to_streamfields'),
     ]
 
     operations = [

@@ -4,6 +4,7 @@ import boto3
 from botocore.exceptions import (
     ClientError,
     ConnectionError,
+    NoCredentialsError,
     ParamValidationError,
 )
 
@@ -33,5 +34,10 @@ class Metadata:
             agreements = [f.key for f in self.get_objects_by_prefix()]
             agreements.sort(reverse=reverse)
             return agreements
-        except (ClientError, ConnectionError, ParamValidationError):
+        except (
+            ClientError,
+            ConnectionError,
+            NoCredentialsError,
+            ParamValidationError,
+        ):
             return []

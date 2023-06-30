@@ -9,11 +9,21 @@ import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 
 const FORM_MESSAGES = {
-  ERROR: 'There was an error in your submission. Please try again later.',
-  ERROR_ES:
-    'Había un error en su presentación. ' + 'Por favor, inténtelo más tarde.',
-  SUCCESS: 'Your submission was successfully received.',
-  SUCCESS_ES: 'Su presentación fue recibido con éxito.',
+  ERROR: {
+    en: 'There was an error in your submission. Please try again later.',
+    es: 'Había un error en su presentación. Por favor, inténtelo más tarde.',
+  },
+  SUCCESS: {
+    en: 'Your submission was successfully received.',
+    ar: 'تم استلام طلبك  بنجاح.',
+    ht: 'Nou byen resevwa sa ou soumèt la.',
+    ko: '신청이 접수되었습니다.',
+    ru: 'Мы успешно получили ваш запрос на подписку.',
+    es: 'Su presentación fue recibido con éxito.',
+    tl: 'Matagumpay na natanggap ang iyong isinumite.',
+    'zh-Hant': '您提交的資料已被成功接收。',
+    vi: 'Đã nhận thành công nội dung gửi của quý vị.',
+  },
 };
 const DONE_CODE = 4;
 const SUCCESS_CODES = {
@@ -138,10 +148,9 @@ function FormSubmit(element, baseClass, opts) {
         if (state === 'SUCCESS' && opts.replaceForm) {
           _replaceFormWithNotification(heading + ' ' + message);
         } else {
-          const key = opts.language === 'es' ? state + '_ES' : state;
           _displayNotification(
             Notification[state],
-            message || FORM_MESSAGES[key]
+            message || getMessage(state, opts.language)
           );
         }
         if (state === 'SUCCESS') {
@@ -209,6 +218,16 @@ function FormSubmit(element, baseClass, opts) {
   }
 
   /**
+   * @param {string} state - 'SUCCESS' or 'ERROR' form state flag.
+   * @param {string} lang - A language string.
+   * @returns {string} A success or error message.
+   */
+  function getMessage(state, lang) {
+    if (state !== 'SUCCESS' && state !== 'ERROR') return 'Error.';
+    return FORM_MESSAGES[state][lang] || FORM_MESSAGES[state]['en'];
+  }
+
+  /**
    * @param {string} fieldName - name of field
    * @param {string} fieldValue - value of field
    * @returns {string} representing field data.
@@ -249,6 +268,7 @@ function FormSubmit(element, baseClass, opts) {
   }
 
   this.init = init;
+  this.getMessage = getMessage;
 
   return this;
 }

@@ -161,7 +161,7 @@
     .u-link__colors( @pacific, @pacific, @black, @black, @black,
     transparent, transparent, @green, @green, @green );
 
-    border-left-style: solid;
+    border-style: solid;
     border-left-width: 5px;
 
     .respond-to-max( @bp-sm-max, {
@@ -236,4 +236,37 @@
   .respond-to-print( {
     display: none;
   } );
+}
+
+// Right-to-left (RTL) layout.
+html[lang='ar'] {
+  .o-secondary-nav {
+    button.o-secondary-nav_header {
+      text-align: right;
+    }
+
+    &_cues {
+      text-align: left;
+    }
+
+    &_list__parents {
+      padding-right: 0;
+    }
+
+    &_link {
+      border-left-width: 0;
+      border-right-width: 5px;
+    }
+
+    // Desktop.
+    .respond-to-min( @bp-med-min, {
+      &_link {
+        padding-right: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
+      }
+
+      &_list__parents {
+        padding-right: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
+      }
+    } );
+  }
 }

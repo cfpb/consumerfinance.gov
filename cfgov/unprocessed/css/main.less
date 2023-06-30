@@ -49,7 +49,6 @@
    ========================================================================== */
 
 @import (less) 'images.less';
-@import (less) 'meta.less';
 @import (less) 'misc.less';
 @import (less) 'schema.less';
 
@@ -83,6 +82,7 @@
 @import (less) 'molecules/related-metadata.less';
 @import (less) 'molecules/related-posts.less';
 @import (less) 'molecules/social-media.less';
+@import (less) 'molecules/tags.less';
 
 /* Organism pieces
    ========================================================================== */
@@ -120,12 +120,15 @@
   text-align: center;
 }
 
-.o-card-group__flow .o-card-group_cards {
-  justify-content: center;
-}
-
 @horizontal-rule: @gray-40;
 
 body {
   -webkit-font-smoothing: antialiased;
+}
+
+// Make Arial the first-line font in Vietnamese pages' main content area.
+// This is used because Avenir Next does not contain all Vietnamese diacritics.
+// See https://[GHE]/Design-Development/Design-and-Content-Team/issues/175
+html[lang='vi'] body main {
+  font-family: Arial, 'Avenir Next', sans-serif;
 }

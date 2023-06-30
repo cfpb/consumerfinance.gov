@@ -218,7 +218,6 @@ function highlightAgeFields(bool) {
 /**
  * This function validates the numbers in the date of birth fields as
  * valid dates.
- *
  * @returns {object} validated dates
  */
 function validateBirthdayFields() {

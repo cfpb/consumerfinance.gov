@@ -20,12 +20,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0060_fix_workflow_unique_constraint'),
-        ('v1', '0212_emailsignup_snippet'),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
         ('wagtailinventory', '0001_initial'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
-        ('v1', '0198_recreated'),
-        ('v1', '0199_2022_squash'),
     ]
 
     operations = [
