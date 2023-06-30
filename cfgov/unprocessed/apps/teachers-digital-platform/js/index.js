@@ -6,7 +6,6 @@ import beforeExpandableTransitionInit from './expandable-mobile.js';
 // Internal modules
 import { init as searchInit } from './search.js';
 import { bindAnalytics } from './tdp-analytics.js';
-import surveys from './tdp-surveys.js';
 
 const app = {
   init: () => {
@@ -20,7 +19,6 @@ const app = {
     cfExpandables.init();
     expandableFacets.init();
 
-    surveys.init();
     bindAnalytics();
   },
 };
