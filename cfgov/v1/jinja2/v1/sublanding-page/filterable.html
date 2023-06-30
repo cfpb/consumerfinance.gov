@@ -1,0 +1,9 @@
+{% extends "v1/sublanding-page/index.html" %}
+
+{% block content_main %}
+    {{ super() }}
+
+    <div class="block">
+        {% include "v1/includes/organisms/filterable-list-results.html" %}
+    </div>
+{% endblock %}

@@ -11,9 +11,9 @@
 {% endif %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__2-1
-                 {% if language == 'ar' %} u-layout-grid__rtl {% endif %}
-          id="main">
+    <main class="u-layout-grid u-layout-grid__2-1"
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
         <div class="u-layout-grid_wrapper">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
@@ -26,10 +26,7 @@
         {%- endblock %}
         {% block body_content scoped %}
         <div class="u-layout-grid_main">
-            {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
-            <section {{ accessible_languages.render() }}>
-                {% block content_main scoped -%}{%- endblock %}
-            </section>
+            {% block content_main scoped -%}{%- endblock %}
         </div>
         <aside class="u-layout-grid_sidebar">
             {% block content_sidebar scoped -%}{%- endblock %}

@@ -127,7 +127,6 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.filterable_search = kwargs.pop("filterable_search")
-        self.filterable_categories = kwargs.pop("filterable_categories")
 
         # This cache key is used for caching the topics, page_ids,
         # and the full set of Elasticsearch results for this form used to
@@ -180,23 +179,10 @@ class FilterableListForm(forms.Form):
             cache.set(f"{self.cache_key_prefix}-page_ids", page_ids)
         return page_ids
 
-    def get_categories(self):
-        categories = self.cleaned_data.get("categories")
-
-        # If no categories are submitted by the form
-        if categories == []:
-            # And we have defined a prexisting set of categories
-            # to limit results by Using CategoryFilterableMixin
-            if self.filterable_categories not in ([], None):
-                return ref.get_category_children(self.filterable_categories)
-        return categories
-
     def get_page_set(self):
-        categories = self.get_categories()
-
         self.filterable_search.filter(
             topics=self.cleaned_data.get("topics"),
-            categories=categories,
+            categories=self.cleaned_data.get("categories"),
             language=self.cleaned_data.get("language"),
             to_date=self.cleaned_data.get("to_date"),
             from_date=self.cleaned_data.get("from_date"),

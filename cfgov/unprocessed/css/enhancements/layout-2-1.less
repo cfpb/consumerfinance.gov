@@ -36,7 +36,7 @@
       }
     }
 
-    // Tablet and above
+    // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       .u-layout-grid {
         &_wrapper {
@@ -52,10 +52,21 @@
         }
       }
     });
+
+    // Desktop
+    .respond-to-min( @bp-med-min, {
+      .u-layout-grid_wrapper {
+          grid-auto-columns: 2fr 1fr;
+          grid-template-areas:
+            'c-hero c-hero'
+            'c-breadcrumbs c-sidebar'
+            'c-main c-sidebar';
+      }
+    } );
   }
 
   // 2-1 Left-to-right (LTR) layout.
-  .u-layout-grid__2-1:not(&.u-layout-grid__rtl) {
+  .u-layout-grid__2-1:not(&[dir='rtl']) {
     // This is for the sidebar bleed.
     overflow-x: hidden;
 
@@ -83,14 +94,6 @@
     // Desktop
     .respond-to-min( @bp-med-min, {
       .u-layout-grid {
-        &_wrapper {
-          grid-auto-columns: 2fr 1fr;
-          grid-template-areas:
-            'c-hero c-hero'
-            'c-breadcrumbs c-sidebar'
-            'c-main c-sidebar';
-        }
-
         &_main {
           padding-right: unit(10px / @base-font-size-px, rem);
         }
@@ -108,7 +111,7 @@
   }
 
   // 2-1 Right-to-left (RTL) layout.
-  .u-layout-grid__2-1.u-layout-grid__rtl {
+  .u-layout-grid__2-1[dir='rtl'] {
     // Mobile.
     .u-layout-grid {
       &_sidebar {
@@ -129,12 +132,6 @@
     .respond-to-min( @bp-med-min, {
       .u-layout-grid {
         &_wrapper {
-          grid-auto-columns: 1fr 2fr;
-          grid-template-areas:
-            'c-hero c-hero'
-            'c-sidebar c-breadcrumbs'
-            'c-sidebar c-main';
-
           // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
           & div:has(.m-hero) {
             display: contents;

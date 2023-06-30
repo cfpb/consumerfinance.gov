@@ -1,5 +1,4 @@
 {% macro render(block, index) %}
-   {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context -%}
    {% set block_classes = ['block'] %}
 
    {% if block.value.has_top_rule_line %}
@@ -17,8 +16,7 @@
       {% do block_classes.append(block.block.meta.classname) %}
    {% endif %}
 
-   <div class="{{ block_classes | unique | join(' ') }}"
-      {{- accessible_languages.render() -}}>
+   <div class="{{ block_classes | unique | join(' ') }}">
       {{ render_stream_child( block ) }}
    </div>
 {% endmacro %}
