@@ -21,7 +21,7 @@
       }
     });
 
-    // Tablet and above
+    // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       .u-layout-grid {
         &_wrapper {
@@ -107,6 +107,26 @@
         &_secondary-nav {
           margin-left: unit(30px / @base-font-size-px, rem);
         }
+      }
+    } );
+  }
+
+  // Optionally make the secondary nav sticky
+  .u-layout-grid_secondary-nav__sticky {
+    position: sticky;
+    top: 0;
+    align-self: start;
+
+    // Expand the sticky nav to full height on desktop with optional scrolling
+    // and adjust spacing so that the scrollbar does not cover content
+    .respond-to-min( @bp-med-min, {
+      max-height: 100vh;
+      overflow-y: auto;
+      margin-right: unit(15px / @base-font-size-px, rem);
+
+      .o-secondary-nav {
+        margin-right: unit(15px / @base-font-size-px, rem);
+        padding-bottom: unit(60px / @base-font-size-px, rem);
       }
     } );
   }

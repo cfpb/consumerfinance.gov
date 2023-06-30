@@ -22,18 +22,22 @@ describe('The Filing Instruction Guide side navigation', () => {
     });
 
     it('should build a list of nav items', () => {
-      expect(navItems.size).toEqual(40);
-      expect(navItems.get('#1').innerHTML).toContain('What is the FIG?');
-      expect(navItems.get('#5').innerHTML).toContain('Data validation');
-      expect(navItems.get('#4.2').innerHTML).toContain('Application Date');
+      expect(navItems.size).toEqual(36);
+      expect(navItems.get('#1').innerHTML).toContain(
+        '1. What is the filing instructions guide?'
+      );
+      expect(navItems.get('#5').innerHTML).toContain('5. Where to get help');
+      expect(navItems.get('#4.2').innerHTML).toContain(
+        '4.2. Multi-field errors'
+      );
     });
 
     it('should build a list of nav container items', () => {
-      expect(navItemContainers.size).toEqual(40);
+      expect(navItemContainers.size).toEqual(36);
     });
 
     it('should have nav items in the same section have the same containers', () => {
-      expect(navItemContainers.size).toEqual(40);
+      expect(navItemContainers.size).toEqual(36);
       // Test all seven nav sections
       let i = 7;
       while (i--) {

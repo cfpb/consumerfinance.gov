@@ -80,7 +80,7 @@
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'v1/includes/tags.html' as tags %}
-        {{ tags.render(page.related_metadata_tags()) }}
+        {{ tags.render(page.related_metadata_tags().links) }}
     </footer>
     {% endif %}
 </article>

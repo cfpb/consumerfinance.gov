@@ -1,23 +1,6 @@
 @import (reference) '../../../css/main.less';
 @import '../node_modules/ctrl-f/dist/css/index.css';
 
-.o-fig {
-  // Make the side navigation sticky
-  .o-fig_sidebar {
-    position: sticky;
-    top: unit(45px / @base-font-size-px, rem);
-  }
-
-  // Desktop
-  .respond-to-min( @bp-med-min, {
-    // Expand it to full height on desktop with optional scrolling
-    .o-fig_sidebar {
-      max-height: 100vh;
-      overflow-y: auto;
-    }
-  } );
-}
-
 .o-fig_main {
   // Bump up all heading sizes to improve readability
   h1 {
@@ -48,7 +31,6 @@
     font-family: Menlo, 'Andale Mono', 'Courier New', monospace;
     overflow-x: auto;
     font-size: unit(14px / @base-font-size-px, em);
-    white-space: pre;
   }
 
   .o-table {
@@ -120,7 +102,7 @@
   .o-secondary-nav_content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
-    &:after {
+    > .o-secondary-nav_list {
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
@@ -135,13 +117,13 @@
   } );
 
   .o-secondary-nav_link {
-    padding-left: unit(40px / @base-font-size-px, em);
-    text-indent: unit(-30px / @base-font-size-px, em);
+    padding-left: unit(24px / @base-font-size-px, em);
+    text-indent: unit(-18px / @base-font-size-px, em);
   }
 
   .o-secondary-nav_list__parents > .o-secondary-nav_link {
-    padding-left: unit(30px / @base-font-size-px, em);
-    text-indent: unit(-18px / @base-font-size-px, em);
+    padding-left: unit(10px / @base-font-size-px, em);
+    text-indent: unit(-10px / @base-font-size-px, em);
   }
 
   h4 {

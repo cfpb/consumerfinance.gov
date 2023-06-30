@@ -44,11 +44,11 @@ export class FilingInstructionGuide {
   }
 
   getMobileTOCHeader() {
-    return cy.get('.o-fig_sidebar .o-expandable_header');
+    return cy.get('.o-fig_sidebar .o-secondary-nav_header');
   }
 
   getMobileTOCBody() {
-    return cy.get('.o-fig_sidebar .o-expandable_content');
+    return cy.get('.o-secondary-nav_content');
   }
 
   goToSection(section) {
@@ -76,7 +76,7 @@ export class FilingInstructionGuide {
   }
 
   toggleToc() {
-    return cy.get('.o-expandable_header').click();
+    return cy.get('.o-secondary-nav_header').click();
   }
 
   scrollToBottom() {
