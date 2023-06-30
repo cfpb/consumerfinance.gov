@@ -1149,12 +1149,6 @@ class AnswerPageContextTests(TestCase):
         context = page.get_context(self.request)
         self.assertEqual(context["portal_page"], portal_page)
 
-    def test_portal_page_primary_topic(self):
-        topic, portal_page = self.make_portal_topic_and_page("test")
-        page = AnswerPage(primary_portal_topic=topic)
-        context = page.get_context(self.request)
-        self.assertEqual(context["portal_page"], portal_page)
-
     def test_portal_page_no_primary_topic_single_portal_topic(self):
         topic, portal_page = self.make_portal_topic_and_page("test")
         page = AnswerPage(portal_topic=[topic])
