@@ -581,6 +581,7 @@ class FullWidthText(blocks.StreamBlock):
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
     table_block = AtomicTableBlock(table_options={"renderer": "html"})
+    table = Table()
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()

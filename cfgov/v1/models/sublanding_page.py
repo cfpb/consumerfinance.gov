@@ -42,6 +42,7 @@ class SublandingPage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("table", organisms.Table()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
         ],

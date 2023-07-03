@@ -129,6 +129,7 @@ class LearnPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("table", organisms.Table()),
             ("faq_group", schema.FAQGroup()),
             ("contact_us_table", organisms.ContactUsTable()),
         ],
@@ -156,6 +157,7 @@ class DocumentDetailPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("table", organisms.Table()),
             ("crc_table", organisms.ConsumerReportingCompanyTable()),
             ("case_docket_table", organisms.CaseDocketTable()),
         ],
@@ -205,6 +207,7 @@ class EventPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("table", organisms.Table()),
             (
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock("v1.ReusableText"),
