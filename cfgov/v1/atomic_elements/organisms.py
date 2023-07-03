@@ -22,6 +22,7 @@ from v1.atomic_elements.tables import (  # noqa: F401
     CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
+    Table,
 )
 from v1.util import ref
 
