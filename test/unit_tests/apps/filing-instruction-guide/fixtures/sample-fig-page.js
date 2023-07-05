@@ -228,7 +228,7 @@ export default `
                     Filers will submit their data to the platform via a web interface. There will be a process for individuals representing a financial institution to register for an account to access the online submission platform.
                 </p>
                 <p data-block-key="ffal8">
-                    Using the platform, each filer will provide financial institution identifying information per 12 CFR § 1002.109(b). The platform will walk filers through the small business lending application register filing process,
+                    Using the platform, each filer will provide financial institution identifying information per 12 CFR § 1002.109(b). The platform will walk filers through the small business lending application register filing process,
                     including uploading data, performing validation checks on the data, and certifying the data. An authorized representative of the filer with knowledge of the data submitted will certify to the accuracy and completeness of
                     the data submitted.
                 </p>

@@ -395,10 +395,6 @@ urlpatterns = [
     ),
     re_path(r"^sitemap\.xml$", akamai_no_store(sitemap), name="sitemap"),
     re_path(
-        r"^consumer-tools/educator-tools/youth-financial-education/",
-        include("teachers_digital_platform.urls"),
-    ),
-    re_path(
         r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
             template_name="regulations3k/regulations3k-service-worker.js",

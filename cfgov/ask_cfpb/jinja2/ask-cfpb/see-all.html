@@ -79,9 +79,12 @@
             </div>
         </section>
         {% if not page.portal_category %}
-        <p class="ask-search-link h4">
-            {{ _("Don't see what you're looking for?") }} <span class="break"><a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a></span>
-        </p>
+        <div class="block block__flush-bottom block__padded-bottom">
+            <p class="ask-search-link h4">
+                <span>{{ _("Don't see what you're looking for?") }}</span>
+                <a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a>
+            </p>
+        </div>
         {% endif %}
     {% endif %}
 {% endblock %}
