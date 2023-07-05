@@ -327,7 +327,9 @@ class AnswerPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         # self.get_meta_description() is not called here because it is called
         # and added to the context by CFGOVPage's get_context() method.
-        portal_topic = self.primary_portal_topic or self.portal_topic.first()
+        portal_topic = self.primary_portal_topic
+        if portal_topic is None and self.portal_topic.count() == 1:
+            portal_topic = self.portal_topic.first()
         context = super().get_context(request)
         context["related_questions"] = self.related_questions.all()
         context["last_edited"] = self.last_edited

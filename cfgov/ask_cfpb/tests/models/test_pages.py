@@ -1125,3 +1125,39 @@ class AnswerPageTest(TestCase):
 
         with self.assertRaises(ValidationError):
             dup_page.full_clean()
+
+
+class AnswerPageContextTests(TestCase):
+    def setUp(self):
+        self.request = HttpRequest()
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+
+    def make_portal_topic_and_page(self, name):
+        topic = PortalTopic.objects.create(heading=name, heading_es=name)
+        page = SublandingPage(title=name, slug=name, portal_topic=topic)
+        self.site_root.add_child(instance=page)
+        return topic, page
+
+    def test_portal_page_no_portal_topics(self):
+        page = AnswerPage()
+        context = page.get_context(self.request)
+        self.assertIsNone(context["portal_page"])
+
+    def test_portal_page_primary_topic(self):
+        topic, portal_page = self.make_portal_topic_and_page("test")
+        page = AnswerPage(primary_portal_topic=topic)
+        context = page.get_context(self.request)
+        self.assertEqual(context["portal_page"], portal_page)
+
+    def test_portal_page_no_primary_topic_single_portal_topic(self):
+        topic, portal_page = self.make_portal_topic_and_page("test")
+        page = AnswerPage(portal_topic=[topic])
+        context = page.get_context(self.request)
+        self.assertEqual(context["portal_page"], portal_page)
+
+    def test_portal_page_no_primary_topic_multiple_portal_topics(self):
+        topic1, portal_page1 = self.make_portal_topic_and_page("test1")
+        topic2, portal_page2 = self.make_portal_topic_and_page("test2")
+        page = AnswerPage(portal_topic=[topic1, topic2])
+        context = page.get_context(self.request)
+        self.assertIsNone(context["portal_page"])
