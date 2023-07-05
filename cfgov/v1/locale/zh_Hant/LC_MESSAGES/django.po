@@ -106,6 +106,14 @@ msgstr ""
 msgid "Pagination"
 msgstr ""
 
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:48
+msgid "Previous"
+msgstr "上一頁"
+
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:61
+msgid "Next"
+msgstr "下一頁"
+
 #: v1/jinja2/v1/includes/molecules/pagination.html:69
 msgid "Page"
 msgstr ""

@@ -112,6 +112,14 @@ msgstr "Borrar búsqueda"
 msgid "Pagination"
 msgstr "Número de página"
 
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:48
+msgid "Previous"
+msgstr "Anterior"
+
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:61
+msgid "Next"
+msgstr "Siguiente"
+
 #: v1/jinja2/v1/includes/molecules/pagination.html:69
 msgid "Page"
 msgstr "Página"
