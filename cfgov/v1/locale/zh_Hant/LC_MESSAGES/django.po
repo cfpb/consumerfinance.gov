@@ -91,7 +91,7 @@ msgstr ""
 #: v1/jinja2/v1/includes/molecules/global-search.html:40
 #: v1/jinja2/v1/includes/organisms/video-player.html:63
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:76
 #: v1/jinja2/v1/includes/molecules/global-search.html:79
@@ -202,7 +202,7 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
 msgid "In this section"
-msgstr ""
+msgstr "本節概述"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"
