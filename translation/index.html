@@ -211,13 +211,13 @@ mystring = _("Hello World!")</code></pre>
 msgstr "Hola Mundo!"</code></pre>
 <h4 id="4-run-the-compilemessages-management-command-to-compile-the-machine-object-file">4. Run the <code>compilemessages</code> management command to compile the machine object file<a class="headerlink" href="#4-run-the-compilemessages-management-command-to-compile-the-machine-object-file" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py compilemessages</code></pre>
+django-admin compilemessages</code></pre>
 <h2 id="wagtail-considerations">Wagtail Considerations<a class="headerlink" href="#wagtail-considerations" title="Permanent link">¶</a></h2>
 <p>All of our Wagtail pages include a language-selection dropdown under its Configuration tab:</p>
 <p><img alt="Wagtail page language selection" src="../img/wagtail-language.png" /></p>
 <p>The selected language will force translation of all translatable strings in templates and code for that page.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<p>To ensure that strings in templates are picked up in message extraction (<code>django-admin.py makemessages</code>), it also helps to know that the way <code>makemessages</code> works.</p>
+<p>To ensure that strings in templates are picked up in message extraction (<code>django-admin makemessages</code>), it also helps to know that the way <code>makemessages</code> works.</p>
 <p><code>makemessages</code> converts all Django <code>{% translate %}</code>, <code>{% blocktranslate %}</code>, and Jinja2 <code>{% trans %}</code> tags into <code>_(…)</code> gettext calls and then to have <a href="https://www.gnu.org/software/gettext/manual/gettext.html"><code>xgettext</code></a> process the files as if they were Python. This process <em>does not</em> work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible.</p>
 <p>There are a few things to avoid to make sure the strings are picked up by <code>makemessages</code>:</p>
 <h4 id="do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure">Do not include the <code>_()</code> call in a larger Jinja2 template data structure:<a class="headerlink" href="#do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure" title="Permanent link">¶</a></h4>
