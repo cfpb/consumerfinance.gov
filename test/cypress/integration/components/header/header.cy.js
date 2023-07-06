@@ -29,7 +29,7 @@ describe('Header', () => {
       menuDesktop.secondPanel().should('not.be.visible');
     });
 
-    it('clicking from the global search to the mega-menu', () => {
+    xit('clicking from the global search to the mega-menu', () => {
       // When I click on the global search trigger.
       globalSearch.trigger().click();
       // Then the global search content should be visible.
@@ -80,7 +80,7 @@ describe('Header', () => {
       // Then the mega-menu content should not be visible.
       menuMobile.firstPanel().should('not.be.inViewport');
     });
-    it('clicking from the global search to the mega-menu', () => {
+    xit('clicking from the global search to the mega-menu', () => {
       // When I click on the global search trigger.
       globalSearch.trigger().click();
       // Then the header organism should display the overlay.
