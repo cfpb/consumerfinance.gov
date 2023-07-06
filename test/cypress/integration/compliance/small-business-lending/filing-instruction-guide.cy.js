@@ -16,6 +16,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
         context(desktop, () => {
           beforeEach(() => {
             cy.viewport(desktop);
+            fig.open();
           });
 
           afterEach(() => {
@@ -23,7 +24,6 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           });
 
           it('should be present', () => {
-            fig.open();
             fig.toc().should('be.visible');
           });
 
@@ -42,19 +42,19 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           });
 
           it('should highlight the current section', () => {
-            fig.goToSection(2);
-            fig
-              .getNavItem(2)
-              .should('have.class', 'o-secondary-nav_link__current');
+            fig.goToSection(4);
             fig
               .getNavItem(1)
+              .should('not.have.class', 'o-secondary-nav_link__current');
+            fig
+              .getNavItem(2)
               .should('not.have.class', 'o-secondary-nav_link__current');
             fig
               .getNavItem(3)
               .should('not.have.class', 'o-secondary-nav_link__current');
             fig
               .getNavItem(4)
-              .should('not.have.class', 'o-secondary-nav_link__current');
+              .should('have.class', 'o-secondary-nav_link__current');
           });
 
           it('should auto-expand subsections', () => {
@@ -137,6 +137,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
         context(tablet, () => {
           beforeEach(() => {
             cy.viewport(tablet);
+            fig.open();
           });
 
           afterEach(() => {
@@ -144,16 +145,12 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           });
 
           it('should be present', () => {
-            fig.open();
             fig.toc().should('be.visible');
           });
 
-          it('should expand', () => {
+          it('should expand and collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('be.visible');
-          });
-
-          it('should collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('not.be.visible');
           });
@@ -186,6 +183,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
         context(mobile, () => {
           beforeEach(() => {
             cy.viewport(mobile);
+            fig.open();
           });
 
           afterEach(() => {
@@ -193,16 +191,12 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           });
 
           it('should be present', () => {
-            fig.open();
             fig.toc().should('be.visible');
           });
 
-          it('should expand', () => {
+          it('should expand and collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('be.visible');
-          });
-
-          it('should collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('not.be.visible');
           });
