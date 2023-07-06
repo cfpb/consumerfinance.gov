@@ -9,20 +9,20 @@
 
    Builds pagination markup when given:
 
-   total_pages: Total number of pages.
+   total_pages:  Total number of pages.
 
-   current_page:   Currently selected page (out of the total).
+   current_page: Currently selected page (out of the total).
 
-   fragment_id: The fragment identifier attached
-                to the prev/next pagination buttons.
-                Default is empty string.
+   fragment_id:  The fragment identifier attached
+                 to the prev/next pagination buttons.
+                 Default is empty string.
 
-   index:       A unique number given to render the form and its fields with.
-                Default is 0.
+   index:        A unique number given to render the form and its fields with.
+                 Default is 0.
 
    ========================================================================== #}
 
-{% macro render(total_pages, current_page, fragment_id='', index=0, prev_text='Newer', next_text='Older') %}
+{% macro render(total_pages, current_page, fragment_id='', index=0) %}
 {% if total_pages > 1 and current_page <= total_pages %}
 {% from 'v1/includes/macros/util/url_parameters.html' import url_parameters %}
 
@@ -45,7 +45,7 @@
             <span class="a-btn_icon a-btn_icon__on-left">
                 {{- svg_icon('left') -}}
             </span>
-            {{ _(prev_text) }}
+            {{ _('Previous') }}
         </a>
         {%- if current_page < total_pages %}
         <a class="a-btn
@@ -58,7 +58,7 @@
                   a-btn__disabled
                   m-pagination_btn-next">
         {% endif -%}
-            {{ _(next_text) }}
+            {{ _('Next') }}
             <span class="a-btn_icon a-btn_icon__on-right">
                 {{- svg_icon('right') -}}
             </span>
