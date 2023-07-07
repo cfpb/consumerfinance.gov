@@ -77,9 +77,8 @@ Prefixed with `m-` in class names.
 ### JavaScript
 
 ```js
+const BASE_CLASS = 'm-notification';
 function Notification( element ) {
-  const BASE_CLASS = 'm-notification';
-
   // Constants for the state of this Notification.
   const SUCCESS = 'success';
   const WARNING = 'warning';
@@ -140,9 +139,8 @@ Prefixed with `o-` in class names.
 ### JavaScript
 
 ```js
- function Expandable( element ) {
-  const BASE_CLASS = 'o-expandable';
-
+const BASE_CLASS = 'o-expandable';
+function Expandable( element ) {
   // Bitwise flags for the state of this Expandable.
   const COLLAPSED = 0;
   const COLLAPSING = 1;

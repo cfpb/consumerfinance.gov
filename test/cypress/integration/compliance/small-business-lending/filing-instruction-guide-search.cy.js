@@ -14,6 +14,7 @@ const deviceAgnosticSpecs = () => {
   });
 
   it('should close the search modal when the bg overlay is clicked', () => {
+    cy.visit(fig.url() + '?search=true');
     fig.getSearchModal().click(5, 5);
     fig.getSearchModal().should('not.be.visible');
   });
@@ -60,6 +61,8 @@ const deviceAgnosticSpecs = () => {
   });
 
   it('should close after following a result', () => {
+    cy.visit(fig.url() + '?search=true');
+    fig.getSearchInput().type('filing');
     fig.getSearchResults().should('be.visible');
     fig.getFirstSearchResult().trigger('click');
     fig.getSearchResults().should('not.be.visible');

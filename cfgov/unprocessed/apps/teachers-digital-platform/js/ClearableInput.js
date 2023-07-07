@@ -6,6 +6,8 @@
 
 import { checkDom } from '@cfpb/cfpb-atomic-component';
 
+const BASE_CLASS = 'input-contains-label';
+
 /**
  * ClearableInput
  * @class
@@ -15,8 +17,6 @@ import { checkDom } from '@cfpb/cfpb-atomic-component';
  * @returns {object} A ClearableInput instance.
  */
 function ClearableInput(element) {
-  const BASE_CLASS = 'input-contains-label';
-
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector('input');
   const _clearBtnDom = _dom.querySelector('.' + BASE_CLASS + '_after__clear');
@@ -90,5 +90,4 @@ function ClearableInput(element) {
   return this;
 }
 
-// Expose public methods.
-export default ClearableInput;
+export { ClearableInput };
