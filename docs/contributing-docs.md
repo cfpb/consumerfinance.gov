@@ -75,3 +75,19 @@ The docs will then be available at https://USER.github.io/consumerfinance.gov/ a
 See the
 [the MkDocs documentation](https://www.mkdocs.org/user-guide/deploying-your-docs/)
 for more information.
+
+## Public vs. private documentation
+
+Some internal documentation is not suitable for inclusion in the public docs.
+
+Internal documentation can be linked from publicly-viewable documentation only
+if internal domain names and URLs are not shared publicly. To support such linking,
+the consumerfinance.gov Wagtail admin has a custom "CFPB Guide" setting that allows
+for dynamic linking to an internal URL without exposing that URL in public source
+code or documentation.
+
+Defining this setting adds a "CFPB Guide" item to the Wagtail admin "Help" menu.
+This menu item then links to the configured setting URL. Defining this setting also
+creates an `/admin/cfpb-guide/` alias URL that redirects to the configured setting
+URL. This alias URL can be shared or referenced publicly without exposing the
+internal one.
