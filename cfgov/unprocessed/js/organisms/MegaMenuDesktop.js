@@ -253,4 +253,4 @@ function MegaMenuDesktop(baseClass, menus) {
   return this;
 }
 
-export default MegaMenuDesktop;
+export { MegaMenuDesktop };

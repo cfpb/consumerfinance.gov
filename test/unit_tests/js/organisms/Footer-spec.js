@@ -1,4 +1,4 @@
-import Footer from '../../../../cfgov/unprocessed/js/organisms/Footer.js';
+import { Footer } from '../../../../cfgov/unprocessed/js/organisms/Footer.js';
 
 let footer;
 
