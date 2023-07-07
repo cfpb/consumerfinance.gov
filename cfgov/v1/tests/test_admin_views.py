@@ -2,8 +2,12 @@ from unittest import mock
 
 from django.contrib.auth.models import Group, Permission, User
 from django.contrib.contenttypes.models import ContentType
+from django.http import Http404, HttpRequest
 from django.test import TestCase, override_settings
 from django.urls import reverse
+
+from v1.admin_views import redirect_to_cfpb_guide
+from v1.models import CFPBGuideSettings
 
 
 def create_admin_access_permissions():
@@ -128,3 +132,17 @@ class TestCDNManagementView(TestCase):
         self.client.login(username="cdn", password="password")
         response = self.client.get(reverse("manage-cdn"))
         self.assertEqual(response.status_code, 404)
+
+
+class CFPBGuideViewTests(TestCase):
+    def test_guide_not_defined_view_returns_404(self):
+        with self.assertRaises(Http404):
+            redirect_to_cfpb_guide(HttpRequest())
+
+    def test_guide_defined_view_redirects_to_guide_url(self):
+        CFPBGuideSettings.objects.create(url="https://example.com/")
+        response = redirect_to_cfpb_guide(HttpRequest())
+        self.assertEqual(
+            (response["Location"], response.status_code),
+            ("https://example.com/", 302),
+        )
