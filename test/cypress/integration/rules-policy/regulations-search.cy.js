@@ -4,9 +4,12 @@ const regulationsSearch = new RegulationsSearch();
 
 describe('Policy Compliance', () => {
   describe('Regulations Search', () => {
-    it('should return results based on search term', () => {
+    beforeEach(() => {
       regulationsSearch.open();
       regulationsSearch.searchTerm('mortgage');
+    });
+
+    it('should return results based on search term', () => {
       regulationsSearch.searchResults().should('be.visible');
     });
 

@@ -3,20 +3,14 @@ import { PfcFinancialPathToGraduation } from './financial-path-helpers.cy.js';
 const page = new PfcFinancialPathToGraduation();
 
 describe('Your Financial Path to Graduation (program-level functionality)', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/paying-for-college/your-financial-path-to-graduation/');
+
+    page.clickGetStarted();
+    page.enterProgramDetails();
   });
 
   it('should enforce Direct federal loan limits based on the constants API values', () => {
-    page.clickGetStarted();
-    page.enter('Harvard University');
-    page.searchResults().should('be.visible');
-    page.clickSearchResult('Harvard University');
-    page.selectProgram('type', 'certificate');
-    page.selectProgram('years-spent', 'n');
-    page.selectProgram('length', '1');
-    page.selectProgram('housing', 'on-campus');
-    page.selectProgram('dependency', 'dependent');
     page.clickLeftNav('federal-loans');
     page.setText('loans__directSub', '999999');
     cy.get('#loans__directSub').blur();

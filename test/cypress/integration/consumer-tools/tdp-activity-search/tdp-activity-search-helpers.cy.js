@@ -23,8 +23,10 @@ export class ActivitySearch {
 
   search(term) {
     cy.get('#search-text').type(term);
-    cy.get('form[action="."]').within(() => {
-      cy.get('button').first().click();
-    });
+    cy.get('form[action="."]')
+      .first()
+      .within(() => {
+        cy.get('button').first().click();
+      });
   }
 }

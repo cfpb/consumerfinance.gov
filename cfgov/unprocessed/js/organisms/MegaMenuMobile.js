@@ -335,4 +335,4 @@ function MegaMenuMobile(menus) {
   return this;
 }
 
-export default MegaMenuMobile;
+export { MegaMenuMobile };
