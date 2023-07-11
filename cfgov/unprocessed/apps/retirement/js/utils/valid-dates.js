@@ -31,7 +31,7 @@ function validDates(month, day, year) {
   day = enforceRange(
     Number(day.toString().replace(/\D/g, '')),
     1,
-    monthMaxes[month.toString()]
+    monthMaxes[month.toString()],
   );
   if (Number(year) < 100) {
     year = Number(year) + 1900;
@@ -39,7 +39,7 @@ function validDates(month, day, year) {
   year = enforceRange(
     Number(year.toString().replace(/\D/g, '')),
     1900,
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   return {
     month: month,

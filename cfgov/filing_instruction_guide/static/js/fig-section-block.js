@@ -12,5 +12,5 @@ class FigSectionDefinition extends window.wagtailStreamField.blocks
 
 window.telepath.register(
   'filing_instruction_guide.blocks.FigSection',
-  FigSectionDefinition
+  FigSectionDefinition,
 );

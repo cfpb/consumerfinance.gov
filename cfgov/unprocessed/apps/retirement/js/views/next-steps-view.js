@@ -26,7 +26,7 @@ function chooseClaimingAge(fullAge) {
   } else {
     const age = parseInt(
       $('#retirement-age-selector').find('option:selected').val(),
-      10
+      10,
     );
 
     $('.next-step-description').hide();
@@ -50,7 +50,7 @@ function chooseClaimingAge(fullAge) {
         {
           scrollTop: $('#retirement-age-selector').offset().top - 20,
         },
-        300
+        300,
       );
     }
   }

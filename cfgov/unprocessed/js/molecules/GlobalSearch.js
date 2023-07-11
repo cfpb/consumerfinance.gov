@@ -48,12 +48,12 @@ function GlobalSearch(element) {
 
     // Set initial appearance.
     const transition = new MoveTransition(_contentDom).init(
-      MoveTransition.CLASSES.MOVE_RIGHT
+      MoveTransition.CLASSES.MOVE_RIGHT,
     );
     _flyout.setTransition(
       transition,
       transition.moveRight,
-      transition.moveToOrigin
+      transition.moveToOrigin,
     );
     _flyout.init();
 

@@ -26,7 +26,7 @@ let secondaryNav;
 const defaultScrollOffset = (target) => {
   scrollIntoViewWithOffset(
     document.getElementById(target.getAttribute('href').replace('#', '')),
-    60
+    60,
   );
 };
 
@@ -107,7 +107,7 @@ const init = (secondaryNavArg) => {
         action: 'toc:click',
         label: event.target?.innerText,
       });
-    }
+    },
   );
 };
 

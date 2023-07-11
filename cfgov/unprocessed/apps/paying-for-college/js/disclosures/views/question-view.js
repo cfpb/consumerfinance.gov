@@ -41,10 +41,10 @@ const questionView = {
       questionView.$nonsettlementBigQuestion.hide();
       $('#question_answer-no').hide();
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main'
+        'get-options__settlement content_main',
       );
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main'
+        'get-options__settlement content_main',
       );
       questionView.$transferCredits.remove();
       questionView.$exploreSchools.remove();
@@ -97,7 +97,7 @@ const questionView = {
           'swing',
           function () {
             // Noop function.
-          }
+          },
         );
 
       analyticsSendEvent({

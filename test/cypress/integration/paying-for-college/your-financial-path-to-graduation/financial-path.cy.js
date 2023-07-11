@@ -36,7 +36,7 @@ describe('Paying For College', () => {
       page.clickSearchResult('Harvard University');
       cy.get('[data-school-item="school"]').should(
         'contain',
-        'Harvard University'
+        'Harvard University',
       );
       cy.get('[data-school-item="city"]').should('contain', 'Cambridge');
       cy.get('[data-school-item="state"]').should('contain', 'MA');
@@ -59,14 +59,14 @@ describe('Paying For College', () => {
       page.setText('costs__other-direct', '12500');
       cy.get('[data-financial-item="total_directCosts"]').should(
         'contain',
-        '$87,500'
+        '$87,500',
       );
       page.setText('costs__books', '7500');
       page.setText('costs__transportation', '5000');
       page.setText('costs__other-indirect', '2500');
       cy.get('[data-financial-item="total_indirectCosts"]').should(
         'contain',
-        '$15,000'
+        '$15,000',
       );
       page.setText('otherCost_additional', '1250');
       cy.get('[data-financial-item="total_costs"]').each((el) => {
@@ -90,14 +90,14 @@ describe('Paying For College', () => {
       page.setText('costs__other-direct', '25000');
       cy.get('[data-financial-item="total_directCosts"]').should(
         'contain',
-        '$175,000'
+        '$175,000',
       );
       page.setText('costs__books', '12500');
       page.setText('costs__transportation', '7500');
       page.setText('costs__other-indirect', '5000');
       cy.get('[data-financial-item="total_indirectCosts"]').should(
         'contain',
-        '$25,000'
+        '$25,000',
       );
       page.setText('otherCost_additional', '2500');
       cy.get('[data-financial-item="total_costs"]').each((el) => {
@@ -119,14 +119,14 @@ describe('Paying For College', () => {
       page.setText('costs__other-direct', '100000');
       cy.get('[data-financial-item="total_directCosts"]').should(
         'contain',
-        '$700,000'
+        '$700,000',
       );
       page.setText('costs__books', '50000');
       page.setText('costs__transportation', '25000');
       page.setText('costs__other-indirect', '12500');
       cy.get('[data-financial-item="total_indirectCosts"]').should(
         'contain',
-        '$87,500'
+        '$87,500',
       );
       page.setText('otherCost_additional', '10000');
       cy.get('[data-financial-item="total_costs"]').each((el) => {
@@ -145,19 +145,19 @@ describe('Paying For College', () => {
       page.setText('scholarships__other', '19000');
       cy.get('[data-financial-item="total_grantsScholarships"]').should(
         'contain',
-        '$139,500'
+        '$139,500',
       );
       page.clickNextStep();
       page.setText('workStudy__workStudy', '50000');
       cy.get('[data-financial-item="total_workStudy"]').should(
         'contain',
-        '$50,000'
+        '$50,000',
       );
       page.clickNextStep();
       page.setText('loans__directUnsub', '2000');
       cy.get('[data-financial-item="total_fedLoans"]').should(
         'contain',
-        '$1,979'
+        '$1,979',
       );
       page.clickNextStep();
       page.setText('loans__stateLoan', '100000');
@@ -182,7 +182,7 @@ describe('Paying For College', () => {
       page.setText('income_otherFunding', '70000');
       cy.get('[data-financial-item="total_otherResources"]').should(
         'contain',
-        '$280,000'
+        '$280,000',
       );
       page.clickNextStep();
       page.clickNextStep();
@@ -213,14 +213,14 @@ describe('Paying For College', () => {
       page.setText('costs__other-direct', '50000');
       cy.get('[data-financial-item="total_directCosts"]').should(
         'contain',
-        '$350,000'
+        '$350,000',
       );
       page.setText('costs__books', '25000');
       page.setText('costs__transportation', '12500');
       page.setText('costs__other-indirect', '7500');
       cy.get('[data-financial-item="total_indirectCosts"]').should(
         'contain',
-        '$45,000'
+        '$45,000',
       );
       page.setText('otherCost_additional', '5000');
       cy.get('[data-financial-item="total_costs"]').each((el) => {
@@ -246,13 +246,13 @@ describe('Paying For College', () => {
       page.setText('workStudy__workStudy', '50000');
       cy.get('[data-financial-item="total_workStudy"]').should(
         'contain',
-        '$50,000'
+        '$50,000',
       );
       page.clickNextStep();
       page.setText('loans__directUnsub', '2000');
       cy.get('[data-financial-item="total_fedLoans"]').should(
         'contain',
-        '$1,979'
+        '$1,979',
       );
       page.clickNextStep();
       page.setText('loans__stateLoan', '100000');

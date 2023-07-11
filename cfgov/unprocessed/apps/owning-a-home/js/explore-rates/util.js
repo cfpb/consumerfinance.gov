@@ -76,7 +76,7 @@ function removeDollarAddCommas(value) {
   let parseValue = convertStringToNumber(value);
   parseValue = formatUSD({ amount: parseValue, decimalPlaces: 0 }).replace(
     '$',
-    ''
+    '',
   );
   return parseValue;
 }

@@ -8,7 +8,7 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 function getChartTitle(evt) {
   const chartWrapper = evt.target.chart.container.parentNode.parentNode;
   const titleNodes = chartWrapper.getElementsByClassName(
-    'o-simple-chart_title'
+    'o-simple-chart_title',
   );
   if (titleNodes.length) return titleNodes[0].textContent;
   return 'Unknown chart title';
@@ -21,7 +21,7 @@ function getChartTitle(evt) {
  */
 function getTimeRange(evt) {
   return `${new Date(evt.min).toLocaleDateString('en-US')} - ${new Date(
-    evt.max
+    evt.max,
   ).toLocaleDateString('en-US')}`;
 }
 

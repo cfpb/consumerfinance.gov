@@ -33,7 +33,7 @@ function BaseTransition(element, classes) {
   ) {
     throw new Error(
       'Transitions require CSS_PROPERTY and BASE_CLASS ' +
-        'to be passed into BaseTransition.'
+        'to be passed into BaseTransition.',
     );
   }
 

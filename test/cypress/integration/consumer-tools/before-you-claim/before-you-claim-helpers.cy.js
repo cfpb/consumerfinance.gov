@@ -43,7 +43,7 @@ export class BeforeYouClaim {
       },
       (request) => {
         request.reply(retirementAPIResponseUnder50);
-      }
+      },
     ).as('retirementAPIResponseUnder50');
 
     cy.intercept(
@@ -52,7 +52,7 @@ export class BeforeYouClaim {
       },
       (request) => {
         request.reply(retirementAPIResponseOver50);
-      }
+      },
     ).as('retirementAPIResponseOver50');
 
     cy.intercept(
@@ -61,7 +61,7 @@ export class BeforeYouClaim {
       },
       (request) => {
         request.reply(retirementAPIResponseOver70);
-      }
+      },
     ).as('retirementAPIResponseOver70');
   }
 
