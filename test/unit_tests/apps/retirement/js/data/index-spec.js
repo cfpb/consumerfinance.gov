@@ -18,7 +18,7 @@ describe('fetchApiData', function () {
       },
       () => {
         throw new Error('It should not reject a valid call');
-      }
+      },
     );
   });
   it('throws on bad data types', function () {

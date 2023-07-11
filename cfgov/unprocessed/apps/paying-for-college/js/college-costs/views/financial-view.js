@@ -31,7 +31,7 @@ const financialView = {
   _handleSeeStepsClick: function () {
     // TODO - This could all be written better.
     const selected = document.querySelector(
-      '.action-plan_choices .highlighted input[checked="true"]'
+      '.action-plan_choices .highlighted input[checked="true"]',
     );
     document.querySelectorAll('[data-action-plan]').forEach((elem) => {
       elem.classList.remove('active');
@@ -81,13 +81,13 @@ const financialView = {
   init: function () {
     this._financialItems = document.querySelectorAll('[data-financial-item]');
     this._financialInputs = document.querySelectorAll(
-      'input[data-financial-item]'
+      'input[data-financial-item]',
     );
     this._financialSpans = document.querySelectorAll(
-      'span[data-financial-item]'
+      'span[data-financial-item]',
     );
     this._costsOfferButton = document.querySelector(
-      '.costs_button-section button'
+      '.costs_button-section button',
     );
     _addInputListeners();
     _addButtonListeners();
@@ -111,7 +111,7 @@ function _addInputListeners() {
 function _addButtonListeners() {
   financialView._costsOfferButton.addEventListener(
     'click',
-    _handleCostsButtonClick
+    _handleCostsButtonClick,
   );
 }
 
@@ -160,7 +160,7 @@ function _handleInputClick(event) {
  */
 function _handleCostsButtonClick() {
   const checkedButton = document.querySelector(
-    'input[name="costs-offer-radio"]:checked'
+    'input[name="costs-offer-radio"]:checked',
   );
   let answer = '';
 

@@ -261,7 +261,7 @@ function getYourEstimates() {
           '.step-two,' +
           '.before-step-three,' +
           '.step-three,' +
-          '.step-three .hidden-content'
+          '.step-three .hidden-content',
       ).show();
 
       textlets.currentAge = gettext(benefits.currentAge);
@@ -277,7 +277,7 @@ function getYourEstimates() {
           {
             scrollTop: $('#estimated-benefits-description').offset().top - 20,
           },
-          300
+          300,
         );
       }
     } else {
@@ -490,7 +490,7 @@ function setGraphDimensions() {
   // Update width settings
   canvasLeft = Number($('#claim-canvas').css('left').replace(/\D/g, ''));
   canvasLeft += Number(
-    $('#claim-canvas').css('padding-left').replace(/\D/g, '')
+    $('#claim-canvas').css('padding-left').replace(/\D/g, ''),
   );
 
   graphWidth = $('.canvas-container').width() - canvasLeft;
@@ -582,7 +582,7 @@ function drawAgeBoxes() {
   $('#claim-canvas .age-text').remove();
   $.each(ages, function (i, val) {
     $('#claim-canvas').append(
-      '<div class="age-text"><p class="h3">' + val + '</p></div>'
+      '<div class="age-text"><p class="h3">' + val + '</p></div>',
     );
     const ageDiv = $('#claim-canvas .age-text:last');
     ageDiv.attr('data-age-value', val);

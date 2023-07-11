@@ -6,7 +6,7 @@ describe('Page meta data', () => {
     cy.get('head meta[name=template]').should(
       'have.attr',
       'content',
-      'v1/home_page/home_page.html'
+      'v1/home_page/home_page.html',
     );
   });
 });

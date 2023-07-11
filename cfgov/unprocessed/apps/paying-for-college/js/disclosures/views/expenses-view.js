@@ -130,7 +130,7 @@ const expensesView = {
           expensesView.currentInput = 'none';
           expensesView.updateView(getExpenses.values());
         }
-      }
+      },
     );
   },
 

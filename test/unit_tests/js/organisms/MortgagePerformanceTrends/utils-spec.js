@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 global.fetch = jest.fn((url) =>
   Promise.resolve({
     json: jest.fn(() => Promise.resolve({ mock: url })),
-  })
+  }),
 );
 
 const BASE_URL = '/data-research/mortgages/api/v1/metadata/';

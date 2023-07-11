@@ -129,7 +129,7 @@ function richTextTable(Handsontable) {
     if (blocksFromHTML && blocksFromHTML.contentBlocks) {
       contentState = window.DraftJS.ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
+        blocksFromHTML.entityMap,
       );
     } else {
       contentState = window.DraftJS.ContentState.createFromText('');
@@ -159,7 +159,7 @@ function richTextTable(Handsontable) {
     window.draftail.initEditor(
       '#' + this.TEXTAREA.id,
       draftailOptions,
-      document.currentScript
+      document.currentScript,
     );
 
     // Call TextEditor's open
@@ -167,7 +167,7 @@ function richTextTable(Handsontable) {
 
     // Style the Draftail editor with the TextEditor's TEXTAREA's style
     const draftailWrapper = this.TEXTAREA_PARENT.querySelector(
-      '.Draftail-Editor__wrapper'
+      '.Draftail-Editor__wrapper',
     );
     draftailWrapper.style.cssText = this.TEXTAREA.style.cssText;
     draftailWrapper.style.display = 'block';
@@ -223,7 +223,7 @@ function initAtomicTable(id, tableOptions) {
   // Wagtail's built-in field elements
   const tableHeaderCheckbox = window.jQuery('#' + id + '-handsontable-header');
   const colHeaderCheckbox = window.jQuery(
-    '#' + id + '-handsontable-col-header'
+    '#' + id + '-handsontable-col-header',
   );
   const tableCaption = window.jQuery('#' + id + '-handsontable-col-caption');
 
@@ -233,7 +233,7 @@ function initAtomicTable(id, tableOptions) {
   const headingIcon = window.jQuery('#' + id + '-handsontable-heading-icon');
   const stripedRows = window.jQuery('#' + id + '-handsontable-striped-rows');
   const stackOnMobile = window.jQuery(
-    '#' + id + '-handsontable-stack-on-mobile'
+    '#' + id + '-handsontable-stack-on-mobile',
   );
   const tableFullWidth = window.jQuery('#' + id + '-handsontable-full-width');
   const tableColFixed = window.jQuery('#' + id + '-handsontable-col-fixed');
@@ -274,7 +274,7 @@ function initAtomicTable(id, tableOptions) {
     if ({}.hasOwnProperty.call(dataForForm, 'first_row_is_table_header')) {
       tableHeaderCheckbox.prop(
         'checked',
-        dataForForm.first_row_is_table_header
+        dataForForm.first_row_is_table_header,
       );
     }
     if ({}.hasOwnProperty.call(dataForForm, 'first_col_is_header')) {
@@ -361,13 +361,13 @@ function initAtomicTable(id, tableOptions) {
         is_full_width: tableFullWidth.prop('checked'),
         fixed_col_widths: tableColFixed.prop('checked'),
         column_widths: getColAttributes(colWidthInput),
-      })
+      }),
     );
   };
 
   const toggleAttributeInputTable = function (
     attributeInputTable,
-    isAttributeEnabled
+    isAttributeEnabled,
   ) {
     if (isAttributeEnabled) {
       attributeInputTable.show();
@@ -531,7 +531,7 @@ function initAtomicTable(id, tableOptions) {
 
   hot = new window.Handsontable(
     document.getElementById(containerId),
-    finalOptions
+    finalOptions,
   );
   hot.render();
 

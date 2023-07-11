@@ -50,7 +50,7 @@ function setup() {
 
   changeElText(
     '.report-date',
-    'Report generated ' + monthNames[monthIndex] + ' ' + day + ', ' + year
+    'Report generated ' + monthNames[monthIndex] + ' ' + day + ', ' + year,
   );
 
   addClass('#file-error', 'u-hidden');
