@@ -14,7 +14,7 @@ import {
   handleClearAllClick,
   handleFetchSearchResults,
 } from './tdp-analytics.js';
-import ClearableInput from './ClearableInput.js';
+import { ClearableInput } from './ClearableInput.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();

@@ -1,6 +1,8 @@
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
-import GlobalSearch from '../molecules/GlobalSearch.js';
-import MegaMenu from '../organisms/MegaMenu.js';
+import { GlobalSearch } from '../molecules/GlobalSearch.js';
+import { MegaMenu } from '../organisms/MegaMenu.js';
+
+const BASE_CLASS = 'o-header';
 
 /**
  * Header
@@ -11,8 +13,6 @@ import MegaMenu from '../organisms/MegaMenu.js';
  * @returns {object} An Header instance.
  */
 function Header(element) {
-  const BASE_CLASS = 'o-header';
-
   const _dom = checkDom(element, BASE_CLASS);
 
   let _globalSearch;
@@ -121,4 +121,4 @@ function Header(element) {
   return this;
 }
 
-export default Header;
+export { Header };

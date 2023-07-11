@@ -44,4 +44,4 @@ function TabTrigger(element) {
   return this;
 }
 
-export default TabTrigger;
+export { TabTrigger };
