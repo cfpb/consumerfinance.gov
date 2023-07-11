@@ -6,10 +6,10 @@ import {
   FlyoutMenu,
   MoveTransition,
 } from '@cfpb/cfpb-atomic-component';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
-import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
-import TabTrigger from '../modules/TabTrigger.js';
-import Tree from '../modules/Tree.js';
+import { MegaMenuDesktop } from '../organisms/MegaMenuDesktop.js';
+import { MegaMenuMobile } from '../organisms/MegaMenuMobile.js';
+import { TabTrigger } from '../modules/TabTrigger.js';
+import { Tree } from '../modules/Tree.js';
 import {
   DESKTOP,
   MOBILE,
@@ -218,4 +218,4 @@ function MegaMenu(element) {
   return this;
 }
 
-export default MegaMenu;
+export { MegaMenu };
