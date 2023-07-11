@@ -181,7 +181,7 @@ describe('FilterableListControls', () => {
     document.body.innerHTML = HTML_SNIPPET;
     filterableListControlsDom = document.querySelector(`.${BASE_CLASS}`);
     filterableListControls = new FilterableListControls(
-      filterableListControlsDom
+      filterableListControlsDom,
     );
   });
 
@@ -190,7 +190,7 @@ describe('FilterableListControls', () => {
       expect(filterableListControlsDom.getAttribute('data-js-hook')).toBeNull();
       filterableListControls.init();
       expect(
-        filterableListControlsDom.getAttribute('data-js-hook')
+        filterableListControlsDom.getAttribute('data-js-hook'),
       ).toStrictEqual('state_atomic_init');
     });
   });

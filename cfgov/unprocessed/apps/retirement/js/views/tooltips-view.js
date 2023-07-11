@@ -71,14 +71,14 @@ function toolTipper(elem) {
       $ttc.outerWidth() -
         innerTip.outerWidth() / 2 -
         elemRightOffset +
-        pagePadding
+        pagePadding,
     );
     outerTip.css(
       'left',
       $ttc.outerWidth() -
         outerTip.outerWidth() / 2 -
         elemRightOffset +
-        pagePadding
+        pagePadding,
     );
   }
 

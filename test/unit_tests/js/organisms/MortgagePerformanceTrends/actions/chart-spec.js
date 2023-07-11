@@ -58,7 +58,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
-      })
+      }),
     );
 
     let dispatch = jest.fn();
@@ -73,7 +73,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getNonMetroData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -85,7 +85,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -97,7 +97,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getStateData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -109,7 +109,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -122,7 +122,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
-      })
+      }),
     );
 
     expect(actions.fetchMetros('bloop', true)).toThrow();
@@ -132,7 +132,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -144,7 +144,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();
@@ -156,7 +156,7 @@ describe('Mortgage Performance chart action creators', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
-      })
+      }),
     );
 
     const dispatch = jest.fn();

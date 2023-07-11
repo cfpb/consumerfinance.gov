@@ -25,7 +25,7 @@ const datetime = {
           trackChartEvent(
             evt,
             'Time Range Selected',
-            evt.rangeSelectorButton.text
+            evt.rangeSelectorButton.text,
           );
         }
       },

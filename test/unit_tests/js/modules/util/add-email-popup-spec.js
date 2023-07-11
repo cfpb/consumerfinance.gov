@@ -10,7 +10,7 @@ describe('add-email-popup', () => {
     addEmailPopup.init();
     const emailPopupDom = document.querySelector('.o-email-popup');
     expect(emailPopupDom.classList.contains('o-email-popup__visible')).toBe(
-      false
+      false,
     );
   });
 });

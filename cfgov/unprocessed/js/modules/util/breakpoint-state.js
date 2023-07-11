@@ -56,7 +56,7 @@ function getBreakpointState(width) {
   for (rangeKey in varsBreakpoints) {
     breakpointState[rangeKey] = _inBreakpointRange(
       varsBreakpoints[rangeKey],
-      width
+      width,
     );
   }
 

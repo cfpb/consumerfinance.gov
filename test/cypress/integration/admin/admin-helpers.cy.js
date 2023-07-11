@@ -10,7 +10,7 @@ export class AdminPage {
         validate() {
           cy.getCookie('sessionid').should('exist');
         },
-      }
+      },
     );
 
     this.open();
@@ -74,7 +74,7 @@ export class AdminPage {
 
   addMortgageData(name) {
     cy.get(
-      `a[href="/admin/data_research/mortgage${name}/create/"]:first`
+      `a[href="/admin/data_research/mortgage${name}/create/"]:first`,
     ).click();
     cy.get('#id_name').type('test');
     this.submitForm();

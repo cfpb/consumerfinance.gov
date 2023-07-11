@@ -66,12 +66,12 @@ function MegaMenu(element) {
     // Set initial transition for root menu on mobile. It's hidden on desktop.
     if (!isInDesktop) {
       const transition = new MoveTransition(rootContentDom).init(
-        MoveTransition.CLASSES.MOVE_LEFT
+        MoveTransition.CLASSES.MOVE_LEFT,
       );
       rootMenu.setTransition(
         transition,
         transition.moveLeft,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
     }
 
@@ -87,10 +87,10 @@ function MegaMenu(element) {
     // Add events and listeners to root menu.
     _addEvents(rootMenu);
     _mobileNav.addEventListener('rootexpandbegin', () =>
-      this.dispatchEvent('rootexpandbegin', { target: this })
+      this.dispatchEvent('rootexpandbegin', { target: this }),
     );
     _mobileNav.addEventListener('rootcollapseend', () =>
-      this.dispatchEvent('rootcollapseend', { target: this })
+      this.dispatchEvent('rootcollapseend', { target: this }),
     );
 
     window.addEventListener('resize', _resizeHandler);

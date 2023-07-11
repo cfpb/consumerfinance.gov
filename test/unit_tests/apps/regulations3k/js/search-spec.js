@@ -65,7 +65,7 @@ describe('The Regs3K search page', () => {
     simulateEvent('submit', form);
 
     expect(global.location.assign).toBeCalledWith(
-      'http://localhost/?q=money&regs=1002'
+      'http://localhost/?q=money&regs=1002',
     );
   });
 

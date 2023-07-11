@@ -83,7 +83,7 @@ chartActionCreators.fetchCountyStates = (countyState) => (dispatch) =>
     Object.keys(states).forEach((state) => {
       const isValid = states[state].counties.reduce(
         (prev, curr) => prev || curr.valid || false,
-        false
+        false,
       );
       if (isValid) {
         reuseState = reuseState || countyState === state;
@@ -137,16 +137,16 @@ chartActionCreators.fetchStates =
         chartActionCreators.setGeo(
           selectedState.fips,
           selectedState.name,
-          'state'
-        )
+          'state',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           selectedState.fips,
           selectedState.name,
           'state',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return states;
     });
@@ -173,7 +173,7 @@ chartActionCreators.fetchMetros =
     return utils.getMetroData((data) => {
       // Alphabetical order
       let newMetros = data[metroState].metros.sort((a, b) =>
-        a.name < b.name ? -1 : 1
+        a.name < b.name ? -1 : 1,
       );
       newMetros = newMetros.filter((metro) => metro.valid);
       if (!newMetros.length) {
@@ -189,16 +189,16 @@ chartActionCreators.fetchMetros =
         chartActionCreators.setGeo(
           newMetros[0].fips,
           newMetros[0].name,
-          'metro'
-        )
+          'metro',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           newMetros[0].fips,
           newMetros[0].name,
           'metro',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return newMetros;
     });
@@ -216,7 +216,7 @@ chartActionCreators.fetchCounties =
     return utils.getCountyData((data) => {
       // Alphabetical order
       let newCounties = data[countyState].counties.sort((a, b) =>
-        a.name < b.name ? -1 : 1
+        a.name < b.name ? -1 : 1,
       );
       newCounties = newCounties.filter((county) => county.valid);
       dispatch(chartActionCreators.setCounties(newCounties));
@@ -224,16 +224,16 @@ chartActionCreators.fetchCounties =
         chartActionCreators.setGeo(
           newCounties[0].fips,
           newCounties[0].name,
-          'county'
-        )
+          'county',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           newCounties[0].fips,
           newCounties[0].name,
           'county',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return newCounties;
     });

@@ -45,7 +45,7 @@ function ExpandableTransition(element) {
     _baseTransition.init();
     _baseTransition.addEventListener(
       BaseTransition.END_EVENT,
-      _transitionComplete.bind(this)
+      _transitionComplete.bind(this),
     );
 
     if (element.classList.contains(CLASSES.OPEN_DEFAULT)) {
