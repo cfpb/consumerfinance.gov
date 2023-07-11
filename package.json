@@ -35,7 +35,7 @@
     "autoprefixer": "10.4.14",
     "cfpb-chart-builder": "6.4.2",
     "enforce-node-version": "0.1.0",
-    "esbuild": "0.18.11",
+    "esbuild": "0.17.19",
     "fancy-log": "2.0.0",
     "highcharts": "7.2.2",
     "less": "4.1.3",
