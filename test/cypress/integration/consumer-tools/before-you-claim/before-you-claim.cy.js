@@ -25,7 +25,7 @@ describe('Planning your Social Security', () => {
   //**********Language Selection***************/
   it('should have a spanish view', () => {
     cy.intercept('/consumer-tools/retirement/before-you-claim/es').as(
-      'getSpanish'
+      'getSpanish',
     );
     claim.setLanguageToSpanish();
     cy.wait('@getSpanish');
@@ -34,10 +34,10 @@ describe('Planning your Social Security', () => {
 
   it('should display tool tip in step one after clicking svg tip icon', () => {
     cy.get('#claiming-social-security #tooltip-container').should(
-      'not.be.visible'
+      'not.be.visible',
     );
     cy.get(
-      '#claiming-social-security #step-one-form .cf-icon-svg__help-round'
+      '#claiming-social-security #step-one-form .cf-icon-svg__help-round',
     ).click();
     cy.get('#claiming-social-security #tooltip-container').should('be.visible');
   });
@@ -45,7 +45,7 @@ describe('Planning your Social Security', () => {
   it('should show error if user is over the age of 70', () => {
     claim.enterAgeOver70();
     cy.get(
-      '#claiming-social-security #step-one-form .m-notification__warning'
+      '#claiming-social-security #step-one-form .m-notification__warning',
     ).should('be.visible');
   });
 
@@ -55,7 +55,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #graph-container .learn-how a').should(
       'have.attr',
       'href',
-      '/consumer-tools/retirement/before-you-claim/about/'
+      '/consumer-tools/retirement/before-you-claim/about/',
     );
   });
 
@@ -66,7 +66,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #claim-canvas .graph__bar').each(
       (elem) => {
         cy.wrap(elem).should('not.have.css', 'height', '0px');
-      }
+      },
     );
   });
 
@@ -89,7 +89,7 @@ describe('Planning your Social Security', () => {
             cy.wrap(elem).should('not.have.css', 'height', '0px');
             break;
         }
-      }
+      },
     );
   });
 
@@ -102,7 +102,7 @@ describe('Planning your Social Security', () => {
       .click();
 
     lsQuestions = cy.get(
-      '#claiming-social-security .question-married .lifestyle-response'
+      '#claiming-social-security .question-married .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -124,7 +124,7 @@ describe('Planning your Social Security', () => {
       .click();
 
     lsQuestions = cy.get(
-      '#claiming-social-security .question-married .lifestyle-response'
+      '#claiming-social-security .question-married .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -145,7 +145,7 @@ describe('Planning your Social Security', () => {
       .contains('Widowed')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-married .lifestyle-response'
+      '#claiming-social-security .question-married .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -166,7 +166,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -206,7 +206,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -246,7 +246,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -288,7 +288,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -328,7 +328,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
 
     qOne = lsQuestions.first();
@@ -368,7 +368,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-working .lifestyle-response'
+      '#claiming-social-security .question-working .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -409,7 +409,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -448,7 +448,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -487,7 +487,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -528,7 +528,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -567,7 +567,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -606,7 +606,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-expenses .lifestyle-response'
+      '#claiming-social-security .question-expenses .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -647,7 +647,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -686,7 +686,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -725,7 +725,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -766,7 +766,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -805,7 +805,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -844,7 +844,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-income .lifestyle-response'
+      '#claiming-social-security .question-income .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne
@@ -885,7 +885,7 @@ describe('Planning your Social Security', () => {
       .contains('Yes')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-longevity .lifestyle-response'
+      '#claiming-social-security .question-longevity .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne.should('have.attr', 'data-responds-to', 'yes').and('be.visible');
@@ -905,7 +905,7 @@ describe('Planning your Social Security', () => {
       .contains('No')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-longevity .lifestyle-response'
+      '#claiming-social-security .question-longevity .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne.should('have.attr', 'data-responds-to', 'yes').and('not.be.visible');
@@ -925,7 +925,7 @@ describe('Planning your Social Security', () => {
       .contains('Not Sure')
       .click();
     lsQuestions = cy.get(
-      '#claiming-social-security .question-longevity .lifestyle-response'
+      '#claiming-social-security .question-longevity .lifestyle-response',
     );
     qOne = lsQuestions.first();
     qOne.should('have.attr', 'data-responds-to', 'yes').and('not.be.visible');
@@ -944,7 +944,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #retirement-age-selector').select('70');
     cy.get('#claiming-social-security .age-response-value').should(
       'contain',
-      '70'
+      '70',
     );
   });
 
@@ -953,7 +953,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #retirement-age-selector').select('70');
     cy.get('#claiming-social-security .next-steps_max').should(
       'contain',
-      'which is your maximum'
+      'which is your maximum',
     );
   });
 
@@ -962,7 +962,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #retirement-age-selector').select('68');
     cy.get('#claiming-social-security .next-steps_over').should(
       'contain',
-      'which is later'
+      'which is later',
     );
   });
 
@@ -971,7 +971,7 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #retirement-age-selector').select('67');
     cy.get('#claiming-social-security .next-steps_equal').should(
       'contain',
-      'which is your'
+      'which is your',
     );
   });
 
@@ -980,14 +980,14 @@ describe('Planning your Social Security', () => {
     cy.get('#claiming-social-security #retirement-age-selector').select('66');
     cy.get('#claiming-social-security .next-steps_under').should(
       'contain',
-      'which is earlier'
+      'which is earlier',
     );
   });
 
   it('should contain link to the external SSA website', () => {
     claim.enterAgeUnder50();
     cy.get(
-      '#claiming-social-security #age-selector-response li.next-step-one a'
+      '#claiming-social-security #age-selector-response li.next-step-one a',
     ).should('have.attr', 'href', 'https://www.ssa.gov/myaccount/');
   });
 });

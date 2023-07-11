@@ -3,20 +3,13 @@ import { AdminPage } from './admin-helpers.cy.js';
 const admin = new AdminPage();
 
 describe('Admin', () => {
-  before(() => {
+  beforeEach(() => {
     /* We can be reasonably sure that the Wagtail admin is being used on a
       laptop screen or larger, and the table editor is wider than Cypress's
       default viewport, so we'll size the viewport appropriately */
     cy.viewport('macbook-13');
-    admin.open();
-    admin.login();
-  });
 
-  beforeEach(() => {
-    /* Preserve the 'sessionid' cookie so it will not be cleared
-       before the NEXT test starts. */
-    Cypress.Cookies.preserveOnce('sessionid');
-    cy.viewport('macbook-13');
+    admin.login();
   });
 
   it('should login', () => {
@@ -113,19 +106,17 @@ describe('Admin', () => {
   });
 
   describe('Custom TableBlock', () => {
-    before(() => {
+    beforeEach(() => {
+      admin.login();
       admin.addBlogChildPage();
       admin.addFullWidthText();
       admin.addTable();
-    });
-
-    beforeEach(() => {
       admin.editFirstTableCell();
     });
 
-    it('should be able to create and edit a table', () => {
+    it('should be able to create and edit a table', async () => {
       const text = 'test cell text';
-      admin.typeTableEditorTextbox(text);
+      await admin.typeTableEditorTextbox(text);
       admin.closeTableEditor();
       admin.searchFirstTableCell(text).should('be.visible');
     });
@@ -139,8 +130,8 @@ describe('Admin', () => {
       admin.closeTableEditor();
     });
 
-    it('should be able to save an empty cell', () => {
-      admin.typeTableEditorTextbox('{selectall} ');
+    it('should be able to save an empty cell', async () => {
+      await admin.typeTableEditorTextbox('{selectall} ');
       admin.closeTableEditor();
       admin.getFirstTableCell().should('be.empty');
     });

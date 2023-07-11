@@ -29,7 +29,7 @@ function ExpandableFacetTransition(element) {
     _baseTransition.init(initialClass);
     this.addEventListener(
       BaseTransition.END_EVENT,
-      _transitionComplete.bind(this)
+      _transitionComplete.bind(this),
     );
 
     if (element.classList.contains(CLASSES.OPEN_DEFAULT)) {

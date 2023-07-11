@@ -65,7 +65,7 @@ function trackSpecificLocation(bottomPos, percent) {
     });
     analyticsLog(
       `Scrolled ${percent}% of hidden height ` +
-        `${timeToContentEnd}s after page load.`
+        `${timeToContentEnd}s after page load.`,
     );
 
     hasFired[hasFiredID] = true;

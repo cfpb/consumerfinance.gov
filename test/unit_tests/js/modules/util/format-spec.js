@@ -12,7 +12,7 @@ describe('convertStringToNumber', () => {
     expect(convertStringToNumber('$1,234,567')).toBe(1234567);
     expect(convertStringToNumber('Ilikethenumber5')).toBe(5);
     expect(
-      convertStringToNumber('function somefunction() { do badstuff; }')
+      convertStringToNumber('function somefunction() { do badstuff; }'),
     ).toBe(0);
   });
 
@@ -75,7 +75,7 @@ describe('formatUSD', () => {
     expect(formatUSD({ amount: 1.258, decimalPlaces: 0 })).toBe('$1');
     expect(formatUSD({ amount: 1.25889349857, decimalPlaces: 0 })).toBe('$1');
     expect(formatUSD({ amount: 798127394873, decimalPlaces: 0 })).toBe(
-      '$798,127,394,873'
+      '$798,127,394,873',
     );
     expect(formatUSD({ amount: 0o00423, decimalPlaces: 0 })).toBe('$275');
   });
@@ -86,7 +86,7 @@ describe('formatUSD', () => {
     expect(formatUSD({ amount: 1.258, decimalPlaces: 1 })).toBe('$1.3');
     expect(formatUSD({ amount: 1.25889349857, decimalPlaces: 1 })).toBe('$1.3');
     expect(formatUSD({ amount: 798127394873, decimalPlaces: 1 })).toBe(
-      '$798,127,394,873.0'
+      '$798,127,394,873.0',
     );
     expect(formatUSD({ amount: 0o00423, decimalPlaces: 1 })).toBe('$275.0');
   });
@@ -105,10 +105,10 @@ describe('formatUSD', () => {
     expect(formatUSD({ amount: 1.25, decimalPlaces: 3 })).toBe('$1.250');
     expect(formatUSD({ amount: 1.258, decimalPlaces: 3 })).toBe('$1.258');
     expect(formatUSD({ amount: 1.25889349857, decimalPlaces: 3 })).toBe(
-      '$1.259'
+      '$1.259',
     );
     expect(formatUSD({ amount: 798127394873, decimalPlaces: 3 })).toBe(
-      '$798,127,394,873.000'
+      '$798,127,394,873.000',
     );
     expect(formatUSD({ amount: 0o00423, decimalPlaces: 3 })).toBe('$275.000');
   });
@@ -116,7 +116,7 @@ describe('formatUSD', () => {
   it('Format strings by removing non-numeric characters', () => {
     expect(formatUSD({ amount: 'foo99', decimalPlaces: 0 })).toBe('$99');
     expect(formatUSD({ amount: '--??!!1,2,3,4,5,6,7', decimalPlaces: 0 })).toBe(
-      '-$1,234,567'
+      '-$1,234,567',
     );
     expect(formatUSD({ amount: 'zero', decimalPlaces: 0 })).toBe('$0');
   });

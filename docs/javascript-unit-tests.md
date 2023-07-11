@@ -537,8 +537,8 @@ Here are the first 22 lines of
 that tests this component:
 
 ```js
-import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 const BASE_CLASS = 'm-notification';
+import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 const HTML_SNIPPET = `
   <div class="m-notification">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>

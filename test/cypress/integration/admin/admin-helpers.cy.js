@@ -1,9 +1,26 @@
 export class AdminPage {
-  open() {
-    cy.visit('/login/');
+  login() {
+    cy.session(
+      'login',
+      () => {
+        this.open();
+        this.submitLoginForm();
+      },
+      {
+        validate() {
+          cy.getCookie('sessionid').should('exist');
+        },
+      },
+    );
+
+    this.open();
   }
 
-  login() {
+  open() {
+    cy.visit('/admin/');
+  }
+
+  submitLoginForm() {
     cy.get('#id_username').type('admin');
     cy.get('#id_password').type('admin');
     cy.get('form').submit();
@@ -46,26 +63,18 @@ export class AdminPage {
   }
 
   searchContact(contact_heading) {
-    cy.get('#changelist-search')
-      .type(contact_heading)
-      .type('{enter}')
-      .then(() => {
-        // we need to wait for results to be populated
-        cy.wait(1000);
-      });
+    cy.get('#changelist-search').type(contact_heading);
+    cy.get('#changelist-search').type('{enter}');
   }
 
   removeContact() {
-    cy.get('a[href^="/admin/v1/contact/delete/"]:first')
-      .click({ force: true })
-      .then(() => {
-        cy.get('[value="Yes, delete"]').click();
-      });
+    cy.get('a[href^="/admin/v1/contact/delete/"]:first').click({ force: true });
+    cy.get('[value="Yes, delete"]').click();
   }
 
   addMortgageData(name) {
     cy.get(
-      `a[href="/admin/data_research/mortgage${name}/create/"]:first`
+      `a[href="/admin/data_research/mortgage${name}/create/"]:first`,
     ).click();
     cy.get('#id_name').type('test');
     this.submitForm();
@@ -109,7 +118,8 @@ export class AdminPage {
   }
 
   setRegulationEffectiveDate(name) {
-    cy.get('#id_effective_date').clear().type(name);
+    cy.get('#id_effective_date').clear();
+    cy.get('#id_effective_date').type(name);
   }
 
   openMegaMenu() {
@@ -133,7 +143,8 @@ export class AdminPage {
 
   clickBlock(name) {
     const block = `.action-add-block-${name}`;
-    cy.get(block).scrollIntoView().should('be.visible');
+    cy.get(block).scrollIntoView();
+    cy.get(block).should('be.visible');
     return cy.get(block).click();
   }
 
@@ -227,6 +238,8 @@ export class AdminPage {
   editFirstTableCell() {
     cy.get('.htCore td').first().as('firstTableCell');
 
+    cy.get('@firstTableCell').scrollIntoView({ duration: 1000 });
+
     /* We need to click near the top left of the cell. */
     cy.get('@firstTableCell').dblclick(5, 5, { force: true });
     this.getTableEditor();
@@ -234,9 +247,8 @@ export class AdminPage {
 
   selectTableEditorButton(name) {
     // Type a slash to open the popup menu.
-    cy.get('.public-DraftEditor-content:visible', { timeout: 1000 })
-      .clear()
-      .type('/');
+    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
+    cy.get('@tableEditor').find('.public-DraftEditor-content').type('/');
 
     // Then click on the item we want.
     cy.get('.Draftail-ComboBox__option-text').contains(name).click();
@@ -253,14 +265,10 @@ export class AdminPage {
   }
 
   typeTableEditorTextbox(text) {
-    return (
-      cy
-        .get('@tableEditor')
-        .find('.public-DraftEditor-content')
-        .focus()
-        .type(text)
-        // We need to wait for a bit or the typed text won't be captured
-        .wait(500)
-    );
+    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
+    return cy
+      .get('@tableEditor')
+      .find('.public-DraftEditor-content')
+      .type(text);
   }
 }

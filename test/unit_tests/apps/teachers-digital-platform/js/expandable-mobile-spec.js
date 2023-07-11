@@ -89,7 +89,7 @@ describe('expandable-mobile', () => {
 
     beforeExpandableTransitionInit();
     expect(expandableDiv.classList.contains(MOBILE_COLLAPSED_CLASS)).toEqual(
-      false
+      false,
     );
   });
 
@@ -98,7 +98,7 @@ describe('expandable-mobile', () => {
 
     beforeExpandableTransitionInit();
     expect(expandableDiv.classList.contains(MOBILE_COLLAPSED_CLASS)).toEqual(
-      false
+      false,
     );
   });
 });

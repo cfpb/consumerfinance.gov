@@ -28,7 +28,7 @@ describe('EmailPopup', () => {
       emailPopup.hidePopup();
       const baseElement = emailPopup.getDom();
       const containsClass = baseElement.classList.contains(
-        'o-email-popup__visible'
+        'o-email-popup__visible',
       );
       expect(containsClass).toBe(false);
     });
@@ -42,11 +42,11 @@ describe('EmailPopup', () => {
         const isShown = emailPopup.showPopup();
         const baseElement = emailPopup.getDom();
         const containsClass = baseElement.classList.contains(
-          'o-email-popup__visible'
+          'o-email-popup__visible',
         );
         expect(containsClass).toBe(false);
         expect(isShown).toBe(false);
-      }
+      },
     );
 
     it(
@@ -60,11 +60,11 @@ describe('EmailPopup', () => {
         const isShown = emailPopup.showPopup();
         const baseElement = emailPopup.getDom();
         const containsClass = baseElement.classList.contains(
-          'o-email-popup__visible'
+          'o-email-popup__visible',
         );
         expect(containsClass).toBe(true);
         expect(isShown).toBe(true);
-      }
+      },
     );
   });
 });

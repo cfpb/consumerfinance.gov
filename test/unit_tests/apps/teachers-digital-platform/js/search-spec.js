@@ -200,29 +200,29 @@ describe('The TDP search page', () => {
     const parentCheckbox = document.querySelector('#topic--earn');
 
     let numChecked = document.querySelectorAll(
-      '.o-expandable-facets .a-checkbox:checked'
+      '.o-expandable-facets .a-checkbox:checked',
     ).length;
     expect(numChecked).toEqual(1);
 
     parentCheckbox.checked = true;
     simulateEvent('change', parentCheckbox);
     numChecked = document.querySelectorAll(
-      '.o-expandable-facets .a-checkbox:checked'
+      '.o-expandable-facets .a-checkbox:checked',
     ).length;
     expect(numChecked).toEqual(3);
     expect(window.location.href).toEqual(
-      'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2'
+      'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2',
     );
 
     const childCheckbox = document.querySelector('#topic--getting-paid');
     childCheckbox.checked = false;
     simulateEvent('change', childCheckbox);
     numChecked = document.querySelectorAll(
-      '.o-expandable-facets .a-checkbox:checked'
+      '.o-expandable-facets .a-checkbox:checked',
     ).length;
     expect(numChecked).toEqual(1);
     expect(window.location.href).toEqual(
-      'http://localhost/?q=executive&building_block=1&topic=2'
+      'http://localhost/?q=executive&building_block=1&topic=2',
     );
   });
 

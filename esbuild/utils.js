@@ -34,7 +34,7 @@ async function getFiles(dir) {
       if (blocklist.indexOf(dirent.name) > -1) return '';
       const res = resolve(dir, dirent.name);
       return dirent.isDirectory() ? getFiles(res) : res;
-    })
+    }),
   );
   return files.flat().filter((v) => v);
 }

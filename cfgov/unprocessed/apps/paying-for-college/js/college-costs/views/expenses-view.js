@@ -22,10 +22,10 @@ const expensesView = {
    */
   init: () => {
     expensesView._expensesItems = document.querySelectorAll(
-      '[data-expenses-item]'
+      '[data-expenses-item]',
     );
     expensesView._expensesInputs = document.querySelectorAll(
-      'input[data-expenses-item]'
+      'input[data-expenses-item]',
     );
     expensesView._regionSelect = document.querySelector('#expenses__region');
 

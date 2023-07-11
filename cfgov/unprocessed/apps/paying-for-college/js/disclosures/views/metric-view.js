@@ -135,7 +135,7 @@ const metricView = {
       $lowerPoint = $national;
     }
     const $higherLabels = $higherPoint.find(
-      '.bar-graph_label, .bar-graph_value'
+      '.bar-graph_label, .bar-graph_value',
     );
 
     // If the values are equal, handle the display with CSS only
