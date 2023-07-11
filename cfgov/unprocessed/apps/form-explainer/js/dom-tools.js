@@ -80,7 +80,7 @@ function addClass(selector, className) {
   className = className.split(', ');
 
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => element.classList.add(...className))
+    fastDom.mutate(() => element.classList.add(...className)),
   );
 }
 
@@ -171,7 +171,7 @@ function _isEl(element) {
  */
 function hide(selector) {
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => (element.style.display = 'none'))
+    fastDom.mutate(() => (element.style.display = 'none')),
   );
 }
 
@@ -181,7 +181,7 @@ function hide(selector) {
  */
 function show(selector) {
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => (element.style.display = 'block'))
+    fastDom.mutate(() => (element.style.display = 'block')),
   );
 }
 

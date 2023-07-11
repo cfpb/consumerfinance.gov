@@ -206,7 +206,7 @@ const handleFetchSearchResults = (searchTerm) => {
 
   // Send the keywords that return 0 results to Analytics.
   const resultsCountBlock = document.querySelector(
-    '#tdp-search-facets-and-results .results_count'
+    '#tdp-search-facets-and-results .results_count',
   );
   if (resultsCountBlock) {
     const resultsCount = resultsCountBlock.getAttribute('data-results-count');
@@ -236,7 +236,7 @@ const bindAnalytics = (spyMethod) => {
   }
 
   const searchContent = document.querySelector(
-    '#tdp-search-facets-and-results'
+    '#tdp-search-facets-and-results',
   );
   if (searchContent) {
     searchContent.addEventListener('click', (event) => {

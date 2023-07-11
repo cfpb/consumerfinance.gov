@@ -119,19 +119,26 @@ select.chzn-select {
 }
 .chzn-container-single .chzn-search input {
   background: #fff url(../img/chosen-sprite.png) no-repeat 100% -20px;
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat 100% -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat 100% -20px,
     linear-gradient(top, #ffffff 85%, #eeeeee 99%);
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
@@ -419,20 +426,29 @@ select.chzn-select {
   border-right: none;
 }
 .chzn-rtl .chzn-search input {
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px, #ffffff;
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
+    #ffffff;
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-  background: url(../img/chosen-sprite.png) no-repeat -38px -20px,
+  background:
+    url(../img/chosen-sprite.png) no-repeat -38px -20px,
     linear-gradient(top, #ffffff 85%, #eeeeee 99%);
   padding: 4px 5px 4px 20px;
 }

@@ -24,7 +24,7 @@ function populateTableRows(contents) {
 
   const rows = contents.reduce(
     (rows, rowContent) => `${rows}${tableRow(rowContent)}`,
-    ''
+    '',
   );
 
   body.innerHTML = rows;

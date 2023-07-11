@@ -127,7 +127,7 @@ const expensesModel = {
         const data = expensesModel.rawData[key];
         if (data) {
           let value = convertStringToNumber(
-            expensesModel.rawData[key][region][salaryRange]
+            expensesModel.rawData[key][region][salaryRange],
           );
           value = Math.round(value / 12);
           expensesModel.values[propertyTranslator[key]] = value;
@@ -155,7 +155,7 @@ const expensesModel = {
           reject(error);
           console.log(
             'An error occurred when accessing the expenses API',
-            error
+            error,
           );
         });
     });

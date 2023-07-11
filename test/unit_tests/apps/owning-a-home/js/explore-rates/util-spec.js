@@ -79,7 +79,7 @@ describe('explore-rates/util', () => {
         'given a house price and down payment amount.',
       () => {
         expect(calcLoanAmount(200000, 20000)).toBe(180000);
-      }
+      },
     );
 
     it('should return 0 if loan amount is negative.', () => {
@@ -159,7 +159,7 @@ describe('explore-rates/util', () => {
         accessibleDataTableHeadDom,
         accessibleDataTableBodyDom,
         mockLabels,
-        mockVals
+        mockVals,
       );
       expect(accessibleDataTableHeadDom.innerHTML).toBe(tableHeadHtml);
       expect(accessibleDataTableBodyDom.innerHTML).toBe(tableBodyHtml);

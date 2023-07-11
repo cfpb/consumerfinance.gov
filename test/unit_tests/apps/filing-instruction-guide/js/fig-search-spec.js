@@ -15,20 +15,20 @@ describe('The Filing Instruction Guide search functionality', () => {
       expect(getSearchData(sections).length).toEqual(242);
 
       expect(getSearchData(sections)[0].title).toEqual(
-        '1. What is the filing instructions guide?'
+        '1. What is the filing instructions guide?',
       );
       expect(getSearchData(sections)[0].contents).toContain(
-        '1. What is the filing instructions guide?'
+        '1. What is the filing instructions guide?',
       );
 
       expect(getSearchData(sections)[10].title).toEqual(
-        'Field 3: Application method'
+        'Field 3: Application method',
       );
       expect(getSearchData(sections)[10].contents).toContain(
-        'Field 3: Application method'
+        'Field 3: Application method',
       );
       expect(getSearchData(sections)[10].contents).toContain(
-        'means by which the applicant submitted the application'
+        'means by which the applicant submitted the application',
       );
     });
 

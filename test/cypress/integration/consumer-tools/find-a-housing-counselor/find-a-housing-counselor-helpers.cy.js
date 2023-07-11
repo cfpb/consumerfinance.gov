@@ -14,7 +14,7 @@ export class FindAHousingCounselor {
       },
       (request) => {
         request.reply(responseMapboxAPIStreets);
-      }
+      },
     ).as('mapboxStreets');
     cy.intercept(
       {
@@ -22,7 +22,7 @@ export class FindAHousingCounselor {
       },
       (request) => {
         request.reply(responseMapboxAPIText);
-      }
+      },
     ).as('mapboxText');
   }
 

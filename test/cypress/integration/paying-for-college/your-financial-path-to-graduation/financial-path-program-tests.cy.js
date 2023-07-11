@@ -47,10 +47,10 @@ describe('Your Financial Path to Graduation (program-level functionality)', () =
     page.clickLeftNav('action-plan');
     page.actionPlan('put-into-action');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .associates-content'
+      '[data-state-based-visibility="put-into-action"] .associates-content',
     ).should('be.visible');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .graduate-content'
+      '[data-state-based-visibility="put-into-action"] .graduate-content',
     ).should('not.be.visible');
   });
 
@@ -59,10 +59,10 @@ describe('Your Financial Path to Graduation (program-level functionality)', () =
     page.clickLeftNav('action-plan');
     page.actionPlan('put-into-action');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+      '[data-state-based-visibility="put-into-action"] .undergrad-content',
     ).should('be.visible');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .graduate-content'
+      '[data-state-based-visibility="put-into-action"] .graduate-content',
     ).should('not.be.visible');
 
     cy.get('[data-nav_section="offer-letter"]').click();
@@ -72,10 +72,10 @@ describe('Your Financial Path to Graduation (program-level functionality)', () =
     page.clickLeftNav('action-plan');
     page.actionPlan('put-into-action');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+      '[data-state-based-visibility="put-into-action"] .undergrad-content',
     ).should('be.visible');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .graduate-content'
+      '[data-state-based-visibility="put-into-action"] .graduate-content',
     ).should('not.be.visible');
 
     cy.get('[data-nav_section="offer-letter"]').click();
@@ -85,10 +85,10 @@ describe('Your Financial Path to Graduation (program-level functionality)', () =
     page.clickLeftNav('action-plan');
     page.actionPlan('put-into-action');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+      '[data-state-based-visibility="put-into-action"] .undergrad-content',
     ).should('be.visible');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .graduate-content'
+      '[data-state-based-visibility="put-into-action"] .graduate-content',
     ).should('not.be.visible');
   });
 
@@ -100,10 +100,10 @@ describe('Your Financial Path to Graduation (program-level functionality)', () =
     page.clickLeftNav('action-plan');
     page.actionPlan('put-into-action');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .graduate-content'
+      '[data-state-based-visibility="put-into-action"] .graduate-content',
     ).should('be.visible');
     cy.get(
-      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+      '[data-state-based-visibility="put-into-action"] .undergrad-content',
     ).should('not.be.visible');
   });
 });

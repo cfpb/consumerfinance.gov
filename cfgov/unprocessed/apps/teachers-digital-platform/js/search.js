@@ -45,7 +45,7 @@ function attachHandlers() {
   cfExpandables.init();
   expandableFacets.init();
   const inputContainsLabel = document.querySelector(
-    '.tdp-activity-search .input-contains-label'
+    '.tdp-activity-search .input-contains-label',
   );
   if (inputContainsLabel) {
     const clearableInput = new ClearableInput(inputContainsLabel);
@@ -152,7 +152,7 @@ function handleSubmit(event) {
  */
 function fetchSearchResults(filters = []) {
   const searchContainer = document.querySelector(
-    '#tdp-search-facets-and-results'
+    '#tdp-search-facets-and-results',
   );
   const baseUrl = window.location.href.split('?')[0];
   const searchField = document.querySelector('input[name=q]');
@@ -263,7 +263,7 @@ function _updateParentFilter(element) {
   // Loop through ancestors and make sure they are checked or unchecked
   const parentWrapper = wrapper.parentElement.parentElement;
   const parentCheckbox = parentWrapper.querySelector(
-    'div>input[type=checkbox]'
+    'div>input[type=checkbox]',
   );
   if (parentCheckbox && parentCheckbox.parentElement === parentWrapper) {
     _updateParentFilter(parentCheckbox);

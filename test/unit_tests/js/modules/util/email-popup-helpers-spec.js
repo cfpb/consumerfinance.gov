@@ -37,15 +37,15 @@ describe('email-popup-helpers', () => {
         recordEmailRegistration('testPopup');
         const date = new Date();
         const testDate = date.setTime(
-          date.getTime() + 10000 * 24 * 60 * 60 * 1000
+          date.getTime() + 10000 * 24 * 60 * 60 * 1000,
         );
 
         /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
         expect(
-          localStorage.getItem('testPopupPopupShowNext') / 10000
+          localStorage.getItem('testPopupPopupShowNext') / 10000,
         ).toBeCloseTo(testDate / 10000);
-      }
+      },
     );
   });
 
@@ -57,7 +57,7 @@ describe('email-popup-helpers', () => {
         recordEmailPopupClosure('testPopup');
         const date = new Date();
         const testDate = date.setTime(
-          date.getTime() + 60 * 24 * 60 * 60 * 1000
+          date.getTime() + 60 * 24 * 60 * 60 * 1000,
         );
         expect(localStorage.getItem('testPopupPopupCount')).toBe('2');
 
@@ -65,9 +65,9 @@ describe('email-popup-helpers', () => {
          and check using toBeCloseTo matcher instead of toBe. */
         const valueStore = localStorage.getItem('testPopupPopupShowNext');
         expect(Number.parseInt(valueStore, 10) / 10000).toBeCloseTo(
-          testDate / 10000
+          testDate / 10000,
         );
-      }
+      },
     );
   });
 });

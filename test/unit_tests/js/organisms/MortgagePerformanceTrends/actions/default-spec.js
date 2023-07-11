@@ -51,7 +51,7 @@ describe('Mortgage Performance default action creators', () => {
       12345,
       'Alabama',
       'state',
-      false
+      false,
     );
     expect(action).toStrictEqual({
       type: 'UPDATE_CHART',
@@ -102,7 +102,7 @@ describe('Mortgage Performance default action creators', () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getMetroData()),
-        })
+        }),
       );
     });
 
@@ -120,7 +120,7 @@ describe('Mortgage Performance default action creators', () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getNonMetroData()),
-        })
+        }),
       );
     });
 
