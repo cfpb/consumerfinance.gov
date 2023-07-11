@@ -63,7 +63,7 @@ describe('Expandable facets', () => {
     expandableFacet = new ExpandableFacets(ef);
     expandableFacet.init();
     efLabel = document.querySelector(
-      '.o-expandable-facets_checkbox ~ .a-label'
+      '.o-expandable-facets_checkbox ~ .a-label',
     );
     efTarget = document.querySelector('.o-expandable-facets_target');
     efBody = document.querySelector('.o-expandable-facets_content');
@@ -88,10 +88,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(true);
 
     simulateEvent('click', efTarget);
@@ -99,10 +99,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(false);
     expect(efTarget.classList.contains('is-open')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(false);
   });
 
@@ -120,10 +120,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(true);
   });
 });

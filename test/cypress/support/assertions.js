@@ -16,7 +16,7 @@ const isInViewport = (_chai) => {
         Math.ceil(rect.right) <= client.width(),
       'expected #{this} to be in viewport',
       'expected #{this} to not be in viewport',
-      this._obj
+      this._obj,
     );
   }
 

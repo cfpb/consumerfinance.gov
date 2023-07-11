@@ -15,7 +15,7 @@ function init() {
 
   navItems = Array.from(navItems).reduce(
     (map, navItem) => map.set(navItem.getAttribute('href'), navItem),
-    new Map()
+    new Map(),
   );
 
   navItemContainers = Array.from(navItems).reduce((map, [key, navItem]) => {

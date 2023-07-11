@@ -54,7 +54,7 @@ function FormSubmit(element, baseClass, opts) {
   const _baseElement = checkDom(element, baseClass);
   const _formElement = _baseElement.querySelector('form');
   const _notificationElement = _baseElement.querySelector(
-    `.${Notification.BASE_CLASS}`
+    `.${Notification.BASE_CLASS}`,
   );
   let _notification;
   let _cachedFields;
@@ -150,7 +150,7 @@ function FormSubmit(element, baseClass, opts) {
         } else {
           _displayNotification(
             Notification[state],
-            message || getMessage(state, opts.language)
+            message || getMessage(state, opts.language),
           );
         }
         if (state === 'SUCCESS') {
@@ -167,7 +167,7 @@ function FormSubmit(element, baseClass, opts) {
    */
   function _replaceFormWithNotification(message) {
     const transition = new AlphaTransition(_baseElement).init(
-      AlphaTransition.CLASSES.ALPHA_100
+      AlphaTransition.CLASSES.ALPHA_100,
     );
     scrollIntoView(_formElement, { offset: 100, callback: fadeOutForm });
 

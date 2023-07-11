@@ -107,7 +107,7 @@ describe('fwb-results', () => {
     window['google_tag_manager'] = {};
 
     toggleButtons = document.querySelectorAll(
-      '.comparison-chart_toggle-button'
+      '.comparison-chart_toggle-button',
     );
     dataPoint = document.querySelectorAll('.comparison_data-point');
     expandableTarget = document.querySelector('.o-expandable_header');
@@ -147,7 +147,7 @@ describe('fwb-results', () => {
       expect(toggleButtons[0].classList.contains(SELECTED_CLASS)).toBe(false);
       expect(dataPoint[0].classList.contains(HIDDEN_CLASS)).toBe(true);
       expect(dataPoint[1].classList.contains(HIDDEN_CLASS)).toBe(true);
-    }
+    },
   );
 
   it('should show the correct category content when the toggle is clicked', () => {
