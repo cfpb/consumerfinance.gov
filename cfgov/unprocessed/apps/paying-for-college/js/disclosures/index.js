@@ -40,7 +40,7 @@ const app = {
             const schoolValues = schoolModel.init(
               nationalData[0],
               schoolData[0],
-              programData[0]
+              programData[0],
             );
 
             /* If PID exists, update the financial model and view based
@@ -64,7 +64,7 @@ const app = {
             // Update expenses model bases on region and salary
             const region = schoolValues.BLSAverage.substr(0, 2);
             $('#bls-region-select').val(region).change();
-          }
+          },
         );
       }
       // set financial caps based on data

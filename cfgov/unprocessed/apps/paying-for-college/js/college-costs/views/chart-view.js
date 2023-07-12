@@ -510,20 +510,20 @@ const chartView = {
 
   init: (body) => {
     chartView._meterChartBtns = body.querySelectorAll(
-      '.school-results_cohort-buttons input.a-radio'
+      '.school-results_cohort-buttons input.a-radio',
     );
     chartView.costOfBorrowingElem = body.querySelector(
-      '#cost-of-borrowing_chart'
+      '#cost-of-borrowing_chart',
     );
     chartView.compareCostElem = body.querySelector(
-      '#compare-cost-of-borrowing_chart'
+      '#compare-cost-of-borrowing_chart',
     );
     chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
     chartView.maxDebtElem = body.querySelector('#max-debt-guideline_chart');
     chartView.affordingElem = body.querySelector('#affording-your-loans_chart');
     chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
     chartView.repaymentMeterElem = body.querySelector(
-      '#school-results_repayment-meter'
+      '#school-results_repayment-meter',
     );
 
     _addRadioListeners();
@@ -543,12 +543,12 @@ const chartView = {
 
     chartView.costOfBorrowingChart = Highcharts.chart(
       chartView.costOfBorrowingElem,
-      { ...costOfBorrowingOpts }
+      { ...costOfBorrowingOpts },
     );
 
     chartView.compareCostOfBorrowingChart = Highcharts.chart(
       chartView.compareCostElem,
-      { ...columnChartOpts, ...compareCostOfBorrowingOpts }
+      { ...columnChartOpts, ...compareCostOfBorrowingOpts },
     );
 
     chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
@@ -590,7 +590,7 @@ const chartView = {
 
     chartView.repaymentMeterChart = Highcharts.chart(
       chartView.repaymentMeterElem,
-      { ...meterOpts, ...repaymentMeterOpts }
+      { ...meterOpts, ...repaymentMeterOpts },
     );
   },
 
@@ -676,7 +676,7 @@ const chartView = {
           debtString +
           '</strong>',
         13,
-        50
+        50,
       )
       .attr({
         zIndex: 5,
@@ -690,7 +690,7 @@ const chartView = {
       .text(
         'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
         13,
-        160
+        160,
       )
       .attr({
         zIndex: 5,

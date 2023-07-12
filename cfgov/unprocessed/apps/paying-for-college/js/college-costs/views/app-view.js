@@ -110,19 +110,19 @@ const appView = {
    */
   init: () => {
     appView._actionPlanChoices = document.querySelectorAll(
-      '.action-plan_choices .m-form-field input.a-radio'
+      '.action-plan_choices .m-form-field input.a-radio',
     );
     appView._didThisHelpChoices = document.querySelectorAll(
-      '[data-impact] .m-form-field input.a-radio'
+      '[data-impact] .m-form-field input.a-radio',
     );
     appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
-      '[data-app-button="save-and-finish-later"]'
+      '[data-app-button="save-and-finish-later"]',
     );
     appView._saveLinks = document.querySelectorAll('[data-app-save-link]');
     appView._copyLinkBtn = document.querySelectorAll('.copy-your-link');
     appView._includeParentPlusBtn = document.querySelector(
-      '#plan__parentPlusFeeRepay'
+      '#plan__parentPlusFeeRepay',
     );
 
     _addButtonListeners();
@@ -144,7 +144,7 @@ function _addButtonListeners() {
   appView._restartBtn.addEventListener('click', appView._handleRestartBtn);
   appView._saveForLaterBtn.addEventListener(
     'click',
-    appView._handleSaveForLaterBtn
+    appView._handleSaveForLaterBtn,
   );
   appView._copyLinkBtn.forEach((elem) => {
     elem.addEventListener('click', appView._handleCopyLinkBtn);
@@ -152,7 +152,7 @@ function _addButtonListeners() {
   });
   appView._includeParentPlusBtn.addEventListener(
     'click',
-    appView._handleIncludeParentPlusBtn
+    appView._handleIncludeParentPlusBtn,
   );
 }
 
@@ -164,7 +164,7 @@ function _handleDidThisHelpClick(event) {
   const parent = event.target.closest('.o-form_fieldset');
   sendAnalyticsEvent(
     'Impact question click: ' + parent.dataset.impact,
-    event.target.value
+    event.target.value,
   );
   updateState.byProperty(parent.dataset.impact, event.target.value);
 }

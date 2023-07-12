@@ -6,10 +6,10 @@ import {
   FlyoutMenu,
   MoveTransition,
 } from '@cfpb/cfpb-atomic-component';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
-import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
-import TabTrigger from '../modules/TabTrigger.js';
-import Tree from '../modules/Tree.js';
+import { MegaMenuDesktop } from '../organisms/MegaMenuDesktop.js';
+import { MegaMenuMobile } from '../organisms/MegaMenuMobile.js';
+import { TabTrigger } from '../modules/TabTrigger.js';
+import { Tree } from '../modules/Tree.js';
 import {
   DESKTOP,
   MOBILE,
@@ -66,12 +66,12 @@ function MegaMenu(element) {
     // Set initial transition for root menu on mobile. It's hidden on desktop.
     if (!isInDesktop) {
       const transition = new MoveTransition(rootContentDom).init(
-        MoveTransition.CLASSES.MOVE_LEFT
+        MoveTransition.CLASSES.MOVE_LEFT,
       );
       rootMenu.setTransition(
         transition,
         transition.moveLeft,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
     }
 
@@ -87,10 +87,10 @@ function MegaMenu(element) {
     // Add events and listeners to root menu.
     _addEvents(rootMenu);
     _mobileNav.addEventListener('rootexpandbegin', () =>
-      this.dispatchEvent('rootexpandbegin', { target: this })
+      this.dispatchEvent('rootexpandbegin', { target: this }),
     );
     _mobileNav.addEventListener('rootcollapseend', () =>
-      this.dispatchEvent('rootcollapseend', { target: this })
+      this.dispatchEvent('rootcollapseend', { target: this }),
     );
 
     window.addEventListener('resize', _resizeHandler);
@@ -218,4 +218,4 @@ function MegaMenu(element) {
   return this;
 }
 
-export default MegaMenu;
+export { MegaMenu };

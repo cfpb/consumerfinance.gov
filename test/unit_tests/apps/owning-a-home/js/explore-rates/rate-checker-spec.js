@@ -5,7 +5,7 @@ import { simulateEvent } from '../../../../../util/simulate-event.js';
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => new Promise((r) => r),
-  })
+  }),
 );
 
 const HTML_SNIPPET = `

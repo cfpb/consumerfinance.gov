@@ -6,8 +6,8 @@ import {
   FlyoutMenu,
   MoveTransition,
 } from '@cfpb/cfpb-atomic-component';
-import ClearableInput from '../modules/ClearableInput.js';
-import TabTrigger from '../modules/TabTrigger.js';
+import { ClearableInput } from '../modules/ClearableInput.js';
+import { TabTrigger } from '../modules/TabTrigger.js';
 
 const BASE_CLASS = 'm-global-search';
 
@@ -48,12 +48,12 @@ function GlobalSearch(element) {
 
     // Set initial appearance.
     const transition = new MoveTransition(_contentDom).init(
-      MoveTransition.CLASSES.MOVE_RIGHT
+      MoveTransition.CLASSES.MOVE_RIGHT,
     );
     _flyout.setTransition(
       transition,
       transition.moveRight,
-      transition.moveToOrigin
+      transition.moveToOrigin,
     );
     _flyout.init();
 
@@ -202,4 +202,4 @@ function GlobalSearch(element) {
   return this;
 }
 
-export default GlobalSearch;
+export { GlobalSearch };

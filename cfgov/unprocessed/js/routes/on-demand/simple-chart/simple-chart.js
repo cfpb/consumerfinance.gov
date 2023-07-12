@@ -107,7 +107,7 @@ function makeChartOptions(data, dataAttributes) {
   if (xAxisSource && chartType !== 'datetime') {
     defaultObj.xAxis.categories = getCategoriesFromXAxisSource(
       data.raw,
-      xAxisSource
+      xAxisSource,
     );
   }
 
@@ -207,7 +207,7 @@ function addProjectedMonths(chartObject, numMonths) {
       .text(
         `Values after ${projectedDate.humanFriendly} are projected`,
         this.plotWidth - 218,
-        165
+        165,
       )
       .css({
         fontSize: '15px',

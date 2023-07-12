@@ -44,11 +44,11 @@ function initialize() {
   this.transition = transition.init();
   this.transition.addEventListener(
     'expandBegin',
-    expandBeginHandler.bind(this)
+    expandBeginHandler.bind(this),
   );
   this.transition.addEventListener(
     'collapseEnd',
-    collapseEndHandler.bind(this)
+    collapseEndHandler.bind(this),
   );
 
   if (
@@ -69,7 +69,7 @@ function initialize() {
   if (this.isAccordionGroup) {
     eventObserver.addEventListener(
       'accordionActivated',
-      _accordionActivatedHandler.bind(this)
+      _accordionActivatedHandler.bind(this),
     );
   }
 }

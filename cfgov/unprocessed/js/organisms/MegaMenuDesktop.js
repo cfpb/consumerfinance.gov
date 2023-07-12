@@ -195,7 +195,7 @@ function MegaMenuDesktop(baseClass, menus) {
       if (transition) transition.setElement(wrapperDom);
       else
         transition = new MoveTransition(wrapperDom).init(
-          MoveTransition.CLASSES.MOVE_UP
+          MoveTransition.CLASSES.MOVE_UP,
         );
 
       /* TODO: The only reason hiding is necessary is that the
@@ -211,7 +211,7 @@ function MegaMenuDesktop(baseClass, menus) {
       menu.setTransition(
         transition,
         transition.moveUp,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
     } else if (nLevel === 2) {
       menu.suspend();
@@ -253,4 +253,4 @@ function MegaMenuDesktop(baseClass, menus) {
   return this;
 }
 
-export default MegaMenuDesktop;
+export { MegaMenuDesktop };

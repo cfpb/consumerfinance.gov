@@ -101,7 +101,7 @@ function attachTilemapFilter(select, chart, data) {
     updateTilemapLegend(
       chart.renderTo,
       updated,
-      updatedTitleObj ? updatedTitleObj.text : ''
+      updatedTitleObj ? updatedTitleObj.text : '',
     );
   });
 }
@@ -115,7 +115,7 @@ function attachTilemapFilter(select, chart, data) {
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
   const legend = node.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend'
+    'o-simple-chart_tilemap_legend',
   )[0];
   legend.innerHTML = '';
   const colors = [];
@@ -152,7 +152,7 @@ function getShortCode(data) {
   }
   /* eslint-disable-next-line no-console */
   return console.error(
-    'Unable to determine state shortcode. Data is misformatted for simple-chart.'
+    'Unable to determine state shortcode. Data is misformatted for simple-chart.',
   );
 }
 
@@ -234,7 +234,7 @@ function init(chartNode, target, data, dataAttributes) {
   const chart = Highmaps.mapChart(target, tilemapOptions);
 
   const legend = target.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend'
+    'o-simple-chart_tilemap_legend',
   )[0];
   legend.style.display = 'block';
   updateTilemapLegend(target, tilemapOptions, yAxisLabel);

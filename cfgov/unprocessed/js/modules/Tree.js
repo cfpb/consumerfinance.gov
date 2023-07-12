@@ -111,4 +111,4 @@ function TreeNode(tree, data, parent, children) {
   return this;
 }
 
-export default Tree;
+export { Tree };

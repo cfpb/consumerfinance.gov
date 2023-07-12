@@ -75,7 +75,7 @@ const financialModel = {
     // Debt Guide Difference
     financialModel.values.other_debtGuideDifference = Math.abs(
       financialModel.values.debt_totalAtGrad -
-        financialModel.values.salary_annual
+        financialModel.values.salary_annual,
     );
 
     financialModel._updateStateWithFinancials();
@@ -164,7 +164,7 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
-      vals.total_funding - vals.total_costs
+      vals.total_funding - vals.total_costs,
     );
 
     if (vals.total_gap < 0) {
@@ -196,7 +196,7 @@ const financialModel = {
     const subResult = enforceRange(
       financialModel.values.fedLoan_directSub,
       0,
-      getConstantsValue('subCaps')[year]
+      getConstantsValue('subCaps')[year],
     );
     if (subResult !== false) {
       financialModel.values.fedLoan_directSub = subResult.value;
@@ -229,7 +229,7 @@ const financialModel = {
     const unsubResult = enforceRange(
       financialModel.values.fedLoan_directUnsub,
       0,
-      unsubCap
+      unsubCap,
     );
     if (unsubResult !== false) {
       financialModel.values.fedLoan_directUnsub = unsubResult.value;
@@ -250,7 +250,7 @@ const financialModel = {
       const result = enforceRange(
         financialModel.values[key],
         limits[key][0],
-        limits[key][1]
+        limits[key][1],
       );
       if (result !== false) {
         value = result.value;
@@ -289,11 +289,11 @@ const financialModel = {
   _updateRates: () => {
     if (getStateValue('programLevel') === 'graduate') {
       financialModel.values.rate_directUnsub = getConstantsValue(
-        'unsubsidizedRateGrad'
+        'unsubsidizedRateGrad',
       );
     } else {
       financialModel.values.rate_directUnsub = getConstantsValue(
-        'unsubsidizedRateUndergrad'
+        'unsubsidizedRateUndergrad',
       );
     }
   },
@@ -304,12 +304,12 @@ const financialModel = {
   _updateStateWithFinancials: () => {
     updateState.byProperty(
       'uncoveredCosts',
-      (financialModel.values.total_gap > 0).toString()
+      (financialModel.values.total_gap > 0).toString(),
     );
 
     updateState.byProperty(
       'excessFunding',
-      (financialModel.values.total_excessFunding > 0).toString()
+      (financialModel.values.total_excessFunding > 0).toString(),
     );
 
     updateState.byProperty(
@@ -317,7 +317,7 @@ const financialModel = {
       (
         financialModel.values.debt_totalAtGrad >
         financialModel.values.salary_annual
-      ).toString()
+      ).toString(),
     );
   },
 
@@ -364,7 +364,7 @@ const financialModel = {
 
     // Get correct tuition based on property name
     financialModel.values.dirCost_tuition = convertStringToNumber(
-      getSchoolValue(tuitionProp)
+      getSchoolValue(tuitionProp),
     );
 
     // Get program length
@@ -376,19 +376,19 @@ const financialModel = {
       financialModel.values.dirCost_housing = 0;
     } else {
       financialModel.values.dirCost_housing = convertStringToNumber(
-        getSchoolValue(housingProp)
+        getSchoolValue(housingProp),
       );
     }
 
     // Get Other costs
     otherProp += otherProperties[housing];
     financialModel.values.indiCost_other = convertStringToNumber(
-      getStateValue(otherProp)
+      getStateValue(otherProp),
     );
 
     // Get Books costs
     financialModel.values.indiCost_books = convertStringToNumber(
-      getSchoolValue('books')
+      getSchoolValue('books'),
     );
 
     financialModel.recalculate();

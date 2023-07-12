@@ -5,7 +5,7 @@ describe('youtube-api', () => {
     it('should return an image URL with the video ID included', () => {
       const testID = 'thisTestID';
       expect(youTubeAPI.fetchImageURL(testID)).toBe(
-        'https://img.youtube.com/vi/thisTestID/maxresdefault.jpg'
+        'https://img.youtube.com/vi/thisTestID/maxresdefault.jpg',
       );
     });
 

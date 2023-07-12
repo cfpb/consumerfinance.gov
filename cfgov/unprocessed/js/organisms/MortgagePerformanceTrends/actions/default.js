@@ -122,16 +122,16 @@ const defaultActionCreators = () => {
           actions.setGeo(
             nonMetros[currStateIndex].fips,
             nonMetros[currStateIndex].name,
-            'non-metro'
-          )
+            'non-metro',
+          ),
         );
         dispatch(
           actions.updateChart(
             nonMetros[currStateIndex].fips,
             nonMetros[currStateIndex].name,
             'non-metro',
-            includeComparison
-          )
+            includeComparison,
+          ),
         );
         return nonMetros;
       });

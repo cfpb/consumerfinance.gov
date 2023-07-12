@@ -48,7 +48,7 @@ function FilterableListControls(element) {
       multiSelect.addEventListener('collapsebegin', _refreshExpandableHeight);
       multiSelect.addEventListener(
         'selectionsupdated',
-        _refreshExpandableHeight
+        _refreshExpandableHeight,
       );
     });
     window.addEventListener('resize', _refreshExpandableHeight);
@@ -125,7 +125,7 @@ function FilterableListControls(element) {
       dataLayerArray.push(
         _getDataLayerOptions('Filter:submit', label, '', () => {
           _form.submit();
-        })
+        }),
       );
       dataLayerArray.forEach((payload) => {
         analyticsSendEvent(payload);

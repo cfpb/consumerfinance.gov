@@ -90,7 +90,7 @@ msgstr "Hola Mundo!"
 
 ```shell
 cd cfgov
-django-admin.py compilemessages
+django-admin compilemessages
 ```
 
 ## Wagtail Considerations
@@ -103,7 +103,7 @@ The selected language will force translation of all translatable strings in temp
 
 ## Troubleshooting
 
-To ensure that strings in templates are picked up in message extraction (`django-admin.py makemessages`), it also helps to know that the way `makemessages` works.
+To ensure that strings in templates are picked up in message extraction (`django-admin makemessages`), it also helps to know that the way `makemessages` works.
 
 `makemessages` converts all Django `{% translate %}`, `{% blocktranslate %}`, and Jinja2 `{% trans %}` tags into `_(…)` gettext calls and then to have [`xgettext`](https://www.gnu.org/software/gettext/manual/gettext.html) process the files as if they were Python. This process _does not_ work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible.
 

@@ -11,10 +11,10 @@ let buttonsDom;
 function switchComparisons(category) {
   const allCategories = document.querySelectorAll('.comparison_data-point');
   const showCategory = document.querySelectorAll(
-    '[class^="comparison_data-point ' + category + '"]'
+    '[class^="comparison_data-point ' + category + '"]',
   );
   const selectedButton = document.querySelector(
-    '[data-compare-by="' + category + '"]'
+    '[data-compare-by="' + category + '"]',
   );
   const selectedButtonClass = 'comparison-chart_toggle-button__selected';
   const hiddenClass = 'u-hidden';
