@@ -17,6 +17,7 @@ spec:
     tty: true
 '''
     }
+  }
 
     stages{
         stage('Build Images') {
