@@ -20,11 +20,10 @@ pipeline{
     }
 
     stages{
-        stage('get docker version'){
-            steps{
-                script{
-                    configureDocker()
-                    docker --version
+        stage('Build Images') {
+            steps {
+                script {
+                configureDocker()
                 }
             }
         }
