@@ -22,7 +22,6 @@ pipeline{
     stages{
         stage('get docker version'){
             configureDocker()
-            docker --version 
         }
     }
 }
