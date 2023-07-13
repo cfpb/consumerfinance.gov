@@ -24,6 +24,7 @@ spec:
             steps {
                 script {
                 configureDocker()
+                docker --version
                 }
             }
         }
