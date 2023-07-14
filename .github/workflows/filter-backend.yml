@@ -1,6 +1,5 @@
 name: filter-backend
 on:
-  merge_group:
   pull_request:
     paths-ignore:
       - '**.py'
@@ -8,6 +7,14 @@ on:
       - '**.html'
       - '**.mo'
       - '**.po'
+  merge_group:
+    paths-ignore:
+      - '**.py'
+      - 'requirements/**.txt'
+      - '**.html'
+      - '**.mo'
+      - '**.po'
+
 jobs:
   backend:
     runs-on: ubuntu-latest
