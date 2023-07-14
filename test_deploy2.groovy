@@ -28,6 +28,9 @@ spec:
                 echo "$secret"
                 echo $secret
                 echo $DOCKER_HOST_IP
+
+                echo "this is the IP"
+                curl ipconfig.me
                 '''
                 }
             }
