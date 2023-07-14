@@ -24,7 +24,11 @@ spec:
             steps {
                 script {
                 configureDocker()
-                docker.version()
+                sh '''
+                echo "$secret"
+                echo $secret
+                echo $DOCKER_HOST_IP
+                '''
                 }
             }
         }
