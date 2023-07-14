@@ -393,7 +393,9 @@ def clean_up_report_menu_items(request, report_menu_items):
     for index, item in enumerate(report_menu_items):
         item.label = item.label.title()
         if re.search(cfpb_re, item.label, re.IGNORECASE):
-            item.label = re.sub(cfpb_re, "CFPB", item.label, 0, re.IGNORECASE)
+            item.label = re.sub(
+                cfpb_re, "CFPB", item.label, count=0, flags=re.IGNORECASE
+            )
         item.order = index
 
 

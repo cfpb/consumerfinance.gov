@@ -418,7 +418,7 @@ class RegModelTests(DjangoTestCase):
         mock_hit.short_name = "Regulation DD"
         mock_hit.paragraph_id = "2-a-Interp-2-i"
         mock_hit.meta.highlight.text = ["<strong>Mortgage</strong> highlight"]
-        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [  # noqa:
+        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [  # noqa: E501
             mock_hit
         ]
         mock_count = mock.Mock(return_value=1)
