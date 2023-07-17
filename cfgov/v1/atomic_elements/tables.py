@@ -7,8 +7,11 @@ from wagtail.contrib.table_block.blocks import (
     TableInput,
     TableInputAdapter,
 )
+from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.telepath import register
+
+from v1.blocks import HeadingBlock
 
 
 class RichTextTableInput(TableInput):
@@ -70,8 +73,8 @@ class AtomicTableBlock(TableBlock):
     class Meta:
         default = None
         icon = "table"
-        template = "v1/includes/organisms/tables/base.html"
-        label = "Table"
+        template = "v1/includes/organisms/tables/atomic.html"
+        label = "Table (Deprecated)"
 
 
 class ContactUsRow(blocks.StructBlock):
@@ -129,4 +132,41 @@ class CaseDocketTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/case-docket.html"
         label = "Table (Case Docket)"
+        unescape = False
+
+
+class Table(blocks.StructBlock):
+    heading = HeadingBlock(required=False)
+    options = blocks.MultipleChoiceBlock(
+        choices=[
+            ("is_full_width", "Display the table at full width"),
+            ("stack_on_mobile", "Stack the table columns on mobile"),
+        ],
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+    )
+    data = TypedTableBlock(
+        [
+            ("text", blocks.CharBlock()),
+            ("numeric", blocks.FloatBlock()),
+            (
+                "rich_text",
+                blocks.RichTextBlock(
+                    features=[
+                        "bold",
+                        "italic",
+                        "ol",
+                        "ul",
+                        "link",
+                        "document-link",
+                        "superscript",
+                    ]
+                ),
+            ),
+        ]
+    )
+
+    class Meta:
+        icon = "table"
+        template = "v1/includes/organisms/tables/base.html"
         unescape = False

@@ -22,6 +22,7 @@ from v1.atomic_elements.tables import (  # noqa: F401
     CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
+    Table,
 )
 from v1.util import ref
 
@@ -580,6 +581,7 @@ class FullWidthText(blocks.StreamBlock):
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
     table_block = AtomicTableBlock(table_options={"renderer": "html"})
+    table = Table()
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
