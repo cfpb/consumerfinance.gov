@@ -1,13 +1,6 @@
-from django.test import SimpleTestCase, TestCase
+from django.test import SimpleTestCase
 
-from v1.atomic_elements.tables import ContactUsTable, RichTextTableInput
-
-
-class TestRichTextTableInput(TestCase):
-    def test_rich_text_table_js_included(self):
-        self.assertIn(
-            "apps/admin/js/rich-text-table.js", RichTextTableInput().media._js
-        )
+from v1.atomic_elements.tables import ContactUsTable
 
 
 class ContactUsTableTests(SimpleTestCase):
