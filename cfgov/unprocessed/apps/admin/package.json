@@ -13,9 +13,6 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "draft-js": "0.11.7",
-    "draft-js-export-html": "1.4.1",
-    "immutable": "4.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
   },
