@@ -125,10 +125,6 @@ class LearnPage(AbstractFilterPage):
                 v1_blocks.EmailSignUpChooserBlock(),
             ),
             ("simple_chart", organisms.SimpleChart()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
             ("table", organisms.Table()),
             ("faq_group", schema.FAQGroup()),
             ("contact_us_table", organisms.ContactUsTable()),
@@ -153,10 +149,6 @@ class DocumentDetailPage(AbstractFilterPage):
             ("expandable_group", organisms.ExpandableGroup()),
             ("notification", molecules.Notification()),
             ("simple_chart", organisms.SimpleChart()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
             ("table", organisms.Table()),
             ("crc_table", organisms.ConsumerReportingCompanyTable()),
             ("case_docket_table", organisms.CaseDocketTable()),
@@ -203,10 +195,6 @@ class EventPage(AbstractFilterPage):
             ("content_with_anchor", molecules.ContentWithAnchor()),
             ("heading", v1_blocks.HeadingBlock(required=False)),
             ("image", molecules.ContentImage()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
             ("table", organisms.Table()),
             (
                 "reusable_text",

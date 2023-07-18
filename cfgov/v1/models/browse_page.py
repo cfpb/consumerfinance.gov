@@ -132,10 +132,6 @@ class BrowsePage(AbstractBrowsePage):
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
             ("snippet_list", organisms.ResourceList()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
             ("table", organisms.Table()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("chart_block", organisms.ChartBlock()),

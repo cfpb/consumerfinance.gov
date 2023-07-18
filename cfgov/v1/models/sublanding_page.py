@@ -38,10 +38,6 @@ class SublandingPage(CFGOVPage):
             ("snippet_list", organisms.ResourceList()),
             ("post_preview_snapshot", organisms.PostPreviewSnapshot()),
             ("contact", organisms.MainContactInfo()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
             ("table", organisms.Table()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
