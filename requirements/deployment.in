@@ -1,4 +1,6 @@
-# These packages are installed from PyPI.
+django==3.2.23
+wagtail==4.2.4
+
 base36==0.1.1
 beautifulsoup4==4.8.2
 boto3==1.22.7
@@ -22,6 +24,7 @@ elasticsearch<7.11  # Keep pinned to the deployed ES version
 govdelivery==1.4.0
 Jinja2==3.1.2
 lxml==4.9.1
+newrelic==8.5.0
 opensearch-py==2.2.0
 psycopg2-binary==2.8.6
 python-dateutil==2.8.2

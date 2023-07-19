@@ -46,10 +46,6 @@ ENV ALLOWED_HOSTS '["*"]'
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
 
-# Install python requirements
-COPY requirements requirements
-RUN cp -Rfp /build/* /usr/local && rm -Rf /build && pip install -r requirements/local.txt
-
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]

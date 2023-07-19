@@ -1,3 +1,0 @@
--r django.txt
--r wagtail.txt
--r libraries.txt
