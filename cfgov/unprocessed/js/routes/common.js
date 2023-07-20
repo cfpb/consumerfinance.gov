@@ -5,6 +5,7 @@
 // GLOBAL ATOMIC ELEMENTS.
 
 // Organisms.
+import { Breadcrumbs } from '../molecules/Breadcrumbs.js';
 import { Footer } from '../organisms/Footer.js';
 import { Header } from '../organisms/Header.js';
 
@@ -13,3 +14,5 @@ const header = new Header(document.body);
 header.init(document.body.querySelector('.a-overlay'));
 
 Footer.init(document.body);
+
+Breadcrumbs.init();

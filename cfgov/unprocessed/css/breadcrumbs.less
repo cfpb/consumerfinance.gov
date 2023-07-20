@@ -1,53 +1,101 @@
-.breadcrumbs {
+.m-breadcrumbs {
   // Mobile size.
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   gap: unit(10px / @base-font-size-px, rem);
   align-items: center;
+  flex-wrap: no-wrap;
+
   font-size: unit(14px / @base-font-size-px, rem);
   padding-top: unit(15px / @base-font-size-px, rem);
   padding-bottom: unit(15px / @base-font-size-px, rem);
-  margin-left: unit(20px / @base-font-size-px, rem);
-  margin-right: unit(20px / @base-font-size-px, rem);
+  min-height: 33px;
+  width: calc(100vw - 65px);
+  padding-left: 35px;
 
-  .cf-icon-svg {
-    fill: @pacific;
-    margin-left: unit(-20px / @base-font-size-px, rem);
+  &_toggle {
+    border: none;
+    background: none;
+    min-width: 44px;
+    min-height: 44px;
+    color: @pacific;
+    font-size: unit(22px / @base-font-size-px, rem);
+    font-weight: 500;
+
+    // Align bottom of larger ellipse to small breadcrumb text.
+    position: absolute;
+    top: 7px;
+    left: -10px;
+
+    &:hover {
+      color: @pacific-dark;
+    }
+  }
+
+  &_crumbs {
+    display: contents;
+
+    &[aria-expanded='false'] {
+      display: none;
+    }
+  }
+
+  &:not(.m-breadcrumbs__expanded) {
+    .m-breadcrumbs_crumb {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
+    }
+  }
+
+  &__expanded {
+    flex-wrap: wrap;
+    padding-left: initial;
   }
 
   // Desktop size.
   .respond-to-min( @bp-med-min, {
     padding-top: unit(30px / @base-font-size-px, rem);
     padding-bottom: 0;
+
+    &_toggle {
+      top: 21px;
+    }
   } );
 }
 
 // Hide on print.
 .respond-to-print( {
-  .breadcrumbs {
+  .m-breadcrumbs {
     display: none;
   }
 } );
 
 // Right-to-left (RTL) layout.
 html[lang='ar'] {
-  .breadcrumbs {
+  .m-breadcrumbs {
     margin-right: unit(20px / @base-font-size-px, rem);
     margin-left: unit(20px / @base-font-size-px, rem);
+    padding-right: 35px;
 
-    .cf-icon-svg {
-      margin-right: unit(-20px / @base-font-size-px, rem);
-      margin-left: initial;
+    &_toggle {
+      left: initial;
+      right: -10px;
+    }
+
+    &__expanded {
+      padding-right: initial;
     }
   }
 }
 
 // TODO: When the layout-2-1 template is converted to use `u-layout-grid_wrapper`, this can be removed.
-.content_wrapper .breadcrumbs {
-  margin-left: unit(35px / @base-font-size-px, rem);
+.content_wrapper .m-breadcrumbs {
+  margin-left: unit(15px / @base-font-size-px, rem);
 
   // Tablet size only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    margin-left: unit(50px / @base-font-size-px, rem);
+    margin-left: unit(30px / @base-font-size-px, rem);
   });
 }
