@@ -36,9 +36,6 @@ class SchemaContent(blocks.StreamBlock):
             )
         ]
     )
-    table_block = organisms.AtomicTableBlock(
-        table_options={"renderer": "html"}
-    )
     table = organisms.Table()
     tip = Tip()
     video_player = organisms.VideoPlayer()

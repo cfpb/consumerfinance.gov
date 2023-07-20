@@ -131,27 +131,6 @@ export class AdminPage {
     this.submitForm();
   }
 
-  openPage(name) {
-    this.openNavigationTab('Pages');
-    cy.get('.c-explorer__item__link').contains(name).click({ force: true });
-  }
-
-  addBlogChildPage() {
-    cy.visit('/admin/pages/add/v1/blogpage/1/');
-    cy.url().should('include', 'blogpage');
-  }
-
-  clickBlock(name) {
-    const block = `.action-add-block-${name}`;
-    cy.get(block).scrollIntoView();
-    cy.get(block).should('be.visible');
-    return cy.get(block).click();
-  }
-
-  addFullWidthText() {
-    this.clickBlock('full_width_text');
-  }
-
   openBuildingBlockActivity() {
     this.openNavigationTab('TDP Activity');
     this.selectSubMenu('Building Block');
@@ -216,59 +195,5 @@ export class AdminPage {
     this.openNavigationTab('Reports');
     this.selectSubMenu('Page Metadata');
     return cy.get('.listing').find('tr');
-  }
-
-  addTable() {
-    cy.get('input[value="table_block"]', { timeout: 1000 }).should('not.exist');
-    this.clickBlock('table_block');
-    cy.get('input[value="table_block"]', { timeout: 1000 }).should('exist');
-  }
-
-  getFirstTableCell() {
-    return cy.get('.htCore td').first();
-  }
-
-  getTableEditor() {
-    cy.get('.handsontableInputHolder', { timeout: 60000 })
-      // Make sure the editor isn't hidden
-      .should('not.have.css', 'z-index', '-1')
-      .as('tableEditor');
-  }
-
-  editFirstTableCell() {
-    cy.get('.htCore td').first().as('firstTableCell');
-
-    cy.get('@firstTableCell').scrollIntoView({ duration: 1000 });
-
-    /* We need to click near the top left of the cell. */
-    cy.get('@firstTableCell').dblclick(5, 5, { force: true });
-    this.getTableEditor();
-  }
-
-  selectTableEditorButton(name) {
-    // Type a slash to open the popup menu.
-    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
-    cy.get('@tableEditor').find('.public-DraftEditor-content').type('/');
-
-    // Then click on the item we want.
-    cy.get('.Draftail-ComboBox__option-text').contains(name).click();
-  }
-
-  searchFirstTableCell(name) {
-    return cy.get('@firstTableCell').contains(name);
-  }
-
-  closeTableEditor() {
-    /* Clicking anywhere outside the editor closes it, so we'll just click
-       on the very bottom right of the content container */
-    cy.get('.content').click('bottomRight', { force: true });
-  }
-
-  typeTableEditorTextbox(text) {
-    cy.get('@tableEditor').find('.public-DraftEditor-content').focus();
-    return cy
-      .get('@tableEditor')
-      .find('.public-DraftEditor-content')
-      .type(text);
   }
 }
