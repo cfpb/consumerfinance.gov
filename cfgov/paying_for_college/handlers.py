@@ -10,7 +10,7 @@ def cors_allow_particular_urls(sender, request, **kwargs):
     https://github.com/adamchainz/django-cors-headers#signals
     """
     return request.path.startswith(
-        '/paying-for-college2/understanding-your-financial-aid-offer/api/'
+        "/paying-for-college2/understanding-your-financial-aid-offer/api/"
     )
 
 check_request_enabled.connect(cors_allow_particular_urls)
