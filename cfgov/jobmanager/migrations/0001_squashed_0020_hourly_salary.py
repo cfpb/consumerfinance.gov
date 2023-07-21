@@ -12,565 +12,264 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("v1", "0001_squashed_0235_add_use_json_field_to_streamfields"),
+        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="ApplicantType",
+            name='ApplicantType',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("applicant_type", models.CharField(max_length=255)),
-                (
-                    "display_title",
-                    models.CharField(blank=True, max_length=255, null=True),
-                ),
-                ("description", models.TextField()),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('applicant_type', models.CharField(max_length=255)),
+                ('display_title', models.CharField(blank=True, max_length=255, null=True)),
+                ('description', models.TextField()),
             ],
             options={
-                "ordering": ["applicant_type"],
+                'ordering': ['applicant_type'],
             },
         ),
         migrations.CreateModel(
-            name="Grade",
+            name='Grade',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("grade", models.CharField(max_length=32)),
-                ("salary_min", models.IntegerField()),
-                ("salary_max", models.IntegerField()),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('grade', models.CharField(max_length=32)),
+                ('salary_min', models.IntegerField()),
+                ('salary_max', models.IntegerField()),
             ],
             options={
-                "ordering": ["grade"],
+                'ordering': ['grade'],
             },
         ),
         migrations.CreateModel(
-            name="JobCategory",
+            name='JobCategory',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("job_category", models.CharField(max_length=255)),
-                ("blurb", wagtail.fields.RichTextField(blank=True, null=True)),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('job_category', models.CharField(max_length=255)),
+                ('blurb', wagtail.fields.RichTextField(blank=True, null=True)),
             ],
             options={
-                "ordering": ["job_category"],
+                'ordering': ['job_category'],
             },
         ),
         migrations.CreateModel(
-            name="JobLength",
+            name='JobLength',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("job_length", models.CharField(max_length=255)),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('job_length', models.CharField(max_length=255)),
             ],
             options={
-                "ordering": ["job_length"],
+                'ordering': ['job_length'],
             },
         ),
         migrations.CreateModel(
-            name="JobListingPage",
+            name='JobListingPage',
             fields=[
-                (
-                    "cfgovpage_ptr",
-                    models.OneToOneField(
-                        auto_created=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        parent_link=True,
-                        primary_key=True,
-                        serialize=False,
-                        to="v1.cfgovpage",
-                    ),
-                ),
-                (
-                    "description",
-                    wagtail.fields.RichTextField(verbose_name="Summary"),
-                ),
-                ("open_date", models.DateField(verbose_name="Open date")),
-                ("close_date", models.DateField(verbose_name="Close date")),
-                (
-                    "salary_min",
-                    models.DecimalField(
-                        decimal_places=2,
-                        max_digits=11,
-                        verbose_name="Minimum salary",
-                    ),
-                ),
-                (
-                    "salary_max",
-                    models.DecimalField(
-                        decimal_places=2,
-                        max_digits=11,
-                        verbose_name="Maximum salary",
-                    ),
-                ),
-                (
-                    "allow_remote",
-                    models.BooleanField(
-                        default=False,
-                        help_text="Adds remote option to jobs with office locations.",
-                        verbose_name="Location can also be remote",
-                    ),
-                ),
-                (
-                    "responsibilities",
-                    wagtail.fields.RichTextField(
-                        blank=True, null=True, verbose_name="Responsibilities"
-                    ),
-                ),
-                (
-                    "travel_required",
-                    models.BooleanField(
-                        default=False,
-                        help_text='Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".',
-                    ),
-                ),
-                (
-                    "travel_details",
-                    wagtail.fields.RichTextField(
-                        blank=True,
-                        help_text='Optional: Add content for "Travel required" section.',
-                        null=True,
-                    ),
-                ),
-                (
-                    "additional_section_title",
-                    models.CharField(
-                        blank=True,
-                        help_text="Optional: Add title for an additional section that will display at end of job description.",
-                        max_length=255,
-                        null=True,
-                    ),
-                ),
-                (
-                    "additional_section_content",
-                    wagtail.fields.RichTextField(
-                        blank=True,
-                        help_text="Optional: Add content for an additional section that will display at end of job description.",
-                        null=True,
-                    ),
-                ),
-                (
-                    "division",
-                    models.ForeignKey(
-                        null=True,
-                        on_delete=django.db.models.deletion.PROTECT,
-                        to="jobmanager.jobcategory",
-                    ),
-                ),
-                (
-                    "job_length",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.PROTECT,
-                        to="jobmanager.joblength",
-                        verbose_name="Position length",
-                    ),
-                ),
+                ('cfgovpage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='v1.cfgovpage')),
+                ('description', wagtail.fields.RichTextField(verbose_name='Summary')),
+                ('open_date', models.DateField(verbose_name='Open date')),
+                ('close_date', models.DateField(verbose_name='Close date')),
+                ('salary_min', models.DecimalField(decimal_places=2, max_digits=11, verbose_name='Minimum salary')),
+                ('salary_max', models.DecimalField(decimal_places=2, max_digits=11, verbose_name='Maximum salary')),
+                ('allow_remote', models.BooleanField(default=False, help_text='Adds remote option to jobs with office locations.', verbose_name='Location can also be remote')),
+                ('responsibilities', wagtail.fields.RichTextField(blank=True, null=True, verbose_name='Responsibilities')),
+                ('travel_required', models.BooleanField(default=False, help_text='Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
+                ('travel_details', wagtail.fields.RichTextField(blank=True, help_text='Optional: Add content for "Travel required" section.', null=True)),
+                ('additional_section_title', models.CharField(blank=True, help_text='Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True)),
+                ('additional_section_content', wagtail.fields.RichTextField(blank=True, help_text='Optional: Add content for an additional section that will display at end of job description.', null=True)),
+                ('division', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to='jobmanager.jobcategory')),
+                ('job_length', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='jobmanager.joblength', verbose_name='Position length')),
             ],
             options={
-                "abstract": False,
+                'abstract': False,
             },
-            bases=("v1.cfgovpage",),
+            bases=('v1.cfgovpage',),
         ),
         migrations.CreateModel(
-            name="JobLocation",
+            name='JobLocation',
             fields=[
-                (
-                    "abbreviation",
-                    models.CharField(
-                        max_length=2, primary_key=True, serialize=False
-                    ),
-                ),
-                ("name", models.CharField(max_length=255)),
+                ('abbreviation', models.CharField(max_length=2, primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=255)),
             ],
             options={
-                "ordering": ("abbreviation",),
+                'ordering': ('abbreviation',),
             },
         ),
         migrations.CreateModel(
-            name="ServiceType",
+            name='ServiceType',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("service_type", models.CharField(max_length=255)),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('service_type', models.CharField(max_length=255)),
             ],
             options={
-                "ordering": ["service_type"],
+                'ordering': ['service_type'],
             },
         ),
         migrations.CreateModel(
-            name="USAJobsApplicationLink",
+            name='USAJobsApplicationLink',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "sort_order",
-                    models.IntegerField(blank=True, editable=False, null=True),
-                ),
-                ("announcement_number", models.CharField(max_length=128)),
-                ("url", models.URLField(max_length=255)),
-                (
-                    "applicant_type",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="usajobs_application_links",
-                        to="jobmanager.applicanttype",
-                    ),
-                ),
-                (
-                    "job_listing",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="usajobs_application_links",
-                        to="jobmanager.joblistingpage",
-                    ),
-                ),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
+                ('announcement_number', models.CharField(max_length=128)),
+                ('url', models.URLField(max_length=255)),
+                ('applicant_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='usajobs_application_links', to='jobmanager.applicanttype')),
+                ('job_listing', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='usajobs_application_links', to='jobmanager.joblistingpage')),
             ],
             options={
-                "ordering": ["sort_order"],
-                "abstract": False,
+                'ordering': ['sort_order'],
+                'abstract': False,
             },
         ),
         migrations.CreateModel(
-            name="Office",
+            name='Office',
             fields=[
-                (
-                    "joblocation_ptr",
-                    models.OneToOneField(
-                        auto_created=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        parent_link=True,
-                        primary_key=True,
-                        serialize=False,
-                        to="jobmanager.joblocation",
-                    ),
-                ),
+                ('joblocation_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='jobmanager.joblocation')),
             ],
             options={
-                "abstract": False,
+                'abstract': False,
             },
-            bases=("jobmanager.joblocation",),
+            bases=('jobmanager.joblocation',),
         ),
         migrations.CreateModel(
-            name="Region",
+            name='Region',
             fields=[
-                (
-                    "joblocation_ptr",
-                    models.OneToOneField(
-                        auto_created=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        parent_link=True,
-                        primary_key=True,
-                        serialize=False,
-                        to="jobmanager.joblocation",
-                    ),
-                ),
+                ('joblocation_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='jobmanager.joblocation')),
             ],
             options={
-                "abstract": False,
+                'abstract': False,
             },
-            bases=("jobmanager.joblocation",),
+            bases=('jobmanager.joblocation',),
         ),
         migrations.AddField(
-            model_name="joblistingpage",
-            name="service_type",
-            field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.PROTECT,
-                to="jobmanager.servicetype",
-            ),
+            model_name='joblistingpage',
+            name='service_type',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='jobmanager.servicetype'),
         ),
         migrations.CreateModel(
-            name="GradePanel",
+            name='GradePanel',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "sort_order",
-                    models.IntegerField(blank=True, editable=False, null=True),
-                ),
-                (
-                    "grade",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="grade_panels",
-                        to="jobmanager.grade",
-                    ),
-                ),
-                (
-                    "job_listing",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="grades",
-                        to="jobmanager.joblistingpage",
-                    ),
-                ),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
+                ('grade', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='grade_panels', to='jobmanager.grade')),
+                ('job_listing', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='grades', to='jobmanager.joblistingpage')),
             ],
             options={
-                "ordering": ("grade",),
+                'ordering': ('grade',),
             },
         ),
         migrations.CreateModel(
-            name="EmailApplicationLink",
+            name='EmailApplicationLink',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "sort_order",
-                    models.IntegerField(blank=True, editable=False, null=True),
-                ),
-                ("address", models.EmailField(max_length=254)),
-                ("label", models.CharField(max_length=255)),
-                ("description", models.TextField(blank=True, null=True)),
-                (
-                    "job_listing",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="email_application_links",
-                        to="jobmanager.joblistingpage",
-                    ),
-                ),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
+                ('address', models.EmailField(max_length=254)),
+                ('label', models.CharField(max_length=255)),
+                ('description', models.TextField(blank=True, null=True)),
+                ('job_listing', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='email_application_links', to='jobmanager.joblistingpage')),
             ],
             options={
-                "ordering": ["sort_order"],
-                "abstract": False,
+                'ordering': ['sort_order'],
+                'abstract': False,
             },
         ),
         migrations.CreateModel(
-            name="State",
+            name='State',
             fields=[
-                (
-                    "name",
-                    models.CharField(
-                        max_length=255, verbose_name="State name"
-                    ),
-                ),
-                (
-                    "abbreviation",
-                    models.CharField(
-                        max_length=2, primary_key=True, serialize=False
-                    ),
-                ),
-                (
-                    "region",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="states",
-                        to="jobmanager.region",
-                    ),
-                ),
+                ('name', models.CharField(max_length=255, verbose_name='State name')),
+                ('abbreviation', models.CharField(max_length=2, primary_key=True, serialize=False)),
+                ('region', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='states', to='jobmanager.region')),
             ],
             options={
-                "ordering": ("abbreviation",),
+                'ordering': ('abbreviation',),
             },
         ),
         migrations.CreateModel(
-            name="NewRegion",
+            name='NewRegion',
             fields=[
-                ("name", models.CharField(max_length=255)),
-                (
-                    "abbreviation",
-                    models.CharField(
-                        max_length=2, primary_key=True, serialize=False
-                    ),
-                ),
+                ('name', models.CharField(max_length=255)),
+                ('abbreviation', models.CharField(max_length=2, primary_key=True, serialize=False)),
             ],
             options={
-                "ordering": ("abbreviation",),
+                'ordering': ('abbreviation',),
             },
         ),
         migrations.CreateModel(
-            name="NewState",
+            name='NewState',
             fields=[
-                ("name", models.CharField(max_length=255)),
-                (
-                    "abbreviation",
-                    models.CharField(
-                        max_length=2, primary_key=True, serialize=False
-                    ),
-                ),
-                (
-                    "region",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.PROTECT,
-                        related_name="states",
-                        to="jobmanager.newregion",
-                    ),
-                ),
+                ('name', models.CharField(max_length=255)),
+                ('abbreviation', models.CharField(max_length=2, primary_key=True, serialize=False)),
+                ('region', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.PROTECT, related_name='states', to='jobmanager.newregion')),
             ],
             options={
-                "ordering": ("abbreviation",),
+                'ordering': ('abbreviation',),
             },
         ),
         migrations.CreateModel(
-            name="NewOffice",
+            name='NewOffice',
             fields=[
-                ("name", models.CharField(max_length=255)),
-                (
-                    "abbreviation",
-                    models.CharField(
-                        max_length=2, primary_key=True, serialize=False
-                    ),
-                ),
-                (
-                    "state",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.PROTECT,
-                        to="jobmanager.newstate",
-                    ),
-                ),
+                ('name', models.CharField(max_length=255)),
+                ('abbreviation', models.CharField(max_length=2, primary_key=True, serialize=False)),
+                ('state', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.newstate')),
             ],
             options={
-                "ordering": ("abbreviation",),
-                "abstract": False,
+                'ordering': ('abbreviation',),
+                'abstract': False,
             },
         ),
         migrations.AddField(
-            model_name="joblistingpage",
-            name="offices",
-            field=modelcluster.fields.ParentalManyToManyField(
-                blank=True,
-                related_name="job_listings",
-                to="jobmanager.NewOffice",
-            ),
+            model_name='joblistingpage',
+            name='offices',
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, related_name='job_listings', to='jobmanager.NewOffice'),
         ),
         migrations.AddField(
-            model_name="joblistingpage",
-            name="regions",
-            field=modelcluster.fields.ParentalManyToManyField(
-                blank=True,
-                related_name="job_listings",
-                to="jobmanager.NewRegion",
-            ),
+            model_name='joblistingpage',
+            name='regions',
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, related_name='job_listings', to='jobmanager.NewRegion'),
         ),
         migrations.CreateModel(
-            name="MajorCity",
+            name='MajorCity',
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("name", models.CharField(max_length=255)),
-                (
-                    "region",
-                    modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.PROTECT,
-                        related_name="major_cities",
-                        to="jobmanager.newregion",
-                    ),
-                ),
-                (
-                    "state",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.PROTECT,
-                        to="jobmanager.newstate",
-                    ),
-                ),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=255)),
+                ('region', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.PROTECT, related_name='major_cities', to='jobmanager.newregion')),
+                ('state', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.newstate')),
             ],
             options={
-                "ordering": ("state", "name"),
-                "abstract": False,
+                'ordering': ('state', 'name'),
+                'abstract': False,
             },
         ),
         migrations.DeleteModel(
-            name="JobLocation",
+            name='JobLocation',
         ),
         migrations.DeleteModel(
-            name="Office",
+            name='Office',
         ),
         migrations.DeleteModel(
-            name="Region",
+            name='Region',
         ),
         migrations.DeleteModel(
-            name="State",
+            name='State',
         ),
         migrations.RenameModel(
-            old_name="NewOffice",
-            new_name="Office",
+            old_name='NewOffice',
+            new_name='Office',
         ),
         migrations.RenameModel(
-            old_name="NewRegion",
-            new_name="Region",
+            old_name='NewRegion',
+            new_name='Region',
         ),
         migrations.RenameModel(
-            old_name="NewState",
-            new_name="State",
+            old_name='NewState',
+            new_name='State',
         ),
         migrations.AlterField(
-            model_name="joblistingpage",
-            name="allow_remote",
-            field=models.BooleanField(
-                default=False,
-                verbose_name="Office location can also be remote",
-            ),
+            model_name='joblistingpage',
+            name='allow_remote',
+            field=models.BooleanField(default=False, verbose_name='Office location can also be remote'),
         ),
         migrations.AddField(
-            model_name="joblistingpage",
-            name="salary_is_hourly",
+            model_name='joblistingpage',
+            name='salary_is_hourly',
             field=models.BooleanField(default=False),
         ),
     ]

@@ -9,160 +9,18 @@ import wagtail.fields
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = []
+    dependencies = [
+    ]
 
     operations = [
         migrations.CreateModel(
-            name="Menu",
+            name='Menu',
             fields=[
-                (
-                    "language",
-                    models.CharField(
-                        choices=[
-                            ("ar", "Arabic"),
-                            ("zh-Hant", "Chinese"),
-                            ("en", "English"),
-                            ("ht", "Haitian Creole"),
-                            ("ko", "Korean"),
-                            ("ru", "Russian"),
-                            ("es", "Spanish"),
-                            ("tl", "Tagalog"),
-                            ("vi", "Vietnamese"),
-                        ],
-                        max_length=100,
-                        primary_key=True,
-                        serialize=False,
-                    ),
-                ),
-                (
-                    "submenus",
-                    wagtail.fields.StreamField(
-                        [
-                            (
-                                "submenu",
-                                wagtail.blocks.StructBlock(
-                                    [
-                                        ("title", wagtail.blocks.CharBlock()),
-                                        (
-                                            "overview_page",
-                                            wagtail.blocks.PageChooserBlock(
-                                                required=False
-                                            ),
-                                        ),
-                                        (
-                                            "featured_links",
-                                            wagtail.blocks.ListBlock(
-                                                wagtail.blocks.StructBlock(
-                                                    [
-                                                        (
-                                                            "page",
-                                                            wagtail.blocks.PageChooserBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "text",
-                                                            wagtail.blocks.CharBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "url",
-                                                            wagtail.blocks.CharBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                    ]
-                                                ),
-                                                default=[],
-                                            ),
-                                        ),
-                                        (
-                                            "other_links",
-                                            wagtail.blocks.ListBlock(
-                                                wagtail.blocks.StructBlock(
-                                                    [
-                                                        (
-                                                            "page",
-                                                            wagtail.blocks.PageChooserBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "text",
-                                                            wagtail.blocks.CharBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "url",
-                                                            wagtail.blocks.CharBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "icon",
-                                                            wagtail.blocks.CharBlock(),
-                                                        ),
-                                                    ]
-                                                ),
-                                                default=[],
-                                            ),
-                                        ),
-                                        (
-                                            "columns",
-                                            wagtail.blocks.ListBlock(
-                                                wagtail.blocks.StructBlock(
-                                                    [
-                                                        (
-                                                            "heading",
-                                                            wagtail.blocks.CharBlock(
-                                                                required=False
-                                                            ),
-                                                        ),
-                                                        (
-                                                            "links",
-                                                            wagtail.blocks.ListBlock(
-                                                                wagtail.blocks.StructBlock(
-                                                                    [
-                                                                        (
-                                                                            "page",
-                                                                            wagtail.blocks.PageChooserBlock(
-                                                                                required=False
-                                                                            ),
-                                                                        ),
-                                                                        (
-                                                                            "text",
-                                                                            wagtail.blocks.CharBlock(
-                                                                                required=False
-                                                                            ),
-                                                                        ),
-                                                                        (
-                                                                            "url",
-                                                                            wagtail.blocks.CharBlock(
-                                                                                required=False
-                                                                            ),
-                                                                        ),
-                                                                    ]
-                                                                ),
-                                                                default=[],
-                                                            ),
-                                                        ),
-                                                    ]
-                                                ),
-                                                default=[],
-                                            ),
-                                        ),
-                                    ]
-                                ),
-                            )
-                        ],
-                        use_json_field=True,
-                    ),
-                ),
+                ('language', models.CharField(choices=[('ar', 'Arabic'), ('zh-Hant', 'Chinese'), ('en', 'English'), ('ht', 'Haitian Creole'), ('ko', 'Korean'), ('ru', 'Russian'), ('es', 'Spanish'), ('tl', 'Tagalog'), ('vi', 'Vietnamese')], max_length=100, primary_key=True, serialize=False)),
+                ('submenus', wagtail.fields.StreamField([('submenu', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock()), ('overview_page', wagtail.blocks.PageChooserBlock(required=False)), ('featured_links', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('text', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.CharBlock(required=False))]), default=[])), ('other_links', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('text', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.CharBlock(required=False)), ('icon', wagtail.blocks.CharBlock())]), default=[])), ('columns', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock(required=False)), ('links', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('text', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.CharBlock(required=False))]), default=[]))]), default=[]))]))], use_json_field=True)),
             ],
             options={
-                "ordering": ("language",),
+                'ordering': ('language',),
             },
         ),
     ]
