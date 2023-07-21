@@ -104,36 +104,4 @@ describe('Admin', () => {
     cy.url().should('contain', 'django-admin');
     cy.visit('/admin/');
   });
-
-  describe('Custom TableBlock', () => {
-    beforeEach(() => {
-      admin.login();
-      admin.addBlogChildPage();
-      admin.addFullWidthText();
-      admin.addTable();
-      admin.editFirstTableCell();
-    });
-
-    it('should be able to create and edit a table', async () => {
-      const text = 'test cell text';
-      await admin.typeTableEditorTextbox(text);
-      admin.closeTableEditor();
-      admin.searchFirstTableCell(text).should('be.visible');
-    });
-
-    it('should be able to insert a block into a table', () => {
-      admin.selectTableEditorButton('Heading 3');
-      admin.selectTableEditorButton('Heading 4');
-      admin.selectTableEditorButton('Heading 5');
-      admin.selectTableEditorButton('Numbered list');
-      admin.selectTableEditorButton('Bulleted list');
-      admin.closeTableEditor();
-    });
-
-    it('should be able to save an empty cell', async () => {
-      await admin.typeTableEditorTextbox('{selectall} ');
-      admin.closeTableEditor();
-      admin.getFirstTableCell().should('be.empty');
-    });
-  });
 });

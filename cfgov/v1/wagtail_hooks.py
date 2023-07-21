@@ -30,11 +30,13 @@ from v1.models.snippets import (
 )
 from v1.template_debug import (
     call_to_action_test_cases,
+    crc_table_test_cases,
     featured_content_test_cases,
     heading_test_cases,
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    table_test_cases,
     translation_links_test_cases,
     video_player_test_cases,
 )
@@ -393,7 +395,9 @@ def clean_up_report_menu_items(request, report_menu_items):
     for index, item in enumerate(report_menu_items):
         item.label = item.label.title()
         if re.search(cfpb_re, item.label, re.IGNORECASE):
-            item.label = re.sub(cfpb_re, "CFPB", item.label, 0, re.IGNORECASE)
+            item.label = re.sub(
+                cfpb_re, "CFPB", item.label, count=0, flags=re.IGNORECASE
+            )
         item.order = index
 
 
@@ -562,6 +566,14 @@ register_template_debug(
 
 register_template_debug(
     "v1",
+    "crc_table",
+    "v1/includes/organisms/tables/consumer-reporting-company.html",
+    crc_table_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
     "featured_content",
     "v1/includes/organisms/featured-content.html",
     featured_content_test_cases,
@@ -587,6 +599,14 @@ register_template_debug(
     "related_posts",
     "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "table",
+    "v1/includes/organisms/tables/base.html",
+    table_test_cases,
 )
 
 

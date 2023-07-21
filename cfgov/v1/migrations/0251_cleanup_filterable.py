@@ -151,12 +151,6 @@ class Migration(migrations.Migration):
                                     ),
                                 ),
                                 (
-                                    "table_block",
-                                    v1.atomic_elements.tables.AtomicTableBlock(
-                                        table_options={"renderer": "html"}
-                                    ),
-                                ),
-                                (
                                     "quote",
                                     wagtail.blocks.StructBlock(
                                         [
@@ -612,12 +606,6 @@ class Migration(migrations.Migration):
                                                 ),
                                             ),
                                         ]
-                                    ),
-                                ),
-                                (
-                                    "table_block",
-                                    v1.atomic_elements.tables.AtomicTableBlock(
-                                        table_options={"renderer": "html"}
                                     ),
                                 ),
                                 (
