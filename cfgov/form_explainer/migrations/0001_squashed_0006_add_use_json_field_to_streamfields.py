@@ -12,15 +12,6 @@ import v1.blocks
 
 
 class Migration(migrations.Migration):
-    replaces = [
-        ("form_explainer", "0001_2022_squash"),
-        ("form_explainer", "0002_deprecate_feedback_block"),
-        ("form_explainer", "0003_add_full_width_text_option"),
-        ("form_explainer", "0004_heading_block_h5s"),
-        ("form_explainer", "0005_add_explainer_heading"),
-        ("form_explainer", "0006_add_use_json_field_to_streamfields"),
-    ]
-
     initial = True
 
     dependencies = [
