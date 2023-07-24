@@ -32,6 +32,8 @@ class PrepaidProduct(models.Model):
     class Meta:
         ordering = ["name"]
 
+    wagtail_reference_index_ignore = True
+
 
 class PrepaidAgreement(models.Model):
     product = models.ForeignKey(
@@ -52,3 +54,5 @@ class PrepaidAgreement(models.Model):
 
     class Meta:
         ordering = ["-effective_date", "-created_time"]
+
+    wagtail_reference_index_ignore = True

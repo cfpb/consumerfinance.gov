@@ -15,3 +15,5 @@ class PasswordHistoryItem(models.Model):
 
     class Meta:
         get_latest_by = "created"
+
+    wagtail_reference_index_ignore = True
