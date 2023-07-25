@@ -6,9 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('login', '0001_add_login_models'), ('login', '0002_populate_login_models'), ('login', '0003_simplify_password_logic')]
-
     initial = True
 
     dependencies = [
