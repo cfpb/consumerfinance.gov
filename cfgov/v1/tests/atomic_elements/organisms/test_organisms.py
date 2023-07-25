@@ -4,7 +4,6 @@ from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.blocks import StreamValue
-from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.tests.utils import get_test_image_file
 from wagtail.models import Site
 
@@ -141,39 +140,6 @@ class OrganismsTestCase(TestCase):
         publish_page(child=landing_page)
         response = django_client.get("/landing/")
         self.assertContains(response, "Info Unit Group")
-
-    def test_tableblock(self):
-        """Table correctly displays on a Learn Page"""
-        learn_page = LearnPage(title="Learn Page", slug="learn")
-        learn_page.content = StreamValue(
-            learn_page.content.stream_block, [atomic.table_block], True
-        )
-        publish_page(child=learn_page)
-        response = django_client.get("/learn/")
-        self.assertContains(response, "Header One")
-        self.assertContains(response, "Row 1-1")
-        self.assertContains(response, "Row 2-1")
-
-    def test_tableblock_missing_attributes(self):
-        """Table correctly displays when value dict is missing attributes"""
-        table_context = dict(atomic.table_block)
-        value = table_context.get("value")
-        del value["first_row_is_table_header"]
-        del value["first_col_is_header"]
-        table = TableBlock()
-        html = str(table.render(table.to_python(value)))
-
-        self.assertRegex(html, "Header One")
-        self.assertRegex(html, "Row 1-1")
-        self.assertRegex(html, "Row 2-1")
-
-        self.assertIsNone(value.get("first_row_is_table_header"), None)
-        self.assertIsNone(value.get("first_col_is_header"), None)
-
-        with self.assertRaises(KeyError):
-            value["first_row_is_table_header"]
-        with self.assertRaises(KeyError):
-            value["first_col_is_header"]
 
     def test_expandable_group(self):
         """Expandable group correctly displays on a Browse Page"""

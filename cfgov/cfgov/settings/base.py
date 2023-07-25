@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     "wagtail.sites",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
-    "wagtail.contrib.table_block",
+    "wagtail.contrib.typed_table_block",
     "localflavor",
     "modelcluster",
     "taggit",
