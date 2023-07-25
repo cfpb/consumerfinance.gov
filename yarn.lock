@@ -5013,10 +5013,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1193.0:
-  version "1.1193.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1193.0.tgz#7e94f381817b77b27668d352a05258235df156d7"
-  integrity sha512-si4DBAnY2jWBNJAdYDaLVtRQ0Bw/YbwRNWfnFJxZp/66gpUnmiTfF68euLHAEwQc5I2iRV2dtlLbQmYgUhcavQ==
+snyk@1.1195.0:
+  version "1.1195.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1195.0.tgz#44dbda90e9c056c030f791c528683b3bc8226864"
+  integrity sha512-fNBZlxf7XeNc3OuRR8H7gu4GAkQKqc5RtEqTNedXwaC8RITJY0KhnV+WaTFS9ajiaRQGRcuM+Y8THxDwHSccyw==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"
