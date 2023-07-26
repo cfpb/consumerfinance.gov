@@ -17,6 +17,26 @@ import v1.blocks
 
 
 class Migration(migrations.Migration):
+    replaces = [
+        ("filing_instruction_guide", "0001_create_fig_models"),
+        ("filing_instruction_guide", "0002_flatten_fig_data_model"),
+        ("filing_instruction_guide", "0003_emailsignup_snippet"),
+        ("filing_instruction_guide", "0004_custom_content_block_options"),
+        (
+            "filing_instruction_guide",
+            "0005_improve_fig_block_names_and_help_text",
+        ),
+        ("filing_instruction_guide", "0006_add_fig_version_info"),
+        ("filing_instruction_guide", "0007_heading_block_h5s"),
+        ("filing_instruction_guide", "0008_import_data_points"),
+        ("filing_instruction_guide", "0009_add_content_above_first_section"),
+        ("filing_instruction_guide", "0010_simplify_expandables"),
+        (
+            "filing_instruction_guide",
+            "0011_add_use_json_field_to_streamfields",
+        ),
+    ]
+
     initial = True
 
     dependencies = [

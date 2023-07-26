@@ -17,6 +17,17 @@ import v1.blocks
 
 
 class Migration(migrations.Migration):
+    replaces = [
+        ("regulations3k", "0029_recreated"),
+        ("regulations3k", "0030_recreated2"),
+        ("regulations3k", "0031_2022_squash"),
+        ("regulations3k", "0032_remove_well_with_ask_search"),
+        ("regulations3k", "0033_emailsignup_snippet"),
+        ("regulations3k", "0034_convert_email_signups_blocks_to_snippets"),
+        ("regulations3k", "0035_heading_block_h5s"),
+        ("regulations3k", "0036_add_use_json_field_to_streamfields"),
+    ]
+
     initial = True
 
     dependencies = [
