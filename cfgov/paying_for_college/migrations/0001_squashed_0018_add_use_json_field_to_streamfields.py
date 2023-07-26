@@ -13,6 +13,24 @@ import v1.blocks
 
 
 class Migration(migrations.Migration):
+    replaces = [
+        ("paying_for_college", "0007_recreated"),
+        ("paying_for_college", "0008_recreated2"),
+        ("paying_for_college", "0009_2022_squash"),
+        ("paying_for_college", "0010_remove_well_with_ask_search"),
+        ("paying_for_college", "0011_add_faq_group_and_expandable_option"),
+        ("paying_for_college", "0012_expandable_info_units"),
+        ("paying_for_college", "0013_emailsignup_snippet"),
+        (
+            "paying_for_college",
+            "0014_convert_email_signups_blocks_to_snippets",
+        ),
+        ("paying_for_college", "0015_delete_feedback"),
+        ("paying_for_college", "0016_heading_block_h5s"),
+        ("paying_for_college", "0017_simplify_expandables"),
+        ("paying_for_college", "0018_add_use_json_field_to_streamfields"),
+    ]
+
     initial = True
 
     dependencies = [
