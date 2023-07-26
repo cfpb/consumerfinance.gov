@@ -20,6 +20,20 @@ import v1.models.snippets
 
 
 class Migration(migrations.Migration):
+    replaces = [
+        ("ask_cfpb", "0037_recreated"),
+        ("ask_cfpb", "0038_recreated2"),
+        ("ask_cfpb", "0039_2022_squash"),
+        ("ask_cfpb", "0040_deprecate_feedback_block"),
+        ("ask_cfpb", "0041_emailsignup_snippet"),
+        ("ask_cfpb", "0042_convert_email_signups_blocks_to_snippets"),
+        ("ask_cfpb", "0043_alter_answer_last_user"),
+        ("ask_cfpb", "0044_update_how_to_schema"),
+        ("ask_cfpb", "0045_set_max_num_on_notifications"),
+        ("ask_cfpb", "0046_deprecate_article_page_and_link"),
+        ("ask_cfpb", "0047_add_use_json_field_to_streamfields"),
+    ]
+
     initial = True
 
     dependencies = [

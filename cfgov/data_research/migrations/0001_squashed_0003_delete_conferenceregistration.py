@@ -5,6 +5,9 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
+    replaces = [('data_research', '0001_squashed_0013_auto_20200811_1143'), ('data_research', '0002_prep_for_deprecated_model_swapout'), ('data_research', '0003_delete_conferenceregistration')]
+
     initial = True
 
     dependencies = [
