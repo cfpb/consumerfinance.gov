@@ -62,7 +62,7 @@
     "postcss-less": "6.0.0",
     "prettier": "3.0.1",
     "snyk": "1.1200.0",
-    "stylelint": "14.16.1",
+    "stylelint": "15.10.2",
     "stylelint-config-prettier": "9.0.5",
     "stylelint-config-recommended-less": "1.0.4"
   },
