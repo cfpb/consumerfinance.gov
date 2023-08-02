@@ -9,9 +9,6 @@ import modelcluster.fields
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('jobmanager', '0017_recreated'), ('jobmanager', '0018_recreated_2'), ('jobmanager', '0019_2022_squash'), ('jobmanager', '0020_hourly_salary')]
-
     initial = True
 
     dependencies = [
