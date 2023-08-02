@@ -28,12 +28,15 @@ value.options:  Enabled configuration options as a list of strings.
 
 Supported configuration options:
 
-is_full_width:      Display the table at full width.
+first_column_header:    Style the first column as a header.
 
-stack_on_mobile:    Stack the table columns on mobile.
+is_full_width:          Display the table at full width.
+
+stack_on_mobile:        Stack the table columns on mobile.
 
 ========================================================================== #}
 
+{%- set first_column_header = 'first_column_header' in (value.options or []) -%}
 {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
 {%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
@@ -49,7 +52,9 @@ stack_on_mobile:    Stack the table columns on mobile.
     <thead>
         <tr>
             {% for col in value.data.columns %}
-                <th scope="col">{{ col.heading }}</th>
+                {% if col.heading -%}
+                    <th scope="col">{{ col.heading }}</th>
+                {%- endif %}
             {% endfor %}
         </tr>
     </thead>
@@ -58,11 +63,27 @@ stack_on_mobile:    Stack the table columns on mobile.
         {% for row in value.data.rows %}
             <tr>
                 {% for block in row %}
-                    <td
-                        {% if stack_on_mobile %}data-label="
-                            {{- value.data.columns[loop.index0].heading -}}
-                        "{% endif %}
-                    >{% include_block block %}</td>
+                    {%- set attrs = "" -%}
+
+                    {%- if first_column_header and loop.first -%}
+                        {% set tag = "th" %}
+                        {% set attrs = attrs ~ (' scope="row"' | safe) %}
+                    {%- else -%}
+                        {% set tag = "td" %}
+                    {%- endif -%}
+
+                    {%- set col_heading = value.data.columns[loop.index0].heading -%}
+                    {%- if stack_on_mobile and col_heading -%}
+                        {% set attrs = attrs ~
+                            (' data-label="' | safe) ~
+                            (col_heading | escape) ~
+                            ('"' | safe)
+                        %}
+                    {%- endif -%}
+
+                    <{{ tag }}{{ attrs }}>
+                        {%- include_block block -%}
+                    </{{ tag }}>
                 {% endfor %}
             </tr>
         {% endfor %}
