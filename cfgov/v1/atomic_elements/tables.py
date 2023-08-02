@@ -20,6 +20,7 @@ class ContactUsTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/contact-us.html"
         label = "Table (Contact Us)"
+        unescape = False
 
 
 class ConsumerReportingCompanyTable(blocks.StructBlock):
