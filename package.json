@@ -47,7 +47,7 @@
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
-    "cypress": "12.17.2",
+    "cypress": "12.17.3",
     "cypress-fail-fast": "7.0.1",
     "eslint": "8.46.0",
     "eslint-config-prettier": "8.9.0",
@@ -61,7 +61,7 @@
     "jest-fetch-mock": "3.0.3",
     "postcss-less": "6.0.0",
     "prettier": "3.0.0",
-    "snyk": "1.1198.0",
+    "snyk": "1.1199.0",
     "stylelint": "14.16.1",
     "stylelint-config-prettier": "9.0.5",
     "stylelint-config-recommended-less": "1.0.4"
