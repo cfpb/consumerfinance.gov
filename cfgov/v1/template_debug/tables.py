@@ -20,6 +20,10 @@ table_test_cases = {
     "Default": {},
     "No header row": {
         "data": {
+            "columns": [
+                {"heading": ""},
+                {"heading": ""},
+            ],
             "rows": table_defaults["data"]["rows"],
         }
     },
@@ -29,8 +33,36 @@ table_test_cases = {
     "Stack on mobile": {
         "options": ["stack_on_mobile"],
     },
+    "Stack on mobile, no column headings": {
+        "options": ["stack_on_mobile"],
+        "data": {
+            "columns": [
+                {"heading": ""},
+                {"heading": ""},
+            ],
+            "rows": [
+                ["0,0", "0,1"],
+                ["1,0", "1,1"],
+            ],
+        },
+    },
     "With heading": {
         "heading": mark_safe("<h3>This is a table</h3>"),
+    },
+    "First column header": {"options": ["first_column_header"]},
+    "First column header, no column headings": {
+        "data": {
+            "columns": [
+                {"heading": ""},
+                {"heading": ""},
+                {"heading": ""},
+            ],
+            "rows": [
+                ["A", "0,0", "0,1"],
+                ["B", "1,0", "1,1"],
+            ],
+        },
+        "options": ["first_column_header"],
     },
 }
 
@@ -50,4 +82,23 @@ crc_table_test_cases = {
             "Example, Inc.<br/>" "P.O. Box 8000<br/>" "Washington, DC 20001"
         ),
     }
+}
+
+
+contact_us_table_test_cases = {
+    "Default": {
+        "heading": "This is a Contact Us table",
+        "rows": [
+            {
+                "title": "Item 1",
+                "body": mark_safe(
+                    '<a href="https://example.com/">https://example.com/</a>'
+                ),
+            },
+            {
+                "title": "Item 2",
+                "body": mark_safe("Foo<br/>Bar"),
+            },
+        ],
+    },
 }
