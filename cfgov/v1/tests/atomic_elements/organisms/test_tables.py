@@ -1,4 +1,5 @@
 from django.test import SimpleTestCase
+from django.utils.html import escape
 
 from v1.atomic_elements.tables import ContactUsTable
 
@@ -11,7 +12,7 @@ class ContactUsTableTests(SimpleTestCase):
                 "rows": [
                     {
                         "title": "<script>alert('title')</script>",
-                        "body": "<script>alert('body')</script>",
+                        "body": escape("<script>alert('body')</script>"),
                     }
                 ],
             }
