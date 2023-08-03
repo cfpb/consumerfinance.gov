@@ -27,9 +27,6 @@ import wagtailmedia.blocks
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'), ('v1', '0236_case_docket_table'), ('v1', '0237_remove_content_image_bleed_option'), ('v1', '0238_collapse_oaa_table'), ('v1', '0239_field_cleanup'), ('v1', '0240_filterable_list_sort'), ('v1', '0241_remove_filterable_5050'), ('v1', '0242_filterable_list_topics'), ('v1', '0243_filterable_list_topics'), ('v1', '0244_deprecate_2ndary_links'), ('v1', '0245_alter_emailsignup_url'), ('v1', '0246_issue_spotlight_category'), ('v1', '0247_eap_no_tables'), ('v1', '0248_filterable_list_mixin'), ('v1', '0249_populate_filterable'), ('v1', '0250_rename_filterable'), ('v1', '0251_cleanup_filterable'), ('v1', '0252_filterable_empty_content'), ('v1', '0253_new_table_block'), ('v1', '0254_delete_campaignpage')]
-
     initial = True
 
     dependencies = [
