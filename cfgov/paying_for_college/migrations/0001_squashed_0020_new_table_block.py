@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0254_delete_campaignpage'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
         ('wagtailinventory', '0001_initial'),

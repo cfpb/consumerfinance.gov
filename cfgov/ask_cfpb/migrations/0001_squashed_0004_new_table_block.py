@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
-        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0254_delete_campaignpage'),
     ]
 
     operations = [
