@@ -66,10 +66,10 @@ a.ec,
 a.ec-blk {
   font-weight: 500;
   text-decoration: none;
-  padding-left: 0px;
+  padding-left: 0;
   background-repeat: no-repeat;
-  background-position-x: 0px;
-  background-position-y: 0px;
+  background-position-x: 0;
+  background-position-y: 0;
 }
 
 a.collapse {
@@ -103,7 +103,7 @@ h2 {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   line-height: 18px;
 }
 
@@ -143,7 +143,7 @@ td {
   line-height: 20px;
   text-align: center;
   font-weight: 500;
-  padding: 10px 0px 10px;
+  padding: 10px 0;
 }
 
 .lc {
@@ -153,7 +153,7 @@ td {
 .nc {
   text-transform: none;
   font-weight: 500;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   margin-bottom: -0.3em;
 }
 
@@ -167,16 +167,16 @@ td {
 }
 
 table {
-  border: 0px;
+  border: 0;
   border-collapse: separate;
-  border-spacing: 18px 0px;
+  border-spacing: 18px 0;
   padding-bottom: 20px;
 }
 
 td,
 th {
   vertical-align: top;
-  padding: 10px 0px 10px;
+  padding: 10px 0;
   text-align: left;
 }
 
@@ -204,12 +204,12 @@ ol li {
 table th {
   background: transparent;
   color: #212121;
-  border: 0px;
+  border: 0;
   text-align: left;
 }
 
 table td {
-  border: 0px;
+  border: 0;
 }
 
 /* Modals */
@@ -228,8 +228,6 @@ table td {
   line-height: 26px;
   font-size: 1.5em;
   border-radius: 100%;
-  -moz-border-radius: 100%;
-  -webkit-border-radius: 100%;
   margin-right: 5px;
   font-weight: 600;
   margin-top: -6px;

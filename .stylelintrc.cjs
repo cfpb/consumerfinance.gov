@@ -15,8 +15,15 @@ selector-class-pattern -
   TODO: Turn on this rule and work out regex for BEM syntax.
 declaration-property-value-no-unknown -
   Turned off for Less per documentation guidance.
+declaration-block-no-redundant-longhand-properties -
+  Turned off.
+  TODO: Turn on this rule and work out longhand properties.
 function-no-unknown -
   Ignore the 'unit' helper function that comes from Less.
+number-max-precision -
+  TODO: See if long decimal values can be shortened using the unit helper.
+media-feature-range-notation -
+  Prefer prefixed values, since Less doesn't support ranges.
 less/color-no-invalid-hex
 less/no-duplicate-variables
   Both of the above settings are turned off till
@@ -43,8 +50,10 @@ module.exports = {
     'selector-id-pattern': null,
     'selector-class-pattern': null,
     'declaration-property-value-no-unknown': null,
-    'function-no-unknown': { ignoreFunctions: ['unit'] },
+    'declaration-block-no-redundant-longhand-properties': null,
+    'function-no-unknown': [true, { ignoreFunctions: ['unit'] }],
     'number-max-precision': 10,
+    'media-feature-range-notation': ['prefix'],
     'less/color-no-invalid-hex': null,
     'less/no-duplicate-variables': null,
   },
