@@ -68,8 +68,8 @@
 }
 
 // A bottom border for the sections in step 3 that use a special grid (11 columns plus bleeding into one gutter)
-.offer-part:after,
-.criteria_wrapper:after {
+.offer-part::after,
+.criteria_wrapper::after {
   .respond-to-min( @bp-sm-min, {
     display: block;
     height: 1px;
@@ -98,7 +98,7 @@
   background-image: url('/static/apps/paying-for-college/img/intro-195.png');
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-resolution: 192dpi) {
   .understanding-financial-aid-offer .m-hero_image {
     background-image: url('/static/apps/paying-for-college/img/intro-390.png');
   }
@@ -697,7 +697,7 @@
     } );
   }
 
-  .column-well:after {
+  .column-well::after {
     background-color: @gold-20;
   }
 }
@@ -716,7 +716,7 @@
     background-color: @gold-20;
   }
 
-  .column-well:after {
+  .column-well::after {
     background-color: @gold-40;
   }
 }
@@ -834,7 +834,7 @@
       .grid_nested-col-group();
     } );
 
-    &:after {
+    &::after {
       .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
         display: none;
       } );
@@ -938,7 +938,7 @@
     } );
   }
 
-  &.column-well__not-stacked:after {
+  &.column-well__not-stacked::after {
     .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
       display: none;
     } );
@@ -1291,7 +1291,7 @@
 
     &_sign {
       .grid_column(3,24);
-      border-width: 0px;
+      border-width: 0;
 
       .respond-to-min( @bp-med-min, {
         .grid_column(3);
@@ -1534,7 +1534,7 @@
     background-image: url('/static/apps/paying-for-college/img/work-while-studying_150.png');
   }
 
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  @media (min-resolution: 192dpi) {
     &__maximize-grants {
       background-image: url('/static/apps/paying-for-college/img/maximize-grants_300.png');
     }

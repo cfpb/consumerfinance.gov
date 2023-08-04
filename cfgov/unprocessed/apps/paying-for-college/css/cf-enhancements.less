@@ -108,7 +108,7 @@
   padding-left: @char-icon-size + @char-icon-spacing;
   position: relative;
 
-  &:before {
+  &::before {
     display: block;
     box-sizing: border-box;
     width: @char-icon-size;
@@ -126,34 +126,34 @@
     text-indent: 0;
   }
 
-  &__1:before {
+  &__1::before {
     content: '1';
   }
-  &__2:before {
+  &__2::before {
     content: '2';
   }
-  &__3:before {
+  &__3::before {
     content: '3';
   }
-  &__4:before {
+  &__4::before {
     content: '4';
   }
-  &__5:before {
+  &__5::before {
     content: '5';
   }
-  &__6:before {
+  &__6::before {
     content: '6';
   }
-  &__7:before {
+  &__7::before {
     content: '7';
   }
-  &__8:before {
+  &__8::before {
     content: '8';
   }
-  &__9:before {
+  &__9::before {
     content: '9';
   }
-  &__0:before {
+  &__0::before {
     content: '0';
   }
 }
@@ -168,7 +168,7 @@
     .char-icon();
   }
 
-  & > li:before {
+  & > li::before {
     content: counter(steps);
   }
 }
@@ -187,7 +187,7 @@
     padding-bottom: unit(30px / @base-font-size-px, em);
   });
 
-  &:after {
+  &::after {
     display: block;
     width: 9999px;
     height: 9999px;
@@ -227,7 +227,7 @@
   }
 
   &__bleed {
-    &:after {
+    &::after {
       .respond-to-min(@bp-med-min, {
         padding-right: @grid_gutter-width * 2;
         left: -@grid_gutter-width;
@@ -251,7 +251,7 @@
       padding-bottom: unit(30px / @base-font-size-px, em);
     });
 
-    &:after {
+    &::after {
       display: none;
 
       .respond-to-min(@bp-sm-min, {
@@ -266,7 +266,7 @@
       padding-bottom: unit(50px / @base-font-size-px, em);
     });
 
-    &:after {
+    &::after {
       background-color: @gray-5;
     }
   }
@@ -276,6 +276,6 @@
    Accessible bleedbar
    ========================================================================== */
 
-.content__bleedbar .content_wrapper:after {
+.content__bleedbar .content_wrapper::after {
   background-color: @gray-5;
 }
