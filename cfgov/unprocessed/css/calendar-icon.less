@@ -44,13 +44,13 @@
   line-height: 1;
   text-align: center;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     // Display & Box Model.
     display: block;
   }
 
-  &:before {
+  &::before {
     // Display & Box Model.
     padding-bottom: 0.15em;
 
@@ -63,7 +63,7 @@
     content: @month;
   }
 
-  &:after {
+  &::after {
     // Display & Box Model.
     padding: 0.15em 0 0;
     border-radius: 0 0 0.16em 0.16em;
