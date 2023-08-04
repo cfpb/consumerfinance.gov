@@ -161,7 +161,7 @@ class FilterableListForm(forms.Form):
         all_filterable_results = cache.get(
             f"{self.cache_key_prefix}-all_filterable_results"
         )
-        if all_filterable_results is None:
+        if not all_filterable_results:
             all_filterable_results = self.filterable_search.get_raw_results()
             cache.set(
                 f"{self.cache_key_prefix}-all_filterable_results",
@@ -172,7 +172,7 @@ class FilterableListForm(forms.Form):
     def get_all_page_ids(self):
         """Return a list of all possible filterable page ids"""
         page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
-        if page_ids is None:
+        if not page_ids:
             page_ids = [
                 result.meta.id for result in self.all_filterable_results
             ]
