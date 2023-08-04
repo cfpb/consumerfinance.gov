@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
@@ -32,7 +30,7 @@ const expensesView = {
     if (currency === true) {
       value = formatUSD({ amount: value, decimalPlaces: 0 });
     }
-    if ($ele.prop('tagName') === 'INPUT') {
+    if ($ele.tagName() === 'INPUT') {
       $ele.val(value);
     } else if (isSummaryLineItem && originalValue !== value) {
       setTimeout(function () {
@@ -50,8 +48,8 @@ const expensesView = {
    */
   updateExpenses: function (values) {
     const expensesHigherThanSalary = $('.aid-form_higher-expenses');
-    this.$elements.each(function () {
-      const $ele = $(this);
+    this.$elements.each( elem => {
+      const $ele = $(elem);
       const name = $ele.attr('data-expenses');
       const currency = true;
       if (expensesView.currentInput !== $ele.attr('id')) {
@@ -114,35 +112,37 @@ const expensesView = {
    * Listener function for keyup in expenses INPUT fields
    */
   keyupListener: function () {
-    this.$reviewAndEvaluate.on(
-      'keyup focusout',
-      '[data-expenses]',
-      function () {
-        clearTimeout(expensesView.keyupDelay);
-        expensesView.currentInput = $(this).attr('id');
-        if ($(this).is(':focus')) {
-          expensesView.keyupDelay = setTimeout(function () {
+    this.$reviewAndEvaluate.each( elem => {
+      $( '[data-expenses]' ).each( elmo => {
+        elmo.addEventListener( 'keyup focusout', function () {
+          clearTimeout(expensesView.keyupDelay);
+          expensesView.currentInput = $(this).attr('id');
+          if ($(this).is(':focus')) {
+            expensesView.keyupDelay = setTimeout(function () {
+              expensesView.inputHandler(expensesView.currentInput);
+              expensesView.updateView(getExpenses.values());
+            }, 500);
+          } else {
             expensesView.inputHandler(expensesView.currentInput);
+            expensesView.currentInput = 'none';
             expensesView.updateView(getExpenses.values());
-          }, 500);
-        } else {
-          expensesView.inputHandler(expensesView.currentInput);
-          expensesView.currentInput = 'none';
-          expensesView.updateView(getExpenses.values());
-        }
-      },
-    );
+          }
+        })
+      });
+    });
   },
 
   /**
    * Listener function for change events on expenses INPUT fields
    */
   expenseInputChangeListener: function () {
-    $('[data-expenses]').one('change', function () {
-      const expenses = $(this).data('expenses');
-      if (expenses) {
-        analyticsSendEvent({ action: 'Value Edited', label: expenses });
-      }
+    $('[data-expenses]').each( elmo => {
+      elmo.addEventListener('change', function () {
+        const expenses = $(this).data('expenses');
+        if (expenses) {
+          analyticsSendEvent({ action: 'Value Edited', label: expenses });
+        }
+      });
     });
   },
 
@@ -150,8 +150,8 @@ const expensesView = {
    * Listener for the BLS region SELECT
    */
   regionSelectListener: function () {
-    $('#bls-region-select').change(function () {
-      const region = $(this).val();
+    $('#bls-region-select').listen( 'change', function ( event ) {
+      const region = event.target.value || 'NE';
       publish.updateRegion(region);
       expensesView.updateView(getExpenses.values());
       analyticsSendEvent({ action: 'Region Changed', label: region });

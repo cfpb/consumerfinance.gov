@@ -1,8 +1,6 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 import formatURL from '../utils/format-url.js';
 import constructScorecardSearch from '../utils/construct-scorecard-search.js';
+import $ from '../utils/dollar-sign.js';
 
 const linksView = {
   $gradLinkText: $('.graduation-link'),
@@ -35,15 +33,11 @@ const linksView = {
   setCollegeScorecardLink: function (values) {
     const scorecardURL =
       'https://collegescorecard.ed.gov/school/?' + values.schoolID;
-    if (scorecardURL) {
-      const $scorecardSchool = $('<a>', {
-        href: scorecardURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$scorecardSchoolLink.attr('class'),
-      }).text(this.$scorecardSchoolLink.text());
-      this.$scorecardSchoolLink.replaceWith($scorecardSchool);
-    }
+    this.$scorecardSchoolLink.each( elem => {
+      elem.setAttribute( 'href', scorecardURL );
+      elem.setAttribute( 'target', '_blank' );
+      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    });
   },
 
   /**
@@ -56,15 +50,11 @@ const linksView = {
       'https://collegescorecard.ed.gov/school/?' +
       values.schoolID +
       '#graduation';
-    if (gradURL) {
-      const $gradLink = $('<a>', {
-        href: gradURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$gradLinkText.attr('class'),
-      }).text(this.$gradLinkText.text());
-      this.$gradLinkText.replaceWith($gradLink);
-    }
+    this.$gradLinkText.each( elem => {
+      elem.setAttribute( 'href', gradURL );
+      elem.setAttribute( 'target', '_blank' );
+      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    })
   },
 
   /**
@@ -76,15 +66,11 @@ const linksView = {
       'http://nces.ed.gov/collegenavigator/?id=' +
       values.schoolID +
       '#fedloans';
-    if (defaultURL) {
-      const $defaultLink = $('<a>', {
-        href: defaultURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$defaultLinkText.attr('class'),
-      }).text(this.$defaultLinkText.text());
-      this.$defaultLinkText.replaceWith($defaultLink);
-    }
+    this.$defaultLinkText.each( elem => {
+      elem.setAttribute( 'href', defaultURL );
+      elem.setAttribute( 'target', '_blank' );
+      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    });
   },
 
   /**
@@ -94,15 +80,11 @@ const linksView = {
    */
   setSchoolLink: function (values) {
     const schoolURL = formatURL(values.url);
-    if (schoolURL) {
-      const $schoolLink = $('<a>', {
-        href: schoolURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$schoolLinkText.attr('class'),
-      }).text(this.$schoolLinkText.text());
-      this.$schoolLinkText.replaceWith($schoolLink);
-    }
+    this.$schoolLinkText.each( elem => {
+      elem.setAttribute( 'href', schoolURL );
+      elem.setAttribute( 'target', '_blank' );
+      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    });
   },
 
   /**
