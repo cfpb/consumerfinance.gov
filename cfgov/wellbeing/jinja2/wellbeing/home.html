@@ -20,6 +20,8 @@
 
 {% block css -%}
     {{ super() }}
+    <link rel="stylesheet"
+    href="{{ static('apps/financial-well-being/css/main.css') }}">
     <style>
         .m-hero {
             background-color: #7eb7e8;
@@ -102,6 +104,7 @@
         </div>
     </div>
 
+    {% include "_templates/no_js.html" %}
     <form id="quiz-form" action="{{ url('fwb_results_' + current_language) }}" method="POST">
         <div class="block">
             <h2>{{ _('Part 1: How well does this statement describe you or your situation?') }}</h2>
