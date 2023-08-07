@@ -182,8 +182,7 @@
 to setup your Docker environment and create the project Docker containers.</p>
 <p>We use <a href="https://docs.docker.com/compose/reference/overview/"><code>docker-compose</code></a>
 to run an Elasticsearch container, a PostgreSQL container,
-and Django in a Python container.
-There is also a container serving the documentation.</p>
+and Django in a Python container.</p>
 <p>All of these containers are configured in our
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
 See the <a href="https://docs.docker.com/compose/compose-file/">Docker documentation</a>
@@ -192,7 +191,6 @@ for more about the format and use of this file.</p>
 <ul>
 <li>Access consumerfinance.gov running in the Python container: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
 <li>Access Elasticsearch: <a href="http://localhost:9200/">http://localhost:9200/</a></li>
-<li>View this documentation: <a href="http://localhost:8888/">http://localhost:8888/</a></li>
 </ul>
 <p>To build and run the containers for the first time, run:</p>
 <pre class="highlight"><code class="language-bash">docker network create cfgov
