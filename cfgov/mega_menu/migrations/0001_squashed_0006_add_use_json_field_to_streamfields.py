@@ -7,9 +7,6 @@ import wagtail.fields
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('mega_menu', '0001_initial'), ('mega_menu', '0002_remove_featured_content'), ('mega_menu', '0003_additional_languages'), ('mega_menu', '0004_deprecate_zh_hans'), ('mega_menu', '0005_rename_chinese'), ('mega_menu', '0006_add_use_json_field_to_streamfields')]
-
     initial = True
 
     dependencies = [
