@@ -80,6 +80,9 @@
     "watch": "yarn build watch",
     "build": "node ./esbuild/build.js"
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "snyk": true,
   "type": "module"
 }
