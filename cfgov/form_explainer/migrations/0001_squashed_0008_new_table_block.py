@@ -10,13 +10,10 @@ import wagtail.images.blocks
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('form_explainer', '0001_squashed_0006_add_use_json_field_to_streamfields'), ('form_explainer', '0007_remove_content_image_bleed_option'), ('form_explainer', '0008_new_table_block')]
-
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0254_delete_campaignpage'),
     ]
 
     operations = [
