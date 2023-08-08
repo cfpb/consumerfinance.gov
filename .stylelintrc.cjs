@@ -2,6 +2,8 @@
 at-rule-no-unknown -
   This rule enforces only @ rules that appear in the CSS spec,
   however, @plugin appears in Less, so should be ignored.
+color-function-notation -
+  Set to 'legacy' to support older browsers in our browserslist (for now).
 declaration-block-no-redundant-longhand-properties -
   Turned off.
   TODO: Turn on this rule and work out longhand properties.
@@ -39,6 +41,7 @@ module.exports = {
   customSyntax: 'postcss-less',
   rules: {
     'at-rule-no-unknown': [true, { ignoreAtRules: 'plugin' }],
+    'color-function-notation': ['legacy'],
     'declaration-block-no-redundant-longhand-properties': null,
     'declaration-empty-line-before': null,
     'declaration-property-value-no-unknown': null,
