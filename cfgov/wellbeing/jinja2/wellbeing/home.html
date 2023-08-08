@@ -59,9 +59,9 @@
 {%- endblock %}
 
 {% block content_main -%}
-{% include "_templates/no_js.html" %}
 
-    <div class="no-js-hide"
+    {% include "_templates/no_js.html" %}
+    <div class="u-hide-if-js">
 
         <p>
         {% if (current_language == 'en') %}
