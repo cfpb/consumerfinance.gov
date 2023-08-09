@@ -1,17 +1,12 @@
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import PermissionDenied
-from django.test import (
-    RequestFactory,
-    SimpleTestCase,
-    TestCase,
-    override_settings,
-)
+from django.test import RequestFactory, SimpleTestCase, TestCase
 from django.urls import reverse
 
 from wagtail import hooks
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
 from wagtail.admin.views.pages.delete import delete
-from wagtail.models import Page, Site
+from wagtail.models import Page
 from wagtail.test.utils import WagtailTestUtils
 from wagtail.whitelist import Whitelister as Allowlister
 
@@ -21,7 +16,6 @@ from v1.models import (
     CFGOVPageCategory,
     InternalDocsSettings,
     Resource,
-    SublandingPage,
 )
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.wagtail_hooks import (
@@ -29,27 +23,6 @@ from v1.wagtail_hooks import (
     raise_bulk_delete_error,
     raise_delete_error,
 )
-
-
-class TestServeLatestDraftPage(TestCase):
-    def setUp(self):
-        self.default_site = Site.objects.get(is_default_site=True)
-        self.page = SublandingPage(title="live", slug="test")
-        self.default_site.root_page.add_child(instance=self.page)
-        self.page.title = "draft"
-        self.page.save_revision()
-
-    @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
-    def test_not_serving_draft_serves_published_revision(self):
-        response = self.client.get("/test/")
-        self.assertContains(response, "live")
-        self.assertIsNone(response.get("Serving-Wagtail-Draft"))
-
-    def test_serving_draft_serves_latest_revision_and_adds_header(self):
-        with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
-            response = self.client.get("/test/")
-            self.assertContains(response, "draft")
-            self.assertEqual(response["Serving-Wagtail-Draft"], "1")
 
 
 class TestGetResourceTags(TestCase):
