@@ -185,6 +185,7 @@ categories = [
     ),
 ]
 
+
 def get_appropriate_categories(specific_categories, page_type):
     """An array of specific categories is provided from whatever
     is selected in the admin for related posts, however they each
