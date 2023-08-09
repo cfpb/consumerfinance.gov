@@ -183,7 +183,7 @@ categories = [
             ("student-loans", "Student loans"),
         ),
     ),
-
+]
 
 def get_appropriate_categories(specific_categories, page_type):
     """An array of specific categories is provided from whatever
