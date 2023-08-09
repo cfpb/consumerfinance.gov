@@ -186,8 +186,8 @@ categories = [
     (
         "Petition",
         (
-            ("open", "Open petition"),
-            ("closed", "Closed petition"),
+            ("open-petition", "Open petition"),
+            ("closed-petition", "Closed petition"),
         ),
     ),
 ]
