@@ -183,6 +183,13 @@ categories = [
             ("student-loans", "Student loans"),
         ),
     ),
+    (
+        "Petition",
+        (
+            ("open-petition", "Open petition"),
+            ("closed-petition", "Closed petition"),
+        ),
+    ),
 ]
 
 
