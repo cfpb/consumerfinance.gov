@@ -183,14 +183,6 @@ categories = [
             ("student-loans", "Student loans"),
         ),
     ),
-    (
-        "Petition",
-        (
-            ("open", "Open petition"),
-            ("closed", "Closed petition"),
-        ),
-    ),
-]
 
 
 def get_appropriate_categories(specific_categories, page_type):
