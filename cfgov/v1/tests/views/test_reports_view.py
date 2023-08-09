@@ -22,7 +22,6 @@ from v1.models import (
     EnforcementActionPage,
     EnforcementActionProduct,
     EnforcementActionStatus,
-    LearnPage,
 )
 from v1.models.snippets import RelatedResource
 from v1.tests.wagtail_pages.helpers import save_new_page
@@ -34,7 +33,6 @@ from v1.views.reports import (
     DocumentsReportView,
     EnforcementActionsReportView,
     PageMetadataReportView,
-    PagePreviewFieldsReportView,
     construct_absolute_url,
     join_values_with_pipe,
     process_categories,
@@ -305,20 +303,3 @@ class TestActiveUsersReport(TestCase):
         report_users = ActiveUsersReportView().get_queryset()
         self.assertGreater(len(User.objects.all()), len(report_users))
         self.assertNotIn(test_user, report_users)
-
-
-class TestPagePreviewFieldsReport(TestCase):
-    def test_get_queryset(self):
-        root_page = Site.objects.get(is_default_site=True).root_page
-        page_no_preview = LearnPage(
-            title="no preview",
-            slug="no-preview",
-        )
-        root_page.add_child(instance=page_no_preview)
-        page_with_preview = LearnPage(
-            title="has preview", slug="has-preview", preview_title="Preview me"
-        )
-        root_page.add_child(instance=page_with_preview)
-
-        queryset = PagePreviewFieldsReportView().get_queryset()
-        self.assertQuerysetEqual(queryset, [page_with_preview])
