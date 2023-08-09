@@ -12,13 +12,16 @@ from wagtail import hooks
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
 from wagtail.admin.views.pages.delete import delete
 from wagtail.models import Page, Site
-from wagtail.test.testapp.models import SimplePage
 from wagtail.test.utils import WagtailTestUtils
 from wagtail.whitelist import Whitelister as Allowlister
 
-from v1.models.base import CFGOVPage, CFGOVPageCategory
-from v1.models.blog_page import BlogPage
-from v1.models.resources import Resource
+from v1.models import (
+    BlogPage,
+    CFGOVPage,
+    CFGOVPageCategory,
+    Resource,
+    SublandingPage,
+)
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.wagtail_hooks import (
     get_resource_tags,
@@ -30,7 +33,7 @@ from v1.wagtail_hooks import (
 class TestServeLatestDraftPage(TestCase):
     def setUp(self):
         self.default_site = Site.objects.get(is_default_site=True)
-        self.page = SimplePage(title="live", slug="test", content="test")
+        self.page = SublandingPage(title="live", slug="test")
         self.default_site.root_page.add_child(instance=self.page)
         self.page.title = "draft"
         self.page.save_revision()
