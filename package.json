@@ -33,6 +33,7 @@
     "@cfpb/rental-assistance-finder": "0.6.0",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.14",
+    "autosize": "6.0.1",
     "cfpb-chart-builder": "6.4.2",
     "enforce-node-version": "0.1.0",
     "esbuild": "0.17.19",
