@@ -58,16 +58,6 @@ class AbstractFilterPage(CFGOVPage):
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
-        MultiFieldPanel(
-            [
-                FieldPanel("preview_title"),
-                FieldPanel("preview_subheading"),
-                FieldPanel("preview_description"),
-                FieldPanel("preview_image"),
-            ],
-            heading="Page Preview Fields",
-            classname="collapsible",
-        ),
         FieldPanel("schema_json", heading="Structured Data"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
@@ -101,12 +91,6 @@ class AbstractFilterPage(CFGOVPage):
                 ObjectList(self.settings_panels, heading="Configuration"),
             ]
         )
-
-    # Returns an image for the page's meta Open Graph tag
-    @property
-    def meta_image(self):
-        parent_meta = super().meta_image
-        return parent_meta or self.preview_image
 
 
 class LearnPage(AbstractFilterPage):

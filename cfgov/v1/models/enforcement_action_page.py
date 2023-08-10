@@ -244,16 +244,6 @@ class EnforcementActionPage(AbstractFilterPage):
 
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
-        MultiFieldPanel(
-            [
-                FieldPanel("preview_title"),
-                FieldPanel("preview_subheading"),
-                FieldPanel("preview_description"),
-                FieldPanel("preview_image"),
-            ],
-            heading="Page Preview Fields",
-            classname="collapsible",
-        ),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("date_published"),
         MultiFieldPanel(
