@@ -1,5 +1,5 @@
 @import (reference) '../../../css/main.less';
-@import '../node_modules/ctrl-f/dist/css/index.css';
+@import url('../node_modules/ctrl-f/dist/css/index.css');
 
 .o-fig_main {
   // Bump up all heading sizes to improve readability
@@ -81,7 +81,7 @@
   margin-bottom: unit(45px / @base-font-size-px, em);
 
   // Put a horizontal rule below all sub level 3 headings
-  &:after {
+  &::after {
     display: inline-block;
     content: '';
     border-top: 2px solid @gray-50;
@@ -137,7 +137,7 @@
 
   .lead-paragraph,
   .author-names {
-    margin: 30px 0 30px 0;
+    margin: 30px 0;
   }
 
   .report-header > a {

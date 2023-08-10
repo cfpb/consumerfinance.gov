@@ -31,7 +31,7 @@
       position: relative;
 
       // Create the hero background bleed.
-      &:after {
+      &::after {
         .u-hero-background();
       }
     }
@@ -84,7 +84,7 @@
         margin-left: unit(-15px / @base-font-size-px, rem);
 
         // This is the sidebar background, which bleeds to the edge.
-        &:after {
+        &::after {
           .u-sidebar-background();
           left: 0;
         }
@@ -120,7 +120,7 @@
         margin-right: unit(-15px / @base-font-size-px, rem);
 
         // This is the sidebar background, which bleeds to the edge.
-        &:after {
+        &::after {
           .u-sidebar-background();
           right: 0;
           left: auto;

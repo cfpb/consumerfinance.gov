@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0254_delete_campaignpage'),
     ]
 
     operations = [

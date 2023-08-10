@@ -9,7 +9,7 @@
 
   .canvas-container .x-axis-label {
     position: relative;
-    top: 0px;
+    top: 0;
     left: 40px;
   }
 
@@ -17,21 +17,7 @@
     position: absolute;
     top: 290px;
     left: -50px;
-
-    /* Safari */
-    -webkit-transform: rotate(-90deg);
-
-    /* Firefox */
-    -moz-transform: rotate(-90deg);
-
-    /* Opera */
-    -o-transform: rotate(-90deg);
-
-    /* CSS3 */
     transform: rotate(-90deg);
-
-    /* IE9 (this must come after the pure CSS3 to prevent autoprefixer from stripping it out) */
-    -ms-transform: rotate(-90deg);
   }
 
   .step-one-hidden,
@@ -108,7 +94,7 @@
     .step-one
     .birthdate-inputs
     label.input-labels:last-child {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .step-one label.input-labels .input-labels_block {
@@ -126,14 +112,14 @@
   }
 
   .estimated-benefits-description {
-    margin: 1em 0 0 0;
+    margin: 1em 0 0;
     padding: 1em 0;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
   }
 
   .estimated-benefits-description p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .estimated-benefits-input {
@@ -142,8 +128,8 @@
   }
 
   #graph-container .content-l_col {
-    margin-top: 0px;
-    padding: 30px 0 60px 0;
+    margin-top: 0;
+    padding: 30px 0 60px;
   }
 
   .step-one .content-l_col {
@@ -212,7 +198,7 @@
     .graph__background {
       background: #e3e4e5;
       height: 1px;
-      left: 0px;
+      left: 0;
     }
 
     .graph_slider {
@@ -286,7 +272,7 @@
   .step-one .estimate-info {
     vertical-align: bottom;
     font-size: 0.875em;
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   .step-one .estimate-info p {
@@ -312,7 +298,7 @@
   }
 
   .selected-retirement-age-container p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .selected-retirement-age {
@@ -329,7 +315,7 @@
   }
 
   .total-benefits-container p {
-    margin: 0px;
+    margin: 0;
   }
 
   .benefit-selection p.selected-full-retirement,
@@ -345,7 +331,7 @@
   }
 
   #graph-container + hr {
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   .graph-content .content-container {
@@ -360,7 +346,7 @@
   .graph-content h3.retirement-age {
     font-size: 1em;
     font-weight: 500;
-    margin: 0px;
+    margin: 0;
   }
 
   #graph-container p.learn-how {
@@ -377,7 +363,7 @@
 
   .step-two .lifestyle-img {
     display: block;
-    margin: 60px auto 60px;
+    margin: 60px auto;
   }
 
   .step-two .lifestyle-response {
@@ -406,7 +392,6 @@
 
   [lang='es'] .step-two .question-working img {
     display: block;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
     background: url('/static/apps/retirement/img/sus60s.png') no-repeat;
     width: 200px;
@@ -416,7 +401,6 @@
 
   [lang='es'] .step-two .question-expenses img {
     display: block;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
     background: url('/static/apps/retirement/img/gastos.png') no-repeat;
     width: 200px;
@@ -447,7 +431,7 @@
   }
 
   #age-selector-response .next-steps {
-    padding-left: 0px;
+    padding-left: 0;
     padding-top: 20px;
     margin-bottom: 60px;
   }
@@ -514,7 +498,7 @@
     }
 
     #estimated-benefits-input label:first-of-type {
-      margin-left: 0px;
+      margin-left: 0;
     }
 
     .step-two .lifestyle-response > p:last-child {
@@ -598,13 +582,13 @@
       padding-bottom: 10px;
     }
 
-    .question:before,
-    .question:after {
+    .question::before,
+    .question::after {
       display: table;
       content: '';
     }
 
-    .question:after {
+    .question::after {
       clear: both;
     }
 
@@ -682,7 +666,7 @@
     }
 
     .estimated-benefits-input {
-      padding-left: 0px;
+      padding-left: 0;
     }
 
     #estimated-benefits-input label {
@@ -693,7 +677,7 @@
 
     #estimated-benefits-input label:first-of-type {
       margin-top: 8px;
-      margin-left: 0px;
+      margin-left: 0;
     }
 
     #graph-container .content-l_col {
@@ -806,8 +790,8 @@
   div[data-tooltip-name] {
     display: none;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
   }
 
   *[data-tooltip-target] {
@@ -819,7 +803,7 @@
 
   #tooltip-container {
     background-color: #e4e2e0;
-    border: 0px solid #000;
+    border: 0 solid #000;
     display: none;
     font-style: normal;
     font-size: 0.8em;
@@ -841,7 +825,7 @@
   /* These elements, .outertip and .innertip, make the little speech-balloon
      styled tip appear along the top of the tooltip. */
   #tooltip-container .outertip {
-    border: 0px solid transparent;
+    border: 0 solid transparent;
     border-bottom-color: #000;
     content: ' ';
     height: 0;

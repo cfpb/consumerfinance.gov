@@ -17,9 +17,6 @@ import wagtail.snippets.blocks
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('ask_cfpb', '0001_squashed_0047_add_use_json_field_to_streamfields'), ('ask_cfpb', '0002_remove_answerpage_redirect_to_page'), ('ask_cfpb', '0003_remove_answerpage_share_and_print'), ('ask_cfpb', '0004_new_table_block')]
-
     initial = True
 
     dependencies = [
@@ -28,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
-        ('v1', '0001_squashed_0235_add_use_json_field_to_streamfields'),
+        ('v1', '0001_squashed_0254_delete_campaignpage'),
     ]
 
     operations = [
