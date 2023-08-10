@@ -43,20 +43,12 @@ nav:
 
 ## Running the docs locally
 
-### With Docker
 
-When running consumerfinance.gov using [Docker-compose](../installation/#docker-based-installation),
-this documentation is running by default at http://localhost:8888.
-
-### Manually
-
-When using
-[the stand-alone installation](../installation/#stand-alone-installation)
-of consumerfinance.gov,
-you can run these docs with:
+With a
+[stand-alone Python virtualenv for consumerfinance.gov](../installation/#set-up-a-local-python-environment-optional):
 
 ```bash
-workon consumerfinance.gov
+pyenv activate consumerfinance.gov
 pip install -r requirements/docs.txt
 mkdocs serve -a :8888
 ```

@@ -24,8 +24,6 @@ and
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888> (docker-compose only).
-
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
 
