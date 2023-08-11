@@ -6,8 +6,8 @@ from django.http import Http404, HttpRequest
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from v1.admin_views import redirect_to_cfpb_guide
-from v1.models import CFPBGuideSettings
+from v1.admin_views import redirect_to_internal_docs
+from v1.models import InternalDocsSettings
 
 
 def create_admin_access_permissions():
@@ -134,14 +134,14 @@ class TestCDNManagementView(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class CFPBGuideViewTests(TestCase):
-    def test_guide_not_defined_view_returns_404(self):
+class InternalDocsViewTests(TestCase):
+    def test_docs_not_defined_view_returns_404(self):
         with self.assertRaises(Http404):
-            redirect_to_cfpb_guide(HttpRequest())
+            redirect_to_internal_docs(HttpRequest())
 
-    def test_guide_defined_view_redirects_to_guide_url(self):
-        CFPBGuideSettings.objects.create(url="https://example.com/")
-        response = redirect_to_cfpb_guide(HttpRequest())
+    def test_docs_defined_view_redirects_to_guide_url(self):
+        InternalDocsSettings.objects.create(url="https://example.com/")
+        response = redirect_to_internal_docs(HttpRequest())
         self.assertEqual(
             (response["Location"], response.status_code),
             ("https://example.com/", 302),

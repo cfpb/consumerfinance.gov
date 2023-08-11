@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="CFPBGuideSettings",
+            name="InternalDocsSettings",
             fields=[
                 (
                     "id",
@@ -25,13 +25,13 @@ class Migration(migrations.Migration):
                     "url",
                     models.URLField(
                         blank=True,
-                        help_text="Enter the URL for the internal CFPB Wagtail editor guide.",
+                        help_text="Enter the URL for internal documentation.",
                         null=True,
                     ),
                 ),
             ],
             options={
-                "verbose_name": "CFPB Guide",
+                "verbose_name": "Internal documentation",
             },
         ),
     ]

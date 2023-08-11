@@ -43,7 +43,6 @@ nav:
 
 ## Running the docs locally
 
-
 With a
 [stand-alone Python virtualenv for consumerfinance.gov](../installation/#set-up-a-local-python-environment-optional):
 
@@ -82,12 +81,12 @@ Some internal documentation is not suitable for inclusion in the public docs.
 
 Internal documentation can be linked from publicly-viewable documentation only
 if internal domain names and URLs are not shared publicly. To support such linking,
-the consumerfinance.gov Wagtail admin has a custom "CFPB Guide" setting that allows
-for dynamic linking to an internal URL without exposing that URL in public source
-code or documentation.
+the consumerfinance.gov Wagtail admin has a custom "Internal documentation" setting
+that allows for dynamic linking to an internal URL without exposing that URL in
+public source code or documentation.
 
-Defining this setting adds a "CFPB Guide" item to the Wagtail admin "Help" menu.
-This menu item then links to the configured setting URL. Defining this setting also
-creates an `/admin/cfpb-guide/` alias URL that redirects to the configured setting
-URL. This alias URL can be shared or referenced publicly without exposing the
-internal one.
+Defining this setting adds a "Internal documentation" item to the Wagtail admin
+"Help" menu. This menu item then links to the configured setting URL. Defining
+this setting also creates an `/admin/internal-docs/` alias URL that redirects
+to the configured setting URL. This alias URL can be shared or referenced publicly
+without exposing the internal one.

@@ -8,9 +8,9 @@ from wagtail.contrib.settings.models import (
 
 
 @register_setting
-class CFPBGuideSettings(BaseGenericSetting):
+class InternalDocsSettings(BaseGenericSetting):
     url = models.URLField(
-        help_text="Enter the URL for the internal CFPB Wagtail editor guide.",
+        help_text="Enter the URL for internal documentation.",
         null=True,
         blank=True,
     )
@@ -20,4 +20,4 @@ class CFPBGuideSettings(BaseGenericSetting):
     ]
 
     class Meta:
-        verbose_name = "CFPB Guide"
+        verbose_name = "Internal documentation"

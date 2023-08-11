@@ -10,7 +10,7 @@ from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm
-from v1.models import AkamaiBackend, CDNHistory, CFPBGuideSettings
+from v1.models import AkamaiBackend, CDNHistory, InternalDocsSettings
 
 
 logger = logging.getLogger(__name__)
@@ -105,10 +105,10 @@ def manage_cdn(request):
     )
 
 
-def redirect_to_cfpb_guide(request):
-    guide_url = CFPBGuideSettings.load(request_or_site=request).url
+def redirect_to_internal_docs(request):
+    docs_url = InternalDocsSettings.load(request_or_site=request).url
 
-    if guide_url is None:
+    if docs_url is None:
         raise Http404
 
-    return HttpResponseRedirect(guide_url)
+    return HttpResponseRedirect(docs_url)

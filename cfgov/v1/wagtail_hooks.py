@@ -21,13 +21,13 @@ from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import (
     cdn_is_configured,
     manage_cdn,
-    redirect_to_cfpb_guide,
+    redirect_to_internal_docs,
 )
 from v1.models import (
     Banner,
-    CFPBGuideSettings,
     Contact,
     EmailSignUp,
+    InternalDocsSettings,
     PortalCategory,
     PortalTopic,
     RelatedResource,
@@ -622,28 +622,28 @@ register_template_debug(
 
 
 @hooks.register("register_admin_urls")
-def register_cfpb_guide_url():
+def register_internal_docs_url():
     return [
         re_path(
-            r"^cfpb-guide/$",
-            redirect_to_cfpb_guide,
-            name="cfpb_guide",
+            r"^internal-docs/$",
+            redirect_to_internal_docs,
+            name="internal_docs",
         ),
     ]
 
 
-class CFPBGuideMenuItem(MenuItem):
+class InternalDocsMenuItem(MenuItem):
     def is_shown(self, request):
-        return bool(CFPBGuideSettings.load(request_or_site=request).url)
+        return bool(InternalDocsSettings.load(request_or_site=request).url)
 
 
 @hooks.register("register_help_menu_item")
-def register_wagtail_guide_menu_item():
-    return CFPBGuideMenuItem(
-        "CFPB Guide",
-        reverse("cfpb_guide"),
+def register_internal_docs_menu_item():
+    return InternalDocsMenuItem(
+        "Internal documentation",
+        reverse("internal_docs"),
         icon_name="help",
         order=1200,
         attrs={"target": "_blank", "rel": "noreferrer"},
-        name="cfpb_guide_menu",
+        name="internal_docs_menu",
     )

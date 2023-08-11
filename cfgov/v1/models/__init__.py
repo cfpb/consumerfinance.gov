@@ -39,7 +39,7 @@ from v1.models.portal_topics import (
     PortalTopicTag,
 )
 from v1.models.resources import Resource, ResourceTag, TaggableSnippetManager
-from v1.models.settings import CFPBGuideSettings
+from v1.models.settings import InternalDocsSettings
 from v1.models.snippets import (
     Contact,
     EmailSignUp,

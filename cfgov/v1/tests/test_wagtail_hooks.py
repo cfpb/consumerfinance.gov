@@ -19,7 +19,7 @@ from v1.models import (
     BlogPage,
     CFGOVPage,
     CFGOVPageCategory,
-    CFPBGuideSettings,
+    InternalDocsSettings,
     Resource,
     SublandingPage,
 )
@@ -233,16 +233,18 @@ class TestDjangoAdminLink(TestCase, WagtailTestUtils):
         self.assertNotContains(response, "Django Admin")
 
 
-class TestCFPBGuideLink(TestCase, WagtailTestUtils):
+class TestInternalDocsLink(TestCase, WagtailTestUtils):
     def setUp(self):
         self.login()
 
     def get_admin_response(self):
         return self.client.get(reverse("wagtailadmin_home"))
 
-    def test_guide_not_defined_no_link_in_admin(self):
-        self.assertNotContains(self.get_admin_response(), "/admin/cfpb-guide/")
+    def test_docs_not_defined_no_link_in_admin(self):
+        self.assertNotContains(
+            self.get_admin_response(), "/admin/internal-docs/"
+        )
 
     def test_guide_defined_creates_link_in_admin(self):
-        CFPBGuideSettings.objects.create(url="https://example.com/")
-        self.assertContains(self.get_admin_response(), "/admin/cfpb-guide/")
+        InternalDocsSettings.objects.create(url="https://example.com/")
+        self.assertContains(self.get_admin_response(), "/admin/internal-docs/")
