@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("v1", "0252_filterable_empty_content"),
+        ("v1", "0003_petition_categories_2"),
     ]
 
     operations = [

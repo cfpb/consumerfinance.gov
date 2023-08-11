@@ -17,9 +17,9 @@ from wagtail.whitelist import Whitelister as Allowlister
 
 from v1.models import (
     BlogPage,
-    CFPBGuideSettings,
     CFGOVPage,
     CFGOVPageCategory,
+    CFPBGuideSettings,
     Resource,
     SublandingPage,
 )
