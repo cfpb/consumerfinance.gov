@@ -22,14 +22,12 @@
    post.date_published:           A date timestamp to format.
    post.categories:               An array with the categories for the post.
                                   Maximum length of array is 2.
-   post.preview_image:            A string with the url of the thumbnail image.
-   post.preview_title:            A string with a preview title
-                                  if post.title is not set.
    post.title:                    A string with the title of the post.
+   post.seo_title:                A string with an alternate title for the post
+                                  (overrides post.title).
    post.comments_close_date:      A datetime object marking the deadline of the
                                   comment period.
-   post.preview_subheading:       A string with the subheading of the post.
-   post.preview_description:      A string with content of post summary.
+   post.search_description:      A string with content of post summary.
    post.get_authors():            An array with authors of the post.
    post.tags:                     An array with the post tags for the post.
 
@@ -117,13 +115,6 @@
                     {% endif %}
                 </div>
             {% endif %}
-        {% elif post.preview_image %}
-            {% set photo = image(post.preview_image, 'original') %}
-            <div class="o-post-preview_image-container">
-                <img class="o-post-preview_image"
-                     src="{{ photo.url }}"
-                     alt="{{ image_alt_value(photo) }}">
-            </div>
         {% endif %}
 
         <div class="o-post-preview_content">
@@ -141,7 +132,7 @@
 
             <h3 class="o-post-preview_title">
                 <a href="{{ post_url }}">
-                    {{ post.preview_title | safe if post.preview_title else post.title }}
+                    {{- post.seo_title or post.title -}}
                 </a>
             </h3>
 
@@ -164,14 +155,9 @@
                     Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
                 </div>
             {% endif %}
-            {% if post.preview_subheading %}
-                <div class="o-post-preview_subtitle">
-                    {{ post.preview_subheading }}
-                </div>
-            {% endif %}
-            {% if post.preview_description %}
+            {% if post.search_description %}
                 <div class="o-post-preview_description">
-                    {{ post.preview_description | safe }}
+                    {{ post.search_description }}
                 </div>
             {% endif %}
             {% if post.get_authors() %}

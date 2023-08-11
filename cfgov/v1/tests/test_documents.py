@@ -59,9 +59,6 @@ class FilterablePagesDocumentTest(TestCase):
                 "statuses",
                 "products",
                 "content",
-                "preview_title",
-                "preview_subheading",
-                "preview_description",
             ],
         )
 
@@ -73,7 +70,6 @@ class FilterablePagesDocumentTest(TestCase):
     def test_prepare_statuses(self):
         enforcement = EnforcementActionPage(
             title="Great Test Page",
-            preview_description="This is a great test page.",
             initial_filing_date=timezone.now(),
         )
         status = EnforcementActionStatus(status="expired-terminated-dismissed")
@@ -93,7 +89,6 @@ class FilterablePagesDocumentTest(TestCase):
     def test_prepare_content_exists(self):
         blog = BlogPage(
             title="Test Blog",
-            preview_title="Blog for Testing",
             content=json.dumps(
                 [
                     {
@@ -121,7 +116,6 @@ class FilterablePagesDocumentTest(TestCase):
     def test_prepare_products(self):
         enforcement = EnforcementActionPage(
             title="Great Test Page",
-            preview_description="This is a great test page.",
             initial_filing_date=timezone.now(),
         )
         product = EnforcementActionProduct(product="Fair Lending")
@@ -152,11 +146,7 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
                 SublandingFilterablePage(title="search1"),
                 [
                     DocumentDetailPage(title="child1"),
-                    DocumentDetailPage(
-                        title="child2",
-                        preview_title="2child",
-                        preview_subheading="2child2",
-                    ),
+                    DocumentDetailPage(title="child2"),
                     (
                         SublandingFilterablePage(title="search2"),
                         [
@@ -195,22 +185,6 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         self.assertEqual(search.search(title="child").count(), 4)
         self.assertEqual(search.search(title="child1").count(), 2)
         self.assertEqual(search.search(title="child3").count(), 0)
-
-    def test_search_by_preview_title(self):
-        search = FilterablePagesDocumentSearch(
-            self.page_tree[0], children_only=False
-        )
-        results_title = search.search(title="child2")
-        results_preview_title = search.search(title="2child")
-        self.assertEqual(results_title.count(), 2)
-        self.assertEqual(results_preview_title.count(), 1)
-
-    def test_search_by_preview_subheading(self):
-        search = FilterablePagesDocumentSearch(
-            self.page_tree[0], children_only=False
-        )
-        results_preview_subheading = search.search(title="2child2")
-        self.assertEqual(results_preview_subheading.count(), 1)
 
     def test_get_raw_results(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
