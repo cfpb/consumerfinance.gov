@@ -1,24 +1,21 @@
+from django.urls import re_path
 from django.views.generic import TemplateView
 
-from flags.urls import flagged_re_path
 from privacy.views import GetDisclosureConsentForm, GetRecordsAccessForm
 
 
 urlpatterns = [
-    flagged_re_path(
-        "PRIVACY_FORMS",
+    re_path(
         r"^disclosure-consent/$",
         GetDisclosureConsentForm.as_view(),
         name="disclosure_consent",
     ),
-    flagged_re_path(
-        "PRIVACY_FORMS",
+    re_path(
         r"^records-access/$",
         GetRecordsAccessForm.as_view(),
         name="records_access",
     ),
-    flagged_re_path(
-        "PRIVACY_FORMS",
+    re_path(
         r"^form-submitted/$",
         TemplateView.as_view(template_name="privacy/form-submitted.html"),
         name="form_submitted",
