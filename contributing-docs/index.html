@@ -118,6 +118,8 @@
         
             <li><a class="toctree-l4" href="#deploying-the-docs-to-github-pages">Deploying the docs to GitHub Pages</a></li>
         
+            <li><a class="toctree-l4" href="#public-vs-private-documentation">Public vs. private documentation</a></li>
+        
         </ul>
     
 
@@ -226,6 +228,18 @@ The docs will then be available at <a href="https://USER.github.io/consumerfinan
 <p>See the
 <a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">the MkDocs documentation</a>
 for more information.</p>
+<h2 id="public-vs-private-documentation">Public vs. private documentation<a class="headerlink" href="#public-vs-private-documentation" title="Permanent link">¶</a></h2>
+<p>Some internal documentation is not suitable for inclusion in the public docs.</p>
+<p>Internal documentation can be linked from publicly-viewable documentation only
+if internal domain names and URLs are not shared publicly. To support such linking,
+the consumerfinance.gov Wagtail admin has a custom "Internal documentation" setting
+that allows for dynamic linking to an internal URL without exposing that URL in
+public source code or documentation.</p>
+<p>Defining this setting adds a "Internal documentation" item to the Wagtail admin
+"Help" menu. This menu item then links to the configured setting URL. Defining
+this setting also creates an <code>/admin/internal-docs/</code> alias URL that redirects
+to the configured setting URL. This alias URL can be shared or referenced publicly
+without exposing the internal one.</p>
               
             </div>
           </div><footer>
