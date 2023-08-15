@@ -1,7 +1,4 @@
-from html import unescape
-
 from django.core.exceptions import FieldDoesNotExist
-from django.utils.html import strip_tags
 
 from django_opensearch_dsl import Document, fields
 from django_opensearch_dsl.registries import registry
@@ -39,9 +36,6 @@ class FilterablePagesDocument(Document):
     statuses = fields.KeywordField()
     products = fields.KeywordField()
     content = fields.TextField()
-    preview_title = fields.TextField()
-    preview_subheading = fields.TextField()
-    preview_description = fields.TextField()
 
     def get_queryset(self, *args, **kwargs):
         return AbstractFilterPage.objects.live().public().specific()
@@ -83,9 +77,6 @@ class FilterablePagesDocument(Document):
             return None
         except IndexError:
             return None
-
-    def prepare_preview_description(self, instance):
-        return unescape(strip_tags(instance.preview_description))
 
     def get_instances_from_related(self, related_instance):
         # Related instances all inherit from AbstractFilterPage.
@@ -174,9 +165,6 @@ class FilterablePagesDocumentSearch:
                     "title^10",
                     "tags.name^10",
                     "content",
-                    "preview_title",
-                    "preview_subheading",
-                    "preview_description",
                 ],
                 type="phrase_prefix",
                 slop=2,

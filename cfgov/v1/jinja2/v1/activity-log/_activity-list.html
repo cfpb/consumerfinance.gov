@@ -35,7 +35,7 @@
                 <td class="u-w65pct">
                     <a href="{{ post_url }}">
                         <span class="h4 u-mb0">
-                            {{ post.preview_title | safe if post.preview_title else post.title }}
+                            {{- post.seo_title or post.title -}}
                         </span>
                     </a>
                 </td>

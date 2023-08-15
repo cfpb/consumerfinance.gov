@@ -3,10 +3,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 
 
-@override_settings(
-    FLAGS={"PRIVACY_FORMS": [("boolean", True)]},
-    PRIVACY_EMAIL_TARGET="email@foia.gov",
-)
+@override_settings(PRIVACY_EMAIL_TARGET="email@foia.gov")
 class TestRecordsAccessForm(TestCase):
     def test_get_the_form(self):
         response = self.client.get(reverse("privacy:records_access"))
@@ -53,10 +50,7 @@ class TestRecordsAccessForm(TestCase):
         self.assertRedirects(response, reverse("privacy:form_submitted"))
 
 
-@override_settings(
-    FLAGS={"PRIVACY_FORMS": [("boolean", True)]},
-    PRIVACY_EMAIL_TARGET="email@foia.gov",
-)
+@override_settings(PRIVACY_EMAIL_TARGET="email@foia.gov")
 class TestDisclosureConsentForm(TestCase):
     def test_get_the_form(self):
         response = self.client.get(reverse("privacy:disclosure_consent"))
