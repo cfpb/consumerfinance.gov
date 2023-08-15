@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
@@ -10,7 +10,7 @@ from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm
-from v1.models.caching import AkamaiBackend, CDNHistory
+from v1.models import AkamaiBackend, CDNHistory, InternalDocsSettings
 
 
 logger = logging.getLogger(__name__)
@@ -103,3 +103,12 @@ def manage_cdn(request):
             "history": history,
         },
     )
+
+
+def redirect_to_internal_docs(request):
+    docs_url = InternalDocsSettings.load(request_or_site=request).url
+
+    if docs_url is None:
+        raise Http404
+
+    return HttpResponseRedirect(docs_url)

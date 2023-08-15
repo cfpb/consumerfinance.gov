@@ -19,6 +19,7 @@ from v1.models import (
     BlogPage,
     CFGOVPage,
     CFGOVPageCategory,
+    InternalDocsSettings,
     Resource,
     SublandingPage,
 )
@@ -230,3 +231,20 @@ class TestDjangoAdminLink(TestCase, WagtailTestUtils):
     def test_non_staff_doesnt_see_django_admin_link(self):
         response = self.get_admin_response_for_user(is_staff=False)
         self.assertNotContains(response, "Django Admin")
+
+
+class TestInternalDocsLink(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.login()
+
+    def get_admin_response(self):
+        return self.client.get(reverse("wagtailadmin_home"))
+
+    def test_docs_not_defined_no_link_in_admin(self):
+        self.assertNotContains(
+            self.get_admin_response(), "/admin/internal-docs/"
+        )
+
+    def test_guide_defined_creates_link_in_admin(self):
+        InternalDocsSettings.objects.create(url="https://example.com/")
+        self.assertContains(self.get_admin_response(), "/admin/internal-docs/")
