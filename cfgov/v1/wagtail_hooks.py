@@ -18,14 +18,20 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import cdn_is_configured, manage_cdn
-from v1.models.banners import Banner
-from v1.models.portal_topics import PortalCategory, PortalTopic
-from v1.models.resources import Resource
-from v1.models.snippets import (
+from v1.admin_views import (
+    cdn_is_configured,
+    manage_cdn,
+    redirect_to_internal_docs,
+)
+from v1.models import (
+    Banner,
     Contact,
     EmailSignUp,
+    InternalDocsSettings,
+    PortalCategory,
+    PortalTopic,
     RelatedResource,
+    Resource,
     ReusableText,
 )
 from v1.template_debug import (
@@ -50,7 +56,6 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
-    PagePreviewFieldsReportView,
     TranslatedPagesReportView,
 )
 
@@ -368,26 +373,6 @@ def register_active_users_report_url():
     ]
 
 
-@hooks.register("register_reports_menu_item")
-def register_page_preview_fields_report_menu_item():
-    return MenuItem(
-        "Page Preview Fields",
-        reverse("page_preview_fields_report"),
-        classnames="icon icon-" + PagePreviewFieldsReportView.header_icon,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_page_preview_fields_report_url():
-    return [
-        re_path(
-            r"^reports/page-preview-fields/$",
-            PagePreviewFieldsReportView.as_view(),
-            name="page_preview_fields_report",
-        ),
-    ]
-
-
 @hooks.register("construct_reports_menu")
 # Alphabetizie and title case report menu items
 def clean_up_report_menu_items(request, report_menu_items):
@@ -634,3 +619,31 @@ register_template_debug(
     video_player_test_cases,
     extra_js=["video-player.js"],
 )
+
+
+@hooks.register("register_admin_urls")
+def register_internal_docs_url():
+    return [
+        re_path(
+            r"^internal-docs/$",
+            redirect_to_internal_docs,
+            name="internal_docs",
+        ),
+    ]
+
+
+class InternalDocsMenuItem(MenuItem):
+    def is_shown(self, request):
+        return bool(InternalDocsSettings.load(request_or_site=request).url)
+
+
+@hooks.register("register_help_menu_item")
+def register_internal_docs_menu_item():
+    return InternalDocsMenuItem(
+        "Internal documentation",
+        reverse("internal_docs"),
+        icon_name="help",
+        order=1200,
+        attrs={"target": "_blank", "rel": "noreferrer"},
+        name="internal_docs_menu",
+    )

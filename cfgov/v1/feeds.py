@@ -42,7 +42,7 @@ class FilterableFeed(Feed):
         return eastern.localize(naive)
 
     def item_description(self, item):
-        return item.preview_description
+        return item.search_description
 
     def item_categories(self, item):
         categories = [cat.get_name_display() for cat in item.categories.all()]

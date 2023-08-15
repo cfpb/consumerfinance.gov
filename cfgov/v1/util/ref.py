@@ -38,6 +38,7 @@ page_types = [
     ("leadership-calendar", "Leadership Calendar"),
     ("newsroom", "Newsroom"),
     ("notice-opportunity-comment", "Notice and Opportunity for Comment"),
+    ("petitions", "Petition for Rulemaking"),
     ("research-hub", "Research Hub"),
     ("research-reports", "Research Report"),
     ("rule-under-dev", "Rule Under Development"),
@@ -142,6 +143,13 @@ categories = [
         ),
     ),
     (
+        "Petition for Rulemaking",
+        (
+            ("open-petition", "Open petition"),
+            ("closed-petition", "Closed petition"),
+        ),
+    ),
+    (
         "Research Hub",
         (("research-publication", "Office of Research Publication"),),
     ),
@@ -181,13 +189,6 @@ categories = [
             ("payday-loans", "Payday loans"),
             ("prepaid-cards", "Prepaid cards"),
             ("student-loans", "Student loans"),
-        ),
-    ),
-    (
-        "Petition",
-        (
-            ("open-petition", "Open petition"),
-            ("closed-petition", "Closed petition"),
         ),
     ),
 ]
