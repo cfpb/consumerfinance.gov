@@ -35,12 +35,10 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.blog1.categories.add(CFGOVPageCategory(name="foo"))
         self.blog1.categories.add(CFGOVPageCategory(name="bar"))
         self.blog1.tags.add("foo")
-        self.blog1.authors.add("richa-agarwal")
         self.blog1.language = "es"
         self.blog2 = BlogPage(title="another test page")
         self.blog2.categories.add(CFGOVPageCategory(name="bar"))
         self.blog2.tags.add("blah")
-        self.blog2.authors.add("richard-cordray")
         self.category_blog = BlogPage(title="Category Test")
         self.category_blog.categories.add(
             CFGOVPageCategory(name="info-for-consumers")
