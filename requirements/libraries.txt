@@ -33,7 +33,7 @@ wagtail-autocomplete==0.9.0
 wagtail-flags==5.3.0
 wagtail-inventory==2.1
 wagtail-placeholder-images==0.1.1
-wagtail-sharing==2.9
+wagtail-sharing==2.10
 wagtail-treemodeladmin==1.7.0
 wagtailmedia==0.13
 
