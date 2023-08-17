@@ -25,7 +25,7 @@ const HTML_SNIPPET = `
       </svg>
     </div>
   </div>
-  <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+  <button class="a-btn a-btn__link a-btn__warning filters_clear"
           data-js-hook="behavior_clear-all">
       Clear all filters
   </button>

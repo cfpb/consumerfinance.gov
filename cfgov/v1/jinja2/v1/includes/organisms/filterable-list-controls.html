@@ -100,7 +100,9 @@
                             class="o-multiselect"
                             data-placeholder="Search for categories"
                             multiple>
-                    {% for slug, name in choices_for_page_type(value.category_choices) %}
+                    {% for slug, name in choices_for_page_type(
+                        value.category_choices
+                    )  | sort(attribute="1") %}
                         <option value="{{ slug }}"
                                 {{ 'selected' if is_filter_selected('categories', slug) else '' }}>
                             {{ name }}
