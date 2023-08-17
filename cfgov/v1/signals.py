@@ -73,7 +73,6 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         cache.delete(f"{cache_key_prefix}-all_filterable_results")
         cache.delete(f"{cache_key_prefix}-page_ids")
         cache.delete(f"{cache_key_prefix}-topics")
-        cache.delete(f"{cache_key_prefix}-authors")
 
         # Add the filterable list's slug to the list of cache tags to purge
         cache_tags_to_purge.append(filterable_list_page.slug)
