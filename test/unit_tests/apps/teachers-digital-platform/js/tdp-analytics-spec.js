@@ -138,7 +138,7 @@ const HTML_SNIPPET = `
                 Getting paid
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
               </div>
-              <button class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
+              <button class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
             </div>
           </div>
         </div>

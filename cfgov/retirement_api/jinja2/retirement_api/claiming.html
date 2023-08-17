@@ -81,7 +81,7 @@
                                 autocomplete="off" autocorrect="off" spellcheck="false"></label>
                         <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
                             aria-haspopup="true">
-                            <p>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</p>
+                            <small>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</small>
                         </div>
                     </div>
                     <div class="content-l_col content-l_col-1-3">
@@ -99,9 +99,9 @@
                 </div>
             </form>
             <div class="content-l_col content-l_col-1-3 estimate-info">
-                <p>
+                <small>
                     {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
-                </p>
+                </small>
             </div>
         </div>
     </div>
@@ -128,14 +128,14 @@
                         {{ _("is your full benefit claiming age.") }}
                     </span>
                 </p>
-                <p class="compared-to-full explainer">{{ _("Compared to claiming at your full benefit claiming age.") }}
-                </p>
+                <small class="compared-to-full">{{ _("Compared to claiming at your full benefit claiming age.") }}
+                </small>
             </div>
             <div class="total-benefits-container">
                 <p class="total-benefits-text h4"><strong>{{ _("By age 85, an average lifespan, your total benefits will be") }}</strong></p>
                 <p>
-                    <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<span
-                        class="todays-dollars explainer">({{ _("in today's dollars") }})</span>
+                    <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<small
+                        class="todays-dollars">({{ _("in today's dollars") }})</small>
                 </p>
             </div>
             <div class="graph-content">
@@ -456,16 +456,16 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+                <small>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+                <small>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="claim_early_and_work" role="tooltip" aria-haspopup="true">
-                <p>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
         </div>
     </div>
@@ -799,19 +799,19 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="pensions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</p>
+                <small>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+                <small>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+                <small>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="catchup-contributions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</p>
+                <small>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</small>
             </div>
         </div>
         <div class="content-l_col content-l_col-1-3 question question-longevity">
@@ -898,10 +898,11 @@
             <h3 id="retirement-selector-label">
                 {{ _("Select the age you plan to start collecting your Social Security retirement benefits.") }}
             </h3>
-            <p class="explainer step-three-note">
-                {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
+            <p class="step-three-note">
+                <small>
+                    {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
+                </small>
             </p>
-
             <div class="m-form-field m-form-field__select">
                 <div class="a-select">
                     <select id="retirement-age-selector" aria-labelledby="retirement-selector-label">
