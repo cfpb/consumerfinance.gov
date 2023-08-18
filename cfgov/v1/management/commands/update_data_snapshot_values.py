@@ -6,7 +6,6 @@ from django.core.management.base import BaseCommand
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
-from v1.util.migrations import set_streamfield_data
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +36,7 @@ class Command(BaseCommand):
         """
         snapshots = []
         for page in BrowsePage.objects.all():
-            data = page.content.raw_data
+            data = page.content._raw_data
             if data and data[0]["type"] == "data_snapshot":
                 data[0]["value"]["page"] = page.pk
                 snapshots.append(data)
@@ -98,5 +97,5 @@ class Command(BaseCommand):
             # Publish changes to the browse page the data snapshot lives on
             page = BrowsePage.objects.get(pk=snapshot["page"])
             del snapshot["page"]
-            set_streamfield_data(page, "content", snapshot_data)
+            page.content = json.dumps(snapshot_data)
             publish_changes(page)
