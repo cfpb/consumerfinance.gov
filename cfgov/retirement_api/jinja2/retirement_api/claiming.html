@@ -44,14 +44,14 @@
             </div>
         </div>
     </div>
+    {% include "_templates/no_js.html" %}
     <div class="step-one
               block
               block__padded-top
               block__border-top
-              block__flush-bottom">        
-
-              {% include "_templates/no_js.html" %}
-              <div class="content-l u-js-only">
+              block__flush-bottom
+              u-js-only">        
+              <div class="content-l">
                 <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
                 <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
                     <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
