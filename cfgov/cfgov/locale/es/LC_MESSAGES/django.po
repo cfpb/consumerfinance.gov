@@ -53,3 +53,7 @@ msgstr ""
 #: cfgov/settings/base.py:237
 msgid "Haitian Creole"
 msgstr ""
+
+#: Hide Retirement Tool - JavaScript Disabled/Not Installed
+msgid "This tool is not supported in your browser. Please try a newer browser or confirm that JavaScript is enabled."
+msgstr "Este sitio no es compatible con su navegador web. Intente con un navegador web más nuevo o confirme que JavaScript está habilitado."
