@@ -1,7 +1,6 @@
 import json
 from unittest import mock
 
-from django.apps import apps
 from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
@@ -14,10 +13,10 @@ from model_bakery import baker
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG,
     SPANISH_PARENT_SLUG,
+    AnswerLandingPage,
     AnswerPage,
 )
 from ask_cfpb.views import annotate_links
-from v1.util.migrations import get_or_create_page
 
 
 now = timezone.now()
@@ -31,26 +30,23 @@ class AnswerPagePreviewTestCase(TestCase):
         self.factory = RequestFactory()
 
         self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.english_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+
+        self.english_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
             language="en",
             live=True,
         )
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
+
+        self.spanish_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
             language="es",
             live=True,
         )
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
+
         self.test_answer = baker.make(Answer)
         self.test_answer2 = baker.make(Answer)
         self.english_answer_page = AnswerPage(
