@@ -97,13 +97,13 @@ docker attach consumerfinancegov_python_1
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 !!! note
-`docker attach` takes the specific container name or ID.
-Yours may or may not be `consumerfinancegov_python_1`.
-To verify, use `docker container ls`
-to get the Python container's full name or ID.
+    `docker attach` takes the specific container name or ID.
+    Yours may or may not be `consumerfinancegov_python_1`.
+    To verify, use `docker container ls`
+    to get the Python container's full name or ID.
 
 !!! note
-`docker attach` will ONLY work with the dev image, not prod (apache).
+    `docker attach` will ONLY work with the dev image, not prod (apache).
 
 ## Useful Docker commands
 

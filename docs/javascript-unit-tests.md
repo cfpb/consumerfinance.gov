@@ -151,11 +151,11 @@ so they can be placed into the uncategorized `modules` subfolders:
 `cfgov/unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
 
 !!! note "Child apps"
-If you’re working on something in a child app,
-put it in `test/unit_test/appname/js/`.
-Otherwise, if you’re working on something that
-belongs to consumerfinance.gov generally,
-it should go in the corresponding folder under `test/unit_test/js/`.
+    If you’re working on something in a child app,
+    put it in `test/unit_test/appname/js/`.
+    Otherwise, if you’re working on something that
+    belongs to consumerfinance.gov generally,
+    it should go in the corresponding folder under `test/unit_test/js/`.
 
 ### First test run
 
@@ -573,18 +573,18 @@ and assigns the component node to the `notificationElem` variable, and
 (2) creates a new instance of the Notification class.
 
 !!! note "A word about `HTML_SNIPPET`s"
-Right now it’s possible to update a component’s Jinja template,
-forget to update the corresponding JavaScript,
-and the unit tests would still pass,
-because they're using their own `HTML_SNIPPET`.
-It would be preferable if we had a canonical component markup template
-that is pulled in by the application, the unit tests, and the docs.
-We haven’t yet figured out how to do this, since
-our component templates contain Jinja tags that
-the tests would have to reconcile
-into a complete, finished chunk of markup.
-For now, just be aware of this when
-[editing a Wagtail component that includes JavaScript](../editing-components/).
+    Right now it’s possible to update a component’s Jinja template,
+    forget to update the corresponding JavaScript,
+    and the unit tests would still pass,
+    because they're using their own `HTML_SNIPPET`.
+    It would be preferable if we had a canonical component markup template
+    that is pulled in by the application, the unit tests, and the docs.
+    We haven’t yet figured out how to do this, since
+    our component templates contain Jinja tags that
+    the tests would have to reconcile
+    into a complete, finished chunk of markup.
+    For now, just be aware of this when
+    [editing a Wagtail component that includes JavaScript](../editing-components/).
 
 Further down, here are some of the tests that cover the `_setType` function
 (by way of the `setTypeAndContent` function that

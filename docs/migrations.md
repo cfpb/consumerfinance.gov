@@ -89,9 +89,9 @@ For examples of good migration names, look through some of
 [our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations).
 
 !!! note
-Some changes will generate multiple migration files.
-If you change a block that is used in pages defined in different sub-apps,
-you will see a migration file for each of those sub-apps.
+    Some changes will generate multiple migration files.
+    If you change a block that is used in pages defined in different sub-apps,
+    you will see a migration file for each of those sub-apps.
 
 ### Migration numbering and conflicts
 
@@ -168,9 +168,9 @@ The `forwards()` and `backwards()` functions are where any changes
 that need to happen to a model's data are made.
 
 !!! note
-While backwards migrations are necessary in external libraries that we create,
-we do not require them in consumerfinance.gov
-because we prefer not to rollback migrations that have already been applied.
+    While backwards migrations are necessary in external libraries that we create,
+    we do not require them in consumerfinance.gov
+    because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
 
