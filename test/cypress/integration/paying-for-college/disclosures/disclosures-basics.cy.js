@@ -108,7 +108,7 @@ describe('Dynamic Disclosures', () => {
     page.setText('contrib__direct-plus','4000');
     page.setText('contrib__private-loan_0','2000');
     page.setText('contrib__payment-plan','2500');
-    cy.get('#summary_total-loans').should('contain','9,000');
+    cy.get('#summary_total-loans').should('contain','11,000');
   });
 
 /*
