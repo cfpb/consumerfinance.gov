@@ -242,7 +242,7 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
         set_school_grad_rate(school, data)
         compile_net_prices(school, data)
         program_data = api_utils.compile_school_programs(data)
-        if program_data and type(program_data.get("most_popular")) == list:
+        if program_data and isinstance(program_data.get("most_popular"), list):
             school.program_most_popular = program_data["most_popular"]
             school.program_count = program_data.get("program_count")
         school.zip5 = fix_zip5(str(school.zip5))
