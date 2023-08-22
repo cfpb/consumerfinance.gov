@@ -177,10 +177,6 @@ pyproject-api==1.5.3 \
     --hash=sha256:14cf09828670c7b08842249c1f28c8ee6581b872e893f81b62d5465bec41502f \
     --hash=sha256:ffb5b2d7cad43f5b2688ab490de7c4d3f6f15e0b819cb588c4b771567c9729eb
     # via tox
-six==1.16.0 \
-    --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
-    --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
-    # via tox-pip-extensions
 tomli==2.0.1 \
     --hash=sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc \
     --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f
@@ -190,12 +186,6 @@ tomli==2.0.1 \
 tox==4.6.4 \
     --hash=sha256:1b8f8ae08d6a5475cad9d508236c51ea060620126fd7c3c513d0f5c7f29cc776 \
     --hash=sha256:5e2ad8845764706170d3dcaac171704513cc8a725655219acb62fe4380bdadda
-    # via
-    #   -r requirements/test.in
-    #   tox-pip-extensions
-tox-pip-extensions==1.6.0 \
-    --hash=sha256:38ab15ed5bcb1e1212e7a0a09e9def9d01ae5bb24073f6c6204e88456f970b49 \
-    --hash=sha256:58dffa74003988ce8fd4fa67db28d5749b7015d3f7923633143cdd392a1b4f1c
     # via -r requirements/test.in
 virtualenv==20.24.0 \
     --hash=sha256:18d1b37fc75cc2670625702d76849a91ebd383768b4e91382a8d51be3246049e \

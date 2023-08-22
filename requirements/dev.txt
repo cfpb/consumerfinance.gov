@@ -1232,14 +1232,12 @@ six==1.16.0 \
     # via
     #   -r requirements/deployment.txt
     #   -r requirements/scripts.txt
-    #   -r requirements/test.txt
     #   django-autocomplete-light
     #   html5lib
     #   l18n
     #   opensearch-py
     #   python-dateutil
     #   requests-aws4auth
-    #   tox-pip-extensions
 soupsieve==2.4.1 \
     --hash=sha256:1c1bfee6819544a3447586c889157365a27e10d88cde3ad3da0cf0ddf646feb8 \
     --hash=sha256:89d12b2d5dfcd2c9e8c22326da9d9aa9cb3dfab0a83a024f05704076ee8d35ea
@@ -1277,12 +1275,6 @@ tomli==2.0.1 \
 tox==4.6.4 \
     --hash=sha256:1b8f8ae08d6a5475cad9d508236c51ea060620126fd7c3c513d0f5c7f29cc776 \
     --hash=sha256:5e2ad8845764706170d3dcaac171704513cc8a725655219acb62fe4380bdadda
-    # via
-    #   -r requirements/test.txt
-    #   tox-pip-extensions
-tox-pip-extensions==1.6.0 \
-    --hash=sha256:38ab15ed5bcb1e1212e7a0a09e9def9d01ae5bb24073f6c6204e88456f970b49 \
-    --hash=sha256:58dffa74003988ce8fd4fa67db28d5749b7015d3f7923633143cdd392a1b4f1c
     # via -r requirements/test.txt
 tqdm==4.65.0 \
     --hash=sha256:1871fb68a86b8fb3b59ca4cdd3dcccbc7e6d613eeed31f4c332531977b89beb5 \

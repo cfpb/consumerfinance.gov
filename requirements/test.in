@@ -2,4 +2,3 @@ coverage==7.2.7
 diff_cover==7.7.0
 pluggy==1.2.0
 tox==4.6.4
-tox-pip-extensions==1.6.0
