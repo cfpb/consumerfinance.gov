@@ -58,12 +58,13 @@ describe('Dynamic Disclosures', () => {
       '91');
   })
 
-  /* Currently, grad cohort (completionCohort) display is not available in the app. */
-  xit('should dynamically display the graduation cohort content if it\'s available', () => {
-    page.confirmVerification();
-    page.stepTwo();
-    cy.get('.content_grad-cohort').should('be.visible');
-  })
+  /* Currently, grad cohort (completionCohort) display is not available in the app.
+     Here is a test for it, in case that ever changes */
+  // xit('should dynamically display the graduation cohort content if it\'s available', () => {
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   cy.get('.content_grad-cohort').should('be.visible');
+  // })
 
   it('should dynamically hide the graduation cohort content if it\'s not available', () => {
     page.confirmVerification();
