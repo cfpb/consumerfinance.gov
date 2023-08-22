@@ -44,66 +44,68 @@
             </div>
         </div>
     </div>
+    {% include "_templates/no_js.html" %}
     <div class="step-one
               block
               block__padded-top
               block__border-top
-              block__flush-bottom">
-        <div class="content-l">
-            <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
-            <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
-                <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
-                <div class="m-notification m-notification__warning">
-                    {{ svg_icon('warning-round') }}
-                    <div class="m-notification_content">
-                        <div class="h4 m-notification_message">Error message.</div>
-                    </div>
-                </div>
-                <div class="content-l">
-                    <div class="content-l_col content-l_col-1-3 birthdate-inputs">
-                        <p>{{ _("Date of birth") }}</p>
-                        <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2"
-                                placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                        <label for="bd-day" class="input-labels"><input id="bd-day" type="text" maxlength="2"
-                                placeholder="{{ _('DD') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                        <label for="bd-year" class="input-labels"><input id="bd-year" type="text" maxlength="4"
-                                placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                    </div>
-                    <div class="content-l_col content-l_col-1-3">
-                        <label for="salary-input" class="input-labels">
-                            <span class="input-labels_block">{{ _("Highest annual work income") }} <span
-                                    data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
-                                    svg_icon('help-round') }}</span></span>
-                            <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none"
-                                autocomplete="off" autocorrect="off" spellcheck="false"></label>
-                        <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
-                            aria-haspopup="true">
-                            <small>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</small>
+              block__flush-bottom
+              u-js-only">        
+              <div class="content-l">
+                <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
+                <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
+                    <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
+                    <div class="m-notification m-notification__warning">
+                        {{ svg_icon('warning-round') }}
+                        <div class="m-notification_content">
+                            <div class="h4 m-notification_message">Error message.</div>
                         </div>
                     </div>
-                    <div class="content-l_col content-l_col-1-3">
-                        <button
-                            type="submit"
-                            id="get-your-estimates"
-                            class="get-your-estimates a-btn a-btn__disabled"
-                            disabled>
-                            {{ _("Get your estimates") }}
-                            <span id="api-data-loading-indicator">
-                                {{ svg_icon('updating') }}
-                            </span>
-                        </button>
+                    <div class="content-l">
+                        <div class="content-l_col content-l_col-1-3 birthdate-inputs">
+                            <p>{{ _("Date of birth") }}</p>
+                            <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2"
+                                    placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                            <label for="bd-day" class="input-labels"><input id="bd-day" type="text" maxlength="2"
+                                    placeholder="{{ _('DD') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                            <label for="bd-year" class="input-labels"><input id="bd-year" type="text" maxlength="4"
+                                    placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                        </div>
+                        <div class="content-l_col content-l_col-1-3">
+                            <label for="salary-input" class="input-labels">
+                                <span class="input-labels_block">{{ _("Highest annual work income") }} <span
+                                        data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
+                                        svg_icon('help-round') }}</span></span>
+                                <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none"
+                                    autocomplete="off" autocorrect="off" spellcheck="false"></label>
+                            <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
+                                aria-haspopup="true">
+                                <small>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</small>
+                            </div>
+                        </div>
+                        <div class="content-l_col content-l_col-1-3">
+                            <button
+                                type="submit"
+                                id="get-your-estimates"
+                                class="get-your-estimates a-btn a-btn__disabled"
+                                disabled>
+                                {{ _("Get your estimates") }}
+                                <span id="api-data-loading-indicator">
+                                    {{ svg_icon('updating') }}
+                                </span>
+                            </button>
+                        </div>
                     </div>
+                </form>
+                <div class="content-l_col content-l_col-1-3 estimate-info">
+                    <small>
+                        {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
+                    </small>
                 </div>
-            </form>
-            <div class="content-l_col content-l_col-1-3 estimate-info">
-                <small>
-                    {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
-                </small>
             </div>
-        </div>
     </div>
 
     <div id="estimated-benefits-description" class="estimated-benefits-description h3 step-one-hidden">

@@ -643,15 +643,6 @@ FLAGS = {
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
 
-# We want the ability to serve the latest drafts of some pages on beta
-# This value is read by v1.wagtail_hooks
-SERVE_LATEST_DRAFT_PAGES = []
-
-# To expose a previously-published page's latest draft version on beta,
-# add its primary key to the list below
-if DEPLOY_ENVIRONMENT == "beta":
-    SERVE_LATEST_DRAFT_PAGES = []
-
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {
     "debt": [
