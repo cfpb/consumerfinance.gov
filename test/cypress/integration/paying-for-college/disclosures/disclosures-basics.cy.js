@@ -111,19 +111,31 @@ describe('Dynamic Disclosures', () => {
     cy.get('#summary_total-loans').should('contain','11,000');
   });
 
-/*
-  should properly update when the cash a student will personally provide is modified
-  should properly update when the cash a student\'s family will provide is modified
-  should properly update when the Parent PLUS loan is modified
-  should properly update when both the Parent PLUS loan and the cash a student\'s family will provide are modified
-  should properly update when the work study earnings are modified within the allowed limit
-  should properly update when the work study earnings are modified above the allowed limit
-  /   
+  it( 'should properly update when the cash a student will personally provide is modified', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    page.setText('contrib__savings','2500');
+    cy.get('#summary_total-contributions').should('contain','20,500');
+  });
 
+  it( 'should properly update when the cash a student\'s family will provide is modified', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    page.setText('contrib__family','9999');
+    cy.get('#summary_total-contributions').should('contain','13,999');
+  });
 
+  it( 'should properly update when the Parent PLUS loan is modified', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    page.setText('contrib__parent-plus','4000');
+    cy.get('#summary_total-contributions').should('contain','21,000');
+  });
 
-
-
-
-*/ 
+  it( 'should properly update when the work study earnings are modified', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    page.setText('contrib__workstudy','1250');
+    cy.get('#summary_total-contributions').should('contain','16,250');
+  });
 });
