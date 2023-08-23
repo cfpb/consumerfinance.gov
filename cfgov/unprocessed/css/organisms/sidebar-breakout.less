@@ -109,11 +109,9 @@
 
     margin-bottom: @margin__em;
 
-    &_col {
+    &_col:last-child {
       width: 100%;
-      &:last-child {
-        padding-top: @margin__em;
-      }
+      margin-top: unit( (@grid_gutter-width * 2) / @base-font-size-px, em );
     }
 
     &_img-container {

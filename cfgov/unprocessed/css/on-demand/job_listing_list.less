@@ -14,3 +14,12 @@
     font-weight: normal;
   }
 }
+
+//adjust white space in job listing area on mobile
+.respond-to-max(@bp-xs-max, {
+  .o-sidebar-breakout_col {
+    .block.block__flush-top {
+      margin-bottom: 0
+    }
+  }
+});
