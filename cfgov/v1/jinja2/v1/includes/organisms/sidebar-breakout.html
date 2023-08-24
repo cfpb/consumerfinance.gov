@@ -87,9 +87,7 @@
                             {% endif %}
                         {% endif %}
                     {% elif block.block_type in ['job_listing_list', 'related_posts'] %}
-                        <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                             {% include_block block %}
-                        </div>
                     {% elif 'slug' in block.block_type %}
                         <header class="m-slug-header">
                             <h2 class="a-heading">
