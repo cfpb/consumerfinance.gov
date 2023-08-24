@@ -18,6 +18,7 @@ describe('Dynamic Disclosures', () => {
     cy.intercept( 'GET', apiProgramOne, {host: 'localhost', fixture: 'paying-for-college/program-133465_5287.json'});
     cy.intercept( 'GET', apiProgramTwo, {host: 'localhost', fixture: 'paying-for-college/program-224776_444.json'});
     cy.visit( urlOne );
+    cy.wait(500)
   });
 
   it('should automatically populate the program length if it\'s available', () => {
