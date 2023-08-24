@@ -12,16 +12,16 @@ describe('Dynamic Disclosures', () => {
   const urlTwo = '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=224776&pid=444&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
 
   beforeEach(() => {
-    cy.intercept( 'GET', apiConstants, {host: 'localhost', fixture: 'paying-for-college/constants.json'});
-    cy.intercept( 'GET', apiSchoolOne, {host: 'localhost', fixture: 'paying-for-college/school-133465.json'});
-    cy.intercept( 'GET', apiSchoolTwo, {host: 'localhost', fixture: 'paying-for-college/school-224776.json'});
-    cy.intercept( 'GET', apiProgramOne, {host: 'localhost', fixture: 'paying-for-college/program-133465_5287.json'});
-    cy.intercept( 'GET', apiProgramTwo, {host: 'localhost', fixture: 'paying-for-college/program-224776_444.json'});
+    cy.intercept( 'GET', apiConstants, {host: 'localhost', fixture: 'paying-for-college/constants.json'}).as('intConstants');
+    cy.intercept( 'GET', apiSchoolOne, {host: 'localhost', fixture: 'paying-for-college/school-133465.json'}).as('intSchoolOne');
+    cy.intercept( 'GET', apiSchoolTwo, {host: 'localhost', fixture: 'paying-for-college/school-224776.json'}).as('intSchoolTwo');
+    cy.intercept( 'GET', apiProgramOne, {host: 'localhost', fixture: 'paying-for-college/program-133465_5287.json'}).as('intProgramOne');
+    cy.intercept( 'GET', apiProgramTwo, {host: 'localhost', fixture: 'paying-for-college/program-224776_444.json'}).as('intProgramTwo');
     cy.visit( urlOne );
-    cy.wait(500)
   });
 
   it('should automatically populate the program length if it\'s available', () => {
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     cy.get('#estimated-years-attending option:checked').should(
       'have.value',
       '2.5'
@@ -31,6 +31,7 @@ describe('Dynamic Disclosures', () => {
   /* Note: this item was removed from the settlement version of the code, and thus
       it may no longer be relevant */
   it('should dynamically display the completion rate if it\'s available', () => {
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('[data-metric="gradRate"] .bar-graph_number').should(
@@ -40,6 +41,7 @@ describe('Dynamic Disclosures', () => {
   });
 
   it('should dynamically display the expected monthly salary if it\'s available', () => {
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('.estimated-expenses [data-financial="monthlySalary"]').should('be.visible');
@@ -51,7 +53,7 @@ describe('Dynamic Disclosures', () => {
 
   it('should dynamically display the job rate if it\'s available', () => {
     cy.visit(urlTwo);
-
+    cy.wait(['@intConstants', '@intSchoolTwo', '@intProgramTwo']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('#criteria_job-placement-rate').should(
@@ -68,6 +70,7 @@ describe('Dynamic Disclosures', () => {
   // })
 
   it('should dynamically hide the graduation cohort content if it\'s not available', () => {
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('.content_grad-cohort').should('not.be.visible');
