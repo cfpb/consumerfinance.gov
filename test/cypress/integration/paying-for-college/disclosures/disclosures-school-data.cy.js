@@ -21,7 +21,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it('should automatically populate the program length if it\'s available', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     cy.get('#estimated-years-attending option:checked').should(
       'have.value',
       '2.5'
@@ -31,7 +30,6 @@ describe('Dynamic Disclosures', () => {
   /* Note: this item was removed from the settlement version of the code, and thus
       it may no longer be relevant */
   it('should dynamically display the completion rate if it\'s available', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('[data-metric="gradRate"] .bar-graph_number').should(
@@ -41,7 +39,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it('should dynamically display the expected monthly salary if it\'s available', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('.estimated-expenses [data-financial="monthlySalary"]').should('be.visible');
@@ -53,7 +50,9 @@ describe('Dynamic Disclosures', () => {
 
   it('should dynamically display the job rate if it\'s available', () => {
     cy.visit(urlTwo);
-    cy.wait(['@intConstants', '@intSchoolTwo', '@intProgramTwo']);
+    cy.wait('@intConstants').its('response.statusCode').should('eq', 200);
+    cy.wait('@intSchoolTwo').its('response.statusCode').should('eq', 200);
+    cy.wait('@intProgramTwo').its('response.statusCode').should('eq', 200);
     page.confirmVerification();
     page.stepTwo();
     cy.get('#criteria_job-placement-rate').should(
@@ -70,7 +69,6 @@ describe('Dynamic Disclosures', () => {
   // })
 
   it('should dynamically hide the graduation cohort content if it\'s not available', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('.content_grad-cohort').should('not.be.visible');
