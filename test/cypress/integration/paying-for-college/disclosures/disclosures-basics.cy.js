@@ -9,27 +9,24 @@ describe('Dynamic Disclosures', () => {
   const urlOne = '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
   
   beforeEach(() => {
-    cy.intercept( 'GET', apiConstants, {host: 'localhost', fixture: 'paying-for-college/constants.json'}).as('intConstants');
-    cy.intercept( 'GET', apiSchoolOne, {host: 'localhost', fixture: 'paying-for-college/school-133465.json'}).as('intSchoolOne');
-    cy.intercept( 'GET', apiProgramOne, {host: 'localhost', fixture: 'paying-for-college/program-133465_5287.json'}).as('intProgramOne');
+    cy.intercept( 'GET', apiConstants, {fixture: 'paying-for-college/constants.json'}).as('intConstants');
+    cy.intercept( 'GET', apiSchoolOne, {fixture: 'paying-for-college/school-133465.json'}).as('intSchoolOne');
+    cy.intercept( 'GET', apiProgramOne, {fixture: 'paying-for-college/program-133465_5287.json'}).as('intProgramOne');
     cy.visit( urlOne );
   });
 
 
   it( 'should properly update when the tuition and fees are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']).then( res => {
-      page.confirmVerification();
-      page.stepTwo();
-      page.setText('costs__tuition','40000');
-      cy.get('#summary_total-cost').should(
-        'contain',
-        '34,550'
-      );
-    });
+    page.confirmVerification();
+    page.stepTwo();
+    page.setText('costs__tuition','40000');
+    cy.get('#summary_total-cost').should(
+      'contain',
+      '34,550'
+    );
   });
 
   it( 'should properly update when any costs fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     // Initial check
@@ -57,7 +54,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when any grants fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     // Initial check
@@ -91,14 +87,12 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly calculate borrowing totals', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('#summary_total-loans').should('contain', '7,200');
   });
 
   it( 'should properly re-calculate borrowing totals when editted', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__unsubsidized','4000');
@@ -109,7 +103,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the cash a student will personally provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__savings','2500');
@@ -117,7 +110,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the cash a student\'s family will provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__family','9999');
@@ -125,7 +117,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the Parent PLUS loan is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__parent-plus','4000');
@@ -133,7 +124,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the work study earnings are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__workstudy','1250');
