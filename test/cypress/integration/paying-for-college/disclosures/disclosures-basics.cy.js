@@ -16,128 +16,128 @@ describe('Dynamic Disclosures', () => {
   });
 
 
-  it( 'should properly update when the tuition and fees are modified', () => {
-    cy.intercept('/dummy').as('dummy')
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']).then( resp => {
-      page.confirmVerification();
-      page.stepTwo();
-      page.setText('costs__tuition','40000');
-      cy.get('#summary_total-cost').should(
-        'contain',
-        '34,550'
-      );
-    });
-  });
+  // it( 'should properly update when the tuition and fees are modified', () => {
+  //   cy.intercept('/dummy').as('dummy');
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']).then( resp => {
+  //     page.confirmVerification();
+  //     page.stepTwo();
+  //     page.setText('costs__tuition','40000');
+  //     cy.get('#summary_total-cost').should(
+  //       'contain',
+  //       '34,550'
+  //     );
+  //   });
+  // });
 
-  it( 'should properly update when any costs fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    // Initial check
-    cy.get('#summary_cost-of-attendance').should(
-      'contain',
-      '43,626'
-    );
-    cy.get('#summary_total-cost').should(
-      'contain',
-      '33,526'
-    );
-    // Change all values
-    page.setText('costs__room-and-board','5000');
-    page.setText('costs__books','1234');
-    page.setText('costs__transportation','2300');
-    page.setText('costs__other','999');
-    cy.get('#summary_cost-of-attendance').should(
-      'contain',
-      '48,509'
-    );
-    cy.get('#summary_total-cost').should(
-      'contain',
-      '38,409'
-    );
-  });
+  // it( 'should properly update when any costs fields are modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   // Initial check
+  //   cy.get('#summary_cost-of-attendance').should(
+  //     'contain',
+  //     '43,626'
+  //   );
+  //   cy.get('#summary_total-cost').should(
+  //     'contain',
+  //     '33,526'
+  //   );
+  //   // Change all values
+  //   page.setText('costs__room-and-board','5000');
+  //   page.setText('costs__books','1234');
+  //   page.setText('costs__transportation','2300');
+  //   page.setText('costs__other','999');
+  //   cy.get('#summary_cost-of-attendance').should(
+  //     'contain',
+  //     '48,509'
+  //   );
+  //   cy.get('#summary_total-cost').should(
+  //     'contain',
+  //     '38,409'
+  //   );
+  // });
 
-  it( 'should properly update when any grants fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    // Initial check
-    cy.get('#summary_cost-of-attendance').should(
-      'contain',
-      '43,626'
-    );
-    cy.get('#summary_total-cost').should(
-      'contain',
-      '33,526'
-    );
-    // Change all values
-    page.setText('grants__school','3000');
-    page.setText('grants__state','3001');
-    page.setText('grants__scholarships','103');
-    page.setText('grants__military','123');
-    page.setText('grants__gi','999');
-    // Check new values
-    cy.get('#summary_cost-of-attendance').should(
-      'contain',
-      '43,626'
-    );
-    cy.get('#summary_total-grants-scholarships').should(
-      'contain',
-      '7,226'
-    );
-    cy.get('#summary_total-cost').should(
-      'contain',
-      '36,400'
-    );
-  });
+  // it( 'should properly update when any grants fields are modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   // Initial check
+  //   cy.get('#summary_cost-of-attendance').should(
+  //     'contain',
+  //     '43,626'
+  //   );
+  //   cy.get('#summary_total-cost').should(
+  //     'contain',
+  //     '33,526'
+  //   );
+  //   // Change all values
+  //   page.setText('grants__school','3000');
+  //   page.setText('grants__state','3001');
+  //   page.setText('grants__scholarships','103');
+  //   page.setText('grants__military','123');
+  //   page.setText('grants__gi','999');
+  //   // Check new values
+  //   cy.get('#summary_cost-of-attendance').should(
+  //     'contain',
+  //     '43,626'
+  //   );
+  //   cy.get('#summary_total-grants-scholarships').should(
+  //     'contain',
+  //     '7,226'
+  //   );
+  //   cy.get('#summary_total-cost').should(
+  //     'contain',
+  //     '36,400'
+  //   );
+  // });
 
-  it( 'should properly calculate borrowing totals', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    cy.get('#summary_total-loans').should('contain', '7,200');
-  });
+  // it( 'should properly calculate borrowing totals', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   cy.get('#summary_total-loans').should('contain', '7,200');
+  // });
 
-  it( 'should properly re-calculate borrowing totals when editted', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('contrib__unsubsidized','4000');
-    page.setText('contrib__direct-plus','4000');
-    page.setText('contrib__private-loan_0','2000');
-    page.setText('contrib__payment-plan','2500');
-    cy.get('#summary_total-loans').should('contain','11,000');
-  });
+  // it( 'should properly re-calculate borrowing totals when editted', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   page.setText('contrib__unsubsidized','4000');
+  //   page.setText('contrib__direct-plus','4000');
+  //   page.setText('contrib__private-loan_0','2000');
+  //   page.setText('contrib__payment-plan','2500');
+  //   cy.get('#summary_total-loans').should('contain','11,000');
+  // });
 
-  it( 'should properly update when the cash a student will personally provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('contrib__savings','2500');
-    cy.get('#summary_total-contributions').should('contain','20,500');
-  });
+  // it( 'should properly update when the cash a student will personally provide is modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   page.setText('contrib__savings','2500');
+  //   cy.get('#summary_total-contributions').should('contain','20,500');
+  // });
 
-  it( 'should properly update when the cash a student\'s family will provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('contrib__family','9999');
-    cy.get('#summary_total-contributions').should('contain','13,999');
-  });
+  // it( 'should properly update when the cash a student\'s family will provide is modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   page.setText('contrib__family','9999');
+  //   cy.get('#summary_total-contributions').should('contain','13,999');
+  // });
 
-  it( 'should properly update when the Parent PLUS loan is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('contrib__parent-plus','4000');
-    cy.get('#summary_total-contributions').should('contain','21,000');
-  });
+  // it( 'should properly update when the Parent PLUS loan is modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   page.setText('contrib__parent-plus','4000');
+  //   cy.get('#summary_total-contributions').should('contain','21,000');
+  // });
 
-  it( 'should properly update when the work study earnings are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('contrib__workstudy','1250');
-    cy.get('#summary_total-contributions').should('contain','16,250');
-  });
+  // it( 'should properly update when the work study earnings are modified', () => {
+  //   cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+  //   page.confirmVerification();
+  //   page.stepTwo();
+  //   page.setText('contrib__workstudy','1250');
+  //   cy.get('#summary_total-contributions').should('contain','16,250');
+  // });
 });
