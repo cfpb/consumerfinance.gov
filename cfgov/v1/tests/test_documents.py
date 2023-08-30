@@ -51,6 +51,7 @@ class FilterablePagesDocumentTest(TestCase):
                 "path",
                 "depth",
                 "title",
+                "live",
                 "start_date",
                 "end_date",
                 "language",
