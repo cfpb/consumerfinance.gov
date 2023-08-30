@@ -22,11 +22,11 @@ describe('Dynamic Disclosures', () => {
     cy.intercept( 'GET', apiProgramOne, (request) => {
       request.reply( dataProgramOne );
     }).as('intProgramOne');
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
   });
 
 
   it( 'should properly update when the tuition and fees are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('costs__tuition','40000');
@@ -37,7 +37,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when any costs fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     // Initial check
@@ -65,7 +64,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when any grants fields are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     // Initial check
@@ -99,14 +97,12 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly calculate borrowing totals', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     cy.get('#summary_total-loans').should('contain', '7,200');
   });
 
   it( 'should properly re-calculate borrowing totals when editted', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__unsubsidized','4000');
@@ -117,7 +113,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the cash a student will personally provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__savings','2500');
@@ -125,7 +120,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the cash a student\'s family will provide is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__family','9999');
@@ -133,7 +127,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the Parent PLUS loan is modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__parent-plus','4000');
@@ -141,7 +134,6 @@ describe('Dynamic Disclosures', () => {
   });
 
   it( 'should properly update when the work study earnings are modified', () => {
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
     page.confirmVerification();
     page.stepTwo();
     page.setText('contrib__workstudy','1250');
