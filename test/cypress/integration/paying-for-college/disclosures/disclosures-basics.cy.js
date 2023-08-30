@@ -17,6 +17,7 @@ describe('Dynamic Disclosures', () => {
 
 
   it( 'should properly update when the tuition and fees are modified', () => {
+    cy.intercept('/dummy').as('dummy')
     cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']).then( resp => {
       page.confirmVerification();
       page.stepTwo();
