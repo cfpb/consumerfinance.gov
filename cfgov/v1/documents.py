@@ -23,6 +23,7 @@ class FilterablePagesDocument(Document):
     path = fields.KeywordField()
     depth = fields.IntegerField()
     title = fields.TextField(fields={"raw": fields.KeywordField()})
+    live = fields.BooleanField()
 
     start_date = fields.DateField()
     end_date = fields.DateField()
