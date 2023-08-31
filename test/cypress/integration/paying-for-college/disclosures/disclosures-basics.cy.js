@@ -27,11 +27,12 @@ describe('Dynamic Disclosures', () => {
 
   it( 'should properly update when the tuition and fees are modified', () => {
     cy.visit( urlOne );
+    cy.wait(1000);
+
     cy.intercept( 'GET', apiConstants, dataConstants ).as( 'intConstants' );
     cy.intercept( 'GET', apiSchoolOne, dataSchoolOne ).as( 'intSchoolOne' );
     cy.intercept( 'GET', apiProgramOne, dataProgramOne ).as( 'intProgramOne' );
 
-    cy.wait(1000);
     page.confirmVerification();
     page.stepTwo();
     page.setText('costs__tuition','40000');
