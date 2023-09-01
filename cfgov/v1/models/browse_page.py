@@ -141,7 +141,6 @@ class BrowsePage(AbstractBrowsePage):
             ("data_snapshot", organisms.DataSnapshot()),
             ("job_listing_table", JobListingTable()),
             ("yes_checklist", YESChecklist()),
-            ("raf_tool", v1_blocks.RAFTBlock()),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
