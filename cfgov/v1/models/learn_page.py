@@ -39,18 +39,6 @@ class AbstractFilterPage(CFGOVPage):
         blank=True,
         use_json_field=True,
     )
-    preview_title = models.CharField(max_length=255, null=True, blank=True)
-    preview_subheading = models.CharField(
-        max_length=255, null=True, blank=True
-    )
-    preview_description = RichTextField(null=True, blank=True)
-    preview_image = models.ForeignKey(
-        "v1.CFGOVImage",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
     date_published = models.DateField(default=date.today)
 
     # Configuration tab panels
