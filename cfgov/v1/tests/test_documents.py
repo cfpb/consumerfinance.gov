@@ -207,6 +207,23 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         indexed_page.save_revision().publish()
         self.assertEqual(search.search(title="foo").count(), 1)
 
+    # Mocking is necessary here because unfortunately it's not currently
+    # possible to use override_settings with DOD autosync. See
+    # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
+    @patch(
+        "django_opensearch_dsl.apps.DODConfig.autosync_enabled",
+        return_value=True,
+    )
+    def test_search_excludes_not_live_pages(self, _):
+        child = DocumentDetailPage(title="child3", live=False)
+        self.page_tree[0].add_child(instance=child)
+
+        # This is a no-op but triggers indexing of this non-live page.
+        child.move(self.page_tree[0], pos="last-child")
+
+        search = FilterablePagesDocumentSearch(self.page_tree[0])
+        self.assertEqual(search.count(), 2)
+
 
 class FilterableSearchFilteringTests(
     ElasticsearchTestsMixin, WagtailPageTreeTestCase
