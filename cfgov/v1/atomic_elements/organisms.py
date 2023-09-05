@@ -124,30 +124,6 @@ class InfoUnitGroup(blocks.StructBlock):
 
     info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
 
-    sharing = blocks.StructBlock(
-        [
-            (
-                "shareable",
-                blocks.BooleanBlock(
-                    label="Include sharing links?",
-                    help_text="If checked, share links "
-                    "will be included below "
-                    "the items.",
-                    required=False,
-                ),
-            ),
-            (
-                "share_blurb",
-                blocks.CharBlock(
-                    help_text="Sets the tweet text, "
-                    "email subject line, and "
-                    "LinkedIn post text.",
-                    required=False,
-                ),
-            ),
-        ]
-    )
-
     def clean(self, value):
         cleaned = super().clean(value)
 
