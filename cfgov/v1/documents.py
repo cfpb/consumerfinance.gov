@@ -107,6 +107,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self, root_page, children_only=True, ordering=None):
         search = FilterablePagesDocument.search()
         search = search.filter("prefix", path=root_page.path)
+        search = search.filter("term", live=True)
 
         if children_only:
             search = search.filter("term", depth=root_page.depth + 1)
