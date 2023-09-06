@@ -10,10 +10,12 @@ const getApiValues = {
     const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
+    console.log('requesting', url);
     const constantsRequest = $.ajax({
       url: url,
       dataType: 'json',
       success: function (resp) {
+        console.log('request succeeded', resp);
         return resp;
       },
       // TODO: the user should be notified of errors
