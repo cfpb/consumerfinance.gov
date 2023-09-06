@@ -35,8 +35,11 @@ describe('Dynamic Disclosures', () => {
       fixture: 'paying-for-college/program-133465_5287.json',
     }).as('intProgramOne');
 
+    cy.log('Intercepts set');
     cy.visit(urlOne);
+    cy.log('visited');
     cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
+    cy.log('waited');
 
     page.confirmVerification();
     page.stepTwo();
