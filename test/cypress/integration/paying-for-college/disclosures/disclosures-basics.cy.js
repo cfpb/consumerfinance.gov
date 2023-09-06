@@ -7,6 +7,10 @@ const apiSchoolOne =
   '/paying-for-college2/understanding-your-financial-aid-offer/api/school/133465';
 const apiProgramOne =
   '/paying-for-college2/understanding-your-financial-aid-offer/api/program/133465_5287/';
+const expenses =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/expenses/';
+const national =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/133465_5287/';
 const urlOne =
   '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
 
@@ -24,7 +28,6 @@ describe('Dynamic Disclosures', () => {
   //   cy.visit( urlOne );
   // });
   it('should properly update when the tuition and fees are modified', () => {
-    cy.log('pre intercept');
     cy.intercept('GET', apiConstants, {
       fixture: 'paying-for-college/constants.json',
     }).as('intConstants');
@@ -34,12 +37,22 @@ describe('Dynamic Disclosures', () => {
     cy.intercept('GET', apiProgramOne, {
       fixture: 'paying-for-college/program-133465_5287.json',
     }).as('intProgramOne');
+    cy.intercept('GET', expenses, {
+      fixture: 'paying-for-college/expenses.json',
+    }).as('intExpenses');
+    cy.intercept('GET', national, {
+      fixture: 'paying-for-college/national.json',
+    }).as('intNational');
 
-    cy.log('Intercepts set');
     cy.visit(urlOne);
-    cy.log('visited');
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
-    cy.log('waited');
+
+    cy.wait([
+      '@intConstants',
+      '@intSchoolOne',
+      '@intProgramOne',
+      '@intExpenses',
+      '@intNational',
+    ]);
 
     page.confirmVerification();
     page.stepTwo();
