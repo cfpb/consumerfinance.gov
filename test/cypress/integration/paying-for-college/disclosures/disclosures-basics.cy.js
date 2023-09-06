@@ -28,21 +28,36 @@ describe('Dynamic Disclosures', () => {
   //   cy.visit( urlOne );
   // });
   it('should properly update when the tuition and fees are modified', () => {
-    cy.intercept('GET', apiConstants, {
-      fixture: 'paying-for-college/constants.json',
-    }).as('intConstants');
-    cy.intercept('GET', apiSchoolOne, {
-      fixture: 'paying-for-college/school-133465.json',
-    }).as('intSchoolOne');
-    cy.intercept('GET', apiProgramOne, {
-      fixture: 'paying-for-college/program-133465_5287.json',
-    }).as('intProgramOne');
-    cy.intercept('GET', expenses, {
-      fixture: 'paying-for-college/expenses.json',
-    }).as('intExpenses');
-    cy.intercept('GET', national, {
-      fixture: 'paying-for-college/national.json',
-    }).as('intNational');
+    cy.intercept(
+      { method: 'GET', url: apiConstants },
+      {
+        fixture: 'paying-for-college/constants.json',
+      },
+    ).as('intConstants');
+    cy.intercept(
+      { method: 'GET', url: apiSchoolOne },
+      {
+        fixture: 'paying-for-college/school-133465.json',
+      },
+    ).as('intSchoolOne');
+    cy.intercept(
+      { method: 'GET', url: apiProgramOne },
+      {
+        fixture: 'paying-for-college/program-133465_5287.json',
+      },
+    ).as('intProgramOne');
+    cy.intercept(
+      { method: 'GET', url: expenses },
+      {
+        fixture: 'paying-for-college/expenses.json',
+      },
+    ).as('intExpenses');
+    cy.intercept(
+      { method: 'GET', url: national },
+      {
+        fixture: 'paying-for-college/national.json',
+      },
+    ).as('intNational');
 
     cy.visit(urlOne);
 
