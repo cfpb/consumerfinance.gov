@@ -49,8 +49,6 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
-
-    {{ email_popup(request) }}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
