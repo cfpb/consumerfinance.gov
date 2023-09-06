@@ -1,6 +1,3 @@
-import dataConstants from '../../../fixtures/paying-for-college/constants.json';
-import dataSchoolOne from '../../../fixtures/paying-for-college/school-133465.json';
-import dataProgramOne from '../../../fixtures/paying-for-college/program-133465_5287.json';
 import { DynamicDisclosures } from './disclosures-helpers.cy.js';
 
 const page = new DynamicDisclosures();
@@ -28,9 +25,15 @@ describe('Dynamic Disclosures', () => {
   // });
 
   it('should properly update when the tuition and fees are modified', () => {
-    cy.intercept('GET', apiConstants, dataConstants).as('intConstants');
-    cy.intercept('GET', apiSchoolOne, dataSchoolOne).as('intSchoolOne');
-    cy.intercept('GET', apiProgramOne, dataProgramOne).as('intProgramOne');
+    cy.intercept('GET', apiConstants, {
+      fixture: 'paying-for-college/constants.json',
+    }).as('intConstants');
+    cy.intercept('GET', apiSchoolOne, {
+      fixture: 'paying-for-college/school-133465.json',
+    }).as('intSchoolOne');
+    cy.intercept('GET', apiProgramOne, {
+      fixture: 'paying-for-college/program-133465_5287.json',
+    }).as('intProgramOne');
 
     cy.visit(urlOne);
     cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne']);
