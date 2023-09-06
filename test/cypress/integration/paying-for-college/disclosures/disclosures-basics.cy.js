@@ -23,7 +23,6 @@ describe('Dynamic Disclosures', () => {
   //   }).as('intProgramOne');
   //   cy.visit( urlOne );
   // });
-  cy.log('Logging works');
   it('should properly update when the tuition and fees are modified', () => {
     cy.log('pre intercept');
     cy.intercept('GET', apiConstants, {
