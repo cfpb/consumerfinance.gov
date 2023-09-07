@@ -24,7 +24,6 @@ const app = {
   init: function () {
     // jquery promise to delay full model creation until ajax resolves
     $.when(fetch.initialData()).done(function (constants, expenses) {
-      if (!constants || !expenses) return;
       financialModel.init(constants[0]);
       financialView.init();
       if (location.href.indexOf('about-this-tool') === -1) {
