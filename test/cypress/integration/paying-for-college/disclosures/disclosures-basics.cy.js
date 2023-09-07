@@ -61,16 +61,9 @@ describe('Dynamic Disclosures', () => {
 
     cy.visit(urlOne);
 
-    cy.wait(
-      [
-        '@intConstants',
-        '@intSchoolOne',
-        '@intProgramOne',
-        '@intExpenses',
-        '@intNational',
-      ],
-      { timeout: 20000 },
-    );
+    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne'], {
+      timeout: 20000,
+    });
 
     page.confirmVerification();
     page.stepTwo();
