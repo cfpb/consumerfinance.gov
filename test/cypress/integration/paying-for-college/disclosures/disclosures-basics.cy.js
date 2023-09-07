@@ -2,9 +2,9 @@ import { DynamicDisclosures } from './disclosures-helpers.cy.js';
 
 const page = new DynamicDisclosures();
 const apiConstants =
-  '/paying-for-college2/understanding-your-financial-aid-offer/api/constants';
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/';
 const apiSchoolOne =
-  '/paying-for-college2/understanding-your-financial-aid-offer/api/school/133465';
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/school/133465/';
 const apiProgramOne =
   '/paying-for-college2/understanding-your-financial-aid-offer/api/program/133465_5287/';
 const expenses =
