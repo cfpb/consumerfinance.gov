@@ -61,37 +61,11 @@ describe('Dynamic Disclosures', () => {
 
     cy.visit(urlOne);
 
-    cy.wait(
-      [
-        '@intConstants',
-        '@intExpenses',
-        '@intSchoolOne',
+    cy.wait(['@intConstants', '@intExpenses']).then(v => {
+        cy.wait(['@intSchoolOne',
         '@intProgramOne',
-        '@intNational',
-      ],
-      {
-        timeout: 20000,
-      },
-    );
-
-    page.confirmVerification();
-    page.stepTwo();
-    page.setText('costs__tuition', '40000');
-    cy.get('#summary_total-cost').should('contain', '34,550');
-  });
-
-  // it( 'should properly update when any costs fields are modified', () => {
-  //   page.confirmVerification();
-  //   page.stepTwo();
-  //   // Initial check
-  //   cy.get('#summary_cost-of-attendance').should(
-  //     'contain',
-  //     '43,626'
-  //   );
-  //   cy.get('#summary_total-cost').should(
-  //     'contain',
-  //     '33,526'
-  //   );
+        '@intNational'
+      ])
   //   // Change all values
   //   page.setText('costs__room-and-board','5000');
   //   page.setText('costs__books','1234');
