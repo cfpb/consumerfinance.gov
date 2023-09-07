@@ -41,7 +41,9 @@ describe('Dynamic Disclosures', () => {
       '@intSchoolOne',
       '@intProgramOne',
       '@intNational',
-    ]);
+    ]).then((inter) => {
+      cy.log(inter[0], inter[0].response);
+    });
 
     page.confirmVerification();
     page.stepTwo();
