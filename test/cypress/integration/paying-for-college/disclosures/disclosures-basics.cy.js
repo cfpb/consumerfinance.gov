@@ -29,31 +29,31 @@ describe('Dynamic Disclosures', () => {
   // });
   it('should properly update when the tuition and fees are modified', () => {
     cy.intercept(
-      { method: 'GET', url: apiConstants },
+      { method: 'GET', path: apiConstants },
       {
         fixture: 'paying-for-college/constants.json',
       },
     ).as('intConstants');
     cy.intercept(
-      { method: 'GET', url: apiSchoolOne },
+      { method: 'GET', path: apiSchoolOne },
       {
         fixture: 'paying-for-college/school-133465.json',
       },
     ).as('intSchoolOne');
     cy.intercept(
-      { method: 'GET', url: apiProgramOne },
+      { method: 'GET', path: apiProgramOne },
       {
         fixture: 'paying-for-college/program-133465_5287.json',
       },
     ).as('intProgramOne');
     cy.intercept(
-      { method: 'GET', url: expenses },
+      { method: 'GET', path: expenses },
       {
         fixture: 'paying-for-college/expenses.json',
       },
     ).as('intExpenses');
     cy.intercept(
-      { method: 'GET', url: national },
+      { method: 'GET', path: national },
       {
         fixture: 'paying-for-college/national.json',
       },
@@ -61,9 +61,18 @@ describe('Dynamic Disclosures', () => {
 
     cy.visit(urlOne);
 
-    cy.wait(['@intConstants', '@intSchoolOne', '@intProgramOne'], {
-      timeout: 20000,
-    });
+    cy.wait(
+      [
+        '@intConstants',
+        '@intExpenses',
+        '@intSchoolOne',
+        '@intProgramOne',
+        '@intNational',
+      ],
+      {
+        timeout: 20000,
+      },
+    );
 
     page.confirmVerification();
     page.stepTwo();
