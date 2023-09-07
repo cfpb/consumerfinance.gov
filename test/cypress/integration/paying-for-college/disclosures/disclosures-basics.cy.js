@@ -61,14 +61,6 @@ describe('Dynamic Disclosures', () => {
 
     cy.visit(urlOne);
 
-    cy.wait([
-      '@intConstants',
-      '@intSchoolOne',
-      '@intProgramOne',
-      '@intExpenses',
-      '@intNational',
-    ]);
-
     page.confirmVerification();
     page.stepTwo();
     page.setText('costs__tuition', '40000');
