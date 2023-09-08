@@ -32,6 +32,12 @@ OID_ERROR = "noOffer"
 PID_ERROR = "noProgram"
 
 
+class CorsAllowAllHttpResponse(HttpResponse):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self["Access-Control-Allow-Origin"] = "*"
+
+
 def get_json_file(filename):
     try:
         with open(filename, "r") as f:
@@ -198,7 +204,9 @@ class SchoolRepresentation(View):
 
     def get(self, request, school_id, **kwargs):
         school = self.get_school(school_id)
-        return HttpResponse(school.as_json(), content_type="application/json")
+        return CorsAllowAllHttpResponse(
+            school.as_json(), content_type="application/json"
+        )
 
 
 class ProgramRepresentation(View):
@@ -225,7 +233,9 @@ class ProgramRepresentation(View):
         if not program:
             p_error = "Error: No program found"
             return HttpResponseBadRequest(p_error)
-        return HttpResponse(program.as_json(), content_type="application/json")
+        return CorsAllowAllHttpResponse(
+            program.as_json(), content_type="application/json"
+        )
 
 
 class StatsRepresentation(View):
@@ -244,7 +254,7 @@ class StatsRepresentation(View):
         except Exception:
             program_id = None
         stats = self.get_stats(school, program_id)
-        return HttpResponse(stats, content_type="application/json")
+        return CorsAllowAllHttpResponse(stats, content_type="application/json")
 
 
 class ExpenseRepresentation(View):
@@ -255,7 +265,9 @@ class ExpenseRepresentation(View):
         if not expense_json:
             error = "No expense data could be found"
             return HttpResponseBadRequest(error)
-        return HttpResponse(expense_json, content_type="application/json")
+        return CorsAllowAllHttpResponse(
+            expense_json, content_type="application/json"
+        )
 
 
 class ConstantsRepresentation(View):
@@ -272,7 +284,7 @@ class ConstantsRepresentation(View):
         return json.dumps(constants)
 
     def get(self, request):
-        return HttpResponse(
+        return CorsAllowAllHttpResponse(
             self.get_constants(), content_type="application/json"
         )
 
@@ -296,7 +308,9 @@ def school_autocomplete(request):
             for school in response.get("results")
         ]
 
-    return JsonResponse(document, safe=False)
+    response = JsonResponse(document, safe=False)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 
 class VerifyView(View):
@@ -327,7 +341,7 @@ class VerifyView(View):
             callback = json.dumps(
                 {"result": "Verification recorded; {0}".format(msg)}
             )
-            response = HttpResponse(callback)
+            response = CorsAllowAllHttpResponse(callback)
             return response
         else:
             errmsg = "Error: No school found"
