@@ -1,8 +1,11 @@
 from django import forms
+from django.utils.functional import cached_property
 
 from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.telepath import register
 
 from v1.blocks import HeadingBlock
 
@@ -101,3 +104,18 @@ class Table(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/base.html"
         unescape = False
+
+
+class TableAdapter(StructBlockAdapter):
+    js_constructor = "v1.atomic_elements.tables.Table"
+
+    @cached_property
+    def media(self):
+        media = super().media
+        return forms.Media(
+            js=media._js + ["apps/admin/js/table.js"],
+            css=media._css,
+        )
+
+
+register(TableAdapter(), Table)

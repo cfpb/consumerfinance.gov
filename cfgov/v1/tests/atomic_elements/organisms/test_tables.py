@@ -1,7 +1,7 @@
 from django.test import SimpleTestCase
 from django.utils.html import escape
 
-from v1.atomic_elements.tables import ContactUsTable
+from v1.atomic_elements.tables import ContactUsTable, TableAdapter
 
 
 class ContactUsTableTests(SimpleTestCase):
@@ -21,3 +21,10 @@ class ContactUsTableTests(SimpleTestCase):
 
         self.assertNotIn("<script>", html)
         self.assertIn("&lt;script&gt;", html)
+
+
+class TableTests(SimpleTestCase):
+    def test_table_adapter_media(self):
+        media = TableAdapter().media
+        self.assertFalse(media._css)
+        self.assertIn("apps/admin/js/table.js", media._js)

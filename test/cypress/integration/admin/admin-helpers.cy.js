@@ -196,4 +196,46 @@ export class AdminPage {
     this.selectSubMenu('Page Metadata');
     return cy.get('.listing').find('tr');
   }
+
+  addSublandingPage() {
+    cy.visit('/admin/pages/add/v1/sublandingpage/1/');
+    cy.url().should('include', 'sublandingpage');
+  }
+
+  clickBlock(name) {
+    const block = `.action-add-block-${name}`;
+    cy.get(block).scrollIntoView();
+    cy.get(block).should('be.visible');
+    return cy.get(block).click();
+  }
+
+  addTable() {
+    cy.get('input[value="table"]', { timeout: 1000 }).should('not.exist');
+    this.clickBlock('table');
+    cy.get('input[value="table"]', { timeout: 1000 }).should('exist');
+  }
+
+  setClipboard(text) {
+    cy.window().its('navigator.clipboard').invoke('writeText', text);
+  }
+
+  getTableHeadingCell() {
+    return cy.get('input[name="content-0-value-data-column-0-heading"]');
+  }
+
+  getTableDataCell() {
+    return cy.get('input[name="content-0-value-data-cell-0-1"]');
+  }
+
+  getTableData() {
+    return '00\t01\n10\t11\n';
+  }
+
+  pasteTableAsText() {
+    cy.get('button.paste-as-text').click();
+  }
+
+  pasteTableAsRichText() {
+    cy.get('button.paste-as-rich-text').click();
+  }
 }
