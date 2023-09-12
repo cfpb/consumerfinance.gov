@@ -105,3 +105,42 @@ describe('Admin', () => {
     cy.visit('/admin/');
   });
 });
+
+// Access to the clipboard works consistently in Electron but asks the user for
+// permission in other browsers, like Chrome. Only run these tests in Electron.
+describe('Pasting into tables', { browser: 'electron' }, () => {
+  beforeEach(() => {
+    admin.login();
+    admin.addSublandingPage();
+    admin.addTable();
+
+    admin.getTableHeadingCell().should('not.exist');
+    admin.getTableDataCell().should('not.exist');
+  });
+
+  it('should gracefully handle non-table data on the clipboard', () => {
+    admin.setClipboard('This is not a table.\n');
+    admin.pasteTableAsText();
+
+    admin.getTableHeadingCell().should('not.exist');
+    admin.getTableDataCell().should('not.exist');
+  });
+
+  it('should create a text table by pasting from the clipboard', () => {
+    admin.setClipboard(admin.getTableData());
+    admin.pasteTableAsText();
+
+    admin.getTableHeadingCell().should('exist').should('have.value', '00');
+    admin.getTableDataCell().should('exist').should('have.value', '11');
+  });
+
+  it('should create a rich text table by pasting from the clipboard', () => {
+    admin.setClipboard(admin.getTableData());
+    admin.pasteTableAsRichText();
+
+    admin.getTableHeadingCell().should('exist').should('have.value', '00');
+    admin.getTableDataCell().should(($input) => {
+      expect($input.val()).to.contain('"text":"11"');
+    });
+  });
+});
