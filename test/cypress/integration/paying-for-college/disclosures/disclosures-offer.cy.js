@@ -1,23 +1,31 @@
 import { DynamicDisclosures } from './disclosures-helpers.cy.js';
 
 const page = new DynamicDisclosures();
-const apiConstants = '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/';
-const apiSchoolOne = '/paying-for-college2/understanding-your-financial-aid-offer/api/school/133465/';
-const apiProgramOne = '/paying-for-college2/understanding-your-financial-aid-offer/api/program/133465_5287/'
-const apiSchoolTwo = '/paying-for-college2/understanding-your-financial-aid-offer/api/school/224776/';
-const apiProgramTwo = '/paying-for-college2/understanding-your-financial-aid-offer/api/program/224776_444/';
+const apiConstants =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/';
+const apiSchoolOne =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/school/133465/';
+const apiProgramOne =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/program/133465_5287/';
 
 describe('Dynamic Disclosures offer page', () => {
-  const urlOne = '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
-  const urlTwo = '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=224776&pid=444&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
+  const urlOne =
+    '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
 
   beforeEach(() => {
-    cy.intercept( 'GET', apiConstants, {host: 'localhost', fixture: 'paying-for-college/constants.json'});
-    cy.intercept( 'GET', apiSchoolOne, {host: 'localhost', fixture: 'paying-for-college/school-133465.json'});
-    cy.intercept( 'GET', apiSchoolTwo, {host: 'localhost', fixture: 'paying-for-college/school-224776.json'});
-    cy.intercept( 'GET', apiProgramOne, {host: 'localhost', fixture: 'paying-for-college/program-133465_5287.json'});
-    cy.intercept( 'GET', apiProgramTwo, {host: 'localhost', fixture: 'paying-for-college/program-224776_444.json'});
-    cy.visit( urlOne );
+    cy.intercept('GET', apiConstants, {
+      host: 'localhost',
+      fixture: 'paying-for-college/constants.json',
+    });
+    cy.intercept('GET', apiSchoolOne, {
+      host: 'localhost',
+      fixture: 'paying-for-college/school-133465.json',
+    });
+    cy.intercept('GET', apiProgramOne, {
+      host: 'localhost',
+      fixture: 'paying-for-college/program-133465_5287.json',
+    });
+    cy.visit(urlOne);
   });
 
   it('should display the verify offer area and no other sections', () => {
@@ -32,14 +40,18 @@ describe('Dynamic Disclosures offer page', () => {
   });
 
   it('should hide the anticipated total direct cost section if not passed in the URL', () => {
-    cy.visit('http://localhost:8000/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8');
+    cy.visit(
+      'http://localhost:8000/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8',
+    );
     cy.get('#verify_totalDirectCost').should('not.be.visible');
   });
 
   it('should hide the anticipated total direct cost section if the passed URL value is 0', () => {
-    cy.visit('http://localhost:8000/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=0&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8');
+    cy.visit(
+      'http://localhost:8000/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=0&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8',
+    );
     cy.get('#verify_totalDirectCost').should('not.be.visible');
-  });  
+  });
 
   it('should let a student verify their information and go on to Step 1 of the offer', () => {
     page.confirmVerification();
@@ -57,22 +69,24 @@ describe('Dynamic Disclosures offer page', () => {
     cy.get('.instructions_content__wrong').should('be.visible');
   });
 
-  /** Note: Some of the following actually comes from the back-end and the jinja template,
+  /**
+       Note: Some of the following actually comes from the back-end and the jinja template,
       but front-end errors can cause errors here as well.
-      **/
+   */
 
   it('should display the correct name for the college', () => {
-    cy.get('.verify_school').should('contain','South University-West Palm Beach')
+    cy.get('.verify_school').should(
+      'contain',
+      'South University-West Palm Beach',
+    );
   });
 
-  it( 'should let a student edit the tuition and fees', () => {
+  it('should let a student edit the tuition and fees', () => {
     page.confirmVerification();
     cy.get('#costs__tuition').should('not.be.disabled');
   });
 
-  it( 'should properly update when the tuition and fees are modified', function() {
+  it('should properly update when the tuition and fees are modified', function () {
     page.confirmVerification();
-    
   });
-
 });

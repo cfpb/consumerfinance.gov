@@ -3,22 +3,20 @@
 // iped=224776&pid=444
 
 export class DynamicDisclosures {
-
   programLengthSelect() {
-  	return cy.get( '#estimated-years-attending' );
+    return cy.get('#estimated-years-attending');
   }
 
-
   confirmVerification() {
-  	cy.get('a[href="#info-right"]').click();
+    cy.get('a[href="#info-right"]').click();
   }
 
   denyVerification() {
-  	cy.get('a[href="#info-wrong"]').click();
+    cy.get('a[href="#info-wrong"]').click();
   }
 
   stepTwo() {
-  	cy.get('.continue.step .continue_controls button').click();
+    cy.get('.continue.step .continue_controls button').click();
   }
 
   typeText(name, value) {
@@ -28,5 +26,4 @@ export class DynamicDisclosures {
   setText(name, value) {
     cy.get(`#${name}`).clear().type(value);
   }
-
 }
