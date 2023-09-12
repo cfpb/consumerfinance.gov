@@ -17,7 +17,7 @@ class StreamBlockPageQuerySetTestCase(TestCase):
             live=True,
             sidebar_breakout=json.dumps(
                 [
-                    {"type": "heading", "value": "Test text"},
+                    {"type": "slug", "value": "Test slug"},
                 ]
             ),
         )
@@ -40,9 +40,7 @@ class StreamBlockPageQuerySetTestCase(TestCase):
         queryset = StreamBlockPageQuerySet(SublandingPage)
         self.assertEqual(queryset.count(), 2)
 
-        heading_queryset = queryset.block_in_field(
-            "heading", "sidebar_breakout"
-        )
+        heading_queryset = queryset.block_in_field("slug", "sidebar_breakout")
         self.assertEqual(heading_queryset.count(), 1)
 
         image_queryset = queryset.block_in_field("image", "sidebar_breakout")
@@ -69,10 +67,10 @@ class StreamBlockPageQuerySetTestCase(TestCase):
         queryset = StreamBlockPageQuerySet(SublandingPage)
 
         annotated_queryset = queryset.block_in_field(
-            "heading", "sidebar_breakout"
-        ).annotate_block_in("heading", "sidebar_breakout")
+            "slug", "sidebar_breakout"
+        ).annotate_block_in("slug", "sidebar_breakout")
         self.assertEqual(annotated_queryset.count(), 1)
-        self.assertEqual(annotated_queryset[0].heading_value, "Test text")
+        self.assertEqual(annotated_queryset[0].slug_value, "Test slug")
 
     def test_annotate_block_in_multiple_blocks(self):
         """If we have multiple target_blocks in a StreamField, ensure we only

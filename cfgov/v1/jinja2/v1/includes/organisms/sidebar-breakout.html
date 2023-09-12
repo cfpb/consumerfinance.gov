@@ -14,20 +14,6 @@
 
    page.sidebar_breakout: An object used to customize the markup.
 
-   page.sidebar_breakout.heading: (Optional) A string containing heading text.
-
-   page.sidebar_breakout.image: (Optional) An object used to customize the image
-                                markup.
-
-
-   page.sidebar_breakout.intro.body: (Optional) A string containing body text.
-
-   page.sidebar_breakout.intro.heading: (Optional) A string containing heading
-                                        text.
-
-   page.sidebar_breakout.related_posts: (Optional) An object used to customize
-                                        the related posts markup.
-
    ========================================================================== #}
 
 {% macro render() %}
@@ -53,11 +39,7 @@
                           block
                           block__flush-bottom">
                 {% for block in page.sidebar_breakout %}
-                    {% if 'heading' in block.block_type %}
-                        <h3 class="o-sidebar-breakout_heading">
-                            {{ render_stream_child(block) }}
-                        </h3>
-                    {% elif 'breakout_image' in block.block_type %}
+                    {% if 'breakout_image' in block.block_type %}
                         {% set blocks = block.value.bound_blocks %}
                         {% if blocks.image is defined %}
                             {% set photo = image(blocks.image.value, 'original') %}
@@ -86,8 +68,8 @@
                                 </div>
                             {% endif %}
                         {% endif %}
-                    {% elif block.block_type in ['job_listing_list', 'related_posts'] %}
-                            {% include_block block %}
+                    {% elif 'job_listing_list' in block.block_type %}
+                        {% include_block block %}
                     {% elif 'slug' in block.block_type %}
                         <header class="m-slug-header">
                             <h2 class="a-heading">
