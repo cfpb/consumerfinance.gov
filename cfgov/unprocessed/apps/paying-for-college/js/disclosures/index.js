@@ -17,17 +17,18 @@ import expensesView from './views/expenses-view.js';
 import metricView from './views/metric-view.js';
 import questionView from './views/question-view.js';
 import publish from './dispatchers/publish-update.js';
+import expensesData from './utils/expenses-data.js';
 
 import('./utils/print-page.js');
 
 const app = {
   init: function () {
     // jquery promise to delay full model creation until ajax resolves
-    $.when(fetch.initialData()).done(function (constants, expenses) {
+    $.when(fetch.initialData()).done(function (constants) {
       financialModel.init(constants[0]);
       financialView.init();
       if (location.href.indexOf('about-this-tool') === -1) {
-        expensesModel.init(expenses[0]);
+        expensesModel.init(expensesData);
         expensesView.init();
       }
       if (getUrlOfferExists()) {

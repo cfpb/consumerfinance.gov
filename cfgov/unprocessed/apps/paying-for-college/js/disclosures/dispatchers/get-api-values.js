@@ -144,7 +144,7 @@ const getApiValues = {
       financialView.missingData(warning);
       return $.Deferred;
     }
-    return $.when(this.constants(), this.expenses());
+    return $.when(this.constants());
   },
 };
 
