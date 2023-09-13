@@ -629,9 +629,6 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     "AB_TESTING": [],
-    # Email popups.
-    "EMAIL_POPUP_OAH": [("boolean", True)],
-    "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
@@ -642,17 +639,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-}
-
-# Email popup configuration. See v1.templatetags.email_popup.
-EMAIL_POPUP_URLS = {
-    "debt": [
-        "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
-        "/consumer-tools/debt-collection/",
-    ],
-    "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [
