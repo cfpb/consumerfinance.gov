@@ -48,7 +48,6 @@ class SublandingPage(CFGOVPage):
     sidebar_breakout = StreamField(
         [
             ("slug", blocks.CharBlock(icon="title")),
-            ("heading", blocks.CharBlock(icon="title")),
             ("paragraph", blocks.RichTextBlock(icon="edit")),
             (
                 "breakout_image",
@@ -84,7 +83,6 @@ class SublandingPage(CFGOVPage):
                     icon="image",
                 ),
             ),
-            ("related_posts", organisms.RelatedPosts()),
             ("job_listing_list", JobListingList()),
         ],
         blank=True,

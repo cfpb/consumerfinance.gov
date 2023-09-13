@@ -2,7 +2,6 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   experimentalMemoryManagement: true,
-  video: false,
   screenshotOnRunFailure: true,
   fixturesFolder: 'test/cypress/fixtures',
   videosFolder: 'test/cypress/videos',
