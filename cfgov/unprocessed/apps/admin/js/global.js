@@ -12,3 +12,11 @@ const env = location.hostname.split('.')[0];
 
 const body = document.querySelector('body');
 body.setAttribute('data-env', env);
+
+// Modify default document title generation to keep file extensions.
+// See https://docs.wagtail.org/en/stable/advanced_topics/documents/title_generation_on_upload.html
+window.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('wagtail:documents-upload', function (event) {
+    event.detail.data.title = event.detail.filename;
+  });
+});
