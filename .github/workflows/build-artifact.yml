@@ -1,0 +1,39 @@
+name: 'Build cf.gov artifact'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2.27.0
+        with:
+          workflow: frontend.yml
+          commit: ${{ github.sha }}
+          name: frontend_${{ github.sha }}
+
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+            registry: gcr.io
+            image: ${{ github.repository }}-builder:latest
+            options: -v ${{ github.workspace }}:/cfgov
+            run: ./_build.sh
+
+      - name: Upload arifact
+        uses: keithweaver/aws-s3-github-action@v1.0.0
+        with:
+          command: cp
+          source: cfgov_current_build.zip
+          destination: s3://${{ secrets.BUCKET }}/cfgov_${{ github.sha }}_build.zip
+          aws_access_key_id: ${{ secrets.BUILD_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.BUILD_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
