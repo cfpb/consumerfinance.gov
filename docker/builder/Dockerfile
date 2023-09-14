@@ -20,6 +20,7 @@ WORKDIR ${BUILD_DIR}
 RUN yum -y update && \
     yum install -y centos-release-scl && \
     yum install -y rh-python38 gcc git && \
+    echo "source scl_source enable rh-python38" > /etc/profile.d/scl_python.sh && \
     source /etc/profile && \
     pip install --no-cache-dir -U pip setuptools wheel && \
     pip3 install --no-cache-dir -U pip setuptools wheel
