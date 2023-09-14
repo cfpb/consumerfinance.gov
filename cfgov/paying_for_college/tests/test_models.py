@@ -11,19 +11,16 @@ import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
     Alias,
-    CollegeCostsPage,
     ConstantCap,
     ConstantRate,
     Contact,
     Nickname,
     Notification,
     Program,
-    RepayingStudentDebtPage,
     School,
     get_region,
     make_divisible_by_6,
 )
-from v1.models import HomePage
 
 
 class MakeDivisibleTest(TestCase):
@@ -38,29 +35,6 @@ class MakeDivisibleTest(TestCase):
         self.assertTrue(make_divisible_by_6(test_value) == 6)
         test_value = 45
         self.assertTrue(make_divisible_by_6(test_value) == 48)
-
-
-class PageModelsTest(TestCase):
-    def setUp(self):
-        def create_page(model, title, slug, parent):
-            new_page = model(live=False, title=title, slug=slug)
-            parent.add_child(instance=new_page)
-            new_page.save()
-            return new_page
-
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.debt_page = create_page(
-            RepayingStudentDebtPage,
-            "Repaying student debt",
-            "repaying-student-debt",
-            self.ROOT_PAGE,
-        )
-        self.college_costs_page = create_page(
-            CollegeCostsPage,
-            "Understanding college costs",
-            "college-costs",
-            self.ROOT_PAGE,
-        )
 
 
 class SchoolRegionTest(TestCase):
