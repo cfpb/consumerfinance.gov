@@ -455,6 +455,7 @@ AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
 )
 AXES_ENABLED = True
+AXES_VERBOSE = False
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
 AXES_ONLY_USER_FAILURES = True
