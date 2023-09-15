@@ -23,7 +23,4 @@ from paying_for_college.models.disclosures import (
     get_region,
     make_divisible_by_6,
 )
-from paying_for_college.models.pages import (
-    CollegeCostsPage,
-    RepayingStudentDebtPage,
-)
+from paying_for_college.models.pages import CollegeCostsPage
