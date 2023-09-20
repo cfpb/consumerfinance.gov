@@ -36,7 +36,9 @@
       .u-layout-grid {
         &_wrapper {
           grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
-          grid-auto-columns: 1fr 3fr;
+          // Numbers below are 870 split into four parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(217.5px, 1fr) minmax(652.5px, 3fr);
           grid-template-areas:
             'c-breadcrumbs c-breadcrumbs'
             'c-secondary-nav c-main';
@@ -58,7 +60,9 @@
       .u-layout-grid {
         &_wrapper {
           grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
-          grid-auto-columns: 1fr 3fr;
+          // Numbers below are 870 split into four parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(217.5px, 1fr) minmax(652.5px, 3fr);
           grid-template-areas:
             'c-breadcrumbs c-breadcrumbs'
             'c-secondary-nav c-main';

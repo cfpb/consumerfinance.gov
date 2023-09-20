@@ -53,25 +53,23 @@
 
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
 
-{% if page.results.total_results and page.results.total_results > 0 %}
-    <div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
-        <h3>
-            {% if page.results.total_activities > page.results.total_results %}
-                Showing {{ page.results.total_results }}
-                match{% if page.results.total_results > 1 %}es{% endif %}
-                out of
-            {% endif %}
-            {{ page.results.total_activities }} activities
-        </h3>
-    </div>
-{% else %}
-    <div class="results_count results_count__empty u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="0">
-        <h3>No results match your search.</h3>
-        <p class="u-mb15">Try a <a href="/consumer-tools/educator-tools/youth-financial-education/teach/activities/">new search</a> with different terms or filters.</p>
-    </div>
-{% endif %}
+<div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
+    {% if page.results.total_results %}
+    <h3>
+        {% if page.results.total_activities > page.results.total_results %}
+            Showing {{ page.results.total_results }}
+            match{% if page.results.total_results > 1 %}es{% endif %}
+            out of
+        {% endif %}
+        {{ page.results.total_activities }} activities
+    </h3>
+    {% else %}
+    <h3>No results match your search.</h3>
+    <p class="u-mb15">Try a new search with different terms or filters.</p>
+    {% endif %}
+</div>
 
-<aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters{% if not activities %} filters__hidden{% endif %}">
+<aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
     <h3 class="h2">Filter results by</h3>
     <form action="." method="get" data-js-hook="behavior_change-filter">
         <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
@@ -104,8 +102,7 @@
     </form>
 
 </aside>
-<section id="tdp-search-results" class="content_main content__flush-all-on-small content__flush-bottom results{% if not activities %} results__full{% endif %}" tabindex="-1">
-    <a class="u-visually-hidden" id="content_main"></a>
+<section id="tdp-search-results" class="content_main content__flush-all-on-small content__flush-bottom results" tabindex="-1">
     <div class="results_header">
         {% if page.results.total_results and page.results.total_results > 0 %}
             <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
@@ -121,7 +118,7 @@
         {% else %}
             <div class="results_count results_count__empty u-hide-on-sm u-hide-on-xs" data-results-count="0">
                 <h3>No results match your search.</h3>
-                <p class="u-mb15">Try a <a href="/consumer-tools/educator-tools/youth-financial-education/teach/activities/">new search</a> with different terms or filters.</p>
+                <p class="u-mb15">Try a new search with different terms or filters.</p>
             </div>
         {% endif %}
         {% if show_filters %}
