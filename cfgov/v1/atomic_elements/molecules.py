@@ -212,7 +212,6 @@ class Notification(blocks.StructBlock):
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
-    button = atoms.Button()
 
     class Meta:
         template = "v1/includes/molecules/call-to-action.html"
