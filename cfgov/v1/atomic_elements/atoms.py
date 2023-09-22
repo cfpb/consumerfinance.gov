@@ -69,16 +69,6 @@ class Hyperlink(blocks.StructBlock):
         template = "v1/includes/atoms/hyperlink.html"
 
 
-class Button(Hyperlink):
-    size = blocks.ChoiceBlock(
-        choices=[
-            ("regular", "Regular"),
-            ("large", "Large Primary"),
-        ],
-        default="regular",
-    )
-
-
 IMAGE_ALT_TEXT_HELP_TEXT = (
     "No character limit, but be as succinct as possible. If the image is "
     "decorative (i.e., a screenreader wouldn't have anything useful to say "

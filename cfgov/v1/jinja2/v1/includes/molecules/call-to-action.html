@@ -38,8 +38,7 @@
     {% endif %}
 
     {% if value.button %}
-    <a class="a-btn a-btn__full-on-xs
-             {{ 'a-btn__super' if value.button.size == 'large' else '' }}"
+    <a class="a-btn a-btn__full-on-xs"
        href="{{ value.button.url or '/' }}">
         {{ value.button.text }}
     </a>
