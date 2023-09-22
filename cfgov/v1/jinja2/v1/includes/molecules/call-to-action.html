@@ -8,17 +8,19 @@
 
    Creates a call to action when given:
 
-   value.slug_text:      The text to display within the header slug.
+   value.slug_text:         The text to display within the header slug.
 
-   value.paragraph_text: The text to display within the paragraph.
+   value.paragraph_text:    The text to display within the paragraph.
 
-   value.button:         A dictionary containing options used to create
-                         the Button markup.
+   value.button:            A dictionary containing options used to create
+                            the Button markup.
 
-   value.button.url:     A link to a page.
-                         Defaults to '/'.
+   value.button.url:        A link to a page.
+                            Defaults to '/'.
 
-   value.button.text:    The text to display on button.
+   value.button.text:       The text to display on button.
+
+   value.button.aria_label: The aria-label text for the link.
 
    ========================================================================== #}
 
@@ -37,9 +39,12 @@
     </div>
     {% endif %}
 
-    {% if value.button %}
+    {% if value.button.url and value.button.text %}
     <a class="a-btn a-btn__full-on-xs"
-       href="{{ value.button.url or '/' }}">
+       href="{{ value.button.url or '/' }}"
+       {% if value.button.aria_label %}
+       aria-label="{{ value.button.aria_label }}"
+       {% endif %}>
         {{ value.button.text }}
     </a>
     {% endif %}
