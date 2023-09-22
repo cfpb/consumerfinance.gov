@@ -56,7 +56,9 @@
     // Desktop
     .respond-to-min( @bp-med-min, {
       .u-layout-grid_wrapper {
-          grid-auto-columns: 2fr 1fr;
+          // Numbers below are 870 split into three parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(580px, 2fr) minmax(290px, 1fr);
           grid-template-areas:
             'c-hero c-hero'
             'c-breadcrumbs c-sidebar'
