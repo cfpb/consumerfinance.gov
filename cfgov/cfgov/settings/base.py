@@ -519,6 +519,7 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
