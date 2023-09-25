@@ -69,6 +69,11 @@ class ResearchHubPage(SublandingFilterablePage):
 
 class ActivityLogPage(SublandingFilterablePage):
     template = "v1/activity-log/index.html"
-    filterable_categories = ("Blog", "Newsroom", "Research Report")
+    filterable_categories = (
+        "Blog",
+        "Newsroom",
+        "Research Hub",
+        "Research Report",
+    )
     filterable_per_page_limit = 100
     filterable_results_compact = True
