@@ -41,7 +41,7 @@
 
     {% if value.button.url and value.button.text %}
     <a class="a-btn a-btn__full-on-xs"
-       href="{{ value.button.url or '/' }}"
+       href="{{ value.button.url }}"
        {% if value.button.aria_label %}
        aria-label="{{ value.button.aria_label }}"
        {% endif %}>
