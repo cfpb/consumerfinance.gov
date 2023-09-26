@@ -1,11 +1,12 @@
 name: Create Docker Image Package
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-  release:
+  # Disabled until needed
+  #  push:
+  #  branches:
+  #    - main
+  # pull_request:
+  # release:
 
 jobs:
   push:

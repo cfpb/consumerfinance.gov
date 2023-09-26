@@ -1,6 +1,7 @@
 name: docker
 
-on: merge_group
+  # Disabled until needed
+  # on: merge_group
 
 env:
   TEST_TAG: cfpb/consumerfinancegov:test
