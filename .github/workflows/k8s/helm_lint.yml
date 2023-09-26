@@ -1,6 +1,6 @@
 name: helmlint
-
-on: pull_request
+  # Disabled until needed
+  # on: pull_request
 
 jobs:
   lint-test:
