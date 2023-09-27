@@ -47,7 +47,7 @@
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
-    "cypress": "13.2.0",
+    "cypress": "13.3.0",
     "cypress-fail-fast": "7.0.3",
     "eslint": "8.50.0",
     "eslint-config-prettier": "9.0.0",
