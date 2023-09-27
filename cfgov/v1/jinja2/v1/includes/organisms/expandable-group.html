@@ -30,25 +30,19 @@
 
    ========================================================================== #}
 
-{% if value.heading %}
-<div id="{{ value.heading | slugify_unique }}">
-    <h3>{{ value.heading }}</h3>
-{% else %}
-<div>
-{% endif %}
+<cfpb-expandable-group>
+    {% if value.heading %}
+        <h3>{{ value.heading }}</h3>
+    {% endif %}
 
     {% if value.body %}
         <p>{{ value.body | safe }}</p>
     {% endif %}
 
-    <div class="o-expandable-group
-                {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
-        {# Should be a stack of Expandable instances. #}
-        {% if value.expandables %}
-            {% for expandable in value.expandables %}
-              {% do expandable.update({'is_faq': value.is_faq}) %}
-                {{ expandable }}
-            {% endfor %}
-        {% endif %}
-    </div>
-</div>
+    {% if value.expandables %}
+        {% for expandable in value.expandables %}
+            {% do expandable.update({'is_faq': value.is_faq}) %}
+            {{ expandable }}
+        {% endfor %}
+    {% endif %}
+</cfpb-expandable-group>

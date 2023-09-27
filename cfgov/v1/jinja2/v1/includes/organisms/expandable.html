@@ -31,47 +31,20 @@
 
 {% macro expandable(value) %}
 
-<div class="o-expandable
-            o-expandable__padded
-            {{ 'o-expandable__background' if value.is_midtone else '' }}
-            {{ 'o-expandable__border' if value.is_bordered else '' }}
-            {{ 'o-expandable__onload-open' if value.is_expanded else '' }}"
-     {{ 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
-        if value.is_faq else '' }} >
-    <button class="o-expandable_header" type="button">
-        <span class="h4 o-expandable_label"
-              {{'itemprop="name"' if value.is_faq else ''}}>
-            {{ value.label }}
-        </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
-                {{ svg_icon('plus-round') }}
-            </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
-                {{ svg_icon('minus-round') }}
-            </span>
-        </span>
-    </button>
-
-    <div class="o-expandable_content"
-          {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer"'
-        if value.is_faq else '' }}>
-        {% if value.is_faq %}<div itemprop='text'>{% endif %}
-            {% if caller is defined %}
-                {{ caller() }}
+<cfpb-expandable header="{{value.label}}">
+    {% if caller is defined %}
+        {{ caller() }}
+    {% else %}
+        {% for block in value.content %}
+            {% if 'paragraph' in block.block_type %}
+                {{ block.value | safe }}
             {% else %}
-                {% for block in value.content %}
-                    {% if 'paragraph' in block.block_type %}
-                        {{ block.value | safe }}
-                    {% else %}
-                        {{ render_stream_child(block) }}
-                    {% endif %}
-                {% endfor %}
+                {{ render_stream_child(block) }}
             {% endif %}
-        {% if value.is_faq %}</div>{% endif %}
-    </div>
+        {% endfor %}
+    {% endif %}
+</cfpb-expandable>
 
-</div>
 {% endmacro %}
 
 {% if value %}

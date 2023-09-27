@@ -2,5 +2,6 @@
    Scripts for Expandable Molecule.
    ========================================================================== */
 
-import { Expandable } from '@cfpb/cfpb-expandables';
-Expandable.init();
+import { defineCustomElementCfpbExpandable } from '../../organisms/expandable';
+
+defineCustomElementCfpbExpandable();
