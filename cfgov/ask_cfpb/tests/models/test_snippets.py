@@ -27,7 +27,7 @@ class TestGlossaryTerm(TestCase):
         html = "<p>This is the text of the reusable snippet.</p>"
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn(
-            '<h2 class="a-heading">',
+            '<h2 class="h4">',
             block.render({"sidefoot_heading": sidefoot_heading, "text": html}),
         )
 
@@ -36,6 +36,6 @@ class TestGlossaryTerm(TestCase):
         html = "<p>This is the text of the reusable snippet.</p>"
         block = ReusableTextChooserBlock(ReusableText)
         self.assertNotIn(
-            '<h2 class="a-heading">',
+            '<h2 class="h4">',
             block.render({"sidefoot_heading": sidefoot_heading, "text": html}),
         )
