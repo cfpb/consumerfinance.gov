@@ -74,7 +74,7 @@
                     {% if loop.index > 1 %}
                         <span class="m-meta-header_separator">|</span>
                     {% endif %}
-                    <span class="m-meta-header_category">{{ category_slug.render(category=cat.name, href=url) }}</span>
+                    <span class="m-meta-header_category">{{ category_slug.render(category=cat.name) }}</span>
                 {% endfor %}
                 {% if show_date %}
                 <span class="m-meta-header_separator">|</span>
