@@ -6,6 +6,11 @@
       markup: |
         <article class="o-post-preview">
             <div class="m-meta-header">
+                <div class="m-meta-header_left">
+                    {{ svg_icon('information') }}
+                    Info for Consumers
+                    <span class="m-meta-header_separator">|</span>
+                </div>
                 <div class="m-meta-header_right">
                     <span class="a-date">
                         Published
@@ -15,10 +20,6 @@
                             </time>
                         </span>
                     </span>
-                </div>
-                <div class="m-meta-header_left">
-                    {{ svg_icon('information') }}
-                    Info for Consumers
                 </div>
             </div>
             <div class="o-post-preview_image-container">
@@ -79,7 +80,7 @@
 */
 
 .o-post-preview {
-  border-bottom: 1px solid @meta-header_border;
+  border-bottom: 1px solid @gray-40;
   padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   display: grid;
   grid-template-rows: auto;
@@ -97,66 +98,6 @@
 
   + .o-post-preview {
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-  }
-
-  .m-meta-header {
-    border-bottom: none;
-    grid-area: header;
-
-    .respond-to-max( @bp-xs-max, {
-      display: grid;
-
-      grid-template-areas:
-      'date'
-      'category';
-
-      .m-meta-header_left {
-        display: block;
-
-        margin-bottom: unit( 5px / @base-font-size-px, em );
-        grid-area: category;
-
-        .m-meta-header_separator {
-          display: none;
-        }
-      }
-
-      .m-meta-header_right {
-        display: block;
-        grid-area: date;
-      }
-    } );
-
-    .respond-to-min( @bp-sm-min, {
-      .a-date {
-        line-height: 1.35;
-        vertical-align: bottom;
-      }
-    } );
-
-    &_left,
-    &_right {
-      display: inline-block;
-      float: none;
-    }
-
-    &_left {
-      .heading-4();
-      line-height: unit(24px / 18px);
-
-      .m-meta-header_separator {
-        padding-left: 0.25em;
-        padding-right: 0.25em;
-      }
-    }
-
-    &_right {
-      line-height: 1.5;
-
-      .a-date {
-        line-height: unit(24px / 14px);
-      }
-    }
   }
 
   &_content {

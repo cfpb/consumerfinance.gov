@@ -31,7 +31,9 @@
         {%- set cat = category_label(category) or category -%}
         {%- set icon_name = get_category_icon( cat ) -%}
         {%- if icon_name %}{{ svg_icon( icon_name ) }}{% endif %}
-        <span class="u-visually-hidden">Category:</span>
+        {%- if href -%}
+            <span class="u-visually-hidden">Category:</span>
+        {% endif %}
         {{ cat | safe }}
     {% endcall %}
 {% endmacro %}
