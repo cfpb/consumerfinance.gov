@@ -38,6 +38,23 @@
                     <a href="es/">Ver página en español</a>
                     {% endif %}
                 </p>
+                {% if current_language == 'en' %}
+                <div class="o-well">
+                    <p>The Social Security Administration offers
+                         <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">free interpreter services</a>
+                         and a <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">multilanguage gateway</a>
+                         to help consumers who speak other languages.
+                    </p>
+                </div>
+                {% else %}
+                <div class="o-well">
+                    <p>La Administración del Seguro Social ofrece
+                         <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">servicios de intérprete</a>
+                         y un <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">portal multilingüe</a>
+                         para ayudar a los consumidores que hablan otros idiomas.
+                    </p>
+                </div>
+                {% endif %}
             </div>
             <div class="content-l_col content-l_col-1-3">
                 <div class="img"></div>
@@ -954,6 +971,19 @@
                         {{ _("If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!") }}
                     </li>
                 </ol>
+                {% if current_language == 'en' %}
+                <p>The Social Security Administration offers
+                    <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">free interpreter services</a>
+                    and a <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">multilanguage gateway</a>
+                    to help consumers who speak other languages.
+                </p>
+                {% else %}
+                <p>La Administración del Seguro Social ofrece
+                    <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">servicios de intérprete</a>
+                    y un<br/> <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">portal multilingüe</a>
+                    para ayudar a los consumidores que hablan otros idiomas.
+                </p>
+                {% endif %}
                 <h5>{{ _("Legal Disclaimer:") }}</h5>
                 <p>
                     {{ _("The content on this page provides general consumer information. It is not legal advice or regulatory guidance. The CFPB updates this information periodically. This information may include links or references to third-party resources or content. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.") }}
