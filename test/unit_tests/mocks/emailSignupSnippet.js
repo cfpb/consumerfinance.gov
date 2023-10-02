@@ -1,7 +1,7 @@
 export default `
 <div class="o-email-signup">
     <header class="m-slug-header">
-        <h2 class="a-heading">
+        <h2 class="m-slug-header_heading">
             Stay informed
         </h2>
     </header>

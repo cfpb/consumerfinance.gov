@@ -52,7 +52,7 @@ const styles = {
     itemMarginBottom: 4,
     itemStyle: {
       color: colorMap['@gray'],
-      fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
+      fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: 16,
     },
     itemHiddenStyle: {
