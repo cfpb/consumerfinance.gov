@@ -38,23 +38,21 @@
                     <a href="es/">Ver página en español</a>
                     {% endif %}
                 </p>
-                {% if current_language == 'en' %}
                 <div class="o-well">
+                    {% if current_language == 'en' %}
                     <p>The Social Security Administration offers
                          <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">free interpreter services</a>
                          and a <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">multilanguage gateway</a>
                          to help consumers who speak other languages.
                     </p>
-                </div>
-                {% else %}
-                <div class="o-well">
+                    {% else %}
                     <p>La Administración del Seguro Social ofrece
                          <a class="a-link a-link__icon" href="https://www.ssa.gov/multilanguage/interpreter.html">servicios de intérprete</a>
                          y un <a class="a-link a-link__icon" href="https://www.ssa.gov/site/languages/en/">portal multilingüe</a>
                          para ayudar a los consumidores que hablan otros idiomas.
                     </p>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
             <div class="content-l_col content-l_col-1-3">
                 <div class="img"></div>
