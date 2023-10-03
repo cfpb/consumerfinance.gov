@@ -42,9 +42,6 @@
    post.preview_link_text:  A string with the description text of an external link.
    post.preview_link_url:   A string with the url of an external link.
 
-   url: A string with the path for the homepage of the pagetype
-                              `/about-us/blog/`, `/about-us/newsroom/`
-
    show_categories: Whether to render categories for this post.
 
    show_date: Whether to render a date for this post.
@@ -59,7 +56,6 @@
 
 {% macro render(
     post,
-    url='',
     show_categories=true,
     show_date=true,
     date_label='',
@@ -74,7 +70,7 @@
                     {% if loop.index > 1 %}
                         <span class="m-meta-header_separator">|</span>
                     {% endif %}
-                    <span class="m-meta-header_category">{{ category_slug.render(category=cat.name, href=url) }}</span>
+                    <span class="m-meta-header_category">{{ category_slug.render(category=cat.name) }}</span>
                 {% endfor %}
                 {% if show_date %}
                 <span class="m-meta-header_separator">|</span>

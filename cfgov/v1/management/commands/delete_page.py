@@ -1,11 +1,10 @@
-from django.core.exceptions import MultipleObjectsReturned
 from django.core.management.base import BaseCommand, CommandError
 
-from v1.models import CFGOVPage
+from wagtail.models import Page
 
 
 class Command(BaseCommand):
-    help = "Deletes a page by its slug name"
+    help = "Delete a Wagtail page or its children"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -16,28 +15,35 @@ class Command(BaseCommand):
         parser.add_argument(
             "--id", nargs="?", help="The ID for the page you wish to delete"
         )
+        parser.add_argument("--children-only", action="store_true")
+        parser.add_argument("--dry-run", action="store_true")
 
     def handle(self, *args, **options):
-        page_to_delete = None
         slug = options["slug"]
         page_id = options["id"]
-        if slug:
-            try:
-                page_to_delete = CFGOVPage.objects.get(slug=slug)
-            except MultipleObjectsReturned as e:
-                self.stderr.write(str(e))
-                raise CommandError(
-                    "Slug `{}` did not work".format(slug)
-                ) from e
-        elif page_id:
-            page_to_delete = CFGOVPage.objects.get(id=page_id)
-        else:
-            raise CommandError("Must supply a slug or an id")
-        try:
-            page_to_delete.delete()
+        children_only = options["children_only"]
+        dry_run = options["dry_run"]
 
-        except Exception as e:
-            self.stderr.write(str(e))
-            raise CommandError(
-                "Failed to delete page {}".format(page_to_delete)
-            ) from e
+        if (slug is not None and page_id is not None) or (
+            slug is None and page_id is None
+        ):
+            raise CommandError("Must supply a unique page slug or a page ID")
+
+        if slug:
+            page = Page.objects.get(slug=slug)
+        else:
+            page = Page.objects.get(pk=page_id)
+
+        self.stdout.write(
+            f'Deleting{" children of" if children_only else ""} '
+            f'page "{page.title}", ID {page.pk}, slug {page.slug}'
+        )
+
+        if dry_run:
+            self.stdout.write("Dry run, skipping delete.")
+            return
+
+        if children_only:
+            page.get_descendants(inclusive=False).delete()
+        else:
+            page.delete()
