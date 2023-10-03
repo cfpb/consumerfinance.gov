@@ -17,11 +17,12 @@ def find_pattern(data, pattern, key, path=None):
     When one is found, the path to the match will be yielded along with any
     matching strings.
 
-    If the path goes through a a JSON array, it will include
+    If the path goes through a JSON array, it will include
     the index in the array.
 
     If the path goes through a JSON object, the value of the given "key" if
-    it exists on the object will be used to idenfiy it in the path."""
+    it exists on the object will be used to identify it in the path.
+    """
     if path is None:
         path = []
 
