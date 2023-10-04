@@ -15,6 +15,24 @@
     margin-left: unit(-20px / @base-font-size-px, rem);
   }
 
+  a:not(:last-of-type) {
+    display: none;
+  }
+
+  span {
+    display: none;
+  }
+
+  //Tablet and above
+  .respond-to-min( @bp-sm-min, {
+    a:not(:last-of-type) {
+      display: inline;
+    }
+    span {
+      display: inline;
+    }
+  } );
+
   // Desktop size.
   .respond-to-min( @bp-med-min, {
     padding-top: unit(30px / @base-font-size-px, rem);
