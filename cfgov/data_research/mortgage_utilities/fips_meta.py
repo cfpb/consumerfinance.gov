@@ -170,6 +170,8 @@ def validate_fips(raw_fips, keep_outdated=False):
     FIPS_SWAP = {
         "46113": "46102",  # Change Shannon County, SD, to Oglala Lakota
         # '12025': '12086'  # Dade/Miami-Dade is handled by merge_the_dades
+        "02063": "02261",
+        "02066": "02261",
     }
     if len(raw_fips) not in [4, 5]:
         return None
