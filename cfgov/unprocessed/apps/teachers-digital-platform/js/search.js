@@ -8,8 +8,6 @@ import {
   handleError,
   updateUrl,
 } from './search-utils.js';
-import expandableFacets from './expandable-facets.js';
-import cfExpandables from './Expandable.js';
 import {
   handleClearAllClick,
   handleFetchSearchResults,
@@ -42,8 +40,6 @@ function attachHandlers() {
   attach('clear-filter', 'click', clearFilter);
   attach('clear-all', 'click', clearFilters);
   attach('clear-search', 'clear', clearSearch);
-  cfExpandables.init();
-  expandableFacets.init();
   const inputContainsLabel = document.querySelector(
     '.tdp-activity-search .input-contains-label',
   );
