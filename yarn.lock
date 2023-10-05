@@ -444,10 +444,10 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-icons" "^0.3.2"
 
-"@cfpb/cfpb-typography@0.31.1":
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.31.1.tgz#870337df79ea1d0cdb834ca3358103a307baab35"
-  integrity sha512-DRDItHCvEj476loJSqA/xUkpRnJCyX167sGnh4LQ3/pntaTWuPhV+upBzMD/sqpvj54+hl+cXy5eicvBAPkYHw==
+"@cfpb/cfpb-typography@0.31.2":
+  version "0.31.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.31.2.tgz#7d0bc75b0caef64407725e8e58acadc98abc6b22"
+  integrity sha512-8JTevqVbETcKuOZ0aPKwZRsvY6U+FCg0GGyAtnusYOZfCljZTosAV3VaK4NQa3sbr7VrLvy/aktk9K9SwBxXVA==
   dependencies:
     "@cfpb/cfpb-core" "^0.31.0"
     "@cfpb/cfpb-icons" "^0.31.0"
