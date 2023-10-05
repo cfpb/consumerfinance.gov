@@ -42,6 +42,7 @@ export class Filter {
   clickCategory(option) {
     const sel = `[data-option=${option}`;
     cy.get('[data-cy=categories-heading]').click();
+    cy.get('.o-multiselect_options').should('be.visible');
     return cy.get(sel).click();
   }
 
