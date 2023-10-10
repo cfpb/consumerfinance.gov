@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.db import models
+from django.template.defaultfilters import pluralize
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 
@@ -216,6 +217,15 @@ class JobListingPage(CFGOVPage):
     objects = JobListingPageManager()
 
     template = "jobmanager/job_listing_page.html"
+
+    def get_admin_display_title(self):
+        title = super().get_admin_display_title()
+        grades = list(map(str, self.grades.all()))
+
+        if grades:
+            title += f" [Grade{pluralize(grades)} {', '.join(grades)}]"
+
+        return title
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request)

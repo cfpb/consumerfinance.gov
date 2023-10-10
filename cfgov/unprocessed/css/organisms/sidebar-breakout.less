@@ -19,8 +19,6 @@
                                   block
                                   block__flush-top
                                   block__flush-bottom">
-                        <h3 class="o-sidebar-breakout_heading">
-                        </h3>
                         <div class="o-sidebar-breakout_img-container">
                             <div class="o-sidebar-breakout_img"
                                  style="background-image:url()">
@@ -32,7 +30,6 @@
                             </h4>
                             <p class="o-sidebar-breakout_text-body short-desc">
                             </p>
-                            <div class="m-related-posts">…</div>
                         </div>
                     </aside>
                 </div>
@@ -49,14 +46,12 @@
                 .o-sidebar-breakout_col
                     .m-text-introduction
                 .o-sidebar-breakout_col
-                  .o-sidebar-breakout_heading
                   .o-sidebar-breakout_img-container
                     .o-sidebar-breakout_img
                   .o-sidebar-breakout_text-container
                     .o-sidebar-breakout_text-heading
                       .cf-icon
                     .o-sidebar-breakout_text-body
-                    .m-related-posts
           .content_line
   tags:
     - cfgov-organisms
@@ -67,10 +62,6 @@
 @o-sidebar-breakout_img-height: 170px;
 
 .o-sidebar-breakout {
-  &_heading {
-    margin-bottom: @margin__em;
-  }
-
   &_img {
     background-repeat: no-repeat;
     background-size: contain;
@@ -112,8 +103,7 @@
     &_col {
       width: 100%;
       &:last-child {
-        padding-top: @margin__em;
-        border-top: 1px solid @gray-40;
+        margin-top: unit( (@grid_gutter-width * 2) / @base-font-size-px, em );
       }
     }
 
@@ -145,11 +135,6 @@
 
     &_text-heading {
       margin-top: 0;
-    }
-
-    .m-related-posts_list .m-list_item {
-      border: 0;
-      width: 100%
     }
   }
 });

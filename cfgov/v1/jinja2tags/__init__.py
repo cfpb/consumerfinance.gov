@@ -11,7 +11,6 @@ from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
-from v1.templatetags.email_popup import email_popup
 from v1.util import ref
 from v1.util.util import get_unique_id
 
@@ -143,7 +142,6 @@ class V1Extension(Extension):
             {
                 "category_label": ref.category_label,
                 "choices_for_page_type": ref.choices_for_page_type,
-                "email_popup": email_popup,
                 "get_category_icon": ref.get_category_icon,
                 "get_model": get_model,
                 "get_unique_id": get_unique_id,

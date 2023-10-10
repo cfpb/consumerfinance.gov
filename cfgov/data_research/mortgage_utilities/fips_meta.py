@@ -15,6 +15,8 @@ NON_STATES = {"MP": "69", "AS": "60", "VI": "78", "GU": "66", "PR": "72"}
 # For more details on stale FIPS and FIPS for territories, see
 # [GHE]/CFGOV/mortgage-performance/wiki/Processing-of-source-file
 STALE_FIPS = [
+    "02010",  # AK, no data after 2005, no further info
+    "02140",  # AK, no data after 2006, no further info
     "02201",  # Prince of Wales-Outer Ketchikan, AK
     "02231",  # Skagway-Yakutat-Angoon Census Area, AK, DELETED 1992-09-22
     "02232",  # Skagway-Hoonah-Angoon Census Area, AK, DELETED 2007-06-20
