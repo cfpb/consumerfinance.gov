@@ -14,6 +14,7 @@ import {
   makeFormatter,
   overrideStyles,
 } from './utils.js';
+import { initFilters } from './data-filters.js';
 import { convertEpochToDateString } from './utils';
 
 accessibility(Highcharts);
@@ -295,8 +296,9 @@ function buildChart(chartNode) {
       chart = tilemapChart.init(chartNode, target, data, dataAttributes);
     } else {
       chart = Highcharts.chart(target, makeChartOptions(data, dataAttributes));
-    }
 
+      initFilters(dataAttributes, chartNode, chart, data);
+    }
     // Make sure chart is displayed properly on print
     window.matchMedia('print').addListener(function () {
       chart.reflow();
