@@ -35,12 +35,12 @@ export class FilterableListControl {
     return this.getResults()
       .find('.m-tags_tag')
       .closest('.o-post-preview')
-      .find('.m-meta-header_category:first');
+      .find('.m-meta-header_item:first');
   }
 
   getResultTagHasCategories() {
     return this.getResults()
-      .find('.m-meta-header_category')
+      .find('.m-meta-header_item:first')
       .closest('.o-post-preview')
       .find('.m-tags_tag:first');
   }
@@ -57,12 +57,12 @@ export class FilterableListControl {
   }
 
   getResultCategory() {
-    return this.getResults().find('.m-meta-header_category:first');
+    return this.getResults().find('.m-meta-header_item:first');
   }
 
   getResultTitleHasCategory() {
     return this.getResults()
-      .find('.m-meta-header_category:first')
+      .find('.m-meta-header_item:first')
       .closest('.o-post-preview')
       .find('.o-post-preview_title:first');
   }
@@ -87,16 +87,14 @@ export class FilterableListControl {
     return this.resultsContent().last();
   }
 
-  resultsHeader(name) {
-    return cy.get(`.o-post-preview .m-meta-header_${name}`);
-  }
-
   resultsHeaderLeft() {
-    return this.resultsHeader('left');
+    return cy.get(
+      `.o-post-preview .m-meta-header_item-group .m-meta-header_item:first`,
+    );
   }
 
   resultsHeaderRight() {
-    return this.resultsHeader('right');
+    return cy.get(`.o-post-preview .m-meta-header_item`);
   }
 
   firstResultHeader() {
