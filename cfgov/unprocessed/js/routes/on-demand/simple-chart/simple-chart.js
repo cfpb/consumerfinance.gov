@@ -299,7 +299,6 @@ function buildChart(chartNode) {
 
       initFilters(dataAttributes, chartNode, chart, data);
     }
-
     // Make sure chart is displayed properly on print
     window.matchMedia('print').addListener(function () {
       chart.reflow();

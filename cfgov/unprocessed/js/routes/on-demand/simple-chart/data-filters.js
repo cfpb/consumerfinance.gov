@@ -280,4 +280,4 @@ function attachFilters(selectors, chart, dataAttributes, data) {
   });
 }
 
-export { initFilters, makeSelectFilterDOM };
+export { initFilters };
