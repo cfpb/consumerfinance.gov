@@ -64,21 +64,15 @@
     <article class="o-post-preview" lang="{{ post.language }}">
         <div class="m-meta-header">
             {% if show_categories and post.categories.exists()  %}
-            <div class="m-meta-header_left">
+            <div class="m-meta-header_item-group">
                 {% import 'v1/includes/macros/category-slug.html' as category_slug %}
                 {% for cat in post.categories.all() %}
-                    {% if loop.index > 1 %}
-                        <span class="m-meta-header_separator">|</span>
-                    {% endif %}
-                    <span class="m-meta-header_category">{{ category_slug.render(category=cat.name) }}</span>
+                    <span class="m-meta-header_item">{{ category_slug.render(category=cat.name) }}</span>
                 {% endfor %}
-                {% if show_date %}
-                <span class="m-meta-header_separator">|</span>
-                {% endif %}
             </div>
             {% endif %}
             {% if show_date %}
-            <div class="m-meta-header_right">
+            <div class="m-meta-header_item">
                 <span class="a-date">
                     {{ date_label | default( '', true ) }}
                     {% if 'EventPage' in post.specific_class.__name__ %}

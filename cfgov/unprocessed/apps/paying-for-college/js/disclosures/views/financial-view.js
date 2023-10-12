@@ -9,7 +9,7 @@ import {
   convertStringToNumber,
   formatUSD,
 } from '../../../../../js/modules/util/format.js';
-import { toWords } from 'number-to-words';
+import converter from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
@@ -610,7 +610,7 @@ const financialView = {
     this.$programLength.on('change', function () {
       const programLength = Number($(this).val());
       const values = getFinancial.values();
-      let yearsAttending = toWords(programLength);
+      let yearsAttending = converter.toWords(programLength);
       const $yearOrLess = $('[data-multi_year="false"]');
       const $multiYears = $('[data-multi_year="true"]');
 

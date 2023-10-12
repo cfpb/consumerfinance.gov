@@ -141,7 +141,6 @@ function extractSeries(rawData, { series, xAxisSource, chartType }) {
         name,
         data: currArr,
       };
-
       rawData.forEach((obj) => {
         let d = Number(obj[key]);
         if (chartType === 'datetime') {
