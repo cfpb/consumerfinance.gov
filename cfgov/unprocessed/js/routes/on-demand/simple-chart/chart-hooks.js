@@ -24,6 +24,16 @@ const hooks = {
     }));
   },
 
+  cct_yoy_transform(d) {
+    return d['Number of Loans'].map((v, i) => {
+      return {
+        x: v[0],
+        loans: v[1] * 100,
+        volume: d['Dollar Volume'][i][1] * 100,
+      };
+    });
+  },
+
   getDateString(x) {
     return new Date(x).toLocaleDateString('en-US', {
       month: 'short',
