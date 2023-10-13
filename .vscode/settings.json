@@ -4,8 +4,5 @@
   "editor.formatOnPaste": false,
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
-  },
-  "[markdown]": {
-    "editor.formatOnSave": false
   }
 }
