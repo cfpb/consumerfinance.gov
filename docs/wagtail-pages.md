@@ -9,11 +9,12 @@ All CFPB Wagtail pages should inherit from the
 [`v1.models.base.CFGOVPage` class](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/base.py).
 
 !!! note
-Before creating a new Wagtail page type
-please consider whether one of our existing page types can meet your needs.
-Talk to the consumerfinance.gov product owners
-if your content is significantly different from anything else on the site
-or a specific maintenance efficiency will be gained from a new page type.
+
+    Before creating a new Wagtail page type
+    please consider whether one of our existing page types can meet your needs.
+    Talk to the consumerfinance.gov product owners
+    if your content is significantly different from anything else on the site
+    or a specific maintenance efficiency will be gained from a new page type.
 
 There are types of information defined on a new Wagtail page model:
 basic [database fields](#fields) (like any Django model),
@@ -180,8 +181,9 @@ class RegulationPage(CFGOVPage):
 ```
 
 !!! note
-We prevent child pages from being added to `RegulationPage` and `RegulationSearchPage`
-by setting `subpage_types` to an empty list.
+
+    We prevent child pages from being added to `RegulationPage` and `RegulationSearchPage`
+    by setting `subpage_types` to an empty list.
 
 ## Template rendering
 
