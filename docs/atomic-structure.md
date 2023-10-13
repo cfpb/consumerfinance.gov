@@ -186,6 +186,7 @@ consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/
 ```
 
 !!! note
+
     Some of our foundational components get their Less and JavaScript
     from the [Design System](https://cfpb.github.io/design-system/),
     but the HTML for their Wagtail block templates

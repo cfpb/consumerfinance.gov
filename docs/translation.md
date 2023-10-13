@@ -75,6 +75,7 @@ cd cfgov
 Using `--ignore=tests` will ignore any calls to gettext inside our unit tests.
 
 !!! note
+
     If you're generating all languages, this will create `django.po` files in all our apps with translations. Please do not commit `django.po` and `django.mo` files for apps you have not editted.
 
 #### 3. Edit the portable object file to add a translation for the string

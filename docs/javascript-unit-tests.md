@@ -151,6 +151,7 @@ so they can be placed into the uncategorized `modules` subfolders:
 `cfgov/unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
 
 !!! note "Child apps"
+
     If you’re working on something in a child app,
     put it in `test/unit_test/appname/js/`.
     Otherwise, if you’re working on something that
@@ -573,6 +574,7 @@ and assigns the component node to the `notificationElem` variable, and
 (2) creates a new instance of the Notification class.
 
 !!! note "A word about `HTML_SNIPPET`s"
+
     Right now it’s possible to update a component’s Jinja template,
     forget to update the corresponding JavaScript,
     and the unit tests would still pass,

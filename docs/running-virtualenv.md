@@ -36,6 +36,7 @@ This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 !!! note
+
     You may also run `./backend.sh` or `./frontend.sh`
     if you only want to re-build the backend or front-end, respectively.
 
@@ -85,6 +86,7 @@ From the project root, start the Django server:
 ```
 
 !!! note
+
     If prompted to migrate database changes,
     stop the server with `ctrl` + `c` and run these commands:
 
@@ -97,6 +99,7 @@ From the project root, start the Django server:
 To view the site browse to: <http://localhost:8000>
 
 !!! note "Using a different port"
+
     If you want to run the server at a port other than 8000 use
 
     `python cfgov/manage.py runserver <port number>`
@@ -109,6 +112,7 @@ and password `admin` (created in `initial-data.sh` above; note that this
 password will expire after 60 days).
 
 !!! note "Using HTTPS locally"
+
     To access a local server using HTTPS use
 
     `./runserver.sh ssl`
