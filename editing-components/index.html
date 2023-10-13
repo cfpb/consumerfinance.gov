@@ -311,15 +311,15 @@ but in the footer on others) on the sidebar tab.</p>
 <hr />
 <div class="admonition note">
 <p class="admonition-title">Don't forget the migrations!</p>
-</div>
 <p>Adding or changing fields on either Python class will always require a new
-<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django schema migration</a>;
-additionally, changing field names or types
-on an existing block will require a
-<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Django data migration</a>.
-See the guide on
-<a href="#creating-migrations-for-streamfield-blocks">creating migrations for StreamField blocks</a>
-for more details.</p>
+  <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django schema migration</a>;
+  additionally, changing field names or types
+  on an existing block will require a
+  <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Django data migration</a>.
+  See the guide on
+  <a href="#creating-migrations-for-streamfield-blocks">creating migrations for StreamField blocks</a>
+  for more details.</p>
+</div>
 <h3 id="the-front-end">The front end<a class="headerlink" href="#the-front-end" title="Permanent link">¶</a></h3>
 <p>Before diving into the front-end code, a reminder to
 visit the <a href="../atomic-structure/">Notes on Atomic Design</a> page
@@ -388,14 +388,14 @@ you can add it by creating a new
 <a href="http://lesscss.org/">Less</a> file for the component.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>Please be sure that you actually need new Less before creating it.
-We have a wide array of styles already available in the
-<a href="https://cfpb.github.io/design-system/components/">Design System components</a> and
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css">here in consumerfinance.gov</a>,
-some of which could perhaps be combined to achieve your desired result.
-Also be sure that new component designs have gone through
-our internal approval process before adding them to the project.</p>
+  We have a wide array of styles already available in the
+  <a href="https://cfpb.github.io/design-system/components/">Design System components</a> and
+  <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css">here in consumerfinance.gov</a>,
+  some of which could perhaps be combined to achieve your desired result.
+  Also be sure that new component designs have gone through
+  our internal approval process before adding them to the project.</p>
+</div>
 <p>If you're working on a general-purpose <a href="../atomic-structure/">atomic component</a>
 for site-wide use, this file should live in
 <code>cfgov/unprocessed/css/&lt;atoms|molecules|organisms&gt;/</code>.
@@ -412,9 +412,9 @@ to tell the Python model anything about a component-specific stylesheet
 That is <em>not</em> the case with JavaScript, as we will see in the next section.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>If you're working on a component that belongs to a particular sub-app,
-its Less file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code>.</p>
+  its Less file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code>.</p>
+</div>
 <h4 id="adding-javascript">Adding JavaScript<a class="headerlink" href="#adding-javascript" title="Permanent link">¶</a></h4>
 <p>Each atomic component may optionally be given a <code>Media</code> class that can
 list one or more JavaScript files that should be loaded when using it.
@@ -446,13 +446,13 @@ that includes the <code>RelatedContent</code> molecule in one of its StreamField
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>Before creating a new component,
 please consider whether one of our existing components can meet your needs.
 Talk to the consumerfinance.gov product owners if
 your content has specific display requirements that aren't served
 by an existing component, or if
 a specific maintenance efficiency will be gained from a new component.</p>
+</div>
 <h3 id="adding-a-field-to-an-existing-component">Adding a field to an existing component<a class="headerlink" href="#adding-a-field-to-an-existing-component" title="Permanent link">¶</a></h3>
 <ol>
 <li>Locate the Python class of the component you want to add a field to.</li>

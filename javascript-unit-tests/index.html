@@ -283,12 +283,12 @@ so they can be placed into the uncategorized <code>modules</code> subfolders:
 <code>cfgov/unprocessed/js/modules</code> and <code>test/unit_tests/modules</code>, respectively.</p>
 <div class="admonition note">
 <p class="admonition-title">Child apps</p>
-</div>
 <p>If you’re working on something in a child app,
 put it in <code>test/unit_test/appname/js/</code>.
 Otherwise, if you’re working on something that
 belongs to consumerfinance.gov generally,
 it should go in the corresponding folder under <code>test/unit_test/js/</code>.</p>
+</div>
 <h3 id="first-test-run">First test run<a class="headerlink" href="#first-test-run" title="Permanent link">¶</a></h3>
 <p>Now that you have your sample JS and test files in the right places,
 let’s try running them and see what happens!
@@ -618,7 +618,6 @@ and assigns the component node to the <code>notificationElem</code> variable, an
 (2) creates a new instance of the Notification class.</p>
 <div class="admonition note">
 <p class="admonition-title">A word about <code>HTML_SNIPPET</code>s</p>
-</div>
 <p>Right now it’s possible to update a component’s Jinja template,
 forget to update the corresponding JavaScript,
 and the unit tests would still pass,
@@ -631,6 +630,7 @@ the tests would have to reconcile
 into a complete, finished chunk of markup.
 For now, just be aware of this when
 <a href="../editing-components/">editing a Wagtail component that includes JavaScript</a>.</p>
+</div>
 <p>Further down, here are some of the tests that cover the <code>_setType</code> function
 (by way of the <code>setTypeAndContent</code> function that
 wraps both <code>_setType</code> and <code>_setContent</code>):</p>

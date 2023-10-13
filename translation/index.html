@@ -202,8 +202,8 @@ mystring = _("Hello World!")</code></pre>
 <p>Using <code>--ignore=tests</code> will ignore any calls to gettext inside our unit tests.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>If you're generating all languages, this will create <code>django.po</code> files in all our apps with translations. Please do not commit <code>django.po</code> and <code>django.mo</code> files for apps you have not editted.</p>
+</div>
 <h4 id="3-edit-the-portable-object-file-to-add-a-translation-for-the-string">3. Edit the portable object file to add a translation for the string<a class="headerlink" href="#3-edit-the-portable-object-file-to-add-a-translation-for-the-string" title="Permanent link">¶</a></h4>
 <p>The portable object files are stored in <code>[APP]/locale/[LANGUAGE]/LC_MESSAGES/</code>. For the Spanish portable object file, edit <code>[APP]/locale/es/LC_MESSAGES/django.po</code> and add the Spanish translation as the <code>msgstr</code> for your new <code>msgid</code></p>
 <pre class="highlight"><code class="language-po">msgid "Hello World!"

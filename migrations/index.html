@@ -239,10 +239,10 @@ that briefly describes the change(s) you're making:</p>
 <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations">our existing migration files</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>Some changes will generate multiple migration files.
 If you change a block that is used in pages defined in different sub-apps,
 you will see a migration file for each of those sub-apps.</p>
+</div>
 <h3 id="migration-numbering-and-conflicts">Migration numbering and conflicts<a class="headerlink" href="#migration-numbering-and-conflicts" title="Permanent link">¶</a></h3>
 <p>When a migration file is generated, it will automatically be given
 a unique four-digit number at the beginning of its filename.
@@ -304,10 +304,10 @@ class Migration(migrations.Migration):
 that need to happen to a model's data are made.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>While backwards migrations are necessary in external libraries that we create,
 we do not require them in consumerfinance.gov
 because we prefer not to rollback migrations that have already been applied.</p>
+</div>
 <h3 id="wagtail-specific-considerations">Wagtail-specific considerations<a class="headerlink" href="#wagtail-specific-considerations" title="Permanent link">¶</a></h3>
 <p>Django data migrations with Wagtail can be challenging because
 <a href="https://github.com/wagtail/wagtail/issues/1101">programmatic editing of Wagtail pages is difficult</a>,

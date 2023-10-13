@@ -177,12 +177,12 @@ All CFPB Wagtail pages should inherit from the
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/base.py"><code>v1.models.base.CFGOVPage</code> class</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>Before creating a new Wagtail page type
 please consider whether one of our existing page types can meet your needs.
 Talk to the consumerfinance.gov product owners
 if your content is significantly different from anything else on the site
 or a specific maintenance efficiency will be gained from a new page type.</p>
+</div>
 <p>There are types of information defined on a new Wagtail page model:
 basic <a href="#fields">database fields</a> (like any Django model),
 specialized database fields called <a href="#streamfields">StreamFields</a> that allow for freeform page content,
@@ -318,9 +318,9 @@ class RegulationPage(CFGOVPage):
     subpage_types = []</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>We prevent child pages from being added to <code>RegulationPage</code> and <code>RegulationSearchPage</code>
 by setting <code>subpage_types</code> to an empty list.</p>
+</div>
 <h2 id="template-rendering">Template rendering<a class="headerlink" href="#template-rendering" title="Permanent link">¶</a></h2>
 <p>New Wagtail page types will usually need to make customizations to their base template
 <a href="https://docs.wagtail.io/en/stable/topics/pages.html#template-rendering">when rendering the page</a>.

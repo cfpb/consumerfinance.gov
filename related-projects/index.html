@@ -181,12 +181,12 @@ set up the full website.</p>
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt">requirements files</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Thinking about making a new satellite app?</p>
-</div>
 <p>Satellite apps were originally built to be imported into the
 consumerfinance.gov website before we started using Wagtail to manage site
 content. We now prefer to build projects as apps inside the consumerfinance.gov
 repo. For more info, refer to the "Setting up new project code for
 consumerfinance.gov" page on the CFGOV/platform wiki on GHE.</p>
+</div>
 <h2 id="other-python-packages">Other Python packages<a class="headerlink" href="#other-python-packages" title="Permanent link">¶</a></h2>
 <p>CFPB also develops and maintains several other Python source code repositories
 and packages that are used on <a href="https://www.consumerfinance.gov">https://www.consumerfinance.gov</a> but are more
@@ -217,10 +217,11 @@ can be used to swap out package versions.</p>
 <a href="https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs">"editable"</a>
 mode, replacing the satellite app version installed from requirements files
 with your local copy:</p>
-<div class="admonition note the retirement app used in this example is deprecated">
+<div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>The retirement app used in this example is deprecated
+and is shown for illustration purpooses only.</p>
 </div>
-<p>and is shown for illustration purpooses only.</p>
 <pre class="highlight"><code class="language-sh"># In a local virtual environment, after installing consumerfinance.gov.
 # Python packages have been installed from requirements files.
 # This includes, for example, the retirement satellite app:

@@ -196,9 +196,9 @@ This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>You may also run <code>./backend.sh</code> or <code>./frontend.sh</code>
 if you only want to re-build the backend or front-end, respectively.</p>
+</div>
 <h5 id="setting-environments">Setting environments<a class="headerlink" href="#setting-environments" title="Permanent link">¶</a></h5>
 <p>The <code>NODE_ENV</code> environment variable can be set in your <code>.env</code> file to either
 <code>development</code> or <code>production</code>, which will affect how the build is made.
@@ -225,31 +225,29 @@ cd consumerfinance.gov</code></pre>
 <pre class="highlight"><code class="language-bash">./runserver.sh</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>If prompted to migrate database changes,
 stop the server with <code>ctrl</code> + <code>c</code> and run these commands:</p>
 <pre class="highlight"><code class="language-bash">python cfgov/manage.py migrate
 ./initial-data.sh
 ./runserver.sh</code></pre>
+</div>
 <p>To view the site browse to: <a href="http://localhost:8000">http://localhost:8000</a></p>
 <div class="admonition note">
 <p class="admonition-title">Using a different port</p>
-</div>
 <p>If you want to run the server at a port other than 8000 use</p>
-<pre class="highlight"><code>`python cfgov/manage.py runserver &lt;port number&gt;`
-
-Specify an alternate port number, e.g. `8001`.</code></pre>
+<p><code>python cfgov/manage.py runserver &lt;port number&gt;</code></p>
+<p>Specify an alternate port number, e.g. <code>8001</code>.</p>
+</div>
 <p>To view the Wagtail admin login,
 browse to <a href="http://localhost:8000/admin">http://localhost:8000/admin</a> and login with username <code>admin</code>
 and password <code>admin</code> (created in <code>initial-data.sh</code> above; note that this
 password will expire after 60 days).</p>
 <div class="admonition note">
 <p class="admonition-title">Using HTTPS locally</p>
-</div>
 <p>To access a local server using HTTPS use</p>
-<pre class="highlight"><code>`./runserver.sh ssl`
-
-You'll need to ignore any browser certificate errors.</code></pre>
+<p><code>./runserver.sh ssl</code></p>
+<p>You'll need to ignore any browser certificate errors.</p>
+</div>
 <h3 id="yarn-commands">yarn commands<a class="headerlink" href="#yarn-commands" title="Permanent link">¶</a></h3>
 <p>The following yarn tasks are available:</p>
 <pre class="highlight"><code>yarn scripts             # Build the Javascript with esbuild
