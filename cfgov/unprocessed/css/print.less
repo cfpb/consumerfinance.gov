@@ -228,18 +228,31 @@
 
   // Solving longstanding issue in Firefox of cutting off inline-block
   // elements after one page.
-  // Also prevents Chrome from adding in a blank first page
-  html, body {
-    margin: 0;
-    padding: 0;
+  @-moz-document url-prefix() {
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .content_main {
+      margin: 0;
+      display: block !important;
+    }
+
+    .content_sidebar {
+      display: block !important;
+    }
   }
 
-  .content_main {
-    margin: 0;
-    display: block !important;
-  }
+  // Prevent Chrome from adding in a blank first page
+  @media (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    .content_main {
+      margin: 0;
+      display: block !important;
+    }
 
-  .content_sidebar {
-    display: block !important;
+    .content_sidebar {
+      display: block !important;
+    }
   }
 } );
