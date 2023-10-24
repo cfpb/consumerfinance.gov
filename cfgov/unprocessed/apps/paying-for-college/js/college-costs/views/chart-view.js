@@ -8,7 +8,7 @@ import {
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import more from 'highcharts/highcharts-more';
-import numberToMoney from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import patternFill from 'highcharts/modules/pattern-fill';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -596,12 +596,12 @@ const chartView = {
 
   updateCostOfBorrowingChart: () => {
     const totalBorrowingAtGrad = getFinancialValue('debt_totalAtGrad');
-    const borrowedString = numberToMoney({
+    const borrowedString = formatUSD({
       amount: totalBorrowingAtGrad,
       decimalPlaces: 0,
     });
     const interest10years = getFinancialValue('debt_tenYearInterest');
-    const interestString = numberToMoney({
+    const interestString = formatUSD({
       amount: interest10years,
       decimalPlaces: 0,
     });
@@ -625,7 +625,7 @@ const chartView = {
     const max = Math.max(totalCosts * 1.1, totalFunding * 1.1);
     const text =
       'Your costs<br>' +
-      numberToMoney({
+      formatUSD({
         amount: totalCosts,
         decimalPlaces: 0,
       });
@@ -653,9 +653,9 @@ const chartView = {
 
   updateMaxDebtChart: () => {
     const totalDebt = getFinancialValue('debt_totalAtGrad');
-    const debtString = numberToMoney({ amount: totalDebt, decimalPlaces: 0 });
+    const debtString = formatUSD({ amount: totalDebt, decimalPlaces: 0 });
     const salary = getFinancialValue('salary_annual');
-    const salaryString = numberToMoney({ amount: salary, decimalPlaces: 0 });
+    const salaryString = formatUSD({ amount: salary, decimalPlaces: 0 });
     const max = Math.max(totalDebt * 1.1, salary * 1.1);
 
     chartView.maxDebtChart.yAxis[0].update({
@@ -703,17 +703,17 @@ const chartView = {
 
   updateAffordingChart: () => {
     const monthlyExpenses = getExpensesValue('total_expenses');
-    const expensesString = numberToMoney({
+    const expensesString = formatUSD({
       amount: monthlyExpenses,
       decimalPlaces: 0,
     });
     const monthlyPayment = getFinancialValue('debt_tenYearMonthly');
-    const paymentString = numberToMoney({
+    const paymentString = formatUSD({
       amount: monthlyPayment,
       decimalPlaces: 0,
     });
     const monthlySalary = getFinancialValue('salary_monthly');
-    const salaryString = numberToMoney({
+    const salaryString = formatUSD({
       amount: monthlySalary,
       decimalPlaces: 0,
     });

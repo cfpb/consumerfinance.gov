@@ -17,7 +17,7 @@ import { updateModelsFromQueryString } from './college-costs/dispatchers/update-
 function init() {
   const body = document.querySelector('body');
   const query = getQueryVariables();
-
+  console.log('initted');
   expensesModel.init(body);
   constantsModel.init();
   expensesView.init();
