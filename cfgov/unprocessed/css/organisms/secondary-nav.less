@@ -110,7 +110,10 @@
     // Grow to available width.
     flex-grow: 1;
 
-    .h5();
+    font-size: unit(16px / @base-font-size-px, rem);
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: @pacific;
 
     line-height: unit((22 / @size-v));
     margin-bottom: 0;
@@ -193,6 +196,9 @@
     background: @gray-5;
     border-bottom: 1px solid @gray-40;
 
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgb(0 0 0 / 20%);
+
     &__no-children {
       display: none;
     }
@@ -201,11 +207,6 @@
       li[data-nav-is-active='False']{
         display: none;
       }
-    }
-
-    .o-secondary-nav {
-      border-top: 1px solid @gray-40;
-      border-bottom: 1px solid @gray-40;
     }
   } );
 
