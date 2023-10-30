@@ -116,4 +116,31 @@ describe('Dynamic Disclosures', () => {
     page.setText('contrib__workstudy', '1250');
     cy.get('#summary_total-contributions').should('contain', '16,250');
   });
+
+  it('should properly add a private loan on button click', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 1 );
+    cy.get('button.private-loans_add-btn').click({force: true});
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 2 );
+    cy.get('button.private-loans_add-btn').click({force: true});
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 3 );      
+  });
+
+  it('should properly remove a private loan on button click', () => {
+    page.confirmVerification();
+    page.stepTwo();
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 1 );
+    cy.get('button.private-loans_add-btn').click({force: true});
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 2 );
+    cy.get('.private-loans_loan:nth-child(2) button.private-loans_remove-btn').click({force: true});
+    cy.get('.private-loans .private-loans_loan')
+      .should('have.length', 1 );
+  });
+
 });
