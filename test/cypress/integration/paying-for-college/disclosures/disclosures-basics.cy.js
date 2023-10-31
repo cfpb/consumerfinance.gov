@@ -119,28 +119,23 @@ describe('Dynamic Disclosures', () => {
 
   it('should properly add a private loan on button click', () => {
     page.confirmVerification();
-    const addLoan = cy.get('button.private-loans_add-btn'); 
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 1 );
-    cy.wait( 500 );
-    addLoan.click({force: true});
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 2 );
-    cy.wait( 500 );
-    addLoan.click({force: true});
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 3 );      
+    const addLoan = cy.get('button.private-loans_add-btn');
+    cy.get('.private-loans .private-loans_loan').should('have.length', 1);
+    cy.wait(500);
+    addLoan.click({ force: true });
+    cy.get('.private-loans .private-loans_loan').should('have.length', 2);
+    cy.wait(500);
+    addLoan.click({ force: true });
+    cy.get('.private-loans .private-loans_loan').should('have.length', 3);
   });
 
   it('should properly remove a private loan on button click', () => {
     page.confirmVerification();
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 1 );
-    cy.wait( 500 );
-    cy.get('button.private-loans_add-btn').click({force: true});
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 2 );
-    cy.wait( 500 );
+    cy.get('.private-loans .private-loans_loan').should('have.length', 1);
+    cy.wait(500);
+    cy.get('button.private-loans_add-btn').click({ force: true });
+    cy.get('.private-loans .private-loans_loan').should('have.length', 2);
+    cy.wait(500);
     // cy.get('.private-loans_loan:nth-child(2) button.private-loans_remove-btn').click({force: true});
     // cy.get('.private-loans .private-loans_loan')
     //   .should('have.length', 1 );
@@ -149,21 +144,15 @@ describe('Dynamic Disclosures', () => {
   it('should properly total and adjust private loan totals when new loans are added or removed', () => {
     page.confirmVerification();
     page.stepTwo();
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 1 );
-    cy.get('#summary_total-private-loans')
-      .should('contain', '3,000' );
-    cy.wait( 500 );
-    cy.get('button.private-loans_add-btn').click({force: true});
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 2 );
+    cy.get('.private-loans .private-loans_loan').should('have.length', 1);
+    cy.get('#summary_total-private-loans').should('contain', '3,000');
+    cy.wait(500);
+    cy.get('button.private-loans_add-btn').click({ force: true });
+    cy.get('.private-loans .private-loans_loan').should('have.length', 2);
     page.setText('contrib__private-loan_1', '1100');
-    cy.get('#summary_total-private-loans')
-      .should('contain', '4,100' );
-    cy.wait( 500 );
-    cy.get('button.private-loans_add-btn').click({force: true});
-    cy.get('.private-loans .private-loans_loan')
-      .should('have.length', 3 );      
+    cy.get('#summary_total-private-loans').should('contain', '4,100');
+    cy.wait(500);
+    cy.get('button.private-loans_add-btn').click({ force: true });
+    cy.get('.private-loans .private-loans_loan').should('have.length', 3);
   });
-
 });

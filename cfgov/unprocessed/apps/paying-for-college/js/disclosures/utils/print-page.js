@@ -1,6 +1,6 @@
-import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
+// TODO: Fix the print functionality
 
-console.log( 'fix print-page' );
+// import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 // $(document).ready(function () {
 //   $('.next-steps_controls > button').on('click', function (evt) {

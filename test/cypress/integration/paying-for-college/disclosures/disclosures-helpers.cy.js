@@ -8,15 +8,15 @@ export class DynamicDisclosures {
   }
 
   confirmVerification() {
-    cy.get('a[href="#info-right"]').click({force: true});
+    cy.get('a[href="#info-right"]').click({ force: true });
   }
 
   denyVerification() {
-    cy.get('a[href="#info-wrong"]').click({force: true});
+    cy.get('a[href="#info-wrong"]').click({ force: true });
   }
 
   stepTwo() {
-    cy.get('.continue.step .continue_controls button').click({force: true});
+    cy.get('.continue.step .continue_controls button').click({ force: true });
   }
 
   typeText(name, value) {

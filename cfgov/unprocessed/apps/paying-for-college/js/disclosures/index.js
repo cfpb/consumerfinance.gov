@@ -18,7 +18,7 @@ import publish from './dispatchers/publish-update.js';
 
 // import('./utils/print-page.js');
 
-const ready = function( callback ) {
+const ready = function (callback) {
   if (document.readyState !== 'loading') {
     // Document is already ready, call the callback directly
     callback();
@@ -27,21 +27,21 @@ const ready = function( callback ) {
     document.addEventListener('DOMContentLoaded', callback);
   } else {
     // Old IE browsers
-    document.attachEvent('onreadystatechange', function() {
+    document.attachEvent('onreadystatechange', function () {
       if (document.readyState === 'complete') {
         callback();
       }
     });
   }
-}
+};
 
 const app = {
   urlValues: {},
   init: function () {
     // jquery promise to delay full model creation until ajax resolves
-    fetch.initialData().then( ( resp ) => {
-      const constants = JSON.parse( resp[0].responseText );
-      const expenses = JSON.parse( resp[1].responseText );
+    fetch.initialData().then((resp) => {
+      const constants = JSON.parse(resp[0].responseText);
+      const expenses = JSON.parse(resp[1].responseText);
       financialModel.init(constants[0]);
       financialView.init();
       if (location.href.indexOf('about-this-tool') === -1) {
@@ -51,40 +51,42 @@ const app = {
       if (getUrlOfferExists()) {
         // Check for URL offer data
         this.urlValues = getUrlValues();
-        fetch.schoolData(this.urlValues.collegeID, this.urlValues.programID ).then( respArr  => {
-          const schoolData = JSON.parse( respArr[0].responseText );
-          const programData = JSON.parse( respArr[1].responseText );
-          const nationalData = JSON.parse( respArr[1].responseText );
-          let data = {};
-          Object.assign(data, schoolData, programData, nationalData );
-          const schoolValues = schoolModel.init(
-            nationalData,
-            schoolData,
-            programData
-          );
+        fetch
+          .schoolData(this.urlValues.collegeID, this.urlValues.programID)
+          .then((respArr) => {
+            const schoolData = JSON.parse(respArr[0].responseText);
+            const programData = JSON.parse(respArr[1].responseText);
+            const nationalData = JSON.parse(respArr[1].responseText);
+            const data = {};
+            Object.assign(data, schoolData, programData, nationalData);
+            const schoolValues = schoolModel.init(
+              nationalData,
+              schoolData,
+              programData,
+            );
 
-          /* If PID exists, update the financial model and view based
+            /* If PID exists, update the financial model and view based
            on program data */
-          if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
-            financialModel.updateModelWithProgram(schoolValues);
-            financialView.updateViewWithProgram(schoolValues, this.urlValues);
-          }
+            if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
+              financialModel.updateModelWithProgram(schoolValues);
+              financialView.updateViewWithProgram(schoolValues, this.urlValues);
+            }
 
-          // Add url values to the financial model
-          publish.extendFinancialData(this.urlValues);
-          if (typeof this.urlValues.totalCost === 'undefined') {
-            publish.financialData('totalCost', null);
-          }
-          financialView.updateViewWithURL(schoolValues, this.urlValues);
-          // initialize metric view
-          metricView.init();
-          financialView.updateView(getFinancial.values());
-          questionView.init();
+            // Add url values to the financial model
+            publish.extendFinancialData(this.urlValues);
+            if (typeof this.urlValues.totalCost === 'undefined') {
+              publish.financialData('totalCost', null);
+            }
+            financialView.updateViewWithURL(schoolValues, this.urlValues);
+            // initialize metric view
+            metricView.init();
+            financialView.updateView(getFinancial.values());
+            questionView.init();
 
-          // Update expenses model bases on region and salary
-          const region = schoolValues.BLSAverage.substr(0, 2);
-          $('#bls-region-select').val(region).change();
-        });
+            // Update expenses model bases on region and salary
+            const region = schoolValues.BLSAverage.substr(0, 2);
+            $('#bls-region-select').val(region).change();
+          });
       }
       // set financial caps based on data
       financialView.setCaps(getFinancial.values());
@@ -104,4 +106,3 @@ ready(function () {
   window.getFinancial = getFinancial;
   window.getExpenses = getExpenses;
 });
-

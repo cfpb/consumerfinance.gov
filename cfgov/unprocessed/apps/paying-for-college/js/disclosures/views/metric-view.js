@@ -133,7 +133,7 @@ const metricView = {
       $lowerPoint = $national;
     }
     const $higherLabels = $higherPoint.find(
-      '.bar-graph_label, .bar-graph_value'
+      '.bar-graph_label, .bar-graph_value',
     );
 
     // If the values are equal, handle the display with CSS only
@@ -146,17 +146,17 @@ const metricView = {
       nationalTop <= schoolTop + schoolHeight &&
       nationalTop + nationalHeight >= schoolTop
     ) {
-      $higherLabels.each( elem => {
+      $higherLabels.each((elem) => {
         elem.style.paddingBottom = offset;
         elem.style.top = -offset;
       });
 
       /* Need to reset the z-index since fixOverlap is called on page load and
          again when a verification button is clicked */
-      $higherPoint.each( elem => {
+      $higherPoint.each((elem) => {
         elem.style.zIndex = 'auto';
       });
-      $lowerPoint.each( elem => {
+      $lowerPoint.each((elem) => {
         elem.style.zIndex = 100;
       });
     }
@@ -213,10 +213,10 @@ const metricView = {
       bottoms.school = graphHeight;
       $graph.addClass('bar-graph__high-point');
     }
-    $school.each( elem => {
+    $school.each((elem) => {
       elem.style.bottom = bottoms.school;
-    })
-    $national.each( elem => {
+    });
+    $national.each((elem) => {
       elem.style.bottom = bottoms.national;
     });
   },
@@ -279,7 +279,7 @@ const metricView = {
    * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function ($notification, notificationClasses) {
-    $notification.attr('class', 'metric_notification')
+    $notification.attr('class', 'metric_notification');
     $notification.addClass(notificationClasses);
   },
 
@@ -297,8 +297,8 @@ const metricView = {
    */
   updateGraphs: function () {
     const $graphs = $('.bar-graph');
-    $graphs.each( elem => {
-      const $graph = $( elem );
+    $graphs.each((elem) => {
+      const $graph = $(elem);
       const metricKey = $graph.attr('data-metric');
       const notificationClasses = metricView.getNotifications(metricKey);
       const $notification = $graph.siblings('.metric_notification');
@@ -355,8 +355,8 @@ const metricView = {
     values.debtBurden = values.loanMonthly / values.monthlySalary;
 
     // Update debt burden elements
-    $elements.each( elem => {
-      const $ele = $( elem );
+    $elements.each((elem) => {
+      const $ele = $(elem);
       const prop = $ele.attr('data-debt-burden');
       let format = 'currency';
       if (prop === 'debtBurden') {
@@ -398,11 +398,11 @@ const metricView = {
     const $ele = $graph.find('[data-graph_label]');
 
     $ele.text(text);
-    if (metricKey === 'gradRate' && source === 'school' ) {
+    if (metricKey === 'gradRate' && source === 'school') {
       $('.content-grad-program').hide();
     }
     if (metricKey === 'defaultRate' && source === 'school') {
-      $('.content-default-program').text( source );
+      $('.content-default-program').text(source);
     }
   },
 

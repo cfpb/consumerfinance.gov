@@ -48,7 +48,7 @@ const expensesView = {
    */
   updateExpenses: function (values) {
     const expensesHigherThanSalary = $('.aid-form_higher-expenses');
-    this.$elements.each( elem => {
+    this.$elements.each((elem) => {
       const $ele = $(elem);
       const name = $ele.attr('data-expenses');
       const currency = true;
@@ -112,9 +112,9 @@ const expensesView = {
    * Listener function for keyup in expenses INPUT fields
    */
   keyupListener: function () {
-    this.$reviewAndEvaluate.each( elem => {
-      $( '[data-expenses]' ).each( elmo => {
-        elmo.addEventListener( 'keyup focusout', function () {
+    this.$reviewAndEvaluate.each(() => {
+      $('[data-expenses]').each((elmo) => {
+        elmo.addEventListener('keyup focusout', function () {
           clearTimeout(expensesView.keyupDelay);
           expensesView.currentInput = $(this).attr('id');
           if ($(this).is(':focus')) {
@@ -127,7 +127,7 @@ const expensesView = {
             expensesView.currentInput = 'none';
             expensesView.updateView(getExpenses.values());
           }
-        })
+        });
       });
     });
   },
@@ -136,7 +136,7 @@ const expensesView = {
    * Listener function for change events on expenses INPUT fields
    */
   expenseInputChangeListener: function () {
-    $('[data-expenses]').each( elmo => {
+    $('[data-expenses]').each((elmo) => {
       elmo.addEventListener('change', function () {
         const expenses = $(this).data('expenses');
         if (expenses) {
@@ -150,7 +150,7 @@ const expensesView = {
    * Listener for the BLS region SELECT
    */
   regionSelectListener: function () {
-    $('#bls-region-select').listen( 'change', function ( event ) {
+    $('#bls-region-select').listen('change', function (event) {
       const region = event.target.value || 'NE';
       publish.updateRegion(region);
       expensesView.updateView(getExpenses.values());

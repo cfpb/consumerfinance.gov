@@ -24,15 +24,15 @@ const getApiValues = {
     const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
-    return getApi( url );
+    return getApi(url);
   },
 
   expenses: function () {
     const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/expenses/';
-    
-    return getApi( url );
+
+    return getApi(url);
   },
 
   fetchSchoolData: function (iped) {
@@ -44,7 +44,7 @@ const getApiValues = {
       iped +
       '/';
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve ) {
       promiseRequest('GET', url)
         .then(function (resp) {
           resolve(resp);
@@ -76,7 +76,7 @@ const getApiValues = {
       '_' +
       pid +
       '/';
-      
+
     //  $.ajax({
     //   url: url,
     //   dataType: 'json',
@@ -88,12 +88,12 @@ const getApiValues = {
     //   },
     // });
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve ) {
       promiseRequest('GET', url)
         .then(function (resp) {
           resolve(resp);
         })
-        .catch(function (error) {
+        .catch(function () {
           financialView.missingData('school');
           // reject(new Error(error));
         });
@@ -114,15 +114,15 @@ const getApiValues = {
       url += '_' + pid + '/';
     }
 
-    return getApi( url );
+    return getApi(url);
   },
 
   schoolData: function (iped, pid) {
     return Promise.all([
       this.fetchSchoolData(iped),
       this.fetchProgramData(iped, pid),
-      this.fetchNationalData(iped, pid)]
-    );
+      this.fetchNationalData(iped, pid),
+    ]);
   },
 
   initialData: function () {
@@ -134,8 +134,8 @@ const getApiValues = {
       financialView.missingData(warning);
       const deferred = {};
       deferred.promise = new Promise((resolve, reject) => {
-          deferred.resolve = resolve;
-          deferred.reject = reject;
+        deferred.resolve = resolve;
+        deferred.reject = reject;
       });
       return deferred;
     }

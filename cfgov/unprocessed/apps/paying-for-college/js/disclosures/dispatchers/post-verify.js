@@ -14,8 +14,8 @@ const postVerify = {
        }
        } */
     const csrfElem = document.querySelector('[name="csrfmiddlewaretoken"]');
-    if ( csrfElem !== null ) {
-      this.csrfToken = csrfElem.value;  
+    if (csrfElem !== null) {
+      this.csrfToken = csrfElem.value;
     }
   },
 
@@ -35,13 +35,13 @@ const postVerify = {
         'INVALID: student indicated the offer information is wrong';
     }
 
-    let xhr = new XMLHttpRequest();
-    xhr.open( 'POST', urlPath, true);
-    xhr.setRequestHeader( 'Content-Type', 'application/json' );
-    xhr.send( JSON.stringify( postdata ) );
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', urlPath, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(postdata));
 
     // $.post(urlPath, postdata);
-  }
+  },
 };
 
 export default postVerify;

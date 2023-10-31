@@ -33,10 +33,10 @@ const linksView = {
   setCollegeScorecardLink: function (values) {
     const scorecardURL =
       'https://collegescorecard.ed.gov/school/?' + values.schoolID;
-    this.$scorecardSchoolLink.each( elem => {
-      elem.setAttribute( 'href', scorecardURL );
-      elem.setAttribute( 'target', '_blank' );
-      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    this.$scorecardSchoolLink.each((elem) => {
+      elem.setAttribute('href', scorecardURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
     });
   },
 
@@ -50,11 +50,11 @@ const linksView = {
       'https://collegescorecard.ed.gov/school/?' +
       values.schoolID +
       '#graduation';
-    this.$gradLinkText.each( elem => {
-      elem.setAttribute( 'href', gradURL );
-      elem.setAttribute( 'target', '_blank' );
-      elem.setAttribute( 'rel', 'noopener noreferrer', );
-    })
+    this.$gradLinkText.each((elem) => {
+      elem.setAttribute('href', gradURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
+    });
   },
 
   /**
@@ -66,10 +66,10 @@ const linksView = {
       'http://nces.ed.gov/collegenavigator/?id=' +
       values.schoolID +
       '#fedloans';
-    this.$defaultLinkText.each( elem => {
-      elem.setAttribute( 'href', defaultURL );
-      elem.setAttribute( 'target', '_blank' );
-      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    this.$defaultLinkText.each((elem) => {
+      elem.setAttribute('href', defaultURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
     });
   },
 
@@ -80,10 +80,10 @@ const linksView = {
    */
   setSchoolLink: function (values) {
     const schoolURL = formatURL(values.url);
-    this.$schoolLinkText.each( elem => {
-      elem.setAttribute( 'href', schoolURL );
-      elem.setAttribute( 'target', '_blank' );
-      elem.setAttribute( 'rel', 'noopener noreferrer', );
+    this.$schoolLinkText.each((elem) => {
+      elem.setAttribute('href', schoolURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
     });
   },
 

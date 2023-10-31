@@ -39,13 +39,13 @@ const expensesModel = {
         model.other +
         model.entertainment +
         model.clothing +
-        model.taxes
+        model.taxes,
     );
 
     model.monthlyLeftover = Math.round(
       financialValues.monthlySalary -
         model.totalMonthlyExpenses -
-        financialValues.loanMonthly
+        financialValues.loanMonthly,
     );
 
     this.values = model;
