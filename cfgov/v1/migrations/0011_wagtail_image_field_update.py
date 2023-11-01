@@ -8,7 +8,7 @@ import wagtail.images.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0004_internaldocssettings'),
+        ('v1', '0010_remove_large_pull_quote'),
     ]
 
     operations = [
