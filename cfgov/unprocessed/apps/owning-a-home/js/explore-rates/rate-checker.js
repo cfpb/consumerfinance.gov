@@ -18,7 +18,7 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import jumbo from 'jumbo-mortgage';
+import jumbo from '@cfpb/jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
