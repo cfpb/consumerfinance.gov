@@ -9,7 +9,7 @@
     "url": "https://cfpb.github.io/"
   },
   "dependencies": {
-    "@cfpb/ccdb5-ui": "2.8.4"
+    "@cfpb/ccdb5-ui": "2.9.0"
   },
   "repository": {
     "type": "git",
