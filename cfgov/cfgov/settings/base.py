@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     "wagtail",
     "wagtailadmin_overrides",
     "wagtail.admin",
+    "wagtail.api.v2",
     "wagtail.documents",
     "wagtail.snippets",
     "wagtail.users",
@@ -773,3 +774,7 @@ ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
 WAGTAILADMIN_BASE_URL = os.getenv(
     "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
 )
+
+WAGTAILAPI_BASE_URL = "http://localhost:8000"
+
+WAGTAILAPI_LIMIT_MAX = 99999

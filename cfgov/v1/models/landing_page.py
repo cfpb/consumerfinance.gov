@@ -1,4 +1,5 @@
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.api import APIField
 from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
@@ -38,5 +39,10 @@ class LandingPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    api_fields = [
+        APIField('header'),
+        APIField('content'),
+    ]
 
     template = "v1/landing-page/index.html"

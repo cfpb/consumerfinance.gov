@@ -2,6 +2,7 @@ from django.db import models
 
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.api import APIField
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -108,6 +109,13 @@ class SublandingPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    api_fields = [
+        APIField('portal_topic'),
+        APIField('header'),
+        APIField('content'),
+        APIField('sidebar_breakout'),
+    ]
 
     template = "v1/sublanding-page/index.html"
 

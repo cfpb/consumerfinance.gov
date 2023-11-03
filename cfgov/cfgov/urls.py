@@ -39,6 +39,8 @@ from housing_counselor.views import (
 )
 from regulations3k.views import redirect_eregs
 
+from .api import api_router
+
 
 def flagged_wagtail_template_view(flag_name, template_name):
     """View that serves Wagtail if a flag is set, and a template if not.
@@ -74,6 +76,7 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+    path('api/v2/', api_router.urls),
     re_path(
         r"^rural-or-underserved-tool/$",
         TemplateView.as_view(
