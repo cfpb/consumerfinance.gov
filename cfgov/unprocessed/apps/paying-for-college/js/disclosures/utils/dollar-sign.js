@@ -17,17 +17,11 @@ function Query(selector) {
   if (typeof selector === 'string' && selector !== '') {
     this.elements = document.querySelectorAll(selector);
   }
-
-  // if ( this.elements.length > 1 ) {
-  // 	return this.elements;
-  // } else {
-  // 	return this.elements[0];
-  // }
 }
 
 Query.prototype.attr = function (name, value) {
   if (typeof value === 'undefined') {
-    return this.elements[0].getAttribute(name);
+    return this.elements.length ? this.elements[0].getAttribute(name) : null;
   } else {
     this.elements.forEach((elem) => {
       elem.setAttribute(name, value);
@@ -36,13 +30,13 @@ Query.prototype.attr = function (name, value) {
 };
 
 Query.prototype.cloner = function () {
-  return this.elements[0].cloneNode(true);
+  return this.elements.length ? this.elements[0].cloneNode(true) : null;
 };
 
 Query.prototype.text = function (value) {
   // getter
   if (typeof value === 'undefined') {
-    return this.elements[0].textContent;
+    return this.elements.length ? this.elements[0].textContent : null;
   }
   //setter
   else {
@@ -55,7 +49,7 @@ Query.prototype.text = function (value) {
 Query.prototype.val = function (value) {
   // getter
   if (typeof value === 'undefined' && this.elements.length > 0) {
-    return this.elements[0].value;
+    return this.elements.length ? this.elements[0].value : null;
   }
   //setter
   else {
@@ -146,19 +140,11 @@ Query.prototype.show = function (className) {
 };
 
 Query.prototype.height = function () {
-  if (this.elements.length > 0) {
-    return this.elements[0].offsetHeight;
-  } else {
-    return null;
-  }
+  return this.elements.length ? this.elements[0].offsetHeight : null;
 };
 
 Query.prototype.top = function () {
-  if (this.elements.length > 0) {
-    return this.elements[0].offsetTop;
-  } else {
-    return null;
-  }
+  return this.elements.length ? this.elements[0].offsetTop : null;
 };
 
 Query.prototype.listen = function (eventType, callback) {
@@ -168,7 +154,7 @@ Query.prototype.listen = function (eventType, callback) {
 };
 
 Query.prototype.tagName = function () {
-  return this.elements[0].tagName;
+  return this.elements.length ? this.elements[0].tagName : null;
 };
 
 Query.prototype.addClass = function (classNames) {
