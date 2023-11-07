@@ -186,7 +186,7 @@ msgid "Back to top"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
-msgid "https://usa.gov/"
+msgid "https://www.usa.gov/"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
