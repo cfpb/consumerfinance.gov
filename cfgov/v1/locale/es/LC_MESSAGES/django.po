@@ -190,12 +190,12 @@ msgid "Back to top"
 msgstr "Ir arriba"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
-msgid "https://usa.gov/"
-msgstr "https://gobiernousa.gov/"
+msgid "https://www.usa.gov/"
+msgstr "https://www.usa.gov/es/"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
 msgid "USA.gov"
-msgstr "GobiernoUSA.gov"
+msgstr "USA.gov/es"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
 #: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22

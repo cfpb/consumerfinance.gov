@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@cfpb/jumbo-mortgage@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/jumbo-mortgage/-/jumbo-mortgage-4.0.0.tgz#492519d69063c250117309cfd4082dfcd190435e"
+  integrity sha512-i2cKzM7C7U34jcDYwZSYYPd7H4zq7mHfVp374MHYaPpoQorFtAkW1L8uzHt5ZGhUjzHH1sL7r5riiaZc4AIo+g==
+  dependencies:
+    format-usd "~0.1.0"
+
 amortize@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/amortize/-/amortize-1.1.0.tgz#640e10fa960c6a073eacec92ebaee08398fe8249"
@@ -16,11 +23,6 @@ ev-pos@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ev-pos/-/ev-pos-1.0.1.tgz#8bd7726667dfc3322f7f33e12bfd8a79658f66d0"
   integrity sha512-XgzFXHBcgOQ92hDQLT2tjB+jC6tcfiUOn0FdfcwFkq1/5LeYY3ql163ADVpj8e8LKAU5oUo9ro1gq1cXnO8eOA==
-
-format-usd@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/format-usd/-/format-usd-1.0.1.tgz#b5f80cf8d9eab5cf5f94135aa7cee272be5d705c"
-  integrity sha512-tFCdsZS3MNvrCCEHp7pk98NWOzOOYTzyCdoMNOuwvbtTOCK0g9y178G9LU+YWR5ROtw0MrIB3gjHOJEYC4UeZg==
 
 format-usd@~0.1.0:
   version "0.1.0"
@@ -37,13 +39,6 @@ jquery@3.6.0:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
-jumbo-mortgage@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/jumbo-mortgage/-/jumbo-mortgage-3.0.0.tgz#36333f126f4bc96a0945a9969b304a9093935d74"
-  integrity sha512-1xRmZmDzmCgJUimK0r82qoo5WZxRcLehMIPn+0mCoEYz9aKHCOpwqHGZzXHu30qj0pgLavWWUj6wBk7lw8ca9Q==
-  dependencies:
-    format-usd "~0.1.0"
-
 median@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/median/-/median-0.0.2.tgz#1b7172bc221eb3e9bf4f479fadaadefc50c44787"
@@ -56,8 +51,3 @@ rangeslider-js@^3.0.2:
   dependencies:
     custom-event "^1.0.1"
     ev-pos "^1.0.1"
-
-unformat-usd@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/unformat-usd/-/unformat-usd-0.1.1.tgz#f9b50e9c5b0a178de1738b4de55537ebd00ab8f7"
-  integrity sha512-dliIiVhz3dGCEIY1tcHctuv1tZIfU4s4a8s3YFWkoyzjEF2mTbQGbGdqbBi7C3OLI5uh4cSa5bEtnpKltC5f+w==

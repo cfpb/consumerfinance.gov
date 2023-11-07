@@ -925,9 +925,11 @@ class AnswerPageTest(TestCase):
             english_answer_page_response,
             "gobierno federal de los Estados Unidos",
         )
-        self.assertContains(english_answer_page_response, "https://usa.gov/")
+        self.assertContains(
+            english_answer_page_response, "https://www.usa.gov/"
+        )
         self.assertNotContains(
-            english_answer_page_response, "https://gobiernousa.gov/"
+            english_answer_page_response, "https://www.usa.gov/es/"
         )
 
     def test_spanish_header_and_footer(self):
@@ -951,10 +953,10 @@ class AnswerPageTest(TestCase):
             spanish_answer_page_response, "United States government"
         )
         self.assertContains(
-            spanish_answer_page_response, "https://gobiernousa.gov/"
+            spanish_answer_page_response, "https://www.usa.gov/es/"
         )
         self.assertNotContains(
-            spanish_answer_page_response, "https://usa.gov/"
+            spanish_answer_page_response, 'https://www.usa.gov/"'
         )
 
     def test_category_str(self):
