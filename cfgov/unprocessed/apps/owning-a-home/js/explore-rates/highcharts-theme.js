@@ -49,11 +49,7 @@ const HIGHCHARTS_SETTINGS = {
   xAxis: {
     minorTickInterval: null,
     labels: {
-      rotation: 0,
-      formatter: function () {
-        const val = this.value.slice(0, -1);
-        return Math.round(val * 10) / 10 + '%';
-      },
+      rotation: -90,
     },
     title: {
       style: {
