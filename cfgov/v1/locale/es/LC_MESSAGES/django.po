@@ -209,8 +209,8 @@ msgid "Section navigation"
 msgstr "Navegación de la sección"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
-msgid "In this section"
-msgstr "En esta sección"
+msgid "Navigate this section"
+msgstr "Navegue por esta sección"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"
