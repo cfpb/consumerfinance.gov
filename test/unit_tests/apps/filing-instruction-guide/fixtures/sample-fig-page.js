@@ -20,16 +20,10 @@ export default `
                         <span class="o-secondary-nav_label"> Table of contents </span>
                         <span class="o-secondary-nav_cues">
                             <span class="o-secondary-nav_cue-open" aria-label="Show">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__plus-round" viewBox="0 0 17 20.4">
-                                    <path
-                                        d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"
-                                    ></path>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__down" viewBox="0 0 17 19"><path d="M8.5 15.313a1.026 1.026 0 0 1-.728-.302l-6.8-6.8a1.03 1.03 0 0 1 1.455-1.456L8.5 12.828l6.073-6.073a1.03 1.03 0 0 1 1.455 1.456l-6.8 6.8a1.026 1.026 0 0 1-.728.302z"></path></svg>
                             </span>
                             <span class="o-secondary-nav_cue-close" aria-label="Hide">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__minus-round" viewBox="0 0 17 20.4">
-                                    <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__up" viewBox="0 0 17 19"><path d="M15.3 15.32a1.026 1.026 0 0 1-.727-.302L8.5 8.946l-6.073 6.072a1.03 1.03 0 0 1-1.456-1.455l6.801-6.8a1.03 1.03 0 0 1 1.456 0l6.8 6.8a1.03 1.03 0 0 1-.727 1.757z"></path></svg>
                             </span>
                         </span>
                     </button>
