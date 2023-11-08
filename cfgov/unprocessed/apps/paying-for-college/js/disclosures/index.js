@@ -1,5 +1,5 @@
 import $ from './utils/dollar-sign.js';
-import fetch from './dispatchers/get-api-values.js';
+import getApiValues from './dispatchers/get-api-values.js';
 import verifyOffer from './dispatchers/post-verify.js';
 import financialModel from './models/financial-model.js';
 import schoolModel from './models/school-model.js';
@@ -38,10 +38,9 @@ const ready = function (callback) {
 const app = {
   urlValues: {},
   init: function () {
-    // jquery promise to delay full model creation until ajax resolves
-    fetch.initialData().then((resp) => {
-      const constants = JSON.parse(resp[0].responseText);
-      const expenses = JSON.parse(resp[1].responseText);
+    getApiValues.initialData().then((resp) => {
+      if (!resp) return;
+      const [constants, expenses] = resp;
       financialModel.init(constants[0]);
       financialView.init();
       if (location.href.indexOf('about-this-tool') === -1) {
@@ -51,12 +50,10 @@ const app = {
       if (getUrlOfferExists()) {
         // Check for URL offer data
         this.urlValues = getUrlValues();
-        fetch
+        getApiValues
           .schoolData(this.urlValues.collegeID, this.urlValues.programID)
           .then((respArr) => {
-            const schoolData = JSON.parse(respArr[0].responseText);
-            const programData = JSON.parse(respArr[1].responseText);
-            const nationalData = JSON.parse(respArr[1].responseText);
+            const [schoolData, programData, nationalData] = respArr;
             const data = {};
             Object.assign(data, schoolData, programData, nationalData);
             const schoolValues = schoolModel.init(

@@ -1,22 +1,4 @@
-import { promiseRequest } from '../utils/promise-request.js';
 import financialView from '../views/financial-view.js';
-
-/**
- * getApi - Make an API request to the endpoint specified with parameters specified
- * @param {string} url - URL of API endpoint
- * @returns {object} Promise
- */
-function getApi(url) {
-  return new Promise(function (resolve, reject) {
-    promiseRequest('GET', url)
-      .then(function (resp) {
-        resolve(resp);
-      })
-      .catch(function (error) {
-        reject(new Error(error));
-      });
-  });
-}
 
 const getApiValues = {
   values: {},
@@ -24,7 +6,7 @@ const getApiValues = {
     const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
-    return getApi(url);
+    return fetch(url);
   },
 
   expenses: function () {
@@ -32,7 +14,7 @@ const getApiValues = {
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/expenses/';
 
-    return getApi(url);
+    return fetch(url);
   },
 
   fetchSchoolData: function (iped) {
@@ -44,15 +26,9 @@ const getApiValues = {
       iped +
       '/';
 
-    return new Promise(function (resolve ) {
-      promiseRequest('GET', url)
-        .then(function (resp) {
-          resolve(resp);
-        })
-        .catch(function (error) {
-          financialView.missingData('school');
-          new Error(error);
-        });
+    return fetch(url).catch(function (error) {
+      financialView.missingData('noSchool');
+      return new Error(error);
     });
   },
 
@@ -77,26 +53,9 @@ const getApiValues = {
       pid +
       '/';
 
-    //  $.ajax({
-    //   url: url,
-    //   dataType: 'json',
-    //   success: function (resp) {
-    //     return resp;
-    //   },
-    //   error: function (/* req, status, err */) {
-    //     financialView.missingData('program');
-    //   },
-    // });
-
-    return new Promise(function (resolve ) {
-      promiseRequest('GET', url)
-        .then(function (resp) {
-          resolve(resp);
-        })
-        .catch(function () {
-          financialView.missingData('school');
-          // reject(new Error(error));
-        });
+    return fetch(url).catch(function (error) {
+      financialView.missingData('noProgram');
+      return new Error(error);
     });
   },
 
@@ -114,14 +73,14 @@ const getApiValues = {
       url += '_' + pid + '/';
     }
 
-    return getApi(url);
+    return fetch(url);
   },
 
   schoolData: function (iped, pid) {
     return Promise.all([
-      this.fetchSchoolData(iped),
-      this.fetchProgramData(iped, pid),
-      this.fetchNationalData(iped, pid),
+      this.fetchSchoolData(iped).then((v) => v.json()),
+      this.fetchProgramData(iped, pid).then((v) => v.json()),
+      this.fetchNationalData(iped, pid).then((v) => v.json()),
     ]);
   },
 
@@ -130,16 +89,14 @@ const getApiValues = {
     const warning = document
       .querySelector('[data-warning]')
       .getAttribute('data-warning');
-    if (warning !== '' && typeof warning !== 'undefined') {
+    if (warning && !window.Cypress) {
       financialView.missingData(warning);
-      const deferred = {};
-      deferred.promise = new Promise((resolve, reject) => {
-        deferred.resolve = resolve;
-        deferred.reject = reject;
-      });
-      return deferred;
+      return Promise.resolve();
     }
-    return Promise.all([this.constants(), this.expenses()]);
+    return Promise.all([
+      this.constants().then((v) => v.json()),
+      this.expenses().then((v) => v.json()),
+    ]);
   },
 };
 

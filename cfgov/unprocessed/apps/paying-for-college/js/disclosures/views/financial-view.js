@@ -277,8 +277,11 @@ const financialView = {
    */
   updateViewWithProgram: function (values, urlValues) {
     // Update program length
-    const lengthExists = Object.prototype.hasOwnProperty.call(urlValues, 'urlProgramLength');
-    if ( lengthExists ) {
+    const lengthExists = Object.prototype.hasOwnProperty.call(
+      urlValues,
+      'urlProgramLength',
+    );
+    if (lengthExists) {
       this.$programLength.val(urlValues.urlProgramLength / 12).change();
     } else {
       this.$programLength.val(values.programLength).change();
@@ -959,18 +962,14 @@ const financialView = {
    */
   missingData: function (dataType) {
     $('.verify_wrapper').hide();
-    if (
-      $('[data-missing-data-error]:not([style*="display: none"]').length === 0
-    ) {
-      $('[data-missing-data-error="' + dataType + '"]').show();
-    }
+    $('[data-missing-data-error="' + dataType + '"]').show();
   },
 
   /**
    * Listener function for change events on financial INPUT fields
    */
   financialInputChangeListener: function () {
-    $('[nancial]').each((elmo) => {
+    $('[data-financial]').each((elmo) => {
       elmo.addEventListener('change', (event) => {
         const dataFinancial = event.target.dataset.financial;
         if (dataFinancial) {
