@@ -6,6 +6,8 @@
 
 import { checkDom } from '@cfpb/cfpb-atomic-component';
 
+const BASE_CLASS = 'input-contains-label';
+
 /**
  * ClearableInput
  * @class
@@ -15,8 +17,6 @@ import { checkDom } from '@cfpb/cfpb-atomic-component';
  * @returns {object} A ClearableInput instance.
  */
 function ClearableInput(element) {
-  const BASE_CLASS = 'input-contains-label';
-
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector('input');
   const _clearBtnDom = _dom.querySelector('.' + BASE_CLASS + '_after__clear');
@@ -41,8 +41,7 @@ function ClearableInput(element) {
     _inputDom.value = _setClearBtnState('');
     _inputDom.focus();
     // Create custom clear event so we can automatically reset results after clear.
-    const customEvent = document.createEvent('Event');
-    customEvent.initEvent('clear', true, true);
+    const customEvent = new Event('clear', { bubbles: true, cancelable: true });
     _clearBtnDom.dispatchEvent(customEvent);
     // Prevent event bubbling up to the input, which would blur otherwise.
     event.preventDefault();
@@ -91,5 +90,4 @@ function ClearableInput(element) {
   return this;
 }
 
-// Expose public methods.
-export default ClearableInput;
+export { ClearableInput };

@@ -102,7 +102,7 @@ describe('explore-rates/RateCheckerChartMenu', () => {
       chartMenu.open();
       expect(chartMenu.state).toStrictEqual(STATE_OPEN);
       expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
-        true
+        true,
       );
     });
   });
@@ -111,11 +111,11 @@ describe('explore-rates/RateCheckerChartMenu', () => {
     it('should set proper classes when the menu button is clicked', () => {
       simulateEvent('click', chartMenuBtnDOM);
       expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
-        true
+        true,
       );
       simulateEvent('click', chartMenuBtnDOM);
       expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
-        false
+        false,
       );
     });
 

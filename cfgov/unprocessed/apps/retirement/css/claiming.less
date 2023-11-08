@@ -1,56 +1,24 @@
-body {
-  background-image: none;
-  font-size: 16px;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-form {
-  margin: 0;
-  padding: 0;
-}
-
-#claiming-social-security .input-labels_block .cf-icon-svg {
-  margin-top: 1px;
-}
-
-#claiming-social-security .canvas-container {
-  position: relative;
-}
-
-#claiming-social-security .canvas-container .x-axis-label {
-  position: relative;
-  top: 0px;
-  left: 40px;
-}
-
-#claiming-social-security p.y-axis-label {
-  position: absolute;
-  top: 290px;
-  left: -50px;
-
-  /* Safari */
-  -webkit-transform: rotate(-90deg);
-
-  /* Firefox */
-  -moz-transform: rotate(-90deg);
-
-  /* Opera */
-  -o-transform: rotate(-90deg);
-
-  /* CSS3 */
-  transform: rotate(-90deg);
-
-  /* IE9 (this must come after the pure CSS3 to prevent autoprefixer from stripping it out) */
-  -ms-transform: rotate(-90deg);
-}
-
 #claiming-social-security {
-  font-style: normal;
-  font-weight: normal;
+  .input-labels_block .cf-icon-svg {
+    margin-top: 1px;
+  }
+
+  .canvas-container {
+    position: relative;
+  }
+
+  .canvas-container .x-axis-label {
+    position: relative;
+    top: 0;
+    left: 40px;
+  }
+
+  p.y-axis-label {
+    position: absolute;
+    top: 290px;
+    left: -50px;
+    transform: rotate(-90deg);
+  }
 
   .step-one-hidden,
   .before-step-two,
@@ -59,844 +27,824 @@ form {
   .step-three {
     display: none;
   }
-}
 
-#claiming-social-security .intro {
-  margin-bottom: 30px;
-  .content-l_col + .content-l_col {
+  .intro {
+    margin-bottom: 30px;
+    .content-l_col + .content-l_col {
+      margin-top: 0;
+    }
+  }
+
+  [lang='es'] .intro {
+    margin-top: 30px;
+  }
+
+  [lang='en'] .intro {
+    margin-top: 15px;
+  }
+
+  @media (min-width: 850px) {
+    .intro {
+      margin-bottom: 45px;
+
+      .img {
+        height: 200px;
+        width: 200px;
+        background-size: 200px;
+        background-repeat: no-repeat;
+      }
+    }
+
+    [lang='es'] .intro {
+      margin-top: 60px;
+      .img {
+        background-image: url('/static/apps/retirement/img/before-you-claim-es.png');
+      }
+    }
+
+    [lang='en'] .intro {
+      .img {
+        background-image: url('/static/apps/retirement/img/before-you-claim.png');
+      }
+    }
+  }
+
+  h1 span.header-line {
+    display: block;
+  }
+
+  .intro p {
+    max-width: 41.875rem;
+  }
+
+  .step-one {
+    padding-bottom: 14px;
+    padding-top: 45px;
+  }
+
+  .step-one h2 {
+    margin-bottom: 30px;
+  }
+
+  .step-one .birthdate-inputs label.input-labels {
+    margin-right: 5px;
+  }
+
+  #claiming-social-security
+    .step-one
+    .birthdate-inputs
+    label.input-labels:last-child {
+    margin-right: 0;
+  }
+
+  .step-one label.input-labels .input-labels_block {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .step-one .input-labels input {
+    height: 32px;
+    padding-left: 10px;
+  }
+
+  .birthdate-inputs p {
+    margin-bottom: 8px;
+  }
+
+  .estimated-benefits-description {
+    margin: 1em 0 0;
+    padding: 1em 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .estimated-benefits-description p {
+    margin-bottom: 0;
+  }
+
+  .estimated-benefits-input {
+    margin: 0;
+    padding: 0 0 30px 40px;
+  }
+
+  #graph-container .content-l_col {
+    margin-top: 0;
+    padding: 30px 0 60px;
+  }
+
+  .step-one .content-l_col {
+    vertical-align: bottom;
+  }
+
+  #api-data-loading-indicator {
+    display: none;
+    margin: 5px 0 0 5px;
+    font-size: 14px;
+    line-height: 6px;
+  }
+
+  #claim-canvas .graph__bar {
+    cursor: pointer;
+  }
+
+  #claim-canvas .age-text {
+    color: #919395;
+    cursor: pointer;
+    position: absolute;
+    top: 292px;
+    height: 75px;
+    text-align: center;
+  }
+
+  #claim-canvas .age-text.selected-age {
+    height: 25px;
+  }
+
+  #claim-canvas .age-text.selected-age p {
+    color: #000;
+    font-weight: bolder;
+  }
+
+  #claim-canvas #min-age-text {
+    left: 5px;
+  }
+
+  #claim-canvas #selected-age-text {
+    color: black;
+  }
+
+  #claim-canvas #max-age-text {
+    left: 443px;
+  }
+
+  #claim-canvas #benefits-text,
+  #claim-canvas #full-age-benefits-text {
+    position: absolute;
+    font-weight: bolder;
+  }
+
+  #claim-canvas {
+    position: relative;
+    left: 40px;
+
+    #full-age-benefits-text {
+      color: #919395;
+    }
+
+    .graph__element {
+      position: absolute;
+    }
+
+    .graph__background {
+      background: #e3e4e5;
+      height: 1px;
+      left: 0;
+    }
+
+    .graph_slider {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: -2px;
+      z-index: 100;
+    }
+
+    input[type='range'] {
+      height: 49px;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .claim-canvas__no-slider {
+    .graph_slider {
+      display: none;
+    }
+
+    & ~ .x-axis-label {
+      margin-top: -45px;
+    }
+  }
+
+  .lifetime-benefits-value {
+    font-weight: bolder;
+  }
+
+  .estimated-benefits-input label {
+    display: inline;
+    margin-left: 15px;
+  }
+
+  input[type='text'] {
+    border: 1px solid @gray-80;
+    border-color: @gray-40;
+  }
+
+  .input-labels {
+    display: inline;
+  }
+
+  .input-labels .label-text {
+    display: block;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .input-labels input {
+    display: inline;
+    width: 15%;
+    padding: 2px;
+  }
+
+  #bd-year {
+    width: 30%;
+  }
+
+  #salary-input {
+    width: 90%;
+  }
+
+  .step-one .estimate-info {
+    vertical-align: bottom;
     margin-top: 0;
   }
-}
 
-[lang='es'] #claiming-social-security .intro {
-  margin-top: 30px;
-}
+  .step-one .estimate-info p {
+    margin-bottom: -5px;
+  }
 
-[lang='en'] #claiming-social-security .intro {
-  margin-top: 15px;
-}
+  .step-one .step-one-instructions {
+    margin-bottom: 60px;
+  }
 
-@media (min-width: 850px) {
-  #claiming-social-security .intro {
+  #step-one-form {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .compared-to-full {
+    display: none;
+  }
+
+  .selected-retirement-age-container {
+    height: 77px;
+    margin-bottom: 30px;
+  }
+
+  .selected-retirement-age-container p {
+    margin-bottom: 0;
+  }
+
+  .selected-retirement-age {
+    margin-bottom: 2px;
+  }
+
+  .total-benefits-text {
+    font-weight: normal;
+    line-height: 24px;
+  }
+
+  .total-benefits-container {
+    margin-bottom: 30px;
+  }
+
+  .total-benefits-container p {
+    margin: 0;
+  }
+
+  .benefit-selection p.selected-full-retirement,
+  #age-selector-response,
+  #age-selector-response .thank-you {
+    display: none;
+  }
+
+  .benefit-selection button.selected-remove {
+    background: none;
+    border: none;
+    float: right;
+  }
+
+  #graph-container + hr {
+    margin-top: 0;
+  }
+
+  .graph-content .content-container {
+    display: none;
+  }
+
+  .graph-content .content-container ul {
+    padding-left: 20px;
+    list-style-position: outside;
+  }
+
+  .graph-content h3.retirement-age {
+    font-size: 1em;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  #graph-container p.learn-how {
+    margin-bottom: 0;
+  }
+
+  hr.before-step-two {
     margin-bottom: 45px;
-
-    .img {
-      height: 200px;
-      width: 200px;
-      background-size: 200px;
-      background-repeat: no-repeat;
-    }
   }
 
-  [lang='es'] #claiming-social-security .intro {
+  .content-l.step-two {
     margin-top: 60px;
-    .img {
-      background-image: url('/static/apps/retirement/img/before-you-claim-es.png');
+  }
+
+  .step-two .lifestyle-img {
+    display: block;
+    margin: 60px auto;
+  }
+
+  .step-two .lifestyle-response {
+    display: none;
+  }
+
+  .step-two .lifestyle-btn__active {
+    background-color: @navy;
+  }
+
+  .step-two + hr {
+    margin: 50px 0;
+  }
+
+  .step-two .content-l_col.content-l_col-1-3 {
+    height: 100%;
+  }
+
+  .step-two .lifestyle-question_container {
+    margin-bottom: 30px;
+  }
+
+  .step-two .lifestyle-question_container hr {
+    margin-top: 0;
+  }
+
+  [lang='es'] .step-two .question-working img {
+    display: block;
+    box-sizing: border-box;
+    background: url('/static/apps/retirement/img/sus60s.png') no-repeat;
+    width: 200px;
+    height: 200px;
+    padding-left: 200px; /* Move english image out of view */
+  }
+
+  [lang='es'] .step-two .question-expenses img {
+    display: block;
+    box-sizing: border-box;
+    background: url('/static/apps/retirement/img/gastos.png') no-repeat;
+    width: 200px;
+    height: 200px;
+    padding-left: 200px; /* Move english image out of view */
+  }
+
+  .step-two .question,
+  .step-three .hidden-content {
+    display: none;
+  }
+
+  .step-three h2 {
+    margin-bottom: 30px;
+  }
+
+  .step-three h3 {
+    margin-bottom: 5px;
+  }
+
+  .step-three .step-three-note {
+    margin-bottom: 30px;
+  }
+
+  #age-selector-response hr {
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+
+  #age-selector-response .next-steps {
+    padding-left: 0;
+    padding-top: 20px;
+    margin-bottom: 60px;
+  }
+
+  #age-selector-response .next-steps li {
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    padding-left: 34px;
+  }
+
+  #age-selector-response .next-steps li.next-step-one,
+  #age-selector-response .next-steps li.next-step-two,
+  #claiming-social-security
+    #age-selector-response
+    .next-steps
+    li.next-step-three {
+    background-image: url('/static/apps/retirement/img/step_check.png');
+  }
+
+  .step-three .helpful-btn {
+    width: 4em;
+  }
+
+  /* cf-notification */
+  .m-notification {
+    margin-bottom: 20px;
+  }
+
+  .step-one .notification-input__warning {
+    border-color: @gold;
+  }
+
+  /* ====================================================================
+     Medium and small screens
+  ==================================================================== */
+
+  @media (max-width: 1190px) {
+    .birthdate-inputs {
+      border-width: 0 15px;
+    }
+
+    #step-one-form {
+      margin-bottom: 30px;
+    }
+
+    .step-one .step-one-instructions {
+      margin-bottom: 30px;
+    }
+
+    .m-notification {
+      margin-top: -10px;
+    }
+
+    .estimated-benefits-input {
+      padding-left: 40px;
+    }
+
+    #estimated-benefits-input span {
+      display: block;
+    }
+
+    .estimated-benefits-input label {
+      margin-left: 15px;
+    }
+
+    #estimated-benefits-input label:first-of-type {
+      margin-left: 0;
+    }
+
+    .step-two .lifestyle-response > p:last-child {
+      margin-bottom: 0;
     }
   }
 
-  [lang='en'] #claiming-social-security .intro {
-    .img {
-      background-image: url('/static/apps/retirement/img/before-you-claim.png');
+  @media (max-width: 940px) {
+    .hero_image,
+    [lang='en'] .hero_image,
+    [lang='es'] .hero_image {
+      display: none;
     }
   }
-}
 
-#claiming-social-security h1 span.header-line {
-  display: block;
-}
+  /* ====================================================================
+     Medium screens
+  ==================================================================== */
 
-#claiming-social-security .intro p {
-  max-width: 41.875rem;
-}
-
-#claiming-social-security .step-one {
-  padding-bottom: 14px;
-  padding-top: 45px;
-}
-
-#claiming-social-security .step-one h2 {
-  margin-bottom: 30px;
-}
-
-#claiming-social-security .step-one .birthdate-inputs label.input-labels {
-  margin-right: 5px;
-}
-
-#claiming-social-security
-  .step-one
-  .birthdate-inputs
-  label.input-labels:last-child {
-  margin-right: 0px;
-}
-
-#claiming-social-security .step-one label.input-labels .input-labels_block {
-  display: block;
-  margin-bottom: 8px;
-}
-
-#claiming-social-security .step-one .input-labels input {
-  height: 32px;
-  padding-left: 10px;
-}
-
-#claiming-social-security .birthdate-inputs p {
-  margin-bottom: 8px;
-}
-
-#claiming-social-security .estimated-benefits-description {
-  margin: 1em 0 0 0;
-  padding: 1em 0;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-
-#claiming-social-security .estimated-benefits-description p {
-  margin-bottom: 0px;
-}
-
-#claiming-social-security .estimated-benefits-input {
-  margin: 0;
-  padding: 0 0 30px 40px;
-}
-
-#claiming-social-security #graph-container .content-l_col {
-  margin-top: 0px;
-  padding: 30px 0 60px 0;
-}
-
-#claiming-social-security .step-one .content-l_col {
-  vertical-align: bottom;
-}
-
-#api-data-loading-indicator {
-  display: none;
-  margin: 5px 0 0 5px;
-  font-size: 14px;
-  line-height: 6px;
-}
-
-#claim-canvas .graph__bar {
-  cursor: pointer;
-}
-
-#claim-canvas .age-text {
-  color: #919395;
-  cursor: pointer;
-  position: absolute;
-  top: 292px;
-  height: 75px;
-  text-align: center;
-}
-
-#claim-canvas .age-text.selected-age {
-  height: 25px;
-}
-
-#claim-canvas .age-text.selected-age p {
-  color: #000;
-  font-weight: bolder;
-}
-
-#claim-canvas #min-age-text {
-  left: 5px;
-}
-
-#claim-canvas #selected-age-text {
-  color: black;
-}
-
-#claim-canvas #max-age-text {
-  left: 443px;
-}
-
-#claim-canvas #benefits-text,
-#claim-canvas #full-age-benefits-text {
-  position: absolute;
-  font-weight: bolder;
-}
-
-#claim-canvas {
-  position: relative;
-  left: 40px;
-
-  #full-age-benefits-text {
-    color: #919395;
+  @media (max-width: 1190px) and (min-width: 1100px) {
+    p.y-axis-label {
+      top: 310px;
+    }
   }
 
-  .graph__element {
+  @media (max-width: 1100px) and (min-width: 850px) {
+    .step-one {
+      padding-top: 30px;
+    }
+
+    .step-one .content-l_col-2-3,
+    .estimate-info {
+      width: 100%;
+    }
+
+    #graph-container .content-l_col-1-3 {
+      width: 40%;
+    }
+
+    #graph-container .content-l_col-2-3 {
+      width: 60%;
+    }
+
+    p.y-axis-label {
+      top: 310px;
+    }
+
+    .content-l.step-two {
+      margin-top: 0;
+      margin-right: 15px;
+      margin-left: 0;
+    }
+
+    .step-two .content-l_col {
+      margin-right: 0;
+      width: 100%;
+    }
+
+    .content-l.step-two h2 {
+      margin-bottom: 0;
+    }
+
+    .content-l.step-two h2 + .question.h3 {
+      margin-top: 15px;
+      margin-bottom: 30px;
+    }
+
+    div.question {
+      border-top: 1px solid #ccc;
+      margin-right: 25px;
+      margin-left: 15px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    div.question.question-married {
+      border-top: none;
+    }
+
+    div.question.question-longevity {
+      padding-bottom: 10px;
+    }
+
+    .question::before,
+    .question::after {
+      display: table;
+      content: '';
+    }
+
+    .question::after {
+      clear: both;
+    }
+
+    .question hr {
+      display: none;
+    }
+
+    .step-two .lifestyle-img {
+      display: block !important;
+      float: left;
+      height: 200px !important;
+      margin: 0;
+      width: 200px !important;
+    }
+
+    .step-two .lifestyle-question_container,
+    .step-two .lifestyle-response {
+      margin-left: 230px;
+    }
+
+    hr.before-step-two {
+      margin-bottom: 60px;
+    }
+
+    .content-l.step-two + hr {
+      margin-top: 60px;
+      margin-bottom: 60px;
+    }
+  }
+
+  /* ====================================================================
+     Small screens
+  ==================================================================== */
+
+  @media (max-width: 849px) {
+    .content-l {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .content-l_col {
+      border: none;
+      display: block;
+      width: auto;
+    }
+
+    .step-one {
+      padding-top: 30px;
+    }
+
+    #step-one-form .content-l_col-1-3 {
+      max-width: 236px;
+    }
+
+    #claiming-social-security
+      #step-one-form
+      .content-l_col.content-l_col-1-3
+      + .content-l_col.content-l_col-1-3 {
+      margin-top: 1.875em;
+    }
+
+    #claiming-social-security
+      .content-l_col.content-l_col-1-3
+      + .content-l_col.content-l_col-1-3 {
+      margin-top: 0;
+    }
+
+    .birthdate-inputs p,
+    .step-one label.input-labels .input-labels_block {
+      margin-bottom: 0;
+    }
+
+    #salary-input {
+      width: 65%;
+    }
+
+    .estimated-benefits-input {
+      padding-left: 0;
+    }
+
+    #estimated-benefits-input label {
+      display: block;
+      margin-left: 0;
+      height: 30px;
+    }
+
+    #estimated-benefits-input label:first-of-type {
+      margin-top: 8px;
+      margin-left: 0;
+    }
+
+    #graph-container .content-l_col {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .graph_slider {
+      bottom: -35px;
+    }
+
+    p.y-axis-label {
+      top: 240px;
+      left: -57px;
+    }
+
+    .canvas-container .x-axis-label {
+      top: 30px;
+    }
+
+    .selected-retirement-age-container {
+      height: auto;
+      margin-top: 425px;
+    }
+
+    .canvas-container {
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .content-l.step-two {
+      margin-top: 0;
+    }
+
+    .step-two .content-l_col {
+      width: 100%;
+    }
+
+    .content-l.step-two h2 {
+      margin-bottom: 0;
+    }
+
+    .content-l.step-two h3.lifestyle-question {
+      font-size: 22px;
+    }
+
+    .question {
+      border-bottom: 1px solid #ccc;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .step-two .lifestyle-question_container {
+      margin-bottom: 0;
+    }
+
+    .lifestyle-question_container hr {
+      display: none;
+    }
+
+    .step-two .lifestyle-img {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 15px;
+      max-width: 200px;
+    }
+
+    [lang='es'] .step-two .question-working img {
+      display: inline-block;
+    }
+
+    [lang='es'] .step-two .question-expenses img {
+      display: inline-block;
+    }
+
+    .content-l.step-two h2 + .question.h3 {
+      border-bottom: none;
+      margin-top: 15px;
+      margin-bottom: 0;
+      padding-top: 0;
+    }
+
+    .question.question-married {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .question-longevity {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .question-longevity .lifestyle-question_container {
+      margin-bottom: 0;
+    }
+
+    .lifestyle-response {
+      margin-top: 30px;
+    }
+
+    hr.before-step-two,
+    .content-l.step-two + hr {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+  }
+
+  /* TOOLTIPS */
+  div[data-tooltip-name] {
+    display: none;
     position: absolute;
+    top: 0;
+    left: 0;
   }
 
-  .graph__background {
-    background: #e3e4e5;
-    height: 1px;
-    left: 0px;
+  *[data-tooltip-target] {
+    cursor: auto;
+    border-bottom: none;
+    color: @pacific;
   }
 
-  .graph_slider {
-    width: 100%;
+  #tooltip-container {
+    background-color: #e4e2e0;
+    border: 0 solid #000;
+    display: none;
+    font-style: normal;
+    padding: 15px;
     position: absolute;
-    bottom: 0;
-    left: -2px;
-    z-index: 100;
+    width: 20em;
+    z-index: 3000;
   }
 
-  input[type='range'] {
-    height: 49px;
+  #tooltip-container .content {
     padding: 0;
     margin: 0;
   }
-}
 
-.claim-canvas__no-slider {
-  .graph_slider {
-    display: none;
-  }
-
-  & ~ .x-axis-label {
-    margin-top: -45px;
-  }
-}
-
-#claiming-social-security .lifetime-benefits-value {
-  font-weight: bolder;
-}
-
-#claiming-social-security .explainer {
-  font-size: 0.875em;
-}
-
-#claiming-social-security .estimated-benefits-input label {
-  display: inline;
-  margin-left: 15px;
-}
-
-#claiming-social-security input[type='text'] {
-  border: 1px solid @gray-80;
-  border-color: @gray-40;
-}
-
-#claiming-social-security .input-labels {
-  display: inline;
-}
-
-#claiming-social-security .input-labels .label-text {
-  display: block;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-#claiming-social-security .input-labels input {
-  display: inline;
-  width: 15%;
-  padding: 2px;
-}
-
-#claiming-social-security #bd-year {
-  width: 30%;
-}
-
-#claiming-social-security #salary-input {
-  width: 90%;
-}
-
-#claiming-social-security .step-one .estimate-info {
-  vertical-align: bottom;
-  font-size: 0.875em;
-  margin-top: 0px;
-}
-
-#claiming-social-security .step-one .estimate-info p {
-  margin-bottom: -5px;
-}
-
-#claiming-social-security .step-one .step-one-instructions {
-  margin-bottom: 60px;
-}
-
-#claiming-social-security #step-one-form {
-  margin-top: 0;
-  padding: 0;
-}
-
-#claiming-social-security .compared-to-full {
-  display: none;
-}
-
-#claiming-social-security .selected-retirement-age-container {
-  height: 77px;
-  margin-bottom: 30px;
-}
-
-#claiming-social-security .selected-retirement-age-container p {
-  margin-bottom: 0px;
-}
-
-#claiming-social-security .selected-retirement-age {
-  margin-bottom: 2px;
-}
-
-#claiming-social-security .total-benefits-text {
-  font-weight: normal;
-  line-height: 24px;
-}
-
-#claiming-social-security .total-benefits-container {
-  margin-bottom: 30px;
-}
-
-#claiming-social-security .total-benefits-container p {
-  margin: 0px;
-}
-
-#claiming-social-security .benefit-selection p.selected-full-retirement,
-#claiming-social-security #age-selector-response,
-#claiming-social-security #age-selector-response .thank-you {
-  display: none;
-}
-
-#claiming-social-security .benefit-selection button.selected-remove {
-  background: none;
-  border: none;
-  float: right;
-}
-
-#claiming-social-security #graph-container + hr {
-  margin-top: 0px;
-}
-
-#claiming-social-security .graph-content .content-container {
-  display: none;
-}
-
-#claiming-social-security .graph-content .content-container ul {
-  padding-left: 20px;
-  list-style-position: outside;
-}
-
-#claiming-social-security .graph-content h3.retirement-age {
-  font-size: 1em;
-  font-weight: 500;
-  margin: 0px;
-}
-
-#claiming-social-security #graph-container p.learn-how {
-  margin-bottom: 0;
-}
-
-#claiming-social-security hr.before-step-two {
-  margin-bottom: 45px;
-}
-
-#claiming-social-security .content-l.step-two {
-  margin-top: 60px;
-}
-
-#claiming-social-security .step-two .lifestyle-img {
-  display: block;
-  margin: 60px auto 60px;
-}
-
-#claiming-social-security .step-two .lifestyle-response {
-  display: none;
-}
-
-#claiming-social-security .step-two .lifestyle-btn__active {
-  // TODO: Replace hardcoded color with color variable from Capital Framework.
-  background-color: #33578e;
-}
-
-#claiming-social-security .step-two + hr {
-  margin: 50px 0;
-}
-
-#claiming-social-security .step-two .content-l_col.content-l_col-1-3 {
-  height: 100%;
-}
-
-#claiming-social-security .step-two .lifestyle-question_container {
-  margin-bottom: 30px;
-}
-
-.step-two .lifestyle-question_container hr {
-  margin-top: 0;
-}
-
-[lang='es'] #claiming-social-security .step-two .question-working img {
-  display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: url('/static/apps/retirement/img/sus60s.png') no-repeat;
-  width: 200px;
-  height: 200px;
-  padding-left: 200px; /* Move english image out of view */
-}
-
-[lang='es'] #claiming-social-security .step-two .question-expenses img {
-  display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: url('/static/apps/retirement/img/gastos.png') no-repeat;
-  width: 200px;
-  height: 200px;
-  padding-left: 200px; /* Move english image out of view */
-}
-
-#claiming-social-security .step-two .question,
-#claiming-social-security .step-three .hidden-content {
-  display: none;
-}
-
-#claiming-social-security .step-three h2 {
-  margin-bottom: 30px;
-}
-
-#claiming-social-security .step-three h3 {
-  margin-bottom: 5px;
-}
-
-#claiming-social-security .step-three .step-three-note {
-  margin-bottom: 30px;
-}
-
-#age-selector-response hr {
-  margin-top: 40px;
-  margin-bottom: 30px;
-}
-
-#claiming-social-security #age-selector-response .next-steps {
-  padding-left: 0px;
-  padding-top: 20px;
-  margin-bottom: 60px;
-}
-
-#claiming-social-security #age-selector-response .next-steps li {
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  padding-left: 34px;
-}
-
-#claiming-social-security #age-selector-response .next-steps li.next-step-one,
-#claiming-social-security #age-selector-response .next-steps li.next-step-two,
-#claiming-social-security
-  #age-selector-response
-  .next-steps
-  li.next-step-three {
-  background-image: url('/static/apps/retirement/img/step_check.png');
-}
-
-#claiming-social-security .step-three .helpful-btn {
-  width: 4em;
-}
-
-/* cf-notification */
-#claiming-social-security .m-notification {
-  margin-bottom: 20px;
-}
-
-#claiming-social-security .step-one .notification-input__warning {
-  border-color: @gold;
-}
-
-/* ====================================================================
-   Medium and small screens
-==================================================================== */
-
-@media (max-width: 1190px) {
-  #claiming-social-security .birthdate-inputs {
-    border-width: 0 15px;
-  }
-
-  #claiming-social-security #step-one-form {
-    margin-bottom: 30px;
-  }
-
-  #claiming-social-security .step-one .step-one-instructions {
-    margin-bottom: 30px;
-  }
-
-  #claiming-social-security .m-notification {
-    margin-top: -10px;
-  }
-
-  #claiming-social-security .estimated-benefits-input {
-    padding-left: 40px;
-  }
-
-  #claiming-social-security #estimated-benefits-input span {
-    display: block;
-  }
-
-  #claiming-social-security .estimated-benefits-input label {
-    margin-left: 15px;
-  }
-
-  #claiming-social-security #estimated-benefits-input label:first-of-type {
-    margin-left: 0px;
-  }
-
-  #claiming-social-security .step-two .lifestyle-response > p:last-child {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 940px) {
-  #claiming-social-security .hero_image,
-  [lang='en'] #claiming-social-security .hero_image,
-  [lang='es'] #claiming-social-security .hero_image {
-    display: none;
-  }
-}
-
-/* ====================================================================
-   Medium screens
-==================================================================== */
-
-@media (max-width: 1190px) and (min-width: 1100px) {
-  #claiming-social-security p.y-axis-label {
-    top: 310px;
-  }
-}
-
-@media (max-width: 1100px) and (min-width: 850px) {
-  #claiming-social-security .step-one {
-    padding-top: 30px;
-  }
-
-  #claiming-social-security .step-one .content-l_col-2-3,
-  #claiming-social-security .estimate-info {
-    width: 100%;
-  }
-
-  #claiming-social-security #graph-container .content-l_col-1-3 {
-    width: 40%;
-  }
-
-  #claiming-social-security #graph-container .content-l_col-2-3 {
-    width: 60%;
-  }
-
-  #claiming-social-security p.y-axis-label {
-    top: 310px;
-  }
-
-  #claiming-social-security .content-l.step-two {
-    margin-top: 0;
-    margin-right: 15px;
-    margin-left: 0;
-  }
-
-  #claiming-social-security .step-two .content-l_col {
-    margin-right: 0;
-    width: 100%;
-  }
-
-  #claiming-social-security .content-l.step-two h2 {
+  #tooltip-container .content p:last-child {
     margin-bottom: 0;
   }
 
-  #claiming-social-security .content-l.step-two h2 + .question.h3 {
-    margin-top: 15px;
-    margin-bottom: 30px;
-  }
-
-  #claiming-social-security div.question {
-    border-top: 1px solid #ccc;
-    margin-right: 25px;
-    margin-left: 15px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #claiming-social-security div.question.question-married {
-    border-top: none;
-  }
-
-  #claiming-social-security div.question.question-longevity {
-    padding-bottom: 10px;
-  }
-
-  #claiming-social-security .question:before,
-  #claiming-social-security .question:after {
-    display: table;
-    content: '';
-  }
-
-  #claiming-social-security .question:after {
-    clear: both;
-  }
-
-  #claiming-social-security .question hr {
-    display: none;
-  }
-
-  #claiming-social-security .step-two .lifestyle-img {
-    display: block !important;
-    float: left;
-    height: 200px !important;
-    margin: 0;
-    width: 200px !important;
-  }
-
-  #claiming-social-security .step-two .lifestyle-question_container,
-  #claiming-social-security .step-two .lifestyle-response {
-    margin-left: 230px;
-  }
-
-  #claiming-social-security hr.before-step-two {
-    margin-bottom: 60px;
-  }
-
-  #claiming-social-security .content-l.step-two + hr {
-    margin-top: 60px;
-    margin-bottom: 60px;
-  }
-}
-
-/* ====================================================================
-   Small screens
-==================================================================== */
-
-@media (max-width: 849px) {
-  #claiming-social-security .content-l {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  #claiming-social-security .content-l_col {
-    border: none;
-    display: block;
-    width: auto;
-  }
-
-  #claiming-social-security .step-one {
-    padding-top: 30px;
-  }
-
-  #claiming-social-security #step-one-form .content-l_col-1-3 {
-    max-width: 236px;
-  }
-
-  #claiming-social-security
-    #step-one-form
-    .content-l_col.content-l_col-1-3
-    + .content-l_col.content-l_col-1-3 {
-    margin-top: 1.875em;
-  }
-
-  #claiming-social-security
-    .content-l_col.content-l_col-1-3
-    + .content-l_col.content-l_col-1-3 {
-    margin-top: 0;
-  }
-
-  #claiming-social-security .birthdate-inputs p,
-  #claiming-social-security .step-one label.input-labels .input-labels_block {
-    margin-bottom: 0;
-  }
-
-  #claiming-social-security #salary-input {
-    width: 65%;
-  }
-
-  #claiming-social-security .estimated-benefits-input {
-    padding-left: 0px;
-  }
-
-  #claiming-social-security #estimated-benefits-input label {
-    display: block;
-    margin-left: 0;
-    height: 30px;
-  }
-
-  #claiming-social-security #estimated-benefits-input label:first-of-type {
-    margin-top: 8px;
-    margin-left: 0px;
-  }
-
-  #claiming-social-security #graph-container .content-l_col {
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #claiming-social-security .graph_slider {
-    bottom: -35px;
-  }
-
-  #claiming-social-security p.y-axis-label {
-    top: 240px;
-    left: -57px;
-  }
-
-  #claiming-social-security .canvas-container .x-axis-label {
-    top: 30px;
-  }
-
-  #claiming-social-security .selected-retirement-age-container {
-    height: auto;
-    margin-top: 425px;
-  }
-
-  #claiming-social-security .canvas-container {
+  /* These elements, .outertip and .innertip, make the little speech-balloon
+     styled tip appear along the top of the tooltip. */
+  #tooltip-container .outertip {
+    border: 0 solid transparent;
+    border-bottom-color: #000;
+    content: ' ';
+    height: 0;
     position: absolute;
-    top: 0;
-    width: 100%;
+    left: -5px;
+    top: -20px;
+    width: 0;
   }
 
-  #claiming-social-security .content-l.step-two {
-    margin-top: 0;
+  #tooltip-container .innertip {
+    border: 7px solid transparent;
+    border-bottom-color: #e4e2e0;
+    content: ' ';
+    height: 0;
+    position: absolute;
+    left: 8px;
+    top: -14px;
+    width: 0;
   }
 
-  #claiming-social-security .step-two .content-l_col {
-    width: 100%;
+  .tooltip-target {
+    border-width: 0;
+    border-style: dotted;
+    border-color: #0072ce;
+    color: #0072ce;
+    cursor: pointer;
+    text-decoration: none;
   }
-
-  #claiming-social-security .content-l.step-two h2 {
-    margin-bottom: 0;
-  }
-
-  #claiming-social-security .content-l.step-two h3.lifestyle-question {
-    font-size: 22px;
-  }
-
-  #claiming-social-security .question {
-    border-bottom: 1px solid #ccc;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #claiming-social-security .step-two .lifestyle-question_container {
-    margin-bottom: 0;
-  }
-
-  #claiming-social-security .lifestyle-question_container hr {
-    display: none;
-  }
-
-  #claiming-social-security .step-two .lifestyle-img {
-    display: inline-block;
-    margin-top: 0;
-    margin-bottom: 15px;
-    max-width: 200px;
-  }
-
-  [lang='es'] #claiming-social-security .step-two .question-working img {
-    display: inline-block;
-  }
-
-  [lang='es'] #claiming-social-security .step-two .question-expenses img {
-    display: inline-block;
-  }
-
-  #claiming-social-security .content-l.step-two h2 + .question.h3 {
-    border-bottom: none;
-    margin-top: 15px;
-    margin-bottom: 0;
-    padding-top: 0;
-  }
-
-  #claiming-social-security .question.question-married {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  #claiming-social-security .question-longevity {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  #claiming-social-security .question-longevity .lifestyle-question_container {
-    margin-bottom: 0;
-  }
-
-  #claiming-social-security .lifestyle-response {
-    margin-top: 30px;
-  }
-
-  #claiming-social-security hr.before-step-two,
-  #claiming-social-security .content-l.step-two + hr {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-
-/* TOOLTIPS */
-#claiming-social-security div[data-tooltip-name] {
-  display: none;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-#claiming-social-security *[data-tooltip-target] {
-  cursor: auto;
-  border-bottom: none;
-  color: @pacific;
-  font-size: 0.9rem;
-}
-
-#claiming-social-security #tooltip-container {
-  background-color: #e4e2e0;
-  border: 0px solid #000;
-  display: none;
-  font-style: normal;
-  font-size: 0.8em;
-  padding: 15px;
-  position: absolute;
-  width: 20em;
-  z-index: 3000;
-}
-
-#claiming-social-security #tooltip-container .content {
-  padding: 0;
-  margin: 0;
-}
-
-#claiming-social-security #tooltip-container .content p:last-child {
-  margin-bottom: 0;
-}
-
-/* These elements, .outertip and .innertip, make the little speech-balloon styled
-   tip appear along the top of the tooltip. */
-#claiming-social-security #tooltip-container .outertip {
-  border: 0px solid transparent;
-  border-bottom-color: #000;
-  content: ' ';
-  height: 0;
-  position: absolute;
-  left: -5px;
-  top: -20px;
-  width: 0;
-}
-
-#claiming-social-security #tooltip-container .innertip {
-  border: 7px solid transparent;
-  border-bottom-color: #e4e2e0;
-  content: ' ';
-  height: 0;
-  position: absolute;
-  left: 8px;
-  top: -14px;
-  width: 0;
-}
-
-#claiming-social-security .tooltip-target {
-  border-width: 0;
-  border-style: dotted;
-  border-color: #0072ce;
-  color: #0072ce;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-// TODO: these are likely unused, but it needs further investigation.
-.reset {
-  margin: 0;
-  padding: 0;
-}
-
-.hidden {
-  display: none !important;
 }

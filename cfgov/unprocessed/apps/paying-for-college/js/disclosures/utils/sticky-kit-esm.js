@@ -82,7 +82,7 @@ export default ($) => {
       top,
       height,
       el_float,
-      detached
+      detached,
     ) {
       var bottomed,
         detach,

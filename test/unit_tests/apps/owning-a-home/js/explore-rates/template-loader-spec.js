@@ -19,7 +19,7 @@ describe('explore-rates/template-loader', () => {
 
     const testTemplate = county(mockData);
     expect(testTemplate).toBe(
-      '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>'
+      '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>',
     );
   });
 
@@ -56,7 +56,7 @@ describe('explore-rates/template-loader', () => {
         'lender is offering <br> ' +
         'rates at <strong>50%</strong>.' +
         '</span>' +
-        '</div>'
+        '</div>',
     );
   });
 
@@ -73,7 +73,7 @@ describe('explore-rates/template-loader', () => {
         'lenders are offering <br> ' +
         'rates at <strong>60%</strong>.' +
         '</span>' +
-        '</div>'
+        '</div>',
     );
   });
 });

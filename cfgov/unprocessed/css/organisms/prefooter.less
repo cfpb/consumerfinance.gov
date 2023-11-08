@@ -28,26 +28,28 @@
 */
 
 .o-prefooter {
-  .block();
+  margin-top: unit(((@grid_gutter-width * 2) / @base-font-size-px), em);
+  margin-bottom: 0;
 
   margin-right: unit(@grid_gutter-width / -2 / @base-font-size-px, em);
   margin-left: unit(@grid_gutter-width / -2 / @base-font-size-px, em);
-  margin-bottom: 0;
 
-  border-top: 1px solid @block__border-top;
+  border-top: 1px solid @gray-40;
 
   padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
   padding-left: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
   padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
 
-  background: @block__bg;
+  background: @gray-5;
   overflow: auto;
 
   .respond-to-min(@bp-sm-min, {
     margin-right: unit( -@grid_gutter-width / @base-font-size-px, em );
     margin-left: unit( -@grid_gutter-width / @base-font-size-px, em );
 
-    border-right: 1px solid @block__border-right;
+    // Border for both LTR and RTL layouts.
+    border-right: 1px solid @gray-40;
+    border-left: 1px solid @gray-40;
 
     padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
     padding-right: unit( @grid_gutter-width / @base-font-size-px, em);

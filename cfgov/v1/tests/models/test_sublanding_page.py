@@ -26,16 +26,12 @@ class SublandingPageTestCase(ElasticsearchTestsMixin, TestCase):
         # This post has both a FullWidthText and a FilterableList.
         self.post1 = BrowseFilterablePage(
             title="post 1",
-            content=json.dumps(
-                [atomic.full_width_text, atomic.filter_controls]
-            ),
+            content=json.dumps([atomic.full_width_text]),
         )
         helpers.save_new_page(self.post1, self.sublanding_page)
 
         # This one only has a FilterableList.
-        self.post2 = BrowseFilterablePage(
-            title="post 2", content=json.dumps([atomic.filter_controls])
-        )
+        self.post2 = BrowseFilterablePage(title="post 2")
         helpers.save_new_page(self.post2, self.sublanding_page)
 
         # manually set the publication date of the posts to ensure consistent

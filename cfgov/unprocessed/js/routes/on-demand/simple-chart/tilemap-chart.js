@@ -1,10 +1,8 @@
 import Highmaps from 'highcharts/highmaps';
 import tilemap from 'highcharts/modules/tilemap';
 import cloneDeep from 'lodash.clonedeep';
-import chartHooks from './chart-hooks.js';
 import defaultTilemap from './tilemap-styles.js';
 import usLayout from './us-layout.js';
-import { makeSelectFilterDOM } from './data-filters.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
 tilemap(Highmaps);
@@ -55,58 +53,6 @@ function makeTilemapOptions(data, dataAttributes) {
 }
 
 /**
- * Builds the tilemap filter DOM
- * @param {object} chartNode - The node where the chart lives
- * @param {object} chart - The chart object
- * @param {object} data - The data object
- * @param {object} transform - Whether data has been transformed
- */
-function makeTilemapSelect(chartNode, chart, data, transform) {
-  let d;
-  if (transform) d = data.transformed;
-  else d = data.raw;
-
-  const options = getTilemapDates(d);
-  const selectNode = makeSelectFilterDOM(options, chartNode, {
-    key: 'tilemap',
-    label: 'Select date',
-  }).nodes[0];
-
-  attachTilemapFilter(selectNode, chart, data);
-}
-
-/**
- * Extracts all dates from an object/csv formatted for tilemap display
- * @param {object} data - The data object
- * @returns {Array} Extracted dates
- */
-function getTilemapDates(data) {
-  return Object.keys(data[0])
-    .filter((k) => !isNaN(new Date(k)))
-    .sort((a, b) => new Date(b) - new Date(a));
-}
-
-/**
- * Wires up the tilemap filter
- * @param {object} select - The select node
- * @param {object} chart - The chart object
- * @param {object} data - The data object
- */
-function attachTilemapFilter(select, chart, data) {
-  select.addEventListener('change', (evt) => {
-    const formatted = formatSeries(data);
-    const updated = getMapConfig(formatted, evt.target.value);
-    chart.update(updated);
-    const updatedTitleObj = chart.options.yAxis[0].title;
-    updateTilemapLegend(
-      chart.renderTo,
-      updated,
-      updatedTitleObj ? updatedTitleObj.text : ''
-    );
-  });
-}
-
-/**
  * Makes a legend for the tilemap
  * @param {object} node - The chart node
  * @param {object} data - The data object
@@ -115,7 +61,7 @@ function attachTilemapFilter(select, chart, data) {
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
   const legend = node.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend'
+    'o-simple-chart_tilemap_legend',
   )[0];
   legend.innerHTML = '';
   const colors = [];
@@ -141,40 +87,21 @@ function updateTilemapLegend(node, data, legendTitle) {
 }
 
 /**
- * Intuits the correct object key for state short codes
- * @param {object} data - A row of data as an object with headers as keys
- * @returns {string} The intuited shortcode
- */
-function getShortCode(data) {
-  const keys = Object.keys(data);
-  for (let i = 0; i < keys.length; i++) {
-    if (usLayout[data[keys[i]]]) return keys[i];
-  }
-  /* eslint-disable-next-line no-console */
-  return console.error(
-    'Unable to determine state shortcode. Data is misformatted for simple-chart.'
-  );
-}
-
-/**
- * Adds generates a config object to be added to the chart config
+ * Generates a config object to be added to the chart config
  * @param {Array} series - The formatted series data
- * @param {string} date - The date to use
  * @returns {Array} series data with a geographic component added
  */
-function getMapConfig(series, date) {
+function getMapConfig(series) {
   let min = Infinity;
   let max = -Infinity;
   const data = series[0].data;
-  const shortCode = getShortCode(data[0]);
-  if (!date) date = getTilemapDates(data)[0];
   const added = data.map((v) => {
-    const val = Math.round(Number(v[date]) * 100) / 100;
+    const val = Math.round(Number(v.value) * 100) / 100;
     if (val <= min) min = val;
     if (val >= max) max = val;
     return {
-      ...usLayout[v[shortCode]],
-      state: v[shortCode],
+      ...usLayout[v.name],
+      state: v.name,
       value: val,
     };
   });
@@ -229,17 +156,15 @@ function getMapConfig(series, date) {
  * @returns {object} The initialized chart object
  */
 function init(chartNode, target, data, dataAttributes) {
-  const { transform, yAxisLabel } = dataAttributes;
+  const { yAxisLabel } = dataAttributes;
   const tilemapOptions = makeTilemapOptions(data, dataAttributes);
   const chart = Highmaps.mapChart(target, tilemapOptions);
 
   const legend = target.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend'
+    'o-simple-chart_tilemap_legend',
   )[0];
   legend.style.display = 'block';
   updateTilemapLegend(target, tilemapOptions, yAxisLabel);
-
-  makeTilemapSelect(chartNode, chart, data, transform && chartHooks[transform]);
 
   /**
    * Fixes tilemap clipping

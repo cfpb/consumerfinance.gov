@@ -162,7 +162,7 @@ function updateSchoolData(iped) {
 
         // Take only the top 3 programs
         schoolModel.values.programsTopThree = getTopThreePrograms(
-          schoolModel.values.programsPopular
+          schoolModel.values.programsPopular,
         );
 
         // add the full state name to the schoolModel
@@ -172,13 +172,13 @@ function updateSchoolData(iped) {
         if (programInfo) {
           financialModel.setValue(
             'salary_annual',
-            convertStringToNumber(programInfo.salary)
+            convertStringToNumber(programInfo.salary),
           );
           stateModel.setValue('programName', programInfo.name);
         } else {
           financialModel.setValue(
             'salary_annual',
-            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
+            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr')),
           );
         }
 
@@ -198,7 +198,7 @@ function updateSchoolData(iped) {
         iped = iped.replace(/\D/g, '');
         console.log(
           'An error occurred when accessing school data for ' + iped,
-          error
+          error,
         );
       });
   });
@@ -234,7 +234,7 @@ function parseQueryParameters(queryObj) {
         financialModel.setValue(
           'plusLoan_gradPlus',
           convertStringToNumber(queryObj[key]),
-          false
+          false,
         );
       }
     }
@@ -244,7 +244,7 @@ function parseQueryParameters(queryObj) {
   financialModel.setValue(
     'other_programLength',
     convertStringToNumber(queryObj.lenp),
-    false
+    false,
   );
 }
 

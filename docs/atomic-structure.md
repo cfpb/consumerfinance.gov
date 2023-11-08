@@ -55,7 +55,6 @@ Prefixed with `m-` in class names.
   class="m-notification
          m-notification__visible
          m-notification__error"
-  data-js-hook="state_atomic_init"
 >
   {{ svg_icon('error') }}
   <div class="m-notification_content" role="alert">
@@ -78,9 +77,8 @@ Prefixed with `m-` in class names.
 ### JavaScript
 
 ```js
+const BASE_CLASS = 'm-notification';
 function Notification( element ) {
-  const BASE_CLASS = 'm-notification';
-
   // Constants for the state of this Notification.
   const SUCCESS = 'success';
   const WARNING = 'warning';
@@ -141,9 +139,8 @@ Prefixed with `o-` in class names.
 ### JavaScript
 
 ```js
- function Expandable( element ) {
-  const BASE_CLASS = 'o-expandable';
-
+const BASE_CLASS = 'o-expandable';
+function Expandable( element ) {
   // Bitwise flags for the state of this Expandable.
   const COLLAPSED = 0;
   const COLLAPSING = 1;
@@ -189,10 +186,11 @@ consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/
 ```
 
 !!! note
-Some of our foundational components get their Less and JavaScript
-from the [Design System](https://cfpb.github.io/design-system/),
-but the HTML for their Wagtail block templates
-is stored in the above folders.
+
+    Some of our foundational components get their Less and JavaScript
+    from the [Design System](https://cfpb.github.io/design-system/),
+    but the HTML for their Wagtail block templates
+    is stored in the above folders.
 
 ### CSS
 

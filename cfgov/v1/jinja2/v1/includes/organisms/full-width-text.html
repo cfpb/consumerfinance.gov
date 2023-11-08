@@ -22,7 +22,7 @@
             <div class="m-full-width-text">
                 {{ block.value | safe }}
             </div>
-        {% elif 'table' in block_type %}
+        {% elif block_type == 'table_block' %}
             <div class="m-full-width-text">
                 {# TODO: We have not historically disallowed raw HTML in
                    table blocks. We should not allow raw HTML. #}
@@ -39,7 +39,7 @@
             <div class="m-inset__email">
                 {% include_block block %}
             </div>
-        {% elif block_type in ['well'] %}
+        {% elif block_type in ['table', 'well'] %}
             <div class="block">
                 {% include_block block %}
             </div>

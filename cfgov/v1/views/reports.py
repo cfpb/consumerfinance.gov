@@ -133,6 +133,7 @@ class DraftReportView(PageReportView):
         "tags.names",
         "categories.all",
         "content_owners.names",
+        "first_published_at",
     ]
     export_headings = dict(
         [
@@ -141,6 +142,7 @@ class DraftReportView(PageReportView):
             ("tags.names", "Tags"),
             ("categories.all", "Categories"),
             ("content_owners.names", "Content Owner(s)"),
+            ("first_published_at", "Published?"),
         ],
         **PageReportView.export_headings,
     )
@@ -306,7 +308,6 @@ class AskReportView(ReportView):
         "url",
         "live",
         "last_edited",
-        "redirect_to_page",
         "portal_topic.all",
         "portal_category.all",
         "related_questions.all",
@@ -324,7 +325,6 @@ class AskReportView(ReportView):
         "url": "URL",
         "live": "Live",
         "last_edited": "Last edited",
-        "redirect_to_page": "Redirect",
         "portal_topic.all": "Portal topics",
         "portal_category.all": "Portal categories",
         "related_questions.all": "Related questions",
@@ -361,7 +361,6 @@ class AskReportView(ReportView):
         "answer_base": {"csv": partial(process_related_item, key="id")},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": partial(process_related_item, key="id")},
         "portal_topic.all": {
             "csv": partial(join_values_with_pipe, key="heading")
         },

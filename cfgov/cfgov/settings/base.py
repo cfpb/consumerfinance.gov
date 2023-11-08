@@ -53,7 +53,8 @@ INSTALLED_APPS = (
     "wagtail.sites",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
-    "wagtail.contrib.table_block",
+    "wagtail.contrib.typed_table_block",
+    "wagtail.contrib.settings",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -372,10 +373,11 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    if os.environ.get("AWS_S3_CUSTOM_DOMAIN"):
-        AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+    MEDIA_URL = os.path.join(
+        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
+    )
 
 
 # GovDelivery
@@ -453,6 +455,7 @@ AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
 )
 AXES_ENABLED = True
+AXES_VERBOSE = False
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
 AXES_ONLY_USER_FAILURES = True
@@ -516,6 +519,7 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
@@ -627,9 +631,6 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     "AB_TESTING": [],
-    # Email popups.
-    "EMAIL_POPUP_OAH": [("boolean", True)],
-    "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
@@ -640,26 +641,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-}
-
-# We want the ability to serve the latest drafts of some pages on beta
-# This value is read by v1.wagtail_hooks
-SERVE_LATEST_DRAFT_PAGES = []
-
-# To expose a previously-published page's latest draft version on beta,
-# add its primary key to the list below
-if DEPLOY_ENVIRONMENT == "beta":
-    SERVE_LATEST_DRAFT_PAGES = []
-
-# Email popup configuration. See v1.templatetags.email_popup.
-EMAIL_POPUP_URLS = {
-    "debt": [
-        "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
-        "/consumer-tools/debt-collection/",
-    ],
-    "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [

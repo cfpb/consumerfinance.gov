@@ -2,7 +2,7 @@ from unittest import mock
 
 from django.test import TestCase
 
-from v1.blocks import AnchorLink, RAFTBlock
+from v1.blocks import AnchorLink
 
 
 class TestAnchorLink(TestCase):
@@ -43,22 +43,3 @@ class TestAnchorLink(TestCase):
 
         assert "anchor_" in result["link_id"]
         assert self.stringContainsNumbers(result["link_id"])
-
-
-class RAFTBlockTestCase(TestCase):
-    def test_render_no_placeholder_provided(self):
-        raft = RAFTBlock()
-        html = raft.render(None)
-        self.assertInHTML(
-            '<div id="rental-assistance-finder" data-language="en"></div>',
-            html,
-        )
-
-    def test_county_threshold(self):
-        raft = RAFTBlock()
-        html = raft.render({"county_threshold": 20})
-        self.assertInHTML(
-            '<div id="rental-assistance-finder" data-language="en"'
-            " data-county-threshold=20></div>",
-            html,
-        )

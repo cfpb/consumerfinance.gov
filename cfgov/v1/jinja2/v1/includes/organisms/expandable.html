@@ -38,12 +38,12 @@
             {{ 'o-expandable__onload-open' if value.is_expanded else '' }}"
      {{ 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
         if value.is_faq else '' }} >
-    <button class="o-expandable_header o-expandable_target" type="button">
+    <button class="o-expandable_header" type="button">
         <span class="h4 o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
             {{ value.label }}
         </span>
-        <span class="o-expandable_link">
+        <span class="o-expandable_cues">
             <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>

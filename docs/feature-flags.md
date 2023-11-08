@@ -52,7 +52,7 @@ An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://g
 
 ```jinja
 {% if flag_enabled('BETA_NOTICE') %}
-<div class="m-global-banner">
+<div class="o-banner">
     <div class="wrapper
                 wrapper__match-content">
         <div class="m-notification
@@ -84,7 +84,7 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
 {% if beta_flag %}
-<div class="m-global-banner">
+<div class="o-banner">
     <div class="wrapper
                 wrapper__match-content">
         <div class="m-notification

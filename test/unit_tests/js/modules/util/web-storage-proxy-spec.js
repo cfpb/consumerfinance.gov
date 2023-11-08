@@ -120,7 +120,7 @@ describe('web-storage-proxy', () => {
         webStorageProxy.setItem('foo', 'bar');
         expect(window.localStorage.getItem('foo')).toBe('bar');
         expect(window.sessionStorage.getItem('foo')).toBeNull();
-      }
+      },
     );
 
     it(
@@ -134,7 +134,7 @@ describe('web-storage-proxy', () => {
 
         expect(item).toBe('bar');
         expect(item).not.toBe('baz');
-      }
+      },
     );
 
     it(
@@ -147,7 +147,7 @@ describe('web-storage-proxy', () => {
         webStorageProxy.removeItem('foo', window.localStorage);
         expect(window.localStorage.getItem('foo')).toBeNull();
         expect(window.sessionStorage.getItem('foo')).toBe('baz');
-      }
+      },
     );
 
     it('should throw an error if passed arg is empty', () => {

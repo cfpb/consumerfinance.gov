@@ -79,7 +79,7 @@ describe('explore-rates/util', () => {
         'given a house price and down payment amount.',
       () => {
         expect(calcLoanAmount(200000, 20000)).toBe(180000);
-      }
+      },
     );
 
     it('should return 0 if loan amount is negative.', () => {
@@ -111,9 +111,11 @@ describe('explore-rates/util', () => {
 
   describe('formatTimestampMMddyyyy()', () => {
     it('should format a timestamp as a date.', () => {
-      expect(formatTimestampMMddyyyy('2018-03-14T12:00:00Z')).toBe(
-        '03/14/2018'
-      );
+      expect(formatTimestampMMddyyyy('2018-03-14T12:00:00Z')).toBe('3/14/2018');
+    });
+
+    it('should not be timezone reliant', () => {
+      expect(formatTimestampMMddyyyy('2018-03-14T00:00:00Z')).toBe('3/14/2018');
     });
   });
 
@@ -157,7 +159,7 @@ describe('explore-rates/util', () => {
         accessibleDataTableHeadDom,
         accessibleDataTableBodyDom,
         mockLabels,
-        mockVals
+        mockVals,
       );
       expect(accessibleDataTableHeadDom.innerHTML).toBe(tableHeadHtml);
       expect(accessibleDataTableBodyDom.innerHTML).toBe(tableBodyHtml);
@@ -167,7 +169,7 @@ describe('explore-rates/util', () => {
   describe('renderDatestamp()', () => {
     it('should format a timestamp as a date.', () => {
       renderDatestamp(timeStampDom, '2018-03-14T12:00:00Z');
-      expect(timeStampDom.textContent).toBe('03/14/2018');
+      expect(timeStampDom.textContent).toBe('3/14/2018');
     });
 
     it('should format timestamp only if timestamp is passed.', () => {

@@ -23,11 +23,6 @@
 {% set num_posts = value.limit | int %}
 {% set posts = page.get_browsefilterable_posts(num_posts) if page else [] %}
 {% for post in posts %}
-    {{ post_preview.render(
-        post,
-        controls=none,
-        url=pageurl(post.get_parent().specific),
-        post_date_description=value.post_date_description
-    ) }}
+    {{ post_preview.render(post, date_label=value.post_date_description) }}
 {% endfor %}
 </div>

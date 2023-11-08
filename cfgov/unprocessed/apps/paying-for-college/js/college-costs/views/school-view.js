@@ -127,7 +127,7 @@ const schoolView = {
   clickRadioButton: (name, value) => {
     if (name !== null && value !== false) {
       const input = document.querySelector(
-        'INPUT[name="' + name + '"][value="' + value + '"]'
+        'INPUT[name="' + name + '"][value="' + value + '"]',
       );
       if (input !== null) {
         const label = input
@@ -141,19 +141,19 @@ const schoolView = {
   init: (body) => {
     // Set up nodeLists
     schoolView._searchSection = body.querySelector(
-      '#college-costs_school-search'
+      '#college-costs_school-search',
     );
     schoolView._searchBox = body.querySelector('#search__school-input');
     schoolView._searchResults = body.querySelector('#search-results');
     schoolView._programRadioLabels = body.querySelectorAll(
-      '.school-search_additional-info label'
+      '.school-search_additional-info label',
     );
     schoolView._programRadioInputs = body.querySelectorAll(
-      '.school-search_additional-info input[type="radio"]'
+      '.school-search_additional-info input[type="radio"]',
     );
     schoolView._programSelect = body.querySelector('#program-select');
     schoolView._schoolInfo = body.querySelector(
-      '.school-search_additional-info'
+      '.school-search_additional-info',
     );
     schoolView._schoolItems = document.querySelectorAll('[data-school-item]');
     schoolView._stateItems = document.querySelectorAll('[data-state-item]');
@@ -180,7 +180,7 @@ function _addListeners() {
 
   schoolView._programSelect.addEventListener(
     'change',
-    _handleProgramSelectChange
+    _handleProgramSelectChange,
   );
 }
 
@@ -229,7 +229,7 @@ function _handleInputChange() {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     }
   }, 500);
@@ -255,7 +255,7 @@ function _handleProgramSelectChange(event) {
   } else {
     updateFinancial(
       'salary_annual',
-      convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
+      convertStringToNumber(getSchoolValue('medianAnnualPay6Yr')),
     );
   }
   refreshExpenses();

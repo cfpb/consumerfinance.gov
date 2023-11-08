@@ -11,7 +11,6 @@ from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
 from youth_employment.blocks import YESChecklist
@@ -132,10 +131,7 @@ class BrowsePage(AbstractBrowsePage):
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
             ("snippet_list", organisms.ResourceList()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
+            ("table", organisms.Table()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("chart_block", organisms.ChartBlock()),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
@@ -144,7 +140,6 @@ class BrowsePage(AbstractBrowsePage):
             ("data_snapshot", organisms.DataSnapshot()),
             ("job_listing_table", JobListingTable()),
             ("yes_checklist", YESChecklist()),
-            ("raf_tool", v1_blocks.RAFTBlock()),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,

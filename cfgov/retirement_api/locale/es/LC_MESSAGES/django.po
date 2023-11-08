@@ -2,13 +2,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: retirement\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 15:57-0500\n"
+"POT-Creation-Date: 2023-08-22 12:33-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: retirement_api/jinja2/retirement_api/_templates/no_js.html:7
+msgid ""
+"This tool is not supported in your browser. Please try a newer browser or "
+"confirm that JavaScript is enabled."
+msgstr ""
+"Este sitio no es compatible con su navegador web. Intente con un navegador "
+"web más nuevo o confirme que JavaScript está habilitado."
 
 #: retirement_api/jinja2/retirement_api/about.html:4
 #: retirement_api/jinja2/retirement_api/about.html:9
@@ -295,7 +303,7 @@ msgstr ""
 "gobierno estatal o local para el cual usted no pagó impuestos de Seguro "
 "Social, pueden afectar la cantidad de beneficios que recibirá."
 
-#: retirement_api/jinja2/retirement_api/about.html:90
+#: retirement_api/jinja2/retirement_api/about.html:88
 msgid ""
 "Create a <em>my</em> Social Security account to review your expected "
 "benefits based on your actual Social Security record."
@@ -303,15 +311,15 @@ msgstr ""
 "Abra una cuenta de <em>my</em> Social Security para ver un estimado de sus "
 "beneficios basados en su propio registro de ganancias del Seguro Social."
 
-#: retirement_api/jinja2/retirement_api/about.html:93
+#: retirement_api/jinja2/retirement_api/about.html:91
 msgid "Visit my Social Security"
 msgstr "Visite my Social Security"
 
-#: retirement_api/jinja2/retirement_api/about.html:99
+#: retirement_api/jinja2/retirement_api/about.html:96
 msgid "Get in touch"
 msgstr "MANTÉNGASE EN CONTACTO"
 
-#: retirement_api/jinja2/retirement_api/about.html:104
+#: retirement_api/jinja2/retirement_api/about.html:99
 msgid "You can send feedback or questions to"
 msgstr "Envíe sus comentarios o preguntas a"
 
@@ -339,7 +347,7 @@ msgstr ""
 "La edad en la que solicita afectará los beneficios de Seguro Social que "
 "recibirá a lo largo de su vida. Le ayudaremos a decidir."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:53
+#: retirement_api/jinja2/retirement_api/claiming.html:55
 msgid ""
 "Explore how the age you start collecting Social Security affects your "
 "retirement benefits"
@@ -347,31 +355,31 @@ msgstr ""
 "Vea cómo la edad en la que solicita afecta sus beneficios de Seguro Social "
 "por jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:55
+#: retirement_api/jinja2/retirement_api/claiming.html:57
 msgid "Enter your information below to calculate your estimated benefits."
 msgstr "Ingrese sus datos para ver los cálculos aproximados de sus beneficios."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:64
+#: retirement_api/jinja2/retirement_api/claiming.html:66
 msgid "Date of birth"
 msgstr "Fecha de nacimiento"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:66
+#: retirement_api/jinja2/retirement_api/claiming.html:68
 msgid "MM"
 msgstr "MM"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:69
+#: retirement_api/jinja2/retirement_api/claiming.html:71
 msgid "DD"
 msgstr "DD"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:72
+#: retirement_api/jinja2/retirement_api/claiming.html:74
 msgid "YYYY"
 msgstr "AAAA"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:77
+#: retirement_api/jinja2/retirement_api/claiming.html:79
 msgid "Highest annual work income"
 msgstr "Ingreso anual de su trabajo"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:84
+#: retirement_api/jinja2/retirement_api/claiming.html:86
 msgid ""
 "Enter your total work income before taxes and other deductions. If your work "
 "income is 0 (zero) because you are now retired or unemployed, enter the "
@@ -382,11 +390,11 @@ msgstr ""
 "jubilado, o se encuentra desempleado, ingrese el total del ingreso que "
 "obtuvo el último año que trabajó."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:90
+#: retirement_api/jinja2/retirement_api/claiming.html:95
 msgid "Get your estimates"
 msgstr "Obtenga su estimado"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:100
+#: retirement_api/jinja2/retirement_api/claiming.html:105
 msgid ""
 "The calculator bases your benefit estimate on current formulas from the "
 "Social Security Administration. Your answers are anonymous. Because we do "
@@ -398,44 +406,44 @@ msgstr ""
 "registro de ingresos del Seguro Social, las cantidades que demostramos son "
 "un cálculo aproximado de sus beneficios."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:107
+#: retirement_api/jinja2/retirement_api/claiming.html:112
 msgid "Your estimated benefits:"
 msgstr "Sus estimados:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:108
+#: retirement_api/jinja2/retirement_api/claiming.html:113
 msgid ""
 "Select claiming ages on the graph to see how your estimated benefit changes."
 msgstr ""
 "Seleccione las edades en la gráfica para ver cómo aumentan o disminuyen sus "
 "beneficios. "
 
-#: retirement_api/jinja2/retirement_api/claiming.html:116
+#: retirement_api/jinja2/retirement_api/claiming.html:121
 msgid "Claiming at age"
 msgstr "A los"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:119
+#: retirement_api/jinja2/retirement_api/claiming.html:124
 msgid "Age"
 msgstr " "
 
-#: retirement_api/jinja2/retirement_api/claiming.html:125
+#: retirement_api/jinja2/retirement_api/claiming.html:130
 msgid "is your full benefit claiming age."
 msgstr "años de edad es su plena edad de jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:128
+#: retirement_api/jinja2/retirement_api/claiming.html:133
 msgid "Compared to claiming at your full benefit claiming age."
 msgstr "en comparación con su plena edad de jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:132
+#: retirement_api/jinja2/retirement_api/claiming.html:137
 msgid "By age 85, an average lifespan, your total benefits will be"
 msgstr ""
 "La expectativa de vida promedio es 85 años de edad, a esa edad el total de "
 "sus beneficios será"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:135
+#: retirement_api/jinja2/retirement_api/claiming.html:140
 msgid "in today's dollars"
 msgstr "sin ajustes por inflación"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:140
+#: retirement_api/jinja2/retirement_api/claiming.html:145
 msgid ""
 "Social Security retirement benefits are not designed to be your sole source "
 "of retirement income, but waiting even one month will increase your benefits."
@@ -444,47 +452,47 @@ msgstr ""
 "única fuente de ingresos de jubilación, pero esperando ni un solo mes se "
 "aumentar sus beneficios."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:143
+#: retirement_api/jinja2/retirement_api/claiming.html:148
 msgid "About your maximum benefit claiming age:"
 msgstr "Más sobre la edad máxima:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:145
+#: retirement_api/jinja2/retirement_api/claiming.html:150
 msgid "Always 70."
 msgstr "Siempre es 70 años."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:146
+#: retirement_api/jinja2/retirement_api/claiming.html:151
 msgid "At this age, you will get the maximum possible monthly benefit."
 msgstr "A esta edad usted obtendrá el beneficio mensual más alto."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:150
+#: retirement_api/jinja2/retirement_api/claiming.html:155
 msgid "About your full benefit claiming age:"
 msgstr "Más sobre la plena edad de jubilación:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:152
+#: retirement_api/jinja2/retirement_api/claiming.html:157
 msgid "It is based on the year you were born."
 msgstr "Está basada en su año de nacimiento."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:153
+#: retirement_api/jinja2/retirement_api/claiming.html:158
 msgid "At this age, you will receive your full benefit with no reductions."
 msgstr "A esta edad recibirá su beneficio mensual sin reducciones."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:157
+#: retirement_api/jinja2/retirement_api/claiming.html:162
 msgid "About your early benefit claiming age:"
 msgstr "Más sobre la edad temprana:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:159
+#: retirement_api/jinja2/retirement_api/claiming.html:164
 msgid "Earliest age you can claim your benefit is 62."
 msgstr ""
 "Lo más temprano que puede solicitar sus beneficios es a los 62 años de edad."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:160
+#: retirement_api/jinja2/retirement_api/claiming.html:165
 msgid ""
 "If you claim your benefit before your full claiming age, it will be reduced."
 msgstr ""
 "Si solicita sus beneficios antes de cumplir su plena edad de jubilación, sus "
 "beneficios se reducirán."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:163
+#: retirement_api/jinja2/retirement_api/claiming.html:168
 msgid ""
 "Remember, claiming age here refers only to your Social Security retirement "
 "benefit, and not when you decide to stop working or apply for Medicare."
@@ -493,49 +501,49 @@ msgstr ""
 "usa para referirse a sus beneficios por jubilación, y no a la edad a la que "
 "usted decide dejar de trabajar o se inscribe en el programa Medicare."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:169
+#: retirement_api/jinja2/retirement_api/claiming.html:174
 msgid "Where do these numbers come from?"
 msgstr "¿De dónde salen estos números?"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:176
+#: retirement_api/jinja2/retirement_api/claiming.html:181
 msgid "View estimated benefits as:"
 msgstr "Vea su estimado como:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:177
+#: retirement_api/jinja2/retirement_api/claiming.html:182
 msgid "monthly income"
 msgstr "ingreso mensual"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:178
+#: retirement_api/jinja2/retirement_api/claiming.html:183
 msgid "annual income"
 msgstr "ingreso anual"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:208
+#: retirement_api/jinja2/retirement_api/claiming.html:213
 msgid "Estimated benefits"
 msgstr "Beneficio estimado"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:209
+#: retirement_api/jinja2/retirement_api/claiming.html:214
 msgid "Claiming age"
 msgstr "Edad de jubilación"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:215
+#: retirement_api/jinja2/retirement_api/claiming.html:220
 msgid "Learn tips specific to your situation"
 msgstr "Lea estos consejos"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:216
+#: retirement_api/jinja2/retirement_api/claiming.html:221
 msgid "Picture your life in retirement to receive claiming tips."
 msgstr ""
 "Imagine su situación durante su jubilación y lea estos consejos sobre cuándo "
 "solicitar sus beneficios."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:222
+#: retirement_api/jinja2/retirement_api/claiming.html:227
 msgid "Are you married?"
 msgstr "¿Está casado?"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:231
+#: retirement_api/jinja2/retirement_api/claiming.html:236
 msgid "You can protect the financial security of your surviving spouse."
 msgstr "Usted puede proteger las finanzas de su cónyuge sobreviviente."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:249
+#: retirement_api/jinja2/retirement_api/claiming.html:254
 msgid ""
 "Claiming at your full retirement age or later permanently increases your "
 "benefit."
@@ -543,7 +551,7 @@ msgstr ""
 "Sus beneficios aumentarán permanentemente al solicitarlos a su plena edad de "
 "jubilación o después."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:266
+#: retirement_api/jinja2/retirement_api/claiming.html:271
 msgid ""
 "Your claiming age matters for your own retirement benefits and your "
 "survivor's benefits."
@@ -551,32 +559,32 @@ msgstr ""
 "Su decisión importa para sus propios beneficios de jubilación y como "
 "sobreviviente."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:292
+#: retirement_api/jinja2/retirement_api/claiming.html:297
 msgid "Do you plan to continue working in your 60s?"
 msgstr "¿Piensa seguir trabajando después de cumplir sus 60 años?"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:301
-#: retirement_api/jinja2/retirement_api/claiming.html:323
+#: retirement_api/jinja2/retirement_api/claiming.html:306
+#: retirement_api/jinja2/retirement_api/claiming.html:328
 msgid "Working in your 60s will help you maximize your income and savings."
 msgstr ""
 "Trabajar en sus sesentas le ayudará a aumentar sus ingresos y sus ahorros."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:345
-#: retirement_api/jinja2/retirement_api/claiming.html:374
+#: retirement_api/jinja2/retirement_api/claiming.html:350
+#: retirement_api/jinja2/retirement_api/claiming.html:379
 msgid ""
 "You can maximize your benefits even if you work fewer hours or stop working."
 msgstr ""
 "Es posible que pueda recibir un beneficio más alto, incluso si trabaja menos "
 "horas o deja de trabajar."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:403
+#: retirement_api/jinja2/retirement_api/claiming.html:408
 msgid ""
 "Consider working in your 60s for an extra boost to your income and savings."
 msgstr ""
 "Considere trabajar en sus sesentas para recibir un aumento adicional en sus "
 "ingresos y sus ahorros."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:427
+#: retirement_api/jinja2/retirement_api/claiming.html:432
 msgid ""
 "Consider working extra years in your 60s for an extra boost to your income "
 "and savings"
@@ -584,8 +592,8 @@ msgstr ""
 "Considere trabajar en sus sesentas para recibir un aumento adicional en sus "
 "ingresos y sus ahorros."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:456
-#: retirement_api/jinja2/retirement_api/claiming.html:799
+#: retirement_api/jinja2/retirement_api/claiming.html:461
+#: retirement_api/jinja2/retirement_api/claiming.html:804
 msgid ""
 "Once you reach your full retirement benefits claiming age, you can work and "
 "earn as much as you want and your benefits will not be reduced. If you claim "
@@ -601,8 +609,8 @@ msgstr ""
 "será acreditada de nuevo una vez que usted alcance su plena edad de "
 "jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:459
-#: retirement_api/jinja2/retirement_api/claiming.html:805
+#: retirement_api/jinja2/retirement_api/claiming.html:464
+#: retirement_api/jinja2/retirement_api/claiming.html:810
 msgid ""
 "A type of retirement savings account offered by employers to help their "
 "employees save for retirement."
@@ -610,8 +618,8 @@ msgstr ""
 "Es un tipo de cuenta de ahorros que ofrecen los empleadores para ayudar a "
 "sus empleados a ahorrar para su jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:462
-#: retirement_api/jinja2/retirement_api/claiming.html:808
+#: retirement_api/jinja2/retirement_api/claiming.html:467
+#: retirement_api/jinja2/retirement_api/claiming.html:813
 msgid ""
 "IRAs are types of retirement savings plans with special tax incentives. In "
 "these plans, your savings equal the contributions that you make to the "
@@ -621,7 +629,7 @@ msgstr ""
 "En estos planes, el total de sus ahorros equivale a lo que usted contribuya, "
 "más las ganancias o las pérdidas de sus inversiones."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:465
+#: retirement_api/jinja2/retirement_api/claiming.html:470
 msgid ""
 "If you claim before full retirement age and continue to work, your benefits "
 "could be temporarily reduced if you earn over a certain amount. Any "
@@ -636,26 +644,26 @@ msgstr ""
 "será acreditada de nuevo una vez que usted alcance su plena edad de "
 "jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:474
+#: retirement_api/jinja2/retirement_api/claiming.html:479
 msgid "Will your expenses decrease after you retire?"
 msgstr "¿Espera que sus gastos se reduzcan después de que se jubile? "
 
-#: retirement_api/jinja2/retirement_api/claiming.html:483
-#: retirement_api/jinja2/retirement_api/claiming.html:504
+#: retirement_api/jinja2/retirement_api/claiming.html:488
+#: retirement_api/jinja2/retirement_api/claiming.html:509
 msgid "Retirement could be more expensive than you expect."
 msgstr "Planificar con tiempo es una buena idea."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:525
-#: retirement_api/jinja2/retirement_api/claiming.html:546
+#: retirement_api/jinja2/retirement_api/claiming.html:530
+#: retirement_api/jinja2/retirement_api/claiming.html:551
 msgid "Maintain your lifestyle by planning ahead."
 msgstr "Usted puede proteger su estilo de vida si planifica con tiempo."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:567
-#: retirement_api/jinja2/retirement_api/claiming.html:588
+#: retirement_api/jinja2/retirement_api/claiming.html:572
+#: retirement_api/jinja2/retirement_api/claiming.html:593
 msgid "Many people find retirement is more expensive than expected."
 msgstr "Para muchos la jubilación tiene más gastos de los que habían previsto."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:613
+#: retirement_api/jinja2/retirement_api/claiming.html:618
 msgid ""
 "Do you expect to have additional sources of retirement income beyond Social "
 "Security?"
@@ -663,24 +671,24 @@ msgstr ""
 "¿Espera tener otras fuentes de ingresos además de los beneficios del Seguro "
 "Social?"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:622
+#: retirement_api/jinja2/retirement_api/claiming.html:627
 msgid "Continue saving in the coming years."
 msgstr "Siga ahorrando en los próximos años."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:651
+#: retirement_api/jinja2/retirement_api/claiming.html:656
 msgid "You have an opportunity to continue growing your money."
 msgstr "Siga ahorrando en los próximos años."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:680
+#: retirement_api/jinja2/retirement_api/claiming.html:685
 msgid "It's a perfect time to start saving."
 msgstr "Es el momento perfecto para comenzar a ahorrar."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:710
-#: retirement_api/jinja2/retirement_api/claiming.html:770
+#: retirement_api/jinja2/retirement_api/claiming.html:715
+#: retirement_api/jinja2/retirement_api/claiming.html:775
 msgid "It's never too late to start saving!"
 msgstr "¡Nunca es demasiado tarde para comenzar a ahorrar!"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:742
+#: retirement_api/jinja2/retirement_api/claiming.html:747
 msgid ""
 "There are many ways to plan for a secure retirement outside of Social "
 "Security."
@@ -688,7 +696,7 @@ msgstr ""
 "Existen otras maneras de planificar para una jubilación libre de "
 "preocupaciones."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:802
+#: retirement_api/jinja2/retirement_api/claiming.html:807
 msgid ""
 "Your Social Security benefits could be reduced if you receive federal, "
 "state, or local government pensions that are based on work where you did not "
@@ -698,7 +706,7 @@ msgstr ""
 "recibe una pensión del gobierno federal, estatal o local por un trabajo en "
 "el que usted no hizo contribuciones al Seguro Social."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:811
+#: retirement_api/jinja2/retirement_api/claiming.html:816
 msgid ""
 "Catch-up contributions are additional contributions that individuals who are "
 "age 50 or older can make to their 401(k) or IRA accounts to help them boost "
@@ -708,30 +716,30 @@ msgstr ""
 "pueden hacer a su plan 401(k) o su cuenta IRA con el fin de aumentar sus "
 "ahorros a medida que se acercan a su jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:818
+#: retirement_api/jinja2/retirement_api/claiming.html:823
 msgid "Do you expect to live a long life?"
 msgstr "¿Espera vivir una larga vida?"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:826
+#: retirement_api/jinja2/retirement_api/claiming.html:831
 msgid "Many people live longer than they expect."
 msgstr "Protéjase para que no sobreviva sus recursos."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:846
+#: retirement_api/jinja2/retirement_api/claiming.html:851
 msgid "Claiming at your full benefit age could still make sense for you."
 msgstr ""
 "Posiblemente tenga sentido el solicitar sus beneficios al cumplir su plena "
 "edad de jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:868
+#: retirement_api/jinja2/retirement_api/claiming.html:873
 msgid "There's a good chance that you'll live into your 80s and beyond."
 msgstr ""
 "Existe una gran posibilidad de que usted viva pasado sus 80 años de edad."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:893
+#: retirement_api/jinja2/retirement_api/claiming.html:898
 msgid "Learn your next steps"
 msgstr "Conozca sus próximos pasos"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:896
+#: retirement_api/jinja2/retirement_api/claiming.html:901
 msgid ""
 "Select the age you plan to start collecting your Social Security retirement "
 "benefits."
@@ -739,7 +747,7 @@ msgstr ""
 "Seleccione la edad en la que planifica solicitar sus beneficios de Seguro "
 "Social"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:899
+#: retirement_api/jinja2/retirement_api/claiming.html:905
 msgid ""
 "(This will not affect your Social Security account or eligibility and it "
 "will not begin an application.)"
@@ -747,23 +755,23 @@ msgstr ""
 "(Su selección no afectará sus beneficios, ni tampoco iniciará una solicitud "
 "para beneficios)."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:905
+#: retirement_api/jinja2/retirement_api/claiming.html:911
 msgid "Choose age"
 msgstr "Elija la edad"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:922
-#: retirement_api/jinja2/retirement_api/claiming.html:926
-#: retirement_api/jinja2/retirement_api/claiming.html:930
-#: retirement_api/jinja2/retirement_api/claiming.html:934
+#: retirement_api/jinja2/retirement_api/claiming.html:928
+#: retirement_api/jinja2/retirement_api/claiming.html:932
+#: retirement_api/jinja2/retirement_api/claiming.html:936
+#: retirement_api/jinja2/retirement_api/claiming.html:940
 msgid "You’ve chosen age"
 msgstr "Usted seleccionó"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:922
+#: retirement_api/jinja2/retirement_api/claiming.html:928
 msgid ", which is your maximum Social Security benefit claiming age."
 msgstr ""
 " años, que es la edad máxima para reclamar sus beneficios de Seguro Social."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:923
+#: retirement_api/jinja2/retirement_api/claiming.html:929
 msgid ""
 "This means you will get your maximum possible monthly benefit! Here are a "
 "few things to keep in mind in the next few years."
@@ -771,12 +779,12 @@ msgstr ""
 "Eso significa que obtendrá el beneficio mensual más alto. Estos son pasos "
 "que le ayudarán en los próximos años:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:926
+#: retirement_api/jinja2/retirement_api/claiming.html:932
 msgid ""
 ", which is later than your Social Security full retirement claiming age."
 msgstr " años, que es después de su plena edad de jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:927
+#: retirement_api/jinja2/retirement_api/claiming.html:933
 msgid ""
 "This means you will get an increase in your monthly benefits! Here are a few "
 "things to keep in mind in the next few years."
@@ -784,11 +792,11 @@ msgstr ""
 "Eso significa que recibirá sus beneficios de Seguro Social completos, sin "
 "ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:930
+#: retirement_api/jinja2/retirement_api/claiming.html:936
 msgid ", which is your Social Security full retirement claiming age."
 msgstr " años, que es su plena edad de jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:931
+#: retirement_api/jinja2/retirement_api/claiming.html:937
 msgid ""
 "That means you’ll receive your full benefit with no reductions! Here are a "
 "few things to keep in mind in the next few years."
@@ -796,12 +804,12 @@ msgstr ""
 "Eso significa que recibirá sus beneficios de Seguro Social completos, sin "
 "ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:934
+#: retirement_api/jinja2/retirement_api/claiming.html:940
 msgid ""
 ", which is earlier than your Social Security full retirement claiming age."
 msgstr " años, que es antes de su edad de plena jubilación."
 
-#: retirement_api/jinja2/retirement_api/claiming.html:935
+#: retirement_api/jinja2/retirement_api/claiming.html:941
 msgid ""
 "If you start collecting at this age you will receive less than your full "
 "benefit amount. Here are a few things to keep in mind in the next few years."
@@ -809,7 +817,7 @@ msgstr ""
 "Por lo tanto la cantidad de sus beneficios será reducida. Estos son pasos "
 "que le ayudarán en los próximos años:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:948
+#: retirement_api/jinja2/retirement_api/claiming.html:954
 msgid ""
 "If your income, employment, or marital status changes, you may need to "
 "reconsider the age you want to start collecting your benefits. Visit us "
@@ -819,11 +827,11 @@ msgstr ""
 "deba reconsiderar la edad en la que solicitará sus beneficios de Seguro "
 "Social. ¡Vuelva a visitarnos!"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:951
+#: retirement_api/jinja2/retirement_api/claiming.html:957
 msgid "Legal Disclaimer:"
 msgstr "Aviso legal:"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:953
+#: retirement_api/jinja2/retirement_api/claiming.html:959
 msgid ""
 "The content on this page provides general consumer information. It is not "
 "legal advice or regulatory guidance. The CFPB updates this information "
@@ -873,11 +881,11 @@ msgstr ""
 #~ "Social?"
 
 #~ msgid ""
-#~ "Create a <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" "
+#~ "Create a <a href=\"https://www.ssa.gov/myaccount/\" target=\"_blank\" "
 #~ "rel=\"noopener noreferrer\">my Social Security account</a> to review your "
 #~ "actual earnings history and expected benefits."
 #~ msgstr ""
-#~ "Crear un <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" "
+#~ "Crear un <a href=\"https://www.ssa.gov/myaccount/\" target=\"_blank\" "
 #~ "rel=\"noopener noreferrer\">mi cuenta de Seguro Social</a> que revise su "
 #~ "historial de ganancias reales y los beneficios esperados."
 
@@ -1520,13 +1528,13 @@ msgstr ""
 #~ "para su jubilación por su propia cuenta."
 
 #~ msgid ""
-#~ "Create a <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" "
+#~ "Create a <a href=\"https://www.ssa.gov/myaccount/\" target=\"_blank\" "
 #~ "rel=\"noopener noreferrer\"><em>my</em> Social Security account</a> to "
 #~ "review your expected benefits based on your actual Social Security "
 #~ "record. You will also find additional information about your eligibility "
 #~ "and other benefits including disability and survivor benefits."
 #~ msgstr ""
-#~ "Visite el <a href=\"http://www.ssa.gov/espanol/jubilacion2/calculadora."
+#~ "Visite el <a href=\"https://www.ssa.gov/espanol/jubilacion2/calculadora."
 #~ "html\" target=\"_blank\" rel=\"noopener noreferrer\">Calculador del "
 #~ "Seguro Social</a> para ver la cantidad aproximada de sus beneficios "
 #~ "basados en su propio registro de ganancias del Seguro Social. También "

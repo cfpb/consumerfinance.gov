@@ -1,0 +1,63 @@
+@layer layout-base {
+  // Establish the wrapper inside the grid container as the grid element.
+  .u-layout-grid {
+    &_wrapper {
+      display: grid;
+      max-width: 1170px;
+      margin: 0 auto;
+      padding-left: unit(15px / @base-font-size-px, rem);
+      padding-right: unit(15px / @base-font-size-px, rem);
+      grid-template-areas:
+        'c-breadcrumbs'
+        'c-secondary-nav'
+        'c-hero'
+        'c-main'
+        'c-sidebar'
+        'c-prefooter';
+      grid-auto-columns: 100%;
+    }
+
+    // Name all possible content area elements (appearing inside <main>).
+    &_breadcrumbs {
+      grid-area: c-breadcrumbs;
+    }
+
+    &_main {
+      grid-area: c-main;
+    }
+
+    &_sidebar {
+      grid-area: c-sidebar;
+    }
+
+    &_secondary-nav {
+      grid-area: c-secondary-nav;
+    }
+
+    &_prefooter {
+      grid-area: c-prefooter;
+    }
+
+    // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
+    .m-hero,
+    &_hero {
+      grid-area: c-hero;
+    }
+  }
+
+  // Set default line width.
+  .u-layout-grid_main,
+  .u-layout-grid_intro {
+    dd,
+    dt,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    p,
+    label {
+      max-width: 41.875rem;
+    }
+  }
+}

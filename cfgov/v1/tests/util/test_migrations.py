@@ -5,9 +5,8 @@ from django.test import SimpleTestCase, TestCase
 
 from wagtail import blocks
 from wagtail.models import Page, Site
-from wagtail.test.testapp.models import StreamPage
 
-from v1.models.snippets import EmailSignUp
+from v1.models import EmailSignUp, SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
     convert_emailsignup_block_to_snippet,
@@ -24,10 +23,12 @@ from v1.util.migrations import (
 class MigrationsUtilTestCase(TestCase):
     def setUp(self):
         self.root = Page.objects.get(slug="cfgov")
-        self.page = StreamPage(title="Test Page", slug="testpage")
+        self.page = SublandingPage(title="Test Page", slug="testpage")
         save_new_page(self.page, self.root)
         set_streamfield_data(
-            self.page, "body", [{"type": "text", "value": "some text"}]
+            self.page,
+            "sidebar_breakout",
+            [{"type": "slug", "value": "some slug"}],
         )
 
         self.revision = self.page.save_revision()
@@ -44,48 +45,50 @@ class MigrationsUtilTestCase(TestCase):
     def test_get_streamfield_data_page(self):
         """Test that get_streamfield_data fetches the data correctly
         from a page object."""
-        data = get_streamfield_data(self.page, "body")
+        data = get_streamfield_data(self.page, "sidebar_breakout")
 
-        self.assertEqual(data[0]["type"], "text")
-        self.assertEqual(data[0]["value"], "some text")
+        self.assertEqual(data[0]["type"], "slug")
+        self.assertEqual(data[0]["value"], "some slug")
 
     def test_get_streamfield_data_revision(self):
         """Test that get_streamfield_data fetches the data correctly
         from a revision object."""
-        data = get_streamfield_data(self.revision, "body")
+        data = get_streamfield_data(self.revision, "sidebar_breakout")
 
-        self.assertEqual(data[0]["type"], "text")
-        self.assertEqual(data[0]["value"], "some text")
+        self.assertEqual(data[0]["type"], "slug")
+        self.assertEqual(data[0]["value"], "some slug")
 
     def test_get_streamfield_data_revision_no_field(self):
         """Test that get an empty list for fields that don't exist on
         revisions"""
-        data = get_streamfield_data(self.revision, "notbody")
+        data = get_streamfield_data(self.revision, "not_a_field")
         self.assertEqual(data, [])
 
     def test_set_streamfield_data_page(self):
         """Test that set_streamfield_data correctly sets data for a
         given page and saves the page."""
-        new_data = [{"type": "text", "value": "new text"}]
-        set_streamfield_data(self.page, "body", new_data)
-        data = self.page.body.raw_data
-        self.assertEqual(data[0]["value"], "new text")
+        new_data = [{"type": "slug", "value": "new slug"}]
+        set_streamfield_data(self.page, "sidebar_breakout", new_data)
+        data = self.page.sidebar_breakout.raw_data
+        self.assertEqual(data[0]["value"], "new slug")
 
     def test_set_streamfield_data_revision(self):
         """Test that set_streamfield_data correctly sets data for a
         given revision and saves the page."""
-        new_data = [{"type": "text", "value": "new text"}]
-        set_streamfield_data(self.revision, "body", new_data)
-        data = self.revision.as_object().body.raw_data
-        self.assertEqual(data[0]["value"], "new text")
+        new_data = [{"type": "slug", "value": "new slug"}]
+        set_streamfield_data(self.revision, "sidebar_breakout", new_data)
+        data = self.revision.as_object().sidebar_breakout.raw_data
+        self.assertEqual(data[0]["value"], "new slug")
 
     def test_set_streamfield_data_page_without_committing(self):
         """Test that set_streamfield_data correctly sets data for a
         given page and saves the page."""
         self.page.save = mock.Mock()
 
-        new_data = [{"type": "text", "value": "new text"}]
-        set_streamfield_data(self.page, "body", new_data, commit=False)
+        new_data = [{"type": "slug", "value": "new slug"}]
+        set_streamfield_data(
+            self.page, "sidebar_breakout", new_data, commit=False
+        )
 
         self.assertEqual(self.page.save.mock_calls, [])
 
@@ -96,13 +99,13 @@ class MigrationsUtilTestCase(TestCase):
         # Mock the field mapper migration function. We'll inspect the
         # call to this and ensure the return value makes it to
         # set_streamfield_data.
-        mapper = mock.Mock(return_value="new text")
+        mapper = mock.Mock(return_value="new slug")
 
-        migrate_stream_field(self.page, "body", "text", mapper)
+        migrate_stream_field(self.page, "sidebar_breakout", "slug", mapper)
 
-        mapper.assert_called_with(self.page, "some text")
-        data = self.page.body.raw_data
-        self.assertEqual(data[0]["value"], "new text")
+        mapper.assert_called_with(self.page, "some slug")
+        data = self.page.sidebar_breakout.raw_data
+        self.assertEqual(data[0]["value"], "new slug")
 
     def test_migrate_stream_field_revision(self):
         """Test that the migrate_stream_field function correctly gets
@@ -111,13 +114,13 @@ class MigrationsUtilTestCase(TestCase):
         # Mock the field mapper migration function. We'll inspect the
         # call to this and ensure the return value makes it to
         # set_streamfield_data.
-        mapper = mock.Mock(return_value="new text")
+        mapper = mock.Mock(return_value="new slug")
 
-        migrate_stream_field(self.revision, "body", "text", mapper)
+        migrate_stream_field(self.revision, "sidebar_breakout", "slug", mapper)
 
-        mapper.assert_called_with(self.revision, "some text")
-        data = self.revision.as_object().body.raw_data
-        self.assertEqual(data[0]["value"], "new text")
+        mapper.assert_called_with(self.revision, "some slug")
+        data = self.revision.as_object().sidebar_breakout.raw_data
+        self.assertEqual(data[0]["value"], "new slug")
 
     @mock.patch("v1.util.migrations.set_streamfield_data")
     def test_migrate_stream_field_not_migrated(
@@ -128,7 +131,9 @@ class MigrationsUtilTestCase(TestCase):
         shouldn't be migrated."""
         mapper = mock.Mock()
 
-        migrate_stream_field(self.page, "body", "other_type", mapper)
+        migrate_stream_field(
+            self.page, "sidebar_breakout", "other_type", mapper
+        )
 
         # The mapper should not be called
         mapper.assert_not_called()
@@ -145,19 +150,19 @@ class MigrationsUtilTestCase(TestCase):
         mapper = mock.Mock()
 
         page_types_and_fields = [
-            ("tests", "StreamPage", "body", "text"),
+            ("v1", "SublandingPage", "sidebar_breakout", "slug"),
         ]
         migrate_page_types_and_fields(apps, page_types_and_fields, mapper)
 
         # Check that migrate_stream_field was correct called with the page
         mock_migrate_stream_field.assert_any_call(
-            self.page, "body", "text", mapper
+            self.page, "sidebar_breakout", "slug", mapper
         )
 
         # Check that the revision lookup happened correctly and that the
         # revision stream field was correctly migrated.
         mock_migrate_stream_field.assert_any_call(
-            self.revision, "body", "text", mapper
+            self.revision, "sidebar_breakout", "slug", mapper
         )
 
 

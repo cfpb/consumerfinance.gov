@@ -138,14 +138,6 @@ class AnswerPage(CFGOVPage):
         related_name="answer_pages",
         on_delete=models.SET_NULL,
     )
-    redirect_to_page = models.ForeignKey(
-        "self",
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="redirect_to_pages",
-        help_text="Choose another AnswerPage to redirect this page to",
-    )
     featured = models.BooleanField(
         default=False,
         help_text=(
@@ -195,11 +187,6 @@ class AnswerPage(CFGOVPage):
     )
     portal_category = ParentalManyToManyField(PortalCategory, blank=True)
 
-    share_and_print = models.BooleanField(
-        default=False,
-        help_text="Include share and print buttons above answer.",
-    )
-
     notification = StreamField(
         [
             (
@@ -215,7 +202,7 @@ class AnswerPage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel(
             [
-                FieldPanel("last_edited"),
+                FieldPanel("last_edited", heading="Last reviewed"),
                 FieldPanel("question"),
                 FieldPanel("statement"),
                 FieldPanel("short_answer"),
@@ -223,7 +210,6 @@ class AnswerPage(CFGOVPage):
             heading="Page content",
             classname="collapsible",
         ),
-        FieldPanel("share_and_print"),
         FieldPanel("notification"),
         FieldPanel("answer_content"),
         MultiFieldPanel(
@@ -233,8 +219,8 @@ class AnswerPage(CFGOVPage):
                     "related_questions", target_model="ask_cfpb.AnswerPage"
                 ),
             ],
-            heading="Related resources",
-            classname="collapsible",
+            heading="Related resources and questions",
+            classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
@@ -246,22 +232,13 @@ class AnswerPage(CFGOVPage):
                     "portal_category", widget=forms.CheckboxSelectMultiple
                 ),
             ],
-            heading="Portal tags",
-            classname="collapsible",
+            heading="Money Topic portal tags",
+            classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [FieldPanel("featured")],
-            heading="Featured answer on Ask landing page",
-            classname="collapsible",
-        ),
-        MultiFieldPanel(
-            [
-                AutocompletePanel(
-                    "redirect_to_page", target_model="ask_cfpb.AnswerPage"
-                )
-            ],
-            heading="Redirect to another answer",
-            classname="collapsible",
+            heading="Featured answer on Ask landing page?",
+            classname="collapsible collapsed",
         ),
     ]
 
@@ -306,7 +283,7 @@ class AnswerPage(CFGOVPage):
                 sibling = self.answer_base.english_page
             else:
                 sibling = self.answer_base.spanish_page
-            if sibling and sibling.live and not sibling.redirect_to_page:
+            if sibling and sibling.live:
                 return sibling.url
 
     def get_meta_description(self):
@@ -350,7 +327,9 @@ class AnswerPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         # self.get_meta_description() is not called here because it is called
         # and added to the context by CFGOVPage's get_context() method.
-        portal_topic = self.primary_portal_topic or self.portal_topic.first()
+        portal_topic = self.primary_portal_topic
+        if portal_topic is None and self.portal_topic.count() == 1:
+            portal_topic = self.portal_topic.first()
         context = super().get_context(request)
         context["related_questions"] = self.related_questions.all()
         context["last_edited"] = self.last_edited
@@ -413,16 +392,6 @@ class AnswerPage(CFGOVPage):
     @property
     def clean_search_tags(self):
         return [tag.strip() for tag in self.search_tags.split(",")]
-
-    @property
-    def status_string(self):
-        if self.redirect_to_page:
-            if not self.live:
-                return "redirected but not live"
-            else:
-                return "redirected"
-        else:
-            return super().status_string
 
     # Returns an image for the page's meta Open Graph tag
     @property

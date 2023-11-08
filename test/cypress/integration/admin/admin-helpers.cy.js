@@ -1,9 +1,26 @@
 export class AdminPage {
-  open() {
-    cy.visit('/login/');
+  login() {
+    cy.session(
+      'login',
+      () => {
+        this.open();
+        this.submitLoginForm();
+      },
+      {
+        validate() {
+          cy.getCookie('sessionid').should('exist');
+        },
+      },
+    );
+
+    this.open();
   }
 
-  login() {
+  open() {
+    cy.visit('/admin/');
+  }
+
+  submitLoginForm() {
     cy.get('#id_username').type('admin');
     cy.get('#id_password').type('admin');
     cy.get('form').submit();
@@ -46,26 +63,18 @@ export class AdminPage {
   }
 
   searchContact(contact_heading) {
-    cy.get('#changelist-search')
-      .type(contact_heading)
-      .type('{enter}')
-      .then(() => {
-        // we need to wait for results to be populated
-        cy.wait(1000);
-      });
+    cy.get('#changelist-search').type(contact_heading);
+    cy.get('#changelist-search').type('{enter}');
   }
 
   removeContact() {
-    cy.get('a[href^="/admin/v1/contact/delete/"]:first')
-      .click({ force: true })
-      .then(() => {
-        cy.get('[value="Yes, delete"]').click();
-      });
+    cy.get('a[href^="/admin/v1/contact/delete/"]:first').click({ force: true });
+    cy.get('[value="Yes, delete"]').click();
   }
 
   addMortgageData(name) {
     cy.get(
-      `a[href="/admin/data_research/mortgage${name}/create/"]:first`
+      `a[href="/admin/data_research/mortgage${name}/create/"]:first`,
     ).click();
     cy.get('#id_name').type('test');
     this.submitForm();
@@ -109,7 +118,8 @@ export class AdminPage {
   }
 
   setRegulationEffectiveDate(name) {
-    cy.get('#id_effective_date').clear().type(name);
+    cy.get('#id_effective_date').clear();
+    cy.get('#id_effective_date').type(name);
   }
 
   openMegaMenu() {
@@ -119,26 +129,6 @@ export class AdminPage {
   editMegaMenu() {
     this.getFirstTableRow().contains('Edit').click({ force: true });
     this.submitForm();
-  }
-
-  openPage(name) {
-    this.openNavigationTab('Pages');
-    cy.get('.c-explorer__item__link').contains(name).click({ force: true });
-  }
-
-  addBlogChildPage() {
-    cy.visit('/admin/pages/add/v1/blogpage/1/');
-    cy.url().should('include', 'blogpage');
-  }
-
-  clickBlock(name) {
-    const block = `.action-add-block-${name}`;
-    cy.get(block).scrollIntoView().should('be.visible');
-    return cy.get(block).click();
-  }
-
-  addFullWidthText() {
-    this.clickBlock('full_width_text');
   }
 
   openBuildingBlockActivity() {
@@ -207,60 +197,45 @@ export class AdminPage {
     return cy.get('.listing').find('tr');
   }
 
+  addSublandingPage() {
+    cy.visit('/admin/pages/add/v1/sublandingpage/1/');
+    cy.url().should('include', 'sublandingpage');
+  }
+
+  clickBlock(name) {
+    const block = `.action-add-block-${name}`;
+    cy.get(block).scrollIntoView();
+    cy.get(block).should('be.visible');
+    return cy.get(block).click();
+  }
+
   addTable() {
-    cy.get('input[value="table_block"]', { timeout: 1000 }).should('not.exist');
-    this.clickBlock('table_block');
-    cy.get('input[value="table_block"]', { timeout: 1000 }).should('exist');
+    cy.get('input[value="table"]', { timeout: 1000 }).should('not.exist');
+    this.clickBlock('table');
+    cy.get('input[value="table"]', { timeout: 1000 }).should('exist');
   }
 
-  getFirstTableCell() {
-    return cy.get('.htCore td').first();
+  setClipboard(text) {
+    cy.window().its('navigator.clipboard').invoke('writeText', text);
   }
 
-  getTableEditor() {
-    cy.get('.handsontableInputHolder', { timeout: 60000 })
-      // Make sure the editor isn't hidden
-      .should('not.have.css', 'z-index', '-1')
-      .as('tableEditor');
+  getTableHeadingCell() {
+    return cy.get('input[name="content-0-value-data-column-0-heading"]');
   }
 
-  editFirstTableCell() {
-    cy.get('.htCore td').first().as('firstTableCell');
-
-    /* We need to click near the top left of the cell. */
-    cy.get('@firstTableCell').dblclick(5, 5, { force: true });
-    this.getTableEditor();
+  getTableDataCell() {
+    return cy.get('input[name="content-0-value-data-cell-0-1"]');
   }
 
-  selectTableEditorButton(name) {
-    // Type a slash to open the popup menu.
-    cy.get('.public-DraftEditor-content:visible', { timeout: 1000 })
-      .clear()
-      .type('/');
-
-    // Then click on the item we want.
-    cy.get('.Draftail-ComboBox__option-text').contains(name).click();
+  getTableData() {
+    return '00\t01\n10\t11\n';
   }
 
-  searchFirstTableCell(name) {
-    return cy.get('@firstTableCell').contains(name);
+  pasteTableAsText() {
+    cy.get('button.paste-as-text').click();
   }
 
-  closeTableEditor() {
-    /* Clicking anywhere outside the editor closes it, so we'll just click
-       on the very bottom right of the content container */
-    cy.get('.content').click('bottomRight', { force: true });
-  }
-
-  typeTableEditorTextbox(text) {
-    return (
-      cy
-        .get('@tableEditor')
-        .find('.public-DraftEditor-content')
-        .focus()
-        .type(text)
-        // We need to wait for a bit or the typed text won't be captured
-        .wait(500)
-    );
+  pasteTableAsRichText() {
+    cy.get('button.paste-as-rich-text').click();
   }
 }

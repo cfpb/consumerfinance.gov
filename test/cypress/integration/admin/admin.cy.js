@@ -3,20 +3,13 @@ import { AdminPage } from './admin-helpers.cy.js';
 const admin = new AdminPage();
 
 describe('Admin', () => {
-  before(() => {
+  beforeEach(() => {
     /* We can be reasonably sure that the Wagtail admin is being used on a
       laptop screen or larger, and the table editor is wider than Cypress's
       default viewport, so we'll size the viewport appropriately */
     cy.viewport('macbook-13');
-    admin.open();
-    admin.login();
-  });
 
-  beforeEach(() => {
-    /* Preserve the 'sessionid' cookie so it will not be cleared
-       before the NEXT test starts. */
-    Cypress.Cookies.preserveOnce('sessionid');
-    cy.viewport('macbook-13');
+    admin.login();
   });
 
   it('should login', () => {
@@ -111,38 +104,43 @@ describe('Admin', () => {
     cy.url().should('contain', 'django-admin');
     cy.visit('/admin/');
   });
+});
 
-  describe('Custom TableBlock', () => {
-    before(() => {
-      admin.addBlogChildPage();
-      admin.addFullWidthText();
-      admin.addTable();
-    });
+// Access to the clipboard works consistently in Electron but asks the user for
+// permission in other browsers, like Chrome. Only run these tests in Electron.
+describe('Pasting into tables', { browser: 'electron' }, () => {
+  beforeEach(() => {
+    admin.login();
+    admin.addSublandingPage();
+    admin.addTable();
 
-    beforeEach(() => {
-      admin.editFirstTableCell();
-    });
+    admin.getTableHeadingCell().should('not.exist');
+    admin.getTableDataCell().should('not.exist');
+  });
 
-    it('should be able to create and edit a table', () => {
-      const text = 'test cell text';
-      admin.typeTableEditorTextbox(text);
-      admin.closeTableEditor();
-      admin.searchFirstTableCell(text).should('be.visible');
-    });
+  it('should gracefully handle non-table data on the clipboard', () => {
+    admin.setClipboard('This is not a table.\n');
+    admin.pasteTableAsText();
 
-    it('should be able to insert a block into a table', () => {
-      admin.selectTableEditorButton('Heading 3');
-      admin.selectTableEditorButton('Heading 4');
-      admin.selectTableEditorButton('Heading 5');
-      admin.selectTableEditorButton('Numbered list');
-      admin.selectTableEditorButton('Bulleted list');
-      admin.closeTableEditor();
-    });
+    admin.getTableHeadingCell().should('not.exist');
+    admin.getTableDataCell().should('not.exist');
+  });
 
-    it('should be able to save an empty cell', () => {
-      admin.typeTableEditorTextbox('{selectall} ');
-      admin.closeTableEditor();
-      admin.getFirstTableCell().should('be.empty');
+  it('should create a text table by pasting from the clipboard', () => {
+    admin.setClipboard(admin.getTableData());
+    admin.pasteTableAsText();
+
+    admin.getTableHeadingCell().should('exist').should('have.value', '00');
+    admin.getTableDataCell().should('exist').should('have.value', '11');
+  });
+
+  it('should create a rich text table by pasting from the clipboard', () => {
+    admin.setClipboard(admin.getTableData());
+    admin.pasteTableAsRichText();
+
+    admin.getTableHeadingCell().should('exist').should('have.value', '00');
+    admin.getTableDataCell().should(($input) => {
+      expect($input.val()).to.contain('"text":"11"');
     });
   });
 });

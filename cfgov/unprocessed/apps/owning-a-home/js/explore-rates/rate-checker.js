@@ -18,7 +18,7 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import jumbo from 'jumbo-mortgage';
+import jumbo from '@cfpb/jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
@@ -56,7 +56,7 @@ let rateCompare2Dom;
 function renderLoanAmountResult() {
   const loanAmount = calcLoanAmount(
     params.getVal('house-price'),
-    params.getVal('down-payment')
+    params.getVal('down-payment'),
   );
   params.setVal('loan-amount', loanAmount);
   renderLoanAmount(loanAmountResultDom, loanAmount);
@@ -194,7 +194,7 @@ function updateView() {
           accessibleDataTableHeadDom,
           accessibleDataTableBodyDom,
           data.labels,
-          data.vals
+          data.vals,
         );
         chart.render(data);
 
@@ -443,11 +443,11 @@ function processCounty() {
     // Add links to loan messages.
     loan.msg = loan.msg.replace(
       'jumbo (non-conforming)',
-      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>'
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>',
     );
     loan.msg = loan.msg.replace(
       'conforming jumbo',
-      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>'
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>',
     );
     $('#hb-warning').removeClass('u-hidden').find('span').html(loan.msg);
   } else {
@@ -588,7 +588,7 @@ function renderInterestAmounts() {
     const length =
       parseInt(
         $(item).parents('.rc-comparison-section').find('.loan-years').text(),
-        10
+        10,
       ) * 12;
     const amortizedVal = amortize({
       amount: params.getVal('loan-amount'),
@@ -871,12 +871,12 @@ function registerEvents() {
         // dropdown('county').hide();
       }
       processLoanAmount(this);
-    }
+    },
   );
 
   // Prevent non-numeric characters from being entered.
   const calcLoanAmountRecalcDoms = document.querySelectorAll(
-    '.calc-loan-amt .recalc'
+    '.calc-loan-amt .recalc',
   );
   calcLoanAmountRecalcDoms.forEach((calcLoanAmountRecalc) => {
     calcLoanAmountRecalc.addEventListener('keydown', (event) => {

@@ -1,133 +1,91 @@
-
 {# ==========================================================================
 
-   Table - See [GHE]/flapjack/Modules-V1/wiki/Tables
+Table - https://cfpb.github.io/design-system/components/tables
 
-   ==========================================================================
+Creates table markup when given:
 
-   Description:
+value.heading:  Optional heading to render before the table.
 
-   Creates Table markup when given:
+value.data:     Wagtail StreamValue for TypedTableBlock, or an equivalent
+                dictionary structure like this:
 
-   value.data:            A multi-dimensional list representing table rows.
+                {
+                    columns: [
+                        {'heading': 'Column 1'},
+                        {'heading': 'Column 2'},
+                        ...
+                    ],
+                    rows [
+                        ['a', 'b', ...],
+                        ['c', 'd', ...],
+                        ...
+                    ]
+                }
 
-   value.heading_text:    (Optional) The text of a heading.
+value.options:  Enabled configuration options as a list of strings.
+                For example: ['stack_on_mobile'].
+                See list of supported options below.
 
-   value.heading_level:   The heading level (H2, H3, H4). Default: H2
+Supported configuration options:
 
-   value.heading_icon:    (Optional) A string containing cf-icon name
-                          that triggers the insertion of an icon before
-                          the heading.
+first_column_header:    Style the first column as a header.
 
-   value.is_stacked:      Boolean indicating if the table columns
-                          should be stacked on mobile.
+is_full_width:          Display the table at full width.
 
-   value.is_striped:      Boolean indicating if the table should be striped.
+stack_on_mobile:        Stack the table columns on mobile.
 
-   value.is_full_width:   Boolean indicating if the table should be full width.
+========================================================================== #}
 
-   value.has_data:        Boolean indicating if the table has data.
+{%- set first_column_header = 'first_column_header' in (value.options or []) -%}
+{%- set is_full_width = 'is_full_width' in (value.options or []) -%}
+{%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
-   value.empty_table_msg: String containing message to display if table has no
-                          data.
+{% if value.heading -%}
+    {% include_block value.heading %}
+{%- endif %}
 
-   value.first_row_is_table_header: Boolean indicating if the first row is the
-                          table header.
-
-   value.fixed_col_widths: Boolean indicating if the table has fixed column
-                           widths.
-
-   value.column_widths:   A list of column width (classes) to be applied in
-                          order to the table columns.
-
-   value.allow_unsafe:    Boolean indicating whether to pass table data
-                          through the |safe filter, allowing unsafe characters.
-                          Defaults to true.
-
-   ========================================================================== #}
-
-
-{% if value.has_data is not defined or value.has_data %}
-
-{%- macro _render_cell( cell, allow_unsafe=true ) %}
-    {% set cell_str = (cell or '&nbsp;') | richtext | linebreaksbr | trim %}
-    {% if allow_unsafe %}
-        {% set cell_str = cell_str | safe %}
-    {% endif %}
-
-    {{- cell_str -}}
-{% endmacro -%}
-
-{% set allow_unsafe = value.allow_unsafe | default(true) %}
-
-{% if value.heading_text %}
-    <{{ value.heading_level -}}>
-        {%- if value.heading_icon %}
-            {{ svg_icon(value.heading_icon) }}
-        {% endif -%}
-        {{ value.heading_text | safe }}
-    </{{ value.heading_level}}>
-{% endif %}
 <table class="o-table
-              {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
-              {{- ' o-table__striped' if value.is_striped else '' -}}
-              {{- ' u-w100pct' if value.is_full_width else '' -}}">
-    {% set row_index = 0 %}
-    {% set first_row = value.data[row_index] %}
-    {% if value.first_row_is_table_header and value.data | list | length > 0 %}
-    {% set row_index = 1 %}
+    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
+    {{- ' u-w100pct' if is_full_width else '' -}}
+">
+    {% if value.data.columns | selectattr('heading') | list -%}
     <thead>
-
-        {# Check to verify the row isn't empty. #}
-        {% if first_row | reject('none') | list | length %}
         <tr>
-            {% for cell in value.data[0] %}
-                {% if value.fixed_col_widths and value.column_widths[loop.index0] != '' %}
-                    {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
-                {% endif %}
-            <th scope="col"{{ width_class | default }}>
-                {{ _render_cell(cell, allow_unsafe) }}
-            </th>
+            {% for col in value.data.columns %}
+                {% if col.heading -%}
+                    <th scope="col">{{ col.heading }}</th>
+                {%- endif %}
             {% endfor %}
         </tr>
-        {% endif %}
     </thead>
-    {% endif %}
+    {%- endif %}
     <tbody>
-    {% for row in value.data[row_index:] or [] %}
-        {% if row | reject('none') | list | length %}
-        <tr>
-            {% for cell in row or [] %}
-                {% set tag = 'td' %}
-                {% set attributes = '' %}
+        {% for row in value.data.rows %}
+            <tr>
+                {% for block in row %}
+                    {%- set attrs = "" -%}
 
-                {# Logic to determine if the first column is a header. #}
-                {% if value.first_col_is_header and loop.first %}
-                    {% set tag = 'th' %}
-                    {% set attributes = ' scope="row"' %}
-                {% endif %}
+                    {%- if first_column_header and loop.first -%}
+                        {% set tag = "th" %}
+                        {% set attrs = attrs ~ (' scope="row"' | safe) %}
+                    {%- else -%}
+                        {% set tag = "td" %}
+                    {%- endif -%}
 
-                {# Logic to determine if fixed widths need to be added. #}
-                {% if value.fixed_col_widths %}
-                    {% set attributes = attributes + ' class="' + value.column_widths[loop.index0] + '"' %}
-                {% endif %}
+                    {%- set col_heading = value.data.columns[loop.index0].heading -%}
+                    {%- if stack_on_mobile and col_heading -%}
+                        {% set attrs = attrs ~
+                            (' data-label="' | safe) ~
+                            (col_heading | escape) ~
+                            ('"' | safe)
+                        %}
+                    {%- endif -%}
 
-                {# Logic to add data labels for creating responsive tables on mobile. #}
-                {% if value.first_row_is_table_header and
-                      first_row[loop.index0] is not none and
-                      value.is_stacked
-                %}
-                    {% set attributes = attributes + ' data-label="' + first_row[loop.index0]|striptags|trim + '"' %}
-                {% endif %}
-                <{{ tag | safe }}{{ attributes | safe }}>
-                    {{ _render_cell(cell, allow_unsafe) }}
-                </{{ tag | safe }}>
-            {% endfor %}
-        </tr>
-        {% endif %}
-    {% endfor %}
+                    <{{ tag }}{{ attrs }}>
+                        {%- include_block block -%}
+                    </{{ tag }}>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
-{% elif value.empty_table_msg %}
-    <h3>{{ value.empty_table_msg }}</h3>
-{% endif %}

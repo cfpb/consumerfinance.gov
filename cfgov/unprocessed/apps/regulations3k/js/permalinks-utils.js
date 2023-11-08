@@ -1,6 +1,8 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
-const regs3kMainContent = document.querySelector('.regulations3k');
+const regs3kMainContent = document.querySelector(
+  '.regulations3k #content_main',
+);
 const regs3kWayfinder = document.querySelector('.o-regulations-wayfinder');
 let wayfinderOffset = 0;
 if (regs3kWayfinder !== null) {
@@ -91,7 +93,7 @@ const getCurrentParagraph = (currentPosition, paragraphs) => {
 const updateUrlHash = () => {
   const currentParagraph = getCurrentParagraph(
     scrollY() + wayfinderOffset,
-    paragraphPositions
+    paragraphPositions,
   );
   // Setting the window state to `.` removes the URL hash
   const hash = currentParagraph ? `#${currentParagraph}` : '.';
@@ -161,7 +163,7 @@ const getWayfinderInfo = (label, sectionTitle) => {
     // For appendices, the wayfinder should look like "Appendix A"
     sectionFormattedTitle = getFirstMatch(
       sectionTitle,
-      wayfinderRegex.appendixTitle
+      wayfinderRegex.appendixTitle,
     );
     paragraphMarker = '';
   } else {
@@ -195,11 +197,11 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     let sectionFormattedTitle;
     let wayfinderInfo;
     const wayfinderLink = wayfinder.querySelector(
-      '.o-regulations-wayfinder_link'
+      '.o-regulations-wayfinder_link',
     );
     const currentParagraph = getCurrentParagraph(
       scrollY() + wayfinderOffset,
-      paragraphPositions
+      paragraphPositions,
     );
 
     if (currentParagraph) {
@@ -222,7 +224,7 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     }
 
     wayfinder.querySelector(
-      '.o-regulations-wayfinder_section-title'
+      '.o-regulations-wayfinder_section-title',
     ).textContent = sectionFormattedTitle;
     wayfinder.querySelector('.o-regulations-wayfinder_marker').textContent =
       paragraphMarker;
@@ -245,7 +247,7 @@ const updateParagraphPositions = () => {
   const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for (let i = 0; i < paragraphs.length; i++) {
-    const hiddenParagraphContainer = paragraphs[i].closest('.u-hidden');
+    const hiddenParagraphContainer = paragraphs[i].closest('[hidden]');
     if (!hiddenParagraphContainer) {
       visibleParagraphs.push(paragraphs[i]);
     }
@@ -271,7 +273,7 @@ const debounce = (event, delay, cb) => {
         cb();
       }, delay);
     },
-    false
+    false,
   );
   return timeout;
 };

@@ -2,7 +2,7 @@
 {% set default_text = 'No information provided' %}
 <article class="results_item">
     <h4 class="h3">
-      <a href="detail/{{result.id}}">{{ result.name }}</a>
+        <a href="{{ result.get_absolute_url() }}">{{ result.name }}</a>
     </h4>
     <div class="content-l">
         <div class="content-l_col content-l_col-1-2">

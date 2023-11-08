@@ -1,13 +1,3 @@
-const _requestAnimationFrame =
-  window.requestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  function (callback) {
-    return setTimeout(function () {
-      callback(Number(new Date()));
-    }, 1000 / 60);
-  };
-
 /**
  * Easing.
  * @param {number} currentTime - current time.
@@ -67,14 +57,14 @@ function scrollTo(to, opts) {
     window.scroll(0, next);
 
     if (elapsed < duration) {
-      _requestAnimationFrame(scroll);
+      window.requestAnimationFrame(scroll);
     } else if (typeof opts.callback === 'function') {
       opts.callback();
     }
   }
 
   if (Math.abs(distance) > 3) {
-    _requestAnimationFrame(scroll);
+    window.requestAnimationFrame(scroll);
   } else if (typeof opts.callback === 'function') {
     opts.callback();
   }

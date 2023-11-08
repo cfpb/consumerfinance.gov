@@ -60,7 +60,6 @@ class FilterableListInvalidationTestCase(TestCase):
             )
             mock_cache.delete.assert_any_call(f"{cache_key_prefix}-page_ids")
             mock_cache.delete.assert_any_call(f"{cache_key_prefix}-topics")
-            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-authors")
 
         mock_purge.assert_called_once()
         self.assertIn(

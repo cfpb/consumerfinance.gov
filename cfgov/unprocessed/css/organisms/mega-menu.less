@@ -199,7 +199,7 @@ body {
 .u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
   position: relative;
 
-  &:before {
+  &::before {
     position: absolute;
     left: @position;
     top: 0;
@@ -221,12 +221,12 @@ body {
   }
 
   // Make the pseudo-element have an outline.
-  &:focus:after {
+  &:focus::after {
     outline: 1px dotted @pacific;
   }
 
   // Create the dimensions for the pseudo-element focus rectangle.
-  &:after {
+  &::after {
     position: absolute;
     left: 0;
     top: 0;
@@ -300,7 +300,7 @@ body {
 .u-focus-link-desktop() {
   .u-focus-rectangle();
 
-  &:after {
+  &::after {
     left: -@menu_link_hover_bar_px - 9px;
     width: calc(100% + @menu_link_hover_bar_px + 6px);
   }
@@ -310,7 +310,7 @@ body {
 .u-focus-overview-link-desktop() {
   .u-focus-rectangle();
 
-  &:after {
+  &::after {
     left: -@menu_link_hover_bar_px - 9px;
     width: calc(100% + @menu_link_hover_bar_px + 9px);
   }
@@ -320,7 +320,7 @@ body {
 .u-focus-link-icon-desktop() {
   .u-focus-rectangle();
 
-  &:after {
+  &::after {
     left: -@menu_link_hover_bar_px - 7px;
     width: calc(100% + @menu_link_hover_bar_px + 6px);
   }
@@ -330,7 +330,7 @@ body {
 .u-focus-link-featured-desktop() {
   .u-focus-rectangle();
 
-  &:after {
+  &::after {
     left: -@menu_link_hover_bar_px;
     width: calc(100% + @menu_link_hover_bar_px + 5px);
   }
@@ -340,7 +340,7 @@ body {
 .u-focus-link-mobile() {
   .u-focus-rectangle();
 
-  &:after {
+  &::after {
     left: -@menu_link_hover_bar_px - 9px;
     width: calc(100% + @menu_link_hover_bar_px + 14px);
   }
@@ -430,7 +430,6 @@ body {
         display: inline;
         color: @pacific;
         margin-right: 6px;
-        width: 100%;
       }
     }
   }
@@ -1048,6 +1047,7 @@ body {
         & .cf-icon-svg {
           color: @gold;
           width: 100%;
+          max-width: unit( 16px / @base-font-size-px, rem );
         }
       }
 
@@ -1102,7 +1102,8 @@ body {
   } );
 
   // Large desktop size. 1021px. Not currently used.
-  /*.respond-to-min( @bp-lg-min, { } );*/
+
+  /* .respond-to-min( @bp-lg-min, { } ); */
 
   // Xtra-Large desktop size. 1261px.
   .respond-to-min( @bp-xl-min + @grid_gutter-width, {

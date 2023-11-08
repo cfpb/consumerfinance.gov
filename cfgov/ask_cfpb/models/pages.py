@@ -421,7 +421,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         """
         tag = kwargs.get("tag").replace("_", " ")
         base_query = AnswerPage.objects.filter(
-            language=self.language, redirect_to_page=None, live=True
+            language=self.language, live=True
         )
         answer_tuples = [
             (page.url, page.question, page.answer_content_preview())

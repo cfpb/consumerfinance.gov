@@ -100,6 +100,7 @@
   .highcharts-xaxis-grid.highcharts-navigator-xaxis > .highcharts-grid-line {
     stroke: @gray-40;
   }
+
   /* Testing line patterns
   .highcharts-line-series.highcharts-series-0 {
     stroke-dasharray: 45, 7;
@@ -183,7 +184,7 @@
 
     .a-link {
       color: @link-text;
-      border-width: 0 0 1px 0;
+      border-width: 0 0 1px;
       border-style: dotted;
       display: inline-block;
       text-overflow: ellipsis;
@@ -258,6 +259,17 @@
     max-width: unit(670 / @size-vi, rem);
     margin-top: unit(45 / @size-vi, em);
     padding-top: unit(15 / @size-vi, em);
+    font-size: 0.75em;
+  }
+
+  .cct {
+    .highcharts-series-0 .highcharts-graph {
+      stroke-width: 3px;
+    }
+
+    .highcharts-series-1 .highcharts-graph {
+      stroke-width: 1px;
+    }
   }
 }
 

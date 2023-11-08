@@ -31,7 +31,7 @@ try {
   let openTabs = JSON.parse(webStorageProxy.getItem('_tab_ids', _localStorage));
   let tabId = webStorageProxy.getItem('_tab_id', _sessionStorage);
   let navPath = JSON.parse(
-    webStorageProxy.getItem('_nav_path', _sessionStorage)
+    webStorageProxy.getItem('_nav_path', _sessionStorage),
   );
   const curPage = document.location.href;
   let newTab = false;
@@ -82,7 +82,7 @@ try {
       webStorageProxy.setItem(
         '_tab_ids',
         JSON.stringify(openTabs),
-        _localStorage
+        _localStorage,
       );
     }
   }
@@ -131,7 +131,7 @@ try {
     webStorageProxy.setItem(
       '_tab_ids',
       JSON.stringify(openTabs),
-      _localStorage
+      _localStorage,
     );
   }
 
@@ -181,7 +181,7 @@ try {
       webStorageProxy.setItem(
         '_nav_path',
         JSON.stringify(navPath),
-        sessionStorage
+        sessionStorage,
       );
     } catch (exception) {
       console.log(exception);
@@ -201,7 +201,7 @@ try {
   // Set the data model keys directly so they can be used in the Page View tag
   window.google_tag_manager['GTM-KMMLRS'].dataLayer.set(
     'browsingBehavior',
-    payload
+    payload,
   );
 
   // Also push to dataLayer

@@ -46,7 +46,7 @@ describe('footer-button', () => {
         expect(window.scrollY).toBe(0);
         done();
       }, 2000);
-    }
+    },
   );
 
   it(
@@ -60,6 +60,6 @@ describe('footer-button', () => {
       simulateEvent('click', footerBtnDom);
 
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
-    }
+    },
   );
 });

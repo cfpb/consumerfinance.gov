@@ -65,7 +65,7 @@
     </div>
     {% if page.tags.all() | length %}
         <footer>
-            {{ tags.render(page.related_metadata_tags()) }}
+            {{ tags.render(page.related_metadata_tags().links) }}
         </footer>
     {% endif %}
 </article>

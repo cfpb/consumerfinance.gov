@@ -38,72 +38,89 @@
                     <a href="es/">Ver página en español</a>
                     {% endif %}
                 </p>
+                <div class="o-well">
+                    {% if current_language == 'en' %}
+                    <p>The Social Security Administration offers
+                         <a href="https://www.ssa.gov/multilanguage/interpreter.html">free interpreter services</a>
+                         and a <a href="https://www.ssa.gov/site/languages/en/">multilanguage gateway</a>
+                         to help consumers who speak other languages.
+                    </p>
+                    {% else %}
+                    <p>La Administración del Seguro Social ofrece
+                         <a href="https://www.ssa.gov/site/languages/es/interpreter.html">servicios de intérprete</a>
+                         y un <a href="https://www.ssa.gov/site/languages/es/">portal multilingüe</a>
+                         para ayudar a los consumidores que hablan otros idiomas.
+                    </p>
+                    {% endif %}
+                </div>
             </div>
             <div class="content-l_col content-l_col-1-3">
                 <div class="img"></div>
             </div>
         </div>
     </div>
+    {% include "_templates/no_js.html" %}
     <div class="step-one
               block
               block__padded-top
               block__border-top
-              block__flush-bottom">
-        <div class="content-l">
-            <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
-            <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
-                <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
-                <div class="m-notification m-notification__warning">
-                    {{ svg_icon('warning-round') }}
-                    <div class="m-notification_content">
-                        <div class="h4 m-notification_message">Error message.</div>
-                    </div>
-                </div>
-                <div class="content-l">
-                    <div class="content-l_col content-l_col-1-3 birthdate-inputs">
-                        <p>{{ _("Date of birth") }}</p>
-                        <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2"
-                                placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                        <label for="bd-day" class="input-labels"><input id="bd-day" type="text" maxlength="2"
-                                placeholder="{{ _('DD') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                        <label for="bd-year" class="input-labels"><input id="bd-year" type="text" maxlength="4"
-                                placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off"
-                                autocorrect="off" spellcheck="false"></label>
-                    </div>
-                    <div class="content-l_col content-l_col-1-3">
-                        <label for="salary-input" class="input-labels">
-                            <span class="input-labels_block">{{ _("Highest annual work income") }} <span
-                                    data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
-                                    svg_icon('help-round') }}</span></span>
-                            <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none"
-                                autocomplete="off" autocorrect="off" spellcheck="false"></label>
-                        <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
-                            aria-haspopup="true">
-                            <p>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</p>
+              block__flush-bottom
+              u-js-only">        
+              <div class="content-l">
+                <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
+                <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
+                    <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
+                    <div class="m-notification m-notification__warning">
+                        {{ svg_icon('warning-round') }}
+                        <div class="m-notification_content">
+                            <div class="h4 m-notification_message">Error message.</div>
                         </div>
                     </div>
-                    <div class="content-l_col content-l_col-1-3">
-                        <button
-                            type="submit"
-                            id="get-your-estimates"
-                            class="get-your-estimates a-btn a-btn__disabled"
-                            disabled>
-                            {{ _("Get your estimates") }}
-                            <span id="api-data-loading-indicator">
-                                {{ svg_icon('updating') }}
-                            </span>
-                        </button>
+                    <div class="content-l">
+                        <div class="content-l_col content-l_col-1-3 birthdate-inputs">
+                            <p>{{ _("Date of birth") }}</p>
+                            <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2"
+                                    placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                            <label for="bd-day" class="input-labels"><input id="bd-day" type="text" maxlength="2"
+                                    placeholder="{{ _('DD') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                            <label for="bd-year" class="input-labels"><input id="bd-year" type="text" maxlength="4"
+                                    placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off"
+                                    autocorrect="off" spellcheck="false"></label>
+                        </div>
+                        <div class="content-l_col content-l_col-1-3">
+                            <label for="salary-input" class="input-labels">
+                                <span class="input-labels_block">{{ _("Highest annual work income") }} <span
+                                        data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
+                                        svg_icon('help-round') }}</span></span>
+                                <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none"
+                                    autocomplete="off" autocorrect="off" spellcheck="false"></label>
+                            <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
+                                aria-haspopup="true">
+                                <small>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</small>
+                            </div>
+                        </div>
+                        <div class="content-l_col content-l_col-1-3">
+                            <button
+                                type="submit"
+                                id="get-your-estimates"
+                                class="get-your-estimates a-btn a-btn__disabled"
+                                disabled>
+                                {{ _("Get your estimates") }}
+                                <span id="api-data-loading-indicator">
+                                    {{ svg_icon('updating') }}
+                                </span>
+                            </button>
+                        </div>
                     </div>
+                </form>
+                <div class="content-l_col content-l_col-1-3 estimate-info">
+                    <small>
+                        {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
+                    </small>
                 </div>
-            </form>
-            <div class="content-l_col content-l_col-1-3 estimate-info">
-                <p>
-                    {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
-                </p>
             </div>
-        </div>
     </div>
 
     <div id="estimated-benefits-description" class="estimated-benefits-description h3 step-one-hidden">
@@ -128,14 +145,14 @@
                         {{ _("is your full benefit claiming age.") }}
                     </span>
                 </p>
-                <p class="compared-to-full explainer">{{ _("Compared to claiming at your full benefit claiming age.") }}
-                </p>
+                <small class="compared-to-full">{{ _("Compared to claiming at your full benefit claiming age.") }}
+                </small>
             </div>
             <div class="total-benefits-container">
                 <p class="total-benefits-text h4"><strong>{{ _("By age 85, an average lifespan, your total benefits will be") }}</strong></p>
                 <p>
-                    <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<span
-                        class="todays-dollars explainer">({{ _("in today's dollars") }})</span>
+                    <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<small
+                        class="todays-dollars">({{ _("in today's dollars") }})</small>
                 </p>
             </div>
             <div class="graph-content">
@@ -315,7 +332,7 @@
                     </span>
                     Working in your 60s also gives you more time to save on your own
                     for retirement.
-                    <a class="a-link a-link__icon" href="https://secure.ssa.gov/RIL/SiView.action"
+                    <a href="https://secure.ssa.gov/RIL/SiView.action"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
                     </a>.
@@ -337,7 +354,7 @@
                     </span>
                     Working in your 60s also gives you more time to save on your own
                     for retirement.
-                    <a class="a-link a-link__icon" href="https://secure.ssa.gov/RIL/SiView.action"
+                    <a href="https://secure.ssa.gov/RIL/SiView.action"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
                     </a>.
@@ -365,7 +382,7 @@
                     claim at your full benefit age or later. The age at which you
                     decide to stop working doesn't have to be the same as your
                     claiming age.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html"
+                    <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about working and collecting Social Security
                             benefits</span>
@@ -393,7 +410,7 @@
                     at your full benefit age or later. The age at which you decide
                     to stop working doesn't have to be the same as your claiming
                     age.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html"
+                    <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">
                             Learn more about working and collecting Social Security benefits
@@ -418,7 +435,7 @@
                     </span>
                     Working in your 60s also gives you more time to save on your own
                     for retirement.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html"
+                    <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about working and collecting Social Security
                             benefits</span>
@@ -447,7 +464,7 @@
                     to supplement your income until full retirement age. However,
                     this may not be an option if it eliminates your savings
                     completely.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html"
+                    <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about working and collecting Social Security
                             benefits</span>
@@ -456,16 +473,16 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+                <small>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+                <small>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="claim_early_and_work" role="tooltip" aria-haspopup="true">
-                <p>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
         </div>
     </div>
@@ -494,7 +511,7 @@
                     also increase your regular income by claiming at your full Social
                     Security benefit age or later. If you claim earlier, your monthly
                     benefit could be reduced by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -515,7 +532,7 @@
                     also increase your regular income by claiming at your full Social
                     Security benefit age or later. If you claim earlier, your monthly
                     benefit could be reduced by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -536,7 +553,7 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -557,7 +574,7 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -578,7 +595,7 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -599,7 +616,7 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                         href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
                         rel="noopener noreferrer" target="_blank">
@@ -641,7 +658,7 @@
                     gap and maximize your monthly benefit. If you claim before your
                     full retirement age, your monthly benefit could be reduced by as
                     much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement"
                         href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Ffor-savers%2Fset-a-goal-what-to-save-for%2Fsave-for-retirement&amp;signature=cWAKF3R5TYhmLgV5uR4O8EneMgc"
                         rel="noopener noreferrer" target="_blank">
@@ -671,7 +688,7 @@
                     Lastly, avoid losing your retirement savings to unnecessary tax
                     penalties. If you withdraw your 401(k) or IRA savings before age
                     59½, you will likely face an early withdrawal penalty.
-                    <a class="a-link a-link__icon" data-pretty-href="https://tools.finra.org/savings_calculator/"
+                    <a data-pretty-href="https://tools.finra.org/savings_calculator/"
                         href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about how retirement savings grow</span>
@@ -701,7 +718,7 @@
                     be reduced by as much as 30 percent. On the other hand, you can
                     get extra increases for every month that you wait to claim past
                     your full benefit age until age 70.
-                    <a class="a-link a-link__icon" data-pretty-href="https://tools.finra.org/savings_calculator/"
+                    <a data-pretty-href="https://tools.finra.org/savings_calculator/"
                         href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about how retirement savings grow</span>
@@ -732,7 +749,7 @@
                     Social Security benefit age or later. When you claim before your
                     full retirement age, your monthly benefit could be reduced by as
                     much as 30 percent.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras"
                         href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68"
                         rel="noopener noreferrer" target="_blank">
@@ -760,7 +777,7 @@
                     age or later, you avoid a reduction in your monthly benefit. You
                     will also get increases for every month that you wait to claim
                     past your full benefit age until age 70.
-                    <a class="a-link a-link__icon"
+                    <a
                         data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras"
                         href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68"
                         rel="noopener noreferrer" target="_blank">
@@ -790,7 +807,7 @@
                     age or later, you avoid a reduction in your monthly benefit. You
                     will also get increases for every month that you wait to claim
                     past your full benefit age until age 70.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html"
+                    <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about working and collecting Social Security
                             benefits</span>
@@ -799,19 +816,19 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+                <small>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="pensions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</p>
+                <small>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+                <small>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+                <small>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</small>
             </div>
             <div class="tooltip-content" data-tooltip-name="catchup-contributions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</p>
+                <small>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</small>
             </div>
         </div>
         <div class="content-l_col content-l_col-1-3 question question-longevity">
@@ -838,7 +855,7 @@
                     living. If you live into your 80s but claim at age 62 instead of
                     your full retirement age or later, your total lifetime benefits
                     will be lower by thousands of dollars.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html"
+                    <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Calculate your expected longevity</span>
                     </a>.
@@ -860,7 +877,7 @@
                     Each additional month that you wait to claim gives you a permanent
                     increase in your monthly benefit which becomes more valuable as
                     you age.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html"
+                    <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Calculate your longevity</span>
                     </a>.
@@ -882,7 +899,7 @@
                     living. If you live into your 80s but claim at age 62 instead of
                     your full retirement age or later, your total lifetime benefits
                     will be lower by thousands of dollars.
-                    <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html"
+                    <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Calculate your longevity</span>
                     </a>.
@@ -898,10 +915,11 @@
             <h3 id="retirement-selector-label">
                 {{ _("Select the age you plan to start collecting your Social Security retirement benefits.") }}
             </h3>
-            <p class="explainer step-three-note">
-                {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
+            <p class="step-three-note">
+                <small>
+                    {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
+                </small>
             </p>
-
             <div class="m-form-field m-form-field__select">
                 <div class="a-select">
                     <select id="retirement-age-selector" aria-labelledby="retirement-selector-label">
@@ -940,7 +958,7 @@
                 <ol class="next-steps content-l">
                     <li class="content-l_col content-l_col-1-3 next-step-one">
                         {% block next_step_one %}
-                        Create a <a class="a-link a-link__icon" href="http://www.ssa.gov/myaccount/"
+                        Create a <a href="https://www.ssa.gov/myaccount/"
                             rel="noopener noreferrer" target="_blank"><span class="a-link_text"><em>my</em> Social
                                 Security account</span></a> to review your expected benefits based on your actual Social
                         Security record. You will also find additional information about your eligibility and other
@@ -951,6 +969,19 @@
                         {{ _("If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!") }}
                     </li>
                 </ol>
+                {% if current_language == 'en' %}
+                <p>The Social Security Administration offers
+                    <a href="https://www.ssa.gov/multilanguage/interpreter.html">free interpreter services</a>
+                    and a <a href="https://www.ssa.gov/site/languages/en/">multilanguage gateway</a>
+                    to help consumers who speak other languages.
+                </p>
+                {% else %}
+                <p>La Administración del Seguro Social ofrece
+                    <a href="https://www.ssa.gov/multilanguage/interpreter.html">servicios de intérprete</a>
+                    y un<br/> <a href="https://www.ssa.gov/site/languages/en/">portal multilingüe</a>
+                    para ayudar a los consumidores que hablan otros idiomas.
+                </p>
+                {% endif %}
                 <h5>{{ _("Legal Disclaimer:") }}</h5>
                 <p>
                     {{ _("The content on this page provides general consumer information. It is not legal advice or regulatory guidance. The CFPB updates this information periodically. This information may include links or references to third-party resources or content. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.") }}

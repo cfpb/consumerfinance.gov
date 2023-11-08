@@ -21,6 +21,8 @@ class NextStep(models.Model):
         FieldPanel("text"),
     ]
 
+    wagtail_reference_index_ignore = True
+
     def __str__(self):
         return self.title
 
@@ -72,6 +74,8 @@ class Category(models.Model):
         ordering = ["name"]
         verbose_name_plural = "Categories"
 
+    wagtail_reference_index_ignore = True
+
 
 class Answer(models.Model):
     last_user = models.ForeignKey(
@@ -82,6 +86,8 @@ class Answer(models.Model):
 
     class Meta:
         ordering = ["-id"]
+
+    wagtail_reference_index_ignore = True
 
     def __str__(self):
         return self.question

@@ -100,27 +100,6 @@
 }
 
 /* topdoc
-  name: Hide only when JS is active
-  family: cf-core
-  patterns:
-    - name: .js-is-hidden
-      markup: |
-        <fieldset class="js-reveal-with-js-class u-hide-js-only">
-        </fieldset>
-      notes:
-        - "A class to hide only when JS is active."
-  tags:
-    - cf-utilities
-*/
-
-.js-is-hidden {
-  display: none !important;
-  .no-js & {
-    display: block !important;
-  }
-}
-
-/* topdoc
   name: Hidden Overflow
   family: cf-core
   patterns:

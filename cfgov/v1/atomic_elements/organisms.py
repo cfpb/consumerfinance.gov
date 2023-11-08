@@ -1,4 +1,3 @@
-from collections import Counter
 from urllib.parse import urlencode
 
 from django.apps import apps
@@ -12,7 +11,6 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from taggit.models import Tag
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
@@ -20,9 +18,10 @@ from v1.atomic_elements import atoms, molecules
 
 # Bring tables into this module to maintain import structure across the project.
 from v1.atomic_elements.tables import (  # noqa: F401
-    AtomicTableBlock,
+    CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
+    Table,
 )
 from v1.util import ref
 
@@ -124,30 +123,6 @@ class InfoUnitGroup(blocks.StructBlock):
     )
 
     info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
-
-    sharing = blocks.StructBlock(
-        [
-            (
-                "shareable",
-                blocks.BooleanBlock(
-                    label="Include sharing links?",
-                    help_text="If checked, share links "
-                    "will be included below "
-                    "the items.",
-                    required=False,
-                ),
-            ),
-            (
-                "share_blurb",
-                blocks.CharBlock(
-                    help_text="Sets the tweet text, "
-                    "email subject line, and "
-                    "LinkedIn post text.",
-                    required=False,
-                ),
-            ),
-        ]
-    )
 
     def clean(self, value):
         cleaned = super().clean(value)
@@ -580,7 +555,7 @@ class FullWidthText(blocks.StreamBlock):
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
-    table_block = AtomicTableBlock(table_options={"renderer": "html"})
+    table = Table()
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
@@ -683,189 +658,63 @@ class ItemIntroduction(blocks.StructBlock):
 
 
 class FilterableList(BaseExpandable):
-    no_posts_message = blocks.CharBlock(
-        required=False,
-        help_text=mark_safe(
-            'Message for the <a href="https://cfpb.github.io/'
-            "design-system/components/notifications"
-            '#default-base-notification">notification</a> '
-            "that will be displayed instead of filter controls "
-            "if there are no posts to filter."
-        ),
-    )
-    no_posts_explanation = blocks.CharBlock(
-        required=False,
-        help_text="Additional explanation for the notification that "
-        "will be displayed if there are no posts to filter.",
-    )
-    post_date_description = blocks.CharBlock(
-        required=False,
-        label="Date stamp descriptor",
-        help_text="Strongly encouraged to help users understand the "
-        "action that the date of the post is linked to, "
-        "i.e. published, issued, released.",
-    )
-    title = blocks.BooleanBlock(
+    filter_by_keyword = blocks.BooleanBlock(
         default=True,
         required=False,
-        label="Filter by keyword",
         help_text='Whether to include a "Search by keyword" filter '
         "in the filter controls.",
     )
-    categories = blocks.StructBlock(
-        [
-            (
-                "filter_category",
-                blocks.BooleanBlock(
-                    default=True,
-                    required=False,
-                    label="Filter by Category",
-                    help_text='Whether to include a "Category" filter '
-                    "in the filter controls.",
-                ),
-            ),
-            (
-                "show_preview_categories",
-                blocks.BooleanBlock(default=True, required=False),
-            ),
-            (
-                "page_type",
-                blocks.ChoiceBlock(
-                    choices=ref.filterable_list_page_types, required=False
-                ),
-            ),
-        ]
+    filter_by_category = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text='Whether to include a "Category" filter '
+        "in the filter controls.",
     )
-    topic_filtering = blocks.ChoiceBlock(
-        choices=[
-            ("no_filter", "Don't filter topics"),
-            (
-                "sort_alphabetically",
-                "Filter topics, sort topic list alphabetically",
-            ),
-            (
-                "sort_by_frequency",
-                "Filter topics, sort topic list by number of results",
-            ),
-        ],
-        required=True,
+    category_choices = blocks.ChoiceBlock(
+        choices=ref.filterable_list_page_types, required=False
+    )
+    filter_by_topics = blocks.BooleanBlock(
+        required=False,
         help_text='Whether to include a "Topics" filter in the filter controls',
     )
-    order_by = blocks.ChoiceBlock(
-        choices=[
-            ("-date_published", "Date Published"),
-            ("_score", "Relevance"),
-        ],
-        required=True,
-        help_text="How to order results",
-        default="-date_published",
-    )
-    statuses = blocks.BooleanBlock(
+    filter_by_enforcement_statuses = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Filter by Enforcement Statuses",
         help_text='Whether to include a "Status" filter '
         "in the filter controls. "
         "Only enable if using on an "
         "enforcement actions filterable list.",
     )
-    products = blocks.BooleanBlock(
+    filter_by_enforcement_products = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Filter by Enforcement Products",
         help_text='Whether to include a "Product" filter '
         "in the filter controls. "
         "Only enable if using on an "
         "enforcement actions filterable list.",
     )
-    language = blocks.BooleanBlock(
+    filter_by_language = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Filter by Language",
         help_text='Whether to include a "Language" filter '
         "in the filter controls."
         "Only enable if there are non-english "
         "filterable results available.",
     )
-    date_range = blocks.BooleanBlock(
+    filter_by_date_range = blocks.BooleanBlock(
         default=True,
         required=False,
-        label="Filter by Date Range",
         help_text='Whether to include a set of "Date range" filters '
         "in the filter controls.",
-    )
-    output_5050 = blocks.BooleanBlock(
-        default=False, required=False, label="Render preview items as 50-50s"
-    )
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text="Add links to post preview images and"
-        " headings in filterable list results",
-    )
-    filter_children = blocks.BooleanBlock(
-        default=True,
-        required=False,
-        help_text="If checked this list will only filter its child pages.",
     )
 
     class Meta:
         label = "Filterable List"
         icon = "form"
-        template = "v1/includes/organisms/filterable-list.html"
+        template = "v1/includes/organisms/filterable-list-controls.html"
 
     class Media:
-        js = ["filterable-list.js"]
-
-    @staticmethod
-    def get_filterable_topics(filterable_page_ids, value):
-        """Given a set of page IDs, return the list of filterable topics"""
-        tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: E501
-        ).values_list("slug", "name")
-
-        sort_order = value.get("topic_filtering", "sort_by_frequency")
-        if sort_order == "sort_alphabetically":
-            return tags.distinct().order_by("name")
-        elif sort_order == "sort_by_frequency":
-            return [tag for (tag, _) in Counter(tags).most_common()]
-        else:
-            return []
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        show_topics = (
-            value["topic_filtering"] == "sort_by_frequency"
-            or value["topic_filtering"] == "sort_alphabetically"
-        )
-        # Different instances of FilterableList need to render their post
-        # previews differently depending on the page type they live on. By
-        # default post dates and tags are always shown.
-        context.update(
-            {
-                "show_post_dates": True,
-                "show_post_tags": True,
-                "show_topic_filter": show_topics,
-            }
-        )
-
-        # Pull out the page type selected when the FilterableList was
-        # configured in the page editor, if one was specified. See the
-        # 'categories' block definition above. The page type choices are
-        # defined in v1.util.ref.page_types.
-        page_type = value["categories"].get("page_type")
-
-        # Pending a much-needed refactor of that code, this logic is being
-        # placed here to keep FilterableList logic in one place. It would be
-        # better if this kind of configuration lived on custom Page models.
-        page_type_overrides = {
-            "cfpb-researchers": {"show_post_dates": False},
-            "consumer-reporting": {"show_post_dates": False},
-            "foia-freq-req-record": {"show_post_tags": False},
-        }
-
-        context.update(page_type_overrides.get(page_type, {}))
-        return context
+        js = ["filterable-list-controls.js"]
 
 
 class VideoPlayerStructValue(blocks.StructValue):

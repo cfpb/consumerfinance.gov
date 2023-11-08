@@ -6,7 +6,7 @@
       markup: |
     <div class="m-related-metadata">
         <header class="m-slug-header">
-            <h2 class="a-heading">
+            <h2 class="m-slug-header_heading">
                 Related Metadata
             </h2>
         </header>
@@ -39,7 +39,7 @@
         -----------------------
         .m-related-metadata
           .m-slug-header
-            .a-heading
+            .m-slug-header_heading
         .m-related-metadata_item-container
           h4
           .m-list
@@ -103,7 +103,7 @@
     .u-link__colors(@gray, @gray, @gray, @gray, @gray,
     @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
 
-    &:before {
+    &::before {
       position: absolute;
       left: -@bullet-font-size__em;
       width: @bullet-font-size__em;

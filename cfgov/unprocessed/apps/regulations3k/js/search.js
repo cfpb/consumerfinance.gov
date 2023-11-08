@@ -43,7 +43,7 @@ function clearFilter(event) {
   }
   target = event.target.closest('.a-tag');
   const checkbox = document.querySelector(
-    `#regulation-${target.getAttribute('data-value')}`
+    `#regulation-${target.getAttribute('data-value')}`,
   );
   // Remove the filter tag
   removeTag(target);

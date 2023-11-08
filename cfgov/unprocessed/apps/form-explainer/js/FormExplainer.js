@@ -93,7 +93,7 @@ class FormExplainer {
 
     DT.removeClass(
       '.o-expandable__form-explainer, .image-map_overlay',
-      className
+      className,
     );
 
     if (target.getAttribute('href') !== null) {
@@ -120,7 +120,7 @@ class FormExplainer {
    */
   openAndScrollToExpandable(imageOverlay, targetExpandable) {
     const targetExpandableTarget = targetExpandable.querySelector(
-      '.o-expandable_target'
+      '.o-expandable_header',
     );
 
     window.setTimeout(() => {
@@ -140,11 +140,11 @@ class FormExplainer {
     const explain = DT.getEl('.explain');
     const explainPagination = explain.querySelector('.explain_pagination');
     const explainPageBtns = explain.querySelectorAll(
-      '.form-explainer_page-buttons button'
+      '.form-explainer_page-buttons button',
     );
     const pages = explain.querySelectorAll('.explain_page');
     const formExplainerLinks = explain.querySelectorAll(
-      '.form-explainer_page-link'
+      '.form-explainer_page-link',
     );
 
     return Object.assign(this.elements, {
@@ -274,13 +274,13 @@ class FormExplainer {
       (event) => {
         event.preventDefault();
         this.updateAttention(event.target, CSS.HOVER_HAS_ATTENTION);
-      }
+      },
     );
 
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents('.o-expandable_target', 'focus', (event) => {
+    DT.bindEvents('.o-expandable_header', 'focus', (event) => {
       const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
@@ -302,17 +302,17 @@ class FormExplainer {
      * update the image overlay position and hover styles.
      */
     DT.bindEvents(
-      '.o-expandable__form-explainer .o-expandable_target',
+      '.o-expandable__form-explainer .o-expandable_header',
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {
           const closestFormExplainer = event.target.closest(
-            '.o-expandable__form-explainer'
+            '.o-expandable__form-explainer',
           );
 
           this.updateAttention(closestFormExplainer, CSS.HAS_ATTENTION);
         }
-      }
+      },
     );
   }
 }

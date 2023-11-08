@@ -62,7 +62,7 @@ MortgagePerformanceMap.prototype.eventListeners = function () {
 MortgagePerformanceMap.prototype.onClick = function (event) {
   const change = new Event('change');
   this.$container.querySelector(
-    'input[name="mp-map_geo"]:checked'
+    'input[name="mp-map_geo"]:checked',
   ).checked = false;
   this.$form.dispatchEvent(change);
   event.preventDefault();
@@ -211,7 +211,7 @@ MortgagePerformanceMap.prototype.renderChartForm = function (prevState, state) {
   }
   const geo = this.$container.querySelector(`#mp-map-${geoType}-container`);
   const containers = this.$container.querySelectorAll(
-    '.mp-map-select-container'
+    '.mp-map-select-container',
   );
   for (let i = 0; i < containers.length; ++i) {
     utils.hideEl(containers[i]);
@@ -227,7 +227,7 @@ MortgagePerformanceMap.prototype.renderChartForm = function (prevState, state) {
 
 MortgagePerformanceMap.prototype.renderChartTitle = function (
   prevState,
-  state
+  state,
 ) {
   let loc = state.geo.name;
   if (!utils.isDateValid(state.date, this.endDate)) {

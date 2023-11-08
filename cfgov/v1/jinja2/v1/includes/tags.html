@@ -9,30 +9,39 @@
 
    Render a tags list when given:
 
-   tags.links:    List of tags to render with:
+   tags:     List of tags to render with:
 
-       link.url:        The tag URL.
+       url:  (optional) The tag URL.
 
-       link.text:       The tag text.
+       text: The tag text.
 
-   hide_heading:  The optional boolean flag to hide the tags_heading element.
-                  Adds class 'tags__hide-heading' if true value passed.
-                  Defaults to false.
+   show_heading: The optional boolean flag to show the tags_heading element.
+                 Defaults to true.
 
    ========================================================================== #}
 
-{% macro render(tags, hide_heading=false) %}
-<div class="tags{{' tags__hide-heading' if hide_heading else ''}}">
-    <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">
+{% macro render(tags, show_heading=true) %}
+<div class="m-tags">
+    {% if show_heading %}
+    <span class="m-tags_heading">
         Topics:
     </span>
-    <ul class="tags_list" aria-label="Topics">
-        {% for tag in tags.links if tag.url %}
-        <li class="tags_tag">
-            <a href="{{ tag.url }}" class="tags_link">
-                <span class="tags_bullet" aria-hidden="true">&bull;</span>
+    {% endif %}
+    <ul class="m-tags_list" aria-label="Topics">
+        {% for tag in tags %}
+        <li class="m-tags_item">
+            {% if tag.url %}
+            <a href="{{ tag.url }}" class="m-tags_tag">
+            {% else %}
+            <span class="m-tags_tag">
+            {% endif %}
+                <span class="m-tags_bullet" aria-hidden="true">&bull;</span>
                 {{ tag.text }}
+            {% if tag.url %}
             </a>
+            {% else %}
+            </span>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>

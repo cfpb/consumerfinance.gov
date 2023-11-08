@@ -256,15 +256,3 @@ chart_block_credit_tightness = {
         "note": "Data from the last four months are not final.",
     },
 }
-
-
-filter_controls = {
-    "type": "filter_controls",
-    "value": {
-        "topic_filtering": "sort_by_frequency",
-        "categories": {
-            "page_type": "",
-        },
-        "filter_children": True,
-    },
-}

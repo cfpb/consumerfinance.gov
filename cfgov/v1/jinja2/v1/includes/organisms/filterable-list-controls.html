@@ -1,3 +1,21 @@
+{# ==========================================================================
+
+    Filterable List Controls
+
+    ==========================================================================
+
+    Description:
+
+    Create an expandable of filters when given:
+
+    value: Data object from an instance of the FilterableList StreamField block.
+
+    form: Django form that carries the fields that are to be rendered.
+
+    has_active_filters: Whether the filter has active filters or not.
+
+    ========================================================================== #}
+
 {% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
     <li class="m-form-field m-form-field__{{ type }}">
         <input class="a-{{ type }}"
@@ -30,7 +48,7 @@
 {% endmacro %}
 
 {% macro _render_filter_fields(value, form) -%}
-    {% if value.title %}
+    {% if value.filter_by_keyword %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
@@ -51,23 +69,23 @@
         columns to 1-2 (50%) width of the available area.
     #}
     {% set filter_count = 0 %}
-    {% if value.categories.filter_category %}
+    {% if value.filter_by_category %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if show_topic_filter %}
+    {% if value.filter_by_topics %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if value.language and form.language %}
+    {% if value.filter_by_language and form.language %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if value.statuses and form.statuses %}
+    {% if value.filter_by_enforcement_statuses and form.statuses %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if value.products %}
+    {% if value.filter_by_enforcement_products %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
 
-    {% if value.categories.filter_category %}
+    {% if value.filter_by_category %}
         <div class="content-l_col
                     content-l_col-1-{{ '3' if filter_count == 3 else '2' }}">
             <div class="o-form_group">
@@ -82,7 +100,9 @@
                             class="o-multiselect"
                             data-placeholder="Search for categories"
                             multiple>
-                    {% for slug, name in choices_for_page_type(value.categories.page_type) %}
+                    {% for slug, name in choices_for_page_type(
+                        value.category_choices
+                    )  | sort(attribute="1") %}
                         <option value="{{ slug }}"
                                 {{ 'selected' if is_filter_selected('categories', slug) else '' }}>
                             {{ name }}
@@ -94,23 +114,23 @@
         </div>
     {% endif %}
 
-    {% if show_topic_filter and form.topics %}
+    {% if value.filter_by_topics and form.topics %}
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 
-    {% if value.language and form.language %}
+    {% if value.filter_by_language and form.language %}
         {{ _filter_multiselect( 'Language', form.language, filter_count ) }}
     {% endif %}
 
-    {% if value.statuses and form.statuses %}
+    {% if value.filter_by_enforcement_statuses and form.statuses %}
         {{ _filter_multiselect( 'Status', form.statuses, filter_count ) }}
     {% endif %}
 
-    {% if value.products and form.products %}
+    {% if value.filter_by_enforcement_products and form.products %}
         {{ _filter_multiselect( 'Product', form.products, filter_count ) }}
     {% endif %}
 
-    {% if value.date_range %}
+    {% if value.filter_by_date_range %}
         {# Ensures the dates appear on their own line #}
         <div class="content-l_col
                     content-l_col-1">
@@ -171,35 +191,15 @@
     </form>
 {% endmacro %}
 
-{# ==========================================================================
 
-   Filterable List Controls
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
+<div id="o-filterable-list-controls" class="o-filterable-list-controls">
+    {% if has_active_filters %}
+        {% do value.update({'is_expanded':true}) %}
+    {% endif %}
 
-   ==========================================================================
-
-   Description:
-
-   Create an expandable of filters when given:
-
-   value: Data object from an instance of the FilterableList StreamField block.
-
-   form: Django form that carries the fields that are to be rendered.
-
-   fragment_id: A unique ID for the filter list control.
-
-   has_active_filters: Whether the filter has active filters or not.
-
-   ========================================================================== #}
-{% macro render(value, form, fragment_id, has_active_filters) %}
-    {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
-    <div id="{{ fragment_id }}" class="o-filterable-list-controls">
-        {% if has_active_filters %}
-            {% do value.update({'is_expanded':true}) %}
-        {% endif %}
-
-        {% set form_markup = _filters_form(value, form) %}
-        {% call() expandable(value) %}
-            {{ form_markup | safe }}
-        {% endcall %}
-    </div>
-{% endmacro %}
+    {% set form_markup = _filters_form(value, form) %}
+    {% call() expandable(value) %}
+        {{ form_markup }}
+    {% endcall %}
+</div>

@@ -138,7 +138,7 @@ function pushAddress(row, addresses) {
       ', ' +
       row.data.State +
       ' ' +
-      row.data.Zip
+      row.data.Zip,
   );
   return addresses;
 }

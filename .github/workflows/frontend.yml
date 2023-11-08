@@ -1,14 +1,10 @@
 name: frontend
 
 on:
-  pull_request:
   merge_group:
-    paths:
-      - '**.js'
-      - '**package.json'
+  pull_request:
 
 jobs:
-
   frontend:
     runs-on: ubuntu-latest
 
@@ -35,6 +31,17 @@ jobs:
 
       - name: Build Javascript
         run: yarn build
+
+      - name: Zip static files
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -q -r frontend.zip ./cfgov/static_built
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend_${{ github.sha }}
+          path: frontend.zip
 
   coverage:
     runs-on: ubuntu-latest

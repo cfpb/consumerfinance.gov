@@ -13,7 +13,7 @@ const URLS = {
 const autocompleteContainer = document.querySelector('.m-autocomplete');
 const errorMessage = document.querySelector('#o-search-bar_error-message');
 const submitButton = document.querySelector(
-  '.o-search-bar button[type="submit"]'
+  '.o-search-bar button[type="submit"]',
 );
 
 /**

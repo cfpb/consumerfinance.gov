@@ -2,14 +2,14 @@
 from django.test import TestCase
 
 from wagtail.models import Site
-from wagtail.test.testapp.models import SimplePage
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models.snippets import (
+from v1.models import (
     Contact,
     EmailSignUp,
     RelatedResource,
     ReusableText,
+    SublandingPage,
 )
 
 
@@ -63,7 +63,7 @@ class TestModelStrings(TestCase):
 
 class TestReusableTextRendering(TestCase):
     def test_links_get_expanded(self):
-        page = SimplePage(title="foo", slug="foo", content="content")
+        page = SublandingPage(title="foo", slug="foo")
         default_site = Site.objects.get(is_default_site=True)
         default_site.root_page.add_child(instance=page)
 

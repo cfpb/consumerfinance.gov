@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // Regs3K sidebar
-.o-regs3k-sidebar {
+.regulations3k .o-regs3k-sidebar {
   // TODO: If secondary navigation is overriding o-expandables appearance,
   //       they aren't atomic expandables anymore per the design spec.
   //       Secondary navigation should use FlyoutMenu for expandable-like
@@ -13,9 +13,10 @@
 
   .respond-to-max( @bp-sm-max, {
     background-color: @gray-5;
-    border-bottom: 1px solid @gray-40;
-    border-top: 1px solid @gray-40;
-    margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   } );
 
   // TODO - this will be updated to data-open='true' in newer expandables.
@@ -33,7 +34,7 @@
 
 // Regs3K secondary nav sections
 .o-regs3k-sections {
-  .o-expandable_target {
+  .o-expandable_header {
     .respond-to-min( @bp-med-min, {
       padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
     } );
@@ -47,13 +48,13 @@
       background: none;
       border: none;
     } );
-    &:before {
+    &::before {
       border: 0;
       padding: 0;
     }
   }
 
-  &:before {
+  &::before {
     .respond-to-max( @bp-sm-max, {
       border-bottom: 1px solid @gray-40;
       content: ' ';
@@ -84,7 +85,8 @@
   }
 }
 
-.m-nav-link {
+// TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
+.o-secondary-nav_link {
   color: @pacific;
 
   &__current {

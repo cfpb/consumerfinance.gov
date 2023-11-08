@@ -8,12 +8,13 @@ from django.apps import apps
 from django.conf import settings
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
-from django.test.runner import DiscoverRunner
+
+from django_slowtests.testrunner import DiscoverSlowestTestsRunner
 
 from scripts import initial_data
 
 
-class TestRunner(DiscoverRunner):
+class TestRunner(DiscoverSlowestTestsRunner):
     def setup_test_environment(self, **kwargs):
         super().setup_test_environment(**kwargs)
 

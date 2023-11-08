@@ -1,14 +1,10 @@
-{% extends 'v1/layouts/layout-side-nav.html' %}
+{% extends 'v1/layouts/layout-1-3.html' %}
 
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
 {% block content_main %}
-    {% for block in page.header %}
+    {% for block in page.header -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
                         {{ 'u-mt0' if loop.first }}">
@@ -28,8 +24,13 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
+
+    <div class="block">
+        {% include "v1/includes/organisms/filterable-list-results.html" %}
+    </div>
+
     {% if page.sidefoot %}
-        <aside class="prefooter">
+        <aside class="o-prefooter">
             {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
         </aside>
     {% endif %}

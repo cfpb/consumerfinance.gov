@@ -7,7 +7,7 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.fields import StreamField
 
-from opensearch_dsl import Q
+from opensearchpy import Q
 
 from teachers_digital_platform.documents import ActivityPageDocument
 from teachers_digital_platform.models.django import (
@@ -406,13 +406,13 @@ def validate_results_per_page(request):
     A utility for parsing the requested number of results per page.
 
     This should catch an invalid number of results and always return
-    a valid number of results, defaulting to 5.
+    a valid number of results, defaulting to 10.
     """
     raw_results = request.GET.get("results")
     if raw_results in ["10", "25", "50"]:
         return int(raw_results)
     else:
-        return 5
+        return 10
 
 
 def validate_page_number(request, paginator):

@@ -114,7 +114,7 @@ function getQueryVariables() {
     new URLSearchParams(window.location.search),
     {
       get: (queryVariables, prop) => queryVariables.get(prop),
-    }
+    },
   );
 
   for (const key in urlParameters) {

@@ -26,7 +26,7 @@ function calculateDirectLoanDebt(
   directSub,
   directUnsub,
   rateUnsub,
-  programLength
+  programLength,
 ) {
   const level = getStateValue('programLevel');
   const dependency = getStateValue('programDependency');
@@ -134,7 +134,7 @@ function debtCalculator() {
     fin.fedLoan_directSub,
     fin.fedLoan_directUnsub,
     fin.rate_directUnsub,
-    fin.other_programLength
+    fin.other_programLength,
   );
 
   debts.directSub = fedLoanTotals.subPrincipal;
@@ -150,7 +150,7 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength
+      fin.other_programLength,
     );
 
     if (isNaN(int)) {
@@ -175,7 +175,7 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['publicLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength
+      fin.other_programLength,
     );
 
     if (isNaN(int)) {
@@ -192,7 +192,7 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['privLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength
+      fin.other_programLength,
     );
 
     if (isNaN(int)) {
@@ -225,7 +225,7 @@ function debtCalculator() {
     let twentyFiveYearMonthly = calcMonthlyPayment(
       debts[key],
       fin['rate_' + key],
-      10
+      10,
     );
 
     if (isNaN(twentyFiveYearMonthly)) {
@@ -257,7 +257,7 @@ function debtCalculator() {
   const existingDebtMonthly = calcMonthlyPayment(
     existingDebtTotalAtGrad,
     fin.rate_existingDebt,
-    10
+    10,
   );
 
   debts.existingDebtInterestAtGrad = existingDebtInterest;

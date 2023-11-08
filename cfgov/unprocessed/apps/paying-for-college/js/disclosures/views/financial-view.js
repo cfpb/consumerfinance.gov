@@ -9,7 +9,7 @@ import {
   convertStringToNumber,
   formatUSD,
 } from '../../../../../js/modules/util/format.js';
-import { toWords } from 'number-to-words';
+import converter from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
@@ -289,13 +289,13 @@ const financialView = {
     }
     this.setGraduationCohortVisibility(
       typeof values.completionCohort !== 'undefined' &&
-        values.completionCohort !== null
+        values.completionCohort !== null,
     );
     this.perkinsVisible(values.offersPerkins);
     this.jobPlacementVisible(
       typeof values.jobRate !== 'undefined' &&
         values.jobRate !== 'None' &&
-        values.jobRate !== ''
+        values.jobRate !== '',
     );
 
     // Update text for overCap errors
@@ -321,11 +321,11 @@ const financialView = {
    */
   updateViewWithURL: function (values, urlvalues) {
     this.totalDirectCostVisible(
-      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0
+      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0,
     );
     this.tuitionPaymentPlanVisible(
       typeof urlvalues.tuitionRepay !== 'undefined' &&
-        urlvalues.tuitionRepay !== 0
+        urlvalues.tuitionRepay !== 0,
     );
     // Update availability of Pell grants, subsidized loans, and gradPLUS loans
     if (values.undergrad === false) {
@@ -518,7 +518,7 @@ const financialView = {
           financialView.updateView(getFinancial.values());
           expensesView.updateView(getExpenses.values());
         }
-      }
+      },
     );
   },
 
@@ -571,7 +571,7 @@ const financialView = {
               metricView.updateGraphs(values);
               window.location.hash = '#info-right';
               financialView.$aboutThisTool.focus();
-            }
+            },
           );
 
         analyticsSendEvent({
@@ -594,7 +594,7 @@ const financialView = {
             function () {
               window.location.hash = '#info-wrong';
               financialView.$programLength.focus();
-            }
+            },
           );
         analyticsSendEvent({ action: 'Step Completed', label: hrefText });
       }
@@ -610,7 +610,7 @@ const financialView = {
     this.$programLength.on('change', function () {
       const programLength = Number($(this).val());
       const values = getFinancial.values();
-      let yearsAttending = toWords(programLength);
+      let yearsAttending = converter.toWords(programLength);
       const $yearOrLess = $('[data-multi_year="false"]');
       const $multiYears = $('[data-multi_year="true"]');
 
@@ -761,7 +761,7 @@ const financialView = {
   updateSalaryContent: function (source) {
     if (source === 'school') {
       this.$medianSalaryContent.text(
-        'The typical salary for students who started attending this school 10 years ago is'
+        'The typical salary for students who started attending this school 10 years ago is',
       );
       this.$salaryMetricContent.text('Typical salary for this school');
     } else if (source === 'national') {
@@ -770,7 +770,7 @@ const financialView = {
       metricView.updateSalaryWarning();
       this.$budgetSalaryContent.show();
       this.$debtBurdenSalaryContent.text(
-        'national salary for all students who attended college'
+        'national salary for all students who attended college',
       );
     }
   },
@@ -784,7 +784,7 @@ const financialView = {
     if (isUndergrad) {
       $error.text(
         'The maximum subsidized and unsubsidized loans that can be ' +
-          'borrowed per year is'
+          'borrowed per year is',
       );
     } else {
       $error.text('The maximum that can be borrowed per year is');
@@ -829,7 +829,7 @@ const financialView = {
           'swing',
           function () {
             // Noop function.
-          }
+          },
         );
       analyticsSendEvent({
         action: 'Step Completed',

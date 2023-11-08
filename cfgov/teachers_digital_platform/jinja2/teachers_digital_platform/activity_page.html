@@ -23,7 +23,7 @@
         </span>
     </div>
     <div class="lead-paragraph u-mb45">
-        <p>{{ page.summary | striptags | safe }}</p>
+        <p>{{ page.summary }}</p>
     </div>
     <h2 class="u-mt45">Big idea</h2>
     {{ page.big_idea|richtext }}
@@ -38,14 +38,14 @@
         <h3 class="h5">Teacher guide</h3>
         <p>
             <a href="{{ page.activity_file.url }}" target="_blank" rel="noopener noreferrer">
-                {{- page.activity_file.title | striptags | safe -}}
+                {{- page.activity_file.title -}}
             </a>
         </p>
         {% if page.activity_documents %}
             {% for activity_document in page.activity_documents.all() %}
                 <p>
                     <a href="{{ activity_document.documents.url }}" target="_blank" rel="noopener noreferrer">
-                        {{- activity_document.documents.title | striptags | safe -}}
+                        {{- activity_document.documents.title -}}
                     </a>
                 </p>
             {% endfor %}
@@ -54,21 +54,21 @@
             <h3 class="h5">Student materials</h3>
             <p>
                 <a href="{{ page.handout_file.url }}" target="_blank" rel="noopener noreferrer">
-                    {{- page.handout_file.title | striptags | safe -}}
+                    {{- page.handout_file.title -}}
                 </a>
             </p>
         {% endif %}
         {% if page.handout_file_2 %}
             <p>
                 <a href="{{ page.handout_file_2.url }}" target="_blank" rel="noopener noreferrer">
-                    {{- page.handout_file_2.title | striptags | safe -}}
+                    {{- page.handout_file_2.title -}}
                 </a>
             </p>
         {% endif %}
         {% if page.handout_file_3 %}
             <p>
                 <a href="{{ page.handout_file_3.url }}" target="_blank" rel="noopener noreferrer">
-                    {{- page.handout_file_3.title | striptags | safe -}}
+                    {{- page.handout_file_3.title -}}
                 </a>
             </p>
         {% endif %}
@@ -76,7 +76,7 @@
             {% for handout_document in page.handout_documents.all() %}
                 <p>
                     <a href="{{ handout_document.documents.url }}" target="_blank" rel="noopener noreferrer">
-                        {{- handout_document.documents.title | striptags | safe -}}
+                        {{- handout_document.documents.title -}}
                     </a>
                 </p>
             {% endfor %}

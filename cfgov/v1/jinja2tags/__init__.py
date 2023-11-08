@@ -11,7 +11,6 @@ from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
-from v1.templatetags.email_popup import email_popup
 from v1.util import ref
 from v1.util.util import get_unique_id
 
@@ -68,29 +67,22 @@ def is_filter_selected(context, fieldname, value):
 
 
 def render_stream_child(context, stream_child):
-    # Use the django_jinja to get the template content based on its name
-    try:
-        template = context.environment.get_template(
-            stream_child.block.meta.template
-        )
-    except Exception:
-        return stream_child
+    rendered = stream_child.render(context=context)
 
-    # Create a new context based on the current one as we can't edit it
-    # directly
-    new_context = context.get_all()
-    # Add the value on the context (value is the keyword chosen by
-    # wagtail for the blocks context)
-    try:
-        new_context["value"] = stream_child.value
-    except AttributeError:
-        new_context["value"] = stream_child
+    # This logic is needed because historically we have supported the
+    # inclusion of raw HTML tags in any Wagtail text or rich text block.
+    # Ideally we could remove this logic, but before we do so we need to
+    # eliminate all such tags from our field content.
+    #
+    # By default all blocks are unescaped, but individual blocks can disable
+    # this behavior by setting unescape=False in their Meta class. Once all
+    # blocks have been audited for raw HTML tags, and all have unescape set
+    # to False, this logic can be removed, and we can simplify our templates
+    # to use {% include_block %} instead of {{ render_stream_child }}.
+    if getattr(stream_child.block.meta, "unescape", True):
+        rendered = html.unescape(rendered)
 
-    # Render the template with the context
-    html_result = template.render(new_context)
-    unescaped = html.unescape(html_result)
-    # Return the rendered template as safe html
-    return Markup(unescaped)
+    return Markup(rendered)
 
 
 def unique_id_in_context(context):
@@ -150,7 +142,6 @@ class V1Extension(Extension):
             {
                 "category_label": ref.category_label,
                 "choices_for_page_type": ref.choices_for_page_type,
-                "email_popup": email_popup,
                 "get_category_icon": ref.get_category_icon,
                 "get_model": get_model,
                 "get_unique_id": get_unique_id,

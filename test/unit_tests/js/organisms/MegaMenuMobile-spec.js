@@ -1,5 +1,5 @@
 import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
-import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
+import { MegaMenu } from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
 describe('MegaMenuMobile', () => {
@@ -24,7 +24,7 @@ describe('MegaMenuMobile', () => {
     it('should expand on the first level sub-menu button click', (done) => {
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
       const subTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children'
+        '.o-mega-menu_content-1-link__has-children',
       );
       const firstPanel = navElem.querySelector('.o-mega-menu_content-1');
       const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
@@ -104,11 +104,11 @@ describe('MegaMenuMobile', () => {
     it('should collapse on the first level sub-menu back button click', (done) => {
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
       const subTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children'
+        '.o-mega-menu_content-1-link__has-children',
       );
       const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
       const subAltTrigger = secondPanel.querySelector(
-        '.o-mega-menu_content-alt-trigger'
+        '.o-mega-menu_content-alt-trigger',
       );
       let isExpanded;
 

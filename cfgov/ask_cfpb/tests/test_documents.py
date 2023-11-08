@@ -152,10 +152,6 @@ class AnswerPageDocumentTest(TestCase):
         )
         self.assertIsInstance(dateField, fields.DateField)
         self.assertEqual(dateField._path, ["last_edited"])
-        for f in ["featured", "share_and_print"]:
-            boolField = doc.to_field(f, AnswerPage._meta.get_field(f))
-            self.assertIsInstance(boolField, fields.BooleanField)
-            self.assertEqual(boolField._path, [f])
         intField = doc.to_field(
             "featured_rank", AnswerPage._meta.get_field("featured_rank")
         )
@@ -177,6 +173,7 @@ class AnswerPageDocumentTest(TestCase):
                     "autocomplete": {
                         "analyzer": "ngram_tokenizer",
                         "type": "text",
+                        "fields": {"raw": {"type": "keyword"}},
                     },
                     "language": {"type": "text"},
                     "portal_categories": {"type": "text"},

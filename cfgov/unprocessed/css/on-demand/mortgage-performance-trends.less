@@ -1,6 +1,6 @@
 // Import external cfpb-chart-builder stylesheet
 // This is also imported by the chart block (in chart.less)
-@import 'cfpb-chart-builder.less';
+@import url('cfpb-chart-builder.less');
 
 .o-mp-map {
   border: 1px solid @gray-40;
@@ -18,7 +18,10 @@
     .highcharts-point:hover {
       stroke: @black !important;
       stroke-width: 3px !important;
-      transition: fill 500ms, fill-opacity 500ms, stroke-width 0 !important;
+      transition:
+        fill 500ms,
+        fill-opacity 500ms,
+        stroke-width 0 !important;
     }
     .highcharts-point {
       stroke: @black;
@@ -179,7 +182,7 @@
 
 #mp-line-chart-controls,
 #mp-map-controls {
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 #mp-line-chart-geo,

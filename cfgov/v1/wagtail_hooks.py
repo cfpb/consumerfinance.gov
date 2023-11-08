@@ -18,23 +18,32 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import cdn_is_configured, manage_cdn
-from v1.models.banners import Banner
-from v1.models.portal_topics import PortalCategory, PortalTopic
-from v1.models.resources import Resource
-from v1.models.snippets import (
+from v1.admin_views import (
+    cdn_is_configured,
+    manage_cdn,
+    redirect_to_internal_docs,
+)
+from v1.models import (
+    Banner,
     Contact,
     EmailSignUp,
+    InternalDocsSettings,
+    PortalCategory,
+    PortalTopic,
     RelatedResource,
+    Resource,
     ReusableText,
 )
 from v1.template_debug import (
     call_to_action_test_cases,
+    contact_us_table_test_cases,
+    crc_table_test_cases,
     featured_content_test_cases,
     heading_test_cases,
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    table_test_cases,
     translation_links_test_cases,
     video_player_test_cases,
 )
@@ -173,15 +182,6 @@ def register_cdn_url():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
     ]
-
-
-@hooks.register("before_serve_page")
-def serve_latest_draft_page(page, request, args, kwargs):
-    if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
-        latest_draft = page.get_latest_revision_as_object()
-        response = latest_draft.serve(request, *args, **kwargs)
-        response["Serving-Wagtail-Draft"] = "1"
-        return response
 
 
 @hooks.register("register_reports_menu_item")
@@ -372,7 +372,9 @@ def clean_up_report_menu_items(request, report_menu_items):
     for index, item in enumerate(report_menu_items):
         item.label = item.label.title()
         if re.search(cfpb_re, item.label, re.IGNORECASE):
-            item.label = re.sub(cfpb_re, "CFPB", item.label, 0, re.IGNORECASE)
+            item.label = re.sub(
+                cfpb_re, "CFPB", item.label, count=0, flags=re.IGNORECASE
+            )
         item.order = index
 
 
@@ -541,6 +543,22 @@ register_template_debug(
 
 register_template_debug(
     "v1",
+    "contact_us_table",
+    "v1/includes/organisms/tables/contact-us.html",
+    contact_us_table_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "crc_table",
+    "v1/includes/organisms/tables/consumer-reporting-company.html",
+    crc_table_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
     "featured_content",
     "v1/includes/organisms/featured-content.html",
     featured_content_test_cases,
@@ -571,6 +589,14 @@ register_template_debug(
 
 register_template_debug(
     "v1",
+    "table",
+    "v1/includes/organisms/tables/base.html",
+    table_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
     "translation_links",
     "v1/includes/molecules/translation-links.html",
     translation_links_test_cases,
@@ -584,3 +610,31 @@ register_template_debug(
     video_player_test_cases,
     extra_js=["video-player.js"],
 )
+
+
+@hooks.register("register_admin_urls")
+def register_internal_docs_url():
+    return [
+        re_path(
+            r"^internal-docs/$",
+            redirect_to_internal_docs,
+            name="internal_docs",
+        ),
+    ]
+
+
+class InternalDocsMenuItem(MenuItem):
+    def is_shown(self, request):
+        return bool(InternalDocsSettings.load(request_or_site=request).url)
+
+
+@hooks.register("register_help_menu_item")
+def register_internal_docs_menu_item():
+    return InternalDocsMenuItem(
+        "Internal documentation",
+        reverse("internal_docs"),
+        icon_name="help",
+        order=1200,
+        attrs={"target": "_blank", "rel": "noreferrer"},
+        name="internal_docs_menu",
+    )

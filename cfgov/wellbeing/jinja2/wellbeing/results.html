@@ -154,11 +154,11 @@
         <div class="o-expandable
                     o-expandable__padded
                     o-expandable__border">
-            <button class="o-expandable_header o-expandable_target">
+            <button class="o-expandable_header">
                 <span class="o-expandable_label">
                     {{ _('Review your answers') }}
                 </span>
-                <span class="o-expandable_link">
+                <span class="o-expandable_cues">
                     <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                         {{ svg_icon('plus-round') }}
                     </span>
@@ -477,7 +477,7 @@
     {% if (current_language == 'en') %}
     <div class="block block__flush-top">
         <header class="m-slug-header">
-            <h2 class="a-heading">Looking for more help?</h2>
+            <h2 class="m-slug-header_heading">Looking for more help?</h2>
         </header>
         <p>
             You can further explore the tips, tools, answers, and resources
@@ -514,7 +514,7 @@
     {% endif %}
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">{{ _('About this questionnaire') }}</h2>
+            <h2 class="m-slug-header_heading">{{ _('About this questionnaire') }}</h2>
         </header>
         <p>
             {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
@@ -527,7 +527,7 @@
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">{{ _('Legal disclaimer') }}</h2>
+            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
         </header>
         <p>
             {{ _('The content on this page provides general consumer information.') }}

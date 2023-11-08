@@ -1,4 +1,5 @@
 @import (reference) '../main.less';
+
 /* ==========================================================================
    consumerfinance.gov
    Ask CFPB pages at /ask-cfpb/.
@@ -37,14 +38,10 @@
   }
 
   .ask-search-link {
-    .respond-to-max( @bp-xs-max, {
-      .break {
-        display: block;
-        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-      }
-    } );
-
-    margin-top: unit(40px / @base-font-size-px, em);
+    // Break Ask search link below text on smaller screen sizes.
+    display: flex;
+    flex-wrap: wrap;
+    gap: unit(10px / @base-font-size-px, rem);
   }
 
   .search-bar {

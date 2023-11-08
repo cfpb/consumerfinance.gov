@@ -11,40 +11,6 @@
 //
 
 /* ==========================================================================
-   Accessible bleedbar
-   ========================================================================== */
-
-.content__bleedbar {
-  .content_wrapper:after {
-    background-color: @gray-5;
-  }
-
-  .content_sidebar {
-    background-color: @gray-5;
-
-    .respond-to-min(801px, {
-      background-color: transparent;
-    });
-  }
-}
-
-/* ==========================================================================
-   Full-width-on-small-screen buttons
-   ========================================================================== */
-
-.a-btn__full {
-  .respond-to-max( @bp-xs-max, {
-    display: block;
-    width: 100%;
-    text-align: center;
-
-    + .a-btn__full {
-      margin-left: initial;
-    }
-  } );
-}
-
-/* ==========================================================================
    Range slider
    https://github.com/cfarm/cf-forms/blob/range/src/cf-forms.less
    ========================================================================== */
@@ -59,7 +25,7 @@ input[type='range'] {
   width: 100%;
   padding-left: 0;
   margin: 15px 0;
-  -webkit-appearance: none;
+  appearance: none;
   border: none;
   &::-webkit-slider-runnable-track {
     width: 100%;
@@ -89,7 +55,7 @@ input[type='range'] {
     width: 45px;
     height: 45px;
     margin-top: -18px;
-    -webkit-appearance: none;
+    appearance: none;
     border: 1px solid @input-range-border;
     border-radius: 50%;
     background: @input-range-handle;
@@ -140,10 +106,4 @@ input[type='range'] {
       border: 2px solid @input-border-focus;
     }
   }
-}
-
-.wrapper__match-content {
-  .respond-to-min( @bp-sm-min, {
-    max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 ) !important;
-  } );
 }

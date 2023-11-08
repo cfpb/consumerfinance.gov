@@ -6,12 +6,11 @@ import boto3
 import moto
 from model_bakery import baker
 
-from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage, LearnPage
+from v1.models import CFGOVImage, CFGOVPage, LearnPage
 
 
 class TestMetaImage(TestCase):
     def setUp(self):
-        self.preview_image = baker.prepare(CFGOVImage)
         self.social_sharing_image = baker.prepare(CFGOVImage)
 
     def test_meta_image_no_images(self):
@@ -23,28 +22,6 @@ class TestMetaImage(TestCase):
         """Meta image uses social sharing image if provided"""
         page = baker.prepare(
             CFGOVPage, social_sharing_image=self.social_sharing_image
-        )
-        self.assertEqual(page.meta_image, page.social_sharing_image)
-
-    def test_meta_image_only_preview(self):
-        """AbstractFilterPages use preview image for meta image
-        if a social image is not provided
-        """
-        page = baker.prepare(
-            AbstractFilterPage,
-            social_sharing_image=None,
-            preview_image=self.preview_image,
-        )
-        self.assertEqual(page.meta_image, page.preview_image)
-
-    def test_meta_image_both(self):
-        """AbstractFilterPages use social image for meta image
-        if both preview image and social image are provided
-        """
-        page = baker.prepare(
-            AbstractFilterPage,
-            social_sharing_image=self.social_sharing_image,
-            preview_image=self.preview_image,
         )
         self.assertEqual(page.meta_image, page.social_sharing_image)
 
@@ -97,8 +74,8 @@ class TestMetaImage(TestCase):
 
     @override_settings(
         AWS_LOCATION="root",
-        AWS_S3_ACCESS_KEY_ID="test",
-        AWS_S3_SECRET_ACCESS_KEY="test",
+        AWS_ACCESS_KEY_ID="test",
+        AWS_SECRET_ACCESS_KEY="test",
         AWS_STORAGE_BUCKET_NAME="test_s3_bucket",
         DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage",
     )

@@ -44,12 +44,12 @@ describe('ExternalSite', () => {
     const externalSite = new ExternalSite(dom);
     externalSite.init();
     expect(dom.querySelectorAll('.external-site_reload-duration').length).toBe(
-      0
+      0,
     );
 
     setTimeout(() => {
       expect(
-        dom.querySelectorAll('.external-site_reload-duration').length
+        dom.querySelectorAll('.external-site_reload-duration').length,
       ).toBe(1);
     }, 1500);
   });

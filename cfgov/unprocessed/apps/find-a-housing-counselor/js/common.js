@@ -69,7 +69,7 @@ function initializeMap() {
       .map('hud_hca_api_map_container')
       .setView([40, -80], 2)
       .addLayer(
-        window.L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11')
+        window.L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'),
       );
 
     if (hudData.counseling_agencies) {

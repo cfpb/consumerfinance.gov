@@ -30,8 +30,7 @@ class FilterableFeed(Feed):
         return "%s | Consumer Financial Protection Bureau" % self.page.title
 
     def items(self):
-        posts = self.context["filter_data"]["page_set"]
-        return posts
+        return self.context["results_page"]
 
     def item_link(self, item):
         return item.full_url
@@ -43,7 +42,7 @@ class FilterableFeed(Feed):
         return eastern.localize(naive)
 
     def item_description(self, item):
-        return item.preview_description
+        return item.search_description
 
     def item_categories(self, item):
         categories = [cat.get_name_display() for cat in item.categories.all()]
@@ -64,15 +63,15 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
     under the index page).
 
     Pages are considered to provide a feed if they inherit from
-    FilterableListMixin.
+    AbstractFilterablePage.
 
     Returns None if neither the page nor any of its ancestors provide feeds.
     """
-    from v1.models.filterable_list_mixins import FilterableListMixin
+    from v1.models.filterable_page import AbstractFilterablePage
 
     ancestors_including_page = page.get_ancestors(inclusive=True)
     ancestors_including_page_with_feeds = ancestors_including_page.filter(
-        ancestors_including_page.type_q(FilterableListMixin)
+        ancestors_including_page.type_q(AbstractFilterablePage)
     )
 
     # page.get_ancestors() orders from root down to page.

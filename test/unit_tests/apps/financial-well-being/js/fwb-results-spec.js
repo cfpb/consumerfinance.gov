@@ -20,19 +20,15 @@ const dataLayerEvent = {
 const HTML_SNIPPET = `
 <div class="content">
   <div class="o-expandable">
-    <button class="o-expandable_target">
-      <div class="o-expandable_header">
-        <span class="o-expandable_label">
-        </span>
-        <span class="o-expandable_link">
-          <span class="o-expandable_cue-open" role="img" aria-label="Show"></span>
-          <span class="o-expandable_cue-close" role="img" aria-label="Hide"></span>
-        </span>
-      </div>
+    <button class="o-expandable_header">
+      <span class="o-expandable_label">
+      </span>
+      <span class="o-expandable_cues">
+        <span class="o-expandable_cue-open" role="img" aria-label="Show"></span>
+        <span class="o-expandable_cue-close" role="img" aria-label="Hide"></span>
+      </span>
     </button>
-    <div class="o-expandable_content">
-      <div class="o-expandable_content-animated"></div>
-    </div>
+    <div class="o-expandable_content"></div>
   </div>
   <figure class="comparison-chart" id="comparison-chart">
     <div class="comparison-chart_toggle u-js-only">
@@ -111,18 +107,17 @@ describe('fwb-results', () => {
     window['google_tag_manager'] = {};
 
     toggleButtons = document.querySelectorAll(
-      '.comparison-chart_toggle-button'
+      '.comparison-chart_toggle-button',
     );
     dataPoint = document.querySelectorAll('.comparison_data-point');
+    expandableTarget = document.querySelector('.o-expandable_header');
     expandableContent = document.querySelector('.o-expandable_content');
-    expandableTarget = document.querySelector('.o-expandable_target');
     initFwbResults();
   });
 
-  // TODO: Add aria pressed states to cf-expandables
-  xit('initialize the expandables on page load', () => {
-    expect(expandableTarget.getAttribute('aria-pressed')).toBe('false');
-    expect(expandableContent.getAttribute('aria-expanded')).toBe('false');
+  it('initialize the expandables on page load', () => {
+    expect(expandableTarget.getAttribute('aria-expanded')).toBe('false');
+    expect(expandableContent.getAttribute('data-open')).toBe('false');
   });
 
   it('should submit the correct analytics when a toggle button is clicked', () => {
@@ -152,7 +147,7 @@ describe('fwb-results', () => {
       expect(toggleButtons[0].classList.contains(SELECTED_CLASS)).toBe(false);
       expect(dataPoint[0].classList.contains(HIDDEN_CLASS)).toBe(true);
       expect(dataPoint[1].classList.contains(HIDDEN_CLASS)).toBe(true);
-    }
+    },
   );
 
   it('should show the correct category content when the toggle is clicked', () => {

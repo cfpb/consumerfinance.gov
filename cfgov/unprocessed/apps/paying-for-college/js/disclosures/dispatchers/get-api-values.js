@@ -131,7 +131,7 @@ const getApiValues = {
     return $.when(
       this.fetchSchoolData(iped),
       this.fetchProgramData(iped, pid),
-      this.fetchNationalData(iped, pid)
+      this.fetchNationalData(iped, pid),
     );
   },
 

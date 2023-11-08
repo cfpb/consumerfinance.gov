@@ -42,7 +42,7 @@ function processDate(option) {
 function makeSelectFilterDOM(options, chartNode, filter) {
   const id = Math.random() + filter.key;
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters'
+    'o-simple-chart_filters',
   )[0];
 
   const wrapper = document.createElement('div');
@@ -106,7 +106,7 @@ function makeSelectFilterDOM(options, chartNode, filter) {
  */
 function makeRadioFilterDOM(buckets, chartNode, filter) {
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters'
+    'o-simple-chart_filters',
   )[0];
   const radios = [];
 
@@ -280,4 +280,4 @@ function attachFilters(selectors, chart, dataAttributes, data) {
   });
 }
 
-export { initFilters, makeSelectFilterDOM };
+export { initFilters };

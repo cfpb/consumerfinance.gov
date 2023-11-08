@@ -357,9 +357,7 @@ main.college-costs {
     }
   }
 
-  &:not([data-state_programprogress='0']):not(
-      [data-state_programprogress='n']
-    ) {
+  &:not([data-state_programprogress='0'], [data-state_programprogress='n']) {
     [data-state-based-visibility='is_first_year-false'] {
       display: block;
     }

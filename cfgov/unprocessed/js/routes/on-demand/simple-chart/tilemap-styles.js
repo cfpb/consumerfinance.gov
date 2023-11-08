@@ -22,7 +22,7 @@ const tilemap = {
           return `<span style="font-weight:500">${
             this.point.state
           }</span><br/><span style="font-weight:300">${Math.round(
-            this.point.value
+            this.point.value,
           )}</span>`;
         },
         style: {

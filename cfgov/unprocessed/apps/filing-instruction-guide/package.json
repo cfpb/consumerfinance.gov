@@ -13,7 +13,7 @@
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "ctrl-f": "1.3.2"
+    "ctrl-f": "1.4.2"
   },
   "type": "module"
 }

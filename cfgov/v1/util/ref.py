@@ -38,6 +38,7 @@ page_types = [
     ("leadership-calendar", "Leadership Calendar"),
     ("newsroom", "Newsroom"),
     ("notice-opportunity-comment", "Notice and Opportunity for Comment"),
+    ("petitions", "Petition for Rulemaking"),
     ("research-hub", "Research Hub"),
     ("research-reports", "Research Report"),
     ("rule-under-dev", "Rule Under Development"),
@@ -142,6 +143,13 @@ categories = [
         ),
     ),
     (
+        "Petition for Rulemaking",
+        (
+            ("open-petition", "Open petition"),
+            ("closed-petition", "Closed petition"),
+        ),
+    ),
+    (
         "Research Hub",
         (("research-publication", "Office of Research Publication"),),
     ),
@@ -155,6 +163,7 @@ categories = [
             ("consumer-edu-empower", "Consumer education and empowerment"),
             ("to-congress", "To Congress"),
             ("data-spotlight", "Data spotlight"),
+            ("issue-spotlight", "Issue spotlight"),
         ),
     ),
     (
@@ -223,6 +232,7 @@ def page_type_choices():
                 ("blog", "Blog"),
                 ("op-ed", "Op-ed"),
                 ("press-release", "Press release"),
+                ("research-publication", "Office of Research Publication"),
                 ("research-reports", "Report"),
                 ("speech", "Speech"),
                 ("testimony", "Testimony"),
@@ -351,6 +361,7 @@ def get_category_icon(category_name):
         "money basics": "money",
         "money transfers": "money-transfer",
         "newsroom": "newspaper",
+        "office of research publication": "chart",
         "op-ed": "fountain-pen",
         "payday loans": "payday-loan",
         "policy and compliance": "bank",

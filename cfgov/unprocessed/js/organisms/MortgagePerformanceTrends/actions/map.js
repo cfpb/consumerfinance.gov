@@ -52,7 +52,7 @@ mapActionCreators.fetchMetros = (metroState, shouldZoom) => (dispatch) => {
   return utils.getMetroData((data) => {
     // Alphabetical order
     let newMetros = data[metroState].metros.sort((a, b) =>
-      a.name < b.name ? -1 : 1
+      a.name < b.name ? -1 : 1,
     );
     newMetros = newMetros.filter((metro) => metro.valid);
     if (!newMetros.length) {
@@ -82,7 +82,7 @@ mapActionCreators.fetchCounties = (countyState, shouldZoom) => (dispatch) => {
   return utils.getCountyData((data) => {
     // Alphabetical order
     let newCounties = data[countyState].counties.sort((a, b) =>
-      a.name < b.name ? -1 : 1
+      a.name < b.name ? -1 : 1,
     );
     newCounties = newCounties.filter((county) => county.valid);
     dispatch(mapActionCreators.setCounties(newCounties));

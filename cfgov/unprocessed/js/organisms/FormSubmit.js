@@ -5,11 +5,26 @@ import {
   BaseTransition,
   EventObserver,
 } from '@cfpb/cfpb-atomic-component';
-import ERROR_MESSAGES from '../config/error-messages-config.js';
 import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 
-const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
+const FORM_MESSAGES = {
+  ERROR: {
+    en: 'There was an error in your submission. Please try again later.',
+    es: 'Había un error en su presentación. Por favor, inténtelo más tarde.',
+  },
+  SUCCESS: {
+    en: 'Your submission was successfully received.',
+    ar: 'تم استلام طلبك  بنجاح.',
+    ht: 'Nou byen resevwa sa ou soumèt la.',
+    ko: '신청이 접수되었습니다.',
+    ru: 'Мы успешно получили ваш запрос на подписку.',
+    es: 'Su presentación fue recibido con éxito.',
+    tl: 'Matagumpay na natanggap ang iyong isinumite.',
+    'zh-Hant': '您提交的資料已被成功接收。',
+    vi: 'Đã nhận thành công nội dung gửi của quý vị.',
+  },
+};
 const DONE_CODE = 4;
 const SUCCESS_CODES = {
   200: 'ok',
@@ -39,7 +54,7 @@ function FormSubmit(element, baseClass, opts) {
   const _baseElement = checkDom(element, baseClass);
   const _formElement = _baseElement.querySelector('form');
   const _notificationElement = _baseElement.querySelector(
-    `.${Notification.BASE_CLASS}`
+    `.${Notification.BASE_CLASS}`,
   );
   let _notification;
   let _cachedFields;
@@ -133,10 +148,9 @@ function FormSubmit(element, baseClass, opts) {
         if (state === 'SUCCESS' && opts.replaceForm) {
           _replaceFormWithNotification(heading + ' ' + message);
         } else {
-          const key = opts.language === 'es' ? state + '_ES' : state;
           _displayNotification(
             Notification[state],
-            message || FORM_MESSAGES[key]
+            message || getMessage(state, opts.language),
           );
         }
         if (state === 'SUCCESS') {
@@ -153,7 +167,7 @@ function FormSubmit(element, baseClass, opts) {
    */
   function _replaceFormWithNotification(message) {
     const transition = new AlphaTransition(_baseElement).init(
-      AlphaTransition.CLASSES.ALPHA_100
+      AlphaTransition.CLASSES.ALPHA_100,
     );
     scrollIntoView(_formElement, { offset: 100, callback: fadeOutForm });
 
@@ -204,6 +218,16 @@ function FormSubmit(element, baseClass, opts) {
   }
 
   /**
+   * @param {string} state - 'SUCCESS' or 'ERROR' form state flag.
+   * @param {string} lang - A language string.
+   * @returns {string} A success or error message.
+   */
+  function getMessage(state, lang) {
+    if (state !== 'SUCCESS' && state !== 'ERROR') return 'Error.';
+    return FORM_MESSAGES[state][lang] || FORM_MESSAGES[state]['en'];
+  }
+
+  /**
    * @param {string} fieldName - name of field
    * @param {string} fieldValue - value of field
    * @returns {string} representing field data.
@@ -244,6 +268,7 @@ function FormSubmit(element, baseClass, opts) {
   }
 
   this.init = init;
+  this.getMessage = getMessage;
 
   return this;
 }

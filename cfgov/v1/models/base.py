@@ -177,14 +177,13 @@ class CFGOVPage(Page):
         FieldPanel("sidefoot"),
     ]
 
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(promote_panels, heading="Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
         FieldPanel("schema_json", heading="Structured Data"),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -294,7 +293,6 @@ class CFGOVPage(Page):
         preference_order = [
             "search_description",
             "header_hero_body",
-            "preview_description",
             "header_text_intro",
             "content_text_intro",
             "header_item_intro",
@@ -312,10 +310,6 @@ class CFGOVPage(Page):
             )
             candidates["header_item_intro"] = self.get_streamfield_content(
                 self.header, "item_introduction", "paragraph"
-            )
-        if hasattr(self, "preview_description") and self.preview_description:
-            candidates["preview_description"] = self.remove_html_tags(
-                self.preview_description
             )
         if hasattr(self, "content"):
             candidates["content_text_intro"] = self.get_streamfield_content(

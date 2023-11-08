@@ -1,9 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
-{% import 'v1/includes/tags.html' as tags with context %}
 {% import 'v1/includes/macros/util/format/datetime.html' as dt %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'v1/includes/organisms/ask-search.html' as ask_search with context %}
-{% import 'v1/includes/molecules/notification.html' as notification %}
 
 {% block title -%}
     {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
@@ -43,18 +41,6 @@
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
-            </div>
-        {% endif %}
-
-        {% if page.share_and_print %}
-            {% import "v1/includes/molecules/social-media.html" as social_media with context -%}
-            <div class="block block__flush-top block__flush-bottom block__padded-bottom">
-                {{ social_media.render(
-                    {
-                        'is_share_view': true,
-                        'is_printable': true
-                    }
-                ) }}
             </div>
         {% endif %}
 
@@ -121,7 +107,6 @@
         </div>
 
     </div>
-{{ email_popup(request) }}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

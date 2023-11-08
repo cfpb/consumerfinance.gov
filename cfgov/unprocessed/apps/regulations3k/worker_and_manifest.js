@@ -80,7 +80,7 @@ function runWorkerAndManifest() {
     .generateSW(SERVICE_WORKER_CONFIG)
     .then(({ count, size }) => {
       fancyLog(
-        `Generated ${SERVICE_WORKER_DEST}, which will precache ${count} files, totaling ${size} bytes.`
+        `Generated ${SERVICE_WORKER_DEST}, which will precache ${count} files, totaling ${size} bytes.`,
       );
     })
     .catch((err) => {

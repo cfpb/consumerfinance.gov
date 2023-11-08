@@ -1,51 +1,28 @@
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import PermissionDenied
-from django.test import (
-    RequestFactory,
-    SimpleTestCase,
-    TestCase,
-    override_settings,
-)
+from django.test import RequestFactory, SimpleTestCase, TestCase
 from django.urls import reverse
 
 from wagtail import hooks
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
 from wagtail.admin.views.pages.delete import delete
-from wagtail.models import Page, Site
-from wagtail.test.testapp.models import SimplePage
+from wagtail.models import Page
 from wagtail.test.utils import WagtailTestUtils
 from wagtail.whitelist import Whitelister as Allowlister
 
-from v1.models.base import CFGOVPage, CFGOVPageCategory
-from v1.models.blog_page import BlogPage
-from v1.models.resources import Resource
+from v1.models import (
+    BlogPage,
+    CFGOVPage,
+    CFGOVPageCategory,
+    InternalDocsSettings,
+    Resource,
+)
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.wagtail_hooks import (
     get_resource_tags,
     raise_bulk_delete_error,
     raise_delete_error,
 )
-
-
-class TestServeLatestDraftPage(TestCase):
-    def setUp(self):
-        self.default_site = Site.objects.get(is_default_site=True)
-        self.page = SimplePage(title="live", slug="test", content="test")
-        self.default_site.root_page.add_child(instance=self.page)
-        self.page.title = "draft"
-        self.page.save_revision()
-
-    @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
-    def test_not_serving_draft_serves_published_revision(self):
-        response = self.client.get("/test/")
-        self.assertContains(response, "live")
-        self.assertIsNone(response.get("Serving-Wagtail-Draft"))
-
-    def test_serving_draft_serves_latest_revision_and_adds_header(self):
-        with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
-            response = self.client.get("/test/")
-            self.assertContains(response, "draft")
-            self.assertEqual(response["Serving-Wagtail-Draft"], "1")
 
 
 class TestGetResourceTags(TestCase):
@@ -227,3 +204,20 @@ class TestDjangoAdminLink(TestCase, WagtailTestUtils):
     def test_non_staff_doesnt_see_django_admin_link(self):
         response = self.get_admin_response_for_user(is_staff=False)
         self.assertNotContains(response, "Django Admin")
+
+
+class TestInternalDocsLink(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.login()
+
+    def get_admin_response(self):
+        return self.client.get(reverse("wagtailadmin_home"))
+
+    def test_docs_not_defined_no_link_in_admin(self):
+        self.assertNotContains(
+            self.get_admin_response(), "/admin/internal-docs/"
+        )
+
+    def test_guide_defined_creates_link_in_admin(self):
+        InternalDocsSettings.objects.create(url="https://example.com/")
+        self.assertContains(self.get_admin_response(), "/admin/internal-docs/")

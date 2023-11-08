@@ -1,21 +1,5 @@
 @import (reference) '../../../css/main.less';
-@import '../node_modules/ctrl-f/dist/css/index.css';
-
-.o-fig {
-  // Make the side navigation sticky
-  .content_sidebar {
-    position: sticky;
-    top: -1px;
-  }
-
-  .respond-to-min( @bp-med-min, {
-    // Expand it to full height on desktop with optional scrolling
-    .content_sidebar {
-      max-height: 100vh;
-      overflow-y: auto;
-    }
-  } );
-}
+@import url('../node_modules/ctrl-f/dist/css/index.css');
 
 .o-fig_main {
   // Bump up all heading sizes to improve readability
@@ -47,7 +31,6 @@
     font-family: Menlo, 'Andale Mono', 'Courier New', monospace;
     overflow-x: auto;
     font-size: unit(14px / @base-font-size-px, em);
-    white-space: pre;
   }
 
   .o-table {
@@ -67,6 +50,7 @@
     padding-top: unit(30px / @base-font-size-px, em);
   }
 
+  // Desktop
   .respond-to-min( @bp-med-min, {
     // Increase the sidebar border from 1px to 2px
     .content &:after {
@@ -97,7 +81,7 @@
   margin-bottom: unit(45px / @base-font-size-px, em);
 
   // Put a horizontal rule below all sub level 3 headings
-  &:after {
+  &::after {
     display: inline-block;
     content: '';
     border-top: 2px solid @gray-50;
@@ -107,17 +91,18 @@
   }
 }
 
+// TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
 .o-fig_sidebar {
-  .o-expandable_label {
+  .o-secondary-nav_label {
     width: 95%;
   }
 
   // When the sidebar collapses into an expandable,
   // make the expandable's content scrollable
-  .o-expandable_content[data-open='true'] {
+  .o-secondary-nav_content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
-    &:after {
+    > .o-secondary-nav_list {
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
@@ -126,19 +111,19 @@
   }
 
   .respond-to-max( @bp-sm-max, {
-    .m-nav-link {
+    .o-secondary-nav_link {
       padding: unit( 10px / @base-font-size-px, em );
     }
   } );
 
-  .m-nav-link {
-    padding-left: unit(40px / @base-font-size-px, em);
-    text-indent: unit(-30px / @base-font-size-px, em);
+  .o-secondary-nav_link {
+    padding-left: unit(24px / @base-font-size-px, em);
+    text-indent: unit(-18px / @base-font-size-px, em);
   }
 
-  .o-secondary-navigation_list__parents > li > a {
-    padding-left: unit(30px / @base-font-size-px, em);
-    text-indent: unit(-18px / @base-font-size-px, em);
+  .o-secondary-nav_list__parents > .o-secondary-nav_link {
+    padding-left: unit(10px / @base-font-size-px, em);
+    text-indent: unit(-10px / @base-font-size-px, em);
   }
 
   h4 {
@@ -152,7 +137,7 @@
 
   .lead-paragraph,
   .author-names {
-    margin: 30px 0 30px 0;
+    margin: 30px 0;
   }
 
   .report-header > a {

@@ -67,7 +67,7 @@
   display: flex;
 
   // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
-  &:before {
+  &::before {
     content: '';
     width: 1px;
     margin-left: -1px;
@@ -79,7 +79,7 @@
   }
 
   // To clear float.
-  &:after {
+  &::after {
     content: '';
     display: table;
     clear: both;
@@ -119,7 +119,7 @@
 
 .o-video-player_duration {
   color: @white;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 40%);
   z-index: 1;
   padding-left: 6px;
   padding-right: 6px;
@@ -145,7 +145,7 @@
     16,
     24,
     32,
-    0.75
+    75%
   ) !important; // CFPB Black (#101820) at 80% opacity
   color: @white !important;
   font-size: @play-btn-icon-size;
@@ -156,7 +156,7 @@
       0,
       114,
       206,
-      0.75
+      75%
     ) !important; // Pacific (#0072ce) at 80% opacity
   }
 
@@ -177,15 +177,15 @@
     &:focus {
       outline: none;
 
-      &:before,
-      &:after {
+      &::before,
+      &::after {
         content: '';
         position: absolute;
         box-sizing: border-box;
         display: block;
       }
 
-      &:before {
+      &::before {
         width: 60px;
         height: 60px;
         left: -2px;
@@ -194,7 +194,7 @@
         outline: 1px solid @white;
       }
 
-      &:after {
+      &::after {
         width: 62px;
         height: 62px;
         left: -3px;
@@ -296,7 +296,8 @@ button.o-video-player_play-btn,
 
   .m-social-media_icons {
     display: block;
-    margin-right: unit(5px / @base-font-size-px, em);
+    margin-right: 0;
+    margin-top: unit(10px / @base-font-size-px, rem);
   }
 }
 

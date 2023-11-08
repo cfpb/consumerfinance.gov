@@ -46,7 +46,7 @@ function styles(baseConfig) {
           math: 'always',
           paths: [
             ...readdirSync(`${modules}/@cfpb`).map(
-              (v) => `${modules}/@cfpb/${v}/src`
+              (v) => `${modules}/@cfpb/${v}/src`,
             ),
             `${modules}/cfpb-chart-builder/src/css`,
             `${modules}`,

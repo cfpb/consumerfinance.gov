@@ -1,0 +1,273 @@
+/* =========================================================================
+   consumerfinance.gov
+   o-secondary-nav
+   ========================================================================= */
+
+/* topdoc
+  name: Secondary navigation
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="o-secondary-nav">
+            <button class="o-secondary-nav_header">
+                <span class="o-secondary-nav_label">
+                    Navigate this section
+                </span>
+                <span class="o-secondary-nav_cues">
+                    <span class="o-secondary-nav_cue-open" aria-label="Show">
+                        {{ svg_icon('down') }}
+                    </span>
+                    <span class="o-secondary-nav_cue-close" aria-label="Hide">
+                        {{ svg_icon('up') }}
+                    </span>
+                </span>
+            </button>
+            <div class="o-secondary-nav_content">
+                <ul class="o-secondary-nav_list
+                           o-secondary-nav_list__parents">
+                    <li>
+                        <a class="o-secondary-nav_link" href="">
+                        </a>
+                    </li><li>
+                        <a class="o-secondary-nav_link" href="">
+                        </a>
+                    </li><li>
+                        <a class="o-secondary-nav_link" href="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-secondary-nav
+            button.o-secondary-nav_header
+              .o-secondary-nav_label
+              .o-secondary-nav_cues
+                .o-secondary-nav_cue-open
+                  .cf-icon-svg
+                .o-secondary-nav_cue-close
+                  .cf-icon-svg
+            .o-secondary-nav_content
+              .o-secondary-nav_list
+                li
+                  .o-secondary-nav_link
+  tags:
+    - cfgov-organisms
+*/
+
+.o-secondary-nav {
+  //
+  // Header
+  //
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    cursor: pointer;
+    padding: unit((10px / @base-font-size-px), em)
+      unit((15px / @base-font-size-px), em);
+
+    &:focus {
+      outline: 1px dotted @black;
+      outline-offset: 1px;
+    }
+
+    .o-secondary-nav_cue-close,
+    .o-secondary-nav_cue-open {
+      display: none;
+    }
+
+    &[aria-expanded='false'] .o-secondary-nav_cue-open {
+      display: block;
+    }
+
+    &[aria-expanded='true'] .o-secondary-nav_cue-close {
+      display: block;
+    }
+  }
+
+  // Using the button element with .o-secondary-nav_header requires setting
+  // an explicit width.
+  button.o-secondary-nav_header {
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  &_cues {
+    min-width: 60px;
+    text-align: right;
+    color: @pacific;
+    font-size: unit((@btn-font-size / @base-font-size-px), em);
+    line-height: unit((@base-line-height-px / @btn-font-size));
+  }
+
+  &_label {
+    // Grow to available width.
+    flex-grow: 1;
+
+    font-size: unit(16px / @base-font-size-px, rem);
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: @pacific;
+
+    line-height: unit((22 / @size-v));
+    margin-bottom: 0;
+  }
+
+  &_content {
+    padding: unit((15px / @base-font-size-px), em);
+    padding-top: 0;
+
+    // The divider between _header and _content.
+    &::before {
+      content: '';
+      display: block;
+      border-top: 1px solid @expandable__border;
+      padding-top: unit((15px / @base-font-size-px), em);
+    }
+
+    &::after {
+      padding-bottom: unit((15px / @base-font-size-px), em);
+      width: 100%;
+    }
+  }
+
+  &_list {
+    padding-left: 0;
+    list-style: none;
+
+    > li {
+      margin-left: 0;
+    }
+  }
+
+  &_list__children {
+    margin-left: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
+
+    .respond-to-min( @bp-med-min, {
+      // Add 5px for the border to half the gutter
+      margin-left: unit( (( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px), em) ;
+    } );
+  }
+
+  &_link {
+    display: inline-block;
+
+    // Break the menu word when it is too wide to fit in the sidebar area.
+    word-break: break-word;
+
+    .u-link__colors( @pacific, @pacific, @black, @black, @black,
+    transparent, transparent, @green, @green, @green );
+
+    border-style: solid;
+    border-left-width: 5px;
+
+    .respond-to-max( @bp-sm-max, {
+      display: block;
+
+      padding: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
+    } );
+
+    .respond-to-min( @bp-med-min, {
+      padding-top: unit( (10px / @base-font-size-px), em );
+      padding-bottom: unit( (10px / @base-font-size-px), em );
+      padding-left: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
+    } );
+
+    &__current {
+      .u-link__colors( @black, @black, @black, @black, @black,
+      @black, @black, @black, @black, @black );
+    }
+
+    &__parent {
+      .heading-4();
+
+      margin-bottom: inherit;
+    }
+  }
+
+  // Tablet and below.
+  .respond-to-max( @bp-sm-max, {
+    background: @gray-5;
+    border-bottom: 1px solid @gray-40;
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+
+    &__no-children {
+      display: none;
+    }
+
+    &_list__parents {
+      li[data-nav-is-active='False']{
+        display: none;
+      }
+    }
+  } );
+
+  // Desktop
+  .respond-to-min( @bp-med-min, {
+    .o-secondary-nav {
+      background: none;
+
+      &_header {
+        display: none;
+      }
+
+      &_content {
+        // These two !important values override basic expandable styling,
+        // because these do not function like expandables on med+ screens.
+        display: block !important;
+        max-height: 100% !important;
+        padding: 0;
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+  } );
+
+  // Hide on print.
+  .respond-to-print( {
+    display: none;
+  } );
+}
+
+// Right-to-left (RTL) layout.
+html[lang='ar'] {
+  .o-secondary-nav {
+    button.o-secondary-nav_header {
+      text-align: right;
+    }
+
+    &_cues {
+      text-align: left;
+    }
+
+    &_list__parents {
+      padding-right: 0;
+    }
+
+    &_link {
+      border-left-width: 0;
+      border-right-width: 5px;
+    }
+
+    // Desktop.
+    .respond-to-min( @bp-med-min, {
+      &_link {
+        padding-right: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
+      }
+
+      &_list__parents {
+        padding-right: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
+      }
+    } );
+  }
+}

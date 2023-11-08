@@ -7,11 +7,11 @@
             o-expandable__border
             inline-interpretation">
 
-    <button class="o-expandable_header o-expandable_target"{% if section_title %} data-section="{{ section_title }}"{% endif %}>
+    <button class="o-expandable_header"{% if section_title %} data-section="{{ section_title }}"{% endif %}>
         <span class="o-expandable_label">
             Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
         </span>
-        <span class="o-expandable_link">
+        <span class="o-expandable_cues">
             <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>

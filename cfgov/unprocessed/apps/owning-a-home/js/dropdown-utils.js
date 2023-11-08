@@ -111,7 +111,7 @@ const utils = function (id) {
   function removeOption(optionVal) {
     if (!optionVal) {
       throw new Error(
-        "You must provide the value of the option you'd like to remove."
+        "You must provide the value of the option you'd like to remove.",
       );
     }
     $el.find('option').filter(parseVals(optionVal)).remove();
@@ -126,7 +126,7 @@ const utils = function (id) {
   function hasOption(value) {
     if (!value) {
       throw new Error(
-        "You must provide the value of the option you'd like to check for."
+        "You must provide the value of the option you'd like to check for.",
       );
     }
 

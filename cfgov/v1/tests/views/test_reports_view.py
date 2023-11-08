@@ -81,7 +81,6 @@ class ServeViewTestCase(TestCase):
         self.enforcement_actions_report_view = EnforcementActionsReportView()
         self.enforcement = EnforcementActionPage(
             title="Great Test Page",
-            preview_description="This is a great test page.",
             initial_filing_date=timezone.now(),
         )
         status = EnforcementActionStatus(status="expired-terminated-dismissed")

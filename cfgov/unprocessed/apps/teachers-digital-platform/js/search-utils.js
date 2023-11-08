@@ -6,13 +6,13 @@
  */
 function getSearchValues(searchEl, filterEls) {
   const fields = [];
-  let field = {};
-  field[searchEl.name] = searchEl.value;
-  fields.push(field);
-  // IE doesn't support forEach w/ node lists so convert it to an array.
-  filterEls = Array.prototype.slice.call(filterEls);
+  if (searchEl.value) {
+    const field = {};
+    field[searchEl.name] = searchEl.value;
+    fields.push(field);
+  }
   filterEls.forEach((input) => {
-    field = {};
+    const field = {};
     field[input.name] = input.value;
     fields.push(field);
   });
@@ -74,7 +74,7 @@ function hideLoading(el) {
  * @returns {string} New URL.
  */
 function updateUrl(base, params) {
-  const url = `${base}?${params}`;
+  const url = params ? `${base}?${params}` : base;
   window.history.replaceState(null, null, url);
   return url;
 }

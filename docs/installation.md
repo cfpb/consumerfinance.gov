@@ -24,8 +24,6 @@ and
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888> (docker-compose only).
-
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
 
@@ -75,10 +73,11 @@ For running our
 outside of the Docker container, we rely on a local Python environment.
 
 !!! note
-Our local Python environment requires [pyenv](https://github.com/pyenv/pyenv)
-with
-[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).
-They can be installed from Homebrew on macOS:
+
+    Our local Python environment requires [pyenv](https://github.com/pyenv/pyenv)
+    with
+    [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).
+    They can be installed from Homebrew on macOS:
 
     ```sh
     brew install pyenv pyenv-virtualenv
@@ -110,13 +109,14 @@ pip install -r requirements/ci.txt
 ```
 
 !!! note "Use local for application-specific python version"
-To set the virtualenv in the future for this project, run:
 
-```sh
-pyenv local consumerfinance.gov
-```
+    To set the virtualenv in the future for this project, run:
 
-This will set the python version in the project's hidden `.python-version` file.
+    ```sh
+    pyenv local consumerfinance.gov
+    ```
+
+    This will set the python version in the project's hidden `.python-version` file.
 
 ### Configure VSCode formatters (optional)
 
@@ -152,13 +152,14 @@ to assist developers with linting without thinking.
 ### Build the frontend
 
 !!! note
-Our frontend requires [Node.js 16](https://nodejs.org/en/)
-with
-[Yarn](https://yarnpkg.com/).
-We prefer
-[nvm](https://github.com/nvm-sh/nvm)
-for Node.js version management.
-nvm can be installed using:
+
+    Our frontend requires [Node.js 16](https://nodejs.org/en/)
+    with
+    [Yarn](https://yarnpkg.com/).
+    We prefer
+    [nvm](https://github.com/nvm-sh/nvm)
+    for Node.js version management.
+    nvm can be installed using:
 
     ```sh
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
@@ -197,7 +198,8 @@ yarn build
 ```
 
 !!! note
-If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
 
 ### Set up and run the Docker containers
 

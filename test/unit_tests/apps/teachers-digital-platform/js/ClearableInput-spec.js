@@ -1,4 +1,4 @@
-import ClearableInput from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/ClearableInput.js';
+import { ClearableInput } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/ClearableInput.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
 let baseDom;

@@ -2,6 +2,8 @@
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import rangesliderJs from 'rangeslider-js';
 
+const BASE_CLASS = 'a-range';
+
 /**
  * Slider
  * @class
@@ -11,7 +13,6 @@ import rangesliderJs from 'rangeslider-js';
  * @returns {Slider} An instance.
  */
 function Slider(element) {
-  const BASE_CLASS = 'a-range';
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector(`.${BASE_CLASS}_input`);
   const _labelDom = _dom.querySelector(`.${BASE_CLASS}_text`);

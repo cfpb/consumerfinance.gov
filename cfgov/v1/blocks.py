@@ -85,25 +85,6 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = "v1/includes/snippets/reusable_text.html"
 
 
-class RAFTBlock(blocks.StructBlock):
-    county_threshold = blocks.IntegerBlock(
-        required=False,
-        help_text=(
-            "Optional: Add a number to determine how many "
-            "results trigger display of county dropdown "
-            "for a state."
-        ),
-    )
-
-    class Meta:
-        icon = "cog"
-        label = "RAF Tool (configurable)"
-        template = "v1/includes/blocks/raf_tool.html"
-
-    class Media:
-        js = ["erap.js"]
-
-
 class EmailSignUpChooserBlock(SnippetChooserBlock):
     def __init__(self, **kwargs):
         super().__init__("v1.EmailSignUp", **kwargs)

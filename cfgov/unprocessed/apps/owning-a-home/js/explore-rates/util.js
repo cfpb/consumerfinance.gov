@@ -1,4 +1,3 @@
-import formatDate from 'date-format';
 import {
   convertStringToNumber,
   formatUSD,
@@ -30,16 +29,11 @@ const delay = (function () {
 
 /**
  * @param {string} timestamp - A timestamp.
- * @returns {string} Date in the format of MM/dd/yyyy.
+ * @returns {string} Date in the format of M?M/d?d/yyyy.
  */
 function formatTimestampMMddyyyy(timestamp) {
-  /* Should you want to format the the date for older versions of IE
-     the following can be used:
-     timestamp = then.slice(0, 10).replace('-', '/');
-     timestamp = new Date( timestamp );
-     return (timestamp.getUTCMonth() + 1) + '/' + timestamp.getUTCDate() +
-            '/' +  timestamp.getUTCFullYear(); */
-  return formatDate.asString('MM/dd/yyyy', new Date(timestamp));
+  const ts = new Date(timestamp);
+  return `${ts.getUTCMonth() + 1}/${ts.getUTCDate()}/${ts.getUTCFullYear()}`;
 }
 
 /**
@@ -82,7 +76,7 @@ function removeDollarAddCommas(value) {
   let parseValue = convertStringToNumber(value);
   parseValue = formatUSD({ amount: parseValue, decimalPlaces: 0 }).replace(
     '$',
-    ''
+    '',
   );
   return parseValue;
 }

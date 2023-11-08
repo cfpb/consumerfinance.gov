@@ -68,7 +68,7 @@ function VideoPlayer(element) {
     _player.addEventListener('onReady', _videoPlayerReadyHandler.bind(this));
     _player.addEventListener(
       'onStateChange',
-      _videoStateChangeHandler.bind(this)
+      _videoStateChangeHandler.bind(this),
     );
   }
 

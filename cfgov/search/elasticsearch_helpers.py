@@ -17,7 +17,7 @@ from wagtail.signals import (
 )
 
 from django_opensearch_dsl.signals import BaseSignalProcessor
-from opensearch_dsl import analyzer, token_filter, tokenizer
+from opensearchpy import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
 
@@ -119,21 +119,15 @@ class ElasticsearchTestsMixin:
 
             raise SkipTest("Cannot connect to local Elasticsearch") from e
 
-        # The django-elasticsearch-dsl package we use to interface with
-        # Elasticsearch does not currently provide a way to make indexing
-        # blocking. This test case patches the Elasticsearch bulk API call
-        # to ensure that reindexes are immediately available in search results.
+        # Patch the Elasticsearch bulk API call to ensure that reindexes and
+        # individual document updates are immediately available in search results.
         #
         # See the Elasticsearch documentation on refresh:
         # https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-refresh.html
-        #
-        # See https://github.com/django-es/django-elasticsearch-dsl/pull/323
-        # for a proposed pull request to django-elasticsearch-dsl to support
-        # this blocking behavior.
         from opensearchpy.helpers import bulk as original_bulk
 
         def bulk_with_refresh(*args, **kwargs):
-            kwargs.setdefault("refresh", True)
+            kwargs["refresh"] = True
             return original_bulk(*args, **kwargs)
 
         cls.patched_es_bulk = patch(

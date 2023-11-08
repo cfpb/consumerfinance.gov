@@ -38,7 +38,7 @@
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {% if rss_feed %}
-    <div class="block block__sub">
+    <div class="block block__flush-top">
         {% import 'v1/includes/molecules/rss-feed.html' as rss %}
         {{ rss.render(rss_feed) }}
     </div>

@@ -140,7 +140,7 @@
                 {% endfor %}
 
                 {% set clear_url = remove_url_parameter(request, filters) %}
-                <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
+                <a class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
                         data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
                     Clear all filters
                 </a>
@@ -157,7 +157,7 @@
     <div class="results_paginator">
         {% if paginator.num_pages > 1 %}
             <div class="block block__flush-top">
-                {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+                {{ pagination.render( paginator.num_pages, current_page, '', '' ) }}
             </div>
         {% endif %}
     </div>

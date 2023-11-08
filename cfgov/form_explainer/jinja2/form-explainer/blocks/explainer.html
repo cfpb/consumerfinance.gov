@@ -88,12 +88,12 @@
             o-expandable__form-explainer
             o-expandable__form-explainer-category-{{ category_index }}"
      id="{{ id }}">
-    <button class="o-expandable_header o-expandable_target"
+    <button class="o-expandable_header"
             tabindex="0">
         <span class="h4 o-expandable_label">
             {{ item.heading }}
         </span>
-        <span class="o-expandable_link">
+        <span class="o-expandable_cues">
             <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
@@ -129,7 +129,7 @@
    ========================================================================== #}
 
 {% macro render_pagination( pages ) %}
-<nav class="pagination explain_pagination">
+<nav class="explain_pagination">
     <span class="form-explainer_nav-label">Viewing page:</span>
     <ul class="form-explainer_page-links">
         {% for page in pages %}
@@ -156,9 +156,9 @@
         {% endif %}
 
         {% for page in value.pages %}
-            {% set page_num = loop.index %}
-            <div class="explain_page"
-              id="explain_page-{{ page_num }}">
+        {% set page_num = loop.index %}
+        <div class="explain_page"
+             id="explain_page-{{ page_num }}">
             <figure class="explain_container">
                 <div class="image-map explain_image-map">
                     <div class="image-map_wrapper">
@@ -181,10 +181,9 @@
                         {{ render_map_points( page.categories, page_num ) }}
                     </div>
                 </div>
-                <figcaption class="terms explain_terms">
+                <figcaption class="explain_terms">
                     <div class="o-expandable-group
-                                o-expandable-group__form-explainer
-                                {{ 'o-expandable-group__accordion' if true else '' }}">
+                                o-expandable-group__accordion">
                         {% for category in page.categories %}
                             {% set category_index = loop.index %}
                             {% if category.title %}
@@ -195,7 +194,7 @@
                     </div>
                 </figcaption>
             </figure>
-          </div>
+        </div>
         {% endfor %}
     </div>
 </div>

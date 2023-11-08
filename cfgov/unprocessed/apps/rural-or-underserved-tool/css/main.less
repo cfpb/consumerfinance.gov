@@ -79,6 +79,11 @@ tr.data + tr[class=''] {
   width: 100%;
 }
 
+// Prevent clicking of the SVG in "Show map" from blocking clicks of the toggle.
+.jsLoadMap svg {
+  pointer-events: none;
+}
+
 // Print-related styling.
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import (less) './print.less';

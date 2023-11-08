@@ -61,7 +61,7 @@ describe('Notification', () => {
         notification.update('default', '');
       } catch (error) {
         expect(error.message).toBe(
-          'default is not a supported notification type!'
+          'default is not a supported notification type!',
         );
       }
     });
@@ -87,7 +87,7 @@ describe('Notification', () => {
 
       const message = notificationElem.querySelector('.m-notification_message');
       const explanation = notificationElem.querySelector(
-        '.m-notification_explanation'
+        '.m-notification_explanation',
       );
 
       expect(notificationElem.className).toContain('m-notification__success');
@@ -102,7 +102,7 @@ describe('Notification', () => {
 
       const message = notificationElem.querySelector('.m-notification_message');
       const explanation = notificationElem.querySelector(
-        '.m-notification_explanation'
+        '.m-notification_explanation',
       );
 
       expect(notificationElem.className).toContain('m-notification__success');

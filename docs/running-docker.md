@@ -7,7 +7,6 @@ to setup your Docker environment and create the project Docker containers.
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
 to run an Elasticsearch container, a PostgreSQL container,
 and Django in a Python container.
-There is also a container serving the documentation.
 
 All of these containers are configured in our
 [`docker-compose.yml` file](https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml).
@@ -18,7 +17,6 @@ The following URLs are mapped to your host from the containers:
 
 - Access consumerfinance.gov running in the Python container: http://localhost:8000/
 - Access Elasticsearch: http://localhost:9200/
-- View this documentation: http://localhost:8888/
 
 To build and run the containers for the first time, run:
 
@@ -99,13 +97,15 @@ docker attach consumerfinancegov_python_1
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 !!! note
-`docker attach` takes the specific container name or ID.
-Yours may or may not be `consumerfinancegov_python_1`.
-To verify, use `docker container ls`
-to get the Python container's full name or ID.
+
+    `docker attach` takes the specific container name or ID.
+    Yours may or may not be `consumerfinancegov_python_1`.
+    To verify, use `docker container ls`
+    to get the Python container's full name or ID.
 
 !!! note
-`docker attach` will ONLY work with the dev image, not prod (apache).
+
+    `docker attach` will ONLY work with the dev image, not prod (apache).
 
 ## Useful Docker commands
 

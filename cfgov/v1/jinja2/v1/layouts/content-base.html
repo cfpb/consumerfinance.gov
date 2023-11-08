@@ -14,12 +14,11 @@
 
             {% if breadcrumb_items | length > 0 %}
                 <div class="content_wrapper">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}
         {%- endblock %}
         {% block body_content scoped -%}{%- endblock %}
-        {% block post_content scoped -%}{%- endblock %}
     </main>
 {% endblock %}

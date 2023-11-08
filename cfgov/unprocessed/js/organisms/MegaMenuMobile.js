@@ -49,7 +49,7 @@ function MegaMenuMobile(menus) {
 
     // Make root level links disabled to tab and voiceover navigation on init.
     _rootLinksDom = _rootMenuContentDom.querySelectorAll(
-      'a.o-mega-menu_content-1-link,.m-global-eyebrow a'
+      'a.o-mega-menu_content-1-link,.m-global-eyebrow a',
     );
 
     return this;
@@ -119,7 +119,7 @@ function MegaMenuMobile(menus) {
         transitionCollapseMethod += currLevel === 1 ? '' : currLevel;
         _rootMenu.setTransition(
           transition,
-          transition[transitionCollapseMethod]
+          transition[transitionCollapseMethod],
         );
       } else {
         // The transition animation is turned off when resuming to avoid a
@@ -144,7 +144,7 @@ function MegaMenuMobile(menus) {
         menu.setTransition(
           transition,
           transition.moveToOrigin,
-          transition.moveLeft
+          transition.moveLeft,
         );
         _rootMenu.getDom().content.classList.remove('u-hidden-overflow');
         _activeMenu = menu;
@@ -274,13 +274,13 @@ function MegaMenuMobile(menus) {
     if (_suspended) {
       _rootMenuContentDom.classList.add('u-hidden-overflow');
       const transition = new MoveTransition(_rootMenuContentDom).init(
-        MoveTransition.CLASSES.MOVE_LEFT
+        MoveTransition.CLASSES.MOVE_LEFT,
       );
       transition.animateOff();
       _rootMenu.setTransition(
         transition,
         transition.moveLeft,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
 
       _activeMenu = _rootMenu;
@@ -335,4 +335,4 @@ function MegaMenuMobile(menus) {
   return this;
 }
 
-export default MegaMenuMobile;
+export { MegaMenuMobile };

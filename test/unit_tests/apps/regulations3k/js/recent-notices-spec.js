@@ -34,7 +34,7 @@ describe('The Regs3K search page', () => {
     expect(processedNotice.constructor.name).toEqual('HTMLLIElement');
     expect(processedNotice.className).toEqual('m-list_link');
     expect(processedNotice.querySelector('a').href).toEqual(
-      'https://federalregister.gov/'
+      'https://federalregister.gov/',
     );
   });
 
@@ -52,7 +52,7 @@ describe('The Regs3K search page', () => {
     const processedNotices = processNotices(notices);
     expect(processedNotices.querySelectorAll('li').length).toEqual(3);
     expect(processedNotices.querySelectorAll('a')[2].textContent).toContain(
-      'More'
+      'More',
     );
   });
 
