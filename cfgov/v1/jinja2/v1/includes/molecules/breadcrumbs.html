@@ -25,9 +25,7 @@
 
          {% for crumb in breadcrumbs %}
 
-            {% if loop.index == loop.length %}
-                {{ crumb_divider }}
-            {% endif %}
+            {{ crumb_divider }}
 
             {% if crumb.href or crumb.live %}
                 <a class="m-breadcrumbs_crumb"
