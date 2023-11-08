@@ -193,8 +193,8 @@ msgid "Section navigation"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
-msgid "In this section"
-msgstr "Trong phần này"
+msgid "Navigate this section"
+msgstr "Điều hướng phần này"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"
