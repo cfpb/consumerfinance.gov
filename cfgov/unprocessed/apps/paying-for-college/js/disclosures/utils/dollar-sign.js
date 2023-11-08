@@ -107,10 +107,15 @@ Query.prototype.filter = function (selector) {
 Query.prototype.siblings = function (selector) {
   const q = new Query();
   const elemArr = [];
-  this.elements.forEach((elem) => {
-    elem.parentNode.querySelectorAll(selector).forEach((sibling) => {
-      if (sibling !== elem) elemArr.push(sibling);
-    });
+  if ( typeof selector === 'undefined' ) selector = '*';
+  this.elements.forEach( ( elem)  => {
+    let node = elem.parentNode.firstElementChild;
+    for ( node; node !== null; node = node.nextElementSibling ) {
+      console.log( node );
+      if ( node.matches( selector ) && node !== elem ) {
+        elemArr.push( node );
+      }
+    } 
   });
   q.elements = elemArr;
 
