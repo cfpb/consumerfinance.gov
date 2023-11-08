@@ -1,36 +1,43 @@
 {# ==========================================================================
 
-   breadcrumbs.render()
+    breadcrumbs.render()
 
-   ==========================================================================
+    ==========================================================================
 
-   Description:
+    Description:
 
-   Create breadcrumb markup when given:
+    Create breadcrumb markup when given:
 
-   breadcrumbs: An array of tuples used to display nav items.
-                Format: (href, live, title)
+    breadcrumbs: An array of tuples used to display nav items.
+                 Format: (href, live, title)
 
-   ========================================================================== #}
+    ========================================================================== #}
 
-{% macro render( breadcrumbs ) %}
-    <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
-        {{ svg_icon('left') }}
-        {% for crumb in breadcrumbs %}
+ {% macro render( breadcrumbs ) %}
+     <nav class="m-breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
+
+         {# Change slash direction in RTL languages. #}
+         {% if language == 'ar' %}
+         {% set crumb_divider = ' \\ ' %}
+         {% else %}
+         {% set crumb_divider = ' / ' %}
+         {% endif %}
+
+         {% for crumb in breadcrumbs %}
+
+            {{ crumb_divider }}
+
             {% if crumb.href or crumb.live %}
-                <a href="{{ crumb.href if crumb.href else pageurl(crumb) }}">
-                    {{ crumb.title | e }}
+                <a class="m-breadcrumbs_crumb"
+                   href="{{ crumb.href if crumb.href else pageurl(crumb) }}">
+                    {{ crumb.title }}
                 </a>
             {% else %}
-                <span class="breadcrumbs_text">{{ crumb.title | e }}</span>
+                <span class="m-breadcrumbs_crumb">
+                    {{ crumb.title }}
+                </span>
             {% endif %}
-            {% if not loop.last %}
-                {% if language == 'ar' %}
-                \
-                {% else %}
-                /
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    </nav>
-{% endmacro %}
+
+         {% endfor %}
+     </nav>
+ {% endmacro %}

@@ -13,9 +13,10 @@
 
   .respond-to-max( @bp-sm-max, {
     background-color: @gray-5;
-    border-bottom: 1px solid @gray-40;
-    border-top: 1px solid @gray-40;
-    margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   } );
 
   // TODO - this will be updated to data-open='true' in newer expandables.

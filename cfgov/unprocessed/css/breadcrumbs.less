@@ -1,18 +1,22 @@
-.breadcrumbs {
+.m-breadcrumbs {
   // Mobile size.
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   gap: unit(10px / @base-font-size-px, rem);
   align-items: center;
+  flex-wrap: wrap;
+
   font-size: unit(14px / @base-font-size-px, rem);
   padding-top: unit(15px / @base-font-size-px, rem);
   padding-bottom: unit(15px / @base-font-size-px, rem);
-  margin-left: unit(20px / @base-font-size-px, rem);
-  margin-right: unit(20px / @base-font-size-px, rem);
+  min-height: 33px;
+  width: calc(100vw - 65px);
 
-  .cf-icon-svg {
-    fill: @pacific;
-    margin-left: unit(-20px / @base-font-size-px, rem);
+  &_crumbs {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
   }
 
   // Desktop size.
@@ -24,30 +28,25 @@
 
 // Hide on print.
 .respond-to-print( {
-  .breadcrumbs {
+  .m-breadcrumbs {
     display: none;
   }
 } );
 
 // Right-to-left (RTL) layout.
 html[lang='ar'] {
-  .breadcrumbs {
+  .m-breadcrumbs {
     margin-right: unit(20px / @base-font-size-px, rem);
     margin-left: unit(20px / @base-font-size-px, rem);
-
-    .cf-icon-svg {
-      margin-right: unit(-20px / @base-font-size-px, rem);
-      margin-left: initial;
-    }
   }
 }
 
 // TODO: When the layout-2-1 template is converted to use `u-layout-grid_wrapper`, this can be removed.
-.content_wrapper .breadcrumbs {
-  margin-left: unit(35px / @base-font-size-px, rem);
+.content_wrapper .m-breadcrumbs {
+  margin-left: unit(15px / @base-font-size-px, rem);
 
   // Tablet size only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    margin-left: unit(50px / @base-font-size-px, rem);
+    margin-left: unit(30px / @base-font-size-px, rem);
   });
 }
