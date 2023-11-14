@@ -29,7 +29,7 @@
             </p>
             <div class="block block__sub">
                 <h5 class="h4 u-mb5">View all agreement files</h5>
-            <p><a href="detail/{{result.id}}">View all agreements for {{ result.name }}</a></p>
+            <p><a href="{{ result.get_absolute_url() }}">View all agreements for {{ result.name }}</a></p>
             </div>
         </div>
     </div>
