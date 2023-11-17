@@ -209,14 +209,14 @@ export class AdminPage {
     addBlockButton.should('be.visible');
     addBlockButton.click();
 
-    const addTableOption = cy.contains('div.w-combobox__option', 'Table');
+    const addTableOption = cy.contains('div.w-combobox__option', name);
     addTableOption.should('be.visible');
     return addTableOption.click();
   }
 
   addTable() {
     cy.get('input[value="table"]', { timeout: 1000 }).should('not.exist');
-    this.clickBlock('table');
+    this.clickBlock('Table');
     cy.get('input[value="table"]', { timeout: 1000 }).should('exist');
   }
 
