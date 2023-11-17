@@ -203,10 +203,15 @@ export class AdminPage {
   }
 
   clickBlock(name) {
-    const block = `.action-add-block-${name}`;
-    cy.get(block).scrollIntoView();
-    cy.get(block).should('be.visible');
-    return cy.get(block).click();
+    const addBlockButton = cy.get(
+      'div[data-contentpath="content"] .c-sf-add-button',
+    );
+    addBlockButton.should('be.visible');
+    addBlockButton.click();
+
+    const addTableOption = cy.contains('div.w-combobox__option', 'Table');
+    addTableOption.should('be.visible');
+    return addTableOption.click();
   }
 
   addTable() {
