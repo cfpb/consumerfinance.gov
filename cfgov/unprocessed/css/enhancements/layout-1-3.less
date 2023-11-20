@@ -10,9 +10,28 @@
       }
     }
 
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
+      .u-layout-grid {
+        &_breadcrumbs {
+          padding-left: unit(30px / @base-font-size-px, rem);
+          padding-right: unit(30px / @base-font-size-px, rem);
+          margin-left: unit(-30px / @base-font-size-px, rem);
+          margin-right: unit(-30px / @base-font-size-px, rem);
+          background: @gray-5;
+          border-bottom: 1px solid @gray-40;
+        }
+      }
+    });
+
     // Tablet
     .respond-to-range( @bp-sm-min, @bp-sm-max, {
       .u-layout-grid {
+        &_breadcrumbs {
+          padding-left: unit(15px / @base-font-size-px, rem);
+          padding-right: unit(15px / @base-font-size-px, rem);
+        }
+
         &_secondary-nav {
           margin-left: unit(-30px / @base-font-size-px, rem);
           margin-right: unit(-30px / @base-font-size-px, rem);

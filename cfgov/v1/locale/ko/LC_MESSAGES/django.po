@@ -184,7 +184,7 @@ msgid "Back to top"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
-msgid "https://usa.gov/"
+msgid "https://www.usa.gov/"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
@@ -201,8 +201,8 @@ msgid "Section navigation"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
-msgid "In this section"
-msgstr "이 섹션에서는"
+msgid "Navigate this section"
+msgstr "섹션 탐색하기"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"
