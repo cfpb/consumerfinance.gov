@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 const postVerify = {
   csrfToken: null,
 
@@ -16,7 +13,10 @@ const postVerify = {
        }
        }
        } */
-    this.csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+    const csrfElem = document.querySelector('[name="csrfmiddlewaretoken"]');
+    if (csrfElem !== null) {
+      this.csrfToken = csrfElem.value;
+    }
   },
 
   verify: function (offerID, collegeID, error) {
@@ -34,7 +34,13 @@ const postVerify = {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
     }
-    $.post(urlPath, postdata);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', urlPath, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(postdata));
+
+    // $.post(urlPath, postdata);
   },
 };
 
