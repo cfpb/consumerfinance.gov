@@ -153,12 +153,9 @@ wagtail_extensions = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
-            "builtins": [],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
