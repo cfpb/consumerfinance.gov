@@ -111,7 +111,6 @@ Query.prototype.siblings = function (selector) {
   this.elements.forEach( ( elem)  => {
     let node = elem.parentNode.firstElementChild;
     for ( node; node !== null; node = node.nextElementSibling ) {
-      console.log( node );
       if ( node.matches( selector ) && node !== elem ) {
         elemArr.push( node );
       }
