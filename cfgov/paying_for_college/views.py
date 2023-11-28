@@ -301,7 +301,7 @@ def school_autocomplete(request):
 
 class VerifyView(View):
     def post(self, request):
-        data = json.loads(request.body)
+        data = json.loads(request.body.decode("utf-8"))
         timestamp = timezone.now()
         if data.get("oid") and validate_oid(data["oid"]):
             OID = data["oid"]
