@@ -1,5 +1,5 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks
@@ -55,8 +55,8 @@ class TextIntroduction(blocks.StructBlock):
         if cleaned.get("eyebrow") and not cleaned.get("heading"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(
-                        ["Required if a pre-heading is entered."]
+                    "heading": ValidationError(
+                        "Required if a pre-heading is entered."
                     )
                 }
             )
@@ -251,8 +251,8 @@ class ContactEmail(blocks.StructBlock):
         if not cleaned.get("emails"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(
-                        ["At least one email address is required."]
+                    "emails": ValidationError(
+                        "At least one email address is required."
                     )
                 }
             )
