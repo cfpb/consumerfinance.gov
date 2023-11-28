@@ -28,19 +28,19 @@ const postVerify = {
       URL: window.location.href,
     };
     const urlBase = document.querySelector('main').getAttribute('data-context');
-    const urlPath =
-      '/' + urlBase + '/understanding-your-financial-aid-offer/api/verify/';
+    const urlPath = `/${urlBase}/understanding-your-financial-aid-offer/api/verify/`;
     if (error === true) {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
     }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', urlPath, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(postdata));
-
-    // $.post(urlPath, postdata);
+    fetch(urlPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postdata),
+    });
   },
 };
 
