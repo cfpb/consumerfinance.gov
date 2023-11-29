@@ -55,7 +55,7 @@ const financialView = {
   $bigQuestion: $('.question'),
   $degreeType: $('.question [data-section="degreeType"]'),
   keyupDelay: null,
-  currentInput: null,
+  currentInput: 'none',
 
   /**
    * Initiates the object
@@ -200,12 +200,13 @@ const financialView = {
    * @param {object} $leftovers - jQuery object of the "leftover" elements
    */
   updateLeftovers: function (values, $leftovers) {
-    $leftovers.not('#' + financialView.currentInput).each((elem) => {
+    $leftovers.each((elem) => {
       const $ele = $(elem);
+      const elemId = $ele.attr('id') || 'noId';
       let currency = true;
       const name = $ele.attr('data-financial');
 
-      if (financialView.currentInput === $ele.attr('id')) {
+      if (financialView.currentInput === elemId) {
         currency = false;
       }
       if ($ele.attr('data-currency') === 'false') {
@@ -530,7 +531,7 @@ const financialView = {
   inputChangeListener: function () {
     const callback = function (elem) {
       clearTimeout(financialView.keyupDelay);
-      financialView.currentInput = $(elem).attr('id');
+      financialView.currentInput = $(elem).attr('id') || 'none';
       if (document.activeElement === elem) {
         financialView.keyupDelay = setTimeout(function () {
           financialView.inputHandler(financialView.currentInput);
