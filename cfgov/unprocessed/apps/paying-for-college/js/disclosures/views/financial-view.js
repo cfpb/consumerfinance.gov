@@ -261,7 +261,9 @@ const financialView = {
     if (gap > 0) {
       positiveRemainingCost.show();
     } else if (overborrowing > 0) {
-      const $span = negativeRemainingCost.find('[data-financial="gap"]');
+      const $span = negativeRemainingCost.find(
+        '[data-financial="overborrowing"]',
+      );
       $span.text($span.text().replace('-', ''));
       negativeRemainingCost.show();
     }
