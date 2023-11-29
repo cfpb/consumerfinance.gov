@@ -279,10 +279,7 @@ const financialView = {
    */
   updateViewWithProgram: function (values, urlValues) {
     // Update program length
-    const lengthExists = Object.prototype.hasOwnProperty.call(
-      urlValues,
-      'urlProgramLength',
-    );
+    const lengthExists = !!urlValues.urlProgramLength;
     if (lengthExists) {
       this.$programLength.val(urlValues.urlProgramLength / 12).change();
     } else {
