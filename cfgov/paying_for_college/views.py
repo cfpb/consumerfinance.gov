@@ -60,7 +60,7 @@ def validate_oid(oid):
 def validate_pid(pid):
     if not pid:
         return False
-    for char in [";", "<", ">", "{", "}"]:
+    for char in [";", "<", ">", "{", "}", "_"]:
         if char in pid:
             return False
     return True
