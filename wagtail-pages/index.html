@@ -211,7 +211,7 @@ In practice, this provides the flexibility of
 <p>For example, our <code>LandingPage</code> page model
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py">includes a <code>header</code> StreamField</a>
 that can have a hero and/or a text introduction:</p>
-<pre class="highlight"><code class="language-python">from wagtail.core.fields import StreamField
+<pre class="highlight"><code class="language-python">from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
@@ -268,7 +268,7 @@ Checking or unchecking that checkbox will set the value of <code>secondary_nav_e
 the <code>header</code> StreamField
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py#L31">is added to the <code>content_panels</code> as a <code>StreamFieldPanel</code></a>:</p>
 <pre class="highlight"><code class="language-python">from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
