@@ -2,7 +2,6 @@
 import json
 from unittest.mock import patch
 
-from django.apps import apps
 from django.db import models
 from django.test import TestCase, override_settings
 
@@ -20,8 +19,8 @@ from ask_cfpb.models.django import (
     SPANISH_PARENT_SLUG,
     Answer,
 )
+from ask_cfpb.models.pages import AnswerLandingPage
 from v1.models import PortalCategory, PortalTopic, SublandingPage
-from v1.util.migrations import get_or_create_page
 
 
 class AnswerPageDocumentTest(TestCase):
@@ -52,26 +51,23 @@ class AnswerPageDocumentTest(TestCase):
         self.root_page.add_child(instance=self.en_portal_page)
         self.en_portal_page.save()
         self.en_portal_page.save_revision().publish()
-        self.en_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.root_page,
+
+        self.en_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
             language="en",
             live=True,
         )
-        self.es_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.root_page,
+        self.root_page.add_child(instance=self.en_parent_page)
+
+        self.es_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
             language="es",
             live=True,
         )
+        self.root_page.add_child(instance=self.es_parent_page)
+
         self.answer = Answer(id=1234)
         self.answer.save()
         self.en_page = AnswerPage(
