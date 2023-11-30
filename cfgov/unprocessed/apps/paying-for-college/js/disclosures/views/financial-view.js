@@ -16,8 +16,9 @@ import postVerification from '../dispatchers/post-verify.js';
 // stickyKit($);
 
 /**
- *
- * @param num
+ * Convert a numerical number to a word.
+ * @param {string} num - A numeric number from 0 through 6.
+ * @returns {string} A word from none through six.
  */
 function numToWord(num) {
   num = Math.floor(num);
@@ -572,9 +573,8 @@ const financialView = {
 
   /**
    * Helper function to indicate that a offer summary line item has
-   * successfully recalculated
-   * @param {object} element - jQuery object of the recalculated summary element
-   * @param $elem
+   * successfully recalculated.
+   * @param {object} $elem - jQuery object of the recalculated summary element.
    */
   addSummaryRecalculationMessage: function ($elem) {
     $('.recalculating-mobile').text('Updating...');
@@ -587,7 +587,7 @@ const financialView = {
   },
 
   /**
-   * Helper function to remove all indicators that data has recalculated
+   * Helper function to remove all indicators that data has recalculated.
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
