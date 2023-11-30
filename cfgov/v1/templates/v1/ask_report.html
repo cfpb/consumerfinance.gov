@@ -39,6 +39,9 @@
                         Portal topics
                     </th>
                     <th>
+                        Primary portal topic
+                    </th>
+                    <th>
                         Portal categories
                     </th>
                     <th>
@@ -90,6 +93,9 @@
                                 {{ portal_topic.heading }}
                                 <br>
                             {% endfor %}
+                        </td>
+                        <td>
+                            {{ page.primary_portal_topic }}
                         </td>
                         <td>
                             {% for portal_category in page.portal_category.all %}
