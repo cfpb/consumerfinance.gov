@@ -5,6 +5,7 @@ on:
     paths:
       - '**.py'
       - 'requirements/**.txt'
+      - 'requirements/**.in'
       - '**.html'
       - '**.mo'
       - '**.po'
@@ -12,6 +13,7 @@ on:
     paths:
       - '**.py'
       - 'requirements/**.txt'
+      - 'requirements/**.in'
       - '**.html'
       - '**.mo'
       - '**.po'
@@ -19,6 +21,7 @@ on:
     paths:
       - '**.py'
       - 'requirements/**.txt'
+      - 'requirements/**.in'
       - '**.html'
       - '**.mo'
       - '**.po'
@@ -34,6 +37,7 @@ jobs:
           - validate-migrations
           - validate-assets
           - validate-translations
+          - validate-requirements
           - unittest
 
     services:
