@@ -191,7 +191,7 @@ and associating it with the block type.
 A custom block definition can specify the template path in its `Meta` class:
 
 ```python
-from wagtail.core import blocks
+from wagtail import blocks
 
 
 class PersonBlock(blocks.StructBlock):

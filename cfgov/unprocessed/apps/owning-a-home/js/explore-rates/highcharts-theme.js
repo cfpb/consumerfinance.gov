@@ -8,16 +8,28 @@ const HIGHCHARTS_SETTINGS = {
     backgroundColor: '#FFFFFF',
     marginRight: 25,
   },
+  title: {
+    text: '',
+  },
+  credits: {
+    enabled: false,
+  },
   yAxis: {
     labels: {
+      formatter: function () {
+        return this.value > 9 ? this.value + '+' : this.value;
+      },
       style: {
         color: '#BABBBD',
       },
     },
+    max: 10,
+    min: 0,
     minorTickInterval: null,
     gridLineColor: '#E3E4E5',
     tickWidth: 0,
     title: {
+      text: 'Number of lenders offering rate',
       style: {
         color: '#101820',
         fontSize: '16px',
@@ -35,11 +47,10 @@ const HIGHCHARTS_SETTINGS = {
     ],
   },
   xAxis: {
-    labels: {
-      enabled: false,
-    },
     minorTickInterval: null,
-    tickWidth: 0,
+    labels: {
+      rotation: -90,
+    },
     title: {
       style: {
         color: '#BABBBD',

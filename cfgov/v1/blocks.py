@@ -38,31 +38,18 @@ class AnchorLink(blocks.StructBlock):
         label = "Anchor link"
 
 
-class HeadingIconBlock(blocks.CharBlock):
-    classname = "heading-icon-block"
-    form_classname = "heading-icon-block"
-
-
-class HeadingLevelBlock(blocks.ChoiceBlock):
-    choices = [
-        ("h2", "H2"),
-        ("h3", "H3"),
-        ("h4", "H4"),
-        ("h5", "H5"),
-    ]
-    classname = "heading-level-block"
-    form_classname = "heading-level-block"
-
-
-class HeadingTextBlock(blocks.CharBlock):
-    classname = "heading-text-block"
-    form_classname = "heading-text-block"
-
-
 class HeadingBlock(blocks.StructBlock):
-    text = HeadingTextBlock(required=False)
-    level = HeadingLevelBlock(default="h2")
-    icon = HeadingIconBlock(
+    text = blocks.CharBlock(required=False)
+    level = blocks.ChoiceBlock(
+        choices=[
+            ("h2", "H2"),
+            ("h3", "H3"),
+            ("h4", "H4"),
+            ("h5", "H5"),
+        ],
+        default="h2",
+    )
+    icon = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
             "Input the name of an icon to appear to the left of the heading. "
@@ -75,9 +62,7 @@ class HeadingBlock(blocks.StructBlock):
     class Meta:
         icon = "title"
         template = "v1/includes/blocks/heading.html"
-        form_template = (
-            "admin/form_templates/struct-with-block-wrapper-classes.html"
-        )
+        form_classname = "struct-block heading-block"
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):

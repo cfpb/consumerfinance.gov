@@ -1,7 +1,6 @@
 import json
 from unittest import mock
 
-from django.apps import apps
 from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
@@ -14,10 +13,9 @@ from model_bakery import baker
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG,
     SPANISH_PARENT_SLUG,
+    AnswerLandingPage,
     AnswerPage,
 )
-from ask_cfpb.views import annotate_links
-from v1.util.migrations import get_or_create_page
 
 
 now = timezone.now()
@@ -31,26 +29,23 @@ class AnswerPagePreviewTestCase(TestCase):
         self.factory = RequestFactory()
 
         self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.english_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+
+        self.english_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
             language="en",
             live=True,
         )
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
+
+        self.spanish_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
             language="es",
             live=True,
         )
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
+
         self.test_answer = baker.make(Answer)
         self.test_answer2 = baker.make(Answer)
         self.english_answer_page = AnswerPage(
@@ -160,30 +155,3 @@ class AnswerPagePreviewTestCase(TestCase):
     def test_redirect_view_with_no_recognized_facet(self):
         response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
         self.assertEqual(response.status_code, 404)
-
-
-class AnswerViewTestCase(TestCase):
-    def test_annotate_links(self):
-        mock_answer = (
-            '<p>Answer with a <a href="http://fake.com">fake link.</a></p>'
-        )
-        (annotated_answer, links) = annotate_links(mock_answer)
-        self.assertEqual(
-            annotated_answer,
-            '<html><body><p>Answer with a <a href="http://fake.com">fake '
-            "link.</a><sup>1</sup></p></body></html>",
-        )
-        self.assertEqual(links, [(1, str("http://fake.com"))])
-
-    def test_annotate_links_no_href(self):
-        mock_answer = "<p>Answer with a <a>fake link.</a></p>"
-        (annotated_answer, links) = annotate_links(mock_answer)
-        self.assertEqual(links, [])
-
-    def test_annotate_links_no_site(self):
-        site = Site.objects.get(is_default_site=True)
-        site.is_default_site = False
-        site.save()
-        with self.assertRaises(RuntimeError) as context:
-            annotate_links("answer")
-        self.assertIn("no default wagtail site", str(context.exception))

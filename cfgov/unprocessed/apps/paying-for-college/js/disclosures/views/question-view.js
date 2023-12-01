@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import postVerification from '../dispatchers/post-verify.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
@@ -66,7 +64,7 @@ const questionView = {
    */
   bigQuestionListener: function (isSettlementStatus) {
     const $answerButtons = $('.question_answers > button');
-    $answerButtons.on('click', function () {
+    $answerButtons.listen('click', function () {
       const values = getFinancial.values();
       if (isSettlementStatus === true) {
         postVerification.verify(values.offerID, values.schoolID, false);
@@ -87,18 +85,18 @@ const questionView = {
       // Show the rest of the page
       questionView.$getOptions.show();
       questionView.$nextSteps.show();
-      $('html, body')
-        .stop()
-        .animate(
-          {
-            scrollTop: questionView.$getOptions.offset().top - 120,
-          },
-          900,
-          'swing',
-          function () {
-            // Noop function.
-          },
-        );
+      // $('html, body')
+      //   .stop()
+      //   .animate(
+      //     {
+      //       scrollTop: questionView.$getOptions.offset().top - 120,
+      //     },
+      //     900,
+      //     'swing',
+      //     function () {
+      //       // Noop function.
+      //     }
+      //   );
 
       analyticsSendEvent({
         action: 'Step Completed',

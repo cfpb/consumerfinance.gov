@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
 import { formatUSD } from '../../../../../js/modules/util/format.js';
@@ -121,9 +119,9 @@ const metricView = {
     const metricKey = $graph.attr('data-metric');
     const metrics = metricView.metrics[metricKey];
     const schoolHeight = $school.find('.bar-graph_label').height();
-    const schoolTop = $school.position().top;
+    const schoolTop = $school.top();
     const nationalHeight = $national.find('.bar-graph_label').height();
-    const nationalTop = $national.position().top;
+    const nationalTop = $national.top();
     let $higherPoint = $national;
     let $lowerPoint = $school;
     // nationalPointHeight is the smaller and gives just the right offset
@@ -148,16 +146,19 @@ const metricView = {
       nationalTop <= schoolTop + schoolHeight &&
       nationalTop + nationalHeight >= schoolTop
     ) {
-      $higherLabels.css({
-        'padding-bottom': offset,
-        top: -offset,
+      $higherLabels.each((elem) => {
+        elem.style.paddingBottom = offset;
+        elem.style.top = -offset;
       });
 
       /* Need to reset the z-index since fixOverlap is called on page load and
          again when a verification button is clicked */
-      $higherPoint.css('z-index', 'auto');
-      $lowerPoint.css('z-index', 'auto');
-      $lowerPoint.css('z-index', 100);
+      $higherPoint.each((elem) => {
+        elem.style.zIndex = 'auto';
+      });
+      $lowerPoint.each((elem) => {
+        elem.style.zIndex = 100;
+      });
     }
   },
 
@@ -212,8 +213,12 @@ const metricView = {
       bottoms.school = graphHeight;
       $graph.addClass('bar-graph__high-point');
     }
-    $school.css('bottom', bottoms.school);
-    $national.css('bottom', bottoms.national);
+    $school.each((elem) => {
+      elem.style.bottom = bottoms.school;
+    });
+    $national.each((elem) => {
+      elem.style.bottom = bottoms.national;
+    });
   },
 
   /**
@@ -274,9 +279,8 @@ const metricView = {
    * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function ($notification, notificationClasses) {
-    $notification
-      .attr('class', 'metric_notification')
-      .addClass(notificationClasses);
+    $notification.attr('class', 'metric_notification');
+    $notification.addClass(notificationClasses);
   },
 
   /**
@@ -284,7 +288,8 @@ const metricView = {
    * @param {object} $notification - jQuery object of the notification box.
    */
   hideNotificationClasses: function ($notification) {
-    $notification.attr('class', 'metric_notification').hide();
+    $notification.attr('class', 'metric_notification');
+    $notification.hide();
   },
 
   /**
@@ -292,8 +297,8 @@ const metricView = {
    */
   updateGraphs: function () {
     const $graphs = $('.bar-graph');
-    $graphs.each(function () {
-      const $graph = $(this);
+    $graphs.each((elem) => {
+      const $graph = $(elem);
       const metricKey = $graph.attr('data-metric');
       const notificationClasses = metricView.getNotifications(metricKey);
       const $notification = $graph.siblings('.metric_notification');
@@ -350,8 +355,8 @@ const metricView = {
     values.debtBurden = values.loanMonthly / values.monthlySalary;
 
     // Update debt burden elements
-    $elements.each(function () {
-      const $ele = $(this);
+    $elements.each((elem) => {
+      const $ele = $(elem);
       const prop = $ele.attr('data-debt-burden');
       let format = 'currency';
       if (prop === 'debtBurden') {
