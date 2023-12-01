@@ -299,27 +299,29 @@ class EventPage(AbstractFilterPage):
                 FieldPanel("end_dt", classname="col6"),
             ]
         ),
+        FieldPanel("future_body", heading="Content visible before event"),
+        FieldPanel("live_body", heading="Content visible during event"),
         MultiFieldPanel(
             [
-                FieldPanel("archive_body"),
-                FieldPanel("archive_image"),
+                FieldPanel(
+                    "archive_body", heading="Content visible after event"
+                ),
+                FieldPanel("archive_image", heading="Image shown after event"),
                 FieldPanel("video_transcript"),
                 FieldPanel("speech_transcript"),
-                FieldPanel("flickr_url"),
+                # FieldPanel("flickr_url"),
                 FieldPanel("archive_video_id"),
             ],
-            heading="Archive Information",
+            heading="Body and information visible after event",
         ),
-        FieldPanel("live_body"),
-        FieldPanel("future_body"),
-        FieldPanel("persistent_body"),
+        FieldPanel("persistent_body", heading="Content visible at all times"),
         MultiFieldPanel(
             [
                 FieldPanel("live_stream_availability"),
                 FieldPanel("live_video_id"),
                 FieldPanel("live_stream_date"),
             ],
-            heading="Live Stream Information",
+            heading="Livestream information",
         ),
     ]
     # Venue content tab
