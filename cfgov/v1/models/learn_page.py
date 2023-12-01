@@ -186,21 +186,6 @@ class EventPage(AbstractFilterPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    video_transcript = models.ForeignKey(
-        "wagtaildocs.Document",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    speech_transcript = models.ForeignKey(
-        "wagtaildocs.Document",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    flickr_url = models.URLField("Flickr URL", blank=True)
     archive_video_id = models.CharField(
         "YouTube video ID (archive)",
         null=True,
@@ -307,9 +292,6 @@ class EventPage(AbstractFilterPage):
                     "archive_body", heading="Content visible after event"
                 ),
                 FieldPanel("archive_image", heading="Image shown after event"),
-                FieldPanel("video_transcript"),
-                FieldPanel("speech_transcript"),
-                # FieldPanel("flickr_url"),
                 FieldPanel("archive_video_id"),
             ],
             heading="Body and information visible after event",
