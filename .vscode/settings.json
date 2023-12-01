@@ -3,6 +3,6 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.black-formatter"
   }
 }

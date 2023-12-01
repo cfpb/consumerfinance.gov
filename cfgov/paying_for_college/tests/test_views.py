@@ -317,10 +317,18 @@ class VerifyViewTest(django.test.TestCase):
     url = reverse("paying_for_college:disclosures:verify")
 
     def test_verify_view(self):
-        resp = self.client.post(self.url, data=self.post_data)
+        resp = self.client.post(
+            self.url,
+            json.dumps(self.post_data),
+            content_type="application/json",
+        )
         self.assertEqual(resp.status_code, 200)
         self.assertIn(b"Verification", resp.content)
-        resp2 = self.client.post(self.url, data=self.post_data)
+        resp2 = self.client.post(
+            self.url,
+            json.dumps(self.post_data),
+            content_type="application/json",
+        )
         self.assertEqual(resp2.status_code, 400)
         self.assertIn(b"already", resp2.content)
 
@@ -328,21 +336,35 @@ class VerifyViewTest(django.test.TestCase):
         post_data = copy.copy(self.post_data)
         post_data["iped"] = "408039"
         post_data["oid"] = "f38283b5b7c939a058889f997949efa566c616c4"
-        resp = self.client.post(self.url, data=post_data)
+        resp = self.client.post(
+            self.url, json.dumps(post_data), content_type="application/json"
+        )
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_bad_id(self):
         self.post_data["iped"] = ""
-        resp = self.client.post(self.url, data=self.post_data)
+        resp = self.client.post(
+            self.url,
+            json.dumps(self.post_data),
+            content_type="application/json",
+        )
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_bad_oid(self):
         self.post_data["iped"] = "243197"
         self.post_data["oid"] = "f38283b5b7c939a058889f997949efa566script"
-        resp = self.client.post(self.url, data=self.post_data)
+        resp = self.client.post(
+            self.url,
+            json.dumps(self.post_data),
+            content_type="application/json",
+        )
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_no_data(self):
         self.post_data = {}
-        resp = self.client.post(self.url, data=self.post_data)
+        resp = self.client.post(
+            self.url,
+            json.dumps(self.post_data),
+            content_type="application/json",
+        )
         self.assertEqual(resp.status_code, 400)

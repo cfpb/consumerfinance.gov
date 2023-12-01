@@ -60,7 +60,7 @@ def validate_oid(oid):
 def validate_pid(pid):
     if not pid:
         return False
-    for char in [";", "<", ">", "{", "}"]:
+    for char in [";", "<", ">", "{", "}", "_"]:
         if char in pid:
             return False
     return True
@@ -151,25 +151,24 @@ class OfferView(TemplateView):
         if OID and validate_oid(OID) is False:
             warning = OID_ERROR
             OID = ""
-        if "iped" in request.GET and request.GET["iped"]:
-            iped = request.GET["iped"]
-            school = get_school(iped)
+        school_id = request.GET.get("iped", "")
+        if school_id and str(school_id).isdigit():
+            school = get_school(school_id)
             if school:
                 school_data = school.as_json()
-                if "pid" in request.GET and request.GET["pid"]:
-                    PID = request.GET["pid"]
-                    if not validate_pid(PID):
+                PID = request.GET.get("pid")
+                if not validate_pid(PID):
+                    warning = PID_ERROR
+                    PID = ""
+                if PID:
+                    programs = Program.objects.filter(
+                        program_code=PID, institution=school, test=test
+                    ).order_by("-pk")
+                    if programs:
+                        program = programs[0]
+                        program_data = program.as_json()
+                    else:
                         warning = PID_ERROR
-                        PID = ""
-                    if PID:
-                        programs = Program.objects.filter(
-                            program_code=PID, institution=school, test=test
-                        ).order_by("-pk")
-                        if programs:
-                            program = programs[0]
-                            program_data = program.as_json()
-                        else:
-                            warning = PID_ERROR
                 else:
                     warning = PID_ERROR
             else:
@@ -301,14 +300,19 @@ def school_autocomplete(request):
 
 class VerifyView(View):
     def post(self, request):
-        data = request.POST
+        data = json.loads(request.body)
         timestamp = timezone.now()
-        if data.get("oid") and validate_oid(data["oid"]):
-            OID = data["oid"]
+        OID = data.get("oid")
+        if OID and validate_oid(OID):
+            pass
         else:
             return HttpResponseBadRequest("Error: No valid OID provided")
-        if data.get("iped") and get_school(data["iped"]):
-            school = get_school(data["iped"])
+        iped = data.get("iped")
+        if iped and str(iped).isdigit():
+            school = get_school(iped)
+            if not school:
+                errmsg = "Error: No school found."
+                return HttpResponseBadRequest(errmsg)
             if not school.contact:
                 errmsg = "Error: School has no contact."
                 return HttpResponseBadRequest(errmsg)
@@ -318,17 +322,15 @@ class VerifyView(View):
             notification = Notification(
                 institution=school,
                 oid=OID,
-                url=data["URL"].replace("#info-right", ""),
+                url=data.get("URL").replace("#info-right", ""),
                 timestamp=timestamp,
                 errors=data["errors"][:255],
             )
             notification.save()
             msg = notification.notify_school()
-            callback = json.dumps(
-                {"result": "Verification recorded; {0}".format(msg)}
-            )
+            callback = json.dumps({"result": f"Verification recorded; {msg}"})
             response = HttpResponse(callback)
             return response
         else:
-            errmsg = "Error: No school found"
+            errmsg = "Error: No valid school ID found"
             return HttpResponseBadRequest(errmsg)

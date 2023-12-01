@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 const postVerify = {
   csrfToken: null,
 
@@ -16,7 +13,10 @@ const postVerify = {
        }
        }
        } */
-    this.csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+    const csrfElem = document.querySelector('[name="csrfmiddlewaretoken"]');
+    if (csrfElem !== null) {
+      this.csrfToken = csrfElem.value;
+    }
   },
 
   verify: function (offerID, collegeID, error) {
@@ -28,13 +28,19 @@ const postVerify = {
       URL: window.location.href,
     };
     const urlBase = document.querySelector('main').getAttribute('data-context');
-    const urlPath =
-      '/' + urlBase + '/understanding-your-financial-aid-offer/api/verify/';
+    const urlPath = `/${urlBase}/understanding-your-financial-aid-offer/api/verify/`;
     if (error === true) {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
     }
-    $.post(urlPath, postdata);
+
+    fetch(urlPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postdata),
+    });
   },
 };
 

@@ -1,3 +1,4 @@
+import json
 from unittest import mock
 
 from django.test import TestCase
@@ -5,7 +6,6 @@ from django.test import TestCase
 from v1.models import BlogPage, LearnPage, NewsroomPage, SublandingPage
 from v1.models.snippets import EmailSignUp
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
-from v1.util.migrations import set_streamfield_data
 
 
 class TestEmailSignup(TestCase):
@@ -19,15 +19,18 @@ class TestEmailSignup(TestCase):
 
         page = page_cls(slug="slug", title="title")
         publish_page(child=page)
-        set_streamfield_data(
+
+        setattr(
             page,
             field,
-            [
-                {
-                    "type": "email_signup",
-                    "value": email_signup.pk,
-                }
-            ],
+            json.dumps(
+                [
+                    {
+                        "type": "email_signup",
+                        "value": email_signup.pk,
+                    }
+                ]
+            ),
         )
         publish_changes(child=page)
 

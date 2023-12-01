@@ -4,12 +4,14 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
  * Sends the user interaction to Analytics
  * @param {string} action - The user's action
  * @param {string} label - The label associated with the action
- * @param {string} category - Optional category if it's not eRegs-related
  * @returns {object} Event data
  */
-let sendEvent = (action, label, category) => {
-  category = category || 'TDP Search Tool';
-  const payload = { action, label, category };
+let sendEvent = (action, label) => {
+  const payload = {
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  };
   analyticsSendEvent(payload);
   return payload;
 };
