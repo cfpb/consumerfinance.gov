@@ -630,7 +630,6 @@ const financialView = {
             //       financialView.$aboutThisTool.focus();
             //     }
             //   );
-            metricView.updateGraphs(values);
             window.location.hash = '#info-right';
 
             analyticsSendEvent({
@@ -883,6 +882,9 @@ const financialView = {
       // Show Step 2
       financialView.$evaluateSection.show();
       financialView.$bigQuestion.show();
+
+      const values = getFinancial.values();
+      metricView.updateGraphs(values);
       // $('html, body')
       //   .stop()
       //   .animate(
