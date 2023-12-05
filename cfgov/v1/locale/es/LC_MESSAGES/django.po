@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 10:36-0400\n"
+"POT-Creation-Date: 2023-12-05 13:47-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,28 +45,29 @@ msgstr "Oficina para la Protección Financiera del Consumidor"
 msgid "Official website of the"
 msgstr "Un sitio web oficial del"
 
-#: v1/jinja2/v1/includes/atoms/tagline.html:21
-msgid "An official website of the"
-msgstr "Un sitio web oficial del"
-
+#: v1/jinja2/v1/includes/atoms/tagline.html:18
 #: v1/jinja2/v1/includes/atoms/tagline.html:22
 msgid "United States government"
 msgstr "gobierno federal de los Estados Unidos"
+
+#: v1/jinja2/v1/includes/atoms/tagline.html:21
+msgid "An official website of the"
+msgstr "Un sitio web oficial del"
 
 #: v1/jinja2/v1/includes/blocks/audio.html:6
 msgid "Your browser does not support this audio player."
 msgstr ""
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:54
-#: v1/jinja2/v1/includes/blocks/email-signup.html:79
+#: v1/jinja2/v1/includes/blocks/email-signup.html:52
+#: v1/jinja2/v1/includes/blocks/email-signup.html:77
 msgid "Sign up"
 msgstr "Suscribir"
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:68
+#: v1/jinja2/v1/includes/blocks/email-signup.html:66
 msgid "Email address"
 msgstr "Dirección email"
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:84
+#: v1/jinja2/v1/includes/blocks/email-signup.html:82
 msgid "See Privacy Act statement"
 msgstr "Lea la declaración de privacidad"
 
@@ -84,8 +85,8 @@ msgstr "Enviar una queja"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:28
 #: v1/jinja2/v1/includes/molecules/global-search.html:36
-#: v1/jinja2/v1/includes/molecules/global-search.html:71
-#: v1/jinja2/v1/includes/molecules/global-search.html:90
+#: v1/jinja2/v1/includes/molecules/global-search.html:70
+#: v1/jinja2/v1/includes/molecules/global-search.html:82
 #: v1/jinja2/v1/includes/organisms/ask-search.html:94
 msgid "Search"
 msgstr "Buscar"
@@ -99,24 +100,20 @@ msgstr "Busque en el sitio web consumerfinance.gov"
 msgid "Close"
 msgstr "Cerrar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:76
-#: v1/jinja2/v1/includes/molecules/global-search.html:79
+#: v1/jinja2/v1/includes/molecules/global-search.html:75
+#: v1/jinja2/v1/includes/molecules/global-search.html:78
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
-
-#: v1/jinja2/v1/includes/molecules/global-search.html:85
-msgid "Clear search"
-msgstr "Borrar búsqueda"
 
 #: v1/jinja2/v1/includes/molecules/pagination.html:33
 msgid "Pagination"
 msgstr "Número de página"
 
-#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:48
+#: v1/jinja2/v1/includes/molecules/pagination.html:48
 msgid "Previous"
 msgstr "Anterior"
 
-#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:61
+#: v1/jinja2/v1/includes/molecules/pagination.html:61
 msgid "Next"
 msgstr "Siguiente"
 
@@ -177,11 +174,11 @@ msgstr "Busca su pregunta"
 msgid "Search Ask CFPB for your question"
 msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:56
+#: v1/jinja2/v1/includes/organisms/expandable.html:47
 msgid "Show"
 msgstr "Mostrar"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:64
+#: v1/jinja2/v1/includes/organisms/expandable.html:50
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -197,18 +194,18 @@ msgstr "https://www.usa.gov/es/"
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
-#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
-#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:34
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:37
 #, fuzzy
 #| msgid "Featured content"
 msgid "Table of contents"
 msgstr "Ítem destacado"
 
-#: v1/jinja2/v1/includes/organisms/secondary-nav.html:17
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:20
 msgid "Section navigation"
 msgstr "Navegación de la sección"
 
-#: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:24
 msgid "Navigate this section"
 msgstr "Navegue por esta sección"
 
@@ -224,36 +221,32 @@ msgstr "Ver video en YouTube"
 msgid "Play video"
 msgstr "Ver video"
 
-#: v1/jinja2/v1/layouts/base.html:242
+#: v1/jinja2/v1/layouts/base.html:267
 msgid "Skip to main content"
 msgstr "Ir al contenido principal"
 
-#: v1/models/base.py:42
+#: v1/models/base.py:40
 msgid "Author"
 msgstr ""
 
-#: v1/models/base.py:43
+#: v1/models/base.py:41
 msgid "Authors"
 msgstr ""
 
-#: v1/models/base.py:50
+#: v1/models/base.py:48
 msgid "Tag"
 msgstr ""
 
-#: v1/models/base.py:51
+#: v1/models/base.py:49
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:56
+#: v1/models/base.py:54
 msgid "Content Owner"
 msgstr ""
 
-#: v1/models/base.py:57
+#: v1/models/base.py:55
 msgid "Content Owners"
-msgstr ""
-
-#: v1/models/base.py:455
-msgid "password"
 msgstr ""
 
 #: v1/templates/cdnadmin/index.html:5
@@ -270,6 +263,7 @@ msgstr "Imprima esta página"
 msgid "Export feedback"
 msgstr ""
 
+#: v1/templates/v1/page_draft_report.html:7
 #: v1/templates/v1/page_metadata_report.html:7
 #: v1/templates/v1/report_no-xlsx_base.html:7
 #, fuzzy
@@ -281,17 +275,5 @@ msgstr "Descargue CSV file"
 msgid "No pages found."
 msgstr ""
 
-#: v1/tests/management/commands/test_makemessages_data/__init__.py:4
-msgid "Test string from Python file."
-msgstr ""
-
-#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
-msgid ""
-"\n"
-"Test string from Jinja template.\n"
-"This is in a multi-line block.\n"
-msgstr ""
-
-#: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
-msgid "Test string from Django template."
-msgstr ""
+#~ msgid "Clear search"
+#~ msgstr "Borrar búsqueda"
