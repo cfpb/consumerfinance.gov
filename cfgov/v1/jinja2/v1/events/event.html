@@ -24,10 +24,6 @@
 
 {% block content_main %}
     {% include 'v1/events/_event-detail.html' %}
-    {% from 'v1/events/_macros.html' import event_media as event_media with context %}
-    {% if event_state and event_state != 'future' %}
-        {{ event_media(page) }}
-    {% endif %}
 
     {% if page.agenda_items %}
         {% from 'v1/events/_macros.html' import event_agenda as event_agenda with context%}

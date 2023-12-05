@@ -42,7 +42,6 @@ const metricView = {
   init: function () {
     this.settlementStatus = getSchool.values().settlementSchool || false;
     this.setMetrics(this.metrics);
-    this.updateGraphs();
     this.updateDebtBurden();
   },
 
@@ -196,7 +195,7 @@ const metricView = {
     const min = $graph.attr('data-graph-min');
     const max = $graph.attr('data-graph-max');
     const $school = $graph.find('.bar-graph_point__you');
-    const $national = $graph.find('bar-graph_point__average');
+    const $national = $graph.find('.bar-graph_point__average');
     const bottoms = {};
     const bottomOffset = 20;
 
@@ -214,10 +213,10 @@ const metricView = {
       $graph.addClass('bar-graph__high-point');
     }
     $school.each((elem) => {
-      elem.style.bottom = bottoms.school;
+      elem.style.bottom = bottoms.school + 'px';
     });
     $national.each((elem) => {
-      elem.style.bottom = bottoms.national;
+      elem.style.bottom = bottoms.national + 'px';
     });
   },
 
