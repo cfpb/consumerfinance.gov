@@ -1,5 +1,3 @@
-@import (reference) 'cfpb-core.less';
-
 // Variable used to set the size of the play button.
 @play-btn-size__px: 60px;
 
@@ -250,7 +248,11 @@ button.o-video-player_play-btn,
   }
 
   .o-video-player_iframe {
-    .u-flexible-container_inner();
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .o-video-player_video-actions-container {
@@ -301,7 +303,11 @@ button.o-video-player_play-btn,
   }
 
   .o-video-player_iframe {
-    .u-flexible-container_inner();
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 } );
 
