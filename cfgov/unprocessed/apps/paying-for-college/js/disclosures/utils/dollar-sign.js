@@ -1,6 +1,6 @@
 /**
- *
- * @param selector
+ * @param {Document|Window|string} selector - A jQuery-style selector.
+ * @returns {Document|Window|undefined} The document, window, or nothing.
  */
 function Query(selector) {
   this.elements = [];
@@ -107,14 +107,14 @@ Query.prototype.filter = function (selector) {
 Query.prototype.siblings = function (selector) {
   const q = new Query();
   const elemArr = [];
-  if ( typeof selector === 'undefined' ) selector = '*';
-  this.elements.forEach( ( elem)  => {
+  if (typeof selector === 'undefined') selector = '*';
+  this.elements.forEach((elem) => {
     let node = elem.parentNode.firstElementChild;
-    for ( node; node !== null; node = node.nextElementSibling ) {
-      if ( node.matches( selector ) && node !== elem ) {
-        elemArr.push( node );
+    for (node; node !== null; node = node.nextElementSibling) {
+      if (node.matches(selector) && node !== elem) {
+        elemArr.push(node);
       }
-    } 
+    }
   });
   q.elements = elemArr;
 
