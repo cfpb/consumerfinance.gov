@@ -316,10 +316,10 @@
   dependencies:
     "@cfpb/cfpb-atomic-component" "^0.21.9"
 
-"@cfpb/cfpb-atomic-component@0.33.0", "@cfpb/cfpb-atomic-component@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.33.0.tgz#fb22f5e1c8940ea009ad4010760e4fa7b3d19f9d"
-  integrity sha512-mIACnvqaFPn6g8dW8rE09+TbnJpAV5zhEeA6u+LzhEHpdbC1HwTcwE/yzLVfiM4B+Z4STmaX2C8eZ9GsLWxmzw==
+"@cfpb/cfpb-atomic-component@0.34.0", "@cfpb/cfpb-atomic-component@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.34.0.tgz#ae82ef09a6ec25082e6951298579a170b80d81d3"
+  integrity sha512-81Hah3hrgNM1JgAnAZQyoj81ewNmzjtthRNILCXFZJN/SqjamfUEaSH6osLvtTt21Cj2CKKx872kOnT5FA1WLQ==
 
 "@cfpb/cfpb-atomic-component@^0.21.9":
   version "0.21.9"
@@ -328,13 +328,13 @@
   dependencies:
     ftdomdelegate "3.1.0"
 
-"@cfpb/cfpb-buttons@0.33.0", "@cfpb/cfpb-buttons@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.33.0.tgz#b5afda257d31238fd48216f6596360596556b453"
-  integrity sha512-Ux/gDOavREhwU/SGRUd7ztUBx3c90DjqTFsYBc5Z18mrAfimthaSNmQspOeVbzzNtMJGbHJasbhWs24PxFQwWQ==
+"@cfpb/cfpb-buttons@0.34.0", "@cfpb/cfpb-buttons@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.34.0.tgz#7feee755f21611d2c926950092224e3f2543915a"
+  integrity sha512-U4fN5ICRhgxQCRCJvkKy1Qa/PSH5VcKecLX1iEclAK+mF8iXmgVi94FIhyf1QywP+L37bsb4ibBoNgJrztJ2Vw==
   dependencies:
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
 "@cfpb/cfpb-core@0.3.1", "@cfpb/cfpb-core@^0.3.1":
   version "0.3.1"
@@ -344,36 +344,36 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-core@0.33.0", "@cfpb/cfpb-core@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.33.0.tgz#0b794b709b940898e70e2d33608e78476afd6373"
-  integrity sha512-PCUu1xi8JJqzSjO8hhTGB9aHZb5Z/F5/xuoAteV0TuqIm03dXG77ARTaygnpTI5wofeZHzdYAAKK7tVFl6X2xg==
+"@cfpb/cfpb-core@0.34.0", "@cfpb/cfpb-core@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.34.0.tgz#b6655df14568eb620b5ffe446157f864d8b64bea"
+  integrity sha512-WBfMoVF0ypzDgT1IDxl9iYJVzXmMgfN+u1OCmiNsdPfplexAOgj5AW31D+j/6ATif4d0DPQxy5D2e2gybuur0w==
   dependencies:
     normalize-css "^2.0.0"
 
-"@cfpb/cfpb-expandables@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.33.0.tgz#119999cedbc6128c4544775fdeb42f43675ad9f6"
-  integrity sha512-ZqQP37CzMIOjOXXpbuIQc2iP+BjiHI+D8W4G63zcdR9E0jDJPFtxsTCTQY3BzPt27rw/c6Cv1MfFaELa7JIxJQ==
+"@cfpb/cfpb-expandables@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.34.0.tgz#206c3589c069773a4517231fd76d93b737544781"
+  integrity sha512-JqKTsqAUFOnskAt23AqS9hc8GCOrF01zBz/DGrFLFIoRIe3krKYqJgqWV0FZydxrq7aBMWq+JRkp/0Br6ePmBg==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.33.0"
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-atomic-component" "^0.34.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
-"@cfpb/cfpb-forms@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.33.0.tgz#5daa87e82382971622a1253f782c077bf371fa9e"
-  integrity sha512-uNK10+mnZGNIZ1gBCgRzukVk2Mtz2EZsfqG5WgbzPCoXDfQ887QOIGXKsaZy80NbUWH+KESD3JLvouhcf4De9A==
+"@cfpb/cfpb-forms@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.34.0.tgz#57b01a1c7e59d23b8469cf8669b6b467e6c4fa39"
+  integrity sha512-k0M4Xzf+X4wYw65dWF7afQEyYdLBK8rcNOl2HTstDdsAVKTsA3t0kM64EVRFXZM96OOxjHD7m+RzDH+A3IB4fA==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.33.0"
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-grid" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-buttons" "^0.34.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-grid" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
-"@cfpb/cfpb-grid@0.33.0", "@cfpb/cfpb-grid@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-grid/-/cfpb-grid-0.33.0.tgz#028f75ab2a2ada575a7447be1fb24fc70a1866bd"
-  integrity sha512-pR+GKEw0p9ugHL2J2GbAxCS9P2mtOcDmtEhtuk7NyfwLLKnebEVPA5w0EsORh1WJL79JJP9CXl4SofAGESvPUA==
+"@cfpb/cfpb-grid@0.34.0", "@cfpb/cfpb-grid@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-grid/-/cfpb-grid-0.34.0.tgz#3c23dbad9911af512c331413413dd3f6b22d03e4"
+  integrity sha512-YqcaLRM0sHU+LOfhBYgoAaA5r7XVAoOoxO2rzr5hxgHUt1hJKx7kQZM94jmdNDE483kgq5U40p/nZGIljK+osQ==
   dependencies:
     normalize-css "^2.0.0"
 
@@ -385,10 +385,10 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-icons@0.33.0", "@cfpb/cfpb-icons@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.33.0.tgz#03b0b2723e25aa2cfa941e1b576ed01ea4de4d19"
-  integrity sha512-bdjxjYIGMmTzTC64rRx2oxX/Ab4t39bNjippfVA4/kGZa4ERleo7G/Itqw4lMo9h2BA7N12mSLsMcNj3VNu2zg==
+"@cfpb/cfpb-icons@0.34.0", "@cfpb/cfpb-icons@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.34.0.tgz#8434f9d5094fd0093b9781dc6b9abb4afd596691"
+  integrity sha512-Ks2VXuzTgZIALN1yNffWErLNbLNCHePaeD5M7OcBAOtJOd0bAiUG5Ep/ma6Xr5i6MJccvvVZdgYkZgYEpnE89A==
 
 "@cfpb/cfpb-icons@^0.3.2":
   version "0.3.2"
@@ -403,38 +403,38 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-grid" "^0.3.1"
 
-"@cfpb/cfpb-layout@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.33.0.tgz#0b415e1183bfe78feb90fd75427bc17889b1efc4"
-  integrity sha512-0el+lhbICMcXdd9O0PnBLeT0P6TWr5CnQ1MjpRTGsiGhlx+al3lJ0NR2e0j6A7+r5o7mnr0LMC9Nxtmefme5UQ==
+"@cfpb/cfpb-layout@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.34.0.tgz#9078e469e19ff66fdf0762405cf8559c298bcfc8"
+  integrity sha512-8fVWKgixAFjXhmmDf6QSWCfXigagfnGHz7jwXiHHIeLsfCF0HcJH2mwcMz1pn8ENKulP+qy+ECWRlmfrDMST1A==
   dependencies:
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-grid" "^0.33.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-grid" "^0.34.0"
 
-"@cfpb/cfpb-notifications@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.33.0.tgz#27edea3261662a1fb8625251a2158f3b1e46e7ba"
-  integrity sha512-lPx6U+s3JpyX9D7ucyEkp0g6S/nWZjbulKui+9S+EmYeRVXoQuMmrExA6TrxEbwQXmrVvgj+/JTsE7pRM5M+6Q==
+"@cfpb/cfpb-notifications@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.34.0.tgz#cd28583223fd8b44d3b69861f0c1c45cf2ee7d44"
+  integrity sha512-urtmypEmrCxrCvwT9GycupAGE9UMjQPig8n3+1E3gMdBbRB2doa8wibTXTHBCC/BiXHlI5m2DI9GDzTjgcWkEA==
   dependencies:
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
-"@cfpb/cfpb-pagination@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.33.0.tgz#081f7897b19c23e06da99640d927b3f6c5b55347"
-  integrity sha512-TdYYAZnqh8j5HnOHGR2smrRDu+rkw7gHtxDHIfftTwDOxsDS16CNna/L6pjyR/XkpPzvfzPckWYsoBbkIrMq6g==
+"@cfpb/cfpb-pagination@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.34.0.tgz#3374df701c5bfbab96a2dffc6f6cc3173b5cfd2a"
+  integrity sha512-uuz4XCwMcYoQ2Kp8C8w/BgM5oEJCdKI68HELVL0JjYukk5q5O1CM2oxk8IbjKLvaoTUjyo6GIkWnRqM+hatJ+w==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.33.0"
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-buttons" "^0.34.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
-"@cfpb/cfpb-tables@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.33.0.tgz#adab40f742bffdf2fbe21bb7a751e746a59a9146"
-  integrity sha512-hoMl0h7y5t/roI/8tN5JMys9Td4JRB9yfxX9kFQKl51lX28QmvXIsYmMYx/DAZDw/67yP6M0RPw8NiQWeLhkKw==
+"@cfpb/cfpb-tables@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.34.0.tgz#50776b38f0596fe46f222c88dde12f6b5dfc03ae"
+  integrity sha512-NUUudkezIHz7dZEfc42IqyXfWnlZhNY3MvLQwAdR5HoOEQ7Xr6OubMkuTr3DFFgTznDP/PAMYO6KUu6qoWjCeg==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.33.0"
-    "@cfpb/cfpb-core" "^0.33.0"
+    "@cfpb/cfpb-atomic-component" "^0.34.0"
+    "@cfpb/cfpb-core" "^0.34.0"
 
 "@cfpb/cfpb-typography@0.3.2":
   version "0.3.2"
@@ -444,13 +444,13 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-icons" "^0.3.2"
 
-"@cfpb/cfpb-typography@0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.33.0.tgz#2ae945cfc3dc54bea753e65825c392aaafa130d4"
-  integrity sha512-elidLjIA3raPvqAZwFBiG/UkzPx/FEAUPYhIi1kBnz/wR7x82jshJToVg+Q5LALHvh8FR/fCy+1L4b8EBZzs9A==
+"@cfpb/cfpb-typography@0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.34.0.tgz#356961c31bbb09c2673bbad56c216aee4533017d"
+  integrity sha512-2E3v1Mj4V8+TqqXOdXLJSI75CdJbXTpjWSzdyaGktZR/TqHLHE3gQFYGULGr+3TcNdpBYpxNvsCRr7kZ1uA+1w==
   dependencies:
-    "@cfpb/cfpb-core" "^0.33.0"
-    "@cfpb/cfpb-icons" "^0.33.0"
+    "@cfpb/cfpb-core" "^0.34.0"
+    "@cfpb/cfpb-icons" "^0.34.0"
 
 "@colors/colors@1.5.0":
   version "1.5.0"
