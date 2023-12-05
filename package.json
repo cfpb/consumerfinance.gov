@@ -43,14 +43,14 @@
     "lodash.throttle": "4.1.1",
     "number-to-words": "1.2.4",
     "papaparse": "5.3.2",
-    "postcss": "8.4.31",
+    "postcss": "8.4.32",
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
-    "cypress": "13.6.0",
+    "cypress": "13.6.1",
     "cypress-fail-fast": "7.1.0",
-    "eslint": "8.54.0",
-    "eslint-config-prettier": "9.0.0",
+    "eslint": "8.55.0",
+    "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.0",
     "eslint-plugin-jsdoc": "46.9.0",
     "eslint-plugin-jsx-a11y": "6.8.0",
@@ -61,7 +61,7 @@
     "jest-fetch-mock": "3.0.3",
     "postcss-less": "6.0.0",
     "prettier": "3.1.0",
-    "snyk": "1.1259.0",
+    "snyk": "1.1260.0",
     "stylelint": "15.11.0",
     "stylelint-config-standard": "34.0.0",
     "stylelint-less": "2.0.0"
