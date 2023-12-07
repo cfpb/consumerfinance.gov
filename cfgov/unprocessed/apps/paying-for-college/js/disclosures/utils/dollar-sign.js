@@ -29,10 +29,6 @@ Query.prototype.attr = function (name, value) {
   }
 };
 
-Query.prototype.cloner = function () {
-  return this.elements.length ? this.elements[0].cloneNode(true) : null;
-};
-
 Query.prototype.text = function (value) {
   // getter
   if (typeof value === 'undefined') {
@@ -121,6 +117,21 @@ Query.prototype.siblings = function (selector) {
   return q;
 };
 
+Query.prototype.parent = function ( selector ) {
+  const q = new Query();
+  const elemArr = [];
+  this.elements.forEach( elem => {
+    let parent = elem.parentElement;
+    if ( typeof selector === 'undefined' || parent.matches( selector ) ) {
+      elemArr.push( parent )
+    }
+  });
+
+  q.elements = elemArr;
+
+  return q;
+};
+
 Query.prototype.remove = function () {
   this.elements.forEach((elem) => {
     elem.remove();
@@ -182,6 +193,25 @@ Query.prototype.change = function () {
     }
   });
 };
+
+Query.prototype.cloner = function () {
+  return this.elements.length ? this.elements[0].cloneNode(true) : null;
+};
+
+Query.prototype.appendTo = function ( newParents ) {
+  // This method is designed only to work on instances of Query
+  if ( newParents instanceof Query !== true ) {
+    throw Error('Error: appendTo can only accept an instance of Query as a parameter');
+  } else {
+    newParents.elements.forEach( parent => {
+      this.elements.forEach( child => {
+        parent.appendChild( child );
+      });
+    });
+  }
+  
+  return this;
+}
 
 const $ = function (param) {
   if (typeof param === 'string') {
