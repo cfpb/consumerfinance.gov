@@ -61,9 +61,8 @@ MortgagePerformanceMap.prototype.eventListeners = function () {
 
 MortgagePerformanceMap.prototype.onClick = function (event) {
   const change = new Event('change');
-  this.$container.querySelector(
-    'input[name="mp-map_geo"]:checked',
-  ).checked = false;
+  this.$container.querySelector('input[name="mp-map_geo"]:checked').checked =
+    false;
   this.$form.dispatchEvent(change);
   event.preventDefault();
 };

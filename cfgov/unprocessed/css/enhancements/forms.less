@@ -1,48 +1,3 @@
-// TODO: Move to the DM & CF
-
-/* topdoc
-  name: Icon inside input
-  family: cf-forms
-  patterns:
-    - name: Default icons before and after a default input.
-      markup: |
-        <div class="input-contains-label">
-            <label for="search-input"
-                   class="input-contains-label_before
-                          input-contains-label_before__search">
-            </label>
-            <label for="search-input"
-                   class="input-contains-label_after
-                          input-contains-label_after__clear">
-            </label>
-            <input type="text"
-                   value="">
-        </div>
-    - name: Default icons before and after a default input, with a button.
-      markup: |
-        <div class="input-with-btn">
-            <div class="input-with-btn_input
-                        input-contains-label">
-                <label for="search-input"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input type="text"
-                       id="search-input"
-                       value="">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn">Search</button>
-            </div>
-        </div>
-  tags:
-    - cf-forms
-*/
-
 .input-contains-label {
   position: relative;
 
@@ -81,15 +36,6 @@
 }
 
 // TODO: Move to the DM and update existing o-form__input-w-btn in CF
-
-/* topdoc
-  name: Match the input to button
-  family: cf-form
-  notes: "Matches the font-size and padding of the input in
-          .input-with-btn to the button"
-  tags:
-    - cf-form
-*/
 
 input {
   .input-with-btn & {
@@ -198,8 +144,3 @@ input {
 input[type='date'] {
   min-height: unit(35px / @base-font-size-px, rem);
 }
-
-/* topdoc
-  name: EOF
-  eof: true
-*/

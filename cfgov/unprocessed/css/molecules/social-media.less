@@ -1,40 +1,3 @@
-/* topdoc
-  name: Social Media
-  family: cfgov-molecules
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="m-social-media m-social-media__share">
-            <h5 class="m-social-media_heading">Share this</h5>
-            <ul class="m-social-media_icons m-list m-list__unstyled m-list__horizontal">
-                <li class="m-list_item">
-                    <a class="m-social-media_icon" href="#">
-                        {{ svg_icon('email') }}
-                        <span class="u-visually-hidden">
-                            Share by email
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-social-media.m-social-media__share
-            .m-social-media_heading
-            ul.m-social-media_icons.m-list.m-list__unstyled.m-list__horizontal
-              li.m-list_item
-                .m-social-media_icon
-                  .cf-icon-svg
-                  span.u-visually-hidden
-      notes:
-        - "m-social-media__follow modifier is identical
-           but does not include the heading."
-  tags:
-    - cfgov-molecules
-*/
-
 .m-social-media {
   display: flex;
   flex-wrap: wrap;
@@ -92,8 +55,3 @@ html[lang='ar'] .m-social-media__share {
     margin-right: 0;
   }
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/
