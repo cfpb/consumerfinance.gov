@@ -1,52 +1,3 @@
-// This is in CFv4 but is necessary because the video-player
-// calls this as a mixin.
-.u-flexible-container_inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-// TODO: Determine if the below utilities can be migrated to CFv4.
-
-/* topdoc
-  name: Width utilities
-  family: cf-utilities
-  patterns:
-    - name: Percent-based
-      markup: |
-        <div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w95pct</code>
-        </div>
-        <div class="u-w85pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w85pct</code>
-        </div>
-        <div class="u-w65pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w65pct</code>
-        </div>
-        <div class="u-w55pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w55pct</code>
-        </div>
-        <div class="u-w45pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w45pct</code>
-        </div>
-        <div class="u-w35pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w35pct</code>
-        </div>
-        <div class="u-w15pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w15pct</code>
-        </div>
-        <div class="u-w5pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w5pct</code>
-        </div>
-      notes:
-        - "Inline styles are for demonstration purposes only, please don't use
-           them."
-  tags:
-    - cfgov-cf-enhancements
-*/
-
 .u-w95pct {
   width: 95%;
 }
@@ -79,87 +30,27 @@
   width: 5%;
 }
 
-/* topdoc
-  name: Reset all
-  family: cf-core
-  patterns:
-    - name: .u-reset
-      markup: |
-        <fieldset class="u-reset">
-        </fieldset>
-      notes:
-        - "A class to remove any default spacing or borders on an element."
-  tags:
-    - cf-utilities
-*/
-
 .u-reset {
   border: 0;
   margin: 0;
   padding: 0;
 }
 
-/* topdoc
-  name: Hidden Overflow
-  family: cf-core
-  patterns:
-    - name: Utility class
-      markup: |
-        <div class="u-hidden-overflow"></div>
-      codenotes:
-        - .u-hidden-overflow;
-      notes:
-        - "Use this class to hide content outside the bounds of an element.
-           Used for cropping views in multi-level menus."
-  tags:
-    - cf-core
-*/
+/* Used for cropping views in multi-level menus. */
 
 .u-hidden-overflow {
   overflow: hidden;
 }
 
-/* topdoc
-  name: Invisible
-  family: cf-core
-  patterns:
-    - name: Utility class
-      markup: |
-        <span class="u-invisible">Not shown</span>
-      codenotes:
-        - .u-invisible;
-      notes:
-        - "Use this class to make something invisible.
-           Useful for hiding off-screen elements that
-           are part of an animation, but you don't want
-           as part of the tabindex."
-  tags:
-    - cf-core
-*/
+/* Useful for hiding off-screen elements that
+   are part of an animation, but you don't want
+   as part of the tabindex.
+ */
 
 .u-invisible {
   visibility: hidden;
 }
 
-/* topdoc
-  name: Disabled link
-  family: cf-core
-  patterns:
-    - name: Utility class
-      markup: |
-        <a class="u-link__disabled">
-          This link is disabled.
-        </div>
-      codenotes:
-        - .u-link__disabled;
-      notes:
-        - "Use this as a general class to give links
-           or button links disabled styling.
-           Sets the color, background-color,
-           removes the border, and sets the cursor to not-allowed."
-  tags:
-    - cf-core
-*/
 .u-link__disabled {
   border: none !important;
   color: @gray-40 !important;
@@ -169,8 +60,3 @@
     background-color: @gray-20 !important;
   }
 }
-
-/* topdoc
-  name: EOF
-  eof: true
-*/

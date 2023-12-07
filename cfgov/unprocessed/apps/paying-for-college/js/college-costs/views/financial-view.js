@@ -11,7 +11,7 @@ import {
   updateFinancial,
   updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
-import numberToMoney from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
@@ -65,7 +65,7 @@ const financialView = {
         } else if (isHours) {
           val = Math.round(val * 10) / 10 + ' hours';
         } else {
-          val = numberToMoney({ amount: val, decimalPlaces: 0 });
+          val = formatUSD({ amount: val, decimalPlaces: 0 });
         }
 
         if (elem.tagName === 'INPUT') {

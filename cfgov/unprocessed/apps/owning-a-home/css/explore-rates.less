@@ -144,7 +144,8 @@
         Main section with output
         --------------------------- */
   .rate-checker-heading {
-    margin-top: unit(40px / @base-font-size-px, em);
+    margin-top: unit(20px / @base-font-size-px, em);
+    margin-bottom: unit(16px / @base-font-size-px, em);
     font-size: 1.375em;
   }
 
@@ -216,17 +217,8 @@
     }
   }
 
-  .data-label {
-    text-align: center;
-  }
-
   .data-label_number {
     background-color: @white;
-
-    .respond-to-max( @bp-xs-max, {
-      display: block;
-      transform: rotate( -90deg );
-    } );
   }
 
   .chart-caption {
@@ -437,8 +429,7 @@
     position: absolute;
     z-index: 1000;
     right: 0;
-    top: 0;
-    width: 145px;
+    top: -26px;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
     border-bottom: 1px solid transparent;
@@ -447,8 +438,7 @@
 
     &_btn {
       width: 100%;
-      padding: unit(15px / @base-font-size-px, em)
-        unit(15px / @base-font-size-px, em) unit(5px / @base-font-size-px, em)
+      padding: unit(5px / @base-font-size-px, em)
         unit(15px / @base-font-size-px, em);
       border: none;
       background-color: @white;

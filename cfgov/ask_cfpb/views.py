@@ -1,48 +1,15 @@
 import json
-from urllib.parse import urljoin
 
 from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
-from wagtail.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
-from bs4 import BeautifulSoup as bs
-
 from ask_cfpb.forms import AutocompleteForm, SearchForm, legacy_facet_validator
 from ask_cfpb.models import AnswerPage, AnswerPageSearch, AnswerResultsPage
-
-
-def annotate_links(answer_text):
-    """
-    Parse and annotate links from answer text.
-
-    Return the annotated answer
-    and an enumerated list of links as footnotes.
-    """
-    try:
-        _site = Site.objects.get(is_default_site=True)
-    except Site.DoesNotExist as err:
-        raise RuntimeError("no default wagtail site configured") from err
-
-    footnotes = []
-    soup = bs(answer_text, "lxml")
-    links = soup.findAll("a")
-    index = 1
-    for link in links:
-        if not link.get("href"):
-            continue
-        footnotes.append((index, urljoin(_site.root_url, link.get("href"))))
-        parent = link.parent
-        link_location = parent.index(link)
-        super_tag = soup.new_tag("sup")
-        super_tag.string = str(index)
-        parent.insert(link_location + 1, super_tag)
-        index += 1
-    return (str(soup), footnotes)
 
 
 def view_answer(request, slug, language, answer_id):

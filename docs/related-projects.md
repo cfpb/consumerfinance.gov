@@ -19,11 +19,12 @@ These satellite apps are imported into consumerfinance.gov as part of the projec
 [requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 
 !!! note "Thinking about making a new satellite app?"
-Satellite apps were originally built to be imported into the
-consumerfinance.gov website before we started using Wagtail to manage site
-content. We now prefer to build projects as apps inside the consumerfinance.gov
-repo. For more info, refer to the "Setting up new project code for
-consumerfinance.gov" page on the CFGOV/platform wiki on GHE.
+
+    Satellite apps were originally built to be imported into the
+    consumerfinance.gov website before we started using Wagtail to manage site
+    content. We now prefer to build projects as apps inside the consumerfinance.gov
+    repo. For more info, refer to the "Setting up new project code for
+    consumerfinance.gov" page on the CFGOV/platform wiki on GHE.
 
 ## Other Python packages
 
@@ -64,8 +65,10 @@ Running `pip install -e path/to/local/repo` will install local source code in
 mode, replacing the satellite app version installed from requirements files
 with your local copy:
 
-!!! note The retirement app used in this example is deprecated
-and is shown for illustration purpooses only.
+!!! note
+
+    The retirement app used in this example is deprecated
+    and is shown for illustration purpooses only.
 
 ```sh
 # In a local virtual environment, after installing consumerfinance.gov.

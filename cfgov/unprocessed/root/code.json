@@ -1191,66 +1191,6 @@
       }
     },
     {
-      "name": "format-usd",
-      "description": "Convert a number or string to a USD-formatted string",
-      "repositoryURL": "https://github.com/cfpb/format-usd",
-      "permissions": {
-        "licenses": [
-          {
-            "name": "Public Domain"
-          }
-        ],
-        "usageType": "openSource"
-      },
-      "laborHours": -1,
-      "tags": [
-        "cfpb"
-      ],
-      "contact": {
-        "email": "tech@consumerfinance.gov"
-      }
-    },
-    {
-      "name": "unformat-usd",
-      "description": "Convert a United States dollar-formatted string into a number.",
-      "repositoryURL": "https://github.com/cfpb/unformat-usd",
-      "permissions": {
-        "licenses": [
-          {
-            "name": "Public Domain"
-          }
-        ],
-        "usageType": "openSource"
-      },
-      "laborHours": -1,
-      "tags": [
-        "cfpb"
-      ],
-      "contact": {
-        "email": "tech@consumerfinance.gov"
-      }
-    },
-    {
-      "name": "is-money-usd",
-      "description": "A node module to test for a USD formatted input.",
-      "repositoryURL": "https://github.com/cfpb/is-money-usd",
-      "permissions": {
-        "licenses": [
-          {
-            "name": "Public Domain"
-          }
-        ],
-        "usageType": "openSource"
-      },
-      "laborHours": -1,
-      "tags": [
-        "cfpb"
-      ],
-      "contact": {
-        "email": "tech@consumerfinance.gov"
-      }
-    },
-    {
       "name": "owning-a-home-api",
       "description": "The API that drives the Buying a House project. ",
       "repositoryURL": "https://github.com/cfpb/owning-a-home-api",

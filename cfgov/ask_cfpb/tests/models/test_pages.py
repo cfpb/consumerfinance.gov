@@ -2,7 +2,6 @@ import json
 import tempfile
 from unittest import mock
 
-from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
@@ -28,6 +27,7 @@ from ask_cfpb.models.pages import (
     AnswerLandingPage,
     AnswerPage,
     PortalSearchPage,
+    TagResultsPage,
     strip_html,
     validate_page_number,
 )
@@ -38,11 +38,6 @@ from v1.models import (
     PortalCategory,
     PortalTopic,
     SublandingPage,
-)
-from v1.util.migrations import (
-    get_free_path,
-    get_or_create_page,
-    set_streamfield_data,
 )
 
 
@@ -511,14 +506,10 @@ class AnswerPageTest(TestCase):
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):
-        kwargs.setdefault(
-            "path", get_free_path(apps, self.english_parent_page)
+        page = AnswerPage(
+            slug="mock-answer-page-en-1234", title="Mock answer page title"
         )
-        kwargs.setdefault("depth", self.english_parent_page.depth + 1)
-        kwargs.setdefault("slug", "mock-answer-page-en-1234")
-        kwargs.setdefault("title", "Mock answer page title")
-        page = baker.prepare(AnswerPage, **kwargs)
-        page.save()
+        self.english_parent_page.add_child(instance=page)
         return page
 
     def setUp(self):
@@ -555,46 +546,38 @@ class AnswerPageTest(TestCase):
         self.ROOT_PAGE.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
-        self.english_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+
+        self.english_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
             language="en",
             live=True,
         )
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
+
+        self.spanish_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
             language="es",
             live=True,
         )
-        self.tag_results_page_en = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "TagResultsPage",
-            "Tag results page",
-            "search-by-tag",
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
+
+        self.tag_results_page_en = TagResultsPage(
+            title="Tag results page",
+            slug="search-by-tag",
             language="en",
             live=True,
         )
-        self.tag_results_page_es = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "TagResultsPage",
-            "Tag results page",
-            "buscar-por-etiqueta",
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.tag_results_page_en)
+
+        self.tag_results_page_es = TagResultsPage(
+            title="Tag results page",
+            slug="buscar-por-etiqueta",
             language="es",
             live=True,
         )
+        self.ROOT_PAGE.add_child(instance=self.tag_results_page_es)
         self.answer1234 = Answer(id=1234)
         self.answer1234.save()
         self.page1 = AnswerPage(
@@ -682,31 +665,32 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This is more than forty words: "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This is more than forty words: "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(
             page.answer_content_preview().endswith("word word ...")
         )
@@ -718,36 +702,37 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This a word with more than 255 characters: "
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "char char char char char char char char char char "
-                        "char char char char char char char char char char "
-                        "char char char char char char char char char char "
-                        "char char char char char char too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This a word with more than 255 characters: "
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "char char char char char char char char char char "
+                            "char char char char char char char char char char "
+                            "char char char char char char char char char char "
+                            "char char char char char char too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
@@ -771,31 +756,32 @@ class AnswerPageTest(TestCase):
         self.assertEqual(page.get_meta_description(), "Mock answer 1")
 
         # Second fallback is truncated answer_content text block
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This is more than forty words: "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This is more than forty words: "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(page.get_meta_description().endswith("word word ..."))
 
         # First fallback is the short_answer
@@ -925,9 +911,11 @@ class AnswerPageTest(TestCase):
             english_answer_page_response,
             "gobierno federal de los Estados Unidos",
         )
-        self.assertContains(english_answer_page_response, "https://usa.gov/")
+        self.assertContains(
+            english_answer_page_response, "https://www.usa.gov/"
+        )
         self.assertNotContains(
-            english_answer_page_response, "https://gobiernousa.gov/"
+            english_answer_page_response, "https://www.usa.gov/es/"
         )
 
     def test_spanish_header_and_footer(self):
@@ -951,10 +939,10 @@ class AnswerPageTest(TestCase):
             spanish_answer_page_response, "United States government"
         )
         self.assertContains(
-            spanish_answer_page_response, "https://gobiernousa.gov/"
+            spanish_answer_page_response, "https://www.usa.gov/es/"
         )
         self.assertNotContains(
-            spanish_answer_page_response, "https://usa.gov/"
+            spanish_answer_page_response, 'https://www.usa.gov/"'
         )
 
     def test_category_str(self):

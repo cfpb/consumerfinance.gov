@@ -63,6 +63,10 @@
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
                         {{ block.value | safe }}
+                    {% elif block.block_type == 'links' %}
+                        <p>
+                            {{ render_stream_child(block) }}
+                        </p>
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}

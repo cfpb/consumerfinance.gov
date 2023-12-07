@@ -1,4 +1,5 @@
 from datetime import datetime
+from urllib.parse import quote
 
 from django.utils import timezone
 
@@ -66,7 +67,7 @@ def import_agreements_data(agreements_data):
             item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
         )
         product = PrepaidProduct.objects.get(pk=product_id)
-        url = S3_PATH + item["agreements_files_location"]
+        url = S3_PATH + quote(item["agreements_files_location"])
 
         if "_" in product.name:
             bulk_path = item["path"].split("/")[2]

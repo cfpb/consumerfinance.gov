@@ -212,7 +212,7 @@ class Notification(blocks.StructBlock):
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
-    button = atoms.Button()
+    button = atoms.Hyperlink()
 
     class Meta:
         template = "v1/includes/molecules/call-to-action.html"
@@ -381,7 +381,6 @@ class RelatedLinks(blocks.StructBlock):
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
     citation = blocks.TextBlock(required=False)
-    is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = "openquote"

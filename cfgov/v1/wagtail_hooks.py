@@ -118,7 +118,6 @@ def editor_css():
         "css/general-enhancements.css",
         "css/heading-block.css",
         "css/model-admin.css",
-        "css/table-block.css",
         "css/simple-chart-admin.css",
     ]
 

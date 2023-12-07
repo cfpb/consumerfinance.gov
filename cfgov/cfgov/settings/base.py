@@ -153,12 +153,9 @@ wagtail_extensions = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
-            "builtins": [],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -303,10 +300,7 @@ WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
-# This is needed to maintain autocomplete search behavior in the Wagtail admin.
-# See https://github.com/wagtail/wagtail/issues/7720.
-# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
-# https://github.com/wagtail/wagtail/pull/9900.
+# This is used for easy autocomplete search behavior in the Wagtail admin.
 WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.database.fallback",
@@ -455,6 +449,7 @@ AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
 )
 AXES_ENABLED = True
+AXES_VERBOSE = False
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
 AXES_ONLY_USER_FAILURES = True
@@ -518,6 +513,7 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
@@ -728,7 +724,7 @@ SECURE_REFERRER_POLICY = "same-origin"  # 1
 SESSION_COOKIE_SAMESITE = "Strict"  # 3
 X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
 
-if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
+if DEPLOY_ENVIRONMENT:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = True  # 22
     CSRF_COOKIE_SECURE = True
