@@ -1,9 +1,3 @@
-/**
- * Used instead of the existing /cfgov/unprocessed/js/modules/ClearableInput
- * in order to listen for the Clear button to be clicked and asynchronously
- * refresh the results on the page.
- */
-
 import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 const BASE_CLASS = 'input-contains-label';
