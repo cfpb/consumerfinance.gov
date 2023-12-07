@@ -1,31 +1,7 @@
-/* ==========================================================================
-   consumerfinance.gov
-   Print
-   ========================================================================== */
-
-/* topdoc
-  name: Print pages
-  family: cfgov-print
-  notes:
-    - "Print pages are barebones printer friendly pages which are also sometimes
-       used as the source to generate PDF's through PDF creation software."
-    - "The `.print` class acts a styling hook. When using the
-       `.respond-to-print()` mixin, all stlyes will be nested under both
-       `@media print` and `.print`."
-  patterns:
-    - name: Usage
-      markup: |
-        <div class="print">
-            <h1>
-                I am a header
-            </h1>
-        </div>
-      notes:
-        - "To trigger a print page simply add the `.print` class to a containing
-           element."
-  tags:
-    - cfgov-print
-*/
+/* "The `.print` class acts a styling hook. When using the
+  `.respond-to-print()` mixin, all stlyes will be nested under both
+  `@media print` and `.print`."
+ */
 
 .respond-to-print({
   a {
