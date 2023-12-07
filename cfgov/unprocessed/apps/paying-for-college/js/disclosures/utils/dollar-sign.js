@@ -1,6 +1,6 @@
 /**
- *
- * @param selector
+ * @param {Document|Window|string} selector - A jQuery-style selector.
+ * @returns {Document|Window|undefined} The document, window, or nothing.
  */
 function Query(selector) {
   this.elements = [];
@@ -27,10 +27,6 @@ Query.prototype.attr = function (name, value) {
       elem.setAttribute(name, value);
     });
   }
-};
-
-Query.prototype.cloner = function () {
-  return this.elements.length ? this.elements[0].cloneNode(true) : null;
 };
 
 Query.prototype.text = function (value) {
@@ -107,15 +103,30 @@ Query.prototype.filter = function (selector) {
 Query.prototype.siblings = function (selector) {
   const q = new Query();
   const elemArr = [];
-  if ( typeof selector === 'undefined' ) selector = '*';
-  this.elements.forEach( ( elem)  => {
+  if (typeof selector === 'undefined') selector = '*';
+  this.elements.forEach((elem) => {
     let node = elem.parentNode.firstElementChild;
-    for ( node; node !== null; node = node.nextElementSibling ) {
-      if ( node.matches( selector ) && node !== elem ) {
-        elemArr.push( node );
+    for (node; node !== null; node = node.nextElementSibling) {
+      if (node.matches(selector) && node !== elem) {
+        elemArr.push(node);
       }
-    } 
+    }
   });
+  q.elements = elemArr;
+
+  return q;
+};
+
+Query.prototype.parent = function ( selector ) {
+  const q = new Query();
+  const elemArr = [];
+  this.elements.forEach( elem => {
+    let parent = elem.parentElement;
+    if ( typeof selector === 'undefined' || parent.matches( selector ) ) {
+      elemArr.push( parent )
+    }
+  });
+
   q.elements = elemArr;
 
   return q;
@@ -182,6 +193,25 @@ Query.prototype.change = function () {
     }
   });
 };
+
+Query.prototype.cloner = function () {
+  return this.elements.length ? this.elements[0].cloneNode(true) : null;
+};
+
+Query.prototype.appendTo = function ( newParents ) {
+  // This method is designed only to work on instances of Query
+  if ( newParents instanceof Query !== true ) {
+    throw Error('Error: appendTo can only accept an instance of Query as a parameter');
+  } else {
+    newParents.elements.forEach( parent => {
+      this.elements.forEach( child => {
+        parent.appendChild( child );
+      });
+    });
+  }
+  
+  return this;
+}
 
 const $ = function (param) {
   if (typeof param === 'string') {
