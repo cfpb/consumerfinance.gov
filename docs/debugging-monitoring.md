@@ -57,19 +57,6 @@ This project can be configured for real-time monitoring with
 [New Relic](https://newrelic.com/). This requires an active New Relic account
 and a valid license key.
 
-First, you'll need to install
-[the New Relic Python Agent](https://docs.newrelic.com/docs/agents/python-agent)
-from
-[from PyPI](https://pypi.org/project/newrelic/).
-This package is not part of the standard development requirements but is
-included in
-the [`requirements/deployment.txt`](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/deployment.txt) file.
-It can be installed into your Python environment using the following command:
-
-```shell
-$ pip install newrelic
-```
-
 New Relic monitoring is implemented by wrapping every request to the Django
 web server with a call to the Python agent. This agent records information
 about web requests and reports it back to New Relic's servers. Additionally,
@@ -103,12 +90,7 @@ file contains placeholder entries for these two variables.
 Once you've set these two variables, start or restart your local web server.
 
 When you make your first web request, you'll see messages in the console
-indicating that the New Relic Python agent has been activated. You should also
-see a message containing a link to the New Relic console:
-
-```txt
-Reporting to: https://rpm.newrelic.com/accounts/XXXXXXXX/applications/XXXXXXXX
-```
+indicating that the New Relic Python agent has been activated.
 
 You should now be able to use that link to navigate to the New Relic console
 and, after a few seconds, see your web server traffic in New Relic APM and
