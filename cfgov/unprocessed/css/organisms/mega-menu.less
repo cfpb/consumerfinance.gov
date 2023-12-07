@@ -279,10 +279,6 @@ body {
     &-overview {
       display: block;
       border-bottom: 1px solid @gray-40;
-
-      .u-link__disabled {
-        color: @gray !important;
-      }
     }
 
     &-link,
@@ -495,16 +491,6 @@ body {
         padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
       }
 
-      // TODO: Remove when Consumer Tools and Ed Resources links are in.
-      // Overrides disabled link styles.
-      &-link.u-link__disabled {
-        color: @pacific !important;
-
-        &:hover {
-          color: @pacific-60 !important;
-          cursor: pointer !important;
-        }
-      }
     }
 
     // 2nd-level menu - Tablet/Mobile.
