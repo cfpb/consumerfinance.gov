@@ -41,7 +41,7 @@ const app = {
     getApiValues.initialData().then((resp) => {
       if (!resp) return;
       const [constants, expenses] = resp;
-      financialModel.init(constants[0]);
+      financialModel.init(constants);
       financialView.init();
       if (location.href.indexOf('about-this-tool') === -1) {
         expensesModel.init(expenses);
