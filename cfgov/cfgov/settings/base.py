@@ -460,14 +460,7 @@ LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 # override this based on the SAML_AUTH environment variable.
 SAML_AUTH = False
 
-# When we generate an full HTML version of the regulation, we want to
-# write it out somewhere. This is where.
-OFFLINE_OUTPUT_DIR = ""
-
 DATE_FORMAT = "n/j/Y"
-
-GOOGLE_ANALYTICS_ID = ""
-GOOGLE_ANALYTICS_SITE = ""
 
 # CDNs
 WAGTAILFRONTENDCACHE = {}
