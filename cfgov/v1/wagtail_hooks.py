@@ -16,6 +16,7 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdminGroup,
     modeladmin_register,
 )
+from wagtail.snippets.models import register_snippet
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import (
@@ -58,6 +59,7 @@ from v1.views.reports import (
     PageMetadataReportView,
     TranslatedPagesReportView,
 )
+from v1.views.snippets import BannerViewSet
 
 
 try:
@@ -431,13 +433,10 @@ class ResourceModelAdmin(ThumbnailMixin, ModelAdmin):
     search_fields = ("title",)
 
 
-@modeladmin_register
-class BannerModelAdmin(ModelAdmin):
-    model = Banner
-    menu_icon = "warning"
-    list_display = ("title", "url_pattern", "enabled")
-    ordering = ("title",)
-    search_fields = ("title", "url_pattern", "content")
+register_snippet(
+    Banner,
+    viewset=BannerViewSet,
+)
 
 
 class ContactModelAdmin(ModelAdmin):
