@@ -1,22 +1,10 @@
-from django.utils import translation
+from wagtail.snippets.views.snippets import SnippetViewSet
 
-from wagtail.contrib.modeladmin.views import WMABaseView
+from mega_menu.models import Menu
 
 
-class MenuPreviewView(WMABaseView):
-    language = None
-
-    def __init__(self, model_admin, language):
-        super().__init__(model_admin)
-        self.language = language
-
-    def get_meta_title(self):
-        return "Previewing %s %s" % (self.verbose_name, self.language)
-
-    def get_template_names(self):
-        return self.model_admin.get_preview_template()
-
-    def render_to_response(self, context, **response_kwargs):
-        with translation.override(self.language):
-            response = super().render_to_response(context, **response_kwargs)
-            return response.render()
+class MenuViewSet(SnippetViewSet):
+    model = Menu
+    icon = "list-ul"
+    menu_label = "Mega menu"
+    add_to_admin_menu = True
