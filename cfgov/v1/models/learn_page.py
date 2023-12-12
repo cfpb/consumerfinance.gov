@@ -46,7 +46,9 @@ class AbstractFilterPage(CFGOVPage):
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
-        FieldPanel("schema_json", heading="Structured Data"),
+        FieldPanel(
+            "schema_json", heading="Structured Data", classname="collapsed"
+        ),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
         FieldPanel("date_published"),
