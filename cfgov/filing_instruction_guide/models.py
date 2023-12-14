@@ -10,6 +10,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
+    TitleFieldPanel,
 )
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamField
@@ -110,7 +111,7 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
     content_panels = [
         MultiFieldPanel(
             [
-                FieldPanel("title"),
+                TitleFieldPanel("title"),
             ],
             heading="Page Title",
         ),
