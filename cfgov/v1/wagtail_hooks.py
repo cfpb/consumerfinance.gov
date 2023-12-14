@@ -2,7 +2,6 @@ import logging
 import re
 
 from django.conf import settings
-from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
@@ -10,31 +9,14 @@ from django.utils.html import format_html_join
 
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
-from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin,
-    ModelAdminGroup,
-    modeladmin_register,
-)
 from wagtail.snippets.models import register_snippet
 
-from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import (
     cdn_is_configured,
     manage_cdn,
     redirect_to_internal_docs,
 )
-from v1.models import (
-    Banner,
-    Contact,
-    EmailSignUp,
-    InternalDocsSettings,
-    PortalCategory,
-    PortalTopic,
-    RelatedResource,
-    Resource,
-    ReusableText,
-)
+from v1.models import InternalDocsSettings
 from v1.template_debug import (
     call_to_action_test_cases,
     contact_us_table_test_cases,
@@ -379,149 +361,7 @@ def clean_up_report_menu_items(request, report_menu_items):
         item.order = index
 
 
-def get_resource_tags():
-    tag_list = []
-
-    for resource in Resource.objects.all():
-        for tag in resource.tags.all():
-            tuple = (tag.slug, tag.name)
-            if tuple not in tag_list:
-                tag_list.append(tuple)
-
-    return sorted(tag_list, key=lambda tup: tup[0])
-
-
-class ResourceTagsFilter(admin.SimpleListFilter):
-    # Human-readable title which will be displayed in the
-    # right admin sidebar just above the filter options.
-    title = "tags"
-
-    # Parameter for the filter that will be used in the URL query.
-    parameter_name = "tag"
-
-    def lookups(self, request, model_admin):
-        """
-        Returns a list of tuples. The first element in each
-        tuple is the coded value for the option that will
-        appear in the URL query. The second element is the
-        human-readable name for the option that will appear
-        in the right sidebar.
-        """
-        return get_resource_tags()
-
-    def queryset(self, request, queryset):
-        """
-        Returns the filtered queryset based on the value
-        provided in the query string and retrievable via
-        `self.value()`.
-        """
-        for tag in get_resource_tags():
-            if self.value() == tag[0]:
-                return queryset.filter(tags__slug__iexact=tag[0])
-
-
-class ResourceModelAdmin(ThumbnailMixin, ModelAdmin):
-    model = Resource
-    menu_label = "Resources"
-    menu_icon = "snippet"
-    list_display = ("title", "desc", "order", "admin_thumb")
-    thumb_image_field_name = "thumbnail"
-    thumb_image_filter_spec = "width-100"
-    thumb_image_width = None
-    ordering = ("title",)
-    list_filter = (ResourceTagsFilter,)
-    search_fields = ("title",)
-
-
-register_snippet(
-    Banner,
-    viewset=BannerViewSet,
-)
-
-
-class ContactModelAdmin(ModelAdmin):
-    model = Contact
-    menu_icon = "snippet"
-    list_display = ("heading", "body")
-    ordering = ("heading",)
-    search_fields = ("heading", "body", "contact_info")
-
-
-class PortalTopicModelAdmin(ModelAdmin):
-    model = PortalTopic
-    menu_icon = "snippet"
-    list_display = ("heading", "heading_es")
-    ordering = ("heading",)
-    search_fields = ("heading", "heading_es")
-
-
-class PortalCategoryModelAdmin(ModelAdmin):
-    model = PortalCategory
-    menu_icon = "snippet"
-    list_display = ("heading", "heading_es")
-    ordering = ("heading",)
-    search_fields = ("heading", "heading_es")
-
-
-class ReusableTextModelAdmin(ModelAdmin):
-    model = ReusableText
-    menu_icon = "snippet"
-    list_display = ("title", "sidefoot_heading", "text")
-    ordering = ("title",)
-    search_fields = ("title", "sidefoot_heading", "text")
-
-
-class RelatedResourceModelAdmin(ModelAdmin):
-    model = RelatedResource
-    menu_icon = "snippet"
-    list_display = ("title", "text")
-    ordering = ("title",)
-    search_fields = ("title", "text")
-
-
-class GlossaryTermModelAdmin(ModelAdmin):
-    model = GlossaryTerm
-    menu_icon = "snippet"
-    list_display = ("name_en", "definition_en", "portal_topic")
-    ordering = ("name_en",)
-    search_fields = ("name_en", "definition_en", "name_es", "definition_es")
-
-
-class EmailSignUpModelAdmin(ModelAdmin):
-    model = EmailSignUp
-    menu_icon = "snippet"
-    list_display = ("topic", "heading", "text", "code", "url")
-    ordering = ("topic",)
-    search_fields = ("topic", "code", "url")
-
-
-class SnippetModelAdminGroup(ModelAdminGroup):
-    menu_label = "Snippets"
-    menu_icon = "snippet"
-    menu_order = 400
-    items = (
-        ContactModelAdmin,
-        ResourceModelAdmin,
-        ReusableTextModelAdmin,
-        RelatedResourceModelAdmin,
-        PortalTopicModelAdmin,
-        PortalCategoryModelAdmin,
-        GlossaryTermModelAdmin,
-        EmailSignUpModelAdmin,
-    )
-
-
-modeladmin_register(SnippetModelAdminGroup)
-
-
-# Hide default Snippets menu item
-@hooks.register("construct_main_menu")
-def hide_snippets_menu_item(request, menu_items):
-    menu_items[:] = [
-        item
-        for item in menu_items
-        if item.url != reverse("wagtailsnippets:index")
-    ]
+register_snippet(BannerViewSet)
 
 
 @hooks.register("register_permissions")
