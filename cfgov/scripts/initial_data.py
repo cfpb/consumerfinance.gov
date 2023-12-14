@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.db import transaction
 
 from wagtail.models import Page, Site
+
 from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
