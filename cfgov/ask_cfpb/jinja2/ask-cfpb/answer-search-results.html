@@ -14,8 +14,7 @@
 
 {% block content_main %}
     <div class="block
-                block__flush-top
-                u-mb15">
+                block__flush-top">
         <h1>{{ _('Search our library of answers') }}</h1>
 
         <div class="block block__sub">
@@ -34,7 +33,9 @@
                 {% endif %}
 
 
-            <section class="search-results block block__flush-top">
+            <section class="search-results
+                            block
+                            block__flush-top">
 
                 <div>
                 {% for question in results %}
@@ -95,7 +96,7 @@
 
 {% block content_sidebar scoped -%}
     {% if about_us %}
-        <div class="block block__flush-top u-mb45 about-us-text">
+        <div class="block block__flush-top about-us-text">
             {{ about_us.text | richtext }}
         </div>
     {% endif %}
