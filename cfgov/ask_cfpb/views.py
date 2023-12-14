@@ -5,11 +5,17 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
+from wagtail.snippets.views.snippets import SnippetViewSet
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
 from ask_cfpb.forms import AutocompleteForm, SearchForm, legacy_facet_validator
-from ask_cfpb.models import AnswerPage, AnswerPageSearch, AnswerResultsPage
+from ask_cfpb.models import (
+    AnswerPage,
+    AnswerPageSearch,
+    AnswerResultsPage,
+    GlossaryTerm,
+)
 
 
 def view_answer(request, slug, language, answer_id):
@@ -213,3 +219,11 @@ def redirect_ask_search(request, language="en"):
                     return redirect_to_tag(tag, language)
 
         raise Http404
+
+
+class GlossaryTermViewSet(SnippetViewSet):
+    model = GlossaryTerm
+    menu_icon = "snippet"
+    list_display = ["name_en", "definition_en", "portal_topic"]
+    ordering = ["name_en"]
+    search_fields = ["name_en", "definition_en", "name_es", "definition_es"]
