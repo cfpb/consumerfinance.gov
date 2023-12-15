@@ -88,10 +88,11 @@
   &_list__children {
     margin-left: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       // Add 5px for the border to half the gutter
       margin-left: unit( (( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px), em) ;
-    } );
+    });
   }
 
   &_link {
@@ -106,17 +107,19 @@
     border-style: solid;
     border-left-width: 5px;
 
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       display: block;
 
       padding: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
-    } );
+    });
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding-top: unit( (10px / @base-font-size-px), em );
       padding-bottom: unit( (10px / @base-font-size-px), em );
       padding-left: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
-    } );
+    });
 
     &__current {
       .u-link__colors( @black, @black, @black, @black, @black,
@@ -131,7 +134,7 @@
   }
 
   // Tablet and below.
-  .respond-to-max( @bp-sm-max, {
+  .respond-to-max(@bp-sm-max, {
     background: @gray-5;
     border-bottom: 1px solid @gray-40;
 
@@ -147,10 +150,10 @@
         display: none;
       }
     }
-  } );
+  });
 
-  // Desktop
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     .o-secondary-nav {
       background: none;
 
@@ -170,12 +173,12 @@
         }
       }
     }
-  } );
+  });
 
   // Hide on print.
   .respond-to-print( {
     display: none;
-  } );
+  });
 }
 
 // Right-to-left (RTL) layout.
@@ -198,8 +201,8 @@ html[lang='ar'] {
       border-right-width: 5px;
     }
 
-    // Desktop.
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       &_link {
         padding-right: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
       }
@@ -207,6 +210,6 @@ html[lang='ar'] {
       &_list__parents {
         padding-right: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
       }
-    } );
+    });
   }
 }

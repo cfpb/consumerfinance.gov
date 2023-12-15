@@ -10,11 +10,12 @@
 /* Event template settings
    ========================================================================== */
 .t-event_details {
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     .modification-date {
       float: right;
     }
-  } );
+  });
 }
 
 /* Event-Agenda Table
@@ -29,11 +30,12 @@
     font-size: 16px;
   }
 
+  // Desktop and above.
   .respond-to-min(@bp-med-min, {
     th {
       width: 25%;
     }
-  } );
+  });
 }
 
 /* Event-Post
@@ -44,6 +46,7 @@
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
+  // Desktop and above.
   .respond-to-min(@bp-med-min, {
     padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
     margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -94,6 +97,7 @@
   border-top: 1px solid @gray-20;
   border-bottom: 1px solid @gray-20;
 
+  // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     float: right;
     width: unit(250px / @base-font-size-px, em);
@@ -180,6 +184,7 @@
 .post_heading {
   .h2();
   margin-bottom: unit(13px / @font-size, em);
+  // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     .h1();
   });
