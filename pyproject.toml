@@ -16,35 +16,10 @@ line_length = 79
 lines_after_imports = 2
 skip = ["f", ".tox", "migrations", ".venv", "venv"]
 known_django = ["django"]
-known_wagtail = ["wagtail", "wagtailsharing"]
-known_first_party = [
-    "agreements",
-    "alerts",
-    "ask_cfpb",
-    "cfgov",
-    "core",
-    "data_research",
-    "deployable_zipfile",
-    "diversity_inclusion",
-    "form_explainer",
-    "hmda",
-    "housing_counselor",
-    "jobmanager",
-    "legacy",
-    "login",
-    "mega_menu",
-    "paying_for_college",
-    "permissions_viewer",
-    "prepaid_agreements",
-    "regulations3k",
-    "scripts",
-    "search",
-    "teachers_digital_platform",
-    "v1",
-    "wellbeing",
-    "youth_employment",
-]
-default_section = "THIRDPARTY"
+known_wagtail = ["wagtail"]
+src_paths = ["cfgov"]
+# Necessary due to the conflicting cfgov/jinja2 top-level template directory.
+known_third_party = ["jinja2"]
 sections = [
     "STDLIB",
     "DJANGO",
