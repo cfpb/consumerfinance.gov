@@ -12,14 +12,14 @@ from django.views.generic.base import RedirectView, TemplateView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
-from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_re_path
 from flags.views import FlaggedTemplateView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls,
 )
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from ask_cfpb.views import (
     ask_autocomplete,

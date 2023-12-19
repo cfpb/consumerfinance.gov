@@ -17,11 +17,11 @@ from django.template.response import TemplateResponse
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.fields import StreamField
-from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
 from markupsafe import Markup
 from regdown import regdown
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.documents import SectionParagraphDocument

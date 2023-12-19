@@ -4,6 +4,7 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.routable_page.models import route
 from wagtail.models import Site
+
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 from v1.documents import FilterablePagesDocumentSearch

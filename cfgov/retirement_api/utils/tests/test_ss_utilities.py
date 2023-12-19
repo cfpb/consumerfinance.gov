@@ -9,6 +9,7 @@ from unittest import mock
 import requests
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
+
 from retirement_api.utils.ss_calculator import (
     calculate_lifetime_benefits,
     clean_comment,
