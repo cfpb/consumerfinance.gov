@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
 from wagtail.snippets.views.snippets import SnippetViewSet
+
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
