@@ -1,51 +1,3 @@
-/* topdoc
-  name: Insets near Full Width Text
-  family: cfgov-molecules
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="o-full-width-text-group">
-            <div class="m-full-width-text"></div>
-            <div class="m-inset
-                        m-inset__bottom-rule
-                        m-inset__left
-                        m-inset__portrait
-                        m-inset__270">
-                <div class="m-inset_image-container">
-                    <img class="m-inset_image" />
-                </div>
-                <div class="m-inset_caption"></div>
-                <div class="m-quote"></div>
-                <div class="m-related-links"></div>
-                <div class="m-call-to-action"></div>
-            </div>
-            <div class="m-full-width-text"></div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-full-width-text
-            .m-full-width-text
-            .m-inset
-            .m-inset__bottom-rule
-            .m-inset__left
-            .m-inset__portrait
-            .m-inset__270
-                .m-inset_image-container
-                    img.m-inset_image
-                .m-inset_caption
-                .m-quote
-                .m-related-links
-                .m-call-to-action
-            .m-full-width-text
-  tags:
-    - cfgov-molecules
-  notes:
-    - These are held in a full-width-text-group container to be held with
-      various full-width text blocks, insets, and tables as needed.
-*/
-
 .m-inset {
   width: 100%;
   clear: right;
@@ -115,8 +67,7 @@
     border-bottom: 1px solid @horizontal-rule;
   }
 
-  .m-full-width-text,
-  .m-quote {
+  .m-full-width-text {
     padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
     padding-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     border-top: 1px solid @horizontal-rule;
@@ -157,8 +108,3 @@
     width: percentage( 4 / 9 );
   } );
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/

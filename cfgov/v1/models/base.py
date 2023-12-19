@@ -6,7 +6,6 @@ from django.db import models
 from django.db.models import F, Q, Value
 from django.utils import translation
 from django.utils.module_loading import import_string
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import (
@@ -111,21 +110,6 @@ class CFGOVPage(Page):
         related_name="cfgov_content_owners",
     )
 
-    schema_json = models.JSONField(
-        null=True,
-        blank=True,
-        verbose_name="Schema JSON",
-        help_text=mark_safe(
-            "Enter structured data for this page in JSON-LD format, "
-            "for use by search engines in providing rich search results. "
-            '<a href="https://developers.google.com/search/docs/guides/'
-            'intro-structured-data">Learn more.</a> '
-            "JSON entered here will be output in the "
-            "<code>&lt;head&gt;</code> of the page between "
-            '<code>&lt;script type="application/ld+json"&gt;</code> and '
-            "<code>&lt;/script&gt;</code> tags."
-        ),
-    )
     force_breadcrumbs = models.BooleanField(
         "Force breadcrumbs on child pages",
         default=False,
@@ -183,7 +167,6 @@ class CFGOVPage(Page):
         FieldPanel("tags", heading="Tags"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
-        FieldPanel("schema_json", heading="Structured Data"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -337,9 +320,6 @@ class CFGOVPage(Page):
             )
             .filter(path__regex=F("url_pattern"))
         )
-
-        if self.schema_json:
-            context["schema_json"] = self.schema_json
 
         context["meta_description"] = self.get_meta_description()
         context["is_faq_page"] = self.is_faq_page()

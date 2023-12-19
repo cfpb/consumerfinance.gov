@@ -1,48 +1,3 @@
-/* topdoc
-  name: Info Unit Group
-  family: cfgov-organisms
-  patterns:
-    - name: Single column (old 25/75)
-      markup: |
-        <div class="o-info-unit-group">
-            <h2>Group heading</h2>
-            <div class="content-l">
-                <div class="content-l_col content-l_col-1">
-                    info-unit
-                </div>
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-info-unit-group
-            h2
-            .content-l
-              .content-l_col.content-l_col-1
-                .info-unit
-    - name: Two or Three column
-      markup: |
-        <div class="o-info-unit-group">
-            <h2>Group heading</h2>
-            <div class="content-l">
-                <div class="content-l_col content-l_col-1-(2|3)">
-                    info-unit
-                </div>
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-info-unit-group
-            h2
-            .content-l
-              .content-l_col.content-l_col-1-(2|3)
-                .info-unit
-  tags:
-    - cfgov-organisms
-*/
 .o-info-unit-group {
   .content-l {
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -98,8 +53,3 @@
     }
   } );
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/

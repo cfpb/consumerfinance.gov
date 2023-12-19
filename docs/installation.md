@@ -128,7 +128,7 @@ to support easier code formatting.
 This repository includes a `.vscode/settings.json` file that sets the
 [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 as the default code formatter. It also sets the
-[Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+[Black extension](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)
 as the formatter for Python files.
 
 ### Install pre-commit

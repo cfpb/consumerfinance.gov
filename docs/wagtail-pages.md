@@ -55,7 +55,7 @@ For example, our `LandingPage` page model
 that can have a hero and/or a text introduction:
 
 ```python
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
@@ -125,7 +125,7 @@ the `header` StreamField
 
 ```python
 from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage

@@ -1,48 +1,27 @@
-/* CSS to display HeadingTextBlock, HeadingLevelBlock, and HeadingIconBlock
-   inline when used in a HeadingBlock, which overrides its form_template to
-   add the field name classes you see below so we can hook into them. */
+/*
+  Wagtail editor style customization for v1.blocks.HeadingBlock.
+  Displays heading text, level, and icon fields side-by-side.
+*/
 
-.heading-text-block,
-.heading-level-block,
-.heading-icon-block {
+.struct-block.heading-block div[data-contentpath='text'],
+.struct-block.heading-block div[data-contentpath='level'],
+.struct-block.heading-block div[data-contentpath='icon'] {
   display: inline-block;
   margin-right: -0.25em;
+  vertical-align: top;
 }
 
-.heading-text-block {
+.struct-block.heading-block div[data-contentpath='text'] {
   width: 50%;
 }
-.heading-level-block {
+.struct-block.heading-block div[data-contentpath='level'] {
   width: 20%;
 }
-.heading-icon-block {
+.struct-block.heading-block div[data-contentpath='icon'] {
   width: 26%;
 }
 
-.heading-level-block,
-.heading-icon-block {
+.struct-block.heading-block div[data-contentpath='level'],
+.struct-block.heading-block div[data-contentpath='icon'] {
   margin-left: 2%;
-}
-
-.heading-text-block label,
-.heading-level-block label,
-.heading-icon-block label {
-  display: block;
-  width: auto;
-  float: none;
-}
-
-.heading-text-block .field-content,
-.heading-level-block .field-content,
-.heading-icon-block .field-content {
-  /* Using !important to override default styling without needing
-       excessively long selectors here. */
-  width: 100% !important;
-}
-
-.heading-level-block.required > label::after {
-  /* Hide the unnecessary required. We are forcing a default value, so
-       indicating that it's required is superfluous. Using !important to
-       override default styling without needing an excessively long selector. */
-  display: none !important;
 }

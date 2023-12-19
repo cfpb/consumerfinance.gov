@@ -15,6 +15,7 @@ onlyOn('local-machine', () => {
 
     it('should display delinquency rates by month for a given state', () => {
       trends.open();
+      cy.get('#mp-map').should('be.visible');
       trends.selectStateForDelinquencyRatesPerMonth('Virginia');
       trends.selectMonth('January');
       trends.selectYear('2017');

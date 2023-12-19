@@ -2,6 +2,13 @@
    "Rate checker" custom styles
    ========================================================================== */
 
+// Mixin to remove any default spacing or borders on an element.
+.u-reset() {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .rate-checker {
   position: relative;
 
@@ -217,17 +224,8 @@
     }
   }
 
-  .data-label {
-    text-align: center;
-  }
-
   .data-label_number {
     background-color: @white;
-
-    .respond-to-max( @bp-xs-max, {
-      display: block;
-      transform: rotate( -90deg );
-    } );
   }
 
   .chart-caption {
