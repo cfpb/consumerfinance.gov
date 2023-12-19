@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
 )
 
 MIDDLEWARE = (
