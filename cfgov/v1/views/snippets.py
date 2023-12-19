@@ -8,7 +8,6 @@ from wagtail.images.shortcuts import get_rendition_or_not_found
 from wagtail.snippets.views.snippets import SnippetViewSet
 
 import django_filters
-from wagtailadmin_overrides.ui import BooleanColumn
 
 from v1.models import (
     Banner,
@@ -20,6 +19,7 @@ from v1.models import (
     Resource,
     ReusableText,
 )
+from wagtailadmin_overrides.ui import BooleanColumn
 
 
 class BannerViewSet(SnippetViewSet):
