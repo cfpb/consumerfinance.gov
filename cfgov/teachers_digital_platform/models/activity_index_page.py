@@ -51,7 +51,6 @@ for facet in FACET_LIST:
     FACET_DICT["aggs"].update(
         {"{}_terms".format(facet): {"terms": {"field": facet}}}
     )
-ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
     "related_text",
@@ -132,7 +131,6 @@ class ActivityIndexPage(CFGOVPage):
                 "total_activities": total_activities,
                 "selected_facets": selected_facets,
                 "all_facets": all_facets,
-                "expanded_facets": ALWAYS_EXPANDED,
             }
             self.results = payload
             results_per_page = validate_results_per_page(request)
@@ -195,18 +193,6 @@ class ActivityIndexPage(CFGOVPage):
             "selected_facets": selected_facets,
             "all_facets": all_facets,
         }
-        # List all facet blocks that need to be expanded
-        conditionally_expanded = {
-            facet_name
-            for facet_name, facet_items in all_facets.items()
-            if any(facet["selected"] is True for facet in facet_items)
-        }
-        expanded_facets = ALWAYS_EXPANDED.union(set(conditionally_expanded))
-        payload.update(
-            {
-                "expanded_facets": expanded_facets,
-            }
-        )
         self.results = payload
         results_per_page = validate_results_per_page(request)
         paginator = Paginator(payload["results"], results_per_page)

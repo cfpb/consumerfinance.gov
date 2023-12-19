@@ -1,20 +1,12 @@
 {% import 'v1/includes/atoms/tag.html' as tag %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
-{% from 'teachers_digital_platform/tdp_expandable.html' import expandable with context %}
 
 {% macro build_filter_section(name) %}
     <div class="filter-section">
         {% set label = name | capitalize | replace('_', ' ') %}
         {% set items = facets[name] %}
-        {% set expandable_settings = {
-            'label': label,
-            'is_expanded': true,
-            'is_collapsed_for_mobile': true,
-            'is_midtone': true
-        } %}
-        {% call() expandable(expandable_settings) %}
-          {{build_form_group(name, items)}}
-        {% endcall %}
+        <h4>{{label}}</h4>
+        {{build_form_group(name, items)}}
     </div>
 {% endmacro %}
 
@@ -78,22 +70,15 @@
         {% if facets.grade_level %}{{build_filter_section('grade_level')}}{% endif %}
         {% if facets.activity_duration %}{{build_filter_section('activity_duration')}}{% endif %}
         {% if facets.topic %}
-        {% set topic_dict = {'Earn': 'Earning', 'Save and invest': 'Saving and investing', 'Protect': 'Protecting', 'Spend': 'Spending', 'Borrow': 'Borrowing'} %}
+          {% set topic_dict = {'Earn': 'Earning', 'Save and invest': 'Saving and investing', 'Protect': 'Protecting', 'Spend': 'Spending', 'Borrow': 'Borrowing'} %}
           <div class="filter-section">
+            <h4>Topic</h4>
             {% set items = facets.topic %}
-            {% set expandable_settings = {
-                'label': 'Topic',
-                'is_expanded': true,
-                'is_collapsed_for_mobile': true,
-                'is_midtone': true
-            } %}
-            {% call() expandable(expandable_settings) %}
-              {% for topic in items %}
-              <h5>{{topic_dict[topic.title]}}</h5>
-              {{build_form_group('topic', topic.children)}}
-              <br/>
-              {% endfor %}
-            {% endcall %}
+            {% for topic in items %}
+            <h5>{{topic_dict[topic.title]}}</h5>
+            {{build_form_group('topic', topic.children)}}
+            <br/>
+            {% endfor %}
           </div>
         {% endif %}
 
