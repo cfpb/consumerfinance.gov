@@ -1,6 +1,7 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
+import cypressFailFast from 'cypress-fail-fast/src/plugin.js';
 
-module.exports = defineConfig({
+export default defineConfig({
   experimentalMemoryManagement: true,
   screenshotOnRunFailure: true,
   fixturesFolder: 'test/cypress/fixtures',
@@ -21,7 +22,7 @@ module.exports = defineConfig({
     supportFile: 'test/cypress/support/e2e.js',
     excludeSpecPattern: 'test/cypress/integration/**/*-helpers.cy.js',
     setupNodeEvents(on, config) {
-      require('cypress-fail-fast/plugin')(on, config);
+      cypressFailFast(on, config);
     },
   },
   component: {
