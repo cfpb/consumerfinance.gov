@@ -8,12 +8,13 @@
     'header header'
     'content image';
 
-  .respond-to-max( @bp-xs-max, {
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
     grid-template-areas:
     'header'
     'image'
     'content';
-  } );
+  });
 
   + .o-post-preview {
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -38,13 +39,15 @@
     position: relative;
     grid-area: image;
 
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
-    } );
+    });
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       width: unit( 270px / @base-font-size-px, em );
-    } );
+    });
   }
 
   &_image {

@@ -50,23 +50,24 @@
     padding-top: unit(30px / @base-font-size-px, em);
   }
 
-  // Desktop
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     // Increase the sidebar border from 1px to 2px
     .content &:after {
       border-left-width: 2px;
     }
-  } );
+  });
 
   // There is a chrome bug that causes `position: relative` elements
   // to have a greater z-index than sticky elements, causing them to
   // float over the sticky TOC as users scroll.
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     .content-l,
     .a-link__jump {
       z-index: -1;
     }
-  } );
+  });
 }
 
 .o-fig_heading {
@@ -110,11 +111,12 @@
     }
   }
 
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     .o-secondary-nav_link {
       padding: unit( 10px / @base-font-size-px, em );
     }
-  } );
+  });
 
   .o-secondary-nav_link {
     padding-left: unit(24px / @base-font-size-px, em);
@@ -149,15 +151,17 @@
 }
 
 .u-hide-on-desktop {
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     display: none;
-  } );
+  });
 }
 
 .u-hide-on-tablet {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     display: none;
-  } );
+  });
 }
 
 #ctrl-f-modal {

@@ -19,9 +19,10 @@
   &_img {
     text-align: center;
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       text-align: left;
-    } );
+    });
 
     img {
       width: 150px;
@@ -51,17 +52,18 @@
 
     .grid_column( 12 );
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       .grid_column( 6 );
 
       &-2 {
         padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
       }
-    } );
+    });
 
-    .respond-to-min( 1000px, {
+    .respond-to-min(1000px, {
       padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
       .grid_column( 3 );
-    } );
+    });
   }
 }
