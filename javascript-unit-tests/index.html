@@ -301,7 +301,7 @@ to save and commit your changes.</p>
 </ol>
 <pre class="highlight"><code class="language-js">it( 'should return a string with expected value', () =&gt; {
   …
-} );</code></pre>
+});</code></pre>
 <ol>
 <li>Run your sample test using</li>
 </ol>
@@ -372,7 +372,7 @@ For the sample, the name of our module is <code>sample</code>,
 so we set this up on line 4 of <code>sample-spec.js</code>:</p>
 <pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
   …
-} );</code></pre>
+});</code></pre>
 <p>This module name will appear in your test output in the console
 when the test is running:</p>
 <p><img alt="Snippet of console output for a unit test that reads 'sample: should return a string with expected value'" src="../img/js-unit-test-output-with-describes.png" /></p>
@@ -603,11 +603,11 @@ describe( 'Notification', () =&gt; {
   beforeEach( () =&gt; {
     document.body.innerHTML = HTML_SNIPPET;
     notificationElem = document.querySelector( `.${ BASE_CLASS }` );
-    notification = new Notification( notificationElem, BASE_CLASS, {} );
-  } );
+    notification = new Notification( notificationElem, BASE_CLASS, {});
+  });
 
   …
-} );</code></pre>
+});</code></pre>
 <p>The main things to note here at the beginning of the file are
 the addition of the <code>HTML_SNIPPET</code> definition,
 containing the markup we will used for testing
@@ -644,7 +644,7 @@ wraps both <code>_setType</code> and <code>_setContent</code>):</p>
     );
 
     expect( notificationElem.classList ).toContain( 'm-notification__success' );
-  } );
+  });
 
   it( 'should update the notification type for the warning state', () =&gt; {
     notification.init();
@@ -655,10 +655,10 @@ wraps both <code>_setType</code> and <code>_setContent</code>):</p>
     );
 
     expect( notificationElem.classList ).toContain( 'm-notification__warning' );
-  } );
+  });
 
   …
-} );</code></pre>
+});</code></pre>
 <p>This part mostly works like testing any other function.
 The notable distinction here is that the test invokes the function
 using the DOM nodes and class set up in <code>beforeEach</code>.</p>
