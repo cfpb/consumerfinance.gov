@@ -53,8 +53,8 @@
       }
     });
 
-    // Desktop
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       .u-layout-grid_wrapper {
           // Numbers below are 870 split into three parts
           // 870 is the 900px breakpoint - 30px of gutters
@@ -64,7 +64,7 @@
             'c-breadcrumbs c-sidebar'
             'c-main c-sidebar';
       }
-    } );
+    });
   }
 
   // 2-1 Left-to-right (LTR) layout.
@@ -93,8 +93,8 @@
       }
     }
 
-    // Desktop
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       .u-layout-grid {
         &_main {
           padding-right: unit(10px / @base-font-size-px, rem);
@@ -109,7 +109,7 @@
           }
         }
       }
-    } );
+    });
   }
 
   // 2-1 Right-to-left (RTL) layout.
@@ -130,8 +130,8 @@
       }
     }
 
-    // Desktop
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       .u-layout-grid {
         &_wrapper {
           // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
