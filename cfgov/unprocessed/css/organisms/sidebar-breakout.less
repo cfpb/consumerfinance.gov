@@ -56,13 +56,15 @@
   }
 });
 
+// Desktop and above.
 .respond-to-min(@bp-med-min, {
   .o-sidebar-breakout_col:last-child {
     padding-left: @margin__em;
   }
 });
 
-.respond-to-range(@bp-sm-min, @bp-sm-max, {
+// Tablet only.
+.respond-to-range( @bp-sm-min, @bp-sm-max, {
   .o-sidebar-breakout {
     &_img-container {
       float: left;

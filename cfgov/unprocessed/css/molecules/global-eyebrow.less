@@ -12,9 +12,9 @@
       margin-right: unit(7px / 12px, em);
       margin-bottom: 0;
 
-      .respond-to-min( @bp-lg-min, {
+      .respond-to-min(@bp-lg-min, {
         margin-right: unit( 10px / 12px, em );
-      } );
+      });
     }
 
     a {
@@ -43,8 +43,8 @@
       text-align: right;
     }
 
-    // Tablet/mobile sizes.
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       .m-global-eyebrow_actions {
         display: none;
       }
@@ -52,7 +52,7 @@
       .a-tagline {
         float: none;
       }
-    } );
+    });
   }
 
   &__list {

@@ -1,12 +1,14 @@
 .o-college-costs-nav {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding-left: 0;
     padding-right: 0;
     border-width: 0;
-  } );
+  });
 
   .o-secondary-nav_list__parents {
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       border-top: 1px solid @gray-20;
       border-left: 0;
       padding-left: 0;
@@ -61,6 +63,6 @@
           }
         }
       }
-    } );
+    });
   }
 }

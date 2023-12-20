@@ -1,6 +1,6 @@
 .a-overlay {
-  // Only show overlay at mobile/tablet size.
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     height: 100vh;
     width: 100vw;
 
@@ -17,5 +17,5 @@
     // Cursor needs to be set for iOS to capture clicks of the overlay
     // and bubble them up to the body.
     cursor: pointer;
-  } );
+  });
 }

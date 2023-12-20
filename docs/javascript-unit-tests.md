@@ -172,7 +172,7 @@ to save and commit your changes.
    ```js
    it( 'should return a string with expected value', () => {
      …
-   } );
+   });
    ```
 
 1. Run your sample test using
@@ -272,7 +272,7 @@ so we set this up on line 4 of `sample-spec.js`:
 ```js
 describe( 'sample', () => {
   …
-} );
+});
 ```
 
 This module name will appear in your test output in the console
@@ -557,11 +557,11 @@ describe( 'Notification', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     notificationElem = document.querySelector( `.${ BASE_CLASS }` );
-    notification = new Notification( notificationElem, BASE_CLASS, {} );
-  } );
+    notification = new Notification( notificationElem, BASE_CLASS, {});
+  });
 
   …
-} );
+});
 ```
 
 The main things to note here at the beginning of the file are
@@ -603,7 +603,7 @@ describe( 'setTypeAndContent()', () => {
     );
 
     expect( notificationElem.classList ).toContain( 'm-notification__success' );
-  } );
+  });
 
   it( 'should update the notification type for the warning state', () => {
     notification.init();
@@ -614,10 +614,10 @@ describe( 'setTypeAndContent()', () => {
     );
 
     expect( notificationElem.classList ).toContain( 'm-notification__warning' );
-  } );
+  });
 
   …
-} );
+});
 ```
 
 This part mostly works like testing any other function.
