@@ -3,9 +3,10 @@
 @import (less) './layout-1-3.less';
 
 .wrapper__match-content {
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
-  } );
+  });
 }
 
 .content_level--1 {
@@ -37,21 +38,23 @@
 }
 
 .content__half-top-on-desk {
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
 
     &:after {
       top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
     }
-  } );
+  });
 }
 
 .content__flush-sides-on-small {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding-left: 0;
     padding-right: 0;
     border-width: 0;
-  } );
+  });
 }
 
 .content-l_col {
@@ -87,19 +90,20 @@
       left: 50%;
       right: 50%;
 
-      .respond-to-min( @bp-sm-min, {
+      // Tablet and above.
+      .respond-to-min(@bp-sm-min, {
         width: ~'calc( 100vw - @{two-gutter-widths} )';
         max-width: ~'calc( 100vw - @{two-gutter-widths} )';
         margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
         margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
-      } );
+      });
 
-      .respond-to-min( @bp-xl-min, {
+      .respond-to-min(@bp-xl-min, {
         width: @grid_wrapper-width - @two-gutter-widths;
         max-width: @grid_wrapper-width - @two-gutter-widths;
         margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
         margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
-      } );
+      });
     }
   }
 }

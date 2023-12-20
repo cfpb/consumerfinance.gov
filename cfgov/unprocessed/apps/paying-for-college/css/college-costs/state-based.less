@@ -163,7 +163,8 @@ main.college-costs {
   &[data-state_activesection='other-resources'],
   &[data-state_activesection='loan-counseling'],
   &[data-state_activesection='make-a-plan'] {
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       @supports (position: sticky) {
         .costs-not-covered-sticky {
           display: block;

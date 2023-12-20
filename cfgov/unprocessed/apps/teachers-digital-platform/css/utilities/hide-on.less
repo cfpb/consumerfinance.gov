@@ -3,12 +3,14 @@
 //
 
 .u-hide-on-xs {
+  // Mobile only.
   .respond-to-max(@bp-xs-max, {
     display: none !important;
   });
 }
 
 .u-hide-on-sm {
+  // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     display: none !important;
   });
