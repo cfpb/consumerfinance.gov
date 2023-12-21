@@ -9,6 +9,7 @@ function resetFileName() {
 
 /**
  * Set a filename for a file input.
+ *
  * @param {string} fileName - A filename.
  */
 function setFileName(fileName) {
@@ -26,6 +27,7 @@ function resetError() {
 
 /**
  * Display an error message.
+ *
  * @param {string} message - An error message.
  */
 function setError(message) {
@@ -52,7 +54,7 @@ function getUploadName(fileName) {
  * @returns {boolean} - True if the file is a CSV, false otherwise.
  */
 function isCSV(fileName) {
-  return fileName.substr(fileName.lastIndexOf('.') + 1) === 'csv';
+  return fileName.slice(fileName.lastIndexOf('.') + 1) === 'csv';
 }
 
 export {
