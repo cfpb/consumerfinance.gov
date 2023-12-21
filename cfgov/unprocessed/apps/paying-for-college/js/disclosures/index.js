@@ -81,7 +81,7 @@ const app = {
             questionView.init();
 
             // Update expenses model bases on region and salary
-            const region = schoolValues.BLSAverage.substr(0, 2);
+            const region = schoolValues.BLSAverage.slice(0, 2);
             $('#bls-region-select').val(region).change();
           });
       }

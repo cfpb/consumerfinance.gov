@@ -23,6 +23,7 @@ const TAG_NAME = 'div';
  * Function as the constrcutor for the AtomicComponent.
  * Sets up initial instance properties and calls
  * necessary methods to properly instantiatie component.
+ *
  * @param {HTMLElement} element - The element to set as the base element.
  * @param {object} attributes - Hash of attributes to set on base element.
  */
@@ -41,6 +42,7 @@ function AtomicComponent(element, attributes) {
 Object.assign(AtomicComponent.prototype, new EventObserver(), {
   /**
    * Run through and call the component's initializers.
+   *
    * @returns {AtomicComponent} An instance.
    */
   init: function () {
@@ -76,6 +78,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to render a template in Single Page Applications.
+   *
    * @returns {AtomicComponent} An instance.
    */
   render: function () {
@@ -101,6 +104,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to set the base DOM element.
+   *
    * @param {HTMLElement} element - The element to set as the base element.
    * @returns {AtomicComponent} An instance.
    */
@@ -118,6 +122,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
   /* eslint-disable complexity */
   /**
    * Function used to set the cached DOM elements.
+   *
    * @returns {object} Hash of event names and cached elements.
    */
   setCachedElements: function () {
@@ -146,6 +151,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
   /**
    * Function used to remove the base element from the DOM
    * and unbind events.
+   *
    * @returns {boolean} True if successful in tearing down component.
    */
   destroy: function () {
@@ -162,6 +168,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to set the attributes on an element.
+   *
    * @param {object} attributes - Hash of attributes to set on base element.
    */
   setElementAttributes: function (attributes) {
@@ -179,6 +186,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
   /**
    * Function used to up event delegation on the base element.
    * Using Dom-delegate library to enable this functionality.
+   *
    * @param {object} events - Hash of events to bind to the dom element.
    * @returns {AtomicComponent} An instance.
    */
@@ -215,6 +223,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to set the attributes on an element.
+   *
    * @param {string} eventName - Event in which to listen for.
    * @param {string} selector - CSS selector.
    * @param {Function} listener - Callback for event.
@@ -228,6 +237,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to remove events from the base element.
+   *
    * @returns {AtomicComponent} An instance.
    */
   undelegateEvents: function () {
@@ -241,11 +251,12 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
   /**
    * Function used to set the attributes on an element.
+   *
    * @param {string} prefix - String to use a prefix.
    * @returns {string} Prefixed unique id string.
    */
   uniqueId: function (prefix) {
-    return prefix + '_' + Math.random().toString(36).substr(2, 9);
+    return prefix + '_' + Math.random().toString(36).slice(2);
   },
 });
 
@@ -254,12 +265,14 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 /**
  * Function used to set the attributes on an element.
  * and unbind events.
+ *
  * @param {object} attributes - Hash of attributes to set on base element.
  * @returns {Function} Extended child constructor function.
  */
 function extend(attributes) {
   /**
    * Function used as constructor in order to establish inheritance chain.
+   *
    * @returns {AtomicComponent} An instance.
    */
   function child() {
@@ -286,6 +299,7 @@ function extend(attributes) {
 /**
  * Function used to instantiate all instances of the particular
  * atomic component on a page.
+ *
  * @param {HTMLElement} scope - Where to search for components within.
  * @returns {Array} List of AtomicComponent instances.
  */

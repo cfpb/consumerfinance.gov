@@ -4,7 +4,9 @@ import { convertStringToNumber } from '../../../../js/modules/util/format.js';
  * Get value(s) of an individual HTML element in the control panel.
  * @param {string} param - Name of parameter to get.
  *   Usually the HTML element's id attribute.
- * @returns {object} Hash of element id and its value(s).
+ * @returns {undefined|string|number}
+ *   A loan text or number value from a DOM element,
+ *   or undefined if no source element is found.
  */
 function getSelection(param) {
   const elm = document.querySelector('#' + param);
