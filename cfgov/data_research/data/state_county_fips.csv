@@ -1,4 +1,5 @@
 state,state_fips,county_fips,complete_fips,county_name
+AA,00,000,00000,All other territories and foreign countries
 AK,02,013,02013,Aleutians East Borough
 AK,02,016,02016,Aleutians West Census Area
 AK,02,020,02020,Anchorage Municipality
@@ -324,6 +325,15 @@ CT,09,009,09009,New Haven County
 CT,09,011,09011,New London County
 CT,09,013,09013,Tolland County
 CT,09,015,09015,Windham County
+CT,09,110,09110,Capitol Planning Region
+CT,09,120,09120,Greater Bridgeport Planning Region
+CT,09,130,09130,Lower Connecticut River Valley Planning Region
+CT,09,140,09140,Naugatuck Valley Planning Region
+CT,09,150,09150,Northeastern Connecticut Planning Region
+CT,09,160,09160,Northwest Hills Planning Region
+CT,09,170,09170,South Central Connecticut Planning Region
+CT,09,180,09180,Southeastern Connecticut Planning Region
+CT,09,190,09190,Western Connecticut Planning Region
 DC,11,001,11001,District of Columbia
 DE,10,001,10001,Kent County
 DE,10,003,10003,New Castle County

@@ -3,13 +3,22 @@ import logging
 
 from django.conf import settings
 
+from data_research.models import County, State
+
 
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = "{}/data_research/data".format(PROJECT_ROOT)
 
 # We have minimal data for smaller territories, so we exclude them.
 # For project launch, we also excluded Puerto Rico (72) as out of scope.
-NON_STATES = {"MP": "69", "AS": "60", "VI": "78", "GU": "66", "PR": "72"}
+NON_STATES = {
+    "AA": "00",
+    "MP": "69",
+    "AS": "60",
+    "VI": "78",
+    "GU": "66",
+    "PR": "72",
+}
 
 # Census no longer uses these FIPS codes, but they show up in the NMDB data.
 # For more details on stale FIPS and FIPS for territories, see
@@ -31,6 +40,7 @@ STALE_FIPS = [
 
 # These codes refer to small U.S. territories that don't meet our threshold
 TERRITORIES_TO_IGNORE = [
+    "00000",
     "60010",
     "66010",
     "69100",
@@ -318,3 +328,24 @@ def load_fips_meta(counties=True):
     if counties is True:
         load_county_mappings()
     load_constants()
+
+
+def load_counties():
+    """
+    Load County objects from state_county_fips.csv
+    """
+    County.objects.all().delete()
+    with open("{}/state_county_fips.csv".format(FIPS_DATA_PATH), "r") as f:
+        reader = csv.DictReader(f)
+        fips_data = list(reader)
+        counties = [
+            County(
+                fips=row["complete_fips"],
+                name=row["county_name"],
+                state=State.objects.get(abbr=row["state"]),
+                valid=False,
+            )
+            for row in fips_data
+            if row["state"] not in NON_STATES
+        ]
+        County.objects.bulk_create(counties)
