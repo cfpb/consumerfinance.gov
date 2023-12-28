@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0083_workflowcontenttype'),
-        ('v1', '0013_remove_cfgovpage_schema_json'),
+        ('v1', '0014_grouppagepermission_index_fix'),
     ]
 
     operations = [
