@@ -74,7 +74,7 @@ We welcome your feedback and contributions.
 See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
 Additionally, you may want to consider
-[contributing to the Design System](https://cfpb.github.io/design-system/#help-us-make-improvements),
+[contributing to the Design System](https://cfpb.github.io/design-system/#contribute-to-the-design-system),
 which is the front-end pattern library used in this project.
 
 ## Open source licensing info
