@@ -12,7 +12,10 @@ from data_research.models import (
     CountyMortgageData,
     MortgageDataConstant,
 )
-from data_research.mortgage_utilities.fips_meta import validate_fips
+from data_research.mortgage_utilities.fips_meta import (
+    load_counties,
+    validate_fips,
+)
 from data_research.mortgage_utilities.s3_utils import (
     S3_SOURCE_BUCKET,
     S3_SOURCE_FILE,
@@ -72,10 +75,17 @@ def process_source(starting_date, through_date, dump_slug=None):
     counter = 0
     pk = 1
     new_objects = []
+
     # truncate table
     CountyMortgageData.objects.all().delete()
+
     source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
     raw_data = read_in_s3_csv(source_url)
+
+    # Ensure county objects are up to date
+    load_counties()
+    logger.info("Counties loaded")
+
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()
         if sampling_date >= starting_date and sampling_date <= through_date:
