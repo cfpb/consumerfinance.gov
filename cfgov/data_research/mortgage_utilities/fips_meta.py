@@ -342,7 +342,7 @@ def load_counties():
             County(
                 fips=row["complete_fips"],
                 name=row["county_name"],
-                state=State.objects.get(abbr=row["state"]),
+                state=State.objects.filter(abbr=row["state"])[0],
                 valid=False,
             )
             for row in fips_data
