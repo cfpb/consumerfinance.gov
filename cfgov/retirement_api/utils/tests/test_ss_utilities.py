@@ -81,7 +81,7 @@ class UtilitiesTests(unittest.TestCase):
             },
             "params": {
                 "dobmon": 1,
-                "dobday": 5,
+                "dobday": 1,
                 "yob": sample_year,
                 "earnings": 40000,
                 "lastYearEarn": "",
