@@ -10,9 +10,7 @@ from django.db import migrations
 table_name = "wagtailcore_grouppagepermission"
 
 
-index_name = (
-    "idx_17388_wagtailcore_grouppagepermission_group_id_16e761a17265"
-)
+index_name = "idx_17388_wagtailcore_grouppagepermission_group_id_16e761a17265"
 
 
 # nosec used here to suppress Bandit warning about this raw SQL.
@@ -29,7 +27,7 @@ END $$;
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("v1", "0013_remove_cfgovpage_schema_json"),
+        ("v1", "0014_update_ds_links"),
     ]
 
     operations = [
