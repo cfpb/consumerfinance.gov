@@ -140,7 +140,7 @@ def register_django_admin_menu_item():
     return StaffOnlyMenuItem(
         "Django Admin",
         reverse("admin:index"),
-        classnames="icon icon-redirect",
+        classname="icon icon-redirect",
         order=99999,
     )
 
@@ -155,7 +155,7 @@ def register_cdn_menu_item():
     return IfCDNEnabledMenuItem(
         "CDN Tools",
         reverse("manage-cdn"),
-        classnames="icon icon-cogs",
+        classname="icon icon-cogs",
         order=10000,
     )
 
@@ -172,7 +172,7 @@ def register_page_metadata_report_menu_item():
     return MenuItem(
         "Page Metadata",
         reverse("page_metadata_report"),
-        classnames="icon icon-" + PageMetadataReportView.header_icon,
+        classname="icon icon-" + PageMetadataReportView.header_icon,
     )
 
 
@@ -192,7 +192,7 @@ def register_page_drafts_report_menu_item():
     return MenuItem(
         "Draft Pages",
         reverse("page_drafts_report"),
-        classnames="icon icon-" + DraftReportView.header_icon,
+        classname="icon icon-" + DraftReportView.header_icon,
     )
 
 
@@ -212,7 +212,7 @@ def register_documents_report_menu_item():
     return MenuItem(
         "Documents",
         reverse("documents_report"),
-        classnames="icon icon-" + DocumentsReportView.header_icon,
+        classname="icon icon-" + DocumentsReportView.header_icon,
     )
 
 
@@ -232,7 +232,7 @@ def register_enforcements_actions_report_menu_item():
     return MenuItem(
         "Enforcement Actions",
         reverse("enforcement_report"),
-        classnames="icon icon-" + EnforcementActionsReportView.header_icon,
+        classname="icon icon-" + EnforcementActionsReportView.header_icon,
     )
 
 
@@ -252,7 +252,7 @@ def register_images_report_menu_item():
     return MenuItem(
         "Images",
         reverse("images_report"),
-        classnames="icon icon-" + ImagesReportView.header_icon,
+        classname="icon icon-" + ImagesReportView.header_icon,
     )
 
 
@@ -272,7 +272,7 @@ def register_ask_report_menu_item():
     return MenuItem(
         "Ask CFPB",
         reverse("ask_report"),
-        classnames="icon icon-" + AskReportView.header_icon,
+        classname="icon icon-" + AskReportView.header_icon,
     )
 
 
@@ -292,7 +292,7 @@ def register_category_icons_report_menu_item():
     return MenuItem(
         "Category Icons",
         reverse("category_icons_report"),
-        classnames="icon icon-" + CategoryIconReportView.header_icon,
+        classname="icon icon-" + CategoryIconReportView.header_icon,
     )
 
 
@@ -312,7 +312,7 @@ def register_translated_pages_report_menu_item():
     return MenuItem(
         "Translated Pages",
         reverse("translated_pages_report"),
-        classnames="icon icon-" + TranslatedPagesReportView.header_icon,
+        classname="icon icon-" + TranslatedPagesReportView.header_icon,
     )
 
 
@@ -332,7 +332,7 @@ def register_active_users_report_menu_item():
     return MenuItem(
         "Active Users",
         reverse("active_users_report"),
-        classnames="icon icon-" + ActiveUsersReportView.header_icon,
+        classname="icon icon-" + ActiveUsersReportView.header_icon,
     )
 
 
