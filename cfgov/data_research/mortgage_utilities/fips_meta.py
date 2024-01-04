@@ -330,6 +330,50 @@ def load_fips_meta(counties=True):
     load_constants()
 
 
+def load_states():
+    """
+    Load state objects from csv data
+    """
+    State.objects.all().delete()
+    states = {}
+
+    with open("{}/states.csv".format(FIPS_DATA_PATH), "r") as f:
+        reader = csv.DictReader(f)
+        for row in list(reader):
+            print(row)
+            states[row["abbr"]] = {
+                "fips": row["fips"],
+                "abbr": row["abbr"],
+                "name": row["name"],
+                "counties": [],
+                "msas": [],
+                "non_msa_counties": [],
+            }
+
+    with open("{}/state_county_fips.csv".format(FIPS_DATA_PATH), "r") as f:
+        reader = csv.DictReader(f)
+        counties = list(reader)
+        for row in counties:
+            if row["state"] not in NON_STATES:
+                states[row["state"]]["counties"].append(row["complete_fips"])
+                states[row["state"]]["non_msa_counties"].append(
+                    row["complete_fips"]
+                )
+
+    with open("{}/msa_county_crosswalk.csv".format(FIPS_DATA_PATH), "r") as f:
+        reader = csv.DictReader(f)
+        msas = list(reader)
+        for row in msas:
+            state = row["county_name"][-2:]
+            states[state]["msas"].append(row["msa_id"])
+            try:
+                states[state]["non_msa_counties"].remove(row["county_fips"])
+            except ValueError:
+                pass
+
+    State.objects.bulk_create([State(**state) for state in states.values()])
+
+
 def load_counties():
     """
     Load County objects from state_county_fips.csv
