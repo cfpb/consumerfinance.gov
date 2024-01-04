@@ -2,6 +2,7 @@ import csv
 import logging
 
 from django.conf import settings
+from django.db import transaction
 
 from data_research.models import County, State
 
@@ -330,6 +331,7 @@ def load_fips_meta(counties=True):
     load_constants()
 
 
+@transaction.atomic
 def load_states():
     """
     Load state objects from csv data
@@ -374,6 +376,7 @@ def load_states():
     State.objects.bulk_create([State(**state) for state in states.values()])
 
 
+@transaction.atomic
 def load_counties():
     """
     Load County objects from state_county_fips.csv
