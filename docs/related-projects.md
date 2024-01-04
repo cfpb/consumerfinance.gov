@@ -11,12 +11,10 @@ set up the full website.
 We have six satellite apps that are maintained outside of the consumerfinance.gov codebase:
 
 - [ccdb5-api](https://github.com/cfpb/ccdb5-api)
-- [ccdb5-ui](https://github.com/cfpb/ccdb5-ui)
 - [owning-a-home-api](https://github.com/cfpb/owning-a-home-api)
-- [teachers-digital-platform](https://github.com/cfpb/teachers-digital-platform)
 
 These satellite apps are imported into consumerfinance.gov as part of the project
-[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/deployment.in).
 
 !!! note "Thinking about making a new satellite app?"
 
@@ -50,7 +48,7 @@ want or need to test their work as part of the larger consumerfinance.gov projec
 
 The standard [installation](../installation/) process for consumerfinance.gov
 includes whatever versions of these packages are specified in project
-[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/deployment.in).
 Developers may want to temporarily or permanently replace those with a local
 copy of package source code.
 

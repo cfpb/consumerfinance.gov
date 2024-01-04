@@ -1,5 +1,0 @@
-coverage==6.3.2
-diff_cover==6.5.0
-pluggy==1.0.0
-tox==3.25.0
-tox-pip-extensions==1.6.0

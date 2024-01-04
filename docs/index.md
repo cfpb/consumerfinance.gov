@@ -35,13 +35,8 @@ Versions for most front-end packages are kept updated in the project's [package.
 Versions for back-end software including Django, Wagtail, Jinja, etc. are kept in the project's requirements files:
 https://github.com/cfpb/consumerfinance.gov/tree/main/requirements
 
-- `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
-- `ci.txt`: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?
-- `deployment.txt`: requirements for deployment, includes `base.txt` and a New Relic library that we don't install anywhere else.
-- `django.txt`: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.
-- `docs.txt`: requirements to build the consumerfinance.gov docs.
-- `libraries.txt`: Python libraries.
-- `local.txt`: includes `base.txt` and some useful libraries when developing locally.
-- `scripts.txt`: Requirements for running certain jobs on Jenkins, so scripts can run in Jenkins without having to install all the other requirements.
-- `test.txt`: requirements for running Python tests.
-- `wagtail.txt`: specifies Wagtail version. In its own file to make it easier to test multiple versions, same as with `django.txt`.
+- `deployment.in`: requirements to run consumerfinance.gov in any environment
+- `test.in`: requirements for executing Python tests locally or in CI
+- `dev.in`: requirements for development work, running, and testing
+- `docs.in`: requirements to build the consumerfinance.gov docs
+- `scripts.in`: Requirements for running our smoke test and alert polling scripts without having to install all the other requirements
