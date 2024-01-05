@@ -69,9 +69,6 @@ class State(models.Model):
     fips = models.CharField(max_length=2, blank=True, db_index=True)
     name = models.CharField(max_length=128, blank=True, db_index=True)
     abbr = models.CharField(max_length=2)
-    ap_abbr = models.CharField(
-        max_length=20, help_text="The AP Stylebook's state abbreviation"
-    )
     counties = models.JSONField(
         blank=True, help_text="FIPS list of counties in the state"
     )
