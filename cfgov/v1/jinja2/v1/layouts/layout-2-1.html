@@ -17,10 +17,7 @@
 
 {% block content scoped %}
     <main class="content content__2-1 content__bleedbar"
-          id="main"
-          {%- if is_faq_page %}
-            itemscope="" itemtype="http://schema.org/FAQPage"
-          {% endif -%}>
+          id="main">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if not breadcrumb_items and page and page.get_breadcrumbs %}
