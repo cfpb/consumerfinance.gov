@@ -56,25 +56,27 @@ export class AdminPage {
   }
 
   addContact() {
-    cy.get('a[href="/admin/v1/contact/create/"]:first').click();
+    cy.get('a[href="/admin/snippets/v1/contact/add/"]:first').click();
     cy.get('#id_heading').type('Test heading');
     cy.get('.DraftEditor-root').type('Random Body');
     this.submitForm();
   }
 
   searchContact(contact_heading) {
-    cy.get('#changelist-search').type(contact_heading);
-    cy.get('#changelist-search').type('{enter}');
+    cy.get('#id_q').type(contact_heading);
+    cy.get('#id_q').type('{enter}');
   }
 
   removeContact() {
-    cy.get('a[href^="/admin/v1/contact/delete/"]:first').click({ force: true });
+    cy.get('a[href^="/admin/snippets/v1/contact/delete/"]:first').click({
+      force: true,
+    });
     cy.get('[value="Yes, delete"]').click();
   }
 
   addMortgageData(name) {
     cy.get(
-      `a[href="/admin/data_research/mortgage${name}/create/"]:first`,
+      `a[href="/admin/snippets/data_research/mortgage${name}/add/"]:first`,
     ).click();
     cy.get('#id_name').type('test');
     this.submitForm();
@@ -184,7 +186,7 @@ export class AdminPage {
   }
 
   submitForm() {
-    cy.get('form[method="POST"]').submit();
+    cy.get('main form[method="POST"]').submit();
   }
 
   getFirstTableRow() {

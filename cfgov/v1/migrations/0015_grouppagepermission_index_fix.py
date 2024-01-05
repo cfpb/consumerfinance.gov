@@ -13,7 +13,7 @@ table_name = "wagtailcore_grouppagepermission"
 index_name = "idx_17388_wagtailcore_grouppagepermission_group_id_16e761a17265"
 
 
-# nosec used here to suppress Bandit warning about this raw SQL.
+# "nosec" is used here to suppress Bandit warning about this raw SQL.
 # https://bandit.readthedocs.io/en/1.7.6/plugins/b608_hardcoded_sql_expressions.html
 sql = f"""
 DO $$ BEGIN
