@@ -2163,13 +2163,6 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enforce-node-version@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/enforce-node-version/-/enforce-node-version-0.1.0.tgz#206a4e69ff68a608a755423b73090668b3b37e98"
-  integrity sha512-A5Y4jBBpohyOfuAH53o4jZl1pxzJrd/xfaFluQIjOs1EKfjgwWbE4sun/gZ0+5dHOHkImaM3jIWE+1RGVBnZPQ==
-  dependencies:
-    semver "5.4.1"
-
 enquirer@^2.3.6:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/enquirer/-/enquirer-2.4.1.tgz#93334b3fbd74fc7097b224ab4a8fb7e40bf4ae56"
@@ -5065,11 +5058,6 @@ semver-compare@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
   integrity sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==
-
-semver@5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
-  integrity sha512-WfG/X9+oATh81XtllIo/I8gOiY9EXRdv1cQdyykeXK17YcUW3EXUAi2To4pcH6nZtJPr7ZOpM5OMyWJZm+8Rsg==
 
 semver@^5.6.0:
   version "5.7.2"

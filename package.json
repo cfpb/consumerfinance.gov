@@ -33,7 +33,6 @@
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.16",
     "cfpb-chart-builder": "6.4.2",
-    "enforce-node-version": "0.1.0",
     "esbuild": "0.19.8",
     "fancy-log": "2.0.0",
     "highcharts": "7.2.2",
@@ -66,9 +65,8 @@
     "stylelint-less": "2.0.0"
   },
   "scripts": {
-    "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
-    "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
+    "postinstall": "node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "lint": "./scripts/lint.sh",
     "jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
