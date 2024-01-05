@@ -62,7 +62,9 @@ class FrontendConverter:
                         "", url
                     )
 
-                    if self.request.path.startswith(url_no_query_string):
+                    if self.request and self.request.path.startswith(
+                        url_no_query_string
+                    ):
                         menu_item["selected"] = True
                         self._submenu_selected = True
                         break
@@ -118,9 +120,11 @@ class FrontendConverter:
 
         if not self._link_selected:
             if selected_exact_only:
-                selected = url and self.request.path == url
+                selected = url and self.request and self.request.path == url
             else:
-                selected = url and self.request.path.startswith(url)
+                selected = (
+                    url and self.request and self.request.path.startswith(url)
+                )
 
             if selected:
                 link["selected"] = True

@@ -52,7 +52,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.forms",
     "wagtail.sites",
     "wagtail.contrib.routable_page",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.typed_table_block",
     "wagtail.contrib.settings",
     "localflavor",
@@ -111,6 +110,7 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
 )
 
 MIDDLEWARE = (

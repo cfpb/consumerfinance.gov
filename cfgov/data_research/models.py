@@ -110,8 +110,6 @@ class State(models.Model):
     class Meta:
         ordering = ["name"]
 
-    wagtail_reference_index_ignore = True
-
 
 class MetroArea(models.Model):
     """Model for Metropolitan Statistical Areas, or MSAs."""
@@ -150,8 +148,6 @@ class MetroArea(models.Model):
     class Meta:
         ordering = ["name"]
 
-    wagtail_reference_index_ignore = True
-
 
 class County(models.Model):
     """Model for the smallest geophraphical unit in our mortgage data."""
@@ -162,8 +158,6 @@ class County(models.Model):
         State, blank=True, null=True, on_delete=models.SET_NULL
     )
     valid = models.BooleanField()
-
-    wagtail_reference_index_ignore = True
 
     def validate(self):
         """
@@ -207,8 +201,6 @@ class MortgageBase(models.Model):
     class Meta:
         abstract = True
         ordering = ["date"]
-
-    wagtail_reference_index_ignore = True
 
     @property
     def county_list(self):
