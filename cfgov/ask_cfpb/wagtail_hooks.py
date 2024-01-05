@@ -7,7 +7,7 @@ from wagtail.models import Page
 from ask_cfpb.models import Answer, AnswerPage
 
 
-@hooks.register("insert_editor_css")
+@hooks.register("insert_global_admin_css")
 def editor_css():
     return format_html(
         '<link rel="stylesheet" href="'

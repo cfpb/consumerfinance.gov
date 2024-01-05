@@ -27,8 +27,6 @@ class CDNHistory(models.Model):
     message = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    wagtail_reference_index_ignore = True
-
 
 class AkamaiBackend(BaseBackend):
     """Akamai backend that performs an 'invalidate' purge"""

@@ -57,7 +57,6 @@ class TimeseriesViewTests(django.test.TestCase):
             State,
             fips="12",
             abbr="FL",
-            ap_abbr="Fla.",
             counties=["12081"],
             msas=["52081"],
             name="Florida",
