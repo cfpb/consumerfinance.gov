@@ -342,7 +342,6 @@ def load_states():
     with open("{}/states.csv".format(FIPS_DATA_PATH), "r") as f:
         reader = csv.DictReader(f)
         for row in list(reader):
-            print(row)
             states[row["abbr"]] = {
                 "fips": row["fips"],
                 "abbr": row["abbr"],
