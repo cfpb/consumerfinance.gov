@@ -141,7 +141,11 @@ class SourceToTableTest(django.test.TestCase):
         "data_research.scripts.process_mortgage_data." "read_in_s3_csv"
     )
     @mock.patch("data_research.scripts.process_mortgage_data." "dump_as_csv")
-    def test_process_source(self, mock_dump, mock_read):
+    @mock.patch("data_research.scripts.process_mortgage_data." "load_counties")
+    @mock.patch("data_research.scripts.process_mortgage_data." "load_states")
+    def test_process_source(
+        self, mock_states, mock_counties, mock_dump, mock_read
+    ):
         test_data_dict = [
             {
                 "date": "01/01/10",
@@ -172,6 +176,8 @@ class SourceToTableTest(django.test.TestCase):
         self.assertEqual(CountyMortgageData.objects.count(), 2)
         self.assertEqual(mock_read.call_count, 1)
         self.assertEqual(mock_dump.call_count, 1)
+        self.assertEqual(mock_counties.call_count, 1)
+        self.assertEqual(mock_states.call_count, 1)
 
     @mock.patch(
         "data_research.scripts.process_mortgage_data." "process_source"

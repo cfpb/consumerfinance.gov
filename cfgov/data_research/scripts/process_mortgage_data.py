@@ -14,6 +14,7 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import (
     load_counties,
+    load_states,
     validate_fips,
 )
 from data_research.mortgage_utilities.s3_utils import (
@@ -81,6 +82,10 @@ def process_source(starting_date, through_date, dump_slug=None):
 
     source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
     raw_data = read_in_s3_csv(source_url)
+
+    # Ensure state objects are up to date
+    load_states()
+    logger.info("States loaded")
 
     # Ensure county objects are up to date
     load_counties()
