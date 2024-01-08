@@ -342,14 +342,15 @@ def load_states():
     with open("{}/states.csv".format(FIPS_DATA_PATH), "r") as f:
         reader = csv.DictReader(f)
         for row in list(reader):
-            states[row["abbr"]] = {
-                "fips": row["fips"],
-                "abbr": row["abbr"],
-                "name": row["name"],
-                "counties": [],
-                "msas": [],
-                "non_msa_counties": [],
-            }
+            if row["abbr"] not in NON_STATES:
+                states[row["abbr"]] = {
+                    "fips": row["fips"],
+                    "abbr": row["abbr"],
+                    "name": row["name"],
+                    "counties": [],
+                    "msas": [],
+                    "non_msa_counties": [],
+                }
 
     with open("{}/state_county_fips.csv".format(FIPS_DATA_PATH), "r") as f:
         reader = csv.DictReader(f)
