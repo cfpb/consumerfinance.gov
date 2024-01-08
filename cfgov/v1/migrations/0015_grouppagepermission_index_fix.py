@@ -22,7 +22,7 @@ DO $$ BEGIN
         ALTER TABLE {table_name} ADD CONSTRAINT {index_name} UNIQUE(group_id, page_id, permission_type);
     END IF;
 END $$;
-""".strip()  # nosec B608
+""".strip()  # nosec
 
 
 class Migration(migrations.Migration):
