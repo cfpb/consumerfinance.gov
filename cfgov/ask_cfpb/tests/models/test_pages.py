@@ -154,7 +154,6 @@ class PortalSearchPageTest(TestCase):
             "English auto-loans question-8888?",
             "english-auto-loans-question-en-8888",
             self.english_ask_parent,
-            featured=True,
         )
         self.answer_page.portal_topic.add(self.portal_topic)
         self.answer_page.save()
@@ -163,7 +162,6 @@ class PortalSearchPageTest(TestCase):
             "English banks question-8889?",
             "english-banks-question-en-8889",
             self.english_ask_parent,
-            featured=True,
         )
         self.answer_page.portal_topic.add(self.portal_topic2)
         self.answer_page.save()
@@ -949,13 +947,6 @@ class AnswerPageTest(TestCase):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
 
-    def test_portal_topic_featured_answers(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        self.assertIn(page, self.portal_topic.featured_answers("en"))
-
     def test_nextstep_str(self):
         next_step = self.next_step
         self.assertEqual(next_step.__str__(), next_step.title)
@@ -972,22 +963,9 @@ class AnswerPageTest(TestCase):
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]["title"], "Ask CFPB")
 
-    def test_landing_page_context_no_featured_answer(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = False
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
-
     def test_landing_page_context(self):
         page = self.page1
         page.portal_topic.add(self.portal_topic)
-        page.featured = True
         page.save_revision().publish()
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
@@ -1002,7 +980,6 @@ class AnswerPageTest(TestCase):
     def test_spanish_landing_page_context(self):
         page = self.page1_es
         page.portal_topic.add(self.portal_topic)
-        page.featured = True
         page.save_revision().publish()
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
@@ -1017,7 +994,6 @@ class AnswerPageTest(TestCase):
     def test_landing_page_context_draft_portal_page(self):
         page = self.page1
         page.portal_topic.add(self.portal_topic)
-        page.featured = True
         page.save_revision().publish()
         self.portal_page.unpublish()
         mock_site = mock.Mock()

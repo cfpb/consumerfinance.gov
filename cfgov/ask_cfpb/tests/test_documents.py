@@ -139,7 +139,7 @@ class AnswerPageDocumentTest(TestCase):
 
     def test_to_field(self):
         doc = Document()
-        for f in ["question", "statement"]:
+        for f in ["question"]:
             nameField = doc.to_field(f, AnswerPage._meta.get_field(f))
             self.assertIsInstance(nameField, fields.TextField)
             self.assertEqual(nameField._path, [f])
