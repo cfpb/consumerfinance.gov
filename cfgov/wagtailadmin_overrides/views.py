@@ -6,7 +6,6 @@ from v1.views.snippets import (
     EmailSignUpViewSet,
     PortalCategoryViewSet,
     PortalTopicViewSet,
-    RelatedResourceViewSet,
     ResourceViewSet,
     ReusableTextViewSet,
 )
@@ -34,7 +33,6 @@ class SnippetsViewSetGroup(SnippetViewSetGroup):
         GlossaryTermViewSet,
         PortalCategoryViewSet,
         PortalTopicViewSet,
-        RelatedResourceViewSet,
         ResourceViewSet,
         ReusableTextViewSet,
     )
