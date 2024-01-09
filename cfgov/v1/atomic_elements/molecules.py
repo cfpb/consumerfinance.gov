@@ -435,7 +435,6 @@ class RelatedMetadata(blocks.StructBlock):
             ),
         ]
     )
-    is_half_width = blocks.BooleanBlock(required=False, default=False)
 
     class Meta:
         icon = "grip"
