@@ -12,6 +12,7 @@ from model_bakery import baker
 from paying_for_college.models import (
     ConstantCap,
     ConstantRate,
+    Notification,
     Program,
     School,
 )
@@ -407,3 +408,15 @@ class VerifyViewTest(django.test.TestCase):
         self.assertEqual(resp.status_code, 200)
         payload = json.loads(resp.content)
         self.assertIn("Verification recorded", payload["result"])
+
+    def test_verify_view_handles_unsafe_urls(self):
+        post_data = copy.copy(self.post_data)
+        post_data["URL"] = INVALID_URLS[1]
+        resp = self.client.post(
+            self.url,
+            json.dumps(post_data),
+            content_type="application/json",
+        )
+        notification = Notification.objects.order_by("-pk").first()
+        self.assertIn("Unsafe URL found", notification.url)
+        self.assertEqual(resp.status_code, 200)
