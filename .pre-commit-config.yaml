@@ -1,10 +1,9 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 23.12.1
     hooks:
       - id: black
-        args: ['cfgov', '--line-length=79']
-        exclude: migrations
+        language_version: python3.8
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.1.11
     hooks:
@@ -20,5 +19,4 @@ repos:
     hooks:
       - id: bandit
         args: ['-c', 'pyproject.toml', '--recursive']
-        additional_dependencies: ["bandit[toml]"]
-
+        additional_dependencies: ['bandit[toml]']
