@@ -16,7 +16,7 @@
 {% extends 'v1/layouts/base.html' %}
 
 {% block content scoped %}
-    <main class="content content__2-1 content__bleedbar"
+    <main class="content content__2-1 content__bleedbar {% block content_modifiers -%}{%- endblock %}"
           id="main">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
