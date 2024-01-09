@@ -35,14 +35,17 @@ class TestRunner(DiscoverSlowestTestsRunner):
     def setup_databases(self, **kwargs):
         dbs = super().setup_databases(**kwargs)
 
-        # Some required Wagtail data (like the default site) are created in
-        # Wagtail migrations. If we're skipping migrations when running tests,
-        # we need to create this data ourselves.
-        if settings.SKIP_DJANGO_MIGRATIONS:
-            self.initial_wagtail_data()
+        # If dbs is empty, it means we don't have a test database; this can
+        # happen if e.g. we're only running tests that don't require one.
+        if dbs:
+            # Some required Wagtail data (like the default site) are created in
+            # Wagtail migrations. If we're skipping migrations when running
+            # tests, we need to create this data ourselves.
+            if settings.SKIP_DJANGO_MIGRATIONS:
+                self.initial_wagtail_data()
 
-        # Set up our own additional required test data.
-        initial_data.run()
+            # Set up our own additional required test data.
+            initial_data.run()
 
         return dbs
 
