@@ -148,16 +148,11 @@ class AnswerLandingPage(LandingPage):
         for portal_page in portal_pages:
             topic = portal_page.portal_topic
             url = portal_page.url
-            # Only include a portal if it has featured answers
-            featured_answers = topic.featured_answers(self.language)
-            if not featured_answers:
-                continue
             portal_cards.append(
                 {
                     "topic": topic,
                     "title": topic.title(self.language),
                     "url": url,
-                    "featured_answers": featured_answers,
                     "icon": get_category_icon(topic.heading),
                 }
             )
