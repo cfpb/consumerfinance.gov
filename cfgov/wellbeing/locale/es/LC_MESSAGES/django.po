@@ -173,33 +173,6 @@ msgstr ""
 "Es por eso que dos personas con el mismo ingreso o educación podrían tener "
 "puntuaciones de bienestar financiero diferentes."
 
-#: wellbeing/jinja2/wellbeing/about.html:83
-msgid "How does financial well-being look across America?"
-msgstr "¿Cuál es el estado de bienestar financiero en los Estados Unidos?"
-
-#: wellbeing/jinja2/wellbeing/about.html:85
-msgid ""
-"The tool allows you to compare your financial well-being score to other "
-"adults in the United States."
-msgstr ""
-"Esta herramienta le permite comparar su puntuación con la de otros adultos "
-"en los Estados Unidos."
-
-#: wellbeing/jinja2/wellbeing/about.html:86
-msgid ""
-"The comparison of your score to others’ scores is made possible by our "
-"national survey. In late 2016, we collected responses to our financial well-"
-"being scale in a nationwide survey of U.S. adults for the first time."
-msgstr ""
-"Esta comparación está basada en datos de una encuesta de bienestar "
-"financiero que hicimos en el 2016 a un grupo representativo de adultos en "
-"los Estados Unidos."
-
-#: wellbeing/jinja2/wellbeing/about.html:91
-#: wellbeing/jinja2/wellbeing/about.html:102
-msgid "See the report"
-msgstr "Lea el informe (en inglés)"
-
 #: wellbeing/jinja2/wellbeing/about.html:179
 #: wellbeing/jinja2/wellbeing/home.html:1036
 #: wellbeing/jinja2/wellbeing/results.html:711
