@@ -1,36 +1,16 @@
-@margin_half__em: unit(15px / @base-font-size-px, em);
-
-@list_half-width: {
-  .grid_nested-col-group();
-
-  .m-list_item {
-    .grid_column(6);
-  }
-
-  // Using .m-list__spaced items within a grid column causes unwanted
-  // extra margins because grid columns suppress margin collapsing.
-  // To counteract that we need to use a negative margin on the list.
-  // This means we also need to add a top margin to the first list
-  // item since the default .m-list__spaced only applies margins to
-  // .m-list_item + .m-list_item.
-  &.m-list__spaced {
-    margin-top: @margin_half__em * -1;
-
-    .m-list_item {
-      margin-top: @margin_half__em;
-    }
-  }
-};
-
-.m-related-posts__half-width {
-  .m-related-posts_list {
-    .respond-to-min(@bp-sm-min, {
-      @list_half-width();
-    });
-  }
-}
+@gap: unit(15px / @base-font-size-px, rem);
 
 .m-related-posts_list {
+  display: grid;
+  column-gap: @gap * 2;
+  row-gap: @gap;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    // 230px is an arbitrary width for small screens.
+    minmax(230px, calc(50% - @gap))
+  );
+
   .m-list_link {
     .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     .u-link__no-border();
@@ -42,25 +22,30 @@
 
   .m-list_item .a-date {
     margin-bottom: 0;
-    margin-top: unit(10px / @base-font-size-px, em);
+    margin-top: unit(10px / @base-font-size-px, rem);
   }
-  // Tablet only.
-  .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    @list_half-width();
-  });
 }
 
 .m-related-posts_list-container {
-  margin-bottom: @margin_half__em * 2;
+  margin-bottom: @gap * 2;
 
   &:last-child {
     margin-bottom: 0;
   }
-
-  // Tablet only.
-  .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    .m-related-posts_list {
-      .grid_nested-col-group();
-    }
-  });
 }
+// Mobile only.
+.respond-to-max(@bp-xs-max, {
+  // Always remove columns at mobile size.
+  .m-related-posts_list {
+    grid-template-columns: initial;
+  }
+});
+
+// Desktop and above.
+.respond-to-min(@bp-med-min, {
+  // If in the sidebar at desktop sizes, do not break into columns.
+  // Related posts also appear in the pre-footer, so we exclude that here.
+  .o-sidebar-content .m-related-posts_list {
+    grid-template-columns: initial;
+  }
+});
