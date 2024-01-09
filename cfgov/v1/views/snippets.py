@@ -3,7 +3,7 @@ from django.forms.utils import flatatt
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.filters import WagtailFilterSet
-from wagtail.admin.ui.tables import Column
+from wagtail.admin.ui.tables import BooleanColumn, Column
 from wagtail.images.shortcuts import get_rendition_or_not_found
 from wagtail.snippets.views.snippets import SnippetViewSet
 
@@ -19,7 +19,6 @@ from v1.models import (
     Resource,
     ReusableText,
 )
-from wagtailadmin_overrides.ui import BooleanColumn
 
 
 class BannerViewSet(SnippetViewSet):
