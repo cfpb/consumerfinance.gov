@@ -1,10 +1,7 @@
 import re
-from urllib.parse import parse_qs, urlencode, urlparse
 
-from django.conf import settings
 from django.core.signing import Signer
 from django.template.defaultfilters import slugify
-from django.urls import reverse
 
 from bs4 import BeautifulSoup
 
@@ -65,32 +62,10 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 ]
 
 
-def should_interstitial(url: str) -> bool:
-    match = LINK_PATTERN.match(url)
-
-    # If this is another link to .gov do not interstitial.
-    if match.group("domain").endswith(".gov"):
-        return False
-
-    # If this is not a link to a .gov, but it's still subject to CFPB's privacy
-    # policy, do not interstitial
-    elif match.group("domain") in settings.ALLOWED_LINKS_WITHOUT_INTERSTITIAL:
-        return False
-
-    return True
-
-
 def sign_url(url):
     signer = Signer(sep="||")
     url, signature = signer.sign(url).split("||")
     return (url, signature)
-
-
-def signed_redirect(url):
-    url, signature = sign_url(url)
-    query_args = {"ext_url": url, "signature": signature}
-
-    return "{0}?{1}".format(reverse("external-site"), urlencode(query_args))
 
 
 def ask_short_url(url):
@@ -132,8 +107,8 @@ def add_link_markup(tag, request_path):
 
     If it's a jump link, return the tag with the page's path removed.
     If it's an Ask CFPB link, return the tag with the shortened Ask URL.
-    If it's an external link, add an external icon and sign the redirect.
-    If it's a non-CFPB govt link, add external icon and sign the redirect.
+    If it's an external link, add an external-link icon.
+    If it's a non-CFPB govt link, add an external-link icon.
     If it contains a descendent that should not get an icon, return the link.
     If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.
@@ -165,26 +140,9 @@ def add_link_markup(tag, request_path):
         tag["data-pretty-href"] = ask_short_url(href)
         return str(tag)
 
-    if href.startswith("/external-site/?"):
+    if NON_CFPB_LINKS.match(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        components = urlparse(href)
-        arguments = parse_qs(components.query)
-        if "ext_url" in arguments:
-            external_url = arguments["ext_url"][0]
-            # Add pretty URL for print styles
-            tag["data-pretty-href"] = external_url
-            # Add the redirect notice as well
-            tag["href"] = signed_redirect(external_url)
-
-    elif NON_CFPB_LINKS.match(href):
-        # Sets the icon to indicate you're leaving consumerfinance.gov
-        icon = "external-link"
-        if should_interstitial(href):
-            # Add pretty URL for print styles
-            tag["data-pretty-href"] = href
-            # Add the redirect notice as well
-            tag["href"] = signed_redirect(href)
 
     elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file

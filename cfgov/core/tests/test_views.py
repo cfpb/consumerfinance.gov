@@ -1,16 +1,12 @@
 import json
-import re
-from unittest.mock import patch
 
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
 
 from core.govdelivery import MockGovDelivery
 from core.views import (
     CacheTaggedTemplateView,
-    ExternalURLNoticeView,
     TranslatedTemplateView,
     govdelivery_subscribe,
 )
@@ -140,30 +136,6 @@ class GovDeliverySubscribeTest(TestCase):
 
     def test_setting_subscriber_answers_to_questions(self):
         self.check_subscribe(self.assertRedirectSuccess, include_answers=True)
-
-
-class TestExternalURLNoticeView(TestCase):
-    def setUp(self):
-        self.factory = RequestFactory()
-
-        patched_whitelist = patch(
-            "core.forms.EXTERNAL_URL_ALLOWLIST",
-            (re.compile(r"^https:\/\/foo\.com$"),),
-        )
-        patched_whitelist.start()
-        self.addCleanup(patched_whitelist.stop)
-
-    def test_valid_get_returns_redirect(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.get("/?ext_url=https://foo.com")
-        response = view(request)
-        self.assertEqual(response.status_code, 200)
-
-    def test_invalid_get_returns_404(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.get("/?ext_url=https://bar.com")
-        with self.assertRaises(Http404):
-            view(request)
 
 
 class TranslatedTemplateViewTestCase(TestCase):
