@@ -116,7 +116,7 @@ class AnswerPage(CFGOVPage):
     )
     question = models.TextField(
         blank=True,
-        help_text=("Used as the primary heading (H1) " "of the page."),
+        help_text=("Used as the primary heading (H1) of the page."),
     )
     short_answer = RichTextField(
         blank=True,
