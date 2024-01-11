@@ -4,7 +4,7 @@ from django.db import models
 
 from dateutil import parser
 
-from data_research.mortgage_utilities.fips_meta import NON_STATES
+from data_research.mortgage_utilities.non_states import NON_STATES
 from v1.models import BrowsePage
 
 

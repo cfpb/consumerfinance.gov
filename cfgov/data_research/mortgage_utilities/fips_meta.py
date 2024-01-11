@@ -6,20 +6,11 @@ from django.db import transaction
 
 from data_research.models import County, State
 
+from .non_states import NON_STATES
+
 
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = "{}/data_research/data".format(PROJECT_ROOT)
-
-# We have minimal data for smaller territories, so we exclude them.
-# For project launch, we also excluded Puerto Rico (72) as out of scope.
-NON_STATES = {
-    "AA": "00",
-    "MP": "69",
-    "AS": "60",
-    "VI": "78",
-    "GU": "66",
-    "PR": "72",
-}
 
 # Census no longer uses these FIPS codes, but they show up in the NMDB data.
 # For more details on stale FIPS and FIPS for territories, see
