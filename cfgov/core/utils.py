@@ -1,6 +1,5 @@
 import re
 
-from django.core.signing import Signer
 from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup
@@ -60,12 +59,6 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
     "h5",
     "h6",
 ]
-
-
-def sign_url(url):
-    signer = Signer(sep="||")
-    url, signature = signer.sign(url).split("||")
-    return (url, signature)
 
 
 def ask_short_url(url):
