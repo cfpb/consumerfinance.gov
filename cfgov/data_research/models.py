@@ -4,6 +4,7 @@ from django.db import models
 
 from dateutil import parser
 
+from data_research.mortgage_utilities.fips_meta import NON_STATES
 from v1.models import BrowsePage
 
 
@@ -325,8 +326,9 @@ class NationalMortgageData(MortgageBase):
         }
         state_records = StateMortgageData.objects.filter(date=self.date)
         for state in state_records:
-            for field in count_fields:
-                count_fields[field] += getattr(state, field)
+            if state.state.abbr not in NON_STATES:
+                for field in count_fields:
+                    count_fields[field] += getattr(state, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
         self.save()
