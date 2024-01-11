@@ -166,14 +166,15 @@ but in the footer on others) on the sidebar tab.
 ---
 
 !!! note "Don't forget the migrations!"
-Adding or changing fields on either Python class will always require a new
-[Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations/);
-additionally, changing field names or types
-on an existing block will require a
-[Django data migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations).
-See the guide on
-[creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
-for more details.
+
+      Adding or changing fields on either Python class will always require a new
+      [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations/);
+      additionally, changing field names or types
+      on an existing block will require a
+      [Django data migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations).
+      See the guide on
+      [creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
+      for more details.
 
 ### The front end
 
@@ -190,7 +191,7 @@ and associating it with the block type.
 A custom block definition can specify the template path in its `Meta` class:
 
 ```python
-from wagtail.core import blocks
+from wagtail import blocks
 
 
 class PersonBlock(blocks.StructBlock):
@@ -258,13 +259,14 @@ you can add it by creating a new
 [Less](http://lesscss.org/) file for the component.
 
 !!! note
-Please be sure that you actually need new Less before creating it.
-We have a wide array of styles already available in the
-[Design System components](https://cfpb.github.io/design-system/components/) and
-[here in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css),
-some of which could perhaps be combined to achieve your desired result.
-Also be sure that new component designs have gone through
-our internal approval process before adding them to the project.
+
+      Please be sure that you actually need new Less before creating it.
+      We have a wide array of styles already available in the
+      [Design System components](https://cfpb.github.io/design-system/components/) and
+      [here in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css),
+      some of which could perhaps be combined to achieve your desired result.
+      Also be sure that new component designs have gone through
+      our internal approval process before adding them to the project.
 
 If you're working on a general-purpose [atomic component](../atomic-structure/)
 for site-wide use, this file should live in
@@ -284,8 +286,9 @@ to tell the Python model anything about a component-specific stylesheet
 That is _not_ the case with JavaScript, as we will see in the next section.
 
 !!! note
-If you're working on a component that belongs to a particular sub-app,
-its Less file should live in `cfgov/unprocessed/<app-name>/css/`.
+
+      If you're working on a component that belongs to a particular sub-app,
+      its Less file should live in `cfgov/unprocessed/<app-name>/css/`.
 
 #### Adding JavaScript
 
@@ -326,12 +329,13 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
    1. [(Optionally) add some JavaScript](#adding-javascript)
 
 !!! note
-Before creating a new component,
-please consider whether one of our existing components can meet your needs.
-Talk to the consumerfinance.gov product owners if
-your content has specific display requirements that aren't served
-by an existing component, or if
-a specific maintenance efficiency will be gained from a new component.
+
+    Before creating a new component,
+    please consider whether one of our existing components can meet your needs.
+    Talk to the consumerfinance.gov product owners if
+    your content has specific display requirements that aren't served
+    by an existing component, or if
+    a specific maintenance efficiency will be gained from a new component.
 
 ### Adding a field to an existing component
 

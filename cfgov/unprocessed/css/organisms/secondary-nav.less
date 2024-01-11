@@ -1,64 +1,3 @@
-/* =========================================================================
-   consumerfinance.gov
-   o-secondary-nav
-   ========================================================================= */
-
-/* topdoc
-  name: Secondary navigation
-  family: cfgov-organisms
-  patterns:
-    - name: Default example
-      markup: |
-        <nav class="o-secondary-nav">
-            <button class="o-secondary-nav_header">
-                <span class="o-secondary-nav_label">
-                    In this section
-                </span>
-                <span class="o-secondary-nav_cues">
-                    <span class="o-secondary-nav_cue-open" aria-label="Show">
-                        {{ svg_icon('plus-round') }}
-                    </span>
-                    <span class="o-secondary-nav_cue-close" aria-label="Hide">
-                        {{ svg_icon('minus-round') }}
-                    </span>
-                </span>
-            </button>
-            <div class="o-secondary-nav_content">
-                <ul class="o-secondary-nav_list
-                           o-secondary-nav_list__parents">
-                    <li>
-                        <a class="o-secondary-nav_link" href="">
-                        </a>
-                    </li><li>
-                        <a class="o-secondary-nav_link" href="">
-                        </a>
-                    </li><li>
-                        <a class="o-secondary-nav_link" href="">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-secondary-nav
-            button.o-secondary-nav_header
-              .o-secondary-nav_label
-              .o-secondary-nav_cues
-                .o-secondary-nav_cue-open
-                  .cf-icon-svg
-                .o-secondary-nav_cue-close
-                  .cf-icon-svg
-            .o-secondary-nav_content
-              .o-secondary-nav_list
-                li
-                  .o-secondary-nav_link
-  tags:
-    - cfgov-organisms
-*/
-
 .o-secondary-nav {
   //
   // Header
@@ -110,7 +49,10 @@
     // Grow to available width.
     flex-grow: 1;
 
-    .h5();
+    font-size: unit(16px / @base-font-size-px, rem);
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: @pacific;
 
     line-height: unit((22 / @size-v));
     margin-bottom: 0;
@@ -146,10 +88,11 @@
   &_list__children {
     margin-left: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       // Add 5px for the border to half the gutter
       margin-left: unit( (( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px), em) ;
-    } );
+    });
   }
 
   &_link {
@@ -164,17 +107,19 @@
     border-style: solid;
     border-left-width: 5px;
 
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       display: block;
 
       padding: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
-    } );
+    });
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding-top: unit( (10px / @base-font-size-px), em );
       padding-bottom: unit( (10px / @base-font-size-px), em );
       padding-left: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
-    } );
+    });
 
     &__current {
       .u-link__colors( @black, @black, @black, @black, @black,
@@ -189,9 +134,12 @@
   }
 
   // Tablet and below.
-  .respond-to-max( @bp-sm-max, {
+  .respond-to-max(@bp-sm-max, {
     background: @gray-5;
     border-bottom: 1px solid @gray-40;
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
 
     &__no-children {
       display: none;
@@ -202,15 +150,10 @@
         display: none;
       }
     }
+  });
 
-    .o-secondary-nav {
-      border-top: 1px solid @gray-40;
-      border-bottom: 1px solid @gray-40;
-    }
-  } );
-
-  // Desktop
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     .o-secondary-nav {
       background: none;
 
@@ -230,12 +173,12 @@
         }
       }
     }
-  } );
+  });
 
   // Hide on print.
   .respond-to-print( {
     display: none;
-  } );
+  });
 }
 
 // Right-to-left (RTL) layout.
@@ -258,8 +201,8 @@ html[lang='ar'] {
       border-right-width: 5px;
     }
 
-    // Desktop.
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       &_link {
         padding-right: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
       }
@@ -267,6 +210,6 @@ html[lang='ar'] {
       &_list__parents {
         padding-right: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
       }
-    } );
+    });
   }
 }

@@ -1,5 +1,5 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks
@@ -55,8 +55,8 @@ class TextIntroduction(blocks.StructBlock):
         if cleaned.get("eyebrow") and not cleaned.get("heading"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(
-                        ["Required if a pre-heading is entered."]
+                    "heading": ValidationError(
+                        "Required if a pre-heading is entered."
                     )
                 }
             )
@@ -73,8 +73,8 @@ class AbstractHero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
-            "For complete guidelines on creating heroes, visit our "
-            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            "For guidelines on creating heroes, visit our "
+            '<a href="https://cfpb.github.io/design-system/patterns/heroes">'
             "Design System</a>. "
             "Character counts (including spaces) at largest breakpoint:"
             '<ul class="help">'
@@ -99,8 +99,6 @@ class AbstractHero(blocks.StructBlock):
         required=False,
         help_text=mark_safe(
             "When saving illustrations, use a transparent background. "
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
-            "See image dimension guidelines.</a>"
         ),
     )
     small_image = ImageChooserBlock(
@@ -109,8 +107,6 @@ class AbstractHero(blocks.StructBlock):
             "<b>Optional.</b> Provides an alternate image for "
             "small displays when using a photo or bleeding hero. "
             "Not required for the standard illustration. "
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
-            "See image dimension guidelines.</a>"
         ),
     )
     background_color = blocks.CharBlock(
@@ -143,7 +139,7 @@ class Hero(AbstractHero):
         help_text=mark_safe(
             "<b>Optional.</b> Uses the large image as a background under "
             'the entire hero, creating the "Photo" style of hero (see '
-            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            '<a href="https://cfpb.github.io/design-system/patterns/heroes">'
             "Design System</a> for details). When using this option, "
             "make sure to specify a background color (above) for the "
             "left/right margins that appear when screens are wider than "
@@ -255,8 +251,8 @@ class ContactEmail(blocks.StructBlock):
         if not cleaned.get("emails"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(
-                        ["At least one email address is required."]
+                    "emails": ValidationError(
+                        "At least one email address is required."
                     )
                 }
             )
@@ -381,7 +377,6 @@ class RelatedLinks(blocks.StructBlock):
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
     citation = blocks.TextBlock(required=False)
-    is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = "openquote"
@@ -440,7 +435,6 @@ class RelatedMetadata(blocks.StructBlock):
             ),
         ]
     )
-    is_half_width = blocks.BooleanBlock(required=False, default=False)
 
     class Meta:
         icon = "grip"

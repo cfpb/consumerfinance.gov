@@ -1,87 +1,3 @@
-// TODO: Move to the DM & CF
-
-/* topdoc
-  name: Icon inside input
-  family: cf-forms
-  patterns:
-    - name: Default icons before and after a default input.
-      markup: |
-        <div class="input-contains-label">
-            <label for="search-input"
-                   class="input-contains-label_before
-                          input-contains-label_before__search">
-            </label>
-            <label for="search-input"
-                   class="input-contains-label_after
-                          input-contains-label_after__clear">
-            </label>
-            <input type="text"
-                   value="">
-        </div>
-    - name: Super-sized icons before and after a super input.
-      markup: |
-        <div class="input-contains-label
-                    input__super">
-            <label for="search-input"
-                   class="input-contains-label_before
-                          input-contains-label_before__search">
-            </label>
-            <label for="search-input"
-                   class="input-contains-label_after
-                          input-contains-label_after__clear">
-            </label>
-            <input class="input__super"
-                   type="text"
-                   value="">
-        </div>
-    - name: Default icons before and after a default input, with a button.
-      markup: |
-        <div class="input-with-btn">
-            <div class="input-with-btn_input
-                        input-contains-label">
-                <label for="search-input"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input type="text"
-                       id="search-input"
-                       value="">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn">Search</button>
-            </div>
-        </div>
-    - name: Super-sized icons before and after a super input, with a button.
-      markup: |
-        <div class="input-with-btn">
-            <div class="input-with-btn_input
-                        input-contains-label
-                        input__super">
-                <label for="search-input"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input class="input__super"
-                       type="text"
-                       id="search-input"
-                       value="">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="a-btn">Search</button>
-            </div>
-        </div>
-  tags:
-    - cf-forms
-*/
-
 .input-contains-label {
   position: relative;
 
@@ -92,18 +8,10 @@
 
   &_before ~ .a-text-input {
     padding-left: unit(30px / @btn-font-size, em);
-
-    &.input__super {
-      padding-left: unit(40px / 18px, em);
-    }
   }
 
   &_after ~ .a-text-input {
     padding-right: unit(30px / @btn-font-size, em);
-
-    &.input__super {
-      padding-right: unit(35px / 18px, em);
-    }
   }
 
   &_before,
@@ -121,37 +29,14 @@
   &_after {
     right: unit(14px / @btn-font-size, em);
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       display: none;
-    } );
-  }
-
-  &.input__super {
-    .input-contains-label_before,
-    .input-contains-label_after {
-      font-size: unit(18px / @base-font-size-px, em);
-    }
-
-    .input-contains-label_before {
-      left: unit(12px / 18px, em);
-    }
-
-    .input-contains-label_after {
-      right: unit(12px / 18px, em);
-    }
+    });
   }
 }
 
 // TODO: Move to the DM and update existing o-form__input-w-btn in CF
-
-/* topdoc
-  name: Match the input to button
-  family: cf-form
-  notes: "Matches the font-size and padding of the input in
-          .input-with-btn to the button"
-  tags:
-    - cf-form
-*/
 
 input {
   .input-with-btn & {
@@ -187,7 +72,8 @@ input {
     margin-top: 0;
   }
 
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     .m-form-field__radio {
       width: percentage( 1 / @scale-point-count );
 
@@ -217,15 +103,15 @@ input {
       position: relative;
       z-index: 1;
     }
-  } );
+  });
 
-  .respond-to-max( @bp-lg-max, {
+  .respond-to-max(@bp-lg-max, {
     .o-scale_answer-prefix {
       margin-bottom: unit( 15px / @base-font-size-px, em );
     }
-  } );
+  });
 
-  .respond-to-min( @bp-xl-min, {
+  .respond-to-min(@bp-xl-min, {
     .o-scale_answer-prefix {
       box-sizing: border-box;
       padding-right: unit( 15px / @base-font-size-px, em );
@@ -239,7 +125,7 @@ input {
 
       float: left;
     }
-  } );
+  });
 }
 
 /*
@@ -261,7 +147,7 @@ input[type='date'] {
   min-height: unit(35px / @base-font-size-px, rem);
 }
 
-/* topdoc
-  name: EOF
-  eof: true
-*/
+input[type='search'],
+input[type='search']::-webkit-search-cancel-button {
+  appearance: auto !important;
+}

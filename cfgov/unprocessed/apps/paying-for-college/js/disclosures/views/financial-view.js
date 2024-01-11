@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getExpenses from '../dispatchers/get-expenses-values.js';
@@ -9,14 +7,24 @@ import {
   convertStringToNumber,
   formatUSD,
 } from '../../../../../js/modules/util/format.js';
-import converter from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-import stickyKit from '../utils/sticky-kit-esm.js';
-stickyKit($);
+// import stickyKit from '../utils/sticky-kit-esm.js';
+// stickyKit($);
+
+/**
+ * Convert a numerical number to a word.
+ * @param {string} num - A numeric number from 0 through 6.
+ * @returns {string} A word from none through six.
+ */
+function numToWord(num) {
+  num = Math.floor(num);
+  const words = ['', 'one', 'two', 'three', 'four', 'five', 'six'];
+  return words[num];
+}
 
 const financialView = {
   $elements: $('[data-financial]'),
@@ -34,7 +42,7 @@ const financialView = {
   $subsidizedSection: $('[data-section="subsidized"]'),
   $tuitionPaymentPlanSection: $('[data-section="tuitionpaymentplan"]'),
   $privateContainer: $('.private-loans'),
-  $privateLoanClone: $('[data-private-loan]:first').clone(),
+  $privateLoanClone: $('[data-private-loan]:first-of-type').cloner(),
   privateLoanKeys: ['amount', 'fees', 'rate', 'deferPeriod'],
   $evaluateSection: $('.evaluate'),
   $jobPlacementContent: $('.content_job-placement'),
@@ -48,7 +56,7 @@ const financialView = {
   $bigQuestion: $('.question'),
   $degreeType: $('.question [data-section="degreeType"]'),
   keyupDelay: null,
-  currentInput: null,
+  currentInput: 'none',
 
   /**
    * Initiates the object
@@ -70,10 +78,8 @@ const financialView = {
    * origination fees in the financial view
    */
   updateOriginationFeeContent: function () {
-    const $elements = $('[data-fee="origination"]');
-
-    $elements.each(function () {
-      const $loanFee = $(this);
+    $('[data-fee="origination"]').each((elem) => {
+      const $loanFee = $(elem);
 
       const modifiedText = financialView.round($loanFee.text(), 2);
       $loanFee.text(modifiedText);
@@ -101,9 +107,8 @@ const financialView = {
       },
       $elems = $('[data-cap]');
 
-    $elems.each(function () {
-      const $cap = $(this);
-      let prop = $cap.attr('data-cap');
+    $elems.each((elem) => {
+      let prop = elem.getAttribute('data-cap');
       let capKey = capMap[prop];
 
       if (financials.undergrad === false) {
@@ -114,7 +119,7 @@ const financialView = {
         amount: financials[capKey],
         decimalPlaces: 0,
       });
-      $cap.text(text);
+      elem.textContent = text;
     });
   },
 
@@ -161,10 +166,10 @@ const financialView = {
     if (currency === true) {
       value = formatUSD({ amount: value, decimalPlaces: 0 });
     }
-    if (isSummaryLineItem) {
+    if (isSummaryLineItem && typeof value === 'string') {
       value = value.replace(/\$/i, '');
     }
-    if ($ele.prop('tagName') === 'INPUT') {
+    if ($ele.tagName() === 'INPUT') {
       $ele.val(value);
     } else if (isSummaryLineItem && originalValue !== value) {
       setTimeout(function () {
@@ -182,11 +187,10 @@ const financialView = {
    * @param {object} $percents - jQuery object of the percentage elements
    */
   updatePercentages: function (values, $percents) {
-    $percents.not('#' + financialView.currentInput).each(function () {
-      const $ele = $(this),
-        name = $ele.attr('data-financial'),
-        value = financialView.round(values[name] * 100, 3);
-      financialView.updateElement($ele, value, false);
+    $percents.not('#' + financialView.currentInput).each((elem) => {
+      const name = elem.getAttribute('data-financial');
+      const value = financialView.round(values[name] * 100, 3);
+      financialView.updateElement($(elem), value, false);
     });
   },
 
@@ -197,11 +201,13 @@ const financialView = {
    * @param {object} $leftovers - jQuery object of the "leftover" elements
    */
   updateLeftovers: function (values, $leftovers) {
-    $leftovers.not('#' + financialView.currentInput).each(function () {
-      const $ele = $(this);
+    $leftovers.each((elem) => {
+      const $ele = $(elem);
+      const elemId = $ele.attr('id') || 'noId';
       let currency = true;
       const name = $ele.attr('data-financial');
-      if (financialView.currentInput === $(this).attr('id')) {
+
+      if (financialView.currentInput === elemId) {
         currency = false;
       }
       if ($ele.attr('data-currency') === 'false') {
@@ -217,17 +223,19 @@ const financialView = {
    * @param {object} $privateLoans - jQuery object of the private loan elements
    */
   updatePrivateLoans: function (values, $privateLoans) {
-    $privateLoans.each(function () {
-      const $loanElements = $(this);
-      const index = $loanElements.index();
+    $privateLoans.each((elem) => {
+      const $loanElements = $(elem);
+
       const $fields = $loanElements.find('[data-private-loan_key]');
-      $fields.not('#' + financialView.currentInput).each(function () {
-        const $ele = $(this);
+
+      $fields.not('#' + financialView.currentInput).each((elem) => {
+        const $ele = $(elem);
+        const index = Number(elem.getAttribute('id').slice(-1));
         const key = $ele.attr('data-private-loan_key');
         let val = values.privateLoanMulti[index][key];
         const id = $ele.attr('id');
         const isntCurrentInput = id !== financialView.currentInput;
-        if ($ele.is('[data-percentage_value="true"]')) {
+        if (elem.matches('[data-percentage_value="true"]')) {
           val *= 100;
           $ele.val(financialView.round(val, 3));
         } else if (isntCurrentInput && key === 'amount') {
@@ -255,7 +263,9 @@ const financialView = {
     if (gap > 0) {
       positiveRemainingCost.show();
     } else if (overborrowing > 0) {
-      const $span = negativeRemainingCost.find('[data-financial="gap"]');
+      const $span = negativeRemainingCost.find(
+        '[data-financial="overborrowing"]',
+      );
       $span.text($span.text().replace('-', ''));
       negativeRemainingCost.show();
     }
@@ -271,7 +281,8 @@ const financialView = {
    */
   updateViewWithProgram: function (values, urlValues) {
     // Update program length
-    if (urlValues.urlProgramLength) {
+    const lengthExists = !!urlValues.urlProgramLength;
+    if (lengthExists) {
       this.$programLength.val(urlValues.urlProgramLength / 12).change();
     } else {
       this.$programLength.val(values.programLength).change();
@@ -413,15 +424,27 @@ const financialView = {
    * Listener function for the "add private loan" button
    */
   addPrivateListener: function () {
-    this.$addPrivateButton.click(function () {
-      const $container = $('.private-loans');
-      const $button = $('[data-add-loan-button]');
-      financialView.$privateLoanClone.clone().insertBefore($button);
-      financialView.enumeratePrivateLoanIDs();
-      $container.find('[data-private-loan]:last .aid-form_input').val('0');
-      publish.addPrivateLoan();
-      financialView.updateView(getFinancial.values());
-      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Added' });
+    this.$addPrivateButton.each((elem) => {
+      elem.addEventListener('click', function () {
+        const $container = $('.private-loans');
+        const button = document.querySelector('[data-add-loan-button]');
+        const lastLoan = document.querySelector(
+          '[data-private-loan]:last-of-type',
+        );
+        const clone = financialView.$privateLoanClone.cloneNode(true);
+        if (lastLoan === null) {
+          button.parentNode.insertBefore(clone, button);
+        } else {
+          lastLoan.parentNode.insertBefore(clone, button);
+        }
+        financialView.enumeratePrivateLoanIDs();
+        $container
+          .find('[data-private-loan]:last-of-type .aid-form_input')
+          .val('0');
+        publish.addPrivateLoan();
+        financialView.updateView(getFinancial.values());
+        analyticsSendEvent({ action: 'Private Loan Changed', label: 'Added' });
+      });
     });
   },
 
@@ -429,15 +452,22 @@ const financialView = {
    * Listener function for the "remove private loan" button
    */
   removePrivateListener: function () {
-    const buttonClass = '.private-loans_remove-btn';
-    this.$privateContainer.on('click', buttonClass, function () {
-      const $ele = $(this).closest('[data-private-loan]');
-      const index = $ele.index();
-      $ele.remove();
-      financialView.enumeratePrivateLoanIDs();
-      publish.dropPrivateLoan(index);
-      financialView.updateView(getFinancial.values());
-      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Removed' });
+    const privLoanContainer = document.querySelector('.private-loans');
+    privLoanContainer.addEventListener('click', (event) => {
+      if (event.target.matches('.private-loans_remove-btn')) {
+        const elem = event.target;
+        const $ele = elem.closest('[data-private-loan]');
+
+        const index = Number(elem.getAttribute('id').slice(-1));
+        $ele.remove();
+        financialView.enumeratePrivateLoanIDs();
+        publish.dropPrivateLoan(index);
+        financialView.updateView(getFinancial.values());
+        analyticsSendEvent({
+          action: 'Private Loan Changed',
+          label: 'Removed',
+        });
+      }
     });
   },
 
@@ -446,10 +476,9 @@ const financialView = {
    * (Three exist on load for no-js scenario)
    */
   resetPrivateLoanView: function () {
-    $('[data-private-loan]').each(function () {
-      const index = $(this).index();
+    $('[data-private-loan]').each((elem, index) => {
       if (index > 0) {
-        $(this).remove();
+        elem.remove();
         publish.dropPrivateLoan(index);
       }
     });
@@ -460,15 +489,16 @@ const financialView = {
    */
   enumeratePrivateLoanIDs: function () {
     // renumber private loan ids to prevent duplicate IDs
-    $('[data-private-loan]').each(function () {
-      const index = $(this).index();
-      const $ele = $(this);
-      const $fields = $ele.find('[data-private-loan_key]');
-      $fields.each(function () {
-        const name = $(this).attr('name');
+    $('[data-private-loan]').each((elem, index) => {
+      const $fields = $(elem).find('[data-private-loan_key]');
+      $fields.each((elem) => {
+        const name = $(elem).attr('name');
         const newID = name + '_' + index.toString();
-        $(this).attr('id', newID);
+        $(elem).attr('id', newID);
       });
+      $(elem)
+        .find('.private-loans_remove-btn')
+        .attr('id', 'private-loans_remove-btn_' + index);
     });
   },
 
@@ -477,7 +507,8 @@ const financialView = {
    * @param {string} id - The id attribute of the element to be handled
    */
   inputHandler: function (id) {
-    const $ele = $('#' + id);
+    const elem = document.querySelector('#' + id);
+    const $ele = $(elem);
     let value = convertStringToNumber($ele.val());
     const key = $ele.attr('data-financial');
     const privateLoanKey = $ele.attr('data-private-loan_key');
@@ -487,12 +518,11 @@ const financialView = {
       value /= 100;
     }
 
-    if (typeof privateLoanKey === 'undefined') {
+    if (privateLoanKey === null) {
       publish.financialData(key, value);
     } else {
-      const index = $ele.closest('[data-private-loan]').index();
-      const privLoanKey = $ele.attr('data-private-loan_key');
-      publish.updatePrivateLoan(index, privLoanKey, value);
+      const index = Number(elem.getAttribute('id').slice(-1));
+      publish.updatePrivateLoan(index, privateLoanKey, value);
     }
   },
 
@@ -500,42 +530,64 @@ const financialView = {
    * Listener function for input change in financial model INPUT fields
    */
   inputChangeListener: function () {
-    this.$reviewAndEvaluate.on(
-      'keyup focusout',
-      '[data-financial]',
-      function () {
-        clearTimeout(financialView.keyupDelay);
-        financialView.currentInput = $(this).attr('id');
-        if ($(this).is(':focus')) {
-          financialView.keyupDelay = setTimeout(function () {
-            financialView.inputHandler(financialView.currentInput);
-            financialView.updateView(getFinancial.values());
-            expensesView.updateView(getExpenses.values());
-          }, 500);
-        } else {
+    const callback = function (elem) {
+      clearTimeout(financialView.keyupDelay);
+      financialView.currentInput = $(elem).attr('id') || 'none';
+      if (document.activeElement === elem) {
+        financialView.keyupDelay = setTimeout(function () {
           financialView.inputHandler(financialView.currentInput);
-          financialView.currentInput = 'none';
           financialView.updateView(getFinancial.values());
           expensesView.updateView(getExpenses.values());
+        }, 500);
+      } else {
+        financialView.inputHandler(financialView.currentInput);
+        financialView.currentInput = 'none';
+        financialView.updateView(getFinancial.values());
+        expensesView.updateView(getExpenses.values());
+      }
+    };
+
+    this.$reviewAndEvaluate.each((elem) => {
+      elem.addEventListener('keyup', (event) => {
+        if (event.target.matches('input[data-financial]')) {
+          callback(event.target);
         }
-      },
-    );
+      });
+
+      elem.addEventListener('focusout', (event) => {
+        if (event.target.matches('input[data-financial]')) {
+          callback(event.target);
+        }
+      });
+
+      // elem.querySelectorAll( 'input[data-financial]' ).forEach( elmo => {
+      //   elmo.addEventListener( 'keyup', event => {
+      //     callback( event.target )
+      //   });
+      //   elmo.addEventListener( 'focusout', event => {
+      //     callback( event.target )
+      //   });
+      // });
+    });
   },
 
   /**
    * Helper function to indicate that a offer summary line item has
-   * successfully recalculated
-   * @param {object} element - jQuery object of the recalculated summary element
+   * successfully recalculated.
+   * @param {object} $elem - jQuery object of the recalculated summary element.
    */
-  addSummaryRecalculationMessage: function (element) {
+  addSummaryRecalculationMessage: function ($elem) {
     $('.recalculating-mobile').text('Updating...');
     $('.recalculating-mobile').show();
-    element.siblings().hide();
-    element.text('Updating...');
+    $elem.each((elmo) => {
+      $(elmo).siblings().hide();
+    });
+    $elem.show();
+    $elem.text('Updating...');
   },
 
   /**
-   * Helper function to remove all indicators that data has recalculated
+   * Helper function to remove all indicators that data has recalculated.
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
@@ -550,56 +602,65 @@ const financialView = {
    */
   verificationListener: function () {
     const $programLengthElement = this.$programLength;
-    this.$verifyControls.on('click', 'a', function (evt) {
-      const values = getFinancial.values();
-      const hrefText = $(this).text();
+    this.$verifyControls.each((elem) => {
+      elem.querySelectorAll('a').forEach((elmo) => {
+        elmo.addEventListener('click', (evt) => {
+          const values = getFinancial.values();
+          const target = evt.target;
+          const $ele = $(target);
+          const hrefText = $ele.text();
 
-      /* Graph points need to be visible before updating their positions
-         to get all the right CSS values, so we'll wait 100 ms */
-      if ($(this).attr('href') === '#info-right') {
-        evt.preventDefault();
-        financialView.$infoVerified.show();
-        $('html, body')
-          .stop()
-          .animate(
-            {
-              scrollTop: financialView.$infoVerified.offset().top - 120,
-            },
-            900,
-            'swing',
-            function () {
-              metricView.updateGraphs(values);
-              window.location.hash = '#info-right';
-              financialView.$aboutThisTool.focus();
-            },
-          );
+          /* Graph points need to be visible before updating their positions
+             to get all the right CSS values, so we'll wait 100 ms */
+          if ($ele.attr('href') === '#info-right') {
+            evt.preventDefault();
+            financialView.$infoVerified.show();
+            // TODO: Fix this animation
+            // $('html, body')
+            //   .stop()
+            //   .animate(
+            //     {
+            //       scrollTop: financialView.$infoVerified.offset().top - 120,
+            //     },
+            //     900,
+            //     'swing',
+            //     function () {
+            //       metricView.updateGraphs(values);
+            //       window.location.hash = '#info-right';
+            //       financialView.$aboutThisTool.focus();
+            //     }
+            //   );
+            window.location.hash = '#info-right';
 
-        analyticsSendEvent({
-          action: 'Years to Complete Program',
-          label: $programLengthElement.val(),
+            analyticsSendEvent({
+              action: 'Years to Complete Program',
+              label: $programLengthElement.val(),
+            });
+            analyticsSendEvent({ action: 'Step Completed', label: hrefText });
+          } else {
+            evt.preventDefault();
+            financialView.$infoIncorrect.show();
+            postVerification.verify(values.offerID, values.schoolID, true);
+            // $('html, body')
+            //   .stop()
+            //   .animate(
+            //     {
+            //       scrollTop: financialView.$infoIncorrect.offset().top - 120,
+            //     },
+            //     900,
+            //     'swing',
+            //     function () {
+            //       window.location.hash = '#info-wrong';
+            //       financialView.$programLength.focus();
+            //     }
+            //   );
+            window.location.hash = '#info-wrong';
+            analyticsSendEvent({ action: 'Step Completed', label: hrefText });
+          }
+          // financialView.stickySummariesListener();
+          financialView.$verifyControls.hide();
         });
-        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
-      } else {
-        evt.preventDefault();
-        financialView.$infoIncorrect.show();
-        postVerification.verify(values.offerID, values.schoolID, true);
-        $('html, body')
-          .stop()
-          .animate(
-            {
-              scrollTop: financialView.$infoIncorrect.offset().top - 120,
-            },
-            900,
-            'swing',
-            function () {
-              window.location.hash = '#info-wrong';
-              financialView.$programLength.focus();
-            },
-          );
-        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
-      }
-      financialView.stickySummariesListener();
-      financialView.$verifyControls.hide();
+      });
     });
   },
 
@@ -607,35 +668,37 @@ const financialView = {
    * Listener function for "estimated years in program" select element
    */
   estimatedYearsListener: function () {
-    this.$programLength.on('change', function () {
-      const programLength = Number($(this).val());
-      const values = getFinancial.values();
-      let yearsAttending = converter.toWords(programLength);
-      const $yearOrLess = $('[data-multi_year="false"]');
-      const $multiYears = $('[data-multi_year="true"]');
+    this.$programLength.each((elmo) => {
+      elmo.addEventListener('change', (event) => {
+        const programLength = Number(event.target.value);
+        const values = getFinancial.values();
+        let yearsAttending = numToWord(programLength);
+        const $yearOrLess = $('[data-multi_year="false"]');
+        const $multiYears = $('[data-multi_year="true"]');
 
-      // Formats summary text, such as "half a year" or "one and a half years."
-      if (programLength === 0.5) {
-        yearsAttending = 'half a';
-      } else if (programLength % 1 !== 0) {
-        yearsAttending += ' and a half';
-      }
+        // Formats summary text, such as "half a year" or "one and a half years."
+        if (programLength === 0.5) {
+          yearsAttending = 'half a';
+        } else if (programLength % 1 !== 0) {
+          yearsAttending += ' and a half';
+        }
 
-      if (programLength > 1) {
-        yearsAttending += ' years';
-        $multiYears.filter('.line-item_title').css('display', 'inline-block');
-        $multiYears.filter('.line-item').show();
-        $yearOrLess.hide();
-      } else {
-        yearsAttending += ' year';
-        $multiYears.hide();
-        $yearOrLess.filter('.line-item_title').css('display', 'inline-block');
-        $yearOrLess.filter('.line-item').show();
-      }
+        if (programLength > 1) {
+          yearsAttending += ' years';
+          $multiYears.filter('.line-item_title').show('inline-block');
+          $multiYears.filter('.line-item').show();
+          $yearOrLess.hide();
+        } else {
+          yearsAttending += ' year';
+          $multiYears.hide();
+          $yearOrLess.filter('.line-item_title').show('inline-block');
+          $yearOrLess.filter('.line-item').show();
+        }
 
-      publish.financialData('programLength', programLength);
-      publish.financialData('yearsAttending', yearsAttending);
-      financialView.updateView(values);
+        publish.financialData('programLength', programLength);
+        publish.financialData('yearsAttending', yearsAttending);
+        financialView.updateView(values);
+      });
     });
   },
 
@@ -813,24 +876,27 @@ const financialView = {
 
   continueStep2Listener: function () {
     const $continueButton = $('.continue_controls > button');
-    $continueButton.on('click', function () {
+    $continueButton.listen('click', function () {
       // Remove continue button
       $continueButton.hide();
       // Show Step 2
       financialView.$evaluateSection.show();
       financialView.$bigQuestion.show();
-      $('html, body')
-        .stop()
-        .animate(
-          {
-            scrollTop: financialView.$evaluateSection.offset().top - 120,
-          },
-          900,
-          'swing',
-          function () {
-            // Noop function.
-          },
-        );
+
+      const values = getFinancial.values();
+      metricView.updateGraphs(values);
+      // $('html, body')
+      //   .stop()
+      //   .animate(
+      //     {
+      //       scrollTop: financialView.$evaluateSection.offset().top - 120,
+      //     },
+      //     900,
+      //     'swing',
+      //     function () {
+      //       // Noop function.
+      //     }
+      //   );
       analyticsSendEvent({
         action: 'Step Completed',
         label: 'Continue to Step 2',
@@ -842,50 +908,52 @@ const financialView = {
    * Stick the sidebar aid offer summaries to the viewport top
    * if the summaries are in the inline-block sidebar column
    */
-  stickySummariesListener: function () {
-    const $stickyOffers = $('.offer-part_summary-wrapper');
-    const $win = $(window);
+  // stickySummariesListener: function () {
+  //   const $stickyOffers = $('.offer-part_summary-wrapper');
+  //   const $win = $(window);
 
-    if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {
-      // Attach event handler
-      $stickyOffers.trigger('sticky_kit:detach');
-      $stickyOffers
-        .stick_in_parent()
-        .on('sticky_kit:bottom', function (evt) {
-          $(evt.target).addClass('is_bottomed');
-        })
-        .on('sticky_kit:unbottom', function (evt) {
-          $(evt.target).removeClass('is_bottomed');
-        });
-    } else if ($win.width() < 600) {
-      $stickyOffers.trigger('sticky_kit:detach');
-    }
+  //   if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {
+  //     // Attach event handler
+  //     $stickyOffers.trigger('sticky_kit:detach');
+  //     $stickyOffers
+  //       .stick_in_parent()
+  //       .on('sticky_kit:bottom', function (evt) {
+  //         $(evt.target).addClass('is_bottomed');
+  //       })
+  //       .on('sticky_kit:unbottom', function (evt) {
+  //         $(evt.target).removeClass('is_bottomed');
+  //       });
+  //   } else if ($win.width() < 600) {
+  //     $stickyOffers.trigger('sticky_kit:detach');
+  //   }
 
-    // On resize, check if event handler should be attached
-    $win.on('resize', function () {
-      clearTimeout(financialView.resizeTimer);
-      financialView.resizeTimer = setTimeout(function () {
-        financialView.stickySummariesListener();
-      }, 250);
-    });
-  },
+  //   // On resize, check if event handler should be attached
+  //   $win.on('resize', function () {
+  //     clearTimeout(financialView.resizeTimer);
+  //     financialView.resizeTimer = setTimeout(function () {
+  //       financialView.stickySummariesListener();
+  //     }, 250);
+  //   });
+  // },
 
   /**
    * Listener for clicks on the repayment toggles
    */
   termToggleListener: function () {
-    $('[data-repayment-section] input').click(function () {
-      const $ele = $(this);
-      const $toggles = $('[data-repayment-section] input');
-      const term = $ele.val();
-      publish.financialData('repaymentTerm', term);
-      $toggles.prop('checked', false);
-      $toggles.filter('[value="' + term + '"]').prop('checked', true);
-      financialView.updateView(getFinancial.values());
-      expensesView.updateView(getExpenses.values());
-      analyticsSendEvent({
-        action: 'See how loan length affects your payments',
-        label: term + ' years',
+    $('[data-repayment-section] input').each((elmo) => {
+      elmo.addEventListener('click', function () {
+        const $ele = $(this);
+        const $toggles = $('[data-repayment-section] input');
+        const term = $ele.val();
+        publish.financialData('repaymentTerm', term);
+        $toggles.prop('checked', false);
+        $toggles.filter('[value="' + term + '"]').prop('checked', true);
+        financialView.updateView(getFinancial.values());
+        expensesView.updateView(getExpenses.values());
+        analyticsSendEvent({
+          action: 'See how loan length affects your payments',
+          label: term + ' years',
+        });
       });
     });
   },
@@ -896,20 +964,20 @@ const financialView = {
    */
   missingData: function (dataType) {
     $('.verify_wrapper').hide();
-    if ($('[data-missing-data-error]:visible').length === 0) {
-      $('[data-missing-data-error="' + dataType + '"]').show();
-    }
+    $('[data-missing-data-error="' + dataType + '"]').show();
   },
 
   /**
    * Listener function for change events on financial INPUT fields
    */
   financialInputChangeListener: function () {
-    $('[data-financial]').one('change', function () {
-      const dataFinancial = $(this).data('financial');
-      if (dataFinancial) {
-        analyticsSendEvent({ action: 'Value Edited', label: dataFinancial });
-      }
+    $('[data-financial]').each((elmo) => {
+      elmo.addEventListener('change', (event) => {
+        const dataFinancial = event.target.dataset.financial;
+        if (dataFinancial) {
+          analyticsSendEvent({ action: 'Value Edited', label: dataFinancial });
+        }
+      });
     });
   },
 };

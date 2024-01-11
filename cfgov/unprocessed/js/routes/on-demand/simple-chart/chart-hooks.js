@@ -34,6 +34,22 @@ const hooks = {
     });
   },
 
+  cct_age_30(d) {
+    return d.filter((v) => v.age_group === 'Younger than 30');
+  },
+
+  cct_age_30_44(d) {
+    return d.filter((v) => v.age_group === 'Age 30-44');
+  },
+
+  cct_age_45_64(d) {
+    return d.filter((v) => v.age_group === 'Age 45-64');
+  },
+
+  cct_age_65(d) {
+    return d.filter((v) => v.age_group === 'Age 65 and older');
+  },
+
   getDateString(x) {
     return new Date(x).toLocaleDateString('en-US', {
       month: 'short',

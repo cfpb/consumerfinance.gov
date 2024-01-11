@@ -1,11 +1,12 @@
 @import (reference) '../main.less';
 
 .m-jobs-list .m-list__links {
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     .m-list_item + .m-list_item {
       margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
-  } );
+  });
 
   .m-list_link-subtext {
     .u-link__colors( @black );

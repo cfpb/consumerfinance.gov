@@ -1,67 +1,6 @@
-// TODO: Move the theme variables to cf-enhancements.
-
-/* topdoc
-  name: Theme variables
-  family: cf-core
-  notes:
-    - "The following color and sizing variables are exposed, allowing you to
-       easily override them before compiling."
-  patterns:
-    - name: Sizing
-      codenotes:
-        - |
-          @margin_half__em
-          @mobile_trigger_ht__px
-          @min_app_width__px
-  tags:
-    - cf-core
-*/
-
 @margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 @mobile_trigger_ht__px: 54px;
 @min_app_width__px: 320px;
-
-/* topdoc
-  name: Header
-  family: cfgov-organisms
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="o-header">
-            <div class="wrapper">
-                <div class="m-global-header-cta"></div>
-                <div class="m-global-search"></div>
-                <a class="o-header_logo" href="/">
-                    <img class="o-header_logo-img"
-                         src="{{ static('img/logo_237x50.png') }}"
-                         srcset="{{ static('img/logo_161x34.png') }} 161w,
-                                 {{ static('img/logo_161x34@2x.png') }} 322w,
-                                 {{ static('img/logo_161x34@3x.png') }} 483w,
-                                 {{ static('img/logo_161x34@4x.png') }} 644w,
-                                 {{ static('img/logo_237x50.png') }} 237w,
-                                 {{ static('img/logo_237x50@2x.png') }} 474w"
-                         sizes="(max-width: 900px) 161px,
-                                237px"
-                         alt="Consumer Financial Protection Bureau">
-                </a>
-            </div>
-            [o-mega-menu]
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-header
-            .wrapper
-              .m-global-header-cta
-              .m-global-search
-              .o-header_logo
-            .o-mega-menu
-      notes:
-        - "The path in the `src` attribute has been adjusted for these docs."
-  tags:
-    - cfgov-organisms
-*/
 
 .o-header {
   min-width: @min_app_width__px;
@@ -70,9 +9,9 @@
   z-index: 10;
   background-color: @white;
 
-  .respond-to-min( @bp-lg-min, {
+  .respond-to-min(@bp-lg-min, {
     min-width: @bp-lg-min;
-  } );
+  });
   &_content {
     position: relative;
 
@@ -84,20 +23,20 @@
       > .m-global-search {
         float: right;
 
-        // Mobile size.
-        .respond-to-max( @bp-xs-max, {
+        // Mobile only.
+        .respond-to-max(@bp-xs-max, {
           margin-right: -15px;
-        } );
+        });
 
-        // Tablet size.
-        .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        // Tablet only.
+        .respond-to-range(@bp-sm-min, @bp-sm-max, {
           margin-right: -30px;
-        } );
+        });
       }
     }
 
-    // Desktop size.
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
       > .wrapper {
@@ -111,12 +50,12 @@
           min-width: 373px;
         }
       }
-    } );
+    });
 
-    // Tablet/mobile sizes.
-    // Hide Global Header Call to Action.
-    // Adjust Mobile Megamenu margin
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
+      // Hide Global Header Call to Action.
+      // Adjust Mobile Megamenu margin
       > .wrapper {
         > .m-global-header-cta {
           display: none;
@@ -131,7 +70,7 @@
           position: absolute;
         }
       }
-    } );
+    });
   }
 
   &_logo {
@@ -145,25 +84,26 @@
       // Removes typical inline vertical whitespace.
       vertical-align: middle;
 
-      // Desktop size.
-      .respond-to-min( @bp-med-min, {
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
         margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
         height: 50px;
-      } );
+      });
     }
   }
 
   &__mega-menu {
     // Setting the minimum height allocates room for the mega menu
     // so the header height doesn't change when it loads in.
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       min-height: 167px;
-    } );
+    });
   }
 
   &__mega-menu &_logo {
-    // Tablet/mobile sizes.
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       .js & {
         // Offset logo by width of mega menu trigger + 15px gap.
         // The margin-left starts inside the 15px padding of the page
@@ -171,16 +111,17 @@
         // will give it the desired spacing to the right of the trigger.
         margin-left: @mobile_trigger_ht__px;
       }
-    } );
+    });
   }
 }
 
 // Used on /external-site/ template, where the header has no nav and eyebrow.
 .o-header__no-nav {
   min-height: auto;
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     margin-top: 15px;
-  } );
+  });
 }
 
 // Move logo on print.
@@ -189,9 +130,4 @@
     // Mega menu is hidden, so we need to remove logo offset.
     margin-left: 15px !important;
   }
-} );
-
-/* topdoc
-    name: EOF
-    eof: true
-*/
+});

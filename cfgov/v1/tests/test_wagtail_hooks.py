@@ -10,96 +10,9 @@ from wagtail.models import Page
 from wagtail.test.utils import WagtailTestUtils
 from wagtail.whitelist import Whitelister as Allowlister
 
-from v1.models import (
-    BlogPage,
-    CFGOVPage,
-    CFGOVPageCategory,
-    InternalDocsSettings,
-    Resource,
-)
+from v1.models import BlogPage, CFGOVPageCategory, InternalDocsSettings
 from v1.tests.wagtail_pages.helpers import publish_page
-from v1.wagtail_hooks import (
-    get_resource_tags,
-    raise_bulk_delete_error,
-    raise_delete_error,
-)
-
-
-class TestGetResourceTags(TestCase):
-    def setUp(self):
-        self.resource1 = Resource.objects.create(title="Test resource 1")
-        self.resource1.tags.add("tagA")
-        self.resource2 = Resource.objects.create(title="Test resource 2")
-        self.resource2.tags.add("tagB")
-        self.page1 = CFGOVPage(title="live", slug="test")
-        self.page1.tags.add("tagC")
-
-    def test_get_resource_tags_returns_only_resource_tags(self):
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
-
-    def test_get_resource_tags_returns_only_unique_tags(self):
-        self.resource2.tags.add("tagA")
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
-
-    def test_get_resource_tags_returns_alphabetized_list(self):
-        self.resource1.tags.add("aTag")
-        self.assertEqual(
-            get_resource_tags(),
-            [("atag", "aTag"), ("taga", "tagA"), ("tagb", "tagB")],
-        )
-
-
-class TestResourceTagsFilter(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.login()
-        self.resource1 = Resource.objects.create(
-            title="Test resource Orange", order=1
-        )
-        self.resource1.tags.add("tagA")
-        self.resource2 = Resource.objects.create(
-            title="Test resource Banana", order=2
-        )
-        self.resource2.tags.add("tagB")
-        self.resource3 = Resource.objects.create(
-            title="Test resource Apple", order=3
-        )
-        self.resource3.tags.add("tagB")
-        self.resource3.tags.add("tagC")
-
-    def get(self, **params):
-        return self.client.get("/admin/v1/resource/", params)
-
-    def test_no_params_returns_all_resources_in_order(self):
-        response = self.get()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 3)
-        self.assertEqual(
-            list(response.context["object_list"]),
-            list(Resource.objects.all().order_by("title")),
-        )
-
-    def test_tag_param_returns_a_resource_tagged_that_way(self):
-        response = self.get(tag="taga")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 1)
-
-        for resource in response.context["object_list"]:
-            self.assertEqual(resource.title, "Test resource Orange")
-
-    def test_tag_param_returns_resources_tagged_that_way(self):
-        response = self.get(tag="tagb")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 2)
-        self.assertEqual(
-            response.context["object_list"][0].title, "Test resource Apple"
-        )
-        self.assertEqual(
-            response.context["object_list"][1].title, "Test resource Banana"
-        )
+from v1.wagtail_hooks import raise_bulk_delete_error, raise_delete_error
 
 
 class TestAllowlistOverride(SimpleTestCase):

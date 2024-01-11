@@ -14,7 +14,8 @@
   max-width: unit(480px / @base-font-size-px, em);
 }
 
-.respond-to-min( @bp-med-min, {
+// Desktop and above.
+.respond-to-min(@bp-med-min, {
   .hud-search-container {
     display: flex;
   }
@@ -33,7 +34,7 @@
   #hud_hca_api_map_canvas {
     height: 440px;
   }
-} );
+});
 
 #hud_hca_api_map_container {
   /* Prevent map controls from appearing on top of mega menu. */
@@ -45,13 +46,13 @@
 }
 
 .hud_hca_api_results_actions {
-  .respond-to-min( @bp-xs-max, {
+  .respond-to-min(@bp-xs-max, {
     & {
       // Margin makes a gap between result header links and result text.
       margin-left: 20px;
       float: right;
     }
-  } );
+  });
 
   // Remove underline from PDF abbreviation and icons in links.
   & abbr,

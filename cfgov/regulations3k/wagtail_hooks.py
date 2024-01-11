@@ -2,11 +2,10 @@ from datetime import date
 
 from django.utils.encoding import force_text
 
-from wagtail.contrib.modeladmin.options import modeladmin_register
-
 from treemodeladmin.helpers import TreeAdminURLHelper
 from treemodeladmin.options import TreeModelAdmin
 from treemodeladmin.views import TreeIndexView
+from wagtail_modeladmin.options import modeladmin_register
 
 from regulations3k.copyable_modeladmin import CopyableModelAdmin
 from regulations3k.models import EffectiveVersion, Part, Section, Subpart

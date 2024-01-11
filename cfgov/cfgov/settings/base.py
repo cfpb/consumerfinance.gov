@@ -52,7 +52,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.forms",
     "wagtail.sites",
     "wagtail.contrib.routable_page",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.typed_table_block",
     "wagtail.contrib.settings",
     "localflavor",
@@ -111,6 +110,7 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
 )
 
 MIDDLEWARE = (
@@ -153,12 +153,9 @@ wagtail_extensions = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
-            "builtins": [],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -303,10 +300,7 @@ WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
-# This is needed to maintain autocomplete search behavior in the Wagtail admin.
-# See https://github.com/wagtail/wagtail/issues/7720.
-# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
-# https://github.com/wagtail/wagtail/pull/9900.
+# This is used for easy autocomplete search behavior in the Wagtail admin.
 WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.database.fallback",
@@ -396,6 +390,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
+WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
@@ -466,14 +461,7 @@ LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 # override this based on the SAML_AUTH environment variable.
 SAML_AUTH = False
 
-# When we generate an full HTML version of the regulation, we want to
-# write it out somewhere. This is where.
-OFFLINE_OUTPUT_DIR = ""
-
 DATE_FORMAT = "n/j/Y"
-
-GOOGLE_ANALYTICS_ID = ""
-GOOGLE_ANALYTICS_SITE = ""
 
 # CDNs
 WAGTAILFRONTENDCACHE = {}
@@ -730,7 +718,7 @@ SECURE_REFERRER_POLICY = "same-origin"  # 1
 SESSION_COOKIE_SAMESITE = "Strict"  # 3
 X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
 
-if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
+if DEPLOY_ENVIRONMENT:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = True  # 22
     CSRF_COOKIE_SECURE = True

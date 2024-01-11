@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class PrepaidProductQuerySet(models.QuerySet):
@@ -24,6 +25,11 @@ class PrepaidProduct(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse(
+            "prepaid_agreements:detail", kwargs={"product_id": self.pk}
+        )
+
     @property
     def most_recent_agreement(self):
         """Gets most recent agreement, as determined by its created time."""
@@ -31,8 +37,6 @@ class PrepaidProduct(models.Model):
 
     class Meta:
         ordering = ["name"]
-
-    wagtail_reference_index_ignore = True
 
 
 class PrepaidAgreement(models.Model):
@@ -54,5 +58,3 @@ class PrepaidAgreement(models.Model):
 
     class Meta:
         ordering = ["-effective_date", "-created_time"]
-
-    wagtail_reference_index_ignore = True

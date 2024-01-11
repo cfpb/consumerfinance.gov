@@ -1,94 +1,8 @@
 // TODO: Move the theme variables to /enhancements/ for CF.
 
-/* topdoc
-  name: Theme variables
-  family: cf-core
-  notes:
-    - "The following color and sizing variables are exposed, allowing you to
-       easily override them before compiling."
-  patterns:
-    - name: Sizing
-      codenotes:
-        - |
-          @margin__em
-          @margin_half__em
-          @mobile_trigger_ht__px
-  tags:
-    - cf-core
-*/
-
 @margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
 @margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 @mobile_trigger_ht__px: 54px;
-
-/* topdoc
-  name: Global Search molecule
-  family: cfgov-molecules
-  patterns:
-    - name: Default example
-      markup: |
-          <div class="m-global-search">
-              <button class="m-global-search_trigger">
-                  <span class="m-global-search_trigger-open-label">
-                      {{ svg_icon('search') }}
-                      <span class="u-hide-on-mobile">Search</span>
-                  </span>
-                  <span class="m-global-search_trigger-close-label">
-                      {{ svg_icon('error') }}
-                      <span class="u-hide-on-mobile">Close</span>
-                  </span>
-              </button>
-              <div class="m-global-search_content"
-                   aria-expanded="false"
-                   role="search">
-                  <form class="m-global-search_content-form">
-                      <div class="input-with-btn">
-                          <div class="input-with-btn_input
-                                      input-contains-label">
-                              <label for="search-input"
-                                     class="input-contains-label_before
-                                            input-contains-label_before__search">
-                                  {{ svg_icon('search') }}
-                                  <span class="u-visually-hidden">Search</span>
-                              </label>
-                              <label for="search-input"
-                                     class="input-contains-label_after
-                                            input-contains-label_after__clear
-                                            u-hidden">
-                                  {{ svg_icon('error') }}
-                                  <span class="u-visually-hidden">Clear search</span>
-                              </label>
-                              <input type="text"
-                                     class="a-text-input"
-                                     id="search-input"
-                                     value=""
-                                     placeholder="Search the CFPB">
-                          </div>
-                          <div class="input-with-btn_btn">
-                              <button class="a-btn">Search</button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-global-search
-            button.m-global-search_trigger
-              span.m-global-search_trigger-label
-                span.u-visually-hidden
-            .m-global-search_content
-              form.m-global-search_content-form
-                […
-                .input-with-btn
-                .input-contains-label
-                from cf-forms
-                …]
-  tags:
-    - cfgov-molecules
-*/
 
 .m-global-search {
   &_trigger {
@@ -203,7 +117,7 @@
     }
   });
 
-  // Tablet size only.
+  // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     &_trigger {
       // Min-width sets open/close states to same size.
@@ -305,7 +219,7 @@
   });
 
   // Hide on print.
-  .respond-to-print({
+  .respond-to-print( {
     & {
       // Important needed to override JS display settings.
       display: none !important;
@@ -324,8 +238,3 @@
     }
   }
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/

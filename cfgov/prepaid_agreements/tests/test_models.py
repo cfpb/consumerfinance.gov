@@ -14,6 +14,13 @@ class TestPrepaidProducts(TestCase):
         self.assertIn(product1, valid_products)
         self.assertNotIn(product2, valid_products)
 
+    def test_get_absolute_url(self):
+        product = PrepaidProduct.objects.create()
+        self.assertEqual(
+            product.get_absolute_url(),
+            f"/data-research/prepaid-accounts/search-agreements/detail/{product.pk}/",
+        )
+
 
 class TestMostRecentAgreement(TestCase):
     """Test that the latest agreement is based on effective date.

@@ -1,23 +1,12 @@
-/* topdoc
-  name: Grid layout
-  family: cf-layout
-  patterns:
-    - name: .u-layout-grid
-*/
-
 @import (less) './layout-base.less';
 @import (less) './layout-2-1.less';
 @import (less) './layout-1-3.less';
 
-/* topdoc
-  name: EOF
-  eof: true
-*/
-
 .wrapper__match-content {
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
-  } );
+  });
 }
 
 .content_level--1 {
@@ -48,72 +37,31 @@
   padding-top: 0;
 }
 
-/* topdoc
-  name: Half top padding
-  family: cf-layout
-  patterns:
-    - name: .content__half-top-on-desk
-      markup: |
-        <aside class="content_sidebar content__half-top-on-desk">
-          <!-- sidebar components -->
-        </aside>
-        <div class="content_main content__half-top-on-desk">
-          <!-- main content components -->
-        </div>
-  tags: cf-layout
-*/
 .content__half-top-on-desk {
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
 
     &:after {
       top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
     }
-  } );
+  });
 }
 
-/* topdoc
-  name: Flush sides on small devices
-  family: cf-layout
-  patterns:
-    - name: .content__flush-sides-on-small
-      markup: |
-        <aside class="content_sidebar content__flush-sides-on-small">
-          <!-- sidebar components -->
-        </aside>
-        <div class="content_main content__flush-sides-on-small">
-          <!-- main content components -->
-        </div>
-  tags: cf-layout
-*/
 .content__flush-sides-on-small {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding-left: 0;
     padding-right: 0;
     border-width: 0;
-  } );
+  });
 }
 
-/* topdoc
-  name: Code styles
-  family: cf-layout
-  notes:
-    - "Removes top margin on 1-column layouts."
-  tags:
-    - cf-layout
-*/
 .content-l_col {
   &.content-l_col-1 + &.content-l_col-1 {
     margin-top: 0;
   }
 }
-
-/* topdoc
-  name: Sets overflow-x to hidden on content element
-  family: cf-layout
-  tags:
-    - cf-layout
-*/
 
 .content__hide-horizontal-overflow {
   overflow-x: hidden;
@@ -142,19 +90,20 @@
       left: 50%;
       right: 50%;
 
-      .respond-to-min( @bp-sm-min, {
+      // Tablet and above.
+      .respond-to-min(@bp-sm-min, {
         width: ~'calc( 100vw - @{two-gutter-widths} )';
         max-width: ~'calc( 100vw - @{two-gutter-widths} )';
         margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
         margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
-      } );
+      });
 
-      .respond-to-min( @bp-xl-min, {
+      .respond-to-min(@bp-xl-min, {
         width: @grid_wrapper-width - @two-gutter-widths;
         max-width: @grid_wrapper-width - @two-gutter-widths;
         margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
         margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
-      } );
+      });
     }
   }
 }

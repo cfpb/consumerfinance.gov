@@ -1,8 +1,8 @@
 from urllib.parse import urlencode
 
 from django.apps import apps
+from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail import blocks
@@ -133,12 +133,10 @@ class InfoUnitGroup(blocks.StructBlock):
                 if not unit["image"]["upload"]:
                     raise StructBlockValidationError(
                         block_errors={
-                            "format": ErrorList(
-                                [
-                                    "Info units must include images when using the "
-                                    '25/75 format. Search for an "FPO" image if you '
-                                    "need a temporary placeholder."
-                                ]
+                            "format": ValidationError(
+                                "Info units must include images when using the "
+                                '25/75 format. Search for an "FPO" image if you '
+                                "need a temporary placeholder."
                             )
                         }
                     )
@@ -763,21 +761,10 @@ class VideoPlayer(blocks.StructBlock):
 
         if not cleaned["video_id"]:
             if getattr(self.meta, "required", True):
-                errors["video_id"] = ErrorList(
-                    [
-                        StructBlockValidationError(
-                            block_errors="This field is required."
-                        ),
-                    ]
-                )
+                errors["video_id"] = ValidationError("This field is required.")
             elif cleaned["thumbnail_image"]:
-                errors["thumbnail_image"] = ErrorList(
-                    [
-                        StructBlockValidationError(
-                            block_errors="This field should not be "
-                            "used if YouTube video ID is not set."
-                        )
-                    ]
+                errors["thumbnail_image"] = ValidationError(
+                    "This field should not be used if YouTube video ID is not set."
                 )
 
         if errors:

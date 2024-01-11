@@ -5,8 +5,6 @@ class Issuer(models.Model):
     name = models.TextField(max_length=500)
     slug = models.TextField(max_length=500)
 
-    wagtail_reference_index_ignore = True
-
 
 class Agreement(models.Model):
     issuer = models.ForeignKey(Issuer, on_delete=models.CASCADE)
@@ -14,5 +12,3 @@ class Agreement(models.Model):
     size = models.IntegerField()
     uri = models.URLField(max_length=500)
     description = models.TextField()
-
-    wagtail_reference_index_ignore = True

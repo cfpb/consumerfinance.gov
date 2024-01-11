@@ -15,8 +15,9 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 `cfgov/unprocessed`.
 
 !!! note
-After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
-ready to be served by Django.
+
+    After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
+    ready to be served by Django.
 
 ## Adding new Javascript entrypoints
 
@@ -72,6 +73,7 @@ The structure looks like this:
   or similar (for example, [owning-a-home](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/owning-a-home/explore-rates/index.html)).
 
 !!! note
-A template may support a non-standard browser, like an older IE version,
-by including the required dependencies, polyfills, etc. in its
-template's `{% block css %}` or `{% block javascript scoped %}` blocks.
+
+    A template may support a non-standard browser, like an older IE version,
+    by including the required dependencies, polyfills, etc. in its
+    template's `{% block css %}` or `{% block javascript scoped %}` blocks.

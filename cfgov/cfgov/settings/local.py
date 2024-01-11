@@ -108,10 +108,13 @@ if not os.environ.get("GOVDELIVERY_BASE_URL"):
     GOVDELIVERY_API = "core.govdelivery.LoggingMockGovDelivery"
 
 # Use a placeholder image service to replace images that are uploaded to S3
+_placeholder_domain = "dummyimage.com"
 WAGTAIL_PLACEHOLDERIMAGES_DUMMY = True
-WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
+WAGTAIL_PLACEHOLDERIMAGES_SOURCE = (
+    f"//{_placeholder_domain}/{{width}}x{{height}}/addc91/1fa040"
+)
 
-CSP_IMG_SRC += ("placekitten.com",)
+CSP_IMG_SRC += (_placeholder_domain,)
 
 # Add django-cprofile-middleware to enable lightweight local profiling.
 # The middleware's profiling is only available if DEBUG=True

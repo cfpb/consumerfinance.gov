@@ -60,9 +60,8 @@
                    value="{{ search_gov_affiliate() }}">
 
             <div class="o-form__input-w-btn">
-               <div class="o-form__input-w-btn_input-container">
-                   <div class="m-btn-inside-input
-                               input-contains-label">
+               <div class="o-form__input-w-btn_input-container m-form-field">
+                   <div class="a-text-input__full input-contains-label">
                        <label for="m-global-search_query"
                               class="input-contains-label_before
                                      input-contains-label_before__search">
@@ -71,18 +70,11 @@
                        </label>
                        <input id="m-global-search_query"
                               name="query"
-                              type="text"
+                              type="search"
                               title="{{ _('Search the CFPB') }}"
                               class="a-text-input"
                               value=""
                               placeholder="{{ _('Search the CFPB') }}">
-                       <label for="m-global-search_query"
-                              class="input-contains-label_after
-                                     input-contains-label_after__clear
-                                     u-hidden">
-                            {{ svg_icon('error') }}
-                            <span class="u-visually-hidden">{{ _('Clear search') }}</span>
-                       </label>
                    </div>
                </div>
                <div class="o-form__input-w-btn_btn-container">

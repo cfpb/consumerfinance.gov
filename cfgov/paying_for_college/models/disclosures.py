@@ -216,8 +216,6 @@ class ConstantRate(models.Model):
     class Meta:
         ordering = ["slug"]
 
-    wagtail_reference_index_ignore = True
-
 
 class ConstantCap(models.Model):
     """Cap values that generally only change annually"""
@@ -235,8 +233,6 @@ class ConstantCap(models.Model):
 
     class Meta:
         ordering = ["slug"]
-
-    wagtail_reference_index_ignore = True
 
 
 # original data_json fields:
@@ -300,8 +296,6 @@ class Contact(models.Model):
         return ", ".join(
             [bit for bit in [self.contacts, self.endpoint] if bit]
         )
-
-    wagtail_reference_index_ignore = True
 
 
 def format_for_null(value):
@@ -425,8 +419,6 @@ class School(models.Model):
             "(150% of expected time to completion)"
         ),
     )
-
-    wagtail_reference_index_ignore = True
 
     def as_json(self):
         """
@@ -590,8 +582,6 @@ class Notification(models.Model):
     )
     sent = models.BooleanField(default=False)
     log = models.TextField(blank=True)
-
-    wagtail_reference_index_ignore = True
 
     def __str__(self):
         return "{0} {1} ({2})".format(
@@ -781,8 +771,6 @@ class Program(models.Model):
     )
     test = models.BooleanField(default=False)
 
-    wagtail_reference_index_ignore = True
-
     def __str__(self):
         return "{} ({})".format(self.program_name, self.institution)
 
@@ -908,8 +896,6 @@ class Alias(models.Model):
     class Meta:
         verbose_name_plural = "Aliases"
 
-    wagtail_reference_index_ignore = True
-
 
 class Nickname(models.Model):
     """
@@ -926,8 +912,6 @@ class Nickname(models.Model):
     class Meta:
         ordering = ["nickname"]
 
-    wagtail_reference_index_ignore = True
-
 
 class BAHRate(models.Model):
     """
@@ -937,5 +921,3 @@ class BAHRate(models.Model):
 
     zip5 = models.CharField(max_length=5)
     value = models.IntegerField()
-
-    wagtail_reference_index_ignore = True
