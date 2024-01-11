@@ -41,7 +41,7 @@ class GeoValidationTests(django.test.TestCase):
             msas=["45300", "35840", "45220"],
         )
 
-        baker.make(
+        nj = baker.make(
             State,
             fips="34",
             name="New Jersey",
@@ -187,6 +187,7 @@ class GeoValidationTests(django.test.TestCase):
         baker.make(
             StateMortgageData,
             date=datetime.date(2016, 1, 1),
+            state=nj,
             fips="12",
             total="1000000",
             current="0",
