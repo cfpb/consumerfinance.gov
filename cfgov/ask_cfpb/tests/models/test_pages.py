@@ -15,13 +15,7 @@ from wagtail.models import Site
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models.django import (
-    ENGLISH_PARENT_SLUG,
-    SPANISH_PARENT_SLUG,
-    Answer,
-    Category,
-    NextStep,
-)
+from ask_cfpb.models.django import Answer, Category, NextStep
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES,
     AnswerLandingPage,
@@ -467,38 +461,6 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortización")
 
-    def test_landing_page_live_portal(self):
-        portal_cards = self.english_ask_parent.get_portal_cards()
-
-        self.assertEqual(len(portal_cards), 2)
-
-        self.assertEqual(portal_cards[0]["title"], "Auto loans")
-        self.assertEqual(portal_cards[0]["icon"], "car")
-
-        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
-        self.assertEqual(portal_cards[1]["icon"], "bank")
-
-    def test_landing_page_draft_portal(self):
-        self.english_portal.unpublish()
-        self.english_portal.save()
-        self.assertFalse(self.english_portal.live)
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
-
-    def test_landing_page_draft_portals(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-            sl_page.save()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
-
-    def test_landing_page_draft_portals_draft_search(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-        for s_page in self.portal_topic.portal_search_pages.all():
-            s_page.unpublish()
-        for s_page in self.portal_topic2.portal_search_pages.all():
-            s_page.unpublish()
-        self.assertEqual(self.english_ask_parent.get_portal_cards(), [])
-
 
 class AnswerPageTest(TestCase):
     fixtures = ["ask_tests", "portal_topics"]
@@ -520,46 +482,12 @@ class AnswerPageTest(TestCase):
         self.test_image = baker.make(CFGOVImage)
         self.test_image2 = baker.make(CFGOVImage)
         self.next_step = baker.make(NextStep, title="stub_step")
-        self.portal_topic = baker.make(
-            PortalTopic, heading="test topic", heading_es="prueba tema"
-        )
         page_clean = mock.patch("ask_cfpb.models.pages.CFGOVPage.clean")
         page_clean.start()
         self.addCleanup(page_clean.stop)
-        self.portal_page = SublandingPage(
-            title="test portal page",
-            slug="test-portal-page",
-            portal_topic=self.portal_topic,
-            language="en",
-        )
-        self.ROOT_PAGE.add_child(instance=self.portal_page)
-        self.portal_page.save()
-        self.portal_page.save_revision().publish()
-        self.portal_page_es = SublandingPage(
-            title="test portal page",
-            slug="test-portal-page-es",
-            portal_topic=self.portal_topic,
-            language="es",
-        )
         self.ROOT_PAGE.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
-
-        self.english_parent_page = AnswerLandingPage(
-            title="Ask CFPB",
-            slug=ENGLISH_PARENT_SLUG,
-            language="en",
-            live=True,
-        )
-        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
-
-        self.spanish_parent_page = AnswerLandingPage(
-            title="Obtener respuestas",
-            slug=SPANISH_PARENT_SLUG,
-            language="es",
-            live=True,
-        )
-        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
 
         self.tag_results_page_en = TagResultsPage(
             title="Tag results page",
@@ -962,46 +890,6 @@ class AnswerPageTest(TestCase):
         breadcrumbs = get_ask_breadcrumbs()
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]["title"], "Ask CFPB")
-
-    def test_landing_page_context(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "test topic"
-        )
-
-    def test_spanish_landing_page_context(self):
-        page = self.page1_es
-        page.portal_topic.add(self.portal_topic)
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.spanish_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "prueba tema"
-        )
-
-    def test_landing_page_context_draft_portal_page(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.save_revision().publish()
-        self.portal_page.unpublish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
 
     def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)
