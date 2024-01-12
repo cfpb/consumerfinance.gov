@@ -15,7 +15,13 @@ from wagtail.models import Site
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models.django import Answer, Category, NextStep
+from ask_cfpb.models.django import (
+    ENGLISH_PARENT_SLUG,
+    SPANISH_PARENT_SLUG,
+    Answer,
+    Category,
+    NextStep,
+)
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES,
     AnswerLandingPage,
@@ -148,6 +154,7 @@ class PortalSearchPageTest(TestCase):
             "English auto-loans question-8888?",
             "english-auto-loans-question-en-8888",
             self.english_ask_parent,
+            featured=True,
         )
         self.answer_page.portal_topic.add(self.portal_topic)
         self.answer_page.save()
@@ -156,6 +163,7 @@ class PortalSearchPageTest(TestCase):
             "English banks question-8889?",
             "english-banks-question-en-8889",
             self.english_ask_parent,
+            featured=True,
         )
         self.answer_page.portal_topic.add(self.portal_topic2)
         self.answer_page.save()
@@ -482,12 +490,46 @@ class AnswerPageTest(TestCase):
         self.test_image = baker.make(CFGOVImage)
         self.test_image2 = baker.make(CFGOVImage)
         self.next_step = baker.make(NextStep, title="stub_step")
+        self.portal_topic = baker.make(
+            PortalTopic, heading="test topic", heading_es="prueba tema"
+        )
         page_clean = mock.patch("ask_cfpb.models.pages.CFGOVPage.clean")
         page_clean.start()
         self.addCleanup(page_clean.stop)
+        self.portal_page = SublandingPage(
+            title="test portal page",
+            slug="test-portal-page",
+            portal_topic=self.portal_topic,
+            language="en",
+        )
+        self.ROOT_PAGE.add_child(instance=self.portal_page)
+        self.portal_page.save()
+        self.portal_page.save_revision().publish()
+        self.portal_page_es = SublandingPage(
+            title="test portal page",
+            slug="test-portal-page-es",
+            portal_topic=self.portal_topic,
+            language="es",
+        )
         self.ROOT_PAGE.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
+
+        self.english_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
+            language="en",
+            live=True,
+        )
+        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
+
+        self.spanish_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
+            language="es",
+            live=True,
+        )
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
 
         self.tag_results_page_en = TagResultsPage(
             title="Tag results page",
