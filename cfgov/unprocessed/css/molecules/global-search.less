@@ -117,7 +117,7 @@
     }
   });
 
-  // Tablet size only.
+  // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     &_trigger {
       // Min-width sets open/close states to same size.
@@ -219,7 +219,7 @@
   });
 
   // Hide on print.
-  .respond-to-print({
+  .respond-to-print( {
     & {
       // Important needed to override JS display settings.
       display: none !important;

@@ -1,7 +1,8 @@
 .o-sidebar-content {
   border-width: 0;
 
-  .respond-to-range( @bp-sm-min, @bp-sm-max, {
+  // Tablet only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
     border-width: 0 unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   } );
 }

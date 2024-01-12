@@ -52,7 +52,7 @@ function getUploadName(fileName) {
  * @returns {boolean} - True if the file is a CSV, false otherwise.
  */
 function isCSV(fileName) {
-  return fileName.substr(fileName.lastIndexOf('.') + 1) === 'csv';
+  return fileName.slice(fileName.lastIndexOf('.') + 1) === 'csv';
 }
 
 export {

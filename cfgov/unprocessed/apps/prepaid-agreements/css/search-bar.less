@@ -25,10 +25,11 @@ button.a-btn.flex-fixed {
   border-bottom-left-radius: 0;
 }
 
-.respond-to-max( @bp-sm-max, {
+// Tablet and below.
+.respond-to-max(@bp-sm-max, {
   .a-select {
     margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-    width: 100%;        
+    width: 100%;
   }
 });
 

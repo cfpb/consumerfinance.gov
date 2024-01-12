@@ -52,7 +52,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.forms",
     "wagtail.sites",
     "wagtail.contrib.routable_page",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.typed_table_block",
     "wagtail.contrib.settings",
     "localflavor",
@@ -111,6 +110,7 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
 )
 
 MIDDLEWARE = (
@@ -390,6 +390,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
+WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 

@@ -48,9 +48,9 @@ const financialView = {
     this._financialItems.forEach((elem) => {
       if (!selectorMatches(elem, ':focus')) {
         const prop = elem.dataset.financialItem;
-        const isRate = prop.substr(0, 5) === 'rate_';
-        const isFee = prop.substr(0, 4) === 'fee_';
-        const isHours = prop.substr(-5, 5) === 'Hours';
+        const isRate = prop.slice(0, 5) === 'rate_';
+        const isFee = prop.slice(0, 4) === 'fee_';
+        const isHours = prop.slice(-5) === 'Hours';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue(prop);
 
@@ -123,8 +123,8 @@ function _handleInputChange(event) {
   clearTimeout(financialView._inputChangeTimeout);
   const elem = event.target;
   const name = elem.dataset.financialItem;
-  const isRate = name.substr(0, 5) === 'rate_';
-  const isFee = name.substr(0, 4) === 'fee_';
+  const isRate = name.slice(0, 5) === 'rate_';
+  const isFee = name.slice(0, 4) === 'fee_';
   let value = convertStringToNumber(elem.value);
 
   financialView._currentInput = elem;

@@ -142,14 +142,15 @@
     text-anchor: start;
   }
 
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     text {
       font-size: unit( 16px / @base-font-size-px, em );;
     }
     tspan {
       font-size: unit( 16px / @base-font-size-px, em );;
     }
-  } );
+  });
 }
 
 #mp-line-chart-container,

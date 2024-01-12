@@ -42,8 +42,8 @@
     padding-right: unit(30px / @base-font-size-px, rem);
   });
 
-  // Desktop
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     &_wrapper {
       display: grid;
       grid-template-columns: 1fr 3fr;
@@ -74,7 +74,7 @@
     &_version {
       text-align: right;
     }
-  } );
+  });
 }
 
 .show-wayfinder .o-regulations-wayfinder {

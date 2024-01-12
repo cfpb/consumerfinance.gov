@@ -74,23 +74,6 @@ class TestCFGOVPageContext(TestCase):
         test_context = self.page.get_context(self.request)
         self.assertEqual(test_context["banners"].count(), 2)
 
-    def test_get_context_no_schema_json(self):
-        test_context = self.page.get_context(self.request)
-        self.assertNotIn("schema_json", test_context)
-
-    def test_get_context_with_schema_json(self):
-        self.page.schema_json = {
-            "@type": "SpecialAnnouncement",
-            "@context": "http://schema.org",
-            "category": "https://www.wikidata.org/wiki/Q81068910",
-            "name": "Special announcement headline",
-            "text": "Special announcement details",
-            "datePosted": "2020-03-17",
-            "expires": "2020-03-24",
-        }
-        test_context = self.page.get_context(self.request)
-        self.assertIn("schema_json", test_context)
-
     def test_get_context_sets_meta_description_from_search_description(self):
         result = "Correct Meta Description"
         self.page = LandingPage(

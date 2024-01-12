@@ -7,6 +7,7 @@
     .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
   }
 
+  // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     border-left: @margin_half__em solid transparent;
     border-right: @margin_half__em solid transparent;
@@ -64,21 +65,6 @@
       &:before {
         position: static;
       }
-    }
-  });
-}
-
-.m-related-metadata__half-width {
-  .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    border: 0;
-
-    .m-related-metadata_item-container {
-      .grid_column(6);
-    };
-
-    .m-slug-header {
-      margin-left: @margin_half__em;
-      margin-right: @margin_half__em;
     }
   });
 }

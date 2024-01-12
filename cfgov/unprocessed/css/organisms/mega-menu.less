@@ -8,9 +8,10 @@
 
 // TODO: Reduce global scope and reign it in to the menu only if possible.
 body {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     overflow-x: hidden;
-  } );
+  });
 }
 
 @menu_max_width_px: 1200px;
@@ -279,10 +280,6 @@ body {
     &-overview {
       display: block;
       border-bottom: 1px solid @gray-40;
-
-      .u-link__disabled {
-        color: @gray !important;
-      }
     }
 
     &-link,
@@ -297,22 +294,22 @@ body {
     }
   }
 
-  // Mobile sizes.
-  .respond-to-max( @bp-xs-max, {
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
     &_trigger {
       margin-left: -15px;
     }
-  } );
+  });
 
-  // Tablet sizes.
-  .respond-to-range( @bp-sm-min, @bp-sm-max, {
+  // Tablet only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
     &_trigger {
       margin-left: -30px;
     }
-  } );
+  });
 
-  // Tablet/mobile sizes.
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     &_trigger {
       display: none;
       height: @mobile_trigger_ht__px;
@@ -495,16 +492,6 @@ body {
         padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
       }
 
-      // TODO: Remove when Consumer Tools and Ed Resources links are in.
-      // Overrides disabled link styles.
-      &-link.u-link__disabled {
-        color: @pacific !important;
-
-        &:hover {
-          color: @pacific-60 !important;
-          cursor: pointer !important;
-        }
-      }
     }
 
     // 2nd-level menu - Tablet/Mobile.
@@ -557,10 +544,11 @@ body {
         border-top: 1px solid @gray-40;
       }
     }
-  } );
+  });
 
   // Desktop sizes. 901px.
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     position: relative;
     left: -( @grid_gutter-width / 2 );
     width: calc( 100% + @grid_gutter-width );
@@ -928,14 +916,14 @@ body {
     .m-global-eyebrow {
       display: none;
     }
-  } );
+  });
 
   // Large desktop size. 1021px. Not currently used.
 
-  /* .respond-to-min( @bp-lg-min, { } ); */
+  /* .respond-to-min(@bp-lg-min, { }); */
 
   // Xtra-Large desktop size. 1261px.
-  .respond-to-min( @bp-xl-min + @grid_gutter-width, {
+  .respond-to-min(@bp-xl-min + @grid_gutter-width, {
     width: @menu_max_width_px;
 
     // Horizontal rule to overlay on top of header rule so that
@@ -950,16 +938,16 @@ body {
       width: @menu_max_width_px + ( @grid_gutter-width * 2 );
     }
 
-  } );
+  });
 
   // Normalize second level width between 901px and 1260px
-  .respond-to-range( @bp-med-min, @bp-lg-max + @grid_gutter-width, {
+  .respond-to-range(@bp-med-min, @bp-lg-max + @grid_gutter-width, {
 
     &_content-2 {
       width: 100%;
     }
 
-  } );
+  });
 }
 
 .no-js .o-mega-menu {
@@ -979,7 +967,7 @@ body {
   .o-mega-menu {
     display: none;
   }
-} );
+});
 
 // The following three rules prevent mega-menu linebreak shenanigans
 .o-mega-menu_content-2-item__has-icon .o-mega-menu_content-2-link {

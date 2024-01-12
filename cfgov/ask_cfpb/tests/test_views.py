@@ -6,9 +6,9 @@ from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
 from wagtail.models import Site
-from wagtailsharing.models import SharingSite
 
 from model_bakery import baker
+from wagtailsharing.models import SharingSite
 
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG,

@@ -1,5 +1,7 @@
 import datetime
 
+from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
+
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,6 +10,7 @@ from data_research.models import (
     County,
     CountyMortgageData,
     MetroArea,
+    MortgageDataConstant,
     MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
@@ -233,3 +236,23 @@ class MapData(APIView):
                     del non_data_series["date"]
                     payload["data"].update({record.fips: non_data_series})
         return Response(payload)
+
+
+class MortgageDataConstantViewSet(SnippetViewSet):
+    model = MortgageDataConstant
+    icon = "list-ul"
+    menu_label = "Mortgage performance constants"
+    list_display = ["name", "value", "date_value", "updated"]
+
+
+class MortgageMetaDataViewSet(SnippetViewSet):
+    model = MortgageMetaData
+    icon = "list-ul"
+    menu_label = "Mortgage metadata"
+    list_display = ["name", "json_value", "note", "updated"]
+
+
+class DataResearchViewSetGroup(SnippetViewSetGroup):
+    items = (MortgageDataConstantViewSet, MortgageMetaDataViewSet)
+    menu_icon = "list-ul"
+    menu_label = "Data Research"

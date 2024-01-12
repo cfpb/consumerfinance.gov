@@ -40,7 +40,7 @@ export function fetchApiData(birthdate, salary, dataLang) {
  */
 export function updateDataFromApi(resp) {
   const data = resp.data;
-  let fullAge = Number(data['full retirement age'].substr(0, 2));
+  let fullAge = Number(data['full retirement age'].slice(0, 2));
   if (resp.current_age > fullAge) {
     fullAge = resp.current_age;
   }
@@ -57,6 +57,6 @@ export function updateDataFromApi(resp) {
   benefits['fullRetirementAge'] = data['full retirement age'];
   benefits['earlyRetirementAge'] = data['early retirement age'];
   benefits['fullAge'] = Number(fullAge);
-  benefits['earlyAge'] = Number(data['early retirement age'].substr(0, 2));
+  benefits['earlyAge'] = Number(data['early retirement age'].slice(0, 2));
   benefits['monthsPastBirthday'] = Number(data.months_past_birthday);
 }
