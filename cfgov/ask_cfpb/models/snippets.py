@@ -1,12 +1,10 @@
 from django.db import models
 
 from wagtail.fields import RichTextField
-from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
 
 
-@register_snippet
 class GlossaryTerm(models.Model):
     name_en = models.CharField(max_length=255, verbose_name="TERM (ENGLISH)")
     definition_en = RichTextField(

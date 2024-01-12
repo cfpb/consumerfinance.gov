@@ -83,6 +83,7 @@ class Command(BaseCommand):
                 "Page Type",
                 "Page Title",
                 "Page URL",
+                "Field",
                 "Raw HTML Block Path",
                 "Raw HTML",
             )
@@ -134,5 +135,6 @@ class Command(BaseCommand):
                     page_type,
                     p.title,
                     p.get_url(),
+                    field,
                     ".".join(path),
                 ] + matches

@@ -230,7 +230,7 @@ const financialView = {
 
       $fields.not('#' + financialView.currentInput).each((elem) => {
         const $ele = $(elem);
-        const index = Number(elem.getAttribute('id').substr(-1, 1));
+        const index = Number(elem.getAttribute('id').slice(-1));
         const key = $ele.attr('data-private-loan_key');
         let val = values.privateLoanMulti[index][key];
         const id = $ele.attr('id');
@@ -458,7 +458,7 @@ const financialView = {
         const elem = event.target;
         const $ele = elem.closest('[data-private-loan]');
 
-        const index = Number(elem.getAttribute('id').substr(-1, 1));
+        const index = Number(elem.getAttribute('id').slice(-1));
         $ele.remove();
         financialView.enumeratePrivateLoanIDs();
         publish.dropPrivateLoan(index);
@@ -521,7 +521,7 @@ const financialView = {
     if (privateLoanKey === null) {
       publish.financialData(key, value);
     } else {
-      const index = Number(elem.getAttribute('id').substr(-1, 1));
+      const index = Number(elem.getAttribute('id').slice(-1));
       publish.updatePrivateLoan(index, privateLoanKey, value);
     }
   },

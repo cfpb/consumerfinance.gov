@@ -18,11 +18,11 @@
     text-overflow: ellipsis;
   }
 
-  // Desktop size.
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     padding-top: unit(30px / @base-font-size-px, rem);
     padding-bottom: 0;
-  } );
+  });
 }
 
 // Hide on print.
@@ -30,7 +30,7 @@
   .m-breadcrumbs {
     display: none;
   }
-} );
+});
 
 // Right-to-left (RTL) layout.
 html[lang='ar'] {
@@ -44,7 +44,7 @@ html[lang='ar'] {
 .content_wrapper .m-breadcrumbs {
   margin-left: unit(15px / @base-font-size-px, rem);
 
-  // Tablet size only.
+  // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     margin-left: unit(30px / @base-font-size-px, rem);
   });

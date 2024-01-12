@@ -65,16 +65,10 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, "cfgov", "tests", "test-media")
 OPENSEARCH_DSL_AUTO_REFRESH = False
 OPENSEARCH_DSL_AUTOSYNC = False
 
-if os.getenv("SKIP_DJANGO_MIGRATIONS"):
-
-    class _NoMigrations:
-        def __contains__(self, item):
-            return True
-
-        def __getitem__(self, item):
-            return None
-
-    MIGRATION_MODULES = _NoMigrations()
+SKIP_DJANGO_MIGRATIONS = os.getenv("SKIP_DJANGO_MIGRATIONS", False)
+if SKIP_DJANGO_MIGRATIONS:
+    for _db in DATABASES.values():
+        _db.setdefault("TEST", {})["MIGRATE"] = False
 
 DEPLOY_ENVIRONMENT = "test"
 

@@ -28,9 +28,9 @@ function numToMoney(num) {
 
   const separator = ',';
   if (groups > 0) {
-    money += numProc.substr(0, groups) + separator;
+    money += numProc.slice(0, groups) + separator;
   }
-  money += numProc.substr(groups).replace(/(\d{3})(?=\d)/g, '$1' + separator);
+  money += numProc.slice(groups).replace(/(\d{3})(?=\d)/g, '$1' + separator);
 
   return money;
 }
