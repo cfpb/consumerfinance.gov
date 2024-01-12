@@ -124,18 +124,18 @@ def validate_page_number(request, paginator):
 
 
 LANDING_PAGE_ANSWER_IDS = {
-    "Auto loans": {"en": [763, 733], "es": [763, 779]},
+    "Auto loans": {"en": [763, 733], "es": [763, 733]},
     "Bank accounts": {"en": [1023, 1145], "es": [1023, 1145]},
-    "Credit cards": {"en": [44, 1861], "es": [44, 61]},
-    "Credit reports and scores": {"en": [5, 315], "es": [316]},
-    "Debt collection": {"en": [1695, 2110], "es": [1397, 1695]},
-    "Fraud and scams": {"en": [2092, 2049], "es": [61]},
-    "Money transfers": {"en": [1161, 1065], "es": [1161, 1507]},
-    "Mortgages": {"en": [122, 227, 224], "es": [100]},
-    "Payday loans": {"en": [1567, 1605], "es": [1567, 1589]},
-    "Prepaid cards": {"en": [503, 395], "es": [1567, 503, 1589]},
-    "Reverse mortgages": {"en": [227, 224]},
-    "Student loans": {"en": [545, 641], "es": [545, 601]},
+    "Credit cards": {"en": [44, 1861], "es": [44, 1861]},
+    "Credit reports and scores": {"en": [5, 315], "es": [5, 315]},
+    "Debt collection": {"en": [1695, 2110], "es": [1695, 2110]},
+    "Fraud and scams": {"en": [2092, 2049], "es": [2092, 2049]},
+    "Money transfers": {"en": [1161, 1065], "es": [1161, 1065]},
+    "Mortgages": {"en": [122, 227, 224], "es": [122, 227, 224]},
+    "Payday loans": {"en": [1567, 1605], "es": [1567, 1605]},
+    "Prepaid cards": {"en": [503, 395], "es": [503, 395]},
+    "Reverse mortgages": {"en": [227, 224], "es": [227, 224]},
+    "Student loans": {"en": [545, 641], "es": [545, 641]},
 }
 
 
