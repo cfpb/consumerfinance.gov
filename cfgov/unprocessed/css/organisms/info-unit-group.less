@@ -25,7 +25,8 @@
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
-  .respond-to-max( @bp-xs-max, {
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
     // Adds top divider between info unit cols on small screens
     .content-l__top-divider {
       .content-l_col + .content-l_col {
@@ -33,9 +34,10 @@
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
       }
     }
-  } );
+  });
 
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     .content-l__top-divider + .content-l__top-divider {
       // Matches top divider width to cols on larger screens
       &:before {
@@ -51,5 +53,5 @@
       // Adds margin-top to info units that begin a new row in their group
       margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
-  } );
+  });
 }

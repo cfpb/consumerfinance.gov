@@ -12,7 +12,8 @@
     display: none;
   }
 
-  .respond-to-min( @bp-med-min, {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     @supports (position: sticky) {
       .app-container {
         display: flex;
@@ -28,7 +29,7 @@
         }
       }
     }
-  } );
+  });
 
   .u-border-bottom {
     border-bottom: 1px solid @block__border-bottom;

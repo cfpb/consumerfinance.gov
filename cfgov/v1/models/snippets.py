@@ -1,8 +1,9 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField, StreamField
-from wagtail.snippets.models import register_snippet
+from wagtail.models import RevisionMixin
 
 from v1.atomic_elements import molecules
 
@@ -13,8 +14,7 @@ from v1.atomic_elements import molecules
 from v1.blocks import ReusableTextChooserBlock  # noqa
 
 
-@register_snippet
-class ReusableText(models.Model):
+class ReusableText(RevisionMixin, models.Model):
     title = models.CharField(
         verbose_name="Snippet title (internal only)", max_length=255
     )
@@ -27,12 +27,14 @@ class ReusableText(models.Model):
         "[GHE]/flapjack/Modules-V1/wiki/Atoms#slugs",
     )
     text = RichTextField()
+    revisions = GenericRelation(
+        "wagtailcore.Revision", related_query_name="email_sign_up"
+    )
 
     def __str__(self):
         return self.title
 
 
-@register_snippet
 class Contact(models.Model):
     heading = models.CharField(
         verbose_name=("Heading"),
@@ -65,7 +67,6 @@ class Contact(models.Model):
         ordering = ["heading"]
 
 
-@register_snippet
 class RelatedResource(models.Model):
     title = models.CharField(max_length=255)
     title_es = models.CharField(max_length=255, blank=True, null=True)
@@ -86,8 +87,7 @@ class RelatedResource(models.Model):
         return self.title
 
 
-@register_snippet
-class EmailSignUp(models.Model):
+class EmailSignUp(RevisionMixin, models.Model):
     topic = models.CharField(
         verbose_name="Topic name (internal only)",
         max_length=255,
@@ -144,6 +144,9 @@ class EmailSignUp(models.Model):
             'should go to. If in doubt, use "Generic Email Sign-Up '
             'Privacy Act Statement".'
         ),
+    )
+    revisions = GenericRelation(
+        "wagtailcore.Revision", related_query_name="email_sign_up"
     )
 
     panels = [

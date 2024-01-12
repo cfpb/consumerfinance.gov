@@ -21,7 +21,10 @@
     ============================================================================
 -->
 {% endif %}
-<html lang="{{ language }}" class="no-js">
+<html lang="{{ language }}" class="no-js"
+{%- if is_faq_page %}
+itemscope="" itemtype="http://schema.org/FAQPage"
+{% endif -%}>
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
@@ -206,13 +209,6 @@
 
     {# End: Don't load certain scripts in the Wagtail preview panel. #}
     {% endif -%}
-
-    {# Schema data in JSON-LD format #}
-    {% if schema_json %}
-    <script type="application/ld+json">
-    {{ schema_json | tojson(indent=2) }}
-    </script>
-    {% endif %}
 
     {% block javascript_loader %}
     <script>

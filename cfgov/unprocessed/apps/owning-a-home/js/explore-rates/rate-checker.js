@@ -805,7 +805,7 @@ function init() {
       params.location = state;
       setSelection('location');
     }
-  } );
+  });
 */
   updateView();
   return true;

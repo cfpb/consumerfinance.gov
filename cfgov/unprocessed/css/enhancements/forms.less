@@ -29,9 +29,10 @@
   &_after {
     right: unit(14px / @btn-font-size, em);
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       display: none;
-    } );
+    });
   }
 }
 

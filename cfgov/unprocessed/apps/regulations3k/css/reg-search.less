@@ -108,7 +108,8 @@
   }
 }
 
-.respond-to-max( @bp-sm-max, {
+// Tablet and below.
+.respond-to-max(@bp-sm-max, {
   .search_results {
     .content_sidebar {
       padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
@@ -120,14 +121,14 @@
       border-left: 1px solid @gray-40;
     }
   }
-} );
+});
 
 // We have an awkward state where text in the filters sidebar is too long on
 // mid-size screens but is fine on desktop and mobile
 .u-hide-on-tablet {
-  .respond-to-range( @bp-sm-max, 1100px, {
+  .respond-to-range(@bp-sm-max, 1100px, {
     display: none;
-  } );
+  });
 }
 
 /* PWA */
