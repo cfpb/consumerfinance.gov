@@ -1,5 +1,6 @@
 import re
 from collections import OrderedDict
+from itertools import chain
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -122,6 +123,22 @@ def validate_page_number(request, paginator):
     return page_number
 
 
+LANDING_PAGE_ANSWER_IDS = {
+    "Auto loans": {"en": [763, 733], "es": [763, 779]},
+    "Bank accounts": {"en": [1023, 1145], "es": [1023, 1145]},
+    "Credit cards": {"en": [44, 1861], "es": [44, 61]},
+    "Credit reports and scores": {"en": [5, 315], "es": [316]},
+    "Debt collection": {"en": [1695, 2110], "es": [1397, 1695]},
+    "Fraud and scams": {"en": [2092, 2049], "es": [61]},
+    "Money transfers": {"en": [1161, 1065], "es": [1161, 1507]},
+    "Mortgages": {"en": [122, 227, 224], "es": [100]},
+    "Payday loans": {"en": [1567, 1605], "es": [1567, 1589]},
+    "Prepaid cards": {"en": [503, 395], "es": [1567, 503, 1589]},
+    "Reverse mortgages": {"en": [227, 224]},
+    "Student loans": {"en": [545, 641], "es": [545, 601]},
+}
+
+
 class AnswerLandingPage(LandingPage):
     """
     Page type for Ask CFPB's landing page.
@@ -140,22 +157,58 @@ class AnswerLandingPage(LandingPage):
     def get_portal_cards(self):
         """Return an array of dictionaries used to populate portal cards."""
         portal_cards = []
-        portal_pages = SublandingPage.objects.filter(
-            portal_topic_id__isnull=False,
-            language=self.language,
-            live=True,
-        ).order_by("portal_topic__heading")
+        portal_pages = (
+            SublandingPage.objects.filter(
+                portal_topic_id__isnull=False,
+                language=self.language,
+                live=True,
+            )
+            .prefetch_related("portal_topic")
+            .order_by("portal_topic__heading")
+        )
+
+        # Store AnswerPages by (language, answer ID) for easy lookup.
+        pages = {
+            (page.language, page.answer_base_id): page
+            for page in AnswerPage.objects.filter(
+                answer_base_id__in=chain(
+                    *(
+                        x.get(self.language, [])
+                        for x in LANDING_PAGE_ANSWER_IDS.values()
+                    )
+                )
+            )
+        }
+
         for portal_page in portal_pages:
             topic = portal_page.portal_topic
-            url = portal_page.url
+
+            topic_answer_ids = LANDING_PAGE_ANSWER_IDS.get(
+                topic.heading, {}
+            ).get(self.language, [])
+            featured_answers = list(
+                filter(
+                    None,
+                    [
+                        pages.get((self.language, answer_id))
+                        for answer_id in topic_answer_ids
+                    ],
+                )
+            )
+
+            if not featured_answers:
+                continue
+
             portal_cards.append(
                 {
                     "topic": topic,
                     "title": topic.title(self.language),
-                    "url": url,
+                    "url": portal_page.url,
+                    "featured_answers": featured_answers,
                     "icon": get_category_icon(topic.heading),
                 }
             )
+
         return portal_cards
 
     def get_context(self, request, *args, **kwargs):
