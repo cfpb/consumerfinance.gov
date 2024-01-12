@@ -20,13 +20,14 @@
     padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em) 0;
     margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 
+    // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       margin: unit( 3px / @base-font-size-px, em )
       0
       unit( @grid_gutter-width / @base-font-size-px, em )
       unit( @grid_gutter-width / @base-font-size-px, em );
       padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
-    } );
+    });
   }
 
   &.m-inset__170 {
@@ -39,7 +40,8 @@
     width: unit(270px / @base-font-size-px, em);
   }
 
-  .respond-to-min( @bp-sm-min, {
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
     // Default anything with just an .m-inset class to 270px floating right,
     // e.g., quote and related links blocks.
     float: right;
@@ -53,13 +55,13 @@
     .m-call-to-action {
       width: 100%;
     }
-  } );
+  });
 
-  .respond-to-min( @bp-xl-min, {
+  .respond-to-min(@bp-xl-min, {
     &__470 {
       width: unit( 470px / @base-font-size-px, em );
     }
-  } );
+  });
 
   .m-call-to-action,
   .m-related-links {
@@ -76,12 +78,13 @@
   }
 
   &__email {
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       box-sizing: border-box;
       width: 50%;
       padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
       float: right;
-    } );
+    });
 
     .o-email-signup {
       padding: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -89,14 +92,15 @@
       margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
       background-color: @block__bg;
 
-      .respond-to-range( @bp-sm-min, @bp-sm-max, {
+      // Tablet only.
+      .respond-to-range(@bp-sm-min, @bp-sm-max, {
         width: 100%;
-      } );
+      });
 
-      .respond-to-max( 320px, {
+      .respond-to-max(320px, {
         padding: unit( @grid_gutter-width / @base-font-size-px, em )
         unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-      } );
+      });
     }
   }
 }
@@ -104,7 +108,7 @@
 // in .content__1-3 pages, inset should be 4 of 9 columns
 // except in the 600-650px range, where it becomes unusably narrow
 .content__1-3 .m-inset__email {
-  .respond-to-min( 650px, {
+  .respond-to-min(650px, {
     width: percentage( 4 / 9 );
-  } );
+  });
 }

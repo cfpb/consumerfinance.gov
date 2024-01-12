@@ -25,9 +25,10 @@
   position: relative;
   padding: 0 unit(15px / 16px, em) !important;
 
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding: 0 unit( 10px / 16px, em ) !important;
-  } );
+  });
 
   // Overrides for design system.
   .o-expandable_header .o-expandable_cue-close,

@@ -505,7 +505,7 @@
   /*
         Media queries
         --------------------------- */
-  .respond-to-max( 720px, {
+  .respond-to-max(720px, {
 
     .calculator,
     .rc-results {
@@ -525,9 +525,9 @@
       position: relative;
       .grid_column( 12 );
     }
-  } );
+  });
 
-  .respond-to-max( 800px, {
+  .respond-to-max(800px, {
 
     .rc-comparison-section {
       margin-top: 1.5em;
@@ -558,9 +558,9 @@
       font-weight: 600;
       color: @gray-60;
     }
-  } );
+  });
 
-  .respond-to-min( @bp-sm-max, {
+  .respond-to-min(@bp-sm-max, {
 
     .m-notification__borderless {
       .grid_column( 8 );
@@ -578,15 +578,15 @@
         white-space: nowrap;
       }
     }
-  } );
+  });
 
-  .respond-to-min( 1000px, {
+  .respond-to-min(1000px, {
     .rate-checker-heading {
       width: 75%;
     }
-  } );
+  });
 
-  .respond-to-max( @bp-lg-max, {
+  .respond-to-max(@bp-lg-max, {
 
     .half-width-gt-1230 {
       .grid_column( 12 );
@@ -595,7 +595,7 @@
     .down-payment {
       margin-top: unit( 20px / @base-font-size-px, em );
     }
-  } );
+  });
 
   @media print {
     .rc-illu-inner {

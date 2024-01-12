@@ -17,24 +17,27 @@
       font-size: unit(18px / @base-font-size-px, em);
       .u-link__colors( @black );
 
-      .respond-to-min( @bp-sm-min, {
+      // Tablet and above.
+      .respond-to-min(@bp-sm-min, {
         margin-right: 1em;
 
         .u-link__hover-border();
-      } );
+      });
 
-      .respond-to-min( @bp-med-min, {
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
         margin-right: unit( @grid_gutter-width / 22px, em );
         font-size: unit( 20px / @base-font-size-px, em );
-      } );
+      });
     }
 
     .m-list_link.m-list_link__disabled {
       border-bottom: 1px dotted;
 
-      .respond-to-min( @bp-med-min, {
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
         .u-link__no-border();
-      } );
+      });
     }
   }
 
@@ -64,7 +67,8 @@
       margin-bottom: 0;
     }
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
       margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
       border-bottom: 1px solid @gray-40;
@@ -80,14 +84,14 @@
           margin-bottom: 0;
         }
       }
-    } );
+    });
 
     .respond-to-print( {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
       display: none !important;
-    } );
+    });
   }
 
   // TODO: Refactor to use Design System Layout package.
@@ -96,8 +100,9 @@
       margin: 0;
     }
 
-    /* Fix doubled border in mobile view */
-    .respond-to-max( @bp-xs-max, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      // Fix doubled border in mobile view.
       .o-footer_col:nth-child( n+2 ) {
         .o-footer_list {
           .m-list_item .m-list_link {
@@ -105,9 +110,10 @@
           }
         }
       }
-    } );
+    });
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       .grid_column(8);
       border-right: 1px solid @gray-40;
       border-left: 0;
@@ -118,55 +124,58 @@
         border-right: 0;
         padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
       }
-    } );
+    });
 
     .respond-to-print( {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
       display: none !important;
-    } );
+    });
   }
 
   &-middle-right {
-    /* Fix doubled border in mobile view */
-    .respond-to-max( @bp-xs-max, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      // Fix doubled border in mobile view.
       .o-footer_list {
         .m-list_item .m-list_link {
           border-top-width: 0;
         }
       }
-    } );
+    });
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       .grid_column(4);
 
       .o-footer_list {
         padding-left: @grid_gutter-width;
         padding-right: @grid_gutter-width;
       }
-    } );
+    });
 
     .respond-to-print( {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
       display: none !important;
-    } );
+    });
   }
 
   &-post {
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
       border-top: 1px solid @gray-40;
-    } );
+    });
 
     .respond-to-print( {
       padding: 0;
       border: none;
       margin: 0;
-    } );
+    });
   }
 }

@@ -18,10 +18,11 @@
       width: unit(@m-info-unit_img__sm / @base-font-size-px, em);
       height: unit(@m-info-unit_img__sm / @base-font-size-px, em);
 
-      .respond-to-min( @bp-med-min, {
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
         width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
         height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
-      } );
+      });
     }
   }
 
@@ -60,13 +61,14 @@
   .u-info-unit-base();
 
   &__inline {
-    .respond-to-range( @bp-sm-min, @bp-sm-max, {
+    // Tablet only.
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
       .u-info-unit-base__inline( @m-info-unit_img__sm );
-    } );
+    });
 
-    .respond-to-min( @bp-med-max, {
+    .respond-to-min(@bp-med-max, {
       .u-info-unit-base__inline( @m-info-unit_img__lg );
-    } );
+    });
   }
 
   // Hide image on print.
@@ -74,5 +76,5 @@
     &_image {
       display: none;
     }
-  } );
+  });
 }

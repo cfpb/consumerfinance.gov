@@ -26,6 +26,10 @@ from paying_for_college.models.search import SchoolSearch
 
 BASEDIR = os.path.dirname(__file__)
 DISCLOSURE_ROOT = "paying-for-college2"
+EXPECTED_ERROR_MESSAGES = [
+    "none",
+    "INVALID: student indicated the offer information is wrong",
+]
 EXPENSE_FILE = "{}/fixtures/bls_data.json".format(BASEDIR)
 IPED_ERROR = "noSchool"
 OID_ERROR = "noOffer"
@@ -63,6 +67,14 @@ def validate_pid(pid):
     for char in [";", "<", ">", "{", "}", "_"]:
         if char in pid:
             return False
+    return True
+
+
+def url_is_safe(url):
+    """Only save disclosure URLs with expected values."""
+    find_illegal = re.search("[^0-9a-zA-Z-/?&=:.#]+", url)
+    if find_illegal:
+        return False
     return True
 
 
@@ -319,12 +331,20 @@ class VerifyView(View):
             if Notification.objects.filter(institution=school, oid=OID):
                 errmsg = "Error: OfferID has already generated a notification."
                 return HttpResponseBadRequest(errmsg)
+            raw_url = data.get("URL")
+            if url_is_safe(raw_url):
+                url = raw_url.replace("#info-right", "")
+            else:
+                url = "Unsafe URL found for {OID}"
+            errors = data["errors"]
+            if errors not in EXPECTED_ERROR_MESSAGES:
+                errors = "App delivered unexpected error for {OID}"
             notification = Notification(
                 institution=school,
                 oid=OID,
-                url=data.get("URL").replace("#info-right", ""),
+                url=url,
                 timestamp=timestamp,
-                errors=data["errors"][:255],
+                errors=errors,
             )
             notification.save()
             msg = notification.notify_school()

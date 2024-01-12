@@ -245,7 +245,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
    * @returns {string} Prefixed unique id string.
    */
   uniqueId: function (prefix) {
-    return prefix + '_' + Math.random().toString(36).substr(2, 9);
+    return prefix + '_' + Math.random().toString(36).slice(2);
   },
 });
 
