@@ -128,11 +128,11 @@
 
     {% if about_us %}
         <div class="block
-                {% if not sibling_url %}
-                block__flush-top
-                {% endif %}
-                about-us-text">
-        {{ about_us.text | richtext }}
+                    {% if not sibling_url %}
+                    block__flush-top
+                    {% endif %}
+                    about-us-text">
+            {{ about_us.text | richtext }}
         </div>
     {% endif %}
 
@@ -141,9 +141,6 @@
     {% endif %}
 
     {% if disclaimer %}
-    <div class="disclaimer-text">
-        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-        {{ disclaimer.text | richtext }}
-    </div>
+        {% include '_disclaimer.html' %}
     {% endif %}
 {% endblock %}

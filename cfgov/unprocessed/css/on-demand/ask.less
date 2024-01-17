@@ -191,15 +191,12 @@
   });
 
   .o-sidebar-content {
-    .about-us-text,
-    .disclaimer-text {
+    .about-us-text {
+      margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
+
       a {
         font-weight: 500;
       }
-    }
-
-    .about-us-text {
-      margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .about-us-text + .block {
@@ -209,18 +206,8 @@
       ) !important;
     }
 
-    .about-us-text + .disclaimer-text {
-      border-top: 1px solid @block__border;
-      margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
-      padding-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
-    }
-
     .a-link + .about-us-text {
       margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
-    }
-
-    .disclaimer-text {
-      margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     }
   }
 
