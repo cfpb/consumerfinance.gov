@@ -17,9 +17,9 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models import blocks as ask_blocks
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, PortalCategory, PortalTopic
-from v1.models.snippets import RelatedResource, ReusableText
+from v1.models.snippets import ReusableText
 
 
 REUSABLE_TEXT_TITLES = {
@@ -109,21 +109,19 @@ class AnswerPage(CFGOVPage):
     last_edited = models.DateField(
         blank=True,
         null=True,
-        help_text="Change the date to today if you make a significant change.",
-    )
-    question = models.TextField(blank=True)
-    statement = models.TextField(
-        blank=True,
         help_text=(
-            "(Optional) Use this field to rephrase the question title as "
-            "a statement. Use only if this answer has been chosen to appear "
-            "on a money topic portal (e.g. /consumer-tools/debt-collection)."
+            "If content is changed, update this "
+            "to match the new publication date."
         ),
+    )
+    question = models.TextField(
+        blank=True,
+        help_text=("Used as the primary heading (H1) of the page."),
     )
     short_answer = RichTextField(
         blank=True,
         features=["link", "document-link"],
-        help_text="Optional answer intro",
+        help_text=("Formatted as a lead paragraph."),
     )
     answer_content = StreamField(
         ask_blocks.AskAnswerContent(),
@@ -138,14 +136,6 @@ class AnswerPage(CFGOVPage):
         related_name="answer_pages",
         on_delete=models.SET_NULL,
     )
-    featured = models.BooleanField(
-        default=False,
-        help_text=(
-            "Check to make this one of two featured answers "
-            "on the landing page."
-        ),
-    )
-    featured_rank = models.IntegerField(blank=True, null=True)
     category = models.ManyToManyField(
         "Category",
         blank=True,
@@ -159,20 +149,20 @@ class AnswerPage(CFGOVPage):
         blank=True,
         help_text="Search words or phrases, separated by commas",
     )
-    related_resource = models.ForeignKey(
-        RelatedResource, blank=True, null=True, on_delete=models.SET_NULL
-    )
     related_questions = ParentalManyToManyField(
         "self",
         symmetrical=False,
         blank=True,
         related_name="related_question",
-        help_text="Maximum of 3 related questions",
+        help_text="Select no more than three.",
     )
     portal_topic = ParentalManyToManyField(
         PortalTopic,
         blank=True,
-        help_text="Limit to 1 portal topic if possible",
+        help_text=(
+            "Adds this question to search indexes "
+            "for selected Consumer Tools pages."
+        ),
     )
     primary_portal_topic = ParentalKey(
         PortalTopic,
@@ -181,11 +171,18 @@ class AnswerPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name="primary_portal_topic",
         help_text=(
-            "Use only if assigning more than one portal topic, "
-            "to control which topic is used as a breadcrumb."
+            "Use only when more than one Consumer "
+            "Tools page is selected above."
         ),
     )
-    portal_category = ParentalManyToManyField(PortalCategory, blank=True)
+    portal_category = ParentalManyToManyField(
+        PortalCategory,
+        blank=True,
+        help_text=(
+            "Determined where this page can be found "
+            "within selected Consumer Tools pages."
+        ),
+    )
 
     notification = StreamField(
         [
@@ -203,57 +200,50 @@ class AnswerPage(CFGOVPage):
         MultiFieldPanel(
             [
                 FieldPanel("last_edited", heading="Last reviewed"),
-                FieldPanel("question"),
-                FieldPanel("statement"),
-                FieldPanel("short_answer"),
+                FieldPanel("question", heading="Question / H1"),
+                FieldPanel("short_answer", heading="Short answer (optional)"),
             ],
-            heading="Page content",
+            heading="Top of page",
             classname="collapsible",
         ),
-        FieldPanel("notification"),
-        FieldPanel("answer_content"),
-        MultiFieldPanel(
-            [
-                FieldPanel("related_resource"),
-                AutocompletePanel(
-                    "related_questions", target_model="ask_cfpb.AnswerPage"
-                ),
-            ],
-            heading="Related resources and questions",
+        FieldPanel(
+            "notification", heading="Notification or warning (optional)"
+        ),
+        FieldPanel("answer_content", heading="Body content"),
+        AutocompletePanel(
+            "related_questions",
+            target_model="ask_cfpb.AnswerPage",
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
                 FieldPanel(
-                    "portal_topic", widget=forms.CheckboxSelectMultiple
+                    "portal_topic",
+                    heading="Consumer Tools pages",
+                    widget=forms.CheckboxSelectMultiple,
                 ),
-                FieldPanel("primary_portal_topic"),
                 FieldPanel(
-                    "portal_category", widget=forms.CheckboxSelectMultiple
+                    "primary_portal_topic",
+                    heading="Primary Consumer Tools page",
+                ),
+                FieldPanel(
+                    "portal_category",
+                    heading="Consumer Tools sections",
+                    widget=forms.CheckboxSelectMultiple,
                 ),
             ],
-            heading="Money Topic portal tags",
-            classname="collapsible collapsed",
-        ),
-        MultiFieldPanel(
-            [FieldPanel("featured")],
-            heading="Featured answer on Ask landing page?",
+            heading="Consumer Tools topics",
             classname="collapsible collapsed",
         ),
     ]
 
     sidebar = StreamField(
         [
-            ("call_to_action", molecules.CallToAction()),
             ("related_links", molecules.RelatedLinks()),
-            ("related_metadata", molecules.RelatedMetadata()),
             (
                 "email_signup",
                 v1_blocks.EmailSignUpChooserBlock(),
             ),
-            ("sidebar_contact", organisms.SidebarContactInfo()),
-            ("rss_feed", molecules.RSSFeed()),
-            ("social_media", molecules.SocialMedia()),
             (
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock(ReusableText),
