@@ -64,12 +64,7 @@
                             block__flush-top">
                 <div data-gtm_ask-no-results="true">
                     <h3 class="results-header">
-                        {{ _('No results found for') }}
-                        {% if tag %}
-                            “{{ tag }}”
-                        {% else %}
-                            “{{ page.query }}”
-                        {% endif %}
+                        {{ _('No results found for') }} “{{ tag or page.query }}”
                     </h3>
 
                     {% if page.suggestion %}
