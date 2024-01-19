@@ -26,6 +26,22 @@
 
 {% block content_main %}
     <h1>{{ _('Why financial well-being?') }}</h1>
+
+    {% set value = {
+        'links': [
+        {
+            'href': url('fwb_about_en'),
+            'language': 'en',
+            'text': 'English'
+        },{
+            'href': url('fwb_about_es'),
+            'language': 'es',
+            'text': 'Spanish'
+        }]
+    } %}
+    {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
+    {% include "_translation-links.html" %}
+
     <p class="lead-paragraph">
         {{ _('At the CFPB, we work to help consumers like you take control of your financial life to reach your own life goals,') }}
         {{ _('achieve financial peace of mind, and avoid pitfalls that can derail you.') }}
@@ -73,16 +89,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <p>
-        {% if (current_language == 'en') %}
-        <a href="{{ url('fwb_about_es') }}">Ver página en español</a>
-        {% else %}
-        <a href="{{ url('fwb_about_en') }}">View page in English</a>
-        {% endif %}
-    </p>
-
     {% if (current_language == 'en') %}
-        <div class="block">
+        <div class="block block__flush-top">
             <header class="m-slug-header">
                 <h2 class="m-slug-header_heading">
                     For further reading and research

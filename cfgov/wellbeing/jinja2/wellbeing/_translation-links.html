@@ -1,0 +1,19 @@
+<div class="block block__sub">
+    <ul dir="ltr" class="m-translation-links">
+        {%- for link in value.links %}
+            {%- set render_link = value.language and link.language != value.language %}
+            <li>
+            {%- if render_link %}
+                <a href="{{ link.href }}"
+                lang="{{ link.language }}"
+                hreflang="{{ link.language }}"
+                translate="no">
+            {%- endif %}
+            {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
+            {% if render_link %}
+                </a>
+            {% endif -%}
+            </li>
+        {% endfor -%}
+    </ul>
+</div>

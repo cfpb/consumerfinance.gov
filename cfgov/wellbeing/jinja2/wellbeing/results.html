@@ -49,32 +49,31 @@
 
 {% block content_main %}
     <h1>{{ _('Your financial well-being score') }}</h1>
-
-{% if user_score %}
-    <p class="lead-paragraph">
-        {{ _('You’ve taken a good step in understanding your financial picture.') }}
-    </p>
-{% elif (current_language == 'en') %}
-    <div class="u-mb15">
-        {{ notification.render(
-            'warning',
-            true,
-            'We never collect or store answers to the financial well-being questionnaire.',
-	          'If you would like to see your score and answers on the page below,
-            please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
-        ) }}
-    </div>
-{% else %}
-    <div class="u-mb15">
-        {{ notification.render(
-            'warning',
-            true,
-            'No guardamos sus respuestas.',
-            'Si usted desea obtener su puntuación y respuestas en esta página,
-            necesita completar el <a href="../">cuestionario</a>.' | safe
-        ) }}
-    </div>
-{% endif %}
+    {% if user_score %}
+        <p class="lead-paragraph">
+            {{ _('You’ve taken a good step in understanding your financial picture.') }}
+        </p>
+    {% elif (current_language == 'en') %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'We never collect or store answers to the financial well-being questionnaire.',
+                'If you would like to see your score and answers on the page below,
+                please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
+            ) }}
+        </div>
+    {% else %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'No guardamos sus respuestas.',
+                'Si usted desea obtener su puntuación y respuestas en esta página,
+                necesita completar el <a href="../">cuestionario</a>.' | safe
+            ) }}
+        </div>
+    {% endif %}
 
 
     <p>
@@ -474,16 +473,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <p>
-        {% if (current_language == 'en') %}
-        <a href="{{ url('fwb_results_es') }}">Ver página en español</a>
-        {% else %}
-        <a href="{{ url('fwb_results_en') }}">View page in English</a>
-        {% endif %}
-    </p>
-
     {% if (current_language == 'en') %}
-    <div class="block">
+    <div class="block block__flush-top">
         <header class="m-slug-header">
             <h2 class="m-slug-header_heading">Looking for more help?</h2>
         </header>
@@ -520,7 +511,7 @@
         </ul>
     </div>
     {% endif %}
-    <div class="block">
+    <div class="block block__flush-top">
         <header class="m-slug-header">
             <h2 class="m-slug-header_heading">{{ _('About this questionnaire') }}</h2>
         </header>

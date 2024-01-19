@@ -64,6 +64,21 @@
 
         <h2>{{ _('Here’s how it works:') }}</h2>
 
+        {% set value = {
+            'links': [
+            {
+                'href': url('fwb_home_en'),
+                'language': 'en',
+                'text': 'English'
+            },{
+                'href': url('fwb_home_es'),
+                'language': 'es',
+                'text': 'Spanish'
+            }]
+        } %}
+        {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
+        {% include "_translation-links.html" %}
+
         <p>
             <b>{{ _('Answer the questions and get your score.') }}</b>
             {{ _('You won’t be asked about any personal financial data—it’s not that kind of questionnaire.') }}
@@ -938,14 +953,7 @@
 {%- endblock %}
 
 {% block content_sidebar -%}
-    <p>
-        {% if (current_language == 'en') %}
-        <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
-        {% else %}
-        <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
-        {% endif %}
-    </p>
-    <div class="block">
+    <div class="block block__flush-top">
         <h3>{{ _('About us') }}</h3>
         <p>
             {{ _('We&#39;re the Consumer Financial Protection Bureau (CFPB),') }}
