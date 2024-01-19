@@ -34,6 +34,8 @@
         <h1>
             {{ page.question | striptags }}
         </h1>
+
+        {% include "v1/includes/molecules/translation-links.html" %}
     </div>
     <div class="block
                 block__flush-top">
@@ -103,23 +105,9 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
-    {% if sibling_url %}
-        <a class="a-link a-link__jump" href="{{ sibling_url }}">
-            <span class="a-link_text">
-            {% if page.language == 'es'%}
-                View page in English
-            {% else %}
-                Ver página en español
-            {% endif %}
-            </span>
-        </a>
-    {% endif %}
-
     {% if about_us %}
         <div class="block
-                    {% if not sibling_url %}
                     block__flush-top
-                    {% endif %}
                     about-us-text">
             {{ about_us.text | richtext }}
         </div>

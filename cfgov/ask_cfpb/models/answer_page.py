@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 from django.db import models
 from django.utils.html import strip_tags
@@ -267,15 +268,6 @@ class AnswerPage(CFGOVPage):
 
     template = "ask-cfpb/answer-page.html"
 
-    def get_sibling_url(self):
-        if self.answer_base:
-            if self.language == "es":
-                sibling = self.answer_base.english_page
-            else:
-                sibling = self.answer_base.spanish_page
-            if sibling and sibling.live:
-                return sibling.url
-
     def get_meta_description(self):
         """Determine what the page's meta and OpenGraph description should be
 
@@ -332,8 +324,32 @@ class AnswerPage(CFGOVPage):
         )
         context["about_us"] = get_standard_text(self.language, "about_us")
         context["disclaimer"] = get_standard_text(self.language, "disclaimer")
-        context["sibling_url"] = self.get_sibling_url()
         return context
+
+    def get_translation_links(self, request, inclusive=True, live=True):
+        """Get translation links for this page.
+
+        Ask CFPB AnswerPages don't use the standard CFGOVPage approach to
+        link between translations.
+        """
+        language_names = dict(settings.LANGUAGES)
+
+        translations = {
+            "en": self.answer_base.english_page,
+            "es": self.answer_base.spanish_page,
+        }
+
+        translations[self.language] = self
+
+        return [
+            {
+                "href": translation.get_url(request=request),
+                "language": translation.language,
+                "text": language_names[translation.language],
+            }
+            for translation in translations.values()
+            if translation and (not live or translation.live)
+        ]
 
     def answer_text(self):
         strings = []
