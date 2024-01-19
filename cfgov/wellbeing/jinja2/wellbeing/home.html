@@ -62,14 +62,6 @@
     {% include "_templates/no_js.html" %}
     <div class="u-js-only">
 
-        <p>
-        {% if (current_language == 'en') %}
-        <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
-        {% else %}
-        <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
-        {% endif %}
-        </p>
-
         <h2>{{ _('Here’s how it works:') }}</h2>
 
         <p>
@@ -946,7 +938,14 @@
 {%- endblock %}
 
 {% block content_sidebar -%}
-    <div class="block block__flush-top">
+    <p>
+        {% if (current_language == 'en') %}
+        <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
+        {% else %}
+        <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
+        {% endif %}
+    </p>
+    <div class="block">
         <h3>{{ _('About us') }}</h3>
         <p>
             {{ _('We&#39;re the Consumer Financial Protection Bureau (CFPB),') }}
@@ -970,19 +969,7 @@
         </a>
     </div>
 
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
-        </header>
-        <p>
-            {{ _('The content on this page provides general consumer information.') }}
-            {{ _('It is not legal advice or regulatory guidance.') }}
-            {{ _('The CFPB updates this information periodically.') }}
-            {{ _('This information may include links or references to third-party resources or content.') }}
-            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
-            {{ _('There may be other resources that also serve your needs.') }}
-        </p>
-    </div>
+    {% include '_disclaimer.html' %}
 {%- endblock %}
 
 {% block javascript scoped %}

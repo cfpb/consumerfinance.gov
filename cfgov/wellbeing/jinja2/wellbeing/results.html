@@ -474,8 +474,16 @@
 {% endblock %}
 
 {% block content_sidebar %}
+    <p>
+        {% if (current_language == 'en') %}
+        <a href="{{ url('fwb_results_es') }}">Ver página en español</a>
+        {% else %}
+        <a href="{{ url('fwb_results_en') }}">View page in English</a>
+        {% endif %}
+    </p>
+
     {% if (current_language == 'en') %}
-    <div class="block block__flush-top">
+    <div class="block">
         <header class="m-slug-header">
             <h2 class="m-slug-header_heading">Looking for more help?</h2>
         </header>
@@ -525,19 +533,7 @@
         </a>
     </div>
 
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
-        </header>
-        <p>
-            {{ _('The content on this page provides general consumer information.') }}
-            {{ _('It is not legal advice or regulatory guidance.') }}
-            {{ _('The CFPB updates this information periodically.') }}
-            {{ _('This information may include links or references to third-party resources or content.') }}
-            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
-            {{ _('There may be other resources that also serve your needs.') }}
-        </p>
-    </div>
+    {% include '_disclaimer.html' %}
 {% endblock %}
 
 {% block javascript scoped %}
