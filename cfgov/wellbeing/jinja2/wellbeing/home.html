@@ -77,7 +77,7 @@
             }]
         } %}
         {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-        {% include "_translation-links.html" %}
+        {% include "v1/includes/molecules/translation-links.html" %}
 
         <p>
             <b>{{ _('Answer the questions and get your score.') }}</b>

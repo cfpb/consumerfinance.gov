@@ -40,7 +40,7 @@
         }]
     } %}
     {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-    {% include "_translation-links.html" %}
+    {% include "v1/includes/molecules/translation-links.html" %}
 
     <p class="lead-paragraph">
         {{ _('At the CFPB, we work to help consumers like you take control of your financial life to reach your own life goals,') }}

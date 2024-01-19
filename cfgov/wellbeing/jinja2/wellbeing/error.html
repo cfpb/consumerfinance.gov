@@ -33,7 +33,7 @@
         }]
     } %}
     {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-    {% include "_translation-links.html" %}
+    {% include "v1/includes/molecules/translation-links.html" %}
 
     <p class="lead-paragraph">
         {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}
