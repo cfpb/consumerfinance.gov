@@ -1,4 +1,4 @@
-FROM python:3.8-alpine as base
+FROM python:3.13.0a3-alpine as base
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
