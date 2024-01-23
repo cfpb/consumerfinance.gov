@@ -23,7 +23,7 @@ class RegionViewSetTests(WagtailTestUtils, TestCase):
             name="Houston", state_id=texas.pk, region_id=usa.pk
         )
 
-        index_url = reverse("wagtailsnippets_jobmanager_region:index")
+        index_url = reverse("wagtailsnippets_jobmanager_region:list")
         response = self.client.get(index_url)
 
         self.assertContains(response, "Texas, Utah")

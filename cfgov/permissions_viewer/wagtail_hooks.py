@@ -31,7 +31,7 @@ def register_settings_menu_item():
     return MenuItem(
         "Permissions",
         reverse("permissions:index"),
-        classnames="icon icon-unlocked",
+        classname="icon icon-unlocked",
     )
 
 

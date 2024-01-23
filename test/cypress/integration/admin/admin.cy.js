@@ -28,10 +28,11 @@ describe('Admin', () => {
   });
 
   it('should add a Contact Snippet', () => {
+    const heading = 'Test heading';
     admin.openContacts();
-    admin.addContact();
+    admin.addContact(heading);
     admin.successBanner().should('be.visible');
-    admin.searchContact('Test heading');
+    admin.searchContact(heading);
     admin.removeContact();
     admin.successBanner().should('be.visible');
   });
