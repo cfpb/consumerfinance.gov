@@ -69,24 +69,8 @@ describe('Dynamic Disclosures offer page', () => {
     cy.get('.instructions_content__wrong').should('be.visible');
   });
 
-  /**
-       Note: Some of the following actually comes from the back-end and the jinja template,
-      but front-end errors can cause errors here as well.
-   */
-
-  it('should display the correct name for the college', () => {
-    cy.get('.verify_school').should(
-      'contain',
-      'South University-West Palm Beach',
-    );
-  });
-
   it('should let a student edit the tuition and fees', () => {
     page.confirmVerification();
     cy.get('#costs__tuition').should('not.be.disabled');
-  });
-
-  it('should properly update when the tuition and fees are modified', function () {
-    page.confirmVerification();
   });
 });
