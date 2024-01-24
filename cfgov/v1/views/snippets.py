@@ -15,7 +15,6 @@ from v1.models import (
     EmailSignUp,
     PortalCategory,
     PortalTopic,
-    RelatedResource,
     Resource,
     ReusableText,
 )
@@ -60,14 +59,6 @@ class PortalTopicViewSet(SnippetViewSet):
     list_display = ["heading", "heading_es"]
     ordering = ["heading"]
     search_fields = ["heading", "heading_es"]
-
-
-class RelatedResourceViewSet(SnippetViewSet):
-    model = RelatedResource
-    menu_icon = "snippet"
-    list_display = ["title", "text"]
-    ordering = ["title"]
-    search_fields = ["title", "text"]
 
 
 class ResourceTagsFilter(WagtailFilterSet):

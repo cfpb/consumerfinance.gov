@@ -39,10 +39,10 @@ class AskAnswerContent(blocks.StreamBlock):
         ]
     )
     table = organisms.Table()
-    tip = Tip()
+    tip = Tip(label="Tip (floats right)")
     video_player = organisms.VideoPlayer()
-    how_to_schema = HowTo()
-    faq_schema = FAQ()
+    how_to_schema = HowTo(label="Google Schema - How To")
+    faq_schema = FAQ(label="Google Schema - FAQ")
 
     class Meta:
         template = "v1/includes/blocks/schema/content-block.html"

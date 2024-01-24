@@ -7,45 +7,4 @@
     TODO: convert layout-2-1 to a grid layout.
 #}
 
-{% if page and page.language == 'ar' %}
-
-{% extends 'v1/layouts/layout-2-1-rtl.html' %}
-
-{% else %}
-
-{% extends 'v1/layouts/base.html' %}
-
-{% block content scoped %}
-    <main class="content content__2-1 content__bleedbar {% block content_modifiers -%}{%- endblock %}"
-          id="main">
-        {% block hero -%}{%- endblock %}
-        {% block pre_content scoped -%}
-            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
-                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-            {% endif %}
-
-            {% if breadcrumb_items | length > 0 %}
-                <div class="content_wrapper">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
-                </div>
-            {% endif %}
-        {%- endblock %}
-        {% block body_content scoped %}
-        {% if not page or (page and page.language != 'ar') %}
-        <div class="content_wrapper">
-            <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-                <section>
-                    {% block content_main scoped -%}{%- endblock %}
-                </section>
-            </div>
-            <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
-                {% block content_sidebar scoped -%}{%- endblock %}
-            </aside>
-        </div>
-        {% endif %}
-        {% endblock %}
-    </main>
-{% endblock %}
-
-{% endif %}
+{% extends 'v1/layouts/layout-2-1-rtl.html' if page and page.language == 'ar' else 'v1/layouts/layout-2-1-ltr.html' %}

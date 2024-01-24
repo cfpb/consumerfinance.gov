@@ -39,7 +39,7 @@
                 <div>
                 {% for question in results %}
                     <article class="question_summary">
-                        <p class="question_title"><a href="{{ question[0] }}">{{ question[1]|safe }}</a></p>
+                        <p class="question_title"><a href="{{ question[0] }}">{{ question[1] | safe }}</a></p>
                         <p>{{ question[2] }}</p>
                     </article>
                 {% endfor %}
@@ -59,32 +59,30 @@
 
         {% elif not results and page.query %}
 
-        <section class="search-results
-                        block
-                        block__flush-top">
-            <div data-gtm_ask-no-results="true">
-                {% if tag %}
-                    <h3 class="results-header">{{ _('No results found for') }} “{{ tag }}”</h3>
-                {% else %}
-                    <h3 class="results-header">{{ _('No results found for') }} “{{ page.query }}”</h3>
-                {% endif %}
+            <section class="search-results
+                            block
+                            block__flush-top">
+                <div data-gtm_ask-no-results="true">
+                    <h3 class="results-header">
+                        {{ _('No results found for') }} “{{ tag or page.query }}”
+                    </h3>
 
                     {% if page.suggestion %}
-                    <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
+                        <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}
-                </p>
-            </div>
-        </section>
+                    </p>
+                </div>
+            </section>
 
         {% else %}
 
-        <section class="search-results
-                        block
-                        block__flush-top">
-            <h4>
-                {{ _('Please enter a search term in the box above.') }}
-            </h4>
-        </section>
+            <section class="search-results
+                            block
+                            block__flush-top">
+                <h4>
+                    {{ _('Please enter a search term in the box above.') }}
+                </h4>
+            </section>
 
         {% endif %}
     </div>
@@ -96,15 +94,13 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-<div class="block block__flush-top u-mb45 about-us-text">
     {% if about_us %}
-        {{ about_us.text | richtext }}
+        <div class="block block__flush-top u-mb45 about-us-text">
+            {{ about_us.text | richtext }}
+        </div>
     {% endif %}
-</div>
-<div class="block block__border-top block__padded-top disclaimer-text">
+
     {% if disclaimer %}
-        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-        {{ disclaimer.text | richtext }}
+        {% include '_disclaimer.html' %}
     {% endif %}
-</div>
 {%- endblock %}

@@ -7,16 +7,18 @@ export class DynamicDisclosures {
     return cy.get('#estimated-years-attending');
   }
 
-  confirmVerification() {
-    cy.get('a[href="#info-right"]').click({ force: true });
+  confirmVerification(forceParam = false) {
+    cy.get('a[href="#info-right"]').click({ force: forceParam });
   }
 
-  denyVerification() {
-    cy.get('a[href="#info-wrong"]').click({ force: true });
+  denyVerification(forceParam = false) {
+    cy.get('a[href="#info-wrong"]').click({ force: forceParam });
   }
 
-  stepTwo() {
-    cy.get('.continue.step .continue_controls button').click({ force: true });
+  stepTwo(forceParam) {
+    cy.get('.continue.step .continue_controls button').click({
+      force: forceParam,
+    });
   }
 
   typeText(name, value) {

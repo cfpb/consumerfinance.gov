@@ -103,25 +103,24 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-<a class="a-link a-link__jump"
-   href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas/'}}">
-    <span class="a-link_text">
-    {% if page.language == 'es'%}
-        View page in English
-    {% else %}
-        Ver página en español
+    <a class="a-link a-link__jump"
+    href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas/'}}">
+        <span class="a-link_text">
+        {% if page.language == 'es'%}
+            View page in English
+        {% else %}
+            Ver página en español
+        {% endif %}
+        </span>
+    </a>
+
+    {% if about_us %}
+        <div class="block u-mt45 u-mb45 about-us-text">
+            {{ about_us.text | richtext }}
+        </div>
     {% endif %}
-    </span>
-</a>
-{% if about_us %}
-<div class="block u-mt45 u-mb45 about-us-text">
-    {{ about_us.text | richtext }}
-</div>
-{% endif %}
-{% if disclaimer %}
-<div class="block block__border-top block__padded-top disclaimer-text">
-    <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-    {{ disclaimer.text | richtext }}
-</div>
-{% endif %}
+
+    {% if disclaimer %}
+        {% include '_disclaimer.html' %}
+    {% endif %}
 {%- endblock %}

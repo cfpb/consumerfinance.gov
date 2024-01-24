@@ -67,26 +67,6 @@ class Contact(models.Model):
         ordering = ["heading"]
 
 
-class RelatedResource(models.Model):
-    title = models.CharField(max_length=255)
-    title_es = models.CharField(max_length=255, blank=True, null=True)
-    text = RichTextField(blank=True, null=True)
-    text_es = RichTextField(blank=True, null=True)
-
-    def trans_title(self, language="en"):
-        if language == "es":
-            return self.title_es or ""
-        return self.title or ""
-
-    def trans_text(self, language="en"):
-        if language == "es":
-            return self.text_es or ""
-        return self.text or ""
-
-    def __str__(self):
-        return self.title
-
-
 class EmailSignUp(RevisionMixin, models.Model):
     topic = models.CharField(
         verbose_name="Topic name (internal only)",
