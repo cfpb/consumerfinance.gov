@@ -40,7 +40,7 @@ def user_listing_buttons(context, user):
     yield UserListingButton(
         "View Permissions",
         reverse("permissions:user", args=[user.pk]),
-        classes={"button-secondary"},
+        classname="button-secondary",
         attrs={"title": "View permissions for this user"},
         priority=15,
     )
