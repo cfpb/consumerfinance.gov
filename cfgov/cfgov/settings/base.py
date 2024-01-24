@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     "ratechecker",
     "rest_framework",
     "wagtail_modeladmin",
+    "wagtail_draftail_anchors",
 )
 
 MIDDLEWARE = (
@@ -689,6 +690,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "superscript",
                 "blockquote",
                 "link",
+                "anchor-identifier",
                 "document-link",
                 "image",
             ]
@@ -761,3 +763,5 @@ ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
 WAGTAILADMIN_BASE_URL = os.getenv(
     "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
 )
+
+DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"
