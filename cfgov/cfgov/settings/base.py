@@ -667,6 +667,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         "WIDGET": "wagtail.admin.rich_text.DraftailRichTextArea",
         "OPTIONS": {
             "features": [
+                "anchor-identifier",
                 "h2",
                 "h3",
                 "h4",
@@ -679,7 +680,6 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "superscript",
                 "blockquote",
                 "link",
-                "anchor-identifier",
                 "document-link",
                 "image",
             ]
