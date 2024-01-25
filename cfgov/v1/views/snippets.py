@@ -2,12 +2,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.forms.utils import flatatt
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.ui.tables import BooleanColumn, Column
 from wagtail.images.shortcuts import get_rendition_or_not_found
 from wagtail.snippets.views.snippets import SnippetViewSet
-
-import django_filters
 
 from v1.models import (
     Banner,
@@ -15,7 +12,6 @@ from v1.models import (
     EmailSignUp,
     PortalCategory,
     PortalTopic,
-    Resource,
     ReusableText,
 )
 
@@ -61,29 +57,6 @@ class PortalTopicViewSet(SnippetViewSet):
     search_fields = ["heading", "heading_es"]
 
 
-class ResourceTagsFilter(WagtailFilterSet):
-    tags = django_filters.MultipleChoiceFilter(method="filter_by_all_tags")
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.filters["tags"].extra["choices"] = (
-            Resource.objects.values_list("tags__slug", "tags__name")
-            .exclude(tags__slug__isnull=True)
-            .order_by("tags__name")
-            .distinct()
-        )
-
-    def filter_by_all_tags(self, queryset, name, value):
-        for tag_slug in value:
-            queryset = queryset.filter(tags__slug=tag_slug)
-
-        return queryset
-
-    class Meta:
-        model = Resource
-        fields = ["tags"]
-
-
 class ThumbnailColumn(Column):
     """Display a snippet column as an image thumbnail.
 
@@ -119,21 +92,6 @@ class ThumbnailColumn(Column):
         }
 
         return mark_safe(f"<img{flatatt(img_attrs)}>")
-
-
-class ResourceViewSet(SnippetViewSet):
-    model = Resource
-    menu_label = "Resources"
-    menu_icon = "snippet"
-    list_display = [
-        "title",
-        "desc",
-        "order",
-        ThumbnailColumn("thumbnail", "width-100"),
-    ]
-    ordering = ["title"]
-    filterset_class = ResourceTagsFilter
-    search_fields = ["title"]
 
 
 class ReusableTextViewSet(SnippetViewSet):
