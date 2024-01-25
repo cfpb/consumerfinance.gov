@@ -334,10 +334,14 @@ class AnswerPage(CFGOVPage):
         """
         language_names = dict(settings.LANGUAGES)
 
-        translations = {
-            "en": self.answer_base.english_page,
-            "es": self.answer_base.spanish_page,
-        }
+        translations = (
+            {
+                "en": self.answer_base.english_page,
+                "es": self.answer_base.spanish_page,
+            }
+            if self.answer_base
+            else {}
+        )
 
         translations[self.language] = self
 
