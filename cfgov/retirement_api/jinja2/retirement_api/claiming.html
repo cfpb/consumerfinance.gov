@@ -31,13 +31,20 @@
                 <p class="lead-paragraph">
                     {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
                 </p>
-                <p>
-                    {% if current_language == 'es' %}
-                    <a href="../">View page in English</a>
-                    {% else %}
-                    <a href="es/">Ver página en español</a>
-                    {% endif %}
-                </p>
+                {% set value = {
+                    'links': [
+                    {
+                        'href': '../',
+                        'language': 'en',
+                        'text': 'English'
+                    },{
+                        'href': 'es/',
+                        'language': 'es',
+                        'text': 'Spanish'
+                    }]
+                } %}
+                {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
+                {% include "v1/includes/molecules/translation-links.html" %}
                 <div class="o-well">
                     {% if current_language == 'en' %}
                     <p>The Social Security Administration offers
@@ -65,7 +72,7 @@
               block__padded-top
               block__border-top
               block__flush-bottom
-              u-js-only">        
+              u-js-only">
               <div class="content-l">
                 <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
                 <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
@@ -511,10 +518,8 @@
                     also increase your regular income by claiming at your full Social
                     Security benefit age or later. If you claim earlier, your monthly
                     benefit could be reduced by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -532,10 +537,8 @@
                     also increase your regular income by claiming at your full Social
                     Security benefit age or later. If you claim earlier, your monthly
                     benefit could be reduced by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -553,10 +556,8 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -574,10 +575,8 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -595,10 +594,8 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -616,10 +613,8 @@
                     income by claiming at your full Social Security benefit age or
                     later. If you claim earlier, your monthly benefit could be reduced
                     by as much as 30 percent.
-                    <a
-                        data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
-                        href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
@@ -658,10 +653,8 @@
                     gap and maximize your monthly benefit. If you claim before your
                     full retirement age, your monthly benefit could be reduced by as
                     much as 30 percent.
-                    <a
-                        data-pretty-href="https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement"
-                        href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Ffor-savers%2Fset-a-goal-what-to-save-for%2Fsave-for-retirement&amp;signature=cWAKF3R5TYhmLgV5uR4O8EneMgc"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about saving for retirement</span>
                     </a>.
                     {% endblock %}
@@ -688,9 +681,8 @@
                     Lastly, avoid losing your retirement savings to unnecessary tax
                     penalties. If you withdraw your 401(k) or IRA savings before age
                     59½, you will likely face an early withdrawal penalty.
-                    <a data-pretty-href="https://tools.finra.org/savings_calculator/"
-                        href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://tools.finra.org/savings_calculator/"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about how retirement savings grow</span>
                     </a>.
                     {% endblock %}
@@ -718,9 +710,8 @@
                     be reduced by as much as 30 percent. On the other hand, you can
                     get extra increases for every month that you wait to claim past
                     your full benefit age until age 70.
-                    <a data-pretty-href="https://tools.finra.org/savings_calculator/"
-                        href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://tools.finra.org/savings_calculator/"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about how retirement savings grow</span>
                     </a>.
                     {% endblock %}
@@ -749,10 +740,8 @@
                     Social Security benefit age or later. When you claim before your
                     full retirement age, your monthly benefit could be reduced by as
                     much as 30 percent.
-                    <a
-                        data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras"
-                        href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://americasaves.org/blog/1345-the-faqs-of-iras"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about starting an IRA</span>
                     </a>.
                     {% endblock %}
@@ -777,10 +766,8 @@
                     age or later, you avoid a reduction in your monthly benefit. You
                     will also get increases for every month that you wait to claim
                     past your full benefit age until age 70.
-                    <a
-                        data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras"
-                        href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68"
-                        rel="noopener noreferrer" target="_blank">
+                    <a href="https://americasaves.org/blog/1345-the-faqs-of-iras"
+                       rel="noopener noreferrer" target="_blank">
                         <span class="a-link_text">Learn more about starting an IRA</span>
                     </a>.
                     {% endblock %}
