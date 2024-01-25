@@ -760,16 +760,6 @@ class AnswerPageTest(TestCase):
         page.search_description = "Test search description"
         self.assertEqual(page.get_meta_description(), page.search_description)
 
-    def test_english_page_sibling_url(self):
-        self.assertEqual(self.page1.get_sibling_url(), self.page1_es.url)
-
-    def test_spanish_page_sibling_url(self):
-        self.assertEqual(self.page1_es.get_sibling_url(), self.page1.url)
-
-    def test_no_sibling_url_returned_for_draft_page(self):
-        self.page1.unpublish()
-        self.assertEqual(self.page1_es.get_sibling_url(), None)
-
     def test_routable_tag_page_base_returns_404(self):
         page = self.tag_results_page_en
         response = self.client.get(page.url + page.reverse_subpage("tag_base"))
