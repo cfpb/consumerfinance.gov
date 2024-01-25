@@ -114,33 +114,6 @@ info_unit_group = {
     },
 }
 
-snippet_list_show_thumbnails_false = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "show_thumbnails": False,
-    },
-}
-
-snippet_list_show_thumbnails_true = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "show_thumbnails": True,
-    },
-}
-
-snippet_list_actions_column_width_40 = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "actions_column_width": "40",
-    },
-}
-
 table_block = {
     "type": "table_block",
     "value": {
