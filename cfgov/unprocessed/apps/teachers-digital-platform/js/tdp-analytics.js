@@ -2,16 +2,10 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Sends the user interaction to Analytics
- * @param {string} action - The user's action
- * @param {string} label - The label associated with the action
+ * @param {object} payload - Payload of arbitrary key/value analytics data.
  * @returns {object} Event data
  */
-let sendEvent = (action, label) => {
-  const payload = {
-    event: 'TDP Search Tool',
-    action: action,
-    label: label,
-  };
+let sendEvent = (payload) => {
   analyticsSendEvent(payload);
   return payload;
 };
@@ -191,9 +185,11 @@ const handleClearAllClick = (event) => {
   if (tagNames.length === 0) {
     return;
   }
-  const action = 'clear all filters';
-  const label = tagNames.join('|');
-  return sendEvent(action, label);
+
+  return sendEvent({
+    event: 'clear_button_click',
+    button_label: tagNames.join('|'),
+  });
 };
 
 /**
@@ -215,17 +211,22 @@ const handleFetchSearchResults = (searchTerm) => {
 
     // Check if result count is 0
     if (resultsCount === '0') {
-      const action = 'noSearchResults';
-      const label = searchTerm.toLowerCase() + ':0';
-
-      sendEvent(action, label);
+      sendEvent({
+        event: 'search',
+        search_term: searchTerm.toLowerCase() + ':0',
+        results_count: 0,
+        no_search_results: true,
+      });
+    } else {
+      // Send the keyword to Analytics.
+      sendEvent({
+        event: 'search',
+        search_term: searchTerm.toLowerCase(),
+        results_count: resultsCount,
+        no_search_results: false,
+      });
     }
   }
-
-  // Send the keyword to Analytics.
-  const action = 'search';
-  const label = searchTerm.toLowerCase();
-  sendEvent(action, label);
 };
 
 /**
@@ -234,6 +235,8 @@ const handleFetchSearchResults = (searchTerm) => {
  */
 const bindAnalytics = (spyMethod) => {
   if (spyMethod) {
+    // TODO: sendEvent exists so it can be mocked in the unit tests.
+    //       Look into calling rewriting the tests to mock analyticsSendEvent.
     sendEvent = spyMethod;
   }
 
