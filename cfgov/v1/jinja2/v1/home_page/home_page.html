@@ -12,7 +12,7 @@
 content_main__flush-inner
 {%- endblock %}
 
-{% block hero %}
+{% block content_intro %}
     {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
 
     <section class="content_level--1">
@@ -50,7 +50,7 @@ content_main__flush-inner
             </div>
         </section>
     </section>
-{% endblock hero %}
+{% endblock %}
 
 {% block content_main %}
     {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
