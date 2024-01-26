@@ -18,8 +18,7 @@
     {% if limit %}{% set posts = posts[ :limit | int ] %}{% endif %}
     <ul class="m-related-posts_list
                m-list
-               m-list__unstyled
-               m-list__spaced">
+               m-list__unstyled">
         {% for post in posts %}
             {% set post_url = post.url or '' %}
             <li class="m-list_item">
@@ -74,14 +73,10 @@
                             icon for each post sublist will be shown.
                             Optional, default false.
 
-   value.half_width:        Boolean indicating whether the posts should be at
-                            half width. Optional, default false.
-
    ========================================================================== #}
 
 {% macro render( value ) %}
-<div class="m-related-posts
-    {{'m-related-posts__half-width' if value.half_width else '' }}">
+<div class="m-related-posts">
     <header class="m-slug-header">
         <h2 class="m-slug-header_heading">
             {{ value.header_title }}
@@ -112,10 +107,6 @@
 {%- if value %}
 
 {# Consolidate additional context variables into the single "value" dict. #}
-
-{% if half_width is defined and not "half_width" in value %}
-    {% do value.update( { "half_width": half_width } ) %}
-{% endif %}
 
 {% if posts is defined and not "posts" in value %}
     {% do value.update( { "posts": posts } ) %}

@@ -52,7 +52,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.forms",
     "wagtail.sites",
     "wagtail.contrib.routable_page",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.typed_table_block",
     "wagtail.contrib.settings",
     "localflavor",
@@ -111,6 +110,8 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
+    "wagtail_draftail_anchors",
 )
 
 MIDDLEWARE = (
@@ -279,14 +280,6 @@ STATICFILES_DIRS += [
 ]
 
 ALLOWED_HOSTS = ["*"]
-
-EXTERNAL_URL_ALLOWLIST = (
-    r"^https:\/\/facebook\.com\/cfpb$",
-    r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: E501
-    r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
-    r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
-)
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
@@ -662,9 +655,6 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
-    # External site interstitial (if we're here, the links have already been
-    # parsed)
-    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
@@ -677,6 +667,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         "WIDGET": "wagtail.admin.rich_text.DraftailRichTextArea",
         "OPTIONS": {
             "features": [
+                "anchor-identifier",
                 "h2",
                 "h3",
                 "h4",
@@ -752,12 +743,10 @@ except (TypeError, ValueError):
         "Expected a JSON array of allowed origins."
     )
 
-# A list of domain names that are allowed to be linked to without adding the
-# interstitial page.
-ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
-
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = os.getenv(
     "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
 )
+
+DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"

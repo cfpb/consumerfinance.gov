@@ -130,27 +130,25 @@ class TestParseLinks(TestCase):
         )
 
     def test_non_gov_link(self):
-        """Non gov links get external link icon and redirect."""
+        """Non gov links get external link icon."""
         link = '<body><a href="https://google.com">external link</a></body>'
         output = parse_links(link)
-        self.assertIn("external-site", output)
         self.assertIn("cf-icon-svg", output)
 
     def test_gov_link(self):
-        """Gov links get external link icon but not redirect."""
+        """External gov links get external link icon."""
         link = '<body><a href="https://www.fdic.gov/bar">gov link</a></body>'
         output = parse_links(link)
         self.assertIn("cf-icon-svg", output)
 
     def test_internal_link(self):
-        """Internal links get neither icon nor redirect."""
+        """Internal links do not get external link icon."""
         link = """
         <body>
             <a href="https://www.consumerfinance.gov/foo">cfpb link</a>
         </body>
         """
         output = parse_links(link)
-        self.assertNotIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_files_get_download_icon(self):
@@ -187,7 +185,6 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_external_link_outside_body_with_attributes(self):
@@ -197,7 +194,6 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_external_link_with_attribute(self):
@@ -207,13 +203,11 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertIn("external-site", output)
         self.assertIn("cf-icon-svg", output)
 
     def test_external_link_with_img(self):
         s = '<body><a href="https://somewhere"><img src="some.png"></a></body>'
         output = parse_links(s)
-        self.assertIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_external_link_with_background_img(self):
@@ -225,13 +219,11 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_external_link_with_header(self):
         s = '<body><a href="https://somewhere"><h3>Header</h3></a></body>'
         output = parse_links(s)
-        self.assertIn("external-site", output)
         self.assertNotIn("cf-icon-svg", output)
 
     def test_multiline_external_gov_link(self):

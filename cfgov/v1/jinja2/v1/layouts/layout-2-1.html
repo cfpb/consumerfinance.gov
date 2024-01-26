@@ -1,38 +1,43 @@
-{#
-    In order to flip the sidebar on arabic pages, a new layout-2-1-rtl template
-    is created that applies CSS grid classes to position the layout.
-    This is intended as a temporary layout until additional page types can have
-    their particular layout classes reconcilated with these new CSS grid
-    classes.
-    TODO: convert layout-2-1 to a grid layout.
-#}
+{% extends 'v1/layouts/base.html' %}
 
-{% if page and page.language == 'ar' %}
+{% if page and not breadcrumb_items %}
+{% set breadcrumb_items = page.get_breadcrumbs(request) %}
+{% endif %}
 
-{% extends 'v1/layouts/layout-2-1-rtl.html' %}
+{% block content scoped %}
+    <main class="u-layout-grid u-layout-grid__2-1 {% block content_modifiers -%}{%- endblock %}"
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
 
-{% else %}
+        {% if self.content_intro() %}
+        <div class="u-layout_content-intro">
+            {% block content_intro scoped -%}{%- endblock %}
+        </div>
+        {% endif %}
 
-{% extends 'v1/layouts/content-base.html' %}
+        <div class="u-layout-grid_wrapper">
 
-{% block body_content scoped %}
-{{ super() }}
-{% if not page or (page and page.language != 'ar') %}
-<div class="content_wrapper">
-    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-        <section>
+        {% block pre_content scoped -%}
+            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
+                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+            {% endif %}
+
+            {% if breadcrumb_items | length > 0 %}
+                <div class="u-layout-grid_breadcrumbs">
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                {{ breadcrumbs.render(breadcrumb_items) }}
+                </div>
+            {% endif %}
+        {%- endblock %}
+
+        {% block body_content scoped %}
+        <div class="u-layout-grid_main">
             {% block content_main scoped -%}{%- endblock %}
-        </section>
-    </div>
-    <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
-        {% block content_sidebar scoped -%}{%- endblock %}
-    </aside>
-</div>
-{% endif %}
+        </div>
+        <aside class="u-layout-grid_sidebar">
+            {% block content_sidebar scoped -%}{%- endblock %}
+        </aside>
+        {% endblock %}
+        </div>
+    </main>
 {% endblock %}
-
-{% block content_modifiers -%}
-    content__2-1 content__bleedbar
-{%- endblock %}
-
-{% endif %}

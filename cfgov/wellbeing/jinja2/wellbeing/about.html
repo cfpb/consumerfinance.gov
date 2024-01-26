@@ -19,22 +19,29 @@
 {%- endblock %}
 
 {% block og_image %}
-        <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 
 {% block content_main %}
-
-    <p>
-      {% if (current_language == 'en') %}
-      <a href="{{ url('fwb_about_es') }}">Ver página en español</a>
-      {% else %}
-      <a href="{{ url('fwb_about_en') }}">View page in English</a>
-      {% endif %}
-    </p>
-
     <h1>{{ _('Why financial well-being?') }}</h1>
+
+    {% set value = {
+        'links': [
+        {
+            'href': url('fwb_about_en'),
+            'language': 'en',
+            'text': 'English'
+        },{
+            'href': url('fwb_about_es'),
+            'language': 'es',
+            'text': 'Spanish'
+        }]
+    } %}
+    {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
+    {% include "v1/includes/molecules/translation-links.html" %}
+
     <p class="lead-paragraph">
         {{ _('At the CFPB, we work to help consumers like you take control of your financial life to reach your own life goals,') }}
         {{ _('achieve financial peace of mind, and avoid pitfalls that can derail you.') }}
@@ -76,115 +83,84 @@
         <li>{{ _('Are on track to meet your financial goals') }}</li>
         <li>{{ _('Have the financial freedom to make the choices that allow you to enjoy life') }}</li>
     </ul>
-    <p>
-        {{ _('That’s why people with the same income, financial experiences, or education can have very different levels of financial well-being.') }}
-    </p>
-
-    <h2>{{ _('How does financial well-being look across America?') }}</h2>
-    <p>
-        {{ _('The tool allows you to compare your financial well-being score to other adults in the United States.') }}
-        {{ _('The comparison of your score to others’ scores is made possible by our national survey. In late 2016, we collected responses to our financial well-being scale in a nationwide survey of U.S. adults for the first time.') }}
-    </p>
-    <ul class="m-list m-list__links">
-        <li class="m-list_item">
-            <a class="m-list_link" href="/data-research/research-reports/financial-well-being-america/">
-                {{ _('See the report') }}
-            </a>
-        </li>
-    </ul>
-    {% if (current_language == 'es') %}
-    <p>
-        También puede comparar su puntuación con la de otros Hispanos o Latinos en el 2018.
-    </p>
-    <ul class="m-list m-list__links">
-        <li class="m-list_item">
-            <a class="m-list_link" href="/data-research/research-reports/measuring-financial-well-being-hispanics-2018-benchmarks/">
-                {{ _('See the report') }}
-            </a>
-        </li>
-    </ul>
-    {% endif %}
+    <div class="block block__flush-top">
+        <p>
+            {{ _('That’s why people with the same income, financial experiences, or education can have very different levels of financial well-being.') }}
+        </p>
+    </div>
 {% endblock %}
 
 {% block content_sidebar %}
     {% if (current_language == 'en') %}
-    <div class="block block__flush-top">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">For further reading and research</h2>
-        </header>
-        <p>
-            <a href="/consumer-tools/educator-tools/financial-well-being-resources/">See how to use financial well-being with the people you serve.</a>
-        </p>
-        <p>
-            <a href="/data-research/research-reports/financial-well-being/">Learn more about financial well-being</a>
-            and how we came to understand its meaning.
-        </p>
-        <p>
-            <a href="/data-research/research-reports/financial-well-being-scale/">View our guide to the Financial Well-Being Scale</a>,
-            how it was developed, and the importance of measuring financial well-being.
-        </p>
-        <p>
-            <a href="/data-research/research-reports/financial-well-being-america/">Read results of the National Financial Well-Being Survey</a>
-            with descriptions of how financial well-being varies among different groups.
-            You can also see our
-            <a href="/data-research/financial-well-being-survey-data/">national survey data</a>
-            (without personally identifying information)
-            so that others with an interest in this topic can
-            explore financial well-being nationwide.
-        </p>
-    </div>
+        <div class="block block__flush-top">
+            <header class="m-slug-header">
+                <h2 class="m-slug-header_heading">
+                    For further reading and research
+                </h2>
+            </header>
+            <p>
+                <a href="/consumer-tools/educator-tools/financial-well-being-resources/">See how to use financial well-being with the people you serve.</a>
+            </p>
+            <p>
+                <a href="/data-research/research-reports/financial-well-being/">Learn more about financial well-being</a>
+                and how we came to understand its meaning.
+            </p>
+            <p>
+                <a href="/data-research/research-reports/financial-well-being-scale/">View our guide to the Financial Well-Being Scale</a>,
+                how it was developed, and the importance of measuring financial well-being.
+            </p>
+            <p>
+                <a href="/data-research/research-reports/financial-well-being-america/">Read results of the National Financial Well-Being Survey</a>
+                with descriptions of how financial well-being varies among different groups.
+                You can also see our
+                <a href="/data-research/financial-well-being-survey-data/">national survey data</a>
+                (without personally identifying information)
+                so that others with an interest in this topic can
+                explore financial well-being nationwide.
+            </p>
+        </div>
 
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">Materials are publicly available for use at no cost</h2>
-        </header>
-        <p>
-            Anyone may reproduce, publish, or otherwise use this content
-            without the CFPB’s permission.
-            The CFPB logo appearing on this content and the name
-            “Consumer Financial Protection Bureau” are registered trademarks,
-            and they should not be used to imply CFPB endorsement of
-            or connection with an entity or activity.
-            Please refer to our
-            <a class="a-link
-                      a-link__icon
-                      a-link__icon-after-text"
-               href="https://cfpb.github.io/design-system/foundation/logo">
-                <span class="a-link_text">name and logo guidelines</span>
-                {{ svg_icon('external-link') -}}
-            </a>.
-        </p>
-        <a class="a-link__jump"
-           href="/data-research/research-reports/financial-well-being-scale/">
-            Download printable versions of the questionnaire in English and Spanish
-        </a>
-    </div>
+        <div class="block">
+            <header class="m-slug-header">
+                <h2 class="m-slug-header_heading">
+                    Materials are publicly available for use at no cost
+                </h2>
+            </header>
+            <p>
+                Anyone may reproduce, publish, or otherwise use this content
+                without the CFPB’s permission.
+                The CFPB logo appearing on this content and the name
+                “Consumer Financial Protection Bureau” are registered trademarks,
+                and they should not be used to imply CFPB endorsement of
+                or connection with an entity or activity.
+                Please refer to our
+                <a class="a-link
+                        a-link__icon
+                        a-link__icon-after-text"
+                href="https://cfpb.github.io/design-system/foundation/logo">
+                    <span class="a-link_text">name and logo guidelines</span>
+                    {{ svg_icon('external-link') -}}
+                </a>.
+            </p>
+            <a class="a-link__jump"
+            href="/data-research/research-reports/financial-well-being-scale/">
+                Download printable versions of the questionnaire in English and Spanish
+            </a>
+        </div>
     {% else %}
-    <div class="block block__flush-top">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">Recursos Adicionales</h2>
-        </header>
-        <p>
-            <a href="https://files.consumerfinance.gov/f/documents/201701_cfpb_FinancialWell-Being_Quick-Guide-Spanish.pdf">Escala de Bienestar Financiero del CFPB</a>:
-            Guía del Usuario
-        </p>
-        <p>
-            <a href="https://files.consumerfinance.gov/f/documents/bcfp_fin-well-being_full-scorecard_es.pdf">Escala de Bienestar Financiero del CFPB: Cuestionario y Hoja para la Tabulación</a>
-        </p>
-    </div>
+        <div class="block block__flush-top">
+            <header class="m-slug-header">
+                <h2 class="m-slug-header_heading">Recursos Adicionales</h2>
+            </header>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/documents/201701_cfpb_FinancialWell-Being_Quick-Guide-Spanish.pdf">Escala de Bienestar Financiero del CFPB</a>:
+                Guía del Usuario
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/documents/bcfp_fin-well-being_full-scorecard_es.pdf">Escala de Bienestar Financiero del CFPB: Cuestionario y Hoja para la Tabulación</a>
+            </p>
+        </div>
     {% endif %}
 
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
-        </header>
-        <p>
-            {{ _('The content on this page provides general consumer information.') }}
-            {{ _('It is not legal advice or regulatory guidance.') }}
-            {{ _('The CFPB updates this information periodically.') }}
-            {{ _('This information may include links or references to third-party resources or content.') }}
-            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
-            {{ _('There may be other resources that also serve your needs.') }}
-        </p>
-    </div>
+    {% include '_disclaimer.html' %}
 {% endblock %}

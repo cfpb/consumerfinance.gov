@@ -8,9 +8,8 @@ from cfgov import urls
 
 
 try:
-    from django.urls import URLPattern, URLResolver, re_path
+    from django.urls import URLPattern, URLResolver
 except ImportError:
-    from django.conf.urls import url as re_path
     from django.core.urlresolvers import RegexURLPattern as URLPattern
     from django.core.urlresolvers import RegexURLResolver as URLResolver
 
@@ -97,15 +96,7 @@ class AdminURLSTestCase(TestCase):
         reload(urls)
 
 
-def dummy_external_site_view(request):
-    pass  # pragma: no cover
-
-
 urlpatterns = [
-    # Needed for rendering of base template that calls reverse("external-site")
-    re_path(
-        r"^external-site/$", dummy_external_site_view, name="external-site"
-    ),
     urls.flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
 ]
 

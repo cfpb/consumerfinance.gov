@@ -55,26 +55,31 @@ export class AdminPage {
     this.selectSubMenu('Contacts');
   }
 
-  addContact() {
-    cy.get('a[href="/admin/v1/contact/create/"]:first').click();
-    cy.get('#id_heading').type('Test heading');
+  addContact(heading) {
+    cy.get('a[href="/admin/snippets/v1/contact/add/"]:first').click();
+    cy.get('#id_heading').type(heading);
     cy.get('.DraftEditor-root').type('Random Body');
     this.submitForm();
   }
 
-  searchContact(contact_heading) {
-    cy.get('#changelist-search').type(contact_heading);
-    cy.get('#changelist-search').type('{enter}');
+  searchContact(heading) {
+    cy.get('#id_q').type(heading);
+    cy.get('#id_q').type('{enter}');
+  }
+
+  getFirstOptionsDropdown() {
+    return cy.get(`button[aria-label^="More options for"]`).eq(0);
   }
 
   removeContact() {
-    cy.get('a[href^="/admin/v1/contact/delete/"]:first').click({ force: true });
+    this.getFirstOptionsDropdown().click();
+    cy.get('a[href^="/admin/snippets/v1/contact/delete/"]:first').click();
     cy.get('[value="Yes, delete"]').click();
   }
 
   addMortgageData(name) {
     cy.get(
-      `a[href="/admin/data_research/mortgage${name}/create/"]:first`,
+      `a[href="/admin/snippets/data_research/mortgage${name}/add/"]:first`,
     ).click();
     cy.get('#id_name').type('test');
     this.submitForm();
@@ -127,6 +132,7 @@ export class AdminPage {
   }
 
   editMegaMenu() {
+    this.getFirstOptionsDropdown('English').click();
     this.getFirstTableRow().contains('Edit').click({ force: true });
     this.submitForm();
   }
@@ -137,6 +143,7 @@ export class AdminPage {
   }
 
   editBuildingBlock() {
+    this.getFirstOptionsDropdown().click();
     this.getFirstTableRow().contains('Edit').click({ force: true });
     this.submitForm();
   }
@@ -147,6 +154,7 @@ export class AdminPage {
   }
 
   editApplicantType() {
+    this.getFirstOptionsDropdown().click();
     this.getFirstTableRow().contains('Edit').click({ force: true });
     this.submitForm();
   }
@@ -184,7 +192,7 @@ export class AdminPage {
   }
 
   submitForm() {
-    cy.get('form[method="POST"]').submit();
+    cy.get('main form[method="POST"]').submit();
   }
 
   getFirstTableRow() {

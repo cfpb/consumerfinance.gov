@@ -19,25 +19,30 @@ describe('Dynamic Disclosures', () => {
     '/paying-for-college2/understanding-your-financial-aid-offer/offer/?iped=224776&pid=444&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30';
 
   beforeEach(() => {
-    cy.intercept('GET', apiConstants, {
-      host: 'localhost',
-      fixture: 'paying-for-college/constants.json',
+    cy.intercept('GET', apiConstants, (req) => {
+      req.reply({
+        fixture: 'paying-for-college/constants.json',
+      });
     });
-    cy.intercept('GET', apiSchoolOne, {
-      host: 'localhost',
-      fixture: 'paying-for-college/school-133465.json',
+    cy.intercept('GET', apiSchoolOne, (req) => {
+      req.reply({
+        fixture: 'paying-for-college/school-133465.json',
+      });
     });
-    cy.intercept('GET', apiSchoolTwo, {
-      host: 'localhost',
-      fixture: 'paying-for-college/school-224776.json',
+    cy.intercept('GET', apiSchoolTwo, (req) => {
+      req.reply({
+        fixture: 'paying-for-college/school-224776.json',
+      });
     });
-    cy.intercept('GET', apiProgramOne, {
-      host: 'localhost',
-      fixture: 'paying-for-college/program-133465_5287.json',
+    cy.intercept('GET', apiProgramOne, (req) => {
+      req.reply({
+        fixture: 'paying-for-college/program-133465_5287.json',
+      });
     });
-    cy.intercept('GET', apiProgramTwo, {
-      host: 'localhost',
-      fixture: 'paying-for-college/program-224776_444.json',
+    cy.intercept('GET', apiProgramTwo, (req) => {
+      req.reply({
+        fixture: 'paying-for-college/program-224776_444.json',
+      });
     });
     cy.visit(urlOne);
   });
@@ -54,10 +59,9 @@ describe('Dynamic Disclosures', () => {
   it("should dynamically display the completion rate if it's available", () => {
     page.confirmVerification();
     page.stepTwo();
-    cy.get('[data-metric="gradRate"] .bar-graph_number').should(
-      'contain',
-      '26%',
-    );
+    cy.get('[data-metric="gradRate"]').should((elem) => {
+      expect(elem).to.contain('17%');
+    });
   });
 
   it("should dynamically display the expected monthly salary if it's available", () => {

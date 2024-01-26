@@ -1,14 +1,12 @@
 import logging
 
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import activate, get_language
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormMixin
 
-from core.forms import ExternalURLForm
 from core.govdelivery import get_govdelivery_api
 from core.utils import extract_answers_from_request
 
@@ -59,40 +57,6 @@ def govdelivery_subscribe(request):
             email_address, question_id, answer_text
         )
     return passing_response
-
-
-class ExternalURLNoticeView(FormMixin, TemplateView):
-    template_name = "external-site/index.html"
-    form_class = ExternalURLForm
-
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-
-        if self.request.method == "GET":
-            kwargs["data"] = self.request.GET
-
-        return kwargs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        form = self.get_form()
-        context["form"] = form
-
-        return context
-
-    def get(self, request):
-        form = self.get_form()
-
-        if not form.is_valid():
-            raise Http404(
-                "URL invalid, not whitelisted, or signature validation failed"
-            )
-
-        return super().get(request)
 
 
 class TranslatedTemplateView(TemplateView):

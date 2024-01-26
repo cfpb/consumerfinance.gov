@@ -1,105 +1,12 @@
-from django.contrib.auth.models import Permission, User
-from django.core.exceptions import PermissionDenied
-from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.contrib.auth.models import Permission
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
-from wagtail import hooks
-from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
-from wagtail.admin.views.pages.delete import delete
-from wagtail.models import Page
+from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
 from wagtail.whitelist import Whitelister as Allowlister
 
-from v1.models import (
-    BlogPage,
-    CFGOVPage,
-    CFGOVPageCategory,
-    InternalDocsSettings,
-    Resource,
-)
-from v1.tests.wagtail_pages.helpers import publish_page
-from v1.wagtail_hooks import (
-    get_resource_tags,
-    raise_bulk_delete_error,
-    raise_delete_error,
-)
-
-
-class TestGetResourceTags(TestCase):
-    def setUp(self):
-        self.resource1 = Resource.objects.create(title="Test resource 1")
-        self.resource1.tags.add("tagA")
-        self.resource2 = Resource.objects.create(title="Test resource 2")
-        self.resource2.tags.add("tagB")
-        self.page1 = CFGOVPage(title="live", slug="test")
-        self.page1.tags.add("tagC")
-
-    def test_get_resource_tags_returns_only_resource_tags(self):
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
-
-    def test_get_resource_tags_returns_only_unique_tags(self):
-        self.resource2.tags.add("tagA")
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
-
-    def test_get_resource_tags_returns_alphabetized_list(self):
-        self.resource1.tags.add("aTag")
-        self.assertEqual(
-            get_resource_tags(),
-            [("atag", "aTag"), ("taga", "tagA"), ("tagb", "tagB")],
-        )
-
-
-class TestResourceTagsFilter(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.login()
-        self.resource1 = Resource.objects.create(
-            title="Test resource Orange", order=1
-        )
-        self.resource1.tags.add("tagA")
-        self.resource2 = Resource.objects.create(
-            title="Test resource Banana", order=2
-        )
-        self.resource2.tags.add("tagB")
-        self.resource3 = Resource.objects.create(
-            title="Test resource Apple", order=3
-        )
-        self.resource3.tags.add("tagB")
-        self.resource3.tags.add("tagC")
-
-    def get(self, **params):
-        return self.client.get("/admin/v1/resource/", params)
-
-    def test_no_params_returns_all_resources_in_order(self):
-        response = self.get()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 3)
-        self.assertEqual(
-            list(response.context["object_list"]),
-            list(Resource.objects.all().order_by("title")),
-        )
-
-    def test_tag_param_returns_a_resource_tagged_that_way(self):
-        response = self.get(tag="taga")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 1)
-
-        for resource in response.context["object_list"]:
-            self.assertEqual(resource.title, "Test resource Orange")
-
-    def test_tag_param_returns_resources_tagged_that_way(self):
-        response = self.get(tag="tagb")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 2)
-        self.assertEqual(
-            response.context["object_list"][0].title, "Test resource Apple"
-        )
-        self.assertEqual(
-            response.context["object_list"][1].title, "Test resource Banana"
-        )
+from v1.models import BlogPage, InternalDocsSettings
 
 
 class TestAllowlistOverride(SimpleTestCase):
@@ -119,67 +26,52 @@ class TestAllowlistOverride(SimpleTestCase):
         self.assertHTMLEqual(output_html, "Consumer Finance")
 
 
-class TestDeleteProtections(TestCase):
+class TestDeleteProtections(TestCase, WagtailTestUtils):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="test",
-            email="test@cfpb.gov",
-            password="test",
-            is_superuser=True,
-            is_staff=True,
-            is_active=True,
-        )
-        self.page1 = BlogPage(title="live1", slug="test1")
-        self.page1.categories.add(CFGOVPageCategory(name="foo"))
-        self.page1.tags.add("foo")
-        self.page1.authors.add("test-author")
-        self.page1.language = "en"
-        self.page2 = BlogPage(title="live2", slug="test2")
-        self.page2.categories.add(CFGOVPageCategory(name="bar"))
-        self.page2.tags.add("bar")
-        self.page2.authors.add("test-author")
-        self.page2.language = "en"
-        publish_page(self.page1)
-        publish_page(self.page2)
-        self.request = RequestFactory().post(
-            f"/admin/bulk/wagtailcore/page/delete/"
-            f"?next=%2Fadmin%2Fpages%2F3%2F&"
-            f"id={self.page1.pk}&id={self.page2.pk}"
-        )
-        self.request.user = self.user
+        self.login()
 
-    @hooks.register_temporarily("before_delete_page", raise_delete_error)
+        root_page = Site.objects.get(is_default_site=True).root_page
+        self.page1 = BlogPage(title="delete1", slug="delete1")
+        root_page.add_child(instance=self.page1)
+        self.page2 = BlogPage(title="delete2", slug="delete2")
+        root_page.add_child(instance=self.page2)
+
+        self.delete_url = reverse(
+            "wagtailadmin_pages:delete", args=(self.page1.id,)
+        )
+        self.bulk_delete_url = (
+            reverse(
+                "wagtail_bulk_action",
+                args=(
+                    "wagtailcore",
+                    "page",
+                    "delete",
+                ),
+            )
+            + f"?id={self.page1.id}&id={self.page2.id}"
+        )
+
     def test_delete_page_block(self):
-        """
-        Test Page Deletion Protections via proper hook and hook calling method.
-        Page delete method requires a request just to pull a user with valid
-        permissions to check, so URL is no factor. Even with valid permissions
-        this should raise PermissionDenied.
-        """
-        self.assertRaises(
-            PermissionDenied, delete, self.request, self.page1.pk
-        )
+        response = self.client.post(self.delete_url)
+        self.assertRedirects(response, reverse("wagtailadmin_home"))
 
-    @hooks.register_temporarily("before_bulk_action", raise_bulk_delete_error)
-    def test_bulk_delete_block(self):
-        """
-        Test Bulk Delete Protections via proper hook and hook calling method.
-        Action requires a request with a user with valid permissions, as well
-        as a bulk delete URL with parsable valid object id's.
-        URL determines the action type and object type.
-        form_valid is what ultimately calls before and after hooks for all
-        bulk actions. form_valid does not, however, require a valid
-        form object, so None is passed.
-        We test with Pages here, but the method should protect against all
-        object bulk deletion. Even with valid permissions this should raise
-        PermissionDenied.
-        """
-        action = DeleteBulkAction(self.request, model=Page)
-        self.assertRaises(
-            PermissionDenied,
-            action.form_valid,
-            None,
+    def test_delete_page_block_ajax(self):
+        response = self.client.post(
+            self.delete_url,
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
         )
+        self.assertEqual(response.status_code, 403)
+
+    def test_bulk_delete_block(self):
+        response = self.client.post(self.bulk_delete_url)
+        self.assertRedirects(response, reverse("wagtailadmin_home"))
+
+    def test_bulk_delete_page_block_ajax(self):
+        response = self.client.post(
+            self.bulk_delete_url,
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+        self.assertEqual(response.status_code, 403)
 
 
 class TestDjangoAdminLink(TestCase, WagtailTestUtils):

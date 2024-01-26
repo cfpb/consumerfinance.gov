@@ -1,15 +1,15 @@
-from django.test import SimpleTestCase, override_settings
+from django.test import SimpleTestCase
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 from core.utils import (
+    ASK_CFPB_LINKS,
     add_link_markup,
     extract_answers_from_request,
     format_file_size,
     get_body_html,
     get_link_tags,
-    signed_redirect,
 )
 
 
@@ -133,24 +133,21 @@ class LinkUtilsTests(SimpleTestCase):
             add_link_markup(tag, path), '<a class="" href="#anchor">bar</a>'
         )
 
-    def check_external_link(
-        self, url, expected_href=None, expected_pretty_href=None, is_gov=False
-    ):
+    def check_external_link(self, url, expected_pretty_href=None):
         tag = f'<a href="{url}">foo</a>'
         path = "/about-us/blog/"
         data_pretty_href = ""
 
-        expected_href = expected_href or url
         expected_pretty_href = expected_pretty_href or url
 
-        # .gov URLs don't get a data-pretty-href attribute
-        if not is_gov:
+        # Only Ask CFPB links get the data-pretty-href attribute
+        if ASK_CFPB_LINKS.match(url):
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
             '<a class="a-link a-link__icon" '
             f"{data_pretty_href}"
-            f'href="{expected_href}">'
+            f'href="{url}">'
             '<span class="a-link_text">foo</span> '
             f"{self.external_link_icon}"
             "</a>"
@@ -159,39 +156,25 @@ class LinkUtilsTests(SimpleTestCase):
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
 
-    @override_settings(
-        ALLOWED_LINKS_WITHOUT_INTERSTITIAL=[
-            "public.govdelivery.com",
-        ]
-    )
     def test_govdelivery_url1(self):
         url = "https://public.govdelivery.com"
-        self.check_external_link(url, expected_href=url, is_gov=True)
+        self.check_external_link(url)
 
     def test_govdelivery_url2(self):
         url = "https://www.govdelivery.com"
-        self.check_external_link(url, signed_redirect(url))
+        self.check_external_link(url)
 
-    @override_settings(
-        ALLOWED_LINKS_WITHOUT_INTERSTITIAL=[
-            "public.govdelivery.com",
-        ]
-    )
     def test_govdelivery_url3(self):
         url = "https://public.govdelivery.com/something"
-        self.check_external_link(url, expected_href=url, is_gov=True)
+        self.check_external_link(url)
 
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"
-        self.check_external_link(
-            url, expected_href=url, expected_pretty_href=None, is_gov=True
-        )
+        self.check_external_link(url, expected_pretty_href=None)
 
     def test_dot_gov_urls2(self):
         url = "https://www.federalreserve.gov/something"
-        self.check_external_link(
-            url, expected_href=url, expected_pretty_href=None, is_gov=True
-        )
+        self.check_external_link(url, expected_pretty_href=None)
 
     def test_content_cfgov(self):
         url = "http://content.cfpb.gov"
@@ -201,20 +184,15 @@ class LinkUtilsTests(SimpleTestCase):
 
     def test_urls_with_gov_in_them(self):
         url = "https://www.realgovsite.lol"
-        self.check_external_link(url, expected_href=signed_redirect(url))
+        self.check_external_link(url)
 
     def test_external_links_get_signed_and_icon_added(self):
         url = "https://example.com"
-        self.check_external_link(url, expected_href=signed_redirect(url))
+        self.check_external_link(url)
 
     def test_external_download_still_uses_external_link_icon(self):
         url = "https://example.com/file.pdf"
-        self.check_external_link(url, expected_href=signed_redirect(url))
-
-    def test_already_signed_external_links_still_get_icon_added(self):
-        url = "https://example.com"
-        signed_url = signed_redirect(url)
-        self.check_external_link(signed_url, expected_pretty_href=url)
+        self.check_external_link(url)
 
     def test_external_link_if_link_already_includes_left_icon(self):
         url = "https://example.com"
@@ -226,11 +204,9 @@ class LinkUtilsTests(SimpleTestCase):
         )
         path = "/about-us/blog/"
 
-        expected_href = signed_redirect(url)
         expected_html = (
             '<a class="a-link a-link__icon" '
-            'data-pretty-href="https://example.com" '
-            f'href="{expected_href}">'
+            f'href="{url}">'
             "<svg></svg>"
             '<span class="a-link_text">foo</span> '
             f"{self.external_link_icon}"
@@ -274,8 +250,7 @@ class LinkUtilsTests(SimpleTestCase):
 
         expected_html = (
             '<a class="a-btn" '
-            f'data-pretty-href="{url}" '
-            f'href="{signed_redirect(url)}">'
+            f'href="{url}">'
             "Click"
             '<span class="a-btn_icon a-btn_icon__on-right">'
             f"{self.external_link_icon}"

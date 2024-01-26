@@ -469,38 +469,6 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortización")
 
-    def test_landing_page_live_portal(self):
-        portal_cards = self.english_ask_parent.get_portal_cards()
-
-        self.assertEqual(len(portal_cards), 2)
-
-        self.assertEqual(portal_cards[0]["title"], "Auto loans")
-        self.assertEqual(portal_cards[0]["icon"], "car")
-
-        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
-        self.assertEqual(portal_cards[1]["icon"], "bank")
-
-    def test_landing_page_draft_portal(self):
-        self.english_portal.unpublish()
-        self.english_portal.save()
-        self.assertFalse(self.english_portal.live)
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
-
-    def test_landing_page_draft_portals(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-            sl_page.save()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
-
-    def test_landing_page_draft_portals_draft_search(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-        for s_page in self.portal_topic.portal_search_pages.all():
-            s_page.unpublish()
-        for s_page in self.portal_topic2.portal_search_pages.all():
-            s_page.unpublish()
-        self.assertEqual(self.english_ask_parent.get_portal_cards(), [])
-
 
 class AnswerPageTest(TestCase):
     fixtures = ["ask_tests", "portal_topics"]
@@ -792,16 +760,6 @@ class AnswerPageTest(TestCase):
         page.search_description = "Test search description"
         self.assertEqual(page.get_meta_description(), page.search_description)
 
-    def test_english_page_sibling_url(self):
-        self.assertEqual(self.page1.get_sibling_url(), self.page1_es.url)
-
-    def test_spanish_page_sibling_url(self):
-        self.assertEqual(self.page1_es.get_sibling_url(), self.page1.url)
-
-    def test_no_sibling_url_returned_for_draft_page(self):
-        self.page1.unpublish()
-        self.assertEqual(self.page1_es.get_sibling_url(), None)
-
     def test_routable_tag_page_base_returns_404(self):
         page = self.tag_results_page_en
         response = self.client.get(page.url + page.reverse_subpage("tag_base"))
@@ -949,13 +907,6 @@ class AnswerPageTest(TestCase):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
 
-    def test_portal_topic_featured_answers(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        self.assertIn(page, self.portal_topic.featured_answers("en"))
-
     def test_nextstep_str(self):
         next_step = self.next_step
         self.assertEqual(next_step.__str__(), next_step.title)
@@ -971,61 +922,6 @@ class AnswerPageTest(TestCase):
         breadcrumbs = get_ask_breadcrumbs()
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]["title"], "Ask CFPB")
-
-    def test_landing_page_context_no_featured_answer(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = False
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
-
-    def test_landing_page_context(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "test topic"
-        )
-
-    def test_spanish_landing_page_context(self):
-        page = self.page1_es
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.spanish_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "prueba tema"
-        )
-
-    def test_landing_page_context_draft_portal_page(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        self.portal_page.unpublish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
 
     def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)

@@ -21,7 +21,10 @@
     ============================================================================
 -->
 {% endif %}
-<html lang="{{ language }}" class="no-js">
+<html lang="{{ language }}" class="no-js"
+{%- if is_faq_page %}
+itemscope="" itemtype="http://schema.org/FAQPage"
+{% endif -%}>
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 

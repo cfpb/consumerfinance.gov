@@ -34,7 +34,6 @@
     <section class="block
                     block__padded-top
                     block__border-top
-                    block__flush-bottom
                     vacancy-announcement_description">
 
         <div class="o-summary o-summary__mobile">
@@ -147,74 +146,76 @@
     o-sidebar-content
 {%- endblock %}
 
-{% block content_sidebar scoped  %}
-{% if about_us %}
-    <div class="block block__flush-top">
-        {{ about_us.text | safe }}
-    </div>
-{% endif %}
-<div class="block block__flush-top">
-    <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
-            Working at the CFPB
-        </h2>
-    </header>
+{% block content_sidebar scoped %}
 
-    <ul class="m-list m-list__links">
-        <li class="m-list_item">
-            <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
+    {% if about_us %}
+        <div class="block block__flush-top">
+            {{ about_us.text | safe }}
+        </div>
+    {% endif %}
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="m-slug-header_heading">
                 Working at the CFPB
-            </a>
-        </li>
-        <li class="m-list_item">
-            <a href="/office-civil-rights/" class="m-list_link">
-                Office of Civil Rights
-            </a>
-        </li>
-    </ul>
-    <p>
-       The Consumer Financial Protection Bureau (CFPB) is an equal
-       opportunity employer and seeks to create and maintain a vibrant
-       and diverse workforce. Women, minorities, veterans, and
-       people with disabilities are encouraged to apply.
-    </p>
-</div>
-<div class="block block__flush-top">
-    <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
-            Learn more about the CFPB's work
-        </h2>
-    </header>
-    <ul class="m-list m-list__links u-mb0">
-        <li class="m-list_item">
-            <a href="/about-us/blog" class="m-list_link">
-                CFPB Blog
-            </a>
-        </li>
-        <li class="m-list_item">
-            <a href="/about-us/newsroom" class="m-list_link">
-                Newsroom
-            </a>
-        </li>
-    </ul>
-</div>
-<div class="block block__flush-top">
-    <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+            </h2>
+        </header>
+
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
+                    Working at the CFPB
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a href="/office-civil-rights/" class="m-list_link">
+                    Office of Civil Rights
+                </a>
+            </li>
+        </ul>
+        <p>
+            The Consumer Financial Protection Bureau (CFPB) is an equal
+            opportunity employer and seeks to create and maintain a vibrant
+            and diverse workforce. Women, minorities, veterans, and
+            people with disabilities are encouraged to apply.
+        </p>
+    </div>
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="m-slug-header_heading">
+                Learn more about the CFPB's work
+            </h2>
+        </header>
+        <ul class="m-list m-list__links u-mb0">
+            <li class="m-list_item">
+                <a href="/about-us/blog" class="m-list_link">
+                    CFPB Blog
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a href="/about-us/newsroom" class="m-list_link">
+                    Newsroom
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="m-slug-header_heading">
+                Follow us on LinkedIn
+            </h2>
+        </header>
+        <p>
+            The CFPB is one of the most searched-for agencies
+            in the federal government.
+            Connect with us to stay updated on the work
+            we do and new opportunities to be a part of it.
+        </p>
+        <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+           class="a-link a-link__jump a-link__external-link">
             Follow us on LinkedIn
-        </h2>
-    </header>
-    <p>
-        The CFPB is one of the most searched-for agencies
-        in the federal government.
-        Connect with us to stay updated on the work
-        we do and new opportunities to be a part of it.
-    </p>
-    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
-       class="a-link a-link__jump a-link__external-link">
-        Follow us on LinkedIn
-    </a>
-</div>
+        </a>
+    </div>
 
 {% endblock %}
 

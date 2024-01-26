@@ -1,9 +1,5 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
-{% block title -%}
-    {{ page.title }} | Consumer Financial Protection Bureau
-{%- endblock title %}
-
 {% block css -%}
     {{ super() }}
 
@@ -84,8 +80,8 @@
         <div class="content_line u-mt30 u-mb30"></div>
         <p><strong>Note:</strong> Please remember to consider your students’ accommodations and special needs to ensure that all students are able to participate in a meaningful way.</p>
     </div>
-    <div>
-        <h2 class="u-mt45">Explore related resources</h2>
+    <div class="block">
+        <h2>Explore related resources</h2>
         <ul>
             <li><a href="{{ page.get_related_activities_url() }}">Search for related CFPB activities</a></li>
             <li><a href="https://www.fdic.gov/resources/consumers/money-smart/index.html" target="_blank" rel="noopener noreferrer">Find financial education lessons from FDIC</a></li>
@@ -154,4 +150,4 @@
         <h5>Legal Disclaimer</h5>
         <p>This resource includes links and references to third-party resources or content that consumers may find helpful. The Bureau does not control or guarantee the accuracy of this third-party information. By listing these links and references, the Bureau is not endorsing and has not vetted these third-parties, the views they express, or the products or services they offer. Other entities and resources also may meet your needs.</p>
     </div>
-{% endblock content_sidebar %}
+{% endblock %}

@@ -2,8 +2,6 @@
 
 from django.db import models
 
-from wagtail.snippets.models import register_snippet
-
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.managers import TaggableManager
@@ -19,7 +17,6 @@ class PortalTopicTag(TaggedItemBase):
     )
 
 
-@register_snippet
 class PortalTopic(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)
@@ -29,11 +26,6 @@ class PortalTopic(ClusterableModel):
         blank=True,
         help_text="Tags are used to identify and organize portal topic pages.",
     )
-
-    def featured_answers(self, language):
-        return self.answerpage_set.filter(
-            language=language, featured=True
-        ).order_by("featured_rank")
 
     def title(self, language="en"):
         if language == "es":
@@ -53,7 +45,6 @@ class PortalCategoryTag(TaggedItemBase):
     )
 
 
-@register_snippet
 class PortalCategory(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)

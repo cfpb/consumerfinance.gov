@@ -133,7 +133,7 @@ const utils = {
    */
   getCountyState: (fips) => {
     // Grab the first two digits of the county's FIPS code.
-    fips = fips.substr(0, 2);
+    fips = fips.slice(0, 2);
     const usStates = {
       '01': 'AL',
       '02': 'AK',
