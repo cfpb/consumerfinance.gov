@@ -7,7 +7,7 @@
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
-{% block hero -%}
+{% block content_intro -%}
     {% for block in page.header -%}
         {% if 'hero' in block.block_type %}
             {{ render_stream_child(block) }}

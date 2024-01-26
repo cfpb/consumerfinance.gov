@@ -7,11 +7,6 @@
       {% do block_classes.append('block__flush-top') %}
    {% endif %}
 
-   {# TODO: Rename `has_rule` to `has_bottom_rule_line` #}
-   {% if block.value.has_rule %}
-      {% do block_classes.append('block__padded-bottom block__border-bottom') %}
-   {% endif %}
-
    {% if block.block.meta.classname %}
       {% do block_classes.append(block.block.meta.classname) %}
    {% endif %}
@@ -19,4 +14,9 @@
    <div class="{{ block_classes | unique | join(' ') }}">
       {{ render_stream_child( block ) }}
    </div>
+
+   {# TODO: Rename `has_rule` to `has_bottom_rule_line` #}
+   {% if block.value.has_rule %}
+      <div class="a-rule-break block block__sub"></div>
+   {% endif %}
 {% endmacro %}

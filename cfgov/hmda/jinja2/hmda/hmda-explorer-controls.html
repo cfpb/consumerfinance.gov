@@ -104,7 +104,7 @@
    ========================================================================== #}
 {% macro render(form) %}
     {% set form_markup = _filters_form(form) %}
-    <div class="o-well u-mb30">
+    <div class="o-well">
         <h2>Select the HMDA data you want</h2>
         {{ form_markup | safe }}
     </div>

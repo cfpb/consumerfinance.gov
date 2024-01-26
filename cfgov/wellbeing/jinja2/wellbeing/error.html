@@ -18,24 +18,26 @@
 {%- endblock %}
 
 {% block content_main %}
-    <h1>{{ _('There was a problem with your submission') }}</h1>
+    <div class="block block__flush-top">
+        <h1>{{ _('There was a problem with your submission') }}</h1>
 
-    {% set value = {
-        'links': [
-        {
-            'href': url('fwb_error_en'),
-            'language': 'en',
-            'text': 'English'
-        },{
-            'href': url('fwb_error_es'),
-            'language': 'es',
-            'text': 'Spanish'
-        }]
-    } %}
-    {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-    {% include "v1/includes/molecules/translation-links.html" %}
+        {% set value = {
+            'links': [
+            {
+                'href': url('fwb_error_en'),
+                'language': 'en',
+                'text': 'English'
+            },{
+                'href': url('fwb_error_es'),
+                'language': 'es',
+                'text': 'Spanish'
+            }]
+        } %}
+        {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
+        {% include "v1/includes/molecules/translation-links.html" %}
 
-    <p class="lead-paragraph">
-        {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}
-    </p>
+        <p class="lead-paragraph">
+            {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}
+        </p>
+    </div>
 {% endblock %}

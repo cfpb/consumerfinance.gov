@@ -4,7 +4,7 @@
     {# content_modifiers block is only used by story_page.html #}
     <main class="content {% block content_modifiers -%}{%- endblock %}"
           id="main">
-        {% block hero -%}{%- endblock %}
+        {% block content_intro -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if not breadcrumb_items and page and page.get_breadcrumbs %}
                 {% set breadcrumb_items = page.get_breadcrumbs(request) %}
