@@ -22,11 +22,10 @@
 
 {% block content_main %}
     <div class="content-l">
-
-        {% include "v1/includes/molecules/translation-links.html" %}
-
         <section class="ask-search block__sub block__flush-top">
             {{ ask_search.render( language=page.language, is_subsection=False ) }}
+
+            {% include "v1/includes/molecules/translation-links.html" %}
         </section>
 
         <section class="ask-categories">
