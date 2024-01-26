@@ -236,7 +236,7 @@ const handleFetchSearchResults = (searchTerm) => {
 const bindAnalytics = (spyMethod) => {
   if (spyMethod) {
     // TODO: sendEvent exists so it can be mocked in the unit tests.
-    //       Look into calling rewriting the tests to mock analyticsSendEvent.
+    //       Look into rewriting the tests to mock analyticsSendEvent.
     sendEvent = spyMethod;
   }
 
