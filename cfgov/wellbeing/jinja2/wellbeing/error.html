@@ -21,7 +21,9 @@
     <div class="block block__flush-top">
         <h1>{{ _('There was a problem with your submission') }}</h1>
 
-        {% set value = {
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render({
+            'language': 'en' if current_language == 'en' else 'es',
             'links': [
             {
                 'href': url('fwb_error_en'),
@@ -32,9 +34,7 @@
                 'language': 'es',
                 'text': 'Spanish'
             }]
-        } %}
-        {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-        {% include "v1/includes/molecules/translation-links.html" %}
+        }) }}
 
         <p class="lead-paragraph">
             {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}

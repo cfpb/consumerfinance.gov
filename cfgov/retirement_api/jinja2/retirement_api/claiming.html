@@ -31,7 +31,10 @@
                 <p class="lead-paragraph">
                     {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
                 </p>
-                {% set value = {
+
+                {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+                {{ translation_links.render({
+                    'language': 'en' if current_language == 'en' else 'es',
                     'links': [
                     {
                         'href': '../',
@@ -42,9 +45,7 @@
                         'language': 'es',
                         'text': 'Spanish'
                     }]
-                } %}
-                {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-                {% include "v1/includes/molecules/translation-links.html" %}
+                }) }}
                 <div class="o-well">
                     {% if current_language == 'en' %}
                     <p>The Social Security Administration offers
