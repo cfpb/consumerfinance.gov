@@ -218,14 +218,16 @@ function addProjectedMonths(chartObject, numMonths) {
   /* Add a zone to each series with a dotted line starting
      at the projected data starting point */
   chartObject.series = chartObject.series.map((singluarSeries) => {
+    let projectedStyle = { dashStyle: 'dot' };
+    if (chartObject.chart && chartObject.chart.type === 'column') {
+      projectedStyle = { color: '#addc91' };
+    }
     singluarSeries.zoneAxis = 'x';
     singluarSeries.zones = [
       {
         value: projectedDate.timestamp,
       },
-      {
-        dashStyle: 'dot',
-      },
+      projectedStyle,
     ];
     return singluarSeries;
   });
