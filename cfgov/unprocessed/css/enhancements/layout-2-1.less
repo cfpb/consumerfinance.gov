@@ -16,15 +16,18 @@
     position: absolute;
     z-index: -1;
     top: 0;
-    width: 100vw;
+    // Add a offset to the width to handle covering gaps added by the wrapper.
+    width: calc(100vw + 60px);
     height: 100%;
     content: '';
     background: @gray-5;
+    // Expand off the screen to cover any margins added by the wrapper.
+    left: -30px;
   }
 
   // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.
   .u-layout-grid__2-1 {
-    // Mobile
+    // Mobile and above
     // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
     .m-hero,
     .u-layout-grid_hero {
@@ -36,33 +39,42 @@
       }
     }
 
+    .u-layout-grid {
+      &_sidebar {
+        position: relative;
+        padding-left: unit(30px / @base-font-size-px, rem);
+        margin-left: unit(-30px / @base-font-size-px, rem);
+        padding-top: unit(45px / @base-font-size-px, rem);
+
+        &::after {
+          .u-sidebar-background();
+        }
+      }
+    }
+
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       .u-layout-grid {
         &_wrapper {
           // This handles collapsing of the breadcrumbs space if they are absent.
-          grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
+          grid-template-rows: min-content 1fr;
           padding-left: unit(30px / @base-font-size-px, rem);
           padding-right: unit(30px / @base-font-size-px, rem);
-        }
-
-        &_main,
-        &_sidebar {
-          padding-top: unit(45px / @base-font-size-px, rem);
         }
       }
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .u-layout-grid_wrapper {
+      .u-layout-grid {
+        &_wrapper {
           // Numbers below are 870 split into three parts
           // 870 is the 900px breakpoint - 30px of gutters
           grid-auto-columns: minmax(580px, 2fr) minmax(290px, 1fr);
           grid-template-areas:
-            'c-hero c-hero'
             'c-breadcrumbs c-sidebar'
             'c-main c-sidebar';
+        }
       }
     });
   }
@@ -71,27 +83,6 @@
   .u-layout-grid__2-1:not(&[dir='rtl']) {
     // This is for the sidebar bleed.
     overflow-x: hidden;
-
-    // Mobile.
-    .u-layout-grid {
-      // Set padding defaults.
-      &_main,
-      &_sidebar {
-        padding-top: unit(30px / @base-font-size-px, rem);
-      }
-
-      &_sidebar {
-        position: relative;
-        padding-left: unit(15px / @base-font-size-px, rem);
-        margin-left: unit(-15px / @base-font-size-px, rem);
-
-        // This is the sidebar background, which bleeds to the edge.
-        &::after {
-          .u-sidebar-background();
-          left: 0;
-        }
-      }
-    }
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
@@ -106,6 +97,7 @@
 
           &:after {
             border-left: 1px solid @gray-40;
+            left: 0;
           }
         }
       }
@@ -114,33 +106,10 @@
 
   // 2-1 Right-to-left (RTL) layout.
   .u-layout-grid__2-1[dir='rtl'] {
-    // Mobile.
-    .u-layout-grid {
-      &_sidebar {
-        position: relative;
-        padding-right: unit(15px / @base-font-size-px, rem);
-        margin-right: unit(-15px / @base-font-size-px, rem);
-
-        // This is the sidebar background, which bleeds to the edge.
-        &::after {
-          .u-sidebar-background();
-          right: 0;
-          left: auto;
-        }
-      }
-    }
-
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       .u-layout-grid {
-        &_wrapper {
-          // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
-          & div:has(.m-hero) {
-            display: contents;
-          }
-        }
-
-       &_main {
+        &_main {
           padding-left: unit(10px / @base-font-size-px, rem);
         }
 
@@ -150,14 +119,9 @@
 
           &:after {
             border-right: 1px solid @gray-40;
+            right: 0;
           }
         }
-      }
-
-      // If we have a breadcrumb and sidebar together,
-      // we need to move the sidebar content down further.
-      .u-layout-grid_breadcrumbs ~ .u-layout-grid_sidebar {
-        padding-top: unit(90px / @base-font-size-px, rem);
       }
     });
   }

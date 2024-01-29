@@ -6,7 +6,6 @@ from v1.views.snippets import (
     EmailSignUpViewSet,
     PortalCategoryViewSet,
     PortalTopicViewSet,
-    ResourceViewSet,
     ReusableTextViewSet,
 )
 
@@ -33,7 +32,6 @@ class SnippetsViewSetGroup(SnippetViewSetGroup):
         GlossaryTermViewSet,
         PortalCategoryViewSet,
         PortalTopicViewSet,
-        ResourceViewSet,
         ReusableTextViewSet,
     )
     menu_icon = "snippet"

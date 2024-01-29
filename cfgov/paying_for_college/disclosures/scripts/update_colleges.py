@@ -3,6 +3,7 @@ Update college data using the Dept. of Education's College Scorecard API.
 
 Scorecard documentation: https://collegescorecard.ed.gov/data/documentation/
 """
+
 import datetime
 import logging
 import os
