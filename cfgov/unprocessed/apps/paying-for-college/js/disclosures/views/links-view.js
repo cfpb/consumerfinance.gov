@@ -63,7 +63,7 @@ const linksView = {
    */
   setLoanDefaultLink: function (values) {
     const defaultURL =
-      'http://nces.ed.gov/collegenavigator/?id=' +
+      'https://nces.ed.gov/collegenavigator/?id=' +
       values.schoolID +
       '#fedloans';
     this.$defaultLinkText.each((elem) => {

@@ -7,7 +7,7 @@ from csv import DictReader as cdr
 
 This script was used to process a few xlsx files to look at expediture data
 based on income and region
-- source: http://www.bls.gov/cex/
+- source: https://www.bls.gov/cex/
 - files under Region of residence by income before taxes:
   - xregnmw.xlsx
   - xregnne.xlsx

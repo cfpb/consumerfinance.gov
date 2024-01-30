@@ -85,7 +85,7 @@ We recommend using test-driven development (TDD) when coding new JavaScript.
 The general concept is to start by writing your test **first**,
 with the expected behavior and functionality well-described,
 **then** you write the code that makes the test pass.
-[A good pithy summary](http://www.javiersaldana.com/tech/2014/11/26/refactoring-the-three-laws-of-tdd.html)
+[A good pithy summary](https://www.javiersaldana.com/articles/tech/refactoring-the-three-laws-of-tdd)
 is:
 
 > 1.  Write only enough of a unit test to fail.

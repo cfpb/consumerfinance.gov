@@ -25,7 +25,7 @@ PFC_ROOT = Path(__file__).resolve().parents[2]
 # In early 2020, the latest data came from the 2018-2019 academic year.
 DATA_YEAR = datetime.datetime.now().year - 2
 ipeds_directory = "{}/data_sources/ipeds".format(PFC_ROOT)
-ipeds_data_url = "http://nces.ed.gov/ipeds/datacenter/data"
+ipeds_data_url = "https://nces.ed.gov/ipeds/datacenter/data/"
 data_slug = "IC{}_AY".format(DATA_YEAR)
 dictionary_slug = "IC{}_AY_Dict".format(DATA_YEAR)
 
