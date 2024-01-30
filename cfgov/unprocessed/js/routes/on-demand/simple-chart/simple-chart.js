@@ -219,7 +219,7 @@ function addProjectedMonths(chartObject, numMonths) {
      at the projected data starting point */
   chartObject.series = chartObject.series.map((singluarSeries) => {
     let projectedStyle = { dashStyle: 'dot' };
-    if (chartObject.chart && chartObject.chart.type === 'column') {
+    if (chartObject.chart?.type === 'column') {
       projectedStyle = { color: '#addc91' };
     }
     singluarSeries.zoneAxis = 'x';
