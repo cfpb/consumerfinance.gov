@@ -19,10 +19,10 @@
         <div class="m-form-field u-mb15">
             {% set selections = filters['issuer_name'] %}
             <label class="a-label a-label__heading"
-                   for="card_type">
+                   for="issuer_name">
                 Issuer name
             </label>
-            <select id="card_type" name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
+            <select id="issuer_name" name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
                 {% for issuer in active_filters['issuer_name'] %}
                     <option
                         value="{{ issuer }}"
