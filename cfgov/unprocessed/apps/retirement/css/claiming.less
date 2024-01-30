@@ -30,6 +30,7 @@
 
   .intro {
     margin-bottom: 30px;
+
     .content-l_col + .content-l_col {
       margin-top: 0;
     }
@@ -90,13 +91,6 @@
     margin-right: 5px;
   }
 
-  #claiming-social-security
-    .step-one
-    .birthdate-inputs
-    label.input-labels:last-child {
-    margin-right: 0;
-  }
-
   .step-one label.input-labels .input-labels_block {
     display: block;
     margin-bottom: 8px;
@@ -116,10 +110,10 @@
     padding: 1em 0;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-  }
 
-  .estimated-benefits-description p {
-    margin-bottom: 0;
+    p {
+      margin-bottom: 0;
+    }
   }
 
   .estimated-benefits-input {
@@ -143,52 +137,16 @@
     line-height: 6px;
   }
 
-  #claim-canvas .graph__bar {
-    cursor: pointer;
-  }
-
-  #claim-canvas .age-text {
-    color: #919395;
-    cursor: pointer;
-    position: absolute;
-    top: 292px;
-    height: 75px;
-    text-align: center;
-  }
-
-  #claim-canvas .age-text.selected-age {
-    height: 25px;
-  }
-
-  #claim-canvas .age-text.selected-age p {
-    color: #000;
-    font-weight: bolder;
-  }
-
-  #claim-canvas #min-age-text {
-    left: 5px;
-  }
-
-  #claim-canvas #selected-age-text {
-    color: black;
-  }
-
-  #claim-canvas #max-age-text {
-    left: 443px;
-  }
-
-  #claim-canvas #benefits-text,
-  #claim-canvas #full-age-benefits-text {
-    position: absolute;
-    font-weight: bolder;
-  }
-
   #claim-canvas {
     position: relative;
     left: 40px;
 
     #full-age-benefits-text {
       color: #919395;
+    }
+
+    .graph__bar {
+      cursor: pointer;
     }
 
     .graph__element {
@@ -214,6 +172,30 @@
       padding: 0;
       margin: 0;
     }
+
+    .age-text {
+      color: #919395;
+      cursor: pointer;
+      position: absolute;
+      top: 292px;
+      height: 75px;
+      text-align: center;
+
+      &.selected-age {
+        height: 25px;
+
+        p {
+          color: #000;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+
+  #benefits-text,
+  #full-age-benefits-text {
+    position: absolute;
+    font-weight: bolder;
   }
 
   .claim-canvas__no-slider {
@@ -290,10 +272,10 @@
   .selected-retirement-age-container {
     height: 77px;
     margin-bottom: 30px;
-  }
 
-  .selected-retirement-age-container p {
-    margin-bottom: 0;
+    p {
+      margin-bottom: 0;
+    }
   }
 
   .selected-retirement-age {
@@ -307,22 +289,15 @@
 
   .total-benefits-container {
     margin-bottom: 30px;
+
+    p {
+      margin: 0;
+    }
   }
 
-  .total-benefits-container p {
-    margin: 0;
-  }
-
-  .benefit-selection p.selected-full-retirement,
   #age-selector-response,
   #age-selector-response .thank-you {
     display: none;
-  }
-
-  .benefit-selection button.selected-remove {
-    background: none;
-    border: none;
-    float: right;
   }
 
   #graph-container + hr {
@@ -429,21 +404,17 @@
     padding-left: 0;
     padding-top: 20px;
     margin-bottom: 60px;
-  }
 
-  #age-selector-response .next-steps li {
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    padding-left: 34px;
-  }
+    li {
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      padding-left: 34px;
+    }
 
-  #age-selector-response .next-steps li.next-step-one,
-  #age-selector-response .next-steps li.next-step-two,
-  #claiming-social-security
-    #age-selector-response
-    .next-steps
+    li.next-step-one,
     li.next-step-three {
-    background-image: url('/static/apps/retirement/img/step_check.png');
+      background-image: url('/static/apps/retirement/img/step_check.png');
+    }
   }
 
   .step-three .helpful-btn {
@@ -482,30 +453,22 @@
 
     .estimated-benefits-input {
       padding-left: 40px;
-    }
 
-    #estimated-benefits-input span {
-      display: block;
-    }
+      & span {
+        display: block;
+      }
 
-    .estimated-benefits-input label {
-      margin-left: 15px;
-    }
+      & label {
+        margin-left: 15px;
 
-    #estimated-benefits-input label:first-of-type {
-      margin-left: 0;
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
     }
 
     .step-two .lifestyle-response > p:last-child {
       margin-bottom: 0;
-    }
-  }
-
-  @media (max-width: 940px) {
-    .hero_image,
-    [lang='en'] .hero_image,
-    [lang='es'] .hero_image {
-      display: none;
     }
   }
 
@@ -638,19 +601,6 @@
       max-width: 236px;
     }
 
-    #claiming-social-security
-      #step-one-form
-      .content-l_col.content-l_col-1-3
-      + .content-l_col.content-l_col-1-3 {
-      margin-top: 1.875em;
-    }
-
-    #claiming-social-security
-      .content-l_col.content-l_col-1-3
-      + .content-l_col.content-l_col-1-3 {
-      margin-top: 0;
-    }
-
     .birthdate-inputs p,
     .step-one label.input-labels .input-labels_block {
       margin-bottom: 0;
@@ -662,17 +612,17 @@
 
     .estimated-benefits-input {
       padding-left: 0;
-    }
 
-    #estimated-benefits-input label {
-      display: block;
-      margin-left: 0;
-      height: 30px;
-    }
+      & label {
+        display: block;
+        margin-left: 0;
+        height: 30px;
 
-    #estimated-benefits-input label:first-of-type {
-      margin-top: 8px;
-      margin-left: 0;
+        &:first-of-type {
+          margin-top: 8px;
+          margin-left: 0;
+        }
+      }
     }
 
     #graph-container .content-l_col {
@@ -687,6 +637,16 @@
     p.y-axis-label {
       top: 240px;
       left: -57px;
+    }
+
+    #step-one-form
+      .content-l_col.content-l_col-1-3
+      + .content-l_col.content-l_col-1-3 {
+      margin-top: 1.875em;
+    }
+
+    .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+      margin-top: 0;
     }
 
     .canvas-container .x-axis-label {
@@ -804,39 +764,39 @@
     position: absolute;
     width: 20em;
     z-index: 3000;
-  }
 
-  #tooltip-container .content {
-    padding: 0;
-    margin: 0;
-  }
+    .content {
+      padding: 0;
+      margin: 0;
+    }
 
-  #tooltip-container .content p:last-child {
-    margin-bottom: 0;
-  }
+    .content p:last-child {
+      margin-bottom: 0;
+    }
 
-  /* These elements, .outertip and .innertip, make the little speech-balloon
+    /* These elements, .outertip and .innertip, make the little speech-balloon
      styled tip appear along the top of the tooltip. */
-  #tooltip-container .outertip {
-    border: 0 solid transparent;
-    border-bottom-color: #000;
-    content: ' ';
-    height: 0;
-    position: absolute;
-    left: -5px;
-    top: -20px;
-    width: 0;
-  }
+    .outertip {
+      border: 0 solid transparent;
+      border-bottom-color: #000;
+      content: ' ';
+      height: 0;
+      position: absolute;
+      left: -5px;
+      top: -20px;
+      width: 0;
+    }
 
-  #tooltip-container .innertip {
-    border: 7px solid transparent;
-    border-bottom-color: #e4e2e0;
-    content: ' ';
-    height: 0;
-    position: absolute;
-    left: 8px;
-    top: -14px;
-    width: 0;
+    .innertip {
+      border: 7px solid transparent;
+      border-bottom-color: #e4e2e0;
+      content: ' ';
+      height: 0;
+      position: absolute;
+      left: 8px;
+      top: -14px;
+      width: 0;
+    }
   }
 
   .tooltip-target {
