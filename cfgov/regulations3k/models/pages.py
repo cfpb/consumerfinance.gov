@@ -233,10 +233,13 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
     header = StreamField(
         [
             ("text_introduction", molecules.TextIntroduction()),
+            ("notification", molecules.Notification()),
         ],
         blank=True,
         use_json_field=True,
     )
+
+    # notification
 
     content = StreamField(
         [
