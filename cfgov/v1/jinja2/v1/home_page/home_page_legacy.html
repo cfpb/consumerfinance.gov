@@ -19,7 +19,7 @@
     </style>
 {% endblock css %}
 
-{% block hero %}
+{% block content_intro %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with image = image_passthrough, value = hardcoded.hero %}
@@ -38,7 +38,7 @@
             {% include "v1/includes/organisms/info-unit-group-2.html" with context %}
         </section>
     {% endwith %}
-{% endblock hero %}
+{% endblock %}
 
 {% block content_main %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}

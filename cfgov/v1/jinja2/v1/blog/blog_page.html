@@ -18,29 +18,32 @@
 {% block content_main %}
     {% include 'v1/includes/article.html' %}
     {% block post_article_content %}
-    <div class="block join-the-conversation">
-        <p>
-            {% set twitter_url = _("https://twitter.com/CFPB") %}
-            {%- set twitter_link = ( '<a href="%s">Twitter</a>' % twitter_url ) | safe %}
+        <div class="block
+                    block__flush-top
+                    block__padded-top
+                    join-the-conversation">
+            <p>
+                {% set twitter_url = _("https://twitter.com/CFPB") %}
+                {%- set twitter_link = ( '<a href="%s">Twitter</a>' % twitter_url ) | safe %}
 
-            {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
-            {%- set facebook_link = ( '<a href="%s">Facebook</a>' % facebook_url ) | safe %}
+                {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
+                {%- set facebook_link = ( '<a href="%s">Facebook</a>' % facebook_url ) | safe %}
 
-            {% trans trimmed %}
-                Join the conversation.
-                Follow CFPB on {{ twitter_link }} and {{ facebook_link }}.
-            {% endtrans %}
-        </p>
-    </div>
+                {% trans trimmed %}
+                    Join the conversation.
+                    Follow CFPB on {{ twitter_link }} and {{ facebook_link }}.
+                {% endtrans %}
+            </p>
+        </div>
     {% endblock %}
 {% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {% if rss_feed %}
-    <div class="block block__flush-top">
-        {% import 'v1/includes/molecules/rss-feed.html' as rss %}
-        {{ rss.render(rss_feed) }}
-    </div>
+        <div class="block">
+            {% import 'v1/includes/molecules/rss-feed.html' as rss %}
+            {{ rss.render(rss_feed) }}
+        </div>
     {% endif %}
 {% endblock %}

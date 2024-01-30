@@ -14,16 +14,20 @@
     {{ super() }} ask-cfpb-page ask-cfpb-page__landing
 {%- endblock %}
 
-{% block hero -%}
+{% block content_intro -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 
 {% block content_main %}
-    <div class="content-l">
+    <div class="content-l
+                block
+                block__flush-top">
         <section class="ask-search block__sub block__flush-top">
             {{ ask_search.render( language=page.language, is_subsection=False ) }}
+
+            {% include "v1/includes/molecules/translation-links.html" %}
         </section>
 
         <section class="ask-categories">
@@ -47,7 +51,7 @@
                 {% endfor %}
             </ul>
 
-            <div class="u-hide-on-mobile question-categories u-mb15">
+            <div class="u-hide-on-mobile question-categories u-mb30">
 
                 {#
                     TODO: This can use the standard card-group.html template
@@ -103,19 +107,8 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    <a class="a-link a-link__jump"
-    href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas/'}}">
-        <span class="a-link_text">
-        {% if page.language == 'es'%}
-            View page in English
-        {% else %}
-            Ver página en español
-        {% endif %}
-        </span>
-    </a>
-
     {% if about_us %}
-        <div class="block u-mt45 u-mb45 about-us-text">
+        <div class="block block__flush-top about-us-text">
             {{ about_us.text | richtext }}
         </div>
     {% endif %}

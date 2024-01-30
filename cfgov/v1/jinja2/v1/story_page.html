@@ -1,6 +1,6 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% block hero %}
+{% block content_intro %}
     {% for block in page.header -%}
         {% if block.block_type == 'features' %}
             <section class="wrapper
@@ -17,6 +17,7 @@
         {% endif %}
     {% endfor %}
 {% endblock %}
+
 {# Remove breadcrumbs from story_page by overriding with an empty block #}
 {% block pre_content -%}{%- endblock %}
 

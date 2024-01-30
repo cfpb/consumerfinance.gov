@@ -36,11 +36,8 @@
     </style>
 {%- endblock %}
 
-{% block hero -%}
-    <section class="m-hero
-                    block
-                    block__flush-top
-                    block__flush-bottom">
+{% block content_intro -%}
+    <section class="m-hero">
         <div class="m-hero_wrapper wrapper">
             <div class="m-hero_text">
                 <h1 class="m-hero_heading">{{ _('Find out your financial well-being') }}</h1>
@@ -938,15 +935,17 @@
                 </div>
             </div>
 
-            <div class="o-form_group">
-                <input class="submit-quiz a-btn"
-                    id="submit-quiz"
-                    type="submit"
-                    value="{{ _('Get my score') }}"
-                    title="Please answer all questions to get your score"
-                    data-gtm-action="Questionnaire Submitted"
-                    data-gtm-label="Get my score"
-                    data-gtm-category="Financial Well-Being Tool Interaction">
+            <div class="block block__flush-top">
+                <div class="o-form_group">
+                    <input class="submit-quiz a-btn"
+                        id="submit-quiz"
+                        type="submit"
+                        value="{{ _('Get my score') }}"
+                        title="Please answer all questions to get your score"
+                        data-gtm-action="Questionnaire Submitted"
+                        data-gtm-label="Get my score"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                </div>
             </div>
         </form>
     </div>
