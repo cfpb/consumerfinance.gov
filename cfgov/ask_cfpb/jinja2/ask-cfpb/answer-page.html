@@ -35,7 +35,8 @@
             {{ page.question | striptags }}
         </h1>
 
-        {% include "v1/includes/molecules/translation-links.html" %}
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render() }}
     </div>
     <div class="block
                 block__flush-top">

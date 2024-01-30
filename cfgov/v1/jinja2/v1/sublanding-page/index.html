@@ -20,7 +20,8 @@
 
 {% block content_main %}
     {% if page.has_hero -%}
-        {% include "v1/includes/molecules/translation-links.html" %}
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render() }}
     {%- endif %}
 
     {% for block in page.content -%}
