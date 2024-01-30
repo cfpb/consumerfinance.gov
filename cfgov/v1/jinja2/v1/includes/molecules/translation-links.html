@@ -31,10 +31,6 @@
 {% macro render(value={}) %}
 
     {%- if page is defined and not value.language or not value.links %}
-        {%- if value is not defined %}
-            {% set value = {} %}
-        {%- endif %}
-
         {% set temp = value.update({
             'language': ( language or page.language )| default( "en" ),
             'links': page.get_translation_links( request ),
