@@ -1,9 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
-{% import 'v1/includes/tags.html' as tags with context %}
 {% import 'v1/includes/macros/util/format/datetime.html' as dt %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'v1/includes/organisms/ask-search.html' as ask_search with context %}
-{% import 'v1/includes/molecules/notification.html' as notification %}
 
 {% block title -%}
     {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
@@ -36,6 +34,8 @@
         <h1>
             {{ page.question | striptags }}
         </h1>
+
+        {% include "v1/includes/molecules/translation-links.html" %}
     </div>
     <div class="block
                 block__flush-top">
@@ -43,18 +43,6 @@
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
-            </div>
-        {% endif %}
-
-        {% if page.share_and_print %}
-            {% import "v1/includes/molecules/social-media.html" as social_media with context -%}
-            <div class="block block__flush-top block__flush-bottom block__padded-bottom">
-                {{ social_media.render(
-                    {
-                        'is_share_view': true,
-                        'is_printable': true
-                    }
-                ) }}
             </div>
         {% endif %}
 
@@ -76,17 +64,6 @@
                     {{ svg_icon('plus-round') }}
                 </button>
             </div>
-
-            {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
-            <div class="block next-steps">
-                <div class="o-well">
-                    <h2>
-                        {{ page.related_resource.trans_title(page.language) | safe }}
-                    </h2>
-                    {{ page.related_resource.trans_text(page.language) | safe }}
-                </div>
-            </div>
-            {% endif %}
 
             <div class="block related-questions">
                 <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
@@ -121,7 +98,6 @@
         </div>
 
     </div>
-{{ email_popup(request) }}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
@@ -129,25 +105,11 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
-    {% if sibling_url %}
-        <a class="a-link a-link__jump" href="{{ sibling_url }}">
-            <span class="a-link_text">
-            {% if page.language == 'es'%}
-                View page in English
-            {% else %}
-                Ver página en español
-            {% endif %}
-            </span>
-        </a>
-    {% endif %}
-
     {% if about_us %}
         <div class="block
-                {% if not sibling_url %}
-                block__flush-top
-                {% endif %}
-                about-us-text">
-        {{ about_us.text | richtext }}
+                    block__flush-top
+                    about-us-text">
+            {{ about_us.text | richtext }}
         </div>
     {% endif %}
 
@@ -156,9 +118,6 @@
     {% endif %}
 
     {% if disclaimer %}
-    <div class="disclaimer-text">
-        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-        {{ disclaimer.text | richtext }}
-    </div>
+        {% include '_disclaimer.html' %}
     {% endif %}
 {% endblock %}

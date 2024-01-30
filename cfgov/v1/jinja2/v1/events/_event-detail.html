@@ -31,8 +31,8 @@
     </header>
     <div class="post_body">
         {% if event_state == 'future' and page.live_stream_availability %}
-        <aside class="post_inset post_inset__right line-container event-status">
-            <div class="line-container_body">
+        <aside class="event-status">
+            <div class="event-status_body">
                 <h1 class="u-visually-hidden">Event viewing details</h1>
                 <div class="event-status_livestream">
                   <p>
@@ -49,8 +49,8 @@
             </div>
         </aside>
         {% elif ( event_state == 'present' and page.live_stream_availability ) %}
-        <aside class="post_inset post_inset__right line-container event-status">
-            <div class="line-container_body">
+        <aside class="event-status">
+            <div class="event-status_body">
                 <div class="event-status_livestream">
                     <p>
                         {{ svg_icon('broadcast') }}
@@ -80,7 +80,7 @@
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'v1/includes/tags.html' as tags %}
-        {{ tags.render(page.related_metadata_tags()) }}
+        {{ tags.render(page.related_metadata_tags().links) }}
     </footer>
     {% endif %}
 </article>

@@ -133,6 +133,7 @@ class DraftReportView(PageReportView):
         "tags.names",
         "categories.all",
         "content_owners.names",
+        "first_published_at",
     ]
     export_headings = dict(
         [
@@ -141,6 +142,7 @@ class DraftReportView(PageReportView):
             ("tags.names", "Tags"),
             ("categories.all", "Categories"),
             ("content_owners.names", "Content Owner(s)"),
+            ("first_published_at", "Published?"),
         ],
         **PageReportView.export_headings,
     )
@@ -306,11 +308,10 @@ class AskReportView(ReportView):
         "url",
         "live",
         "last_edited",
-        "redirect_to_page",
         "portal_topic.all",
+        "primary_portal_topic",
         "portal_category.all",
         "related_questions.all",
-        "related_resource",
         "language",
     ]
     export_headings = {
@@ -324,11 +325,10 @@ class AskReportView(ReportView):
         "url": "URL",
         "live": "Live",
         "last_edited": "Last edited",
-        "redirect_to_page": "Redirect",
         "portal_topic.all": "Portal topics",
+        "primary_portal_topic": "Primary portal topic",
         "portal_category.all": "Portal categories",
         "related_questions.all": "Related questions",
-        "related_resource": "Related resource",
         "language": "Language",
     }
 
@@ -361,7 +361,6 @@ class AskReportView(ReportView):
         "answer_base": {"csv": partial(process_related_item, key="id")},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": partial(process_related_item, key="id")},
         "portal_topic.all": {
             "csv": partial(join_values_with_pipe, key="heading")
         },
@@ -370,9 +369,6 @@ class AskReportView(ReportView):
         },
         "related_questions.all": {
             "csv": partial(join_values_with_pipe, key="id")
-        },
-        "related_resource": {
-            "csv": partial(process_related_item, key="title")
         },
     }
 

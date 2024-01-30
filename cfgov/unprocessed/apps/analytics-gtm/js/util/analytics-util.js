@@ -2,7 +2,6 @@ import { analyticsLog } from '@cfpb/cfpb-analytics';
 
 /**
  * Query a selector and add listeners to returned elements.
- *
  * @param {string} selector - A dom selector.
  * @param {string} event - An event string, probably a "MouseEvent."
  * @param {Function} callback - The event handler.
@@ -16,7 +15,6 @@ function addEventListenerToSelector(selector, event, callback) {
 
 /**
  * Check if an element exists on the page, and if it does, add listeners.
- *
  * @param {HTMLElement} [elem] - The element to attach an event to.
  * @param {string} [event] - The event type string.
  * @param {Function} callback - Function to call when the event triggers.
@@ -31,7 +29,6 @@ function addEventListenerToElem(elem, event, callback) {
 
 /**
  * Create a delay given a callback function and millisecond delay.
- *
  * @class
  */
 function Delay() {

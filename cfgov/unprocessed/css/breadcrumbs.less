@@ -1,34 +1,45 @@
-.breadcrumbs {
-  .grid_column( 1, 1 );
+.m-breadcrumbs {
+  // Mobile size.
+  position: relative;
+  display: flex;
+  gap: unit(10px / @base-font-size-px, rem);
+  align-items: center;
+  flex-wrap: wrap;
 
-  padding-top: unit(@grid_gutter-width / 14px, em);
-  font-size: unit(14px / @base-font-size-px, em);
+  font-size: unit(14px / @base-font-size-px, rem);
+  padding-top: unit(15px / @base-font-size-px, rem);
+  padding-bottom: unit(15px / @base-font-size-px, rem);
+  min-height: 33px;
 
-  .cf-icon-svg {
-    fill: @pacific;
-    margin-right: 0.25em;
+  &_crumbs {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
-  .respond-to-max( @bp-sm-max, {
-    padding-top: unit( @grid_gutter-width / 2 / 14px, em );
-    padding-bottom: unit( @grid_gutter-width / 2 / 14px, em );
-  } );
-
-  &_link,
-  &_text {
-    padding-left: 4px;
-
-    &:not(:last-child):after {
-      padding-left: 4px;
-      color: @text;
-      content: ' /';
-    }
-  }
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
+    padding-top: unit(30px / @base-font-size-px, rem);
+    // Bottom is zero because main content area may or may not have a breadcrumb,
+    // so the main content needs to set it s own spacing.
+    padding-bottom: 0;
+  });
 }
 
 // Hide on print.
 .respond-to-print( {
-  .breadcrumbs {
+  .m-breadcrumbs {
     display: none;
   }
-} );
+});
+
+// TODO: When the layout-full template is converted to use `u-layout-grid_wrapper`, this can be removed.
+.content_wrapper .m-breadcrumbs {
+  margin-left: unit(15px / @base-font-size-px, rem);
+
+  // Tablet only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+    margin-left: unit(30px / @base-font-size-px, rem);
+  });
+}

@@ -5,7 +5,6 @@ import { incrementTotal } from './count.js';
 
 /**
  * Call the census.gov API and display an error if warranted.
- *
  * @param {string} address - An address.
  * @param {Array} ruralCounties - Rural counties for a chosen year.
  * @param {Function} cb - Callback to call.

@@ -160,7 +160,7 @@ describe('fwb-questions', () => {
     expect(submitBtnDom.disabled).toBe(true);
 
     expect(submitBtnDom.title).toBe(
-      'Please answer all questions to get your score'
+      'Please answer all questions to get your score',
     );
   });
 
@@ -172,7 +172,7 @@ describe('fwb-questions', () => {
       const formSubmissionStatus = simulateEvent('click', submitBtnDom);
       expect(submitBtnDom.disabled).toBe(true);
       expect(formSubmissionStatus).toBe(false);
-    }
+    },
   );
 
   it(
@@ -184,7 +184,7 @@ describe('fwb-questions', () => {
       const formSubmissionStatus = simulateEvent('click', submitBtnDom);
       expect(submitBtnDom.disabled).toBe(false);
       expect(formSubmissionStatus).toBe(true);
-    }
+    },
   );
 
   it(
@@ -196,7 +196,7 @@ describe('fwb-questions', () => {
       const formSubmissionStatus = simulateEvent('click', submitBtnDom);
       expect(submitBtnDom.disabled).toBe(false);
       expect(formSubmissionStatus).toBe(true);
-    }
+    },
   );
 
   it('should send the correct analytics when a radio button is clicked', () => {

@@ -167,7 +167,7 @@ fileChangeDom.addEventListener('change', function () {
             'The header row of your CSV file does not match' +
               ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
               ' title="Download CSV template">CSV template</a>.' +
-              ' Please adjust your CSV file and try again.'
+              ' Please adjust your CSV file and try again.',
           );
           return;
         }
@@ -181,7 +181,7 @@ fileChangeDom.addEventListener('change', function () {
       complete: function (/*results, file*/) {
         if (rowCount === 0) {
           setError(
-            'There are no rows in this csv. Please update and try again.'
+            'There are no rows in this csv. Please update and try again.',
           );
         }
         if (rowCount >= MAX_CSV_ROWS) {
@@ -197,7 +197,7 @@ fileChangeDom.addEventListener('change', function () {
               MAX_CSV_ROWS +
               ' now, but please recheck the remaining ' +
               leftOver +
-              '.'
+              '.',
           );
         }
       },
@@ -209,7 +209,7 @@ fileChangeDom.addEventListener('change', function () {
         'our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
         'title="Download CSV template">CSV template</a>.' +
         ' For more information about CSV files, view our' +
-        ' Frequently Asked Questions below.'
+        ' Frequently Asked Questions below.',
     );
   }
 });
@@ -229,7 +229,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   ) {
     setError(
       'You have not selected a file. ' +
-        'Use the "Select file" button to select the file with your addresses.'
+        'Use the "Select file" button to select the file with your addresses.',
     );
   } else if (isCSV(fileValue)) {
     let pass = true;
@@ -257,7 +257,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
             'The header row of your CSV file does not match' +
               ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
               ' title="Download CSV template">CSV template</a>.' +
-              ' Please adjust your CSV file and try again.'
+              ' Please adjust your CSV file and try again.',
           );
         }
       },
@@ -265,7 +265,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
         if (rowCount === 0) {
           pass = false;
           setError(
-            'There are no rows in this csv. Please update and try again.'
+            'There are no rows in this csv. Please update and try again.',
           );
         }
         if (rowCount >= MAX_CSV_ROWS) {
@@ -281,7 +281,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
               MAX_CSV_ROWS +
               ' now, but please recheck the remaining ' +
               leftOver +
-              '.'
+              '.',
           );
         }
         if (addresses.length > 1) {
@@ -301,7 +301,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
         ' <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
         ' title="Download CSV template">CSV template</a>.' +
         ' For more information about CSV files,' +
-        ' view our Frequently Asked Questions below.'
+        ' view our Frequently Asked Questions below.',
     );
   }
 
@@ -409,7 +409,6 @@ function generateCSV() {
 
   /**
    * Process each cell in a table row.
-   *
    * @param {HTMLElement} element - A table data element to process.
    */
   function _loopHandler(element) {

@@ -12,7 +12,7 @@ from django.test import (
 from model_bakery import baker
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import email_popup, image_alt_value
+from v1.jinja2tags import image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 
@@ -60,12 +60,6 @@ class TestImageAltValue(TestCase):
             {"upload": image_with_alt_text.pk, "alt": "Alt text on block"}
         )
         self.assertEqual(image_alt_value(value), "Alt text on block")
-
-
-class TestEmailPopup(TestCase):
-    def test_email_popup_defined_and_returns_empty_for_no_popup(self):
-        request = RequestFactory().get("/page/without/a/popup")
-        self.assertEqual(email_popup(request), "")
 
 
 class TestIsFilterSelected(TestCase):

@@ -1,16 +1,15 @@
 /**
  * Tree
- *
  * @class
  * @classdesc A tree data structure.
  * Trees have one root node, and child nodes that branch.
  * Like:
  *
- *        R
- *       / \
- *      A   B
- *    / | \
- *   C  D  E
+ * ------ R
+ * ----- / \
+ * ---- A   B
+ * -- / | \
+ * - C  D  E
  * @returns {Tree} An instance.
  */
 function Tree() {
@@ -60,16 +59,15 @@ function Tree() {
    * Get all nodes at a particular tree level. For example, returning
    * Given this Tree and starting at (R):
    *
-   *        R
-   *       / \
-   *      A   B
-   *    / | \
-   *   C  D  E
+   * ------ R
+   * ----- / \
+   * ---- A   B
+   * -- / | \
+   * - C  D  E
    *
    * Level 0 nodes would return (R).
    * Level 1 nodes would return (A) and (B).
    * Level 2 nodes would return (C), (D), and (E).
-   *
    * @param {number} level - The tree level on which to return nodes.
    * @returns {Array} A list of all nodes at a particular tree level.
    */
@@ -94,7 +92,6 @@ function Tree() {
 // PRIVATE CLASS
 /**
  * TreeNode
- *
  * @class
  * @classdesc A node in a tree data structure.
  * @param {Tree} tree - The data structure this node is a member of.
@@ -114,4 +111,4 @@ function TreeNode(tree, data, parent, children) {
   return this;
 }
 
-export default Tree;
+export { Tree };

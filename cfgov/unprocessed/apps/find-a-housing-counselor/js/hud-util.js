@@ -7,7 +7,6 @@ before you start requesting properties that don't exist in _updateMap()
 /**
  * Make sure your data has the correct structure
  * before you start requesting properties that don't exist in updateMap()
- *
  * @param {object} data - The data object to check for a valid structure.
  * @returns {boolean} True if the data object is valid, false otherwise.
  */

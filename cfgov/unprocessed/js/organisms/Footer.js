@@ -1,9 +1,14 @@
+import {
+  checkDom,
+  instantiateAll,
+  setInitFlag,
+} from '@cfpb/cfpb-atomic-component';
 import { init as footerButtonInit } from '../modules/footer-button.js';
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
+
+const BASE_CLASS = 'o-footer';
 
 /**
  * Footer
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -11,8 +16,6 @@ import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
  * @returns {Footer} An instance.
  */
 function Footer(element) {
-  const BASE_CLASS = 'o-footer';
-
   const _dom = checkDom(element, BASE_CLASS);
 
   /**
@@ -33,4 +36,7 @@ function Footer(element) {
   return this;
 }
 
-export default Footer;
+Footer.BASE_CLASS = BASE_CLASS;
+Footer.init = (scope) => instantiateAll(`.${Footer.BASE_CLASS}`, Footer, scope);
+
+export { Footer };

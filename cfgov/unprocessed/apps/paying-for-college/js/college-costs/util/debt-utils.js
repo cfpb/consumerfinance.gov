@@ -1,7 +1,6 @@
 /**
  * calcInterestAtGrad - Calculate interest at end of program length (graduation)
  * NOTE: This ONLY works for debts incurred once per year, each year, during the program.
- *
  * @param {number} amount - Amount of loan per year
  * @param {number} rate - Interest rate (as decimal)
  * @param {number} programLength - Program length in years
@@ -23,7 +22,6 @@ function calcInterestAtGrad(amount, rate, programLength) {
 
 /**
  * calcMonthlyPayment - Calculate monthly payment of loan after term
- *
  * @param {number} debt - Amount of debt at end of program
  * @param {number} rate - Interest rate, as decimal
  * @param {number} term - Loan term, in years

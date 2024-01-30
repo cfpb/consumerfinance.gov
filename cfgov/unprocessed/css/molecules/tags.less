@@ -1,0 +1,147 @@
+@import (reference) 'cfpb-core.less';
+
+@bullet-font-size: 17px;
+
+.m-tags {
+  // Mobile.
+  &_heading {
+    .h4();
+    display: block;
+    color: @black;
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-left: 0;
+    padding-right: 0;
+    list-style-type: none;
+  }
+
+  &_tag {
+    .h6();
+    // Override h6 margin.
+    margin: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    line-height: @bullet-font-size;
+    color: @gray;
+  }
+
+  &_item {
+    margin: 0;
+  }
+
+  &_bullet {
+    position: absolute;
+    left: -1em;
+    color: @gold-80;
+    font-size: unit(@bullet-font-size / @base-font-size-px, rem);
+    margin-right: unit(5px / @base-font-size-px, rem);
+    margin-left: @bullet-font-size;
+  }
+
+  a.m-tags_tag {
+    .u-link__colors(
+      @gray, @gray, @gray, @gray, @gray,
+      @gold-80, @gold-80, @gold-80, @gold-80, @gold-80
+    );
+  }
+
+  // Negate the border of the sibling when hovering.
+  &_item:hover + &_item {
+    a.m-tags_tag {
+      border-top: none;
+    }
+  }
+
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
+    &_tag {
+      height: 100%;
+      width: 100%;
+      padding-top: unit(10px / @base-font-size-px, rem);
+      padding-bottom: unit(10px / @base-font-size-px, rem);
+      padding-left: @bullet-font-size;
+      border-top: 1px dotted @gold-80;
+    }
+
+    a.m-tags_tag {
+      border-bottom-width: 0;
+
+      &:hover {
+        border-top: 1px solid @gold-80;
+        border-bottom: 1px solid @gold-80;
+      }
+    }
+
+    // Add bottom border to last tag.
+    &_item:last-child {
+      // This needs to appear after border-bottom-width: 0;
+      .m-tags_tag {
+        border-bottom: 1px dotted @gold-80;
+      }
+    }
+  });
+
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    display: flex;
+    align-items: baseline;
+    gap: unit(15px / @base-font-size-px, rem);
+
+    &_list {
+      flex-direction: row;
+      gap: unit(15px / @base-font-size-px, rem);
+    }
+
+    &_tag {
+      margin-left: @bullet-font-size;
+    }
+
+    &_bullet {
+      margin-left: 0;
+    }
+  });
+
+  .respond-to-print({
+    display: none;
+  });
+}
+
+// Right-to-left (RTL) adjustments for arabic pages.
+html[lang='ar'] {
+  .m-tags {
+    &_bullet {
+      position: absolute;
+      right: -1rem;
+      left: initial;
+      color: @gold-80;
+    }
+
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      &_tag {
+        padding-right: @bullet-font-size;
+      }
+
+      &_bullet {
+        right: unit(-7px / @base-font-size-px, rem);
+      }
+    });
+
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
+      &_tag {
+        margin-left: 0;
+        margin-right: @bullet-font-size;
+      }
+
+      &_bullet {
+        margin-right: 0;
+      }
+    });
+  }
+}

@@ -4,10 +4,7 @@ from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_page import AbstractFilterablePage
 
 
 class SublandingFilterableContent(StreamBlock):
@@ -27,7 +24,7 @@ class SublandingFilterableContent(StreamBlock):
         }
 
 
-class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
+class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
     header = StreamField(
         [
             ("hero", molecules.Hero()),
@@ -35,7 +32,9 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         blank=True,
         use_json_field=True,
     )
-    content = StreamField(SublandingFilterableContent, use_json_field=True)
+    content = StreamField(
+        SublandingFilterableContent, blank=True, use_json_field=True
+    )
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -47,12 +46,15 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
+            ObjectList(
+                AbstractFilterablePage.filtering_panels, heading="Filtering"
+            ),
             ObjectList(CFGOVPage.sidefoot_panels, heading="Sidebar"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
 
-    template = "v1/sublanding-page/index.html"
+    template = "v1/sublanding-page/filterable.html"
 
     page_description = (
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
@@ -60,12 +62,18 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
     )
 
 
-class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "v1/sublanding-page/index.html"
+class ResearchHubPage(SublandingFilterablePage):
+    template = "v1/sublanding-page/filterable.html"
     filterable_categories = ["Research Hub"]
 
 
-class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
+class ActivityLogPage(SublandingFilterablePage):
     template = "v1/activity-log/index.html"
-    filterable_categories = ("Blog", "Newsroom", "Research Report")
+    filterable_categories = (
+        "Blog",
+        "Newsroom",
+        "Research Hub",
+        "Research Report",
+    )
     filterable_per_page_limit = 100
+    filterable_results_compact = True

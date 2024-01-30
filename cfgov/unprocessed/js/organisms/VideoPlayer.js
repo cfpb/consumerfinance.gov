@@ -14,7 +14,6 @@ const BASE_CLASS = 'o-video-player';
 
 /**
  * VideoPlayer
- *
  * @class
  * @classdesc Initializes a new VideoPlayer organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -69,13 +68,12 @@ function VideoPlayer(element) {
     _player.addEventListener('onReady', _videoPlayerReadyHandler.bind(this));
     _player.addEventListener(
       'onStateChange',
-      _videoStateChangeHandler.bind(this)
+      _videoStateChangeHandler.bind(this),
     );
   }
 
   /**
    * Event handler for when the video is ready.
-   *
    * @param {object} event - Event object containing target
    *   to video player instance.
    */
@@ -117,7 +115,6 @@ function VideoPlayer(element) {
 
   /**
    * Handler for when the video changes state.
-   *
    * @param {Event} event - Event object for the changed state,
    *   which contains a data property for the state.
    */
@@ -131,7 +128,6 @@ function VideoPlayer(element) {
    * Load Youtube max res image if it exists.
    * TODO: Replace this method by calling the YouTube data API.
    * https://developers.google.com/youtube/v3/getting-started#fields
-   *
    * @param {string} imageURL - The URL to load in the image.
    */
   function _imageLoad(imageURL) {
@@ -182,7 +178,6 @@ function VideoPlayer(element) {
 
   /**
    * Play the video.
-   *
    * @returns {VideoPlayer} An instance.
    */
   function playVideo() {
@@ -207,7 +202,6 @@ function VideoPlayer(element) {
 
   /**
    * Stop the video from playing.
-   *
    * @returns {VideoPlayer} An instance.
    */
   function stopVideo() {

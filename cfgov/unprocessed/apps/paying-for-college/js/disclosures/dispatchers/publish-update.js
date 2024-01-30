@@ -4,7 +4,6 @@ import expensesModel from '../models/expenses-model.js';
 const publishUpdate = {
   /**
    * Function which updates financial model with new value
-   *
    * @param {string} prop - financial model property name
    * @param {number|string} val - new value
    */
@@ -16,7 +15,6 @@ const publishUpdate = {
 
   /**
    * Function which updates financial model by extending it with an object
-   *
    * @param {object} object - an object of financial model values
    */
   extendFinancialData: function (object) {
@@ -28,7 +26,6 @@ const publishUpdate = {
   /**
    * Function which updates privateLoanMulti array in financial model with new
    * value
-   *
    * @param {number} index - The index of the private loan being updated
    * @param {string} prop - private loan object property name
    * @param {number|string} val - new value
@@ -41,7 +38,6 @@ const publishUpdate = {
 
   /**
    * Function which removes a private loan from the privateLoanMulti array
-   *
    * @param {number} index - The index of the private loan being removed
    */
   dropPrivateLoan: function (index) {
@@ -63,7 +59,6 @@ const publishUpdate = {
 
   /**
    * Function which updates expenses model with new value
-   *
    * @param {string} prop - expenses model property name
    * @param {number|string} val - new value
    */
@@ -75,7 +70,6 @@ const publishUpdate = {
   /**
    * Function which updates expenses model with a new
    * region.
-   *
    * @param {string} region - region code
    */
   updateRegion: function (region) {

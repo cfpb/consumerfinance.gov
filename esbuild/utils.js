@@ -25,7 +25,8 @@ const blocklist = [
 ];
 
 /**
- * @param {string} dir - Current directory to walk
+ * @param {string} dir - Current directory to walk.
+ * @returns {Array} The list of filtered files from the `dir` directory.
  */
 async function getFiles(dir) {
   const dirents = await readdir(dir, { withFileTypes: true });
@@ -34,7 +35,7 @@ async function getFiles(dir) {
       if (blocklist.indexOf(dirent.name) > -1) return '';
       const res = resolve(dir, dirent.name);
       return dirent.isDirectory() ? getFiles(res) : res;
-    })
+    }),
   );
   return files.flat().filter((v) => v);
 }

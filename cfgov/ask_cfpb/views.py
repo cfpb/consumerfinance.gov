@@ -1,48 +1,22 @@
 import json
-from urllib.parse import urljoin
 
 from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
-from wagtail.models import Site
+from wagtail.snippets.views.snippets import SnippetViewSet
+
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
-from bs4 import BeautifulSoup as bs
-
 from ask_cfpb.forms import AutocompleteForm, SearchForm, legacy_facet_validator
-from ask_cfpb.models import AnswerPage, AnswerPageSearch, AnswerResultsPage
-
-
-def annotate_links(answer_text):
-    """
-    Parse and annotate links from answer text.
-
-    Return the annotated answer
-    and an enumerated list of links as footnotes.
-    """
-    try:
-        _site = Site.objects.get(is_default_site=True)
-    except Site.DoesNotExist as err:
-        raise RuntimeError("no default wagtail site configured") from err
-
-    footnotes = []
-    soup = bs(answer_text, "lxml")
-    links = soup.findAll("a")
-    index = 1
-    for link in links:
-        if not link.get("href"):
-            continue
-        footnotes.append((index, urljoin(_site.root_url, link.get("href"))))
-        parent = link.parent
-        link_location = parent.index(link)
-        super_tag = soup.new_tag("sup")
-        super_tag.string = str(index)
-        parent.insert(link_location + 1, super_tag)
-        index += 1
-    return (str(soup), footnotes)
+from ask_cfpb.models import (
+    AnswerPage,
+    AnswerPageSearch,
+    AnswerResultsPage,
+    GlossaryTerm,
+)
 
 
 def view_answer(request, slug, language, answer_id):
@@ -63,10 +37,6 @@ def view_answer(request, slug, language, answer_id):
         else:
             return ServeView.serve(answer_page, request, [], {})
     # page is live
-    # redirect if so configured
-    if answer_page.redirect_to_page:
-        new_page = answer_page.redirect_to_page
-        return redirect(new_page.url, permanent=True)
     # handle pages that have unpublished revisions
     if answer_page.status_string == "live + draft":
         if sharing_site:
@@ -250,3 +220,11 @@ def redirect_ask_search(request, language="en"):
                     return redirect_to_tag(tag, language)
 
         raise Http404
+
+
+class GlossaryTermViewSet(SnippetViewSet):
+    model = GlossaryTerm
+    menu_icon = "snippet"
+    list_display = ["name_en", "definition_en", "portal_topic"]
+    ordering = ["name_en"]
+    search_fields = ["name_en", "definition_en", "name_es", "definition_es"]

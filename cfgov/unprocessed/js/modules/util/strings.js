@@ -11,7 +11,8 @@ function formatTimestamp(totalSeconds) {
   if (hours < 10) {
     hours = '0' + hours;
   }
-  if (hours !== '00') {
+
+  if (String(hours) !== '00') {
     timestamp = hours + ':';
   }
 
@@ -30,7 +31,6 @@ function formatTimestamp(totalSeconds) {
 
 /**
  * Escapes a string.
- *
  * @param {string} s - The string to escape.
  * @returns {string} The escaped string.
  */
@@ -40,7 +40,6 @@ function stringEscape(s) {
 
 /**
  * Tests whether a string matches another.
- *
  * @param {string} x - The control string.
  * @param {string} y - The comparison string.
  * @returns {boolean} True if `x` and `y` match, false otherwise.

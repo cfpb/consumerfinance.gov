@@ -1,6 +1,5 @@
 /**
  * Converts a number to a money string.
- *
  * @param {number} num - A number to be converted.
  * @returns {string} money A string representing currency.
  */
@@ -18,7 +17,7 @@ function numToMoney(num) {
   const sign = num < 0 ? '-' : '';
 
   const numProc = String(
-    parseInt((num = Math.abs(Number(num) || 0).toFixed(0)), 10)
+    parseInt((num = Math.abs(Number(num) || 0).toFixed(0)), 10),
   );
   let groups = 0;
   if (numProc.length > 3) {
@@ -29,9 +28,9 @@ function numToMoney(num) {
 
   const separator = ',';
   if (groups > 0) {
-    money += numProc.substr(0, groups) + separator;
+    money += numProc.slice(0, groups) + separator;
   }
-  money += numProc.substr(groups).replace(/(\d{3})(?=\d)/g, '$1' + separator);
+  money += numProc.slice(groups).replace(/(\d{3})(?=\d)/g, '$1' + separator);
 
   return money;
 }

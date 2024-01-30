@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 /**
  * Some dropdown utility methods.
- *
  * @param {string|Array} id - ID(s) of the HTML select elements.
  * @returns {object} Methods to manipulate the requested elements.
  */
@@ -19,10 +18,9 @@ const utils = function (id) {
 
   /**
    * If optionVal is provided as an array, turn it into a string
-   *  of attribute selectors. Otherwise, just create a single attribute
-   *  selector. If no val is provided, return an asterisk to select
-   *  all elements.
-   *
+   * of attribute selectors. Otherwise, just create a single attribute
+   * selector. If no val is provided, return an asterisk to select
+   * all elements.
    * @param {string|Array} optionVal - Option(s) in the dropdown to modify.
    * @returns {string} Selector string of values.
    */
@@ -42,7 +40,6 @@ const utils = function (id) {
 
   /**
    * Disable a select element's option(s).
-   *
    * @param {string|Array} optionVal - The value(s) of the options
    *  that you'd like to disable. Can be a string or an array. If no
    *  option(s) are specified, the entire dropdown is disabled.
@@ -62,7 +59,6 @@ const utils = function (id) {
 
   /**
    * Enable a select element's option(s).
-   *
    * @param {string|Array} optionVal - The value(s) of the options
    * that you'd like to enable. Can be a string or an array. If no
    * option(s) are specified, the entire dropdown is enabled.
@@ -107,7 +103,6 @@ const utils = function (id) {
 
   /**
    * Remove an option from a dropdown.
-   *
    * @param {string|Array} optionVal - The value(s) of the options
    *  that you'd like to remove. Can be a string or an array. If no
    *  option(s) are specified, all options are removed.
@@ -116,7 +111,7 @@ const utils = function (id) {
   function removeOption(optionVal) {
     if (!optionVal) {
       throw new Error(
-        "You must provide the value of the option you'd like to remove."
+        "You must provide the value of the option you'd like to remove.",
       );
     }
     $el.find('option').filter(parseVals(optionVal)).remove();
@@ -131,7 +126,7 @@ const utils = function (id) {
   function hasOption(value) {
     if (!value) {
       throw new Error(
-        "You must provide the value of the option you'd like to check for."
+        "You must provide the value of the option you'd like to check for.",
       );
     }
 
@@ -140,7 +135,6 @@ const utils = function (id) {
 
   /**
    * Resets the select's element to its first option.
-   *
    * @returns {object} The top-level utils object.
    */
   function reset() {
@@ -153,7 +147,6 @@ const utils = function (id) {
 
   /**
    * Show a dropdown.
-   *
    * @returns {object} The top-level utils object.
    */
   function show() {
@@ -167,7 +160,6 @@ const utils = function (id) {
 
   /**
    * Hide a dropdown.
-   *
    * @returns {object} The top-level utils object.
    */
   function hide() {
@@ -181,7 +173,6 @@ const utils = function (id) {
 
   /**
    * Show a loading animation.
-   *
    * @returns {object} The top-level utils object.
    */
   function showLoading() {
@@ -195,7 +186,6 @@ const utils = function (id) {
 
   /**
    * Hide the loading animation.
-   *
    * @returns {object} The top-level utils object.
    */
   function hideLoading() {
@@ -209,7 +199,6 @@ const utils = function (id) {
 
   /**
    * Give a dropdown a yellow border to highlight it.
-   *
    * @returns {object} The top-level utils object.
    */
   function showHighlight() {
@@ -222,7 +211,6 @@ const utils = function (id) {
 
   /**
    * Remove a dropdown's highlight.
-   *
    * @returns {object} The top-level utils object.
    */
   function hideHighlight() {

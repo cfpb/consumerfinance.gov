@@ -2,7 +2,6 @@ import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
 /**
  * TabTrigger
- *
  * @class
  * @classdesc Initializes a new TabTrigger module.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -45,4 +44,4 @@ function TabTrigger(element) {
   return this;
 }
 
-export default TabTrigger;
+export { TabTrigger };

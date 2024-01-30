@@ -93,7 +93,7 @@ msgstr ""
 #: v1/jinja2/v1/includes/molecules/global-search.html:40
 #: v1/jinja2/v1/includes/organisms/video-player.html:63
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:76
 #: v1/jinja2/v1/includes/molecules/global-search.html:79
@@ -107,6 +107,14 @@ msgstr ""
 #: v1/jinja2/v1/includes/molecules/pagination.html:33
 msgid "Pagination"
 msgstr ""
+
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:48
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: cfgov/v1/jinja2/v1/includes/molecules/pagination.html:61
+msgid "Next"
+msgstr "Следующая"
 
 #: v1/jinja2/v1/includes/molecules/pagination.html:69
 msgid "Page"
@@ -178,25 +186,25 @@ msgid "Back to top"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
-msgid "https://usa.gov/"
+msgid "https://www.usa.gov/"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
 msgid "USA.gov"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:21
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:22
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22
 msgid "Table of contents"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:17
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:17
 msgid "Section navigation"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:18
-msgid "In this section"
-msgstr ""
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
+msgid "Navigate this section"
+msgstr "Навигация по этому разделу"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"

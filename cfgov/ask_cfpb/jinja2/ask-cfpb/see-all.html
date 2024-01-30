@@ -1,4 +1,4 @@
-{% extends 'v1/layouts/layout-side-nav.html' %}
+{% extends 'v1/layouts/layout-1-3.html' %}
 
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 
@@ -75,13 +75,16 @@
             {% endfor %}
 
             <div class="block block__sub">
-                {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+                {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
             </div>
         </section>
         {% if not page.portal_category %}
-        <p class="ask-search-link h4">
-            {{ _("Don't see what you're looking for?") }} <span class="break"><a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a></span>
-        </p>
+        <div class="block block__flush-bottom block__padded-bottom">
+            <p class="ask-search-link h4">
+                <span>{{ _("Don't see what you're looking for?") }}</span>
+                <a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a>
+            </p>
+        </div>
         {% endif %}
     {% endif %}
 {% endblock %}

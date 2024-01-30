@@ -9,11 +9,15 @@
 
    Renders a small visual tag with an X icon.
 
-   options.label:  The tag's text content.
+   options:
 
-   value:          The tag's underlying value. Optional.
+     label:    The tag's text content.
 
-   behavior:       The checkbox's JS behavior. Optional.
+     href:     The tag's X icon click URL. Optional.
+
+     value:    The tag's underlying value. Optional.
+
+     behavior: The checkbox's JS behavior. Optional.
 
    ========================================================================== #}
 
@@ -26,6 +30,6 @@
 <div class="a-tag"
      {{ value }}
      {{ behavior }}>
-    {{ options.label }} {% if href %}<a {{href}}>{% endif %}{{ svg_icon('error') }}{% if href %}</a>{% endif %}
+   {{ options.label }} {% if href %}<a {{href}}>{% endif %}{{ svg_icon('error') }}{% if href %}</a>{% endif %}
 </div>
 {% endmacro %}

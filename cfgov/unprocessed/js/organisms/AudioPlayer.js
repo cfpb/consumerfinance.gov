@@ -6,7 +6,6 @@ const EVENT_CATEGORY = 'Audio Player Events';
 
 /**
  * AudioPlayer
- *
  * @class
  * @classdesc Initializes a new AudioPlayer organism for the purpose of sending
  *   analytics events for the native HTML `audio` element.

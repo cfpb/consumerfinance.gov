@@ -62,10 +62,14 @@ class AnswerPageSearch:
             )
         else:
             search = self.base_query.filter("term", language=self.language)
+
         if self.search_term != "":
             search = search.query(
                 "match", text={"query": self.search_term, "operator": "AND"}
             )
+        else:
+            search = search.sort("autocomplete.raw")
+
         total_results = search.count()
         search = search[0:total_results]
         self.results = search.execute()[0:total_results]

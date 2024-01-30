@@ -3,7 +3,7 @@ try:
 except ImportError:
     from django.conf.urls import url as re_path
 
-from agreements.views import index, issuer_search
+from agreements.views import archive, index, issuer_search
 
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     re_path(
         r"^issuer/(?P<issuer_slug>.*)/$", issuer_search, name="issuer_search"
     ),
+    re_path(r"^archive/$", archive, name="agreements_archive"),
 ]

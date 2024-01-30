@@ -31,7 +31,6 @@ function _bindTabLink(tabGroup, tabContents) {
 
   /**
    * Handle a click of a tab.
-   *
    * @param {MouseEvent} evt - Event object for a click on a tab.
    */
   function _tabLinkClicked(evt) {

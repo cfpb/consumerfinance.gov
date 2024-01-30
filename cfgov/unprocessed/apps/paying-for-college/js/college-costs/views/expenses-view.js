@@ -1,7 +1,7 @@
 // This file contains the 'view' of expenses budget after graduation
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
-import numberToMoney from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import {
@@ -22,10 +22,10 @@ const expensesView = {
    */
   init: () => {
     expensesView._expensesItems = document.querySelectorAll(
-      '[data-expenses-item]'
+      '[data-expenses-item]',
     );
     expensesView._expensesInputs = document.querySelectorAll(
-      'input[data-expenses-item]'
+      'input[data-expenses-item]',
     );
     expensesView._regionSelect = document.querySelector('#expenses__region');
 
@@ -40,7 +40,7 @@ const expensesView = {
       if (!selectorMatches(elem, ':focus')) {
         const prop = elem.dataset.expensesItem;
         let val = getExpensesValue(prop);
-        val = numberToMoney({ amount: val, decimalPlaces: 0 });
+        val = formatUSD({ amount: val, decimalPlaces: 0 });
 
         if (elem.tagName === 'INPUT') {
           elem.value = val;
@@ -76,7 +76,6 @@ function _addInputListeners() {
 
 /**
  * Event handling for expenses-item INPUT changes.
- *
  * @param {KeyboardEvent} event - Triggering event.
  */
 function _handleInputChange(event) {

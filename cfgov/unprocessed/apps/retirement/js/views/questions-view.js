@@ -29,7 +29,6 @@ function init() {
 /**
  * This function updates the text in the "questions" in Step 2
  * based on the user's current age.
- *
  * @param {number} currentAge - The user's current age.
  */
 function update(currentAge) {

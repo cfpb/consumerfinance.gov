@@ -19,7 +19,7 @@ export class EmailSignup {
       },
       (request) => {
         request.reply(subscriptionSuccessResponse);
-      }
+      },
     ).as('subscriptionSuccess');
   }
 

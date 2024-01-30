@@ -25,7 +25,7 @@ const HTML_SNIPPET = `
       </svg>
     </div>
   </div>
-  <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+  <button class="a-btn a-btn__link a-btn__warning filters_clear"
           data-js-hook="behavior_clear-all">
       Clear all filters
   </button>
@@ -54,8 +54,7 @@ describe('The Regs3K search page', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent('Event');
-    event.initEvent('load', true, true);
+    const event = new Event('load', { bubbles: true, cancelable: true });
     window.dispatchEvent(event);
   });
 
@@ -66,7 +65,7 @@ describe('The Regs3K search page', () => {
     simulateEvent('submit', form);
 
     expect(global.location.assign).toBeCalledWith(
-      'http://localhost/?q=money&regs=1002'
+      'http://localhost/?q=money&regs=1002',
     );
   });
 

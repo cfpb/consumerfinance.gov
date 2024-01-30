@@ -39,7 +39,6 @@ function injectMapboxJS() {
 
 /**
  * Event handler for successful load of mapbox JavaScript file.
- *
  * @param {Event} evt - The event object from the load event.
  */
 function scriptLoaded(evt) {

@@ -6,16 +6,15 @@ let buttonsDom;
 /**
  * Changes the visibility of the results by category
  * based on user input
- *
  * @param {string} category - The category to display
  */
 function switchComparisons(category) {
   const allCategories = document.querySelectorAll('.comparison_data-point');
   const showCategory = document.querySelectorAll(
-    '[class^="comparison_data-point ' + category + '"]'
+    '[class^="comparison_data-point ' + category + '"]',
   );
   const selectedButton = document.querySelector(
-    '[data-compare-by="' + category + '"]'
+    '[data-compare-by="' + category + '"]',
   );
   const selectedButtonClass = 'comparison-chart_toggle-button__selected';
   const hiddenClass = 'u-hidden';
@@ -40,7 +39,6 @@ function switchComparisons(category) {
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
- *
  * @param {HTMLElement} el - A dom element
  */
 function handleAnalytics(el) {

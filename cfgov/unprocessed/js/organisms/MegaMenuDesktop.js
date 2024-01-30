@@ -3,7 +3,6 @@ import { EventObserver, MoveTransition } from '@cfpb/cfpb-atomic-component';
 
 /**
  * MegaMenuDesktop
- *
  * @class
  * @classdesc Behavior for the mega menu at desktop sizes.
  * @param {string} baseClass - The base class of the parent mega menu.
@@ -46,7 +45,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Pass an event bubbled up from the menus to the appropriate handler.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent(event) {
@@ -68,7 +66,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Event handler for when FlyoutMenu trigger is clicked.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleTriggerClick(event) {
@@ -89,7 +86,6 @@ function MegaMenuDesktop(baseClass, menus) {
   /**
    * Event handler for when FlyoutMenu collapse transition has ended.
    * Use this to perform post-collapseEnd actions.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseEnd(event) {
@@ -98,7 +94,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Event handler for when clicking on the body of the document.
-   *
    * @param {MouseEvent} event - The click event.
    */
   function _handleBodyClick(event) {
@@ -110,7 +105,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Cleanup state and set the currently active menu.
-   *
    * @param {FlyoutMenu} menu - The menu currently being activated.
    */
   function _updateMenuState(menu) {
@@ -144,7 +138,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Close the mega menu.
-   *
    * @returns {MegaMenuDesktop} An instance.
    */
   function collapse() {
@@ -156,7 +149,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Add events necessary for the desktop menu behaviors.
-   *
    * @returns {boolean} Whether it has successfully been resumed or not.
    */
   function resume() {
@@ -170,7 +162,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Remove events necessary for the desktop menu behaviors.
-   *
    * @returns {boolean} Whether it has successfully been suspended or not.
    */
   function suspend() {
@@ -188,7 +179,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Iterate over the sub menus and handle setting the resumed state.
-   *
    * @param {TreeNode} node - The data source for the current menu.
    */
   function _handleResumeTraversal(node) {
@@ -205,7 +195,7 @@ function MegaMenuDesktop(baseClass, menus) {
       if (transition) transition.setElement(wrapperDom);
       else
         transition = new MoveTransition(wrapperDom).init(
-          MoveTransition.CLASSES.MOVE_UP
+          MoveTransition.CLASSES.MOVE_UP,
         );
 
       /* TODO: The only reason hiding is necessary is that the
@@ -221,7 +211,7 @@ function MegaMenuDesktop(baseClass, menus) {
       menu.setTransition(
         transition,
         transition.moveUp,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
     } else if (nLevel === 2) {
       menu.suspend();
@@ -230,7 +220,6 @@ function MegaMenuDesktop(baseClass, menus) {
 
   /**
    * Iterate over the sub menus and handle setting the suspended state.
-   *
    * @param {TreeNode} node - The data source for the current menu.
    */
   function _handleSuspendTraversal(node) {
@@ -264,4 +253,4 @@ function MegaMenuDesktop(baseClass, menus) {
   return this;
 }
 
-export default MegaMenuDesktop;
+export { MegaMenuDesktop };

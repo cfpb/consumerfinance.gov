@@ -23,7 +23,6 @@ from v1.models import (
     EnforcementActionProduct,
     EnforcementActionStatus,
 )
-from v1.models.snippets import RelatedResource
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
@@ -66,7 +65,6 @@ class ServeViewTestCase(TestCase):
                 },
             ]
         )
-        self.related_resource = baker.make(RelatedResource, title="Resource")
         self.tag1 = baker.make(Tag, name="tag1")
         self.tag2 = baker.make(Tag, name="tag2")
 
@@ -81,7 +79,6 @@ class ServeViewTestCase(TestCase):
         self.enforcement_actions_report_view = EnforcementActionsReportView()
         self.enforcement = EnforcementActionPage(
             title="Great Test Page",
-            preview_description="This is a great test page.",
             initial_filing_date=timezone.now(),
         )
         status = EnforcementActionStatus(status="expired-terminated-dismissed")

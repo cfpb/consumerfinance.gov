@@ -9,7 +9,6 @@ const CLASSES = {
 
 /**
  * PrintButton
- *
  * @class
  * @classdesc Simple view for calling the system print dialog when the
  * user wants to print their final plan. Toggles visibility of elements
@@ -24,7 +23,7 @@ const CLASSES = {
  */
 function printButton(
   element,
-  { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } = {}
+  { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } = {},
 ) {
   const _dom = checkDom(element, btnClass);
 
@@ -33,7 +32,7 @@ function printButton(
    */
   function _onAfterPrint() {
     toArray(
-      document.querySelectorAll(`.${CLASSES.NO_PRINT}.${CLASSES.HIDE}`)
+      document.querySelectorAll(`.${CLASSES.NO_PRINT}.${CLASSES.HIDE}`),
     ).forEach((el) => el.classList.remove(`${CLASSES.HIDE}`));
 
     window.removeEventListener('focus', _onAfterPrint);
@@ -50,7 +49,7 @@ function printButton(
     /* I believe we need to query each time as elements may have been
        added to the DOM during the tool's lifecycle on the page */
     toArray(document.querySelectorAll(`.${CLASSES.NO_PRINT}`)).forEach((el) =>
-      el.classList.add(`${CLASSES.HIDE}`)
+      el.classList.add(`${CLASSES.HIDE}`),
     );
 
     window.addEventListener('focus', _onAfterPrint);

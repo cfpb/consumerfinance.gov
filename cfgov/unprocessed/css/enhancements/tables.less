@@ -1,66 +1,10 @@
-/* topdoc
-  name: Tables
-  family: cf-tables
-  notes:
-    - Adjustments for cf-tables to allow them to be full-width
-  tags:
-    - cfgov-cf-tables
-*/
-
-.respond-to-max( @bp-sm-max, {
+// Tablet and below.
+.respond-to-max(@bp-sm-max, {
   table {
     width: 100%;
   }
-} );
+});
 
-/* topdoc
-  name: Table Organism
-  family: cfgov-cf-enhancements
-  notes:
-    - Extends the above stacked tables for sm devices
-    - Hides the thead
-    - Styles first td as if it were the thead
-    - Allows any other td to be styled as a heading level 4
-    - Adds data-label attr for small td labels above td content
-    - Used in older blog posts to make them responsive.
-      Do not remove unless removed from blog posts.
-  patterns:
-    - name: Collapsable Table
-      markup: |
-        <table class="o-table">
-            <thead>
-                <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                    <th>Column 3</th>
-                    <th>Column 4</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
-                    <td data-label="Lorem">Lorem ipsum dolor.</td>
-                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
-                    <td data-label="Lorem">Lorem ipsum dolor.</td>
-                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
-                    <td data-label="Lorem">Lorem ipsum dolor.</td>
-                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
-                </tr>
-            </tbody>
-        </table>
-    tags:
-  tags:
-    - cfgov-cf-enhancements
-*/
 .o-table {
   tbody th {
     border-bottom: 1px solid @table-head-bg;
@@ -73,8 +17,3 @@
     }
   }
 }
-
-/* topdoc
-  name: EOF
-  eof: true
-*/

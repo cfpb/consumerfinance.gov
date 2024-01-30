@@ -1,7 +1,7 @@
 export class CCTCharts {
   open() {
     cy.visit(
-      '/data-research/consumer-credit-trends/auto-loans/origination-activity/'
+      '/data-research/consumer-credit-trends/auto-loans/origination-activity/',
     );
   }
 

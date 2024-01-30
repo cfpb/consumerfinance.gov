@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+
 from wagtail import blocks
 from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
@@ -51,32 +53,18 @@ class Hyperlink(blocks.StructBlock):
         return self.is_required
 
     def clean(self, data):
-        error_dict = {}
-
         data = super().clean(data)
 
-        if self.is_required:
-            if not data["text"]:
-                error_dict.update({"text": is_required("Text")})
+        if self.is_required and not data["text"]:
+            raise StructBlockValidationError(
+                block_errors={"text": ValidationError(is_required("Text"))}
+            )
 
-        if error_dict:
-            raise StructBlockValidationError(block_errors=error_dict)
-        else:
-            return data
+        return data
 
     class Meta:
         icon = "link"
         template = "v1/includes/atoms/hyperlink.html"
-
-
-class Button(Hyperlink):
-    size = blocks.ChoiceBlock(
-        choices=[
-            ("regular", "Regular"),
-            ("large", "Large Primary"),
-        ],
-        default="regular",
-    )
 
 
 IMAGE_ALT_TEXT_HELP_TEXT = (
@@ -125,20 +113,14 @@ class ImageBasic(blocks.StructBlock):
         return self.is_required
 
     def clean(self, data):
-        error_dict = {}
-
         data = super().clean(data)
 
-        if not self.required and not data["upload"]:
-            return data
+        if self.required and not data["upload"]:
+            raise StructBlockValidationError(
+                {"upload": ValidationError(is_required("Upload"))}
+            )
 
-        if not data["upload"]:
-            error_dict.update({"upload": is_required("Upload")})
-
-        if error_dict:
-            raise StructBlockValidationError(block_errors=error_dict)
-        else:
-            return data
+        return data
 
     class Meta:
         icon = "image"

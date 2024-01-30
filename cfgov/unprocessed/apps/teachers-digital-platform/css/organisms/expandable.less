@@ -18,8 +18,8 @@
 // .o-expandable_label
 @expandable_label-text: @black;
 
-// .o-expandable_link
-@expandable_link-text: @pacific;
+// .o-expandable_cues
+@expandable_cues-text: @pacific;
 
 // .o-expandable modifiers
 @expandable__background: @gray-5;
@@ -27,8 +27,8 @@
 
 // Sizing variables
 
-// .o-expandable_link
-@expandable_link-font-size: @btn-font-size;
+// .o-expandable_cues
+@expandable_cues-font-size: @btn-font-size;
 
 // Timing variables
 
@@ -100,12 +100,12 @@
     font-weight: 500;
   }
 
-  &_link {
+  &_cues {
     min-width: 60px;
     text-align: right;
-    color: @expandable_link-text;
-    font-size: unit((@expandable_link-font-size / @base-font-size-px), em);
-    line-height: unit((@base-line-height-px / @expandable_link-font-size));
+    color: @expandable_cues-text;
+    font-size: unit((@expandable_cues-font-size / @base-font-size-px), em);
+    line-height: unit((@base-line-height-px / @expandable_cues-font-size));
   }
 
   //
@@ -201,7 +201,7 @@
       display: block;
       max-height: 99999px !important;
     }
-  } );
+  });
 }
 
 // Used when the set language reads right-to-left

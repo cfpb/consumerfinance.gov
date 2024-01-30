@@ -1,7 +1,7 @@
 from django.test import TestCase, override_settings
 
 from ask_cfpb.models.blocks import AskAnswerContent
-from v1.atomic_elements.schema import FAQ, HowTo, SchemaContent, Tip
+from v1.atomic_elements.schema import FAQ, HowTo, Tip
 
 
 @override_settings(LANGUAGE_CODE="en-US", LANGUAGES=(("en", "English"),))
@@ -112,38 +112,6 @@ class SchemaBlocksTestCase(TestCase):
             '<div itemprop="text">Answer content</div>'
             "</div>"
             "</div>"
-            "</div>"
-        )
-        html = block.render(data)
-        self.assertHTMLEqual(html, expected_html)
-
-
-class SchemaContentTestCase(TestCase):
-    def test_table_block_autoescape(self):
-        block = SchemaContent()
-        data = block.to_python(
-            [
-                {
-                    "type": "table_block",
-                    "value": {
-                        "data": [
-                            [
-                                "Column",
-                                "<p>Column with HTML<br/></p>",
-                            ],
-                        ],
-                        "has_data": True,
-                    },
-                },
-            ]
-        )
-        expected_html = (
-            '<div class="row table_block-row">'
-            '<table class="o-table">'
-            "<tbody>"
-            "<tr><td>Column</td><td><p>Column with HTML<br/></p></td></tr>"
-            "</tbody>"
-            "</table>"
             "</div>"
         )
         html = block.render(data)

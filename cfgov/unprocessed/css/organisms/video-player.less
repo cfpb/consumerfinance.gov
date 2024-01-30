@@ -1,18 +1,3 @@
-/* ==========================================================================
-   consumerfinance.gov
-   o-video-player
-   ========================================================================== */
-
-/* topdoc
-  name: Video Player
-  family: cfgov-video-player
-  patterns:
-      notes:
-        - "For the markup please see organisms/video-player.html."
-  tags:
-    - cfgov-video-player
-*/
-
 // Variable used to set the size of the play button.
 @play-btn-size__px: 60px;
 
@@ -67,7 +52,7 @@
   display: flex;
 
   // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
-  &:before {
+  &::before {
     content: '';
     width: 1px;
     margin-left: -1px;
@@ -79,7 +64,7 @@
   }
 
   // To clear float.
-  &:after {
+  &::after {
     content: '';
     display: table;
     clear: both;
@@ -119,7 +104,7 @@
 
 .o-video-player_duration {
   color: @white;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 40%);
   z-index: 1;
   padding-left: 6px;
   padding-right: 6px;
@@ -145,7 +130,7 @@
     16,
     24,
     32,
-    0.75
+    75%
   ) !important; // CFPB Black (#101820) at 80% opacity
   color: @white !important;
   font-size: @play-btn-icon-size;
@@ -156,7 +141,7 @@
       0,
       114,
       206,
-      0.75
+      75%
     ) !important; // Pacific (#0072ce) at 80% opacity
   }
 
@@ -177,15 +162,15 @@
     &:focus {
       outline: none;
 
-      &:before,
-      &:after {
+      &::before,
+      &::after {
         content: '';
         position: absolute;
         box-sizing: border-box;
         display: block;
       }
 
-      &:before {
+      &::before {
         width: 60px;
         height: 60px;
         left: -2px;
@@ -194,7 +179,7 @@
         outline: 1px solid @white;
       }
 
-      &:after {
+      &::after {
         width: 62px;
         height: 62px;
         left: -3px;
@@ -249,21 +234,30 @@ button.o-video-player_play-btn,
   }
 }
 
-.respond-to-min( @bp-sm-min, {
+// Tablet and above.
+.respond-to-min(@bp-sm-min, {
   .o-video-player_video-actions-container {
     position: absolute;
     top: 0;
   }
-} );
+});
+
+.o-video-player_iframe-mixin() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
 .o-video-player_video-container__flexible {
   .o-video-player_iframe-container {
     width: auto;
-    .u-flexible-container();
+    .u-flexible-container-mixin();
   }
 
   .o-video-player_iframe {
-    .u-flexible-container_inner();
+    .o-video-player_iframe-mixin();
   }
 
   .o-video-player_video-actions-container {
@@ -273,9 +267,10 @@ button.o-video-player_play-btn,
   }
 
   .m-social-media {
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       text-align: right;
-    } );
+    });
   }
 
   .m-social-media,
@@ -283,9 +278,10 @@ button.o-video-player_play-btn,
     margin-bottom: 0;
     .grid_column(6);
 
-    .respond-to-max( @bp-xs-max, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
       width: 100%;
-    } );
+    });
   }
 }
 
@@ -296,26 +292,29 @@ button.o-video-player_play-btn,
 
   .m-social-media_icons {
     display: block;
-    margin-right: unit(5px / @base-font-size-px, em);
+    margin-right: 0;
+    margin-top: unit(10px / @base-font-size-px, rem);
   }
 }
 
 .o-video-player .m-social-media,
 .o-video-player_video-actions {
-  .respond-to-max( @bp-xs-max, {
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
     margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-  } );
+  });
 }
 
-.respond-to-max( @bp-xs-max, {
+// Mobile only.
+.respond-to-max(@bp-xs-max, {
   .o-video-player_iframe-container {
-    .u-flexible-container();
+    .u-flexible-container-mixin();
   }
 
   .o-video-player_iframe {
-    .u-flexible-container_inner();
+    .o-video-player_iframe-mixin();
   }
-} );
+});
 
 // Special styles for playing within a Featured Content Module (FCM).
 .o-featured-content-module {
@@ -335,13 +334,15 @@ button.o-video-player_play-btn,
   }
 }
 
-.respond-to-max( @bp-xs-max, {
+// Mobile only.
+.respond-to-max(@bp-xs-max, {
   .o-featured-content-module .o-video-player_video-actions-container {
     display: none;
   }
-} );
+});
 
-.respond-to-min( @bp-sm-min, {
+// Tablet and above.
+.respond-to-min(@bp-sm-min, {
   .o-featured-content-module.video-playing {
     .u-flexible-container();
     transition: 0.5s all ease-out;
@@ -372,4 +373,4 @@ button.o-video-player_play-btn,
       opacity: 1;
     }
   }
-} );
+});

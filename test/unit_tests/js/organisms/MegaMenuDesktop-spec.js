@@ -1,5 +1,5 @@
 import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
-import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
+import { MegaMenu } from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
 describe('MegaMenuDesktop', () => {
@@ -23,11 +23,11 @@ describe('MegaMenuDesktop', () => {
     */
     it('should expand on the first level sub-menu button click', (done) => {
       const menuTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children'
+        '.o-mega-menu_content-1-link__has-children',
       );
       const subContent = navElem.querySelector('.o-mega-menu_content-2');
       const subContentWrapper = navElem.querySelector(
-        '.o-mega-menu_content-2-wrapper'
+        '.o-mega-menu_content-2-wrapper',
       );
       let isExpanded;
 

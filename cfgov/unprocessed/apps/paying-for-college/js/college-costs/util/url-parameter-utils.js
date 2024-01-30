@@ -106,7 +106,6 @@ const models = {
 /**
  * getQueryVariables - Check the url for queryString and interpret it into an object
  * full of key-value pairs.
- *
  * @returns {object} key-value pairs of the queryString
  */
 function getQueryVariables() {
@@ -115,7 +114,7 @@ function getQueryVariables() {
     new URLSearchParams(window.location.search),
     {
       get: (queryVariables, prop) => queryVariables.get(prop),
-    }
+    },
   );
 
   for (const key in urlParameters) {
@@ -130,7 +129,6 @@ function getQueryVariables() {
 /**
  * _buildUrlQueryString - Retreieve values from the models and transform them into a
  * querystring
- *
  * @returns {string} a formatted query string based on model values
  */
 function buildUrlQueryString() {

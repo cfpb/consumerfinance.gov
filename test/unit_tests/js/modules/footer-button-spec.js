@@ -19,7 +19,6 @@ const HTML_SNIPPET = `
 
 /**
  * Mock window.scrollTo() method.
- *
  * @param {number} xCoord - An x coordinate.
  * @param {number} yCoord - A y coordinate.
  */
@@ -47,7 +46,7 @@ describe('footer-button', () => {
         expect(window.scrollY).toBe(0);
         done();
       }, 2000);
-    }
+    },
   );
 
   it(
@@ -61,6 +60,6 @@ describe('footer-button', () => {
       simulateEvent('click', footerBtnDom);
 
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
-    }
+    },
   );
 });

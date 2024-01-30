@@ -1,6 +1,8 @@
+@import (reference) 'cfpb-core.less';
+
 .save-links {
   padding-bottom: 15px;
-  border-bottom: 1px solid #b4b5b6;
+  border-bottom: 1px solid @gray-40;
   margin: 30px 0;
   text-align: right;
 }
@@ -14,7 +16,7 @@
 
 .score-box {
   height: 150px;
-  border-color: #101820;
+  border-color: @black;
   border-style: solid;
   position: absolute;
   top: 0;
@@ -43,9 +45,9 @@
 .spectrum_x-label {
   padding-top: 5px;
   padding-left: 5px;
-  border-left: 1px solid #b4b5b6;
+  border-left: 1px solid @gray-40;
   position: absolute;
-  font-size: 0.75em;
+  font-size: unit(12px / @base-font-size-px, em);
   list-style: none;
 }
 
@@ -79,15 +81,15 @@
 
 .comparison-chart_toggle-button {
   margin-bottom: 5px;
-  background-color: #d6e8fa;
-  color: #101820;
-  font-size: 0.875em;
+  background-color: @pacific-20;
+  color: @black;
+  font-size: unit(14px / @base-font-size-px, em);
 }
 
 .comparison-chart_toggle-button:hover,
 .comparison-chart_toggle-button:focus,
 .comparison-chart_toggle-button__selected {
-  background-color: #7eb7e8;
+  background-color: @pacific-60;
 }
 
 .comparison-chart_title {
@@ -114,7 +116,7 @@
 
 .comparison-chart_list dd {
   width: 65%;
-  border-bottom: 1px solid #b4b5b6;
+  border-bottom: 1px solid @gray-40;
   position: relative;
   bottom: 0.25em;
 }
@@ -136,22 +138,81 @@
 
 .comparison-chart_source {
   padding-top: 15px;
-  border-top: 1px solid #b4b5b6;
+  border-top: 1px solid @gray-40;
   margin-top: 30px;
-  color: #75787b;
-  font-size: 0.75em;
+  color: @gray-80;
+  font-size: unit(12px / @base-font-size-px, em);
+}
+
+@scale-point-count: 5;
+
+.o-scale {
+  + .o-scale {
+    padding-top: unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-40;
+    margin-top: unit(30px / @base-font-size-px, em);
+  }
+
+  .m-form-field + .m-form-field {
+    margin-top: 0;
+  }
+
+  .respond-to-min( @bp-sm-min, {
+    .m-form-field__radio {
+      width: percentage( 1 / @scale-point-count );
+
+      float: left;
+      position: relative;
+
+      &:not(:last-child):before {
+        border-top: 1px solid @gray-80;
+
+        position: absolute;
+        top: 11px;
+        right: 0;
+        left: 22px;
+
+        content: '';
+      }
+    }
+
+    .a-label,
+    .a-label:before, {
+      display: block;
+    }
+
+    .a-label:before {
+      margin-bottom: unit( 3px / @base-font-size-px, em );
+
+      position: relative;
+      z-index: 1;
+    }
+  } );
+
+  .respond-to-max( @bp-lg-max, {
+    .o-scale_answer-prefix {
+      margin-bottom: unit( 15px / @base-font-size-px, em );
+    }
+  } );
+
+  .respond-to-min( @bp-xl-min, {
+    .o-scale_answer-prefix {
+      box-sizing: border-box;
+      padding-right: unit( 15px / @base-font-size-px, em );
+      width: 20%;
+
+      float: left;
+    }
+
+    .o-scale_answer-options {
+      width: 80%;
+
+      float: left;
+    }
+  } );
 }
 
 /* CF Enhancements */
-.u-left {
-  float: left;
-}
-
-.o-expandable {
-  border-top: 1px solid #b4b5b6;
-  border-bottom: 1px solid #b4b5b6;
-}
-
 @media all and (max-width: 37.5em) {
   .comparison-chart_toggle-button {
     display: block;
@@ -197,7 +258,7 @@
 
   /* Hide various things when printing */
   .save-links,
-  .o-expandable_link,
+  .o-expandable_cues,
   .comparison-chart_toggle,
   .content_sidebar,
   .o-footer {

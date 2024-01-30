@@ -56,7 +56,7 @@ function getBreakpointState(width) {
   for (rangeKey in varsBreakpoints) {
     breakpointState[rangeKey] = _inBreakpointRange(
       varsBreakpoints[rangeKey],
-      width
+      width,
     );
   }
 
@@ -70,7 +70,6 @@ const DESKTOP = 'desktop';
 
 /**
  * Checks whether the current breakpoint is in a particular breakpoint group.
- *
  * @param {string} breakpointGroup - Breakpoint group names.
  * @returns {boolean} True if in the breakpoint group, otherwise false.
  */

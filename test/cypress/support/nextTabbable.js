@@ -5,7 +5,6 @@ import isTabbable from './isTabbable';
  *
  * Note: This uses a naive/simplified algorithm adapted from jQuery UI
  * It does not support image maps, disabled fieldsets, among other things
- *
  * @param {string} $referenceElement - reference element
  * @param {string} direction - forward or backward
  * @returns {string} element in focus

@@ -36,19 +36,16 @@
                         Last edited
                     </th>
                     <th>
-                        Redirect
+                        Portal topics
                     </th>
                     <th>
-                        Portal topics
+                        Primary portal topic
                     </th>
                     <th>
                         Portal categories
                     </th>
                     <th>
                         Related questions
-                    </th>
-                    <th>
-                        Related resource
                     </th>
                     <th>
                         Language
@@ -89,13 +86,13 @@
                             {{ page.last_edited }}
                         </td>
                         <td>
-                            {{ page.redirect_to_page.id }}
-                        </td>
-                        <td>
                             {% for portal_topic in page.portal_topic.all %}
                                 {{ portal_topic.heading }}
                                 <br>
                             {% endfor %}
+                        </td>
+                        <td>
+                            {{ page.primary_portal_topic }}
                         </td>
                         <td>
                             {% for portal_category in page.portal_category.all %}
@@ -108,9 +105,6 @@
                                 {{ question.id }}
                                 <br>
                             {% endfor %}
-                        </td>
-                        <td>
-                            {{ page.related_resource.title }}
                         </td>
                         <td>
                             {{ page.language }}

@@ -63,7 +63,6 @@ const schoolModel = {
   /**
    * Returns an array of Objects which is alphabetized
    * by program name
-   *
    * @param {string} level - program level - 'undergrad' or 'graduate'
    * @returns {Array} an array of objects containing program data
    */
@@ -91,7 +90,6 @@ const schoolModel = {
 
   /**
    * getProgramInfo - retrieve info based on program id
-   *
    * @param {string} pid - Program ID
    * @returns {object|boolean} Values of the program, or false if undefined
    */

@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import postVerification from '../dispatchers/post-verify.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
@@ -33,7 +31,6 @@ const questionView = {
 
   /**
    * Show the appropriate content in Step 3 for settlement schools.
-   *
    * @param {boolean} isSettlementStatus - Flag if this is a settlement school.
    */
   displayOptions: function (isSettlementStatus) {
@@ -42,10 +39,10 @@ const questionView = {
       questionView.$nonsettlementBigQuestion.hide();
       $('#question_answer-no').hide();
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main'
+        'get-options__settlement content_main',
       );
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main'
+        'get-options__settlement content_main',
       );
       questionView.$transferCredits.remove();
       questionView.$exploreSchools.remove();
@@ -63,12 +60,11 @@ const questionView = {
 
   /**
    * Listener function for the "big question"/"moment of pause" buttons.
-   *
    * @param {boolean} isSettlementStatus - Flag if this is a settlement school.
    */
   bigQuestionListener: function (isSettlementStatus) {
     const $answerButtons = $('.question_answers > button');
-    $answerButtons.on('click', function () {
+    $answerButtons.listen('click', function () {
       const values = getFinancial.values();
       if (isSettlementStatus === true) {
         postVerification.verify(values.offerID, values.schoolID, false);
@@ -89,18 +85,18 @@ const questionView = {
       // Show the rest of the page
       questionView.$getOptions.show();
       questionView.$nextSteps.show();
-      $('html, body')
-        .stop()
-        .animate(
-          {
-            scrollTop: questionView.$getOptions.offset().top - 120,
-          },
-          900,
-          'swing',
-          function () {
-            // Noop function.
-          }
-        );
+      // $('html, body')
+      //   .stop()
+      //   .animate(
+      //     {
+      //       scrollTop: questionView.$getOptions.offset().top - 120,
+      //     },
+      //     900,
+      //     'swing',
+      //     function () {
+      //       // Noop function.
+      //     }
+      //   );
 
       analyticsSendEvent({
         action: 'Step Completed',

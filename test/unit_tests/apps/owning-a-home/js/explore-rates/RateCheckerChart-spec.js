@@ -60,7 +60,7 @@ describe('explore-rates/RateCheckerChart', () => {
       chart.render();
       chart.startLoading();
       const dataLoadedDom = document.querySelector(
-        '#chart-section .data-enabled'
+        '#chart-section .data-enabled',
       );
       expect(dataLoadedDom.classList.contains('loading')).toBe(true);
       expect(dataLoadedDom.classList.contains('loaded')).toBe(false);
@@ -72,7 +72,7 @@ describe('explore-rates/RateCheckerChart', () => {
       chart.render();
       chart.finishLoading();
       const dataLoadedDom = document.querySelector(
-        '#chart-section .data-enabled'
+        '#chart-section .data-enabled',
       );
       expect(dataLoadedDom.classList.contains('loading')).toBe(false);
       expect(dataLoadedDom.classList.contains('loaded')).toBe(true);
@@ -86,7 +86,7 @@ describe('explore-rates/RateCheckerChart', () => {
       const resultAlertDom = document.querySelector('#chart-result-alert');
       expect(chartDom.classList.contains('warning')).toBe(true);
       expect(resultAlertDom.classList.contains('m-notification__visible')).toBe(
-        true
+        true,
       );
     });
 

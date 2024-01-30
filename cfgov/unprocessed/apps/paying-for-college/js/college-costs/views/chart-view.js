@@ -8,7 +8,7 @@ import {
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import more from 'highcharts/highcharts-more';
-import numberToMoney from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import patternFill from 'highcharts/modules/pattern-fill';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -510,20 +510,20 @@ const chartView = {
 
   init: (body) => {
     chartView._meterChartBtns = body.querySelectorAll(
-      '.school-results_cohort-buttons input.a-radio'
+      '.school-results_cohort-buttons input.a-radio',
     );
     chartView.costOfBorrowingElem = body.querySelector(
-      '#cost-of-borrowing_chart'
+      '#cost-of-borrowing_chart',
     );
     chartView.compareCostElem = body.querySelector(
-      '#compare-cost-of-borrowing_chart'
+      '#compare-cost-of-borrowing_chart',
     );
     chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
     chartView.maxDebtElem = body.querySelector('#max-debt-guideline_chart');
     chartView.affordingElem = body.querySelector('#affording-your-loans_chart');
     chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
     chartView.repaymentMeterElem = body.querySelector(
-      '#school-results_repayment-meter'
+      '#school-results_repayment-meter',
     );
 
     _addRadioListeners();
@@ -543,12 +543,12 @@ const chartView = {
 
     chartView.costOfBorrowingChart = Highcharts.chart(
       chartView.costOfBorrowingElem,
-      { ...costOfBorrowingOpts }
+      { ...costOfBorrowingOpts },
     );
 
     chartView.compareCostOfBorrowingChart = Highcharts.chart(
       chartView.compareCostElem,
-      { ...columnChartOpts, ...compareCostOfBorrowingOpts }
+      { ...columnChartOpts, ...compareCostOfBorrowingOpts },
     );
 
     chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
@@ -590,18 +590,18 @@ const chartView = {
 
     chartView.repaymentMeterChart = Highcharts.chart(
       chartView.repaymentMeterElem,
-      { ...meterOpts, ...repaymentMeterOpts }
+      { ...meterOpts, ...repaymentMeterOpts },
     );
   },
 
   updateCostOfBorrowingChart: () => {
     const totalBorrowingAtGrad = getFinancialValue('debt_totalAtGrad');
-    const borrowedString = numberToMoney({
+    const borrowedString = formatUSD({
       amount: totalBorrowingAtGrad,
       decimalPlaces: 0,
     });
     const interest10years = getFinancialValue('debt_tenYearInterest');
-    const interestString = numberToMoney({
+    const interestString = formatUSD({
       amount: interest10years,
       decimalPlaces: 0,
     });
@@ -625,7 +625,7 @@ const chartView = {
     const max = Math.max(totalCosts * 1.1, totalFunding * 1.1);
     const text =
       'Your costs<br>' +
-      numberToMoney({
+      formatUSD({
         amount: totalCosts,
         decimalPlaces: 0,
       });
@@ -653,9 +653,9 @@ const chartView = {
 
   updateMaxDebtChart: () => {
     const totalDebt = getFinancialValue('debt_totalAtGrad');
-    const debtString = numberToMoney({ amount: totalDebt, decimalPlaces: 0 });
+    const debtString = formatUSD({ amount: totalDebt, decimalPlaces: 0 });
     const salary = getFinancialValue('salary_annual');
-    const salaryString = numberToMoney({ amount: salary, decimalPlaces: 0 });
+    const salaryString = formatUSD({ amount: salary, decimalPlaces: 0 });
     const max = Math.max(totalDebt * 1.1, salary * 1.1);
 
     chartView.maxDebtChart.yAxis[0].update({
@@ -676,7 +676,7 @@ const chartView = {
           debtString +
           '</strong>',
         13,
-        50
+        50,
       )
       .attr({
         zIndex: 5,
@@ -690,7 +690,7 @@ const chartView = {
       .text(
         'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
         13,
-        160
+        160,
       )
       .attr({
         zIndex: 5,
@@ -703,17 +703,17 @@ const chartView = {
 
   updateAffordingChart: () => {
     const monthlyExpenses = getExpensesValue('total_expenses');
-    const expensesString = numberToMoney({
+    const expensesString = formatUSD({
       amount: monthlyExpenses,
       decimalPlaces: 0,
     });
     const monthlyPayment = getFinancialValue('debt_tenYearMonthly');
-    const paymentString = numberToMoney({
+    const paymentString = formatUSD({
       amount: monthlyPayment,
       decimalPlaces: 0,
     });
     const monthlySalary = getFinancialValue('salary_monthly');
-    const salaryString = numberToMoney({
+    const salaryString = formatUSD({
       amount: monthlySalary,
       decimalPlaces: 0,
     });

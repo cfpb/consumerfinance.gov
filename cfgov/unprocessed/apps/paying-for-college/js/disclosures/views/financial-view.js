@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getExpenses from '../dispatchers/get-expenses-values.js';
@@ -9,14 +7,24 @@ import {
   convertStringToNumber,
   formatUSD,
 } from '../../../../../js/modules/util/format.js';
-import { toWords } from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-import stickyKit from '../utils/sticky-kit-esm.js';
-stickyKit($);
+// import stickyKit from '../utils/sticky-kit-esm.js';
+// stickyKit($);
+
+/**
+ * Convert a numerical number to a word.
+ * @param {string} num - A numeric number from 0 through 6.
+ * @returns {string} A word from none through six.
+ */
+function numToWord(num) {
+  num = Math.floor(num);
+  const words = ['', 'one', 'two', 'three', 'four', 'five', 'six'];
+  return words[num];
+}
 
 const financialView = {
   $elements: $('[data-financial]'),
@@ -34,7 +42,7 @@ const financialView = {
   $subsidizedSection: $('[data-section="subsidized"]'),
   $tuitionPaymentPlanSection: $('[data-section="tuitionpaymentplan"]'),
   $privateContainer: $('.private-loans'),
-  $privateLoanClone: $('[data-private-loan]:first').clone(),
+  $privateLoanClone: $('[data-private-loan]:first-of-type').cloner(),
   privateLoanKeys: ['amount', 'fees', 'rate', 'deferPeriod'],
   $evaluateSection: $('.evaluate'),
   $jobPlacementContent: $('.content_job-placement'),
@@ -48,7 +56,7 @@ const financialView = {
   $bigQuestion: $('.question'),
   $degreeType: $('.question [data-section="degreeType"]'),
   keyupDelay: null,
-  currentInput: null,
+  currentInput: 'none',
 
   /**
    * Initiates the object
@@ -70,10 +78,8 @@ const financialView = {
    * origination fees in the financial view
    */
   updateOriginationFeeContent: function () {
-    const $elements = $('[data-fee="origination"]');
-
-    $elements.each(function () {
-      const $loanFee = $(this);
+    $('[data-fee="origination"]').each((elem) => {
+      const $loanFee = $(elem);
 
       const modifiedText = financialView.round($loanFee.text(), 2);
       $loanFee.text(modifiedText);
@@ -82,7 +88,6 @@ const financialView = {
 
   /**
    * Sets all the values for caps in the errors notifications
-   *
    * @param {object} financials - the financials model
    */
   setCaps: function (financials) {
@@ -102,9 +107,8 @@ const financialView = {
       },
       $elems = $('[data-cap]');
 
-    $elems.each(function () {
-      const $cap = $(this);
-      let prop = $cap.attr('data-cap');
+    $elems.each((elem) => {
+      let prop = elem.getAttribute('data-cap');
       let capKey = capMap[prop];
 
       if (financials.undergrad === false) {
@@ -115,13 +119,12 @@ const financialView = {
         amount: financials[capKey],
         decimalPlaces: 0,
       });
-      $cap.text(text);
+      elem.textContent = text;
     });
   },
 
   /**
    * A better rounding function
-   *
    * @param {number} n - Number to be rounded
    * @param {number} decimals - Number of decimal places
    * @returns {number} rounded value
@@ -133,7 +136,6 @@ const financialView = {
 
   /**
    * Function that updates the view with new values
-   *
    * @param {object} values - financial model values
    */
   updateView: function (values) {
@@ -154,7 +156,6 @@ const financialView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
@@ -165,10 +166,10 @@ const financialView = {
     if (currency === true) {
       value = formatUSD({ amount: value, decimalPlaces: 0 });
     }
-    if (isSummaryLineItem) {
+    if (isSummaryLineItem && typeof value === 'string') {
       value = value.replace(/\$/i, '');
     }
-    if ($ele.prop('tagName') === 'INPUT') {
+    if ($ele.tagName() === 'INPUT') {
       $ele.val(value);
     } else if (isSummaryLineItem && originalValue !== value) {
       setTimeout(function () {
@@ -182,32 +183,31 @@ const financialView = {
 
   /**
    * Helper function that updates all percent elements in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $percents - jQuery object of the percentage elements
    */
   updatePercentages: function (values, $percents) {
-    $percents.not('#' + financialView.currentInput).each(function () {
-      const $ele = $(this),
-        name = $ele.attr('data-financial'),
-        value = financialView.round(values[name] * 100, 3);
-      financialView.updateElement($ele, value, false);
+    $percents.not('#' + financialView.currentInput).each((elem) => {
+      const name = elem.getAttribute('data-financial');
+      const value = financialView.round(values[name] * 100, 3);
+      financialView.updateElement($(elem), value, false);
     });
   },
 
   /**
    * Helper function that updates all non-percent, non-privateLoan elements
    * in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $leftovers - jQuery object of the "leftover" elements
    */
   updateLeftovers: function (values, $leftovers) {
-    $leftovers.not('#' + financialView.currentInput).each(function () {
-      const $ele = $(this);
+    $leftovers.each((elem) => {
+      const $ele = $(elem);
+      const elemId = $ele.attr('id') || 'noId';
       let currency = true;
       const name = $ele.attr('data-financial');
-      if (financialView.currentInput === $(this).attr('id')) {
+
+      if (financialView.currentInput === elemId) {
         currency = false;
       }
       if ($ele.attr('data-currency') === 'false') {
@@ -219,22 +219,23 @@ const financialView = {
 
   /**
    * Helper function that updates all private loan values in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $privateLoans - jQuery object of the private loan elements
    */
   updatePrivateLoans: function (values, $privateLoans) {
-    $privateLoans.each(function () {
-      const $loanElements = $(this);
-      const index = $loanElements.index();
+    $privateLoans.each((elem) => {
+      const $loanElements = $(elem);
+
       const $fields = $loanElements.find('[data-private-loan_key]');
-      $fields.not('#' + financialView.currentInput).each(function () {
-        const $ele = $(this);
+
+      $fields.not('#' + financialView.currentInput).each((elem) => {
+        const $ele = $(elem);
+        const index = Number(elem.getAttribute('id').slice(-1));
         const key = $ele.attr('data-private-loan_key');
         let val = values.privateLoanMulti[index][key];
         const id = $ele.attr('id');
         const isntCurrentInput = id !== financialView.currentInput;
-        if ($ele.is('[data-percentage_value="true"]')) {
+        if (elem.matches('[data-percentage_value="true"]')) {
           val *= 100;
           $ele.val(financialView.round(val, 3));
         } else if (isntCurrentInput && key === 'amount') {
@@ -262,7 +263,9 @@ const financialView = {
     if (gap > 0) {
       positiveRemainingCost.show();
     } else if (overborrowing > 0) {
-      const $span = negativeRemainingCost.find('[data-financial="gap"]');
+      const $span = negativeRemainingCost.find(
+        '[data-financial="overborrowing"]',
+      );
       $span.text($span.text().replace('-', ''));
       negativeRemainingCost.show();
     }
@@ -273,13 +276,13 @@ const financialView = {
    * This updates the programLength dropdown and visibility of
    * graduate program only content, Pell grants, subsidized loans, and
    * Grad PLUS loans.
-   *
    * @param {object} values - An object with program values
    * @param {object} urlValues - An object with url-derived values
    */
   updateViewWithProgram: function (values, urlValues) {
     // Update program length
-    if (urlValues.urlProgramLength) {
+    const lengthExists = !!urlValues.urlProgramLength;
+    if (lengthExists) {
       this.$programLength.val(urlValues.urlProgramLength / 12).change();
     } else {
       this.$programLength.val(values.programLength).change();
@@ -297,13 +300,13 @@ const financialView = {
     }
     this.setGraduationCohortVisibility(
       typeof values.completionCohort !== 'undefined' &&
-        values.completionCohort !== null
+        values.completionCohort !== null,
     );
     this.perkinsVisible(values.offersPerkins);
     this.jobPlacementVisible(
       typeof values.jobRate !== 'undefined' &&
         values.jobRate !== 'None' &&
-        values.jobRate !== ''
+        values.jobRate !== '',
     );
 
     // Update text for overCap errors
@@ -324,17 +327,16 @@ const financialView = {
    * Updates view based on URL values.
    * Updates the visibility of the anticipated total direct cost, Pell grants,
    * subsidized loans, Grad PLUS loans, and tuition payment plans.
-   *
    * @param {object} values - An object with program values
    * @param {object} urlvalues - An object with URL values
    */
   updateViewWithURL: function (values, urlvalues) {
     this.totalDirectCostVisible(
-      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0
+      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0,
     );
     this.tuitionPaymentPlanVisible(
       typeof urlvalues.tuitionRepay !== 'undefined' &&
-        urlvalues.tuitionRepay !== 0
+        urlvalues.tuitionRepay !== 0,
     );
     // Update availability of Pell grants, subsidized loans, and gradPLUS loans
     if (values.undergrad === false) {
@@ -350,7 +352,6 @@ const financialView = {
 
   /**
    * Update the view with calculation errors
-   *
    * @param {object} values - financial model values object
    */
   updateCalculationErrors: function (values) {
@@ -364,7 +365,6 @@ const financialView = {
 
   /**
    * Checks and shows OverCap errors
-   *
    * @param {object} errors - Errors object
    */
   checkOverCapErrors: function (errors) {
@@ -388,7 +388,6 @@ const financialView = {
 
   /**
    * Checks and shows over-borrowing errors
-   *
    * @param {object} errors - Errors object
    */
   checkOverBorrowingErrors: function (errors) {
@@ -425,15 +424,27 @@ const financialView = {
    * Listener function for the "add private loan" button
    */
   addPrivateListener: function () {
-    this.$addPrivateButton.click(function () {
-      const $container = $('.private-loans');
-      const $button = $('[data-add-loan-button]');
-      financialView.$privateLoanClone.clone().insertBefore($button);
-      financialView.enumeratePrivateLoanIDs();
-      $container.find('[data-private-loan]:last .aid-form_input').val('0');
-      publish.addPrivateLoan();
-      financialView.updateView(getFinancial.values());
-      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Added' });
+    this.$addPrivateButton.each((elem) => {
+      elem.addEventListener('click', function () {
+        const $container = $('.private-loans');
+        const button = document.querySelector('[data-add-loan-button]');
+        const lastLoan = document.querySelector(
+          '[data-private-loan]:last-of-type',
+        );
+        const clone = financialView.$privateLoanClone.cloneNode(true);
+        if (lastLoan === null) {
+          button.parentNode.insertBefore(clone, button);
+        } else {
+          lastLoan.parentNode.insertBefore(clone, button);
+        }
+        financialView.enumeratePrivateLoanIDs();
+        $container
+          .find('[data-private-loan]:last-of-type .aid-form_input')
+          .val('0');
+        publish.addPrivateLoan();
+        financialView.updateView(getFinancial.values());
+        analyticsSendEvent({ action: 'Private Loan Changed', label: 'Added' });
+      });
     });
   },
 
@@ -441,15 +452,22 @@ const financialView = {
    * Listener function for the "remove private loan" button
    */
   removePrivateListener: function () {
-    const buttonClass = '.private-loans_remove-btn';
-    this.$privateContainer.on('click', buttonClass, function () {
-      const $ele = $(this).closest('[data-private-loan]');
-      const index = $ele.index();
-      $ele.remove();
-      financialView.enumeratePrivateLoanIDs();
-      publish.dropPrivateLoan(index);
-      financialView.updateView(getFinancial.values());
-      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Removed' });
+    const privLoanContainer = document.querySelector('.private-loans');
+    privLoanContainer.addEventListener('click', (event) => {
+      if (event.target.matches('.private-loans_remove-btn')) {
+        const elem = event.target;
+        const $ele = elem.closest('[data-private-loan]');
+
+        const index = Number(elem.getAttribute('id').slice(-1));
+        $ele.remove();
+        financialView.enumeratePrivateLoanIDs();
+        publish.dropPrivateLoan(index);
+        financialView.updateView(getFinancial.values());
+        analyticsSendEvent({
+          action: 'Private Loan Changed',
+          label: 'Removed',
+        });
+      }
     });
   },
 
@@ -458,10 +476,9 @@ const financialView = {
    * (Three exist on load for no-js scenario)
    */
   resetPrivateLoanView: function () {
-    $('[data-private-loan]').each(function () {
-      const index = $(this).index();
+    $('[data-private-loan]').each((elem, index) => {
       if (index > 0) {
-        $(this).remove();
+        elem.remove();
         publish.dropPrivateLoan(index);
       }
     });
@@ -472,25 +489,26 @@ const financialView = {
    */
   enumeratePrivateLoanIDs: function () {
     // renumber private loan ids to prevent duplicate IDs
-    $('[data-private-loan]').each(function () {
-      const index = $(this).index();
-      const $ele = $(this);
-      const $fields = $ele.find('[data-private-loan_key]');
-      $fields.each(function () {
-        const name = $(this).attr('name');
+    $('[data-private-loan]').each((elem, index) => {
+      const $fields = $(elem).find('[data-private-loan_key]');
+      $fields.each((elem) => {
+        const name = $(elem).attr('name');
         const newID = name + '_' + index.toString();
-        $(this).attr('id', newID);
+        $(elem).attr('id', newID);
       });
+      $(elem)
+        .find('.private-loans_remove-btn')
+        .attr('id', 'private-loans_remove-btn_' + index);
     });
   },
 
   /**
    * Helper function for handling user entries in financial model INPUT fields
-   *
    * @param {string} id - The id attribute of the element to be handled
    */
   inputHandler: function (id) {
-    const $ele = $('#' + id);
+    const elem = document.querySelector('#' + id);
+    const $ele = $(elem);
     let value = convertStringToNumber($ele.val());
     const key = $ele.attr('data-financial');
     const privateLoanKey = $ele.attr('data-private-loan_key');
@@ -500,12 +518,11 @@ const financialView = {
       value /= 100;
     }
 
-    if (typeof privateLoanKey === 'undefined') {
+    if (privateLoanKey === null) {
       publish.financialData(key, value);
     } else {
-      const index = $ele.closest('[data-private-loan]').index();
-      const privLoanKey = $ele.attr('data-private-loan_key');
-      publish.updatePrivateLoan(index, privLoanKey, value);
+      const index = Number(elem.getAttribute('id').slice(-1));
+      publish.updatePrivateLoan(index, privateLoanKey, value);
     }
   },
 
@@ -513,44 +530,64 @@ const financialView = {
    * Listener function for input change in financial model INPUT fields
    */
   inputChangeListener: function () {
-    this.$reviewAndEvaluate.on(
-      'keyup focusout',
-      '[data-financial]',
-      function () {
-        clearTimeout(financialView.keyupDelay);
-        financialView.currentInput = $(this).attr('id');
-        if ($(this).is(':focus')) {
-          financialView.keyupDelay = setTimeout(function () {
-            financialView.inputHandler(financialView.currentInput);
-            financialView.updateView(getFinancial.values());
-            expensesView.updateView(getExpenses.values());
-          }, 500);
-        } else {
+    const callback = function (elem) {
+      clearTimeout(financialView.keyupDelay);
+      financialView.currentInput = $(elem).attr('id') || 'none';
+      if (document.activeElement === elem) {
+        financialView.keyupDelay = setTimeout(function () {
           financialView.inputHandler(financialView.currentInput);
-          financialView.currentInput = 'none';
           financialView.updateView(getFinancial.values());
           expensesView.updateView(getExpenses.values());
-        }
+        }, 500);
+      } else {
+        financialView.inputHandler(financialView.currentInput);
+        financialView.currentInput = 'none';
+        financialView.updateView(getFinancial.values());
+        expensesView.updateView(getExpenses.values());
       }
-    );
+    };
+
+    this.$reviewAndEvaluate.each((elem) => {
+      elem.addEventListener('keyup', (event) => {
+        if (event.target.matches('input[data-financial]')) {
+          callback(event.target);
+        }
+      });
+
+      elem.addEventListener('focusout', (event) => {
+        if (event.target.matches('input[data-financial]')) {
+          callback(event.target);
+        }
+      });
+
+      // elem.querySelectorAll( 'input[data-financial]' ).forEach( elmo => {
+      //   elmo.addEventListener( 'keyup', event => {
+      //     callback( event.target )
+      //   });
+      //   elmo.addEventListener( 'focusout', event => {
+      //     callback( event.target )
+      //   });
+      // });
+    });
   },
 
   /**
    * Helper function to indicate that a offer summary line item has
-   * successfully recalculated
-   *
-   * @param {object} element - jQuery object of the recalculated summary element
+   * successfully recalculated.
+   * @param {object} $elem - jQuery object of the recalculated summary element.
    */
-  addSummaryRecalculationMessage: function (element) {
+  addSummaryRecalculationMessage: function ($elem) {
     $('.recalculating-mobile').text('Updating...');
     $('.recalculating-mobile').show();
-    element.siblings().hide();
-    element.text('Updating...');
+    $elem.each((elmo) => {
+      $(elmo).siblings().hide();
+    });
+    $elem.show();
+    $elem.text('Updating...');
   },
 
   /**
-   * Helper function to remove all indicators that data has recalculated
-   *
+   * Helper function to remove all indicators that data has recalculated.
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
@@ -565,56 +602,65 @@ const financialView = {
    */
   verificationListener: function () {
     const $programLengthElement = this.$programLength;
-    this.$verifyControls.on('click', 'a', function (evt) {
-      const values = getFinancial.values();
-      const hrefText = $(this).text();
+    this.$verifyControls.each((elem) => {
+      elem.querySelectorAll('a').forEach((elmo) => {
+        elmo.addEventListener('click', (evt) => {
+          const values = getFinancial.values();
+          const target = evt.target;
+          const $ele = $(target);
+          const hrefText = $ele.text();
 
-      /* Graph points need to be visible before updating their positions
-         to get all the right CSS values, so we'll wait 100 ms */
-      if ($(this).attr('href') === '#info-right') {
-        evt.preventDefault();
-        financialView.$infoVerified.show();
-        $('html, body')
-          .stop()
-          .animate(
-            {
-              scrollTop: financialView.$infoVerified.offset().top - 120,
-            },
-            900,
-            'swing',
-            function () {
-              metricView.updateGraphs(values);
-              window.location.hash = '#info-right';
-              financialView.$aboutThisTool.focus();
-            }
-          );
+          /* Graph points need to be visible before updating their positions
+             to get all the right CSS values, so we'll wait 100 ms */
+          if ($ele.attr('href') === '#info-right') {
+            evt.preventDefault();
+            financialView.$infoVerified.show();
+            // TODO: Fix this animation
+            // $('html, body')
+            //   .stop()
+            //   .animate(
+            //     {
+            //       scrollTop: financialView.$infoVerified.offset().top - 120,
+            //     },
+            //     900,
+            //     'swing',
+            //     function () {
+            //       metricView.updateGraphs(values);
+            //       window.location.hash = '#info-right';
+            //       financialView.$aboutThisTool.focus();
+            //     }
+            //   );
+            window.location.hash = '#info-right';
 
-        analyticsSendEvent({
-          action: 'Years to Complete Program',
-          label: $programLengthElement.val(),
+            analyticsSendEvent({
+              action: 'Years to Complete Program',
+              label: $programLengthElement.val(),
+            });
+            analyticsSendEvent({ action: 'Step Completed', label: hrefText });
+          } else {
+            evt.preventDefault();
+            financialView.$infoIncorrect.show();
+            postVerification.verify(values.offerID, values.schoolID, true);
+            // $('html, body')
+            //   .stop()
+            //   .animate(
+            //     {
+            //       scrollTop: financialView.$infoIncorrect.offset().top - 120,
+            //     },
+            //     900,
+            //     'swing',
+            //     function () {
+            //       window.location.hash = '#info-wrong';
+            //       financialView.$programLength.focus();
+            //     }
+            //   );
+            window.location.hash = '#info-wrong';
+            analyticsSendEvent({ action: 'Step Completed', label: hrefText });
+          }
+          // financialView.stickySummariesListener();
+          financialView.$verifyControls.hide();
         });
-        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
-      } else {
-        evt.preventDefault();
-        financialView.$infoIncorrect.show();
-        postVerification.verify(values.offerID, values.schoolID, true);
-        $('html, body')
-          .stop()
-          .animate(
-            {
-              scrollTop: financialView.$infoIncorrect.offset().top - 120,
-            },
-            900,
-            'swing',
-            function () {
-              window.location.hash = '#info-wrong';
-              financialView.$programLength.focus();
-            }
-          );
-        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
-      }
-      financialView.stickySummariesListener();
-      financialView.$verifyControls.hide();
+      });
     });
   },
 
@@ -622,42 +668,43 @@ const financialView = {
    * Listener function for "estimated years in program" select element
    */
   estimatedYearsListener: function () {
-    this.$programLength.on('change', function () {
-      const programLength = Number($(this).val());
-      const values = getFinancial.values();
-      let yearsAttending = toWords(programLength);
-      const $yearOrLess = $('[data-multi_year="false"]');
-      const $multiYears = $('[data-multi_year="true"]');
+    this.$programLength.each((elmo) => {
+      elmo.addEventListener('change', (event) => {
+        const programLength = Number(event.target.value);
+        const values = getFinancial.values();
+        let yearsAttending = numToWord(programLength);
+        const $yearOrLess = $('[data-multi_year="false"]');
+        const $multiYears = $('[data-multi_year="true"]');
 
-      // Formats summary text, such as "half a year" or "one and a half years."
-      if (programLength === 0.5) {
-        yearsAttending = 'half a';
-      } else if (programLength % 1 !== 0) {
-        yearsAttending += ' and a half';
-      }
+        // Formats summary text, such as "half a year" or "one and a half years."
+        if (programLength === 0.5) {
+          yearsAttending = 'half a';
+        } else if (programLength % 1 !== 0) {
+          yearsAttending += ' and a half';
+        }
 
-      if (programLength > 1) {
-        yearsAttending += ' years';
-        $multiYears.filter('.line-item_title').css('display', 'inline-block');
-        $multiYears.filter('.line-item').show();
-        $yearOrLess.hide();
-      } else {
-        yearsAttending += ' year';
-        $multiYears.hide();
-        $yearOrLess.filter('.line-item_title').css('display', 'inline-block');
-        $yearOrLess.filter('.line-item').show();
-      }
+        if (programLength > 1) {
+          yearsAttending += ' years';
+          $multiYears.filter('.line-item_title').show('inline-block');
+          $multiYears.filter('.line-item').show();
+          $yearOrLess.hide();
+        } else {
+          yearsAttending += ' year';
+          $multiYears.hide();
+          $yearOrLess.filter('.line-item_title').show('inline-block');
+          $yearOrLess.filter('.line-item').show();
+        }
 
-      publish.financialData('programLength', programLength);
-      publish.financialData('yearsAttending', yearsAttending);
-      financialView.updateView(values);
+        publish.financialData('programLength', programLength);
+        publish.financialData('yearsAttending', yearsAttending);
+        financialView.updateView(values);
+      });
     });
   },
 
   /**
    * Sets visibility of anticipated total direct cost section
    * Dependent on `totl` value being passed in URL
-   *
    * @param {boolean} visibility - Whether or not `values.totalCost` is not null
    */
   totalDirectCostVisible: function (visibility) {
@@ -670,7 +717,6 @@ const financialView = {
 
   /**
    * Sets visibility of Grad Plus loan section (only called for grad programs)
-   *
    * @param {boolean} visibility - Whether or not gradPlus was passed in the URL
    */
   gradPlusVisible: function (visibility) {
@@ -685,7 +731,6 @@ const financialView = {
   /**
    * Sets visibility of Perkins section. Hidden if school does not offer it or
    * it wasn't passed in the URL
-   *
    * @param {boolean} visibility - Value of `values.offerPerkins` or
    *                               whether or not perkins was passed in the URL
    */
@@ -701,7 +746,6 @@ const financialView = {
   /**
    * Sets visibility of Pell Grant section. Hidden if graduate program or
    * it wasn't passed in the URL
-   *
    * @param {boolean} visibility - If `values.level.Graduate` is defined or
    *                               whether or not gradPlus was passed in the URL
    */
@@ -717,7 +761,6 @@ const financialView = {
   /**
    * Sets visibility of Direct subsidized loan section. Hidden if graduate
    * program or it wasn't passed in the URL
-   *
    * @param {boolean} visibility - If `values.level.Graduate` is defined or
    *                               whether or not directSubsidized was passed
    *                               in the URL
@@ -734,7 +777,6 @@ const financialView = {
   /**
    * Sets visibility of tuition payment plan section. Hidden if it wasn't
    * passed in the URL
-   *
    * @param {boolean} visibility - Whether or not tuitionRepay was
    *                               passed in the URL
    */
@@ -751,7 +793,6 @@ const financialView = {
 
   /**
    * Sets visibility of graduation cohort content. Hidden if not available.
-   *
    * @param {boolean} isVisible - Whether or not a graduation cohort
    * was provided
    */
@@ -765,7 +806,6 @@ const financialView = {
 
   /**
    * Sets visibility of job placement values. Hidden if not available
-   *
    * @param {boolean} visibility - Whether or not we have a job placement rate
    */
   jobPlacementVisible: function (visibility) {
@@ -778,14 +818,13 @@ const financialView = {
 
   /**
    * Sets dynamic content for salary, based on what data we have
-   *
    * @param {boolean} source - The source of our salary figure (program, school,
    *                           or national)
    */
   updateSalaryContent: function (source) {
     if (source === 'school') {
       this.$medianSalaryContent.text(
-        'The typical salary for students who started attending this school 10 years ago is'
+        'The typical salary for students who started attending this school 10 years ago is',
       );
       this.$salaryMetricContent.text('Typical salary for this school');
     } else if (source === 'national') {
@@ -794,14 +833,13 @@ const financialView = {
       metricView.updateSalaryWarning();
       this.$budgetSalaryContent.show();
       this.$debtBurdenSalaryContent.text(
-        'national salary for all students who attended college'
+        'national salary for all students who attended college',
       );
     }
   },
 
   /**
    * Updates the text of the unsubsidized error
-   *
    * @param {boolean} isUndergrad - true if undergraduate program, false otherwise
    */
   unsubsidizedErrorText: function (isUndergrad) {
@@ -809,7 +847,7 @@ const financialView = {
     if (isUndergrad) {
       $error.text(
         'The maximum subsidized and unsubsidized loans that can be ' +
-          'borrowed per year is'
+          'borrowed per year is',
       );
     } else {
       $error.text('The maximum that can be borrowed per year is');
@@ -838,24 +876,27 @@ const financialView = {
 
   continueStep2Listener: function () {
     const $continueButton = $('.continue_controls > button');
-    $continueButton.on('click', function () {
+    $continueButton.listen('click', function () {
       // Remove continue button
       $continueButton.hide();
       // Show Step 2
       financialView.$evaluateSection.show();
       financialView.$bigQuestion.show();
-      $('html, body')
-        .stop()
-        .animate(
-          {
-            scrollTop: financialView.$evaluateSection.offset().top - 120,
-          },
-          900,
-          'swing',
-          function () {
-            // Noop function.
-          }
-        );
+
+      const values = getFinancial.values();
+      metricView.updateGraphs(values);
+      // $('html, body')
+      //   .stop()
+      //   .animate(
+      //     {
+      //       scrollTop: financialView.$evaluateSection.offset().top - 120,
+      //     },
+      //     900,
+      //     'swing',
+      //     function () {
+      //       // Noop function.
+      //     }
+      //   );
       analyticsSendEvent({
         action: 'Step Completed',
         label: 'Continue to Step 2',
@@ -867,75 +908,77 @@ const financialView = {
    * Stick the sidebar aid offer summaries to the viewport top
    * if the summaries are in the inline-block sidebar column
    */
-  stickySummariesListener: function () {
-    const $stickyOffers = $('.offer-part_summary-wrapper');
-    const $win = $(window);
+  // stickySummariesListener: function () {
+  //   const $stickyOffers = $('.offer-part_summary-wrapper');
+  //   const $win = $(window);
 
-    if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {
-      // Attach event handler
-      $stickyOffers.trigger('sticky_kit:detach');
-      $stickyOffers
-        .stick_in_parent()
-        .on('sticky_kit:bottom', function (evt) {
-          $(evt.target).addClass('is_bottomed');
-        })
-        .on('sticky_kit:unbottom', function (evt) {
-          $(evt.target).removeClass('is_bottomed');
-        });
-    } else if ($win.width() < 600) {
-      $stickyOffers.trigger('sticky_kit:detach');
-    }
+  //   if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {
+  //     // Attach event handler
+  //     $stickyOffers.trigger('sticky_kit:detach');
+  //     $stickyOffers
+  //       .stick_in_parent()
+  //       .on('sticky_kit:bottom', function (evt) {
+  //         $(evt.target).addClass('is_bottomed');
+  //       })
+  //       .on('sticky_kit:unbottom', function (evt) {
+  //         $(evt.target).removeClass('is_bottomed');
+  //       });
+  //   } else if ($win.width() < 600) {
+  //     $stickyOffers.trigger('sticky_kit:detach');
+  //   }
 
-    // On resize, check if event handler should be attached
-    $win.on('resize', function () {
-      clearTimeout(financialView.resizeTimer);
-      financialView.resizeTimer = setTimeout(function () {
-        financialView.stickySummariesListener();
-      }, 250);
-    });
-  },
+  //   // On resize, check if event handler should be attached
+  //   $win.on('resize', function () {
+  //     clearTimeout(financialView.resizeTimer);
+  //     financialView.resizeTimer = setTimeout(function () {
+  //       financialView.stickySummariesListener();
+  //     }, 250);
+  //   });
+  // },
 
   /**
    * Listener for clicks on the repayment toggles
    */
   termToggleListener: function () {
-    $('[data-repayment-section] input').click(function () {
-      const $ele = $(this);
-      const $toggles = $('[data-repayment-section] input');
-      const term = $ele.val();
-      publish.financialData('repaymentTerm', term);
-      $toggles.prop('checked', false);
-      $toggles.filter('[value="' + term + '"]').prop('checked', true);
-      financialView.updateView(getFinancial.values());
-      expensesView.updateView(getExpenses.values());
-      analyticsSendEvent({
-        action: 'See how loan length affects your payments',
-        label: term + ' years',
+    $('[data-repayment-section] input').each((elmo) => {
+      elmo.addEventListener('click', function () {
+        const $ele = $(this);
+        const $toggles = $('[data-repayment-section] input');
+        const term = $ele.val();
+        publish.financialData('repaymentTerm', term);
+        $toggles.elements.forEach((v) => {
+          v.value == term ? (v.checked = true) : (v.checked = false);
+        });
+        financialView.updateView(getFinancial.values());
+        expensesView.updateView(getExpenses.values());
+        analyticsSendEvent({
+          action: 'See how loan length affects your payments',
+          label: term + ' years',
+        });
       });
     });
   },
 
   /**
    * Update view for bad school requests
-   *
    * @param {string} dataType - type of missing data, 'school' or 'program'
    */
   missingData: function (dataType) {
     $('.verify_wrapper').hide();
-    if ($('[data-missing-data-error]:visible').length === 0) {
-      $('[data-missing-data-error="' + dataType + '"]').show();
-    }
+    $('[data-missing-data-error="' + dataType + '"]').show();
   },
 
   /**
    * Listener function for change events on financial INPUT fields
    */
   financialInputChangeListener: function () {
-    $('[data-financial]').one('change', function () {
-      const dataFinancial = $(this).data('financial');
-      if (dataFinancial) {
-        analyticsSendEvent({ action: 'Value Edited', label: dataFinancial });
-      }
+    $('[data-financial]').each((elmo) => {
+      elmo.addEventListener('change', (event) => {
+        const dataFinancial = event.target.dataset.financial;
+        if (dataFinancial) {
+          analyticsSendEvent({ action: 'Value Edited', label: dataFinancial });
+        }
+      });
     });
   },
 };

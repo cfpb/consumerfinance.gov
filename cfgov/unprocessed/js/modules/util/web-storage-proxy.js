@@ -13,7 +13,6 @@ let _storage;
 
 /**
  * Set an item value specified by the key in web storage.
- *
  * @param {string} key - The key for the value.
  * @param {string} value - The value to store.
  * @param {object} [storage] - (Optional)
@@ -34,7 +33,6 @@ function setItem(key, value, storage) {
 
 /**
  * Get an item value specified by the key in web storage.
- *
  * @param {string} key - The key for the value.
  * @param {object} [storage] - (Optional)
  *   Use non-persistent storage (sessionStorage)
@@ -49,7 +47,6 @@ function getItem(key, storage) {
 
 /**
  * Remove an item specified by the key.
- *
  * @param {string} key - The key for the value.
  * @param {object} [storage] - (Optional)
  *   Use non-persistent storage (sessionStorage)
@@ -78,7 +75,6 @@ function removeItem(key, storage) {
 
 /**
  * Set the default session type.
- *
  * @param {object} storage -  Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @throws {Error} If parameter isn't a object.
@@ -93,7 +89,6 @@ function setStorage(storage) {
 
 /**
  * Internal function for whether to use local or session storage.
- *
  * @param {object} storage - Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  *   Default is sessionStorage.

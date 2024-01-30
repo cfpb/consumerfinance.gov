@@ -21,7 +21,6 @@ const MODIFIER_VISIBLE = `${BASE_CLASS}__visible`;
 
 /**
  * Notification
- *
  * @class
  * @classdesc Initializes a new Notification molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -56,7 +55,7 @@ function Notification(element) {
   }
 
   /**
-   * @param {number} type - The notification type.
+   * @param {string} type - The notification type.
    * @param {string} messageText - The content of the notification message.
    * @param {string} [explanationText] - The content of the notification
    *   explanation.
@@ -92,7 +91,7 @@ function Notification(element) {
   }
 
   /**
-   * @param {number} type - The notification type.
+   * @param {string} type - The notification type.
    * @returns {Notification} An instance.
    */
   function _setType(type) {

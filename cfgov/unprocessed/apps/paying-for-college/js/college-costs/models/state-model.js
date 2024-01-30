@@ -107,7 +107,6 @@ const stateModel = {
 
   /**
    * Check whether required fields are selected
-   *
    * @returns {boolean} false if the school form is incomplete, true otherwise
    */
   _checkRequiredFields: function () {
@@ -185,7 +184,6 @@ const stateModel = {
 
   /**
    * update the application state based on the 'property' parameter.
-   *
    * @param {string} property - What property to update based on
    */
   _updateApplicationState: (property) => {
@@ -255,7 +253,6 @@ const stateModel = {
 
   /**
    * replaceStateInHistory - Replace current application state in window.history
-   *
    * @param {string} queryString - The queryString to put in the history object
    */
   replaceStateInHistory: (queryString) => {
@@ -269,7 +266,6 @@ const stateModel = {
 
   /**
    * setValue - Public method to update model values
-   *
    * @param {string} name - the name of the property to update
    * @param {*} value - the value to be assigned
    */
@@ -288,7 +284,6 @@ const stateModel = {
 
   /**
    * setActiveSection - Method to update the app's active section
-   *
    * @param {*} value - the value to be assigned
    * @param {boolean} popState - true if the update is the result of a popState event
    */

@@ -1,4 +1,3 @@
-import json
 from io import StringIO
 from unittest.mock import patch
 
@@ -6,7 +5,6 @@ from django.core.cache import cache, caches
 from django.template import engines
 from django.test import TestCase, override_settings
 
-from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
 from v1.models.blog_page import BlogPage
@@ -20,7 +18,6 @@ class TestFragmentCacheExtension(ElasticsearchTestsMixin, TestCase):
         page = BrowseFilterablePage(
             title="test browse filterable page",
             slug="test-browse-filterable-page",
-            content=json.dumps([atomic.filter_controls]),
         )
         publish_page(page)
 

@@ -49,9 +49,6 @@ related_posts_test_cases = {
     "Hide heading": {
         "show_heading": False,
     },
-    "Half width": {
-        "half_width": True,
-    },
 }
 
 

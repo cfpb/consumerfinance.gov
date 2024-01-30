@@ -12,22 +12,23 @@ describe('The Filing Instruction Guide search functionality', () => {
 
     it('should build a list of search items', () => {
       sections = [...document.querySelectorAll('[data-search-section]')];
-      expect(getSearchData(sections).length).toEqual(100);
+      expect(getSearchData(sections).length).toEqual(242);
 
-      expect(getSearchData(sections)[0].title).toEqual('1. What is the FIG?');
-      expect(getSearchData(sections)[0].contents).toContain(
-        '1. What is the FIG?'
+      expect(getSearchData(sections)[0].title).toEqual(
+        '1. What is the filing instructions guide?',
       );
-      expect(getSearchData(sections)[0].contents).toContain('Lorem Ipsum');
+      expect(getSearchData(sections)[0].contents).toContain(
+        '1. What is the filing instructions guide?',
+      );
 
       expect(getSearchData(sections)[10].title).toEqual(
-        'Field 3: Application Method'
+        'Field 3: Application method',
       );
       expect(getSearchData(sections)[10].contents).toContain(
-        'Field 3: Application Method'
+        'Field 3: Application method',
       );
       expect(getSearchData(sections)[10].contents).toContain(
-        'means by which the applicant submitted the application'
+        'means by which the applicant submitted the application',
       );
     });
 

@@ -1,4 +1,4 @@
-import { Expandable } from '@cfpb/cfpb-expandables';
+import { Expandable, ExpandableGroup } from '@cfpb/cfpb-expandables';
 import checkbox from './templates/checkbox';
 import checklistGroupView from './views/checklist-group';
 import checklistMap from './models/checklist-map';
@@ -6,7 +6,6 @@ import error from './views/error';
 import printButtonView from './views/print-button';
 import printTableView from './views/print-table';
 import selectedItems from './models/selected-items';
-import updateExpandableButtonText from './expandables';
 
 const TEMPLATE_SELECTOR = 'cbg-checklist';
 
@@ -16,18 +15,17 @@ const PRINT_BUTTON_SELECTOR = 'js-cbg-print';
 const GOALS_TABLE_SELECTOR = 'cbg-print-goals';
 const NEXT_STEPS_TABLE_SELECTOR = 'cbg-print-next-steps';
 
-const EXPANDABLE_UI_CLASSES = Expandable.prototype.ui;
-const EXPANDABLE_GROUP_SELECTOR = Expandable.prototype.classes.group;
+const EXPANDABLE_UI_CLASSES = Expandable.BASE_CLASS;
+const EXPANDABLE_GROUP_SELECTOR = ExpandableGroup.BASE_CLASS;
 const expandableEls = Array.prototype.slice
-  .call(document.querySelectorAll(`${EXPANDABLE_UI_CLASSES.base}`))
+  .call(document.querySelectorAll(`.${EXPANDABLE_UI_CLASSES}`))
   .filter((elm) =>
-    elm.parentNode.classList.contains(EXPANDABLE_GROUP_SELECTOR)
+    elm.parentNode.classList.contains(EXPANDABLE_GROUP_SELECTOR),
   );
 
 const expandableData = expandableEls.reduce((memo, expandable) => {
-  const labelText = expandable.querySelector(`${EXPANDABLE_UI_CLASSES.label}`);
-  const content = expandable.querySelector(`${EXPANDABLE_UI_CLASSES.content}`);
-
+  const labelText = expandable.querySelector(`.${EXPANDABLE_UI_CLASSES}_label`);
+  const content = expandable.querySelector(`.${EXPANDABLE_UI_CLASSES}_content`);
   memo[labelText.textContent.trim()] = content.innerHTML;
 
   return memo;
@@ -42,8 +40,6 @@ const checklistLookup = checklistMap(expandableData);
 
 const errorView = error(document.querySelector(`.${error.CONTAINER}`));
 
-updateExpandableButtonText(expandableEls);
-
 checklistGroupView(document.querySelector(`.${CHECKLIST_GROUP_SELECTOR}`), {
   selectedItems: items,
 }).init();
@@ -55,10 +51,10 @@ printButtonView(document.querySelector(`.${PRINT_BUTTON_SELECTOR}`), {
 }).init();
 
 const goalsTableView = printTableView(
-  document.querySelector(`.${GOALS_TABLE_SELECTOR}`)
+  document.querySelector(`.${GOALS_TABLE_SELECTOR}`),
 );
 const nextStepsTableView = printTableView(
-  document.querySelector(`.${NEXT_STEPS_TABLE_SELECTOR}`)
+  document.querySelector(`.${NEXT_STEPS_TABLE_SELECTOR}`),
 );
 
 /**
@@ -94,7 +90,7 @@ function updateTableView() {
   goalsTableView.render(goalsTableContent);
 
   const remainingItems = checklistLookup.filterKeysBy(
-    (key) => selectedChecklistItems.indexOf(key) === -1
+    (key) => selectedChecklistItems.indexOf(key) === -1,
   );
   const nextStepsTableContent = remainingItems.map((item) => checkbox(item));
 

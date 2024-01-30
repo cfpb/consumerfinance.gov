@@ -42,6 +42,7 @@ export class Filter {
   clickCategory(option) {
     const sel = `[data-option=${option}`;
     cy.get('[data-cy=categories-heading]').click();
+    cy.get('.o-multiselect_options').should('be.visible');
     return cy.get(sel).click();
   }
 
@@ -72,11 +73,11 @@ export class Filter {
   }
 
   expandableTarget() {
-    return cy.get('.o-expandable_target');
+    return cy.get('.o-expandable_header');
   }
 
   search() {
-    return cy.get('.o-expandable_header .o-expandable_target');
+    return this.expandableTarget();
   }
 
   open() {

@@ -39,58 +39,16 @@ class AbstractFilterPage(CFGOVPage):
         blank=True,
         use_json_field=True,
     )
-    preview_title = models.CharField(max_length=255, null=True, blank=True)
-    preview_subheading = models.CharField(
-        max_length=255, null=True, blank=True
-    )
-    preview_description = RichTextField(null=True, blank=True)
-    secondary_link_url = models.CharField(
-        max_length=500, null=True, blank=True
-    )
-    secondary_link_text = models.CharField(
-        max_length=255, null=True, blank=True
-    )
-    preview_image = models.ForeignKey(
-        "v1.CFGOVImage",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
     date_published = models.DateField(default=date.today)
-    date_filed = models.DateField(null=True, blank=True)
-    comments_close_by = models.DateField(null=True, blank=True)
 
     # Configuration tab panels
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
-        MultiFieldPanel(
-            [
-                FieldPanel("preview_title"),
-                FieldPanel("preview_subheading"),
-                FieldPanel("preview_description"),
-                FieldPanel("secondary_link_url"),
-                FieldPanel("secondary_link_text"),
-                FieldPanel("preview_image"),
-            ],
-            heading="Page Preview Fields",
-            classname="collapsible",
-        ),
-        FieldPanel("schema_json", heading="Structured Data"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
-        MultiFieldPanel(
-            [
-                FieldPanel("date_published"),
-                FieldPanel("date_filed"),
-                FieldPanel("comments_close_by"),
-            ],
-            "Relevant Dates",
-            classname="collapsible",
-        ),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("date_published"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -102,6 +60,7 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
+    start_date_field = "date_published"
 
     @classmethod
     def generate_edit_handler(self, content_panel):
@@ -120,12 +79,6 @@ class AbstractFilterPage(CFGOVPage):
             ]
         )
 
-    # Returns an image for the page's meta Open Graph tag
-    @property
-    def meta_image(self):
-        parent_meta = super().meta_image
-        return parent_meta or self.preview_image
-
 
 class LearnPage(AbstractFilterPage):
     content = StreamField(
@@ -143,10 +96,7 @@ class LearnPage(AbstractFilterPage):
                 v1_blocks.EmailSignUpChooserBlock(),
             ),
             ("simple_chart", organisms.SimpleChart()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
+            ("table", organisms.Table()),
             ("faq_group", schema.FAQGroup()),
             ("contact_us_table", organisms.ContactUsTable()),
         ],
@@ -170,14 +120,13 @@ class DocumentDetailPage(AbstractFilterPage):
             ("expandable_group", organisms.ExpandableGroup()),
             ("notification", molecules.Notification()),
             ("simple_chart", organisms.SimpleChart()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
+            ("table", organisms.Table()),
             ("crc_table", organisms.ConsumerReportingCompanyTable()),
+            ("case_docket_table", organisms.CaseDocketTable()),
         ],
         blank=True,
         use_json_field=True,
+        block_counts={"case_docket_table": {"max_num": 1}},
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")
@@ -217,10 +166,7 @@ class EventPage(AbstractFilterPage):
             ("content_with_anchor", molecules.ContentWithAnchor()),
             ("heading", v1_blocks.HeadingBlock(required=False)),
             ("image", molecules.ContentImage()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
+            ("table", organisms.Table()),
             (
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock("v1.ReusableText"),
@@ -239,21 +185,6 @@ class EventPage(AbstractFilterPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    video_transcript = models.ForeignKey(
-        "wagtaildocs.Document",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    speech_transcript = models.ForeignKey(
-        "wagtaildocs.Document",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    flickr_url = models.URLField("Flickr URL", blank=True)
     archive_video_id = models.CharField(
         "YouTube video ID (archive)",
         null=True,
@@ -352,27 +283,26 @@ class EventPage(AbstractFilterPage):
                 FieldPanel("end_dt", classname="col6"),
             ]
         ),
+        FieldPanel("future_body", heading="Content visible before event"),
+        FieldPanel("live_body", heading="Content visible during event"),
         MultiFieldPanel(
             [
-                FieldPanel("archive_body"),
-                FieldPanel("archive_image"),
-                FieldPanel("video_transcript"),
-                FieldPanel("speech_transcript"),
-                FieldPanel("flickr_url"),
+                FieldPanel(
+                    "archive_body", heading="Content visible after event"
+                ),
+                FieldPanel("archive_image", heading="Image shown after event"),
                 FieldPanel("archive_video_id"),
             ],
-            heading="Archive Information",
+            heading="Body and information visible after event",
         ),
-        FieldPanel("live_body"),
-        FieldPanel("future_body"),
-        FieldPanel("persistent_body"),
+        FieldPanel("persistent_body", heading="Content visible at all times"),
         MultiFieldPanel(
             [
                 FieldPanel("live_stream_availability"),
                 FieldPanel("live_video_id"),
                 FieldPanel("live_stream_date"),
             ],
-            heading="Live Stream Information",
+            heading="Livestream information",
         ),
     ]
     # Venue content tab
@@ -427,6 +357,8 @@ class EventPage(AbstractFilterPage):
     )
 
     template = "v1/events/event.html"
+    start_date_field = "start_dt"
+    end_date_field = "end_dt"
 
     @property
     def event_state(self):

@@ -9,6 +9,7 @@ from unittest import mock
 import requests
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
+
 from retirement_api.utils.ss_calculator import (
     calculate_lifetime_benefits,
     clean_comment,
@@ -569,7 +570,10 @@ class UtilitiesTests(unittest.TestCase):
 
     def test_get_retire_data_too_old(self):
         params = {}
-        params["yob"] = self.today.year - 71
+        too_old_birthday = self.today - relativedelta(years=71, days=1)
+        params["dobmon"] = too_old_birthday.month
+        params["dobday"] = too_old_birthday.day
+        params["yob"] = too_old_birthday.year
         results = self._get_retire_data(param_overrides=params)
         self.assertTrue("older than 70" in results["note"])
 

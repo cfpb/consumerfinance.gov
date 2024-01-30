@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
@@ -22,7 +20,6 @@ const expensesView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
@@ -33,7 +30,7 @@ const expensesView = {
     if (currency === true) {
       value = formatUSD({ amount: value, decimalPlaces: 0 });
     }
-    if ($ele.prop('tagName') === 'INPUT') {
+    if ($ele.tagName() === 'INPUT') {
       $ele.val(value);
     } else if (isSummaryLineItem && originalValue !== value) {
       setTimeout(function () {
@@ -47,13 +44,12 @@ const expensesView = {
 
   /**
    * Helper function that updates expenses elements
-   *
    * @param {object} values - expenses model values
    */
   updateExpenses: function (values) {
     const expensesHigherThanSalary = $('.aid-form_higher-expenses');
-    this.$elements.each(function () {
-      const $ele = $(this);
+    this.$elements.each((elem) => {
+      const $ele = $(elem);
       const name = $ele.attr('data-expenses');
       const currency = true;
       if (expensesView.currentInput !== $ele.attr('id')) {
@@ -73,7 +69,6 @@ const expensesView = {
 
   /**
    * Function that updates the view with new values
-   *
    * @param {object} values - expense model values
    */
   updateView: function (values) {
@@ -83,7 +78,6 @@ const expensesView = {
 
   /**
    * Helper function for handling user entries in expenses model INPUT fields.
-   *
    * @param {string} id - The id attribute of the element to be handled.
    */
   inputHandler: function (id) {
@@ -97,7 +91,6 @@ const expensesView = {
   /**
    * Helper function to indicate that a offer summary line item has
    * successfully recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    */
   addSummaryRecalculationMessage: function (element) {
@@ -107,7 +100,6 @@ const expensesView = {
 
   /**
    * Helper function to remove all indicators that data has recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
@@ -120,35 +112,37 @@ const expensesView = {
    * Listener function for keyup in expenses INPUT fields
    */
   keyupListener: function () {
-    this.$reviewAndEvaluate.on(
-      'keyup focusout',
-      '[data-expenses]',
-      function () {
-        clearTimeout(expensesView.keyupDelay);
-        expensesView.currentInput = $(this).attr('id');
-        if ($(this).is(':focus')) {
-          expensesView.keyupDelay = setTimeout(function () {
+    this.$reviewAndEvaluate.each(() => {
+      $('[data-expenses]').each((elmo) => {
+        elmo.addEventListener('keyup focusout', function () {
+          clearTimeout(expensesView.keyupDelay);
+          expensesView.currentInput = $(this).attr('id');
+          if ($(this).is(':focus')) {
+            expensesView.keyupDelay = setTimeout(function () {
+              expensesView.inputHandler(expensesView.currentInput);
+              expensesView.updateView(getExpenses.values());
+            }, 500);
+          } else {
             expensesView.inputHandler(expensesView.currentInput);
+            expensesView.currentInput = 'none';
             expensesView.updateView(getExpenses.values());
-          }, 500);
-        } else {
-          expensesView.inputHandler(expensesView.currentInput);
-          expensesView.currentInput = 'none';
-          expensesView.updateView(getExpenses.values());
-        }
-      }
-    );
+          }
+        });
+      });
+    });
   },
 
   /**
    * Listener function for change events on expenses INPUT fields
    */
   expenseInputChangeListener: function () {
-    $('[data-expenses]').one('change', function () {
-      const expenses = $(this).data('expenses');
-      if (expenses) {
-        analyticsSendEvent({ action: 'Value Edited', label: expenses });
-      }
+    $('[data-expenses]').each((elmo) => {
+      elmo.addEventListener('change', function () {
+        const expenses = $(this).data('expenses');
+        if (expenses) {
+          analyticsSendEvent({ action: 'Value Edited', label: expenses });
+        }
+      });
     });
   },
 
@@ -156,8 +150,8 @@ const expensesView = {
    * Listener for the BLS region SELECT
    */
   regionSelectListener: function () {
-    $('#bls-region-select').change(function () {
-      const region = $(this).val();
+    $('#bls-region-select').listen('change', function (event) {
+      const region = event.target.value || 'NE';
       publish.updateRegion(region);
       expensesView.updateView(getExpenses.values());
       analyticsSendEvent({ action: 'Region Changed', label: region });

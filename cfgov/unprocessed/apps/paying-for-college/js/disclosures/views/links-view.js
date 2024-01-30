@@ -1,8 +1,6 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 import formatURL from '../utils/format-url.js';
 import constructScorecardSearch from '../utils/construct-scorecard-search.js';
+import $ from '../utils/dollar-sign.js';
 
 const linksView = {
   $gradLinkText: $('.graduation-link'),
@@ -13,7 +11,6 @@ const linksView = {
   /**
    * Initializes (and updates) links in Step 3 to the school's website and to
    * a College Scorecard search of related schools
-   *
    * @param {object} values - Financial model values
    */
   updateLinks: function (values) {
@@ -31,27 +28,21 @@ const linksView = {
 
   /**
    * Creates a link in Step 2 to the school on the College Scorecard website
-   *
    * @param {object} values - Financial model values
    */
   setCollegeScorecardLink: function (values) {
     const scorecardURL =
       'https://collegescorecard.ed.gov/school/?' + values.schoolID;
-    if (scorecardURL) {
-      const $scorecardSchool = $('<a>', {
-        href: scorecardURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$scorecardSchoolLink.attr('class'),
-      }).text(this.$scorecardSchoolLink.text());
-      this.$scorecardSchoolLink.replaceWith($scorecardSchool);
-    }
+    this.$scorecardSchoolLink.each((elem) => {
+      elem.setAttribute('href', scorecardURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
+    });
   },
 
   /**
    * Creates a link in Step 2 to the school's graduation metrics
    * on the College Scorecard website
-   *
    * @param {object} values - Financial model values
    */
   setGraduationLink: function (values) {
@@ -59,20 +50,15 @@ const linksView = {
       'https://collegescorecard.ed.gov/school/?' +
       values.schoolID +
       '#graduation';
-    if (gradURL) {
-      const $gradLink = $('<a>', {
-        href: gradURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$gradLinkText.attr('class'),
-      }).text(this.$gradLinkText.text());
-      this.$gradLinkText.replaceWith($gradLink);
-    }
+    this.$gradLinkText.each((elem) => {
+      elem.setAttribute('href', gradURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
+    });
   },
 
   /**
    * Creates a link in Step 2 to the school's loan default metrics
-   *
    * @param {object} values - Financial model values
    */
   setLoanDefaultLink: function (values) {
@@ -80,40 +66,30 @@ const linksView = {
       'http://nces.ed.gov/collegenavigator/?id=' +
       values.schoolID +
       '#fedloans';
-    if (defaultURL) {
-      const $defaultLink = $('<a>', {
-        href: defaultURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$defaultLinkText.attr('class'),
-      }).text(this.$defaultLinkText.text());
-      this.$defaultLinkText.replaceWith($defaultLink);
-    }
+    this.$defaultLinkText.each((elem) => {
+      elem.setAttribute('href', defaultURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
+    });
   },
 
   /**
    * Creates a link in Step 3 to the school's website if the school has provided
    * a URL in the College Scorecard data
-   *
    * @param {object} values - Financial model values
    */
   setSchoolLink: function (values) {
     const schoolURL = formatURL(values.url);
-    if (schoolURL) {
-      const $schoolLink = $('<a>', {
-        href: schoolURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        class: this.$schoolLinkText.attr('class'),
-      }).text(this.$schoolLinkText.text());
-      this.$schoolLinkText.replaceWith($schoolLink);
-    }
+    this.$schoolLinkText.each((elem) => {
+      elem.setAttribute('href', schoolURL);
+      elem.setAttribute('target', '_blank');
+      elem.setAttribute('rel', 'noopener noreferrer');
+    });
   },
 
   /**
    * Modifies the College Scorecard link in step 3 to search for schools that
    * offer a given program near a given ZIP if program and ZIP are specified
-   *
    * @param {object} values - Financial model values
    */
   setScorecardSearch: function (values) {

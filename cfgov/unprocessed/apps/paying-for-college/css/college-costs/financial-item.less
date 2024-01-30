@@ -1,7 +1,7 @@
 .financial-item {
   margin-top: unit(30px / @base-font-size-px, em);
 
-  &:not(&__expandable) {
+  &:not(&__flyout) {
     .financial-item_label,
     .financial-item_value {
       display: inline-block;
@@ -45,18 +45,25 @@
     }
   }
 
-  &__expandable {
+  &__flyout {
+    padding: 0.625em;
     margin-top: 0;
+    background-color: #fff;
 
     .h4 {
       margin-bottom: 0;
     }
 
-    .o-expandable_label {
+    .o-costs-group_label {
       width: auto;
     }
 
     .financial-item_note {
+      text-align: left;
+      margin-top: unit(15px / @base-font-size-px, em);
+    }
+
+    .financial-item_note span {
       margin-top: unit(15px / @base-font-size-px, em);
     }
 
@@ -65,22 +72,27 @@
     }
   }
 
-  &.o-expandable_target {
+  &.o-costs-group_header {
+    width: 100%;
+    border: none;
+    margin-bottom: unit(15px / @base-font-size-px, em);
+    text-align: left;
+
     &__collapsed {
-      .o-expandable_cue-close {
+      .o-costs-group_cue-close {
         display: none;
       }
-      .o-expandable_cue-open {
+      .o-costs-group_cue-open {
         display: inline;
         margin-left: unit(5px / @base-font-size-px, em);
       }
     }
 
-    &.o-expandable_target__expanded {
-      .o-expandable_cue-open {
+    &__expanded {
+      .o-costs-group_cue-open {
         display: none;
       }
-      .o-expandable_cue-close {
+      .o-costs-group_cue-close {
         display: inline;
         margin-left: unit(5px / @base-font-size-px, em);
       }
@@ -89,9 +101,17 @@
     .flex-container {
       display: flex;
 
-      .o-expandable_label {
+      .o-costs-group_label {
         flex: 1;
+        flex-grow: 1;
       }
+    }
+
+    .o-costs-group_link .o-costs-group_cue-close,
+    .o-costs-group_link .o-costs-group_cue-open {
+      color: @pacific;
+      font-size: 1em;
+      line-height: 1.375;
     }
   }
 
@@ -112,11 +132,26 @@
       margin-top: unit(5px / @base-font-size-px, em);
     }
   }
+
+  .financial-item_label p {
+    font-size: unit(16px / @base-font-size-px, em);
+  }
 }
 
 .financial-item-group {
-  .financial-item {
-    margin-top: unit(15px / @base-font-size-px, em);
+  .o-costs-group {
+    border-bottom: 1px solid @flyout__border;
+    &:first-child {
+      border-top: 1px solid @flyout__border;
+    }
+  }
+
+  .o-costs-group_content {
+    .financial-item {
+      margin-top: unit(15px / @base-font-size-px, em);
+    }
+
+    margin-bottom: unit(15px / @base-font-size-px, em);
   }
 }
 

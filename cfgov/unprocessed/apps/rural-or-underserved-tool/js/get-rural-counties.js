@@ -12,7 +12,7 @@ function getRuralCounties(year) {
   return fetch(
     'https://files.consumerfinance.gov/data/rural-or-underserved-tool/' +
       year +
-      '.txt'
+      '.txt',
   )
     .then((v) => v.text())
     .then((v) => {

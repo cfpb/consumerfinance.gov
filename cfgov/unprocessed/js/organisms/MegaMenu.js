@@ -6,10 +6,10 @@ import {
   FlyoutMenu,
   MoveTransition,
 } from '@cfpb/cfpb-atomic-component';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
-import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
-import TabTrigger from '../modules/TabTrigger.js';
-import Tree from '../modules/Tree.js';
+import { MegaMenuDesktop } from '../organisms/MegaMenuDesktop.js';
+import { MegaMenuMobile } from '../organisms/MegaMenuMobile.js';
+import { TabTrigger } from '../modules/TabTrigger.js';
+import { Tree } from '../modules/Tree.js';
 import {
   DESKTOP,
   MOBILE,
@@ -20,7 +20,6 @@ const BASE_CLASS = 'o-mega-menu';
 
 /**
  * MegaMenu
- *
  * @class
  * @classdesc Initializes a new MegaMenu organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -67,12 +66,12 @@ function MegaMenu(element) {
     // Set initial transition for root menu on mobile. It's hidden on desktop.
     if (!isInDesktop) {
       const transition = new MoveTransition(rootContentDom).init(
-        MoveTransition.CLASSES.MOVE_LEFT
+        MoveTransition.CLASSES.MOVE_LEFT,
       );
       rootMenu.setTransition(
         transition,
         transition.moveLeft,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
     }
 
@@ -88,10 +87,10 @@ function MegaMenu(element) {
     // Add events and listeners to root menu.
     _addEvents(rootMenu);
     _mobileNav.addEventListener('rootexpandbegin', () =>
-      this.dispatchEvent('rootexpandbegin', { target: this })
+      this.dispatchEvent('rootexpandbegin', { target: this }),
     );
     _mobileNav.addEventListener('rootcollapseend', () =>
-      this.dispatchEvent('rootcollapseend', { target: this })
+      this.dispatchEvent('rootcollapseend', { target: this }),
     );
 
     window.addEventListener('resize', _resizeHandler);
@@ -115,7 +114,6 @@ function MegaMenu(element) {
   /**
    * Perform a recursive depth-first search of the DOM
    * and call a function for each node.
-   *
    * @param {HTMLElement} dom - A DOM element to search from.
    * @param {TreeNode} parentNode - Node in a tree from which
    *   to attach new nodes.
@@ -139,7 +137,6 @@ function MegaMenu(element) {
 
   /**
    * Create a new FlyoutMenu and attach it to a new tree node.
-   *
    * @param {HTMLElement} dom - A DOM element to check for a js
    *   data-* attribute hook.
    * @param {TreeNode} parentNode - The parent node in a tree on which
@@ -172,7 +169,6 @@ function MegaMenu(element) {
   /**
    * Handle events coming from menu,
    * and pass it to the desktop or mobile behaviors.
-   *
    * @param {object} event - A FlyoutMenu event object.
    */
   function _handleEvent(event) {
@@ -198,7 +194,6 @@ function MegaMenu(element) {
 
   /**
    * Close the mega menu.
-   *
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
@@ -223,4 +218,4 @@ function MegaMenu(element) {
   return this;
 }
 
-export default MegaMenu;
+export { MegaMenu };

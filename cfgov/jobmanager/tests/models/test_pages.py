@@ -143,7 +143,6 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
             "usajobs_application_links-INITIAL_FORMS": 0,
             "usajobs_application_links-TOTAL_FORMS": 0,
             "language": "en",
-            "schema_json": "null",
         }
 
         post_data.update(kwargs)
@@ -241,3 +240,18 @@ class JobListingPageTests(TestCase):
 
     def test_page_includes_extra_js(self):
         self.assertIn("summary.js", JobListingPage().page_js)
+
+    def test_get_admin_display_title(self):
+        page = JobListingPage(title="Director")
+        self.assertEqual(page.get_admin_display_title(), "Director")
+
+        grade53 = Grade(grade="53", salary_min=1, salary_max=2)
+        grade60 = Grade(grade="60", salary_min=1, salary_max=2)
+
+        page.grades = [grade53]
+        self.assertEqual(page.get_admin_display_title(), "Director [Grade 53]")
+
+        page.grades = [grade53, grade60]
+        self.assertEqual(
+            page.get_admin_display_title(), "Director [Grades 53, 60]"
+        )

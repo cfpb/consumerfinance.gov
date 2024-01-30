@@ -2,7 +2,6 @@ import chartHooks from './chart-hooks.js';
 
 /**
  * Adjusts legend alignment based on series length.
- *
  * @param {object} defaultObj - A default object to be decorated.
  * @param {string} chartType - The current chart type.
  */
@@ -29,7 +28,6 @@ function alignMargin(defaultObj, chartType) {
 
 /**
  * Mechanism for passing functions or applied functions to the chart style object
- *
  * @param {string} override - Prefixed refered to a function in chart-hooks.js
  * @param {object} data - Data provided to chart
  * @returns {Function | string} Result of the override or the provided unmatched style
@@ -47,7 +45,6 @@ function resolveOverride(override, data) {
 
 /**
  * Mutates a style object with entries from the style overrides field
- *
  * @param {string} styleOverrides - Stringified JSON style overrides
  * @param {object} obj - The object to mutate
  * @param {object} data - The data to provide to the chart
@@ -66,7 +63,6 @@ function overrideStyles(styleOverrides, obj, data) {
 
 /**
  * Formats processed series data as expected by Highcharts
- *
  * @param {object} data - Series data in various acceptable formats
  * @returns {object} Correctly formatted series object
  */
@@ -89,7 +85,6 @@ function formatSeries(data) {
 
 /**
  * Makes a tooltip formatter function
- *
  * @param {string} yAxisLabel - Label for the yAxis
  * @returns {Function} The formatter function
  */
@@ -112,7 +107,6 @@ function makeFormatter(yAxisLabel) {
 
 /**
  * Pulls specified keys from the resolved data object
- *
  * @param {Array} rawData - Array of data from JSON, CSV or directly entered
  * @param {object} meta - The employee who is responsible for the project.
  * @param {string} meta.series - The keys for data to render into the chart.
@@ -147,7 +141,6 @@ function extractSeries(rawData, { series, xAxisSource, chartType }) {
         name,
         data: currArr,
       };
-
       rawData.forEach((obj) => {
         let d = Number(obj[key]);
         if (chartType === 'datetime') {
@@ -167,7 +160,6 @@ function extractSeries(rawData, { series, xAxisSource, chartType }) {
 
 /**
  * Converts to human readable date from Epoch format.
- *
  * @param {number} date - UNIX timestamp (seconds since Epoch).
  * @returns {string|null} Human readable date string,
  *   or null if supplied timestamp is invalid.

@@ -14,12 +14,8 @@ const jsPaths = [
   `${routes}/ask-cfpb/single.js`,
   `${routes}/credit-cards/single.js`,
   `${routes}/es/single.js`,
-  `${routes}/external-site.js`,
   // js for specific pages, based on url
-  `${routes}/consumer-tools/debt-collection/index.js`,
   `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
-  `${routes}/owning-a-home/mortgage-estimate/index.js`,
-  `${routes}/owning-a-home/index.js`,
 
   // on-demand: components included on a page via Wagtail
   ...getAll(onDemand),
@@ -35,9 +31,9 @@ const jsPaths = [
   `${apps}/form-explainer/js/index.js`,
   `${apps}/owning-a-home/js/common.js`,
   `${apps}/owning-a-home/js/explore-rates/index.js`,
-  `${apps}/owning-a-home/js/mortgage-estimate/index.js`,
   `${apps}/paying-for-college/js/disclosures/index.js`,
   `${apps}/paying-for-college/js/college-costs.js`,
+  `${apps}/prepaid-agreements/js/common.js`,
   `${apps}/regulations3k/js/index.js`,
   `${apps}/regulations3k/js/permalinks.js`,
   `${apps}/regulations3k/js/recent-notices.js`,

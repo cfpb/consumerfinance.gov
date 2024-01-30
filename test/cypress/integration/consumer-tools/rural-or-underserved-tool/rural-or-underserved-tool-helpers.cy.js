@@ -26,7 +26,7 @@ export class RuralOrUnderservedTool {
       },
       (request) => {
         request.reply(censusAPIResponses.geocoding);
-      }
+      },
     ).as('censusGeocoding');
     cy.intercept(
       {
@@ -37,7 +37,7 @@ export class RuralOrUnderservedTool {
       },
       (request) => {
         request.reply(censusAPIResponses.tigerweb1);
-      }
+      },
     ).as('censusTigerweb1');
     cy.intercept(
       {
@@ -48,7 +48,7 @@ export class RuralOrUnderservedTool {
       },
       (request) => {
         request.reply(censusAPIResponses.tigerweb2);
-      }
+      },
     ).as('censusTigerweb2');
     cy.intercept(
       {
@@ -59,7 +59,7 @@ export class RuralOrUnderservedTool {
       },
       (request) => {
         request.reply(censusAPIResponses.tigerweb3);
-      }
+      },
     ).as('censusTigerweb3');
     cy.wait('@censusGeocoding');
     cy.wait('@censusTigerweb1');

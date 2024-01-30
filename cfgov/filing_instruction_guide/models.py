@@ -10,11 +10,14 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
+    TitleFieldPanel,
 )
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamField
 
 import requests
+from modelcluster.models import ClusterableModel
+
 from filing_instruction_guide import import_data_points
 from filing_instruction_guide.blocks import (
     FigLevel3Subsection,
@@ -22,8 +25,6 @@ from filing_instruction_guide.blocks import (
     FigSubsection,
     content_block_options,
 )
-from modelcluster.models import ClusterableModel
-
 from v1.models.base import CFGOVPage
 
 
@@ -110,7 +111,7 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
     content_panels = [
         MultiFieldPanel(
             [
-                FieldPanel("title"),
+                TitleFieldPanel("title"),
             ],
             heading="Page Title",
         ),

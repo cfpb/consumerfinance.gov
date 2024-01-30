@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import render
 
 from agreements import RESULTS_PER_PAGE
+from agreements.metadata import Metadata
 from agreements.models import Agreement, Issuer
 
 
@@ -10,9 +11,19 @@ def index(request):
     return render(
         request,
         "agreements/index.html",
+    )
+
+
+def archive(request):
+    metadata = Metadata()
+
+    return render(
+        request,
+        "agreements/archive.html",
         {
-            "agreement_count": Agreement.objects.all().count(),
-            "pagetitle": "Credit card agreements",
+            "agreements": metadata.get_sorted_agreements(),
+            "flexibilities": metadata.flexibilities,
+            "notes": metadata.notes,
         },
     )
 

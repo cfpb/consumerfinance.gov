@@ -11,13 +11,13 @@ export class MegaMenuDesktop {
 
   firstTabOpenIcon() {
     return this.firstTab().find(
-      `${BASE_CLASS}_content-link-icon-open .cf-icon-svg`
+      `${BASE_CLASS}_content-link-icon-open .cf-icon-svg`,
     );
   }
 
   firstTabCloseIcon() {
     return this.firstTab().find(
-      `${BASE_CLASS}_content-link-icon-closed .cf-icon-svg`
+      `${BASE_CLASS}_content-link-icon-closed .cf-icon-svg`,
     );
   }
 

@@ -3,7 +3,6 @@ import { EventObserver, MoveTransition } from '@cfpb/cfpb-atomic-component';
 
 /**
  * MegaMenuMobile
- *
  * @class
  * @classdesc Behavior for the mega menu at desktop sizes.
  * @param {Tree} menus - Tree of FlyoutMenus.
@@ -50,7 +49,7 @@ function MegaMenuMobile(menus) {
 
     // Make root level links disabled to tab and voiceover navigation on init.
     _rootLinksDom = _rootMenuContentDom.querySelectorAll(
-      'a.o-mega-menu_content-1-link,.m-global-eyebrow a'
+      'a.o-mega-menu_content-1-link,.m-global-eyebrow a',
     );
 
     return this;
@@ -59,7 +58,6 @@ function MegaMenuMobile(menus) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   *
    * @param {MouseEvent} event - The event object for the click event.
    */
   function _handleBodyClick(event) {
@@ -75,7 +73,6 @@ function MegaMenuMobile(menus) {
 
   /**
    * Pass an event bubbled up from the menus to the appropriate handler.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent(event) {
@@ -99,7 +96,6 @@ function MegaMenuMobile(menus) {
 
   /**
    * Event handler for when FlyoutMenu trigger is clicked.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleTriggerClick(event) {
@@ -123,7 +119,7 @@ function MegaMenuMobile(menus) {
         transitionCollapseMethod += currLevel === 1 ? '' : currLevel;
         _rootMenu.setTransition(
           transition,
-          transition[transitionCollapseMethod]
+          transition[transitionCollapseMethod],
         );
       } else {
         // The transition animation is turned off when resuming to avoid a
@@ -148,7 +144,7 @@ function MegaMenuMobile(menus) {
         menu.setTransition(
           transition,
           transition.moveToOrigin,
-          transition.moveLeft
+          transition.moveLeft,
         );
         _rootMenu.getDom().content.classList.remove('u-hidden-overflow');
         _activeMenu = menu;
@@ -159,7 +155,6 @@ function MegaMenuMobile(menus) {
   /**
    * Event handler for when FlyoutMenu expand transition begins.
    * Use this to perform post-expandbegin actions.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin(event) {
@@ -177,7 +172,6 @@ function MegaMenuMobile(menus) {
   /**
    * Event handler for when FlyoutMenu expand transition ends.
    * Use this to perform post-expandEnd actions.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandEnd(event) {
@@ -195,7 +189,6 @@ function MegaMenuMobile(menus) {
   /**
    * Event handler for when FlyoutMenu collapse transition has begun.
    * Use this to perform post-collapseBegin actions.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseBegin(event) {
@@ -212,7 +205,6 @@ function MegaMenuMobile(menus) {
   /**
    * Event handler for when FlyoutMenu collapse transition has ended.
    * Use this to perform post-collapseEnd actions.
-   *
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseEnd(event) {
@@ -264,7 +256,6 @@ function MegaMenuMobile(menus) {
 
   /**
    * Close the mega menu.
-   *
    * @returns {MegaMenuMobile} A instance.
    */
   function collapse() {
@@ -277,20 +268,19 @@ function MegaMenuMobile(menus) {
 
   /**
    * Add events necessary for the desktop menu behaviors.
-   *
    * @returns {boolean} Whether it has successfully been resumed or not.
    */
   function resume() {
     if (_suspended) {
       _rootMenuContentDom.classList.add('u-hidden-overflow');
       const transition = new MoveTransition(_rootMenuContentDom).init(
-        MoveTransition.CLASSES.MOVE_LEFT
+        MoveTransition.CLASSES.MOVE_LEFT,
       );
       transition.animateOff();
       _rootMenu.setTransition(
         transition,
         transition.moveLeft,
-        transition.moveToOrigin
+        transition.moveToOrigin,
       );
 
       _activeMenu = _rootMenu;
@@ -305,7 +295,6 @@ function MegaMenuMobile(menus) {
 
   /**
    * Remove events necessary for the desktop menu behaviors.
-   *
    * @returns {boolean} Whether it has successfully been suspended or not.
    */
   function suspend() {
@@ -346,4 +335,4 @@ function MegaMenuMobile(menus) {
   return this;
 }
 
-export default MegaMenuMobile;
+export { MegaMenuMobile };

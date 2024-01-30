@@ -22,7 +22,6 @@ const navigationView = {
 
   /**
    * _handlePopState - handle popstate events
-   *
    * @param {object} event - the popstate event
    */
   _handlePopState: function (event) {
@@ -36,7 +35,6 @@ const navigationView = {
 
   /**
    * _updateSideNav - Update the side nav
-   *
    * @param {string} activeName - name of the active app section
    */
   _updateSideNav: function (activeName) {
@@ -50,10 +48,12 @@ const navigationView = {
     });
 
     const navItem = document.querySelector(
-      '[data-nav_item="' + activeName + '"]'
+      '[data-nav_item="' + activeName + '"]',
     );
     const activeElem = navItem.closest('li');
-    const activeParent = activeElem.closest('.m-list_item__parent');
+    const activeParent = activeElem.closest(
+      '.o-secondary-nav_list-item__parent',
+    );
 
     this._navListItems.forEach((elem) => {
       elem.setAttribute('data-nav-is-active', 'False');
@@ -65,16 +65,17 @@ const navigationView = {
     activeParent.setAttribute('data-nav-is-open', 'True');
     activeParent.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
-    activeParent.querySelectorAll('.m-list_item').forEach((elem) => {
-      elem.setAttribute('data-nav-is-active', 'True');
-    });
+    activeParent
+      .querySelectorAll('.o-secondary-nav_list__children li')
+      .forEach((elem) => {
+        elem.setAttribute('data-nav-is-active', 'True');
+      });
 
     navItem.classList.add('active-section');
   },
 
   /**
    * _showAndHideSections - Hide all app sections, then show appropriate ones
-   *
    * @param {string} activeName - Name of the active section
    */
   _showAndHideSections: function (activeName) {
@@ -104,7 +105,6 @@ const navigationView = {
   /**
    * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
    * properly
-   *
    * @param {string} property - The state property to modify
    * @param {string} value - The new value of the property
    * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
@@ -115,35 +115,34 @@ const navigationView = {
     } else {
       navigationView._stateDomElem.setAttribute(
         'data-state_' + property,
-        value
+        value,
       );
     }
   },
 
   /**
    * init - Initialize the navigation view
-   *
    * @param {object} body - The body element of the page
    * @param { string } iped - String representing the chosen school.
    */
   init: function (body, iped) {
-    this._navMenu = body.querySelector('.o-secondary-navigation');
-    this._navButtons = body.querySelectorAll('.o-secondary-navigation a');
-    this._navListItems = body.querySelectorAll('.o-secondary-navigation li');
+    this._navMenu = body.querySelector('.o-secondary-nav');
+    this._navButtons = body.querySelectorAll('.o-secondary-nav a');
+    this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
     this._nextButton = body.querySelector(
-      '.college-costs_tool-section_buttons .btn__next-step'
+      '.college-costs_tool-section_buttons .btn__next-step',
     );
     this._contentSidebar = body.querySelector('.content_sidebar');
     this._introduction = body.querySelector('.college-costs_intro-segment');
     this._getStartedBtn = body.querySelector(
-      '.college-costs_intro-segment .btn__get-started'
+      '.college-costs_intro-segment .btn__get-started',
     );
     this._appSegment = body.querySelector('.college-costs_app-segment');
     this._sections = body.querySelectorAll('.college-costs_tool-section');
     this._stateDomElem = document.querySelector('main.college-costs');
     this._affordingChoices = document.querySelectorAll(
-      '.affording-loans-choices .m-form-field'
+      '.affording-loans-choices .m-form-field',
     );
 
     _addButtonListeners(iped);
@@ -156,7 +155,6 @@ const navigationView = {
 
 /**
  * _addButtonListeners - Add event listeners for nav buttons
- *
  * @param { string } iped - String representing the chosen school.
  */
 function _addButtonListeners(iped) {
@@ -174,14 +172,13 @@ function _addButtonListeners(iped) {
   } else {
     navigationView._getStartedBtn.addEventListener(
       'click',
-      _handleGetStartedBtnClick
+      _handleGetStartedBtnClick,
     );
   }
 }
 
 /**
  * _handleAffordingChoicesClick - Handle clicks on Affording Payment choices.
- *
  * @param {MouseEvent} event - The click event object.
  */
 function _handleAffordingChoicesClick(event) {
@@ -203,7 +200,6 @@ function _handleGetStartedBtnClick() {
 
 /**
  * _handleNavButtonClick - Handle click event for secondary nav.
- *
  * @param {MouseEvent} event - click event object.
  */
 function _handleNavButtonClick(event) {
@@ -235,7 +231,7 @@ function _handleNextButtonClick() {
   } else {
     sendAnalyticsEvent(
       'next step - ' + getStateValue('activeSection'),
-      'time-to-click'
+      'time-to-click',
     );
     updateState.nextSection();
     window.scrollTo(0, document.querySelector('.college-costs').offsetTop);

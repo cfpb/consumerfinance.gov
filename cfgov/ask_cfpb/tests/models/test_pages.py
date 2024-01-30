@@ -2,11 +2,10 @@ import json
 import tempfile
 from unittest import mock
 
-from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
@@ -28,6 +27,7 @@ from ask_cfpb.models.pages import (
     AnswerLandingPage,
     AnswerPage,
     PortalSearchPage,
+    TagResultsPage,
     strip_html,
     validate_page_number,
 )
@@ -38,11 +38,6 @@ from v1.models import (
     PortalCategory,
     PortalTopic,
     SublandingPage,
-)
-from v1.util.migrations import (
-    get_free_path,
-    get_or_create_page,
-    set_streamfield_data,
 )
 
 
@@ -474,51 +469,15 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortización")
 
-    def test_landing_page_live_portal(self):
-        portal_cards = self.english_ask_parent.get_portal_cards()
-
-        self.assertEqual(len(portal_cards), 2)
-
-        self.assertEqual(portal_cards[0]["title"], "Auto loans")
-        self.assertEqual(portal_cards[0]["icon"], "car")
-
-        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
-        self.assertEqual(portal_cards[1]["icon"], "bank")
-
-    def test_landing_page_draft_portal(self):
-        self.english_portal.unpublish()
-        self.english_portal.save()
-        self.assertFalse(self.english_portal.live)
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
-
-    def test_landing_page_draft_portals(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-            sl_page.save()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
-
-    def test_landing_page_draft_portals_draft_search(self):
-        for sl_page in SublandingPage.objects.all():
-            sl_page.unpublish()
-        for s_page in self.portal_topic.portal_search_pages.all():
-            s_page.unpublish()
-        for s_page in self.portal_topic2.portal_search_pages.all():
-            s_page.unpublish()
-        self.assertEqual(self.english_ask_parent.get_portal_cards(), [])
-
 
 class AnswerPageTest(TestCase):
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):
-        kwargs.setdefault(
-            "path", get_free_path(apps, self.english_parent_page)
+        page = AnswerPage(
+            slug="mock-answer-page-en-1234", title="Mock answer page title"
         )
-        kwargs.setdefault("depth", self.english_parent_page.depth + 1)
-        kwargs.setdefault("slug", "mock-answer-page-en-1234")
-        kwargs.setdefault("title", "Mock answer page title")
-        page = baker.prepare(AnswerPage, **kwargs)
-        page.save()
+        self.english_parent_page.add_child(instance=page)
         return page
 
     def setUp(self):
@@ -555,46 +514,38 @@ class AnswerPageTest(TestCase):
         self.ROOT_PAGE.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
-        self.english_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+
+        self.english_parent_page = AnswerLandingPage(
+            title="Ask CFPB",
+            slug=ENGLISH_PARENT_SLUG,
             language="en",
             live=True,
         )
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.english_parent_page)
+
+        self.spanish_parent_page = AnswerLandingPage(
+            title="Obtener respuestas",
+            slug=SPANISH_PARENT_SLUG,
             language="es",
             live=True,
         )
-        self.tag_results_page_en = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "TagResultsPage",
-            "Tag results page",
-            "search-by-tag",
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent_page)
+
+        self.tag_results_page_en = TagResultsPage(
+            title="Tag results page",
+            slug="search-by-tag",
             language="en",
             live=True,
         )
-        self.tag_results_page_es = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "TagResultsPage",
-            "Tag results page",
-            "buscar-por-etiqueta",
-            self.ROOT_PAGE,
+        self.ROOT_PAGE.add_child(instance=self.tag_results_page_en)
+
+        self.tag_results_page_es = TagResultsPage(
+            title="Tag results page",
+            slug="buscar-por-etiqueta",
             language="es",
             live=True,
         )
+        self.ROOT_PAGE.add_child(instance=self.tag_results_page_es)
         self.answer1234 = Answer(id=1234)
         self.answer1234.save()
         self.page1 = AnswerPage(
@@ -682,31 +633,32 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This is more than forty words: "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This is more than forty words: "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(
             page.answer_content_preview().endswith("word word ...")
         )
@@ -718,36 +670,37 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This a word with more than 255 characters: "
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                        "char char char char char char char char char char "
-                        "char char char char char char char char char char "
-                        "char char char char char char char char char char "
-                        "char char char char char char too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This a word with more than 255 characters: "
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                            "char char char char char char char char char char "
+                            "char char char char char char char char char char "
+                            "char char char char char char char char char char "
+                            "char char char char char char too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
@@ -771,31 +724,32 @@ class AnswerPageTest(TestCase):
         self.assertEqual(page.get_meta_description(), "Mock answer 1")
 
         # Second fallback is truncated answer_content text block
-        data = [
-            {
-                "type": "video_player",
-                "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+        page.answer_content = json.dumps(
+            [
+                {
+                    "type": "video_player",
+                    "id": "402b933b",
+                    "value": {
+                        "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                    },
                 },
-            },
-            {
-                "type": "text",
-                "id": "402b933c",
-                "value": {
-                    "content": (
-                        "<p><span>"
-                        "This is more than forty words: "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word word word word word "
-                        "word word word word word word too-many."
-                        "</span></p>"
-                    )
+                {
+                    "type": "text",
+                    "id": "402b933c",
+                    "value": {
+                        "content": (
+                            "<p><span>"
+                            "This is more than forty words: "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word word word word word "
+                            "word word word word word word too-many."
+                            "</span></p>"
+                        )
+                    },
                 },
-            },
-        ]
-        set_streamfield_data(page, "answer_content", data)
+            ]
+        )
         self.assertTrue(page.get_meta_description().endswith("word word ..."))
 
         # First fallback is the short_answer
@@ -805,22 +759,6 @@ class AnswerPageTest(TestCase):
         # First choice is the search_description
         page.search_description = "Test search description"
         self.assertEqual(page.get_meta_description(), page.search_description)
-
-    def test_english_page_sibling_url(self):
-        self.assertEqual(self.page1.get_sibling_url(), self.page1_es.url)
-
-    def test_spanish_page_sibling_url(self):
-        self.assertEqual(self.page1_es.get_sibling_url(), self.page1.url)
-
-    def test_no_sibling_url_returned_for_redirected_page(self):
-        self.page1_es.redirect_to_page = self.page2
-        self.page1_es.save()
-        self.page1_es.save_revision(user=self.test_user).publish()
-        self.assertEqual(self.page1.get_sibling_url(), None)
-
-    def test_no_sibling_url_returned_for_draft_page(self):
-        self.page1.unpublish()
-        self.assertEqual(self.page1_es.get_sibling_url(), None)
 
     def test_routable_tag_page_base_returns_404(self):
         page = self.tag_results_page_en
@@ -881,20 +819,6 @@ class AnswerPageTest(TestCase):
         )
         self.assertEqual(response.status_code, 301)
 
-    def test_view_answer_redirected(self):
-        page = self.page1
-        page.redirect_to = self.page2.answer_base
-        page.save()
-        revision = page.save_revision()
-        revision.publish()
-        response_302 = self.client.get(
-            reverse(
-                "ask-english-answer", args=["mocking-answer-page", "en", 1234]
-            )
-        )
-        self.assertTrue(isinstance(response_302, HttpResponse))
-        self.assertEqual(response_302.status_code, 301)
-
     def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
         referrer_unicode = (
             "https://www.consumerfinance.gov/es/obtener-respuestas/"
@@ -945,9 +869,11 @@ class AnswerPageTest(TestCase):
             english_answer_page_response,
             "gobierno federal de los Estados Unidos",
         )
-        self.assertContains(english_answer_page_response, "https://usa.gov/")
+        self.assertContains(
+            english_answer_page_response, "https://www.usa.gov/"
+        )
         self.assertNotContains(
-            english_answer_page_response, "https://gobiernousa.gov/"
+            english_answer_page_response, "https://www.usa.gov/es/"
         )
 
     def test_spanish_header_and_footer(self):
@@ -971,22 +897,15 @@ class AnswerPageTest(TestCase):
             spanish_answer_page_response, "United States government"
         )
         self.assertContains(
-            spanish_answer_page_response, "https://gobiernousa.gov/"
+            spanish_answer_page_response, "https://www.usa.gov/es/"
         )
         self.assertNotContains(
-            spanish_answer_page_response, "https://usa.gov/"
+            spanish_answer_page_response, 'https://www.usa.gov/"'
         )
 
     def test_category_str(self):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
-
-    def test_portal_topic_featured_answers(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        self.assertIn(page, self.portal_topic.featured_answers("en"))
 
     def test_nextstep_str(self):
         next_step = self.next_step
@@ -997,77 +916,12 @@ class AnswerPageTest(TestCase):
             page1 = self.page1
             self.assertEqual(page1.status_string, "live + draft")
 
-    def test_status_string_redirected(self):
-        with translation.override("en"):
-            page1 = self.page1
-            page1.redirect_to_page = self.page2
-            page1.save()
-            page1.get_latest_revision().publish()
-            self.assertEqual(page1.status_string, "redirected")
-            page1.unpublish()
-            self.assertEqual(page1.status_string, "redirected but not live")
-
     def test_get_ask_breadcrumbs(self):
         from ask_cfpb.models import get_ask_breadcrumbs
 
         breadcrumbs = get_ask_breadcrumbs()
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]["title"], "Ask CFPB")
-
-    def test_landing_page_context_no_featured_answer(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = False
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
-
-    def test_landing_page_context(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "test topic"
-        )
-
-    def test_spanish_landing_page_context(self):
-        page = self.page1_es
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.spanish_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "prueba tema"
-        )
-
-    def test_landing_page_context_draft_portal_page(self):
-        page = self.page1
-        page.portal_topic.add(self.portal_topic)
-        page.featured = True
-        page.save_revision().publish()
-        self.portal_page.unpublish()
-        mock_site = mock.Mock()
-        mock_site.hostname = "localhost"
-        mock_request = HttpRequest()
-        landing_page = self.english_parent_page
-        test_context = landing_page.get_context(mock_request)
-        self.assertEqual(len(test_context["portal_cards"]), 0)
 
     def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)
@@ -1155,3 +1009,39 @@ class AnswerPageTest(TestCase):
 
         with self.assertRaises(ValidationError):
             dup_page.full_clean()
+
+
+class AnswerPageContextTests(TestCase):
+    def setUp(self):
+        self.request = HttpRequest()
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+
+    def make_portal_topic_and_page(self, name):
+        topic = PortalTopic.objects.create(heading=name, heading_es=name)
+        page = SublandingPage(title=name, slug=name, portal_topic=topic)
+        self.site_root.add_child(instance=page)
+        return topic, page
+
+    def test_portal_page_no_portal_topics(self):
+        page = AnswerPage()
+        context = page.get_context(self.request)
+        self.assertIsNone(context["portal_page"])
+
+    def test_portal_page_primary_topic(self):
+        topic, portal_page = self.make_portal_topic_and_page("test")
+        page = AnswerPage(primary_portal_topic=topic)
+        context = page.get_context(self.request)
+        self.assertEqual(context["portal_page"], portal_page)
+
+    def test_portal_page_no_primary_topic_single_portal_topic(self):
+        topic, portal_page = self.make_portal_topic_and_page("test")
+        page = AnswerPage(portal_topic=[topic])
+        context = page.get_context(self.request)
+        self.assertEqual(context["portal_page"], portal_page)
+
+    def test_portal_page_no_primary_topic_multiple_portal_topics(self):
+        topic1, portal_page1 = self.make_portal_topic_and_page("test1")
+        topic2, portal_page2 = self.make_portal_topic_and_page("test2")
+        page = AnswerPage(portal_topic=[topic1, topic2])
+        context = page.get_context(self.request)
+        self.assertIsNone(context["portal_page"])

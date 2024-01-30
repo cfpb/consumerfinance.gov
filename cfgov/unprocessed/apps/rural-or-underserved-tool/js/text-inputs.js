@@ -55,7 +55,6 @@ function add() {
 
 /**
  * Add an error class to an address input if it is empty.
- *
  * @param {object} evt - A blur event object.
  */
 function toggleError(evt) {

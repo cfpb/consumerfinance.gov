@@ -7,6 +7,7 @@ import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getStateValue } from '../dispatchers/get-model-values.js';
+import { CostsGroup } from '../CostsGroup.js';
 
 const HIDDEN_CLASS = 'u-hidden';
 const appView = {
@@ -22,7 +23,6 @@ const appView = {
 
   /**
    * Handle the click of the Include Parent Plus checkbox
-   *
    * @param {object} event - Click event object
    */
   _handleIncludeParentPlusBtn: (event) => {
@@ -35,7 +35,6 @@ const appView = {
 
   /**
    * Handle clicks of the restart button
-   *
    * @param {object} event - The event object
    */
   _handleRestartBtn: (event) => {
@@ -71,7 +70,7 @@ const appView = {
   },
 
   _handleCopyLinkBtnKeypress: (event) => {
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       appView._handleCopyLinkBtn(event);
     }
   },
@@ -111,19 +110,19 @@ const appView = {
    */
   init: () => {
     appView._actionPlanChoices = document.querySelectorAll(
-      '.action-plan_choices .m-form-field input.a-radio'
+      '.action-plan_choices .m-form-field input.a-radio',
     );
     appView._didThisHelpChoices = document.querySelectorAll(
-      '[data-impact] .m-form-field input.a-radio'
+      '[data-impact] .m-form-field input.a-radio',
     );
     appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
-      '[data-app-button="save-and-finish-later"]'
+      '[data-app-button="save-and-finish-later"]',
     );
     appView._saveLinks = document.querySelectorAll('[data-app-save-link]');
     appView._copyLinkBtn = document.querySelectorAll('.copy-your-link');
     appView._includeParentPlusBtn = document.querySelector(
-      '#plan__parentPlusFeeRepay'
+      '#plan__parentPlusFeeRepay',
     );
 
     _addButtonListeners();
@@ -145,42 +144,44 @@ function _addButtonListeners() {
   appView._restartBtn.addEventListener('click', appView._handleRestartBtn);
   appView._saveForLaterBtn.addEventListener(
     'click',
-    appView._handleSaveForLaterBtn
+    appView._handleSaveForLaterBtn,
   );
   appView._copyLinkBtn.forEach((elem) => {
     elem.addEventListener('click', appView._handleCopyLinkBtn);
-  });
-  appView._copyLinkBtn.forEach((elem) => {
     elem.addEventListener('keyup', appView._handleCopyLinkBtnKeypress);
   });
   appView._includeParentPlusBtn.addEventListener(
     'click',
-    appView._handleIncludeParentPlusBtn
+    appView._handleIncludeParentPlusBtn,
   );
 }
 
 /**
  * Handle the click of buttons on final page.
- *
  * @param {MouseEvent} event - Click event object.
  */
 function _handleDidThisHelpClick(event) {
   const parent = event.target.closest('.o-form_fieldset');
   sendAnalyticsEvent(
     'Impact question click: ' + parent.dataset.impact,
-    event.target.value
+    event.target.value,
   );
   updateState.byProperty(parent.dataset.impact, event.target.value);
 }
 
 /**
  * Event handling for action-plan choice clicks.
- *
  * @param {MouseEvent} event - Triggering event.
  */
 function _handleActionPlanClick(event) {
   const target = event.target;
   updateState.byProperty('actionPlan', target.value);
 }
+
+/**
+ * Initialize Costs Groups organism
+ */
+const collegeCosts = document.querySelector('.college-costs');
+CostsGroup.init(collegeCosts);
 
 export { appView };

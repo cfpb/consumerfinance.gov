@@ -6,7 +6,6 @@ const NO_OP = () => {
 
 /**
  * Apply a function to one or more elements.
- *
  * @param {HTMLElement|NodeList} elements - An HTML element or a list of them.
  * @param {Function} applyFn - A function to apply to the elements.
  * @returns {boolean} True if function was applied, false otherwise.
@@ -29,7 +28,6 @@ function applyAll(elements, applyFn) {
 
 /**
  * Bind a collection of events to a collection of elements.
- *
  * @param {Array|string} elements - Collection of elements.
  * @param {Array | object} events - Collection of events.
  * @param {Function} callback - Function to call when events fire.
@@ -52,7 +50,6 @@ function bindEvents(elements, events, callback = NO_OP) {
 
 /**
  * Creates and returns a div HTML element containing arbitrary HTML.
- *
  * @param {string} HTML - Arbitrary HTML to include in created div.
  * @returns {HTMLElement} First HTMLElement in the created div.
  */
@@ -83,7 +80,7 @@ function addClass(selector, className) {
   className = className.split(', ');
 
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => element.classList.add(...className))
+    fastDom.mutate(() => element.classList.add(...className)),
   );
 }
 
@@ -157,7 +154,6 @@ function getPreviousEls(element, filter = '*') {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} element - Something, possibly a list, element or window instance.
  * @returns {boolean} True if `element` meets the criteria, false otherwise.
  */
@@ -171,23 +167,21 @@ function _isEl(element) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function hide(selector) {
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => (element.style.display = 'none'))
+    fastDom.mutate(() => (element.style.display = 'none')),
   );
 }
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function show(selector) {
   applyAll(getEls(selector), (element) =>
-    fastDom.mutate(() => (element.style.display = 'block'))
+    fastDom.mutate(() => (element.style.display = 'block')),
   );
 }
 

@@ -1,19 +1,18 @@
-<h2 id="{{ value.heading | slugify_unique }}">{{ value.heading }}</h2>
+{% if value.heading -%}
+    <h2 id="{{ value.heading | slugify_unique }}">{{ value.heading }}</h2>
+{%- endif %}
 
-{% set rows = [] %}
-{% for row in value.rows %}
+{%- set rows = [] -%}
+{%- for row in value.rows %}
     {% do rows.append([row.title, row.body]) %}
-{% endfor %}
+{% endfor -%}
 
 {%- with value = {
-    'data': rows,
-    'has_data': true,
-    'first_col_is_header': true,
-    'fixed_col_widths': true,
-    'column_widths': ['u-w25pct', 'u-w75pct'],
-    'allow_unsafe': false,
-    'is_full_width': true,
-    'is_stacked': true
-} %}
+    'data': {
+        'columns': [{'heading': ''}, {'heading': ''}],
+        'rows': rows,
+    },
+    'options': ['first_column_header', 'is_full_width', 'stack_on_mobile']
+} -%}
     {% include 'v1/includes/organisms/tables/base.html' %}
-{% endwith %}
+{%- endwith %}

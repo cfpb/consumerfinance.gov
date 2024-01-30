@@ -4,7 +4,6 @@ const defaultActionCreators = () => {
   const actions = {
     /**
      * setGeo - Sets geographic location's info
-     *
      * @param {string} geoId - ID of location
      * @param {string} geoName - Name of location
      * @param {string} geoType - Type of location (state, metro, county)
@@ -21,7 +20,6 @@ const defaultActionCreators = () => {
 
     /**
      * clearGeo - Clears geographic location's info
-     *
      * @returns {object} Action to clear geo
      */
     clearGeo: () => ({
@@ -30,7 +28,6 @@ const defaultActionCreators = () => {
 
     /**
      * updateChart - Action dispatched to redraw the chart/map
-     *
      * @param {string} geoId - ID of location
      * @param {string} geoName - Name of location
      * @param {string} geoType - Type of location (state, metro, county)
@@ -54,7 +51,6 @@ const defaultActionCreators = () => {
 
     /**
      * updateNational - Action dispatched when the national comparison is toggled
-     *
      * @param {boolean} includeComparison - Include national comparison?
      * @returns {object} Action to include the national data in chart
      */
@@ -68,7 +64,6 @@ const defaultActionCreators = () => {
 
     /**
      * updateDate - Action dispatched when the month/year is changed
-     *
      * @param {string} date - Date in format 2010-01
      * @returns {object} Action to update the data viz's date
      */
@@ -79,7 +74,6 @@ const defaultActionCreators = () => {
 
     /**
      * requestCounties - Action indicating county names are being downloaded.
-     *
      * @returns {object} Action with county loading state
      */
     requestCounties: () => ({
@@ -89,7 +83,6 @@ const defaultActionCreators = () => {
 
     /**
      * requestMetros - Action indicating metro names are being downloaded.
-     *
      * @returns {object} Action with metro loading state
      */
     requestMetros: () => ({
@@ -99,7 +92,6 @@ const defaultActionCreators = () => {
 
     /**
      * requestNonMetros - Action indicating non metro names are being downloaded
-     *
      * @returns {object} Action with non metro loading state
      */
     requestNonMetros: () => ({
@@ -109,7 +101,6 @@ const defaultActionCreators = () => {
 
     /**
      * fetchNonMetros - Creates async action to fetch list of non-metros.
-     *
      * @param {string} nonMetroState - Two-letter U.S. state abbreviation.
      * @param {boolean} includeComparison - Include national comparison?
      * @returns {Function} Thunk called with non metros
@@ -131,16 +122,16 @@ const defaultActionCreators = () => {
           actions.setGeo(
             nonMetros[currStateIndex].fips,
             nonMetros[currStateIndex].name,
-            'non-metro'
-          )
+            'non-metro',
+          ),
         );
         dispatch(
           actions.updateChart(
             nonMetros[currStateIndex].fips,
             nonMetros[currStateIndex].name,
             'non-metro',
-            includeComparison
-          )
+            includeComparison,
+          ),
         );
         return nonMetros;
       });
@@ -148,7 +139,6 @@ const defaultActionCreators = () => {
 
     /**
      * setMetros - New metros to store in state.
-     *
      * @param {Array} metros - List of metros.
      * @returns {object} Action with new metros.
      */
@@ -159,7 +149,6 @@ const defaultActionCreators = () => {
 
     /**
      * setNonMetros - New non-metros to store in state.
-     *
      * @param {Array} nonMetros - List of non-metros.
      * @returns {object} Action with new non-metros.
      */
@@ -170,7 +159,6 @@ const defaultActionCreators = () => {
 
     /**
      * setCounties - New counties to store in state.
-     *
      * @param {Array} counties - List of counties.
      * @returns {object} Action with new counties.
      */
@@ -181,7 +169,6 @@ const defaultActionCreators = () => {
 
     /**
      * startLoading - Set global loading state for the app.
-     *
      * @returns {object} Action indicating the app is loading.
      */
     startLoading: () => ({
@@ -191,7 +178,6 @@ const defaultActionCreators = () => {
 
     /**
      * stopLoading - Set global loading state for the app.
-     *
      * @returns {object} Action indicating the app is not loading.
      */
     stopLoading: () => ({

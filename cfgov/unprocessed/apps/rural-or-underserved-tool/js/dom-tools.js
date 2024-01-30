@@ -120,7 +120,6 @@ function getNextEls(element, filterNode) {
 
 /**
  * Code copied from jQuery with minimal modifications.
- *
  * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
  * @returns {DocumentFragment} The created document fragment node.
  */
@@ -246,7 +245,6 @@ function getParentEls(element, filterNode) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} element - An object to check for element-ness.
  */
 function _isEl(element) {

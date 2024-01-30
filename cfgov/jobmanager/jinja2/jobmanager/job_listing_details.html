@@ -63,10 +63,9 @@
 
 <section class="block
                 block__flush-top
-                block__sub
-                vacancy-announcement_details">
+                block__sub">
     <h1>{{ value.title }}</h1>
-    <dl>
+    <dl class="vacancy-announcement_details">
         <dt>Division/Office:</dt>
         <dd>{{ value.division }}</dd>
         <dt>Closing date:</dt>
@@ -124,8 +123,7 @@
         <dt>Grade{{ value.grades | pluralize() }}:</dt>
         <dd>
             {{ value.grades | sort | join( ', ' ) }}
-            <a class="pay-grade-link"
-                href="/about-us/careers/pay-scales/">
+            <a href="/about-us/careers/pay-scales/">
                 See information on grades and base pay ranges</a>
         </dd>
         {% endif %}

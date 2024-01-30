@@ -21,7 +21,6 @@ const ESCAPE = 'Escape';
 
 /**
  * Autocomplete
- *
  * @class
  * @classdesc Initializes the molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -86,7 +85,6 @@ function Autocomplete(element, opts) {
 
   /**
    * Set up and create the autocomplete.
-   *
    * @returns {Autocomplete|undefined} An instance,
    *   or undefined if it was already initialized.
    */
@@ -106,7 +104,6 @@ function Autocomplete(element, opts) {
 
   /**
    * Creates and injects markup for autocomplete.
-   *
    * @returns {HTMLElement} <ul> element for autocomplete suggestions.
    */
   function _addContainer() {
@@ -154,7 +151,6 @@ function Autocomplete(element, opts) {
 
   /**
    * Event handler for input into the _input element.
-   *
    * @param {InputEvent} event - The input event object.
    */
   function _handleInput(event) {
@@ -198,9 +194,9 @@ function Autocomplete(element, opts) {
       const key = event.key;
       if (_isVisible) {
         if (key === UP) {
-          _prev(event);
+          _prev();
         } else if (key === DOWN) {
-          _next(event);
+          _next();
         } else if (key === ENTER && _selection > -1) {
           event.preventDefault();
           _settings.onSubmit(event, _suggestions[_selection]);
@@ -261,7 +257,6 @@ function Autocomplete(element, opts) {
   /**
    * Updates selected item in suggestions list and scrolls
    * it into view. Sets _input value to new selection.
-   *
    * @param {number} index - Index of new selection.
    */
   function _updateSelection(index) {

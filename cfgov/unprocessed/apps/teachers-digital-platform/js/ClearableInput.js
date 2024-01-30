@@ -1,14 +1,9 @@
-/**
- * Used instead of the existing /cfgov/unprocessed/js/modules/ClearableInput
- * in order to listen for the Clear button to be clicked and asynchronously
- * refresh the results on the page.
- */
-
 import { checkDom } from '@cfpb/cfpb-atomic-component';
+
+const BASE_CLASS = 'input-contains-label';
 
 /**
  * ClearableInput
- *
  * @class
  * @classdesc Initializes a new ClearableInput molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -16,8 +11,6 @@ import { checkDom } from '@cfpb/cfpb-atomic-component';
  * @returns {object} A ClearableInput instance.
  */
 function ClearableInput(element) {
-  const BASE_CLASS = 'input-contains-label';
-
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector('input');
   const _clearBtnDom = _dom.querySelector('.' + BASE_CLASS + '_after__clear');
@@ -36,15 +29,13 @@ function ClearableInput(element) {
 
   /**
    * Event handler for when the clear input label was clicked.
-   *
    * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _clearClicked(event) {
     _inputDom.value = _setClearBtnState('');
     _inputDom.focus();
     // Create custom clear event so we can automatically reset results after clear.
-    const customEvent = document.createEvent('Event');
-    customEvent.initEvent('clear', true, true);
+    const customEvent = new Event('clear', { bubbles: true, cancelable: true });
     _clearBtnDom.dispatchEvent(customEvent);
     // Prevent event bubbling up to the input, which would blur otherwise.
     event.preventDefault();
@@ -93,5 +84,4 @@ function ClearableInput(element) {
   return this;
 }
 
-// Expose public methods.
-export default ClearableInput;
+export { ClearableInput };

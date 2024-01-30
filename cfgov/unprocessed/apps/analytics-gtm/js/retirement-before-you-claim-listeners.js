@@ -33,7 +33,6 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
 
   /**
    * Handle submission of the form.
-   *
    * @param {Event} evt - Form submit event object.
    */
   function formSubmitted(evt) {
@@ -144,7 +143,7 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
     }
 
     const benefitsRadios = document.querySelectorAll(
-      'input[name="benefits-display"]'
+      'input[name="benefits-display"]',
     );
     for (let i = 0, len = benefitsRadios.length; i < len; i++) {
       benefitsRadios[i].addEventListener('click', function (event) {

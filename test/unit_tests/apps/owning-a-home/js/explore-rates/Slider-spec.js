@@ -62,7 +62,7 @@ describe('explore-rates/Slider', () => {
         'value of the range slider label',
       () => {
         expect(slider.valMax()).toBe(79);
-      }
+      },
     );
 
     it(
@@ -78,7 +78,7 @@ describe('explore-rates/Slider', () => {
           value: 90,
         });
         expect(slider.valMax()).toBe(100);
-      }
+      },
     );
   });
 
@@ -108,7 +108,7 @@ describe('explore-rates/Slider', () => {
         slider.setState();
       }
       expect(incorrectState).toThrowError(
-        'State set in range slider is not supported!'
+        'State set in range slider is not supported!',
       );
     });
   });

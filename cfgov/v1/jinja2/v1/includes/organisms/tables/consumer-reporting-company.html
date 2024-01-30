@@ -1,17 +1,15 @@
 {%- with value = {
-    'data': [
-        ['Website', 'Phone number', 'Mailing address'],
-        [
-            value.website | richtext,
-            value.phone | richtext,
-            value.mailing_address | richtext
-        ]
-    ],
-    'has_data': true,
-    'first_row_is_table_header': true,
-    'allow_unsafe': false,
-    'is_full_width': true,
-    'is_stacked': true
+    'data': {
+        'columns': [
+            {'heading': 'Website'},
+            {'heading': 'Phone number'},
+            {'heading': 'Mailing address'}
+        ],
+        'rows': [
+            [value.website, value.phone, value.mailing_address]
+        ],
+    },
+    'options': ['is_full_width', 'stack_on_mobile']
 } %}
     {% include 'v1/includes/organisms/tables/base.html' %}
 {% endwith %}

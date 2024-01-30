@@ -8,26 +8,23 @@ const HTML_SNIPPET = `
             o-expandable__padded
             o-expandable__background
             o-expandable__border">
-
-    <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" type="button">
+    <button class="o-expandable_header" type="button">
         <span class="h4 o-expandable_label">
             Filter posts
         </span>
-        <span class="o-expandable_link">
-            <span class="o-expandable_cue-open" aria-label="Show">
+        <span class="o-expandable_cues">
+            <span class="o-expandable_cue-open" role="img" aria-label="Show">
                 Show
                 filters
             </span>
-            <span class="o-expandable_cue-close" aria-label="Hide">
+            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                 Hide
                 filters
             </span>
         </span>
     </button>
 
-    <div class="o-expandable_content
-                o-expandable_content__transition
-                o-expandable_content__collapsed">
+    <div class="o-expandable_content">
 
     <form method="get" action=".">
 
@@ -41,11 +38,11 @@ const HTML_SNIPPET = `
                         Item name
                     </label>
                     <input type="text"
-                           name="title"
-                           maxlength="250"
-                           placeholder="Search for a specific word in item title"
-                           class="a-text-input a-text-input__full"
-                           id="title">
+                            name="title"
+                            maxlength="250"
+                            placeholder="Search for a specific word in item title"
+                            class="a-text-input a-text-input__full"
+                            id="title">
                 </div>
             </div>
         </div>
@@ -111,9 +108,9 @@ const HTML_SNIPPET = `
                                     Topic
                                 </label>
                                 <select multiple>
-                                  <option>Financial education</option>
-                                  <option>Mortgages</option>
-                                  <option>Student loans</option>
+                                    <option>Financial education</option>
+                                    <option>Mortgages</option>
+                                    <option>Student loans</option>
                                 </select>
                             </div>
                         </div>
@@ -171,8 +168,7 @@ const HTML_SNIPPET = `
 <div class="m-notification">
     <div class="m-notification_content">
         <div class="h4 m-notification_message"></div></div>
-</div>
-
+    </div>
 
 </div>
 `;
@@ -185,7 +181,7 @@ describe('FilterableListControls', () => {
     document.body.innerHTML = HTML_SNIPPET;
     filterableListControlsDom = document.querySelector(`.${BASE_CLASS}`);
     filterableListControls = new FilterableListControls(
-      filterableListControlsDom
+      filterableListControlsDom,
     );
   });
 
@@ -194,28 +190,8 @@ describe('FilterableListControls', () => {
       expect(filterableListControlsDom.getAttribute('data-js-hook')).toBeNull();
       filterableListControls.init();
       expect(
-        filterableListControlsDom.getAttribute('data-js-hook')
+        filterableListControlsDom.getAttribute('data-js-hook'),
       ).toStrictEqual('state_atomic_init');
-    });
-  });
-
-  describe('error handling', () => {
-    it('should highlight text input fields with errors', (done) => {
-      const FIELD_ERROR_CLASS = 'a-text-input__error';
-      const form = document.querySelector('form');
-      const field = document.querySelector('#from_date');
-
-      filterableListControls.init();
-
-      expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeFalsy();
-
-      filterableListControls.addEventListener('fieldinvalid', () => {
-        expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeTruthy();
-        done();
-      });
-
-      field.value = 'text that is not a valid date';
-      form.dispatchEvent(new Event('submit'));
     });
   });
 });

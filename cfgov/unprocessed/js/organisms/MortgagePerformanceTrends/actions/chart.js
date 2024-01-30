@@ -5,7 +5,6 @@ const chartActionCreators = defaultActionCreators();
 
 /**
  * fetchMetroStates - Creates async action to fetch list of valid metro states.
- *
  * @param {string} metroState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with metro states.
  */
@@ -47,7 +46,6 @@ chartActionCreators.fetchMetroStates = (metroState) => (dispatch) =>
 /**
  * fetchNonMetroStates -
  * Creates async action to fetch list of valid non-metro states.
- *
  * @param {string} nonMetroState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with metro states.
  */
@@ -75,7 +73,6 @@ chartActionCreators.fetchNonMetroStates = (nonMetroState) => (dispatch) =>
 /**
  * fetchCountyStates -
  * Creates async action to fetch list of valid counties in states.
- *
  * @param {string} countyState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with county states.
  */
@@ -86,7 +83,7 @@ chartActionCreators.fetchCountyStates = (countyState) => (dispatch) =>
     Object.keys(states).forEach((state) => {
       const isValid = states[state].counties.reduce(
         (prev, curr) => prev || curr.valid || false,
-        false
+        false,
       );
       if (isValid) {
         reuseState = reuseState || countyState === state;
@@ -113,7 +110,6 @@ chartActionCreators.fetchCountyStates = (countyState) => (dispatch) =>
 
 /**
  * fetchStates - Creates async action to fetch list of valid states.
- *
  * @param {string} selectedState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with valid states.
@@ -141,23 +137,22 @@ chartActionCreators.fetchStates =
         chartActionCreators.setGeo(
           selectedState.fips,
           selectedState.name,
-          'state'
-        )
+          'state',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           selectedState.fips,
           selectedState.name,
           'state',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return states;
     });
 
 /**
  * setStates - New U.S. states.
- *
  * @param {Array} states - List of U.S. states.
  * @returns {object} Action with new U.S. states.
  */
@@ -168,7 +163,6 @@ chartActionCreators.setStates = (states) => ({
 
 /**
  * fetchMetros - Creates async action to fetch list of metros
- *
  * @param {string} metroState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with new metros
@@ -179,7 +173,7 @@ chartActionCreators.fetchMetros =
     return utils.getMetroData((data) => {
       // Alphabetical order
       let newMetros = data[metroState].metros.sort((a, b) =>
-        a.name < b.name ? -1 : 1
+        a.name < b.name ? -1 : 1,
       );
       newMetros = newMetros.filter((metro) => metro.valid);
       if (!newMetros.length) {
@@ -195,16 +189,16 @@ chartActionCreators.fetchMetros =
         chartActionCreators.setGeo(
           newMetros[0].fips,
           newMetros[0].name,
-          'metro'
-        )
+          'metro',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           newMetros[0].fips,
           newMetros[0].name,
           'metro',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return newMetros;
     });
@@ -212,7 +206,6 @@ chartActionCreators.fetchMetros =
 
 /**
  * fetchCounties - Creates async action to fetch list of counties
- *
  * @param {string} countyState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with new metros
@@ -223,7 +216,7 @@ chartActionCreators.fetchCounties =
     return utils.getCountyData((data) => {
       // Alphabetical order
       let newCounties = data[countyState].counties.sort((a, b) =>
-        a.name < b.name ? -1 : 1
+        a.name < b.name ? -1 : 1,
       );
       newCounties = newCounties.filter((county) => county.valid);
       dispatch(chartActionCreators.setCounties(newCounties));
@@ -231,16 +224,16 @@ chartActionCreators.fetchCounties =
         chartActionCreators.setGeo(
           newCounties[0].fips,
           newCounties[0].name,
-          'county'
-        )
+          'county',
+        ),
       );
       dispatch(
         chartActionCreators.updateChart(
           newCounties[0].fips,
           newCounties[0].name,
           'county',
-          includeComparison
-        )
+          includeComparison,
+        ),
       );
       return newCounties;
     });

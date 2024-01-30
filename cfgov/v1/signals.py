@@ -12,10 +12,7 @@ from teachers_digital_platform.models.activity_index_page import (
 )
 from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.caching import AkamaiBackend
-from v1.models.filterable_list_mixins import (
-    CategoryFilterableMixin,
-    FilterableListMixin,
-)
+from v1.models.filterable_page import AbstractFilterablePage
 from v1.util.ref import get_category_children
 
 
@@ -41,25 +38,25 @@ def invalidate_filterable_list_caches(sender, **kwargs):
 
     # Determine which filterable list page this page might belong
     # First, check to see if it has any ancestors that are
-    # FilterableListMixins.
+    # AbstractFilterablePages.
     filterable_list_pages = (
-        page.get_ancestors().type(FilterableListMixin).specific().all()
+        page.get_ancestors().type(AbstractFilterablePage).specific().all()
     )
 
-    # Next, see if it belongs to any CategoryFilterableMixin filterable lists
+    # Next, see if it belongs to any AbstractFilterablePage pages configured
+    # to include any of this page's categories.
     page_categories = page.categories.values_list("name", flat=True)
     category_filterable_list_pages = (
-        category_filterable_list_page
-        for category_filterable_list_page in CFGOVPage.objects.type(
-            CategoryFilterableMixin
+        filterable_page
+        for filterable_page in CFGOVPage.objects.type(
+            AbstractFilterablePage
         ).specific()
-        if any(
+        if filterable_page.filterable_categories
+        and any(
             category
             for category in page_categories
             if category
-            in get_category_children(
-                category_filterable_list_page.filterable_categories
-            )
+            in get_category_children(filterable_page.filterable_categories)
         )
     )
 
@@ -76,7 +73,6 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         cache.delete(f"{cache_key_prefix}-all_filterable_results")
         cache.delete(f"{cache_key_prefix}-page_ids")
         cache.delete(f"{cache_key_prefix}-topics")
-        cache.delete(f"{cache_key_prefix}-authors")
 
         # Add the filterable list's slug to the list of cache tags to purge
         cache_tags_to_purge.append(filterable_list_page.slug)

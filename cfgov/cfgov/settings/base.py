@@ -52,8 +52,8 @@ INSTALLED_APPS = (
     "wagtail.contrib.forms",
     "wagtail.sites",
     "wagtail.contrib.routable_page",
-    "wagtail.contrib.modeladmin",
-    "wagtail.contrib.table_block",
+    "wagtail.contrib.typed_table_block",
+    "wagtail.contrib.settings",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -110,6 +110,8 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_modeladmin",
+    "wagtail_draftail_anchors",
 )
 
 MIDDLEWARE = (
@@ -152,12 +154,9 @@ wagtail_extensions = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
-            "builtins": [],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -282,14 +281,6 @@ STATICFILES_DIRS += [
 
 ALLOWED_HOSTS = ["*"]
 
-EXTERNAL_URL_ALLOWLIST = (
-    r"^https:\/\/facebook\.com\/cfpb$",
-    r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: E501
-    r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
-    r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
-)
-
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
@@ -302,10 +293,7 @@ WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
-# This is needed to maintain autocomplete search behavior in the Wagtail admin.
-# See https://github.com/wagtail/wagtail/issues/7720.
-# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
-# https://github.com/wagtail/wagtail/pull/9900.
+# This is used for easy autocomplete search behavior in the Wagtail admin.
 WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.database.fallback",
@@ -372,10 +360,11 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    if os.environ.get("AWS_S3_CUSTOM_DOMAIN"):
-        AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+    MEDIA_URL = os.path.join(
+        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
+    )
 
 
 # GovDelivery
@@ -394,6 +383,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
+WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
@@ -453,6 +443,7 @@ AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
 )
 AXES_ENABLED = True
+AXES_VERBOSE = False
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
 AXES_ONLY_USER_FAILURES = True
@@ -463,14 +454,7 @@ LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 # override this based on the SAML_AUTH environment variable.
 SAML_AUTH = False
 
-# When we generate an full HTML version of the regulation, we want to
-# write it out somewhere. This is where.
-OFFLINE_OUTPUT_DIR = ""
-
 DATE_FORMAT = "n/j/Y"
-
-GOOGLE_ANALYTICS_ID = ""
-GOOGLE_ANALYTICS_SITE = ""
 
 # CDNs
 WAGTAILFRONTENDCACHE = {}
@@ -516,6 +500,7 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
@@ -627,9 +612,6 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     "AB_TESTING": [],
-    # Email popups.
-    "EMAIL_POPUP_OAH": [("boolean", True)],
-    "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
@@ -640,26 +622,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-}
-
-# We want the ability to serve the latest drafts of some pages on beta
-# This value is read by v1.wagtail_hooks
-SERVE_LATEST_DRAFT_PAGES = []
-
-# To expose a previously-published page's latest draft version on beta,
-# add its primary key to the list below
-if DEPLOY_ENVIRONMENT == "beta":
-    SERVE_LATEST_DRAFT_PAGES = []
-
-# Email popup configuration. See v1.templatetags.email_popup.
-EMAIL_POPUP_URLS = {
-    "debt": [
-        "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
-        "/consumer-tools/debt-collection/",
-    ],
-    "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [
@@ -693,9 +655,6 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
-    # External site interstitial (if we're here, the links have already been
-    # parsed)
-    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
@@ -708,6 +667,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         "WIDGET": "wagtail.admin.rich_text.DraftailRichTextArea",
         "OPTIONS": {
             "features": [
+                "anchor-identifier",
                 "h2",
                 "h3",
                 "h4",
@@ -749,7 +709,7 @@ SECURE_REFERRER_POLICY = "same-origin"  # 1
 SESSION_COOKIE_SAMESITE = "Strict"  # 3
 X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
 
-if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
+if DEPLOY_ENVIRONMENT:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = True  # 22
     CSRF_COOKIE_SECURE = True
@@ -783,12 +743,10 @@ except (TypeError, ValueError):
         "Expected a JSON array of allowed origins."
     )
 
-# A list of domain names that are allowed to be linked to without adding the
-# interstitial page.
-ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
-
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = os.getenv(
     "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
 )
+
+DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"

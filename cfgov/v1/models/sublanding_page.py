@@ -38,10 +38,7 @@ class SublandingPage(CFGOVPage):
             ("snippet_list", organisms.ResourceList()),
             ("post_preview_snapshot", organisms.PostPreviewSnapshot()),
             ("contact", organisms.MainContactInfo()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
+            ("table", organisms.Table()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
         ],
@@ -51,7 +48,6 @@ class SublandingPage(CFGOVPage):
     sidebar_breakout = StreamField(
         [
             ("slug", blocks.CharBlock(icon="title")),
-            ("heading", blocks.CharBlock(icon="title")),
             ("paragraph", blocks.RichTextBlock(icon="edit")),
             (
                 "breakout_image",
@@ -87,7 +83,6 @@ class SublandingPage(CFGOVPage):
                     icon="image",
                 ),
             ),
-            ("related_posts", organisms.RelatedPosts()),
             ("job_listing_list", JobListingList()),
         ],
         blank=True,
@@ -137,11 +132,5 @@ class SublandingPage(CFGOVPage):
 
     @property
     def has_hero(self):
-        """Returns boolean indicating whether the page includes a hero module.
-
-        TODO: On Wagtail 4.0, this functionality can be removed in favor of
-        using the built-in page.header.first_block_by_name("hero"):
-
-        https://docs.wagtail.org/en/stable/topics/streamfield.html#streamfield-retrieving-blocks-by-name
-        """
-        return bool(len(self.header))
+        """Returns boolean indicating whether the page includes a hero."""
+        return bool(self.header.first_block_by_name("hero"))

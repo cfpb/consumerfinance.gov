@@ -18,7 +18,7 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import jumbo from 'jumbo-mortgage';
+import jumbo from '@cfpb/jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
@@ -56,7 +56,7 @@ let rateCompare2Dom;
 function renderLoanAmountResult() {
   const loanAmount = calcLoanAmount(
     params.getVal('house-price'),
-    params.getVal('down-payment')
+    params.getVal('down-payment'),
   );
   params.setVal('loan-amount', loanAmount);
   renderLoanAmount(loanAmountResultDom, loanAmount);
@@ -194,7 +194,7 @@ function updateView() {
           accessibleDataTableHeadDom,
           accessibleDataTableBodyDom,
           data.labels,
-          data.vals
+          data.vals,
         );
         chart.render(data);
 
@@ -211,7 +211,6 @@ function updateView() {
 
 /**
  * Updates the sentence above the chart.
- *
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage(totalVals) {
@@ -255,7 +254,6 @@ function updateLanguage(totalVals) {
 
 /**
  * Render the median percentage.
- *
  * @param {Array} totalVals - List of interest rates.
  */
 function renderMedian(totalVals) {
@@ -445,11 +443,11 @@ function processCounty() {
     // Add links to loan messages.
     loan.msg = loan.msg.replace(
       'jumbo (non-conforming)',
-      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>'
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>',
     );
     loan.msg = loan.msg.replace(
       'conforming jumbo',
-      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>'
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>',
     );
     $('#hb-warning').removeClass('u-hidden').find('span').html(loan.msg);
   } else {
@@ -478,7 +476,6 @@ function processCounty() {
 /**
  * Store the loan amount and down payment, process the county data,
  * check if it's a jumbo loan.
- *
  * @param {HTMLElement} element - TODO: Add description.
  */
 function processLoanAmount(element) {
@@ -555,7 +552,6 @@ function hideSummary() {
 
 /**
  * Update the values in the dropdowns in the comparison section
- *
  * @param {object} data - Data object created by the updateView method.
  */
 function updateComparisons(data) {
@@ -592,7 +588,7 @@ function renderInterestAmounts() {
     const length =
       parseInt(
         $(item).parents('.rc-comparison-section').find('.loan-years').text(),
-        10
+        10,
       ) * 12;
     const amortizedVal = amortize({
       amount: params.getVal('loan-amount'),
@@ -625,7 +621,6 @@ function renderInterestAmounts() {
 
 /**
  * Calculate and display the plain language loan comparison summary.
- *
  * @param {Array} intVals - array with two objects containing rate, interest accrued, and term
  * @param {number} term - The term used in the HTML element's ID.
  */
@@ -753,7 +748,6 @@ function onSlideEndHandler() {
 
 /**
  * Initialize the rate checker app.
- *
  * @returns {undefined}
  */
 function init() {
@@ -811,7 +805,7 @@ function init() {
       params.location = state;
       setSelection('location');
     }
-  } );
+  });
 */
   updateView();
   return true;
@@ -877,12 +871,12 @@ function registerEvents() {
         // dropdown('county').hide();
       }
       processLoanAmount(this);
-    }
+    },
   );
 
   // Prevent non-numeric characters from being entered.
   const calcLoanAmountRecalcDoms = document.querySelectorAll(
-    '.calc-loan-amt .recalc'
+    '.calc-loan-amt .recalc',
   );
   calcLoanAmountRecalcDoms.forEach((calcLoanAmountRecalc) => {
     calcLoanAmountRecalc.addEventListener('keydown', (event) => {

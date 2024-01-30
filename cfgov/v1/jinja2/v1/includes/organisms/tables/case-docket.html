@@ -1,0 +1,44 @@
+<h2 class="h5">Case docket</h2>
+
+<table class="o-table u-w100pct">
+    <thead>
+        <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Date filed</th>
+            <th scope="col">Short description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in value.events -%}
+        <tr>
+            <td>
+                {% if event.document -%}
+                    <a href="{{ event.document.url }}">
+                {%- endif -%}
+                {{ event.index }}
+                {%- if event.document -%}
+                    </a>
+                {%- endif %}
+            </td>
+            <td>
+                {{ event.date_filed | date( "%m/%d/%Y" ) }}
+            </td>
+            <td>
+                <p>{{ event.description }} (Filed by <i>{{ event.filed_by }}</i>)</p>
+                {% for attachment in event.attachments %}
+                <p>
+                    Attachment {{ attachment.id }}:
+                    {% if attachment.document -%}
+                        <a href="{{ attachment.document.url }}">
+                    {%- endif -%}
+                    {{ attachment.title }}
+                    {%- if attachment.document -%}
+                        </a>
+                    {%- endif %}
+                </p>
+                {% endfor %}
+            </td>
+        </tr>
+        {%- endfor %}
+    </tbody>
+</table>

@@ -114,33 +114,6 @@ info_unit_group = {
     },
 }
 
-snippet_list_show_thumbnails_false = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "show_thumbnails": False,
-    },
-}
-
-snippet_list_show_thumbnails_true = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "show_thumbnails": True,
-    },
-}
-
-snippet_list_actions_column_width_40 = {
-    "type": "snippet_list",
-    "value": {
-        "heading": "Test Resource List",
-        "snippet_type": "v1.models.resources.Resource",
-        "actions_column_width": "40",
-    },
-}
-
 table_block = {
     "type": "table_block",
     "value": {
@@ -254,17 +227,5 @@ chart_block_credit_tightness = {
         "date_published": "2001-01-01",
         "description": "Indexed number of people who applied for credit cards but did not open a new account.",  # noqa
         "note": "Data from the last four months are not final.",
-    },
-}
-
-
-filter_controls = {
-    "type": "filter_controls",
-    "value": {
-        "topic_filtering": "sort_by_frequency",
-        "categories": {
-            "page_type": "",
-        },
-        "filter_children": True,
     },
 }

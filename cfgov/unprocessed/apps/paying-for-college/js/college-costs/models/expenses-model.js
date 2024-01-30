@@ -58,7 +58,6 @@ const expensesModel = {
 
   /**
    * setValue - Used to set a value
-   *
    * @param {string} name - Property name
    * @param {number} value - New value of property
    * @param {boolean} updateView - (defaults true) should view be updated?
@@ -74,7 +73,6 @@ const expensesModel = {
   /**
    * Turns a salary number into a salary range for use in retrieving
    * the correct BLS expense values.
-   *
    * @param {number} salary - Number value of salary
    * @returns {string} salaryRange - String representing salary range
    */
@@ -106,7 +104,6 @@ const expensesModel = {
 
   /**
    * Change values based on region, using data stored in rawData property
-   *
    * @param {string} region - Two letter code for region
    */
   setValuesByRegion(region) {
@@ -130,7 +127,7 @@ const expensesModel = {
         const data = expensesModel.rawData[key];
         if (data) {
           let value = convertStringToNumber(
-            expensesModel.rawData[key][region][salaryRange]
+            expensesModel.rawData[key][region][salaryRange],
           );
           value = Math.round(value / 12);
           expensesModel.values[propertyTranslator[key]] = value;
@@ -144,7 +141,6 @@ const expensesModel = {
 
   /**
    * Initialize the model, fetch values from API
-   *
    * @returns {Promise} The promised init response
    */
   init: function () {
@@ -159,7 +155,7 @@ const expensesModel = {
           reject(error);
           console.log(
             'An error occurred when accessing the expenses API',
-            error
+            error,
           );
         });
     });

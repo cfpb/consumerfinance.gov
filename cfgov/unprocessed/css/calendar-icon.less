@@ -1,29 +1,3 @@
-/* ==========================================================================
-   consumerfinance.gov
-   calendar-icon
-   ========================================================================== */
-
-/* topdoc
-  name: Calendar Icon
-  family: cfgov-calendar-icon
-  notes:
-    - "A square-ish calendar icon with a three-letter month name and date."
-  patterns:
-    - name: Calendar Icon
-      markup: |
-        <time class="calendar-icon" data-month="Jan" data-day="21" datetime="2015-01-21">
-          <span class="u-visually-hidden">Jan 21, 2015</span>
-        </time>
-        denotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          time.calendar-icon
-            span.u-visually-hidden
-  tags:
-    - cfgov-calendar-icon
-*/
-
 /*  Mixin to generate a calendar icon.
     @month [String] The month (3-letter abbreviation, typically).
     @date [Number] The day in the month.
@@ -44,13 +18,13 @@
   line-height: 1;
   text-align: center;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     // Display & Box Model.
     display: block;
   }
 
-  &:before {
+  &::before {
     // Display & Box Model.
     padding-bottom: 0.15em;
 
@@ -63,7 +37,7 @@
     content: @month;
   }
 
-  &:after {
+  &::after {
     // Display & Box Model.
     padding: 0.15em 0 0;
     border-radius: 0 0 0.16em 0.16em;
@@ -83,8 +57,3 @@
 .calendar-icon {
   .cf-calendar-icon( attr(data-month), attr(data-day), @gray-40, @white, 1 );
 }
-
-/* topdoc
-  name: EOF
-  eof: true
-*/

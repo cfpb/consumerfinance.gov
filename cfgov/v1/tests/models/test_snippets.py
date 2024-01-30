@@ -2,15 +2,9 @@
 from django.test import TestCase
 
 from wagtail.models import Site
-from wagtail.test.testapp.models import SimplePage
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models.snippets import (
-    Contact,
-    EmailSignUp,
-    RelatedResource,
-    ReusableText,
-)
+from v1.models import Contact, EmailSignUp, ReusableText, SublandingPage
 
 
 class TestUnicodeCompatibility(TestCase):
@@ -18,23 +12,6 @@ class TestUnicodeCompatibility(TestCase):
         contact = Contact(heading="Unicod\xeb")
         self.assertEqual(str(contact), "Unicod\xeb")
         self.assertIsInstance(str(contact), str)
-
-
-class TestTranslations(TestCase):
-    def test_related_resource_translations(self):
-        test_resource = RelatedResource(
-            title="English title",
-            title_es="Spanish title",
-            text="English text.",
-            text_es="Spanish text.",
-        )
-        self.assertEqual(str(test_resource), test_resource.title)
-        self.assertEqual(test_resource.trans_title(), test_resource.title)
-        self.assertEqual(test_resource.trans_text(), test_resource.text)
-        self.assertEqual(
-            test_resource.trans_title("es"), test_resource.title_es
-        )
-        self.assertEqual(test_resource.trans_text("es"), test_resource.text_es)
 
 
 class TestModelStrings(TestCase):
@@ -63,7 +40,7 @@ class TestModelStrings(TestCase):
 
 class TestReusableTextRendering(TestCase):
     def test_links_get_expanded(self):
-        page = SimplePage(title="foo", slug="foo", content="content")
+        page = SublandingPage(title="foo", slug="foo")
         default_site = Site.objects.get(is_default_site=True)
         default_site.root_page.add_child(instance=page)
 

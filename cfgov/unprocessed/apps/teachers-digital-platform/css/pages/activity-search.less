@@ -11,10 +11,11 @@
   .m-hero_image-wrapper {
     display: none;
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       display: inline-block;
       margin-top: 0;
-    } );
+    });
   }
 
   .m-pagination {
@@ -43,30 +44,31 @@
     background-color: @gray-5;
     margin-bottom: unit(30px / @base-font-size-px, em);
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       margin-bottom: 0;
-      padding-top: unit( 30px / @base-font-size-px, em )
-    } );
+      padding-top: unit( 30px / @base-font-size-px, em );
+    });
 
-    .o-expandable {
-      border-bottom: 1px solid @gray-40;
-      margin-bottom: unit(15px / @base-font-size-px, em);
-    }
-
-    .o-expandable_target,
+    .o-expandable_header,
     .o-expandable_content {
       border: 0;
       padding: 0;
       overflow: hidden;
 
-      &:before,
-      &:after {
+      &::before,
+      &::after {
         border: 0;
       }
 
-      &:before {
+      &::before {
         padding: 0;
       }
+    }
+
+    .o-expandable_header {
+      padding: unit(13px / @base-font-size-px, em) 0;
+      margin-bottom: 2px;
     }
 
     .m-list__unstyled .m-list__unstyled {
@@ -75,13 +77,13 @@
 
     .filter-section {
       border-top: 1px solid @gray-40;
-      padding-top: unit(15px / @base-font-size-px, em);
     }
 
-    .filter-section__first {
-      .respond-to-max( @bp-sm-max, {
+    .filter-section:first-of-type {
+      // Tablet and below.
+      .respond-to-max(@bp-sm-max, {
         border-top: 0;
-      } );
+      });
     }
 
     .o-form_group {
@@ -93,23 +95,20 @@
     }
   }
 
-  .filters__hidden {
-    display: none;
-  }
-
   .content_main {
     border: 0;
 
-    &:after {
+    &::after {
       display: none;
     }
   }
 
   .input-contains-label {
     &_after:not(.u-hidden) {
-      .respond-to-min( @bp-sm-min, {
+      // Tablet and above.
+      .respond-to-min(@bp-sm-min, {
         display: initial;
-      } );
+      });
     }
   }
 
@@ -123,11 +122,12 @@
     border: 1px solid @gray-40;
     background-color: @green-20;
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       border-left: 0;
       padding-left: unit( 30px / @base-font-size-px, em );
       padding-right: unit( 30px / @base-font-size-px, em );
-    } );
+    });
   }
 
   .results_count__empty {
@@ -139,11 +139,12 @@
     display: flex;
     padding-top: unit(15px / @base-font-size-px, em);
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       border-left: 0;
       padding-left: unit( 30px / @base-font-size-px, em );
       padding-right: unit( 30px / @base-font-size-px, em );
-    } );
+    });
 
     .a-tag {
       background-color: @green-20;
@@ -159,9 +160,10 @@
   .results_list {
     padding: unit(15px / @base-font-size-px, em) 0;
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding-left: unit( 30px / @base-font-size-px, em );
-    } );
+    });
 
     li {
       max-width: 100%;
@@ -169,21 +171,23 @@
   }
 
   .results_footer {
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding-left: unit( 30px / @base-font-size-px, em );
-    } );
+    });
   }
 
   .results__full {
     margin-right: 0;
     width: 100%;
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       .results_list,
       .results_footer {
         padding-left: 0;
       }
-    } );
+    });
   }
 
   .layout-row > * {
@@ -197,9 +201,10 @@
     padding: unit(30px / @base-font-size-px, em)
       unit(15px / @base-font-size-px, em);
 
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding: unit( 30px / @base-font-size-px, em );
-    } );
+    });
 
     h3,
     h4,
@@ -227,7 +232,8 @@
       margin-bottom: unit(30px / @base-font-size-px, em);
     }
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       @supports ( display: flex ) {
         display: flex;
       }
@@ -251,7 +257,7 @@
           float: none;
         }
       }
-    } );
+    });
   }
 
   .activity_meta-key {

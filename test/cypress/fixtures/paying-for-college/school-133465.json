@@ -1,0 +1,106 @@
+{
+  "books": "1500",
+  "city": "Royal Palm Beach",
+  "cohortRankByControl": {
+    "grad_rate": {
+      "cohort_count": 1100,
+      "percentile_rank": 15
+    },
+    "repay_3yr": {
+      "cohort_count": 1285,
+      "percentile_rank": 17
+    },
+    "median_total_debt": {
+      "cohort_count": 1283,
+      "percentile_rank": 30
+    }
+  },
+  "cohortRankByHighestDegree": {
+    "grad_rate": {
+      "cohort_count": 1621,
+      "percentile_rank": 12
+    },
+    "repay_3yr": {
+      "cohort_count": 1850,
+      "percentile_rank": 13
+    },
+    "median_total_debt": {
+      "cohort_count": 1851,
+      "percentile_rank": 29
+    }
+  },
+  "cohortRankByState": {
+    "grad_rate": {
+      "cohort_count": 66,
+      "percentile_rank": 20
+    },
+    "repay_3yr": {
+      "cohort_count": 72,
+      "percentile_rank": 21
+    },
+    "median_total_debt": {
+      "cohort_count": 74,
+      "percentile_rank": 38
+    }
+  },
+  "control": "For-profit",
+  "defaultRate": "0.145",
+  "enrollment": 554,
+  "gradRate": "0.13",
+  "highestDegree": "Graduate degree",
+  "medianAnnualPay": 33400,
+  "medianAnnualPay6Yr": 26900,
+  "medianMonthlyDebt": "260.33",
+  "medianTotalDebt": "12667.0",
+  "netPriceAvg": 21471,
+  "netPriceAvgSlices": {
+    "0_30k": 19799,
+    "30k_48k": 22473,
+    "48k_75k": null,
+    "75k_110k": null,
+    "110k_plus": 24483
+  },
+  "nicknames": "",
+  "offersPerkins": false,
+  "onCampusAvail": "No",
+  "online": false,
+  "otherOffCampus": "5899",
+  "otherOnCampus": null,
+  "otherWFamily": "4129",
+  "predominantDegree": "Bachelor's degree",
+  "programCodes": {
+    "graduate": [],
+    "undergrad": []
+  },
+  "programCount": 6,
+  "programsPopular": [
+    "Health Professions and Related Programs",
+    "Legal Professions and Studies",
+    "Psychology",
+    "Business, Management, Marketing, and Related Support Services",
+    "Homeland Security, Law Enforcement, Firefighting and Related Protective Services",
+    "Computer and Information Sciences and Support Services"
+  ],
+  "rateAssociateTransfer": null,
+  "rateDefault": "0.145",
+  "rateGraduation": "0.256",
+  "rateRepay3yr": "0.2547585840",
+  "region": "SO",
+  "repay3yr": "0.2547585840",
+  "roomBrdOffCampus": "6652",
+  "roomBrdOnCampus": null,
+  "school": "South University-West Palm Beach",
+  "schoolID": 133465,
+  "schoolSalary": 33400,
+  "settlementSchool": "edmc",
+  "state": "FL",
+  "tuitionGradInDis": "16620",
+  "tuitionGradInS": "16620",
+  "tuitionGradOss": "16620",
+  "tuitionUnderInDis": "16920",
+  "tuitionUnderInS": 17014,
+  "tuitionUnderOoss": 17014,
+  "underInvestigation": false,
+  "url": "www.southuniversity.edu/west-palm-beach#location=West%20Palm%20Beach,%20FL",
+  "zip5": "33411"
+}

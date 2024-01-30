@@ -20,36 +20,27 @@
                        Path is used to create the filtered URL:
                        {{ href }}?category={{ category }}
 
-   classes (optional): Space separated list of class names.
-
-   use_blog_category (optional): Whether to use the blog category filter or not.
-                                 Defaults to false.
-
    ========================================================================== #}
 
-{% macro render(category, href, classes='', use_blog_category=false) %}
+{% macro render(category, href) %}
     {% if href %}
-        {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
-        {% if use_blog_category %}
-            {% set href = href + '?blog_category=' + category | urlencode | replace('%20', '+') %}
-        {% else %}
-            {% set href = href + '?categories=' + category | urlencode | replace('%20', '+') %}
-        {% endif %}
+        {% set href = href + '?categories=' + category | urlencode | replace('%20', '+') %}
     {% endif %}
 
-    {% call _category_link(href, classes) %}
+    {% call _category_link(href) %}
         {%- set cat = category_label(category) or category -%}
         {%- set icon_name = get_category_icon( cat ) -%}
         {%- if icon_name %}{{ svg_icon( icon_name ) }}{% endif %}
-        <span class="u-visually-hidden">Category:</span>
+        {%- if href -%}
+            <span class="u-visually-hidden">Category:</span>
+        {% endif %}
         {{ cat | safe }}
     {% endcall %}
 {% endmacro %}
 
-{% macro _category_link(href, classes) %}
+{% macro _category_link(href) %}
     {% if href %}
-        <a href="{{ href }}"
-           class="a-heading a-heading__icon {{ classes }}">
+        <a href="{{ href }}" class="h4">
     {% endif %}
        {{ caller() }}
     {% if href %}

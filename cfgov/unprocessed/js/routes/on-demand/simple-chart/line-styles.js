@@ -11,7 +11,7 @@ const line = {
           trackChartEvent(
             evt,
             'Legend Clicked',
-            `${evt.target.name}: ${evt.target.visible ? 'hide' : 'show'}`
+            `${evt.target.name}: ${evt.target.visible ? 'hide' : 'show'}`,
           );
         },
       },

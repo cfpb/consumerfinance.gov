@@ -4,74 +4,84 @@
    ========================================================================== */
 
 // Regs3K sidebar
-.o-regs3k-sidebar {
+.regulations3k .o-regs3k-sidebar {
   // TODO: If secondary navigation is overriding o-expandables appearance,
   //       they aren't atomic expandables anymore per the design spec.
   //       Secondary navigation should use FlyoutMenu for expandable-like
   //       behavior and handle its own styling
   //       (possibly shared with expandables).
 
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     background-color: @gray-5;
-    border-bottom: 1px solid @gray-40;
-    border-top: 1px solid @gray-40;
-    margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-  } );
+    margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  });
+
+  // TODO - this will be updated to data-open='true' in newer expandables.
+  .o-expandable_target__expanded {
+    .o-expandable_cue-close {
+      display: block;
+    }
+  }
+  .o-expandable_target__collapsed {
+    .o-expandable_cue-open {
+      display: block;
+    }
+  }
 }
 
 // Regs3K secondary nav sections
 .o-regs3k-sections {
-  .o-expandable_target {
-    .respond-to-min( @bp-med-min, {
+  .o-expandable_header {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-    } );
+    });
     border: 0;
     padding-right: 0;
   }
 
-  .o-expandable_header {
-    &-label {
-      width: 88%;
-    }
-    &-link {
-      width: 12%;
-    }
-  }
-
   .o-expandable_content {
     padding: 0;
-    .respond-to-min( @bp-med-min, {
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
       background: none;
       border: none;
-    } );
-    &:before {
+    });
+    &::before {
       border: 0;
       padding: 0;
     }
   }
 
-  &:before {
-    .respond-to-max( @bp-sm-max, {
+  &::before {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       border-bottom: 1px solid @gray-40;
       content: ' ';
       display: block;
-    } );
+    });
   }
 }
 
 // Regs3K secondary nav header
 .o-regs3k-navigation {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding: unit( 10px / @base-font-size-px, em )
     unit( 15px / @base-font-size-px, em );
-  } );
+  });
 
   .o-regs3k-navigation_header {
     display: none;
 
-    .respond-to-max( @bp-sm-max, {
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
       display: flex;
-    } );
+    });
 
     padding: unit(10px / @base-font-size-px, em) 0
       unit(5px / @base-font-size-px, em);
@@ -79,18 +89,10 @@
       text-transform: uppercase;
     }
   }
-
-  .o-expandable_label {
-    width: 88%;
-  }
-
-  .o-expandable_link {
-    text-align: right;
-    width: 12%;
-  }
 }
 
-.m-nav-link {
+// TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
+.o-secondary-nav_link {
   color: @pacific;
 
   &__current {
@@ -108,7 +110,8 @@
 // Utility methods specific to when regs3k secondary nav
 // is stacked on top of the page's content
 .u-hide-on-stacked {
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     display: none;
-  } );
+  });
 }

@@ -6,14 +6,12 @@ import {
   FlyoutMenu,
   MoveTransition,
 } from '@cfpb/cfpb-atomic-component';
-import ClearableInput from '../modules/ClearableInput.js';
-import TabTrigger from '../modules/TabTrigger.js';
+import { TabTrigger } from '../modules/TabTrigger.js';
 
 const BASE_CLASS = 'm-global-search';
 
 /**
  * GlobalSearch
- *
  * @class
  * @classdesc Initializes a new GlobalSearch molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -24,16 +22,12 @@ function GlobalSearch(element) {
   const _dom = checkDom(element, BASE_CLASS);
   const _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
   const _triggerDom = _dom.querySelector(`.${BASE_CLASS}_trigger`);
-  const _triggerCloseLabelText = _triggerDom
-    .querySelector(`.${BASE_CLASS}_trigger-close-label`)
-    .innerText.trim();
   const _triggerOpenLabelText = _triggerDom
     .querySelector(`.${BASE_CLASS}_trigger-open-label`)
     .innerText.trim();
   const _flyout = new FlyoutMenu(_dom, false);
   let _searchInputDom;
   let _searchBtnDom;
-  let _clearBtnDom;
 
   /* The tab trigger adds an element to the end of the element that handles
      cleanup after tabbing out of the element. */
@@ -49,29 +43,24 @@ function GlobalSearch(element) {
 
     // Set initial appearance.
     const transition = new MoveTransition(_contentDom).init(
-      MoveTransition.CLASSES.MOVE_RIGHT
+      MoveTransition.CLASSES.MOVE_RIGHT,
     );
     _flyout.setTransition(
       transition,
       transition.moveRight,
-      transition.moveToOrigin
+      transition.moveToOrigin,
     );
     _flyout.init();
 
     _contentDom.classList.remove('u-hidden');
 
-    const clearBtnSel = `.${BASE_CLASS} .input-contains-label_after__clear`;
     const inputContainsLabelSel = `.${BASE_CLASS}_content-form .input-contains-label`;
     const searchBtnSel = `.${BASE_CLASS} .o-form__input-w-btn_btn-container button`;
 
-    _clearBtnDom = _contentDom.querySelector(clearBtnSel);
     const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
     _searchInputDom = inputContainsLabel.querySelector('input');
     _searchBtnDom = _contentDom.querySelector(searchBtnSel);
 
-    // Initialize new clearable input behavior on the input-contains-label.
-    const clearableInput = new ClearableInput(inputContainsLabel);
-    clearableInput.init();
     const handleExpandBeginBinded = _handleExpandBegin.bind(this);
     const handleCollapseEndBinded = _handleCollapseEnd.bind(this);
 
@@ -98,7 +87,6 @@ function GlobalSearch(element) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   *
    * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _handleBodyClick(event) {
@@ -115,21 +103,15 @@ function GlobalSearch(element) {
 
   /**
    * Whether a target is one of the ones that appear in the desktop view.
-   *
    * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the desktop view.
    */
   function _isDesktopTarget(target) {
-    return (
-      target === _searchInputDom ||
-      target === _searchBtnDom ||
-      target === _clearBtnDom
-    );
+    return target === _searchInputDom || target === _searchBtnDom;
   }
 
   /**
    * Whether a target is one of the ones that appear in the mobile view.
-   *
    * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the mobile view.
    */
@@ -144,18 +126,7 @@ function GlobalSearch(element) {
   function _handleExpandBegin() {
     this.dispatchEvent('expandbegin', { target: this });
 
-    /* TODO: Remove when Android 4.0-4.4 support is dropped.
-       Hack to fix reflow issues on legacy Android devices. */
-    /*_contentDom.style.display = 'none';
-    // eslint-disable-next-line no-unused-expressions
-    _contentDom.offsetHeight;
-    _contentDom.style.display = '';
-    */
     _contentDom.classList.remove('u-invisible');
-
-    //_searchInputDom.select();
-
-    _triggerDom.setAttribute('aria-label', _triggerCloseLabelText);
 
     document.body.addEventListener('mousedown', _handleBodyClick);
   }
@@ -186,7 +157,6 @@ function GlobalSearch(element) {
 
   /**
    * Close the search box.
-   *
    * @returns {object} An GlobalSearch instance.
    */
   function collapse() {
@@ -207,4 +177,4 @@ function GlobalSearch(element) {
   return this;
 }
 
-export default GlobalSearch;
+export { GlobalSearch };

@@ -607,7 +607,7 @@ class Notification(models.Model):
         if school.contact:
             if school.contact.endpoint:
                 endpoint = school.contact.endpoint
-                if type(endpoint) == str:
+                if isinstance(endpoint, str):
                     endpoint = endpoint.encode("utf-8")
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)

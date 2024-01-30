@@ -8,8 +8,6 @@
 }
 
 .clear {
-  /* IE 8 */
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
   opacity: 0;
 }
 
@@ -32,8 +30,6 @@
 }
 
 .loading {
-  /* IE 8 */
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
   opacity: 0.3;
 }
 
@@ -56,23 +52,23 @@
 }
 
 .u-right-on-desktop {
-  .respond-to-min( 801px, {
+  .respond-to-min(801px, {
     text-align: right;
-  } );
+  });
 }
 
 .u-link-underline {
   border-bottom: 1px dotted;
 }
 
-.respond-to-max( 800px, {
+.respond-to-max(800px, {
   .mobi-no {
     display: none;
   }
-} );
+});
 
-.respond-to-min( 800px, {
+.respond-to-min(800px, {
   .mobi-yes {
     display: none;
   }
-} );
+});

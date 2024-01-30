@@ -7,7 +7,6 @@ import { EventObserver } from '@cfpb/cfpb-atomic-component';
 // eslint-disable-next-line max-statements
 /**
  * BaseTransition
- *
  * @class
  * @classdesc Initializes new BaseTransition behavior.
  *   This shouldn't be used directly, but instead should be
@@ -34,7 +33,7 @@ function BaseTransition(element, classes) {
   ) {
     throw new Error(
       'Transitions require CSS_PROPERTY and BASE_CLASS ' +
-        'to be passed into BaseTransition.'
+        'to be passed into BaseTransition.',
     );
   }
 
@@ -72,7 +71,6 @@ function BaseTransition(element, classes) {
 
   /**
    * Handle the end of a transition.
-   *
    * @param {TransitionEvent} evt - Transition event object.
    * @returns {boolean} True if transition was cleaned up,
    *   false if an outside transitioning property triggered this event handler.
@@ -127,7 +125,6 @@ function BaseTransition(element, classes) {
 
   /**
    * Remove all transition classes, if transition is initialized.
-   *
    * @returns {boolean}
    *   True, if the element's CSS classes were touched, false otherwise.
    */
@@ -144,7 +141,6 @@ function BaseTransition(element, classes) {
 
   /**
    * Add a "transition-duration: 0s" utility CSS class.
-   *
    * @returns {BaseTransition} An instance.
    */
   function animateOn() {
@@ -158,7 +154,6 @@ function BaseTransition(element, classes) {
 
   /**
    * Remove a "transition-duration: 0s" utility CSS class.
-   *
    * @returns {BaseTransition} An instance.
    */
   function animateOff() {
@@ -204,7 +199,6 @@ function BaseTransition(element, classes) {
 
   /**
    * Set the HTML element target of this transition.
-   *
    * @param {HTMLElement} targetElement - The target of the transition.
    */
   function setElement(targetElement) {

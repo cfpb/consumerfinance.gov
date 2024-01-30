@@ -1,23 +1,22 @@
 {% macro render(block, index) %}
-   {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context -%}
    {% set block_classes = ['block'] %}
 
-   {% if block.value.has_top_border or block.value.has_top_rule_line %}
+   {% if block.value.has_top_rule_line %}
       {% do block_classes.append('block__padded-top block__border-top') %}
    {% elif index == 1 %}
       {% do block_classes.append('block__flush-top') %}
-   {% endif %}
-
-   {% if block.value.has_rule or block.value.has_bottom_border %}
-      {% do block_classes.append('block__padded-bottom block__border-bottom') %}
    {% endif %}
 
    {% if block.block.meta.classname %}
       {% do block_classes.append(block.block.meta.classname) %}
    {% endif %}
 
-   <div class="{{ block_classes | unique | join(' ') }}"
-      {{- accessible_languages.render() -}}>
-      {{ render_stream_child(block) | safe }}
+   <div class="{{ block_classes | unique | join(' ') }}">
+      {{ render_stream_child( block ) }}
    </div>
+
+   {# TODO: Rename `has_rule` to `has_bottom_rule_line` #}
+   {% if block.value.has_rule %}
+      <div class="a-rule-break block block__sub"></div>
+   {% endif %}
 {% endmacro %}

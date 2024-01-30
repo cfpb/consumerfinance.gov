@@ -51,7 +51,7 @@ Store.prototype.notifySubscribers = function () {
   this.subscribers.forEach(
     function (subscriber) {
       subscriber(this.prevState, this.state);
-    }.bind(this)
+    }.bind(this),
   );
 };
 

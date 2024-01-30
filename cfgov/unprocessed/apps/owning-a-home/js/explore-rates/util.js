@@ -1,4 +1,3 @@
-import formatDate from 'date-format';
 import {
   convertStringToNumber,
   formatUSD,
@@ -6,7 +5,6 @@ import {
 
 /**
  * Check if the house price entered is 0
- *
  * @param {string|number} price - A price.
  * @returns {boolean} True if price is zero, false otherwise.
  */
@@ -19,7 +17,6 @@ function checkIfZero(price) {
 
 /**
  * Simple (anonymous) delay function.
- *
  * @returns {object} function that has been delayed.
  */
 const delay = (function () {
@@ -32,22 +29,16 @@ const delay = (function () {
 
 /**
  * @param {string} timestamp - A timestamp.
- * @returns {string} Date in the format of MM/dd/yyyy.
+ * @returns {string} Date in the format of M?M/d?d/yyyy.
  */
 function formatTimestampMMddyyyy(timestamp) {
-  /* Should you want to format the the date for older versions of IE
-     the following can be used:
-     timestamp = then.slice(0, 10).replace('-', '/');
-     timestamp = new Date( timestamp );
-     return (timestamp.getUTCMonth() + 1) + '/' + timestamp.getUTCDate() +
-            '/' +  timestamp.getUTCFullYear(); */
-  return formatDate.asString('MM/dd/yyyy', new Date(timestamp));
+  const ts = new Date(timestamp);
+  return `${ts.getUTCMonth() + 1}/${ts.getUTCDate()}/${ts.getUTCFullYear()}`;
 }
 
 /**
  * See keys on
  * https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values
- *
  * @param {string} key - A key string.
  * @returns {boolean} True if key is forbidden, false otherwise.
  */
@@ -78,7 +69,6 @@ function isVisible(elem) {
 
 /**
  * Add commas to numbers where appropriate.
- *
  * @param {string} value - Old value where commas will be added.
  * @returns {string} Value with commas and no dollar sign.
  */
@@ -86,14 +76,13 @@ function removeDollarAddCommas(value) {
   let parseValue = convertStringToNumber(value);
   parseValue = formatUSD({ amount: parseValue, decimalPlaces: 0 }).replace(
     '$',
-    ''
+    '',
   );
   return parseValue;
 }
 
 /**
  * Render chart data in an accessible format.
- *
  * @param {HTMLElement} tableHead - A <thead> element.
  * @param {HTMLElement} tableBody - A <tbody> element.
  * @param {Array} labels - Data labels from the API.
@@ -119,7 +108,6 @@ function renderAccessibleData(tableHead, tableBody, labels, vals) {
 
 /**
  * Updates the sentence data date sentence below the chart.
- *
  * @param {HTMLElement} elem - An HTML element holding the timestamp.
  * @param {string} time - Timestamp from API.
  */
@@ -134,7 +122,6 @@ function renderDatestamp(elem, time) {
 
 /**
  * Calculate and render the loan amount.
- *
  * @param {number} housePrice - A home price.
  * @param {number} downPayment - A down payment amount.
  * @returns {number} Loan amount.
@@ -152,7 +139,6 @@ function calcLoanAmount(housePrice, downPayment) {
 
 /**
  * Calculate and render the loan amount in the format $100,000.
- *
  * @param {HTMLElement} elem - HTML element to fill in with loan amount.
  * @param {number} loanAmount - A loan amount as a number.
  */
@@ -162,7 +148,6 @@ function renderLoanAmount(elem, loanAmount) {
 
 /**
  * Set value(s) of all HTML elements in the control panel.
- *
  * @param {string} fields - TODO: Add description.
  */
 function setSelections(fields) {
@@ -181,7 +166,6 @@ function setSelections(fields) {
 
 /**
  * Set value(s) of an individual HTML element in the control panel.
- *
  * @param {HTMLElement} el - An HTML input element on the page.
  * @param {string} val - Value to set inside the HTML element.
  */

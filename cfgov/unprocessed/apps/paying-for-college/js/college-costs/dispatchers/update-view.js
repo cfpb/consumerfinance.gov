@@ -61,7 +61,6 @@ const updateSchoolItems = () => {
 /**
  * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
  * properly
- *
  * @param {string} prop - The state property to modify
  * @param {string} value - The new value of the property
  * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed

@@ -78,8 +78,8 @@ class TestManagementUtils(TestCase):
     @mock.patch.dict(
         os.environ,
         {
-            "AWS_S3_ACCESS_KEY_ID": "fake",
-            "AWS_S3_SECRET_ACCESS_KEY": "fake",
+            "AWS_ACCESS_KEY_ID": "fake",
+            "AWS_SECRET_ACCESS_KEY": "fake",
             "AWS_STORAGE_BUCKET_NAME": "fake",
         },
     )

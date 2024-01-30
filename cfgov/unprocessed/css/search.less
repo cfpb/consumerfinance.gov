@@ -22,7 +22,7 @@
   .content_sidebar {
     padding: 45px 15px 0;
     border: 1px solid @gray-40;
-    background-color: #f7f8f9;
+    background-color: @gray-5;
 
     .o-expandable-group {
       margin-bottom: 15px;
@@ -37,7 +37,7 @@
 
       // Override for left/right padding on the label and content.
       .o-expandable_content,
-      .o-expandable_target {
+      .o-expandable_header {
         padding-left: 0;
         padding-right: 0;
       }
@@ -52,7 +52,7 @@
     }
   }
   .content_main {
-    &:after {
+    &::after {
       border: 0;
     }
     border: 0;
@@ -95,7 +95,8 @@
   }
 }
 
-.respond-to-max( @bp-sm-max, {
+// Tablet and below.
+.respond-to-max(@bp-sm-max, {
   .search_results {
     .content_sidebar {
       padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );

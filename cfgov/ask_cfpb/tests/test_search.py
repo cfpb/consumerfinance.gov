@@ -1,6 +1,7 @@
 import json
 import unittest
 from io import StringIO
+from operator import itemgetter
 from unittest import mock
 
 from django.test import TestCase
@@ -107,6 +108,26 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(
             test_answer_page_search_results,
             "What is money?\nMoney makes the world go round.",
+        )
+
+    def test_answerpage_search_default_alphabetical_sort_order(self):
+        for page in [
+            AnswerPage(
+                **{k: f"test-{letter}" for k in ("title", "slug", "question")},
+                live=True,
+            )
+            for letter in reversed("edcba")
+        ]:
+            self.ROOT_PAGE.add_child(instance=page)
+
+        self.rebuild_elasticsearch_index(
+            AnswerPageDocument.Index.name, stdout=StringIO()
+        )
+
+        results = AnswerPageSearch("test").search()
+        self.assertEqual(
+            list(map(itemgetter("autocomplete"), results["results"])),
+            [f"test-{letter}" for letter in "abcde"],
         )
 
     def test_AnswerPage_suggest(self):

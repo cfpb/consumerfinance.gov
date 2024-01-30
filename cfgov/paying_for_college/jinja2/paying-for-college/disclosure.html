@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block content %}
+{% set school_primary_alias = school.primary_alias if school else '' %}
 <main id="main" data-context="{{url_root}}">
     <div id="financial-offer" class="understanding-financial-aid-offer">
         <section class="m-hero">
@@ -83,7 +84,7 @@
                         </h2>
                         <form class="verify_form">
                             <div class="verify_school">
-                                {{school.primary_alias}}
+                              {{school_primary_alias}}
                             </div>
                             <div class="verify_location">
                                 {% if school %}{{school.city}}, {{school.state}}{% endif %}
@@ -258,7 +259,7 @@
                             <p class="step_intro">
                                 Here is your financial aid offer from
                                 <span
-                                id="intro__school-name">{{school.primary_alias}}</span>. Please review the amounts provided by
+                                    id="intro__school-name">{{school_primary_alias}}</span>. Please review the amounts provided by
                                 your school below and make any necessary changes
                                 or add any missing information.  Please note any
                                 changes you make here will not change your
@@ -886,7 +887,7 @@
                                 <p>
                                     This is an estimate of the remaining costs
                                     of studying your program at
-                                    {{school.primary_alias}} for one year.
+                                    {{school_primary_alias}} for one year.
                                 </p>
                             </div>
                         </div>
@@ -1742,7 +1743,7 @@
                                 <p>
                                     This is an estimate of the remaining costs
                                     of studying your program at
-                                    {{school.primary_alias}} for one year based
+                                    {{school_primary_alias}} for one year based
                                     on your inputs above.
                                 </p>
                             </div>
@@ -1873,7 +1874,7 @@
                                     After all the grants, scholarships, loans,
                                     and personal contributions, this is how
                                     much you still need to pay to attend
-                                    {{school.primary_alias}} for one year.
+                                    {{school_primary_alias}} for one year.
                                 </p>
                             </div>
                             <div class="aid-form_summary debt-summary
@@ -1968,9 +1969,9 @@
                                     eligibility.
                                 </p>
                                 <div class="continue_controls">
-                                    <button class="a-btn a-btn__full-on-xs"
-                                    title="Continue to Step 2" type="button">
-                                    Continue to Step 2
+                                    <button class="a-btn a-btn__full-on-xs a-btn__disabled"
+                                    title="Continue to Step 2" type="button" disabled>
+                                    {{ svg_icon('updating') }} Continue to Step 2
                                     </button>
                                 </div>
                             </div>
@@ -2003,7 +2004,7 @@
                                 <p class="content_grad-cohort">
                                     For first-time students enrolled full-time
                                     in {{program.program_name}} at
-                                    {{school.primary_alias}},
+                                    {{school_primary_alias}},
                                     {{program.completers}} out of
                                     {{program.completion_cohort}}
                                     graduated.
@@ -2942,7 +2943,7 @@
                                     It's estimated you'll owe <span
                                     data-financial="loanLifetime">[XX]</span>
                                     to complete this program in {{program.program_name}} at
-                                    {{school.primary_alias}}. Do you better
+                                    {{school_primary_alias}}. Do you better
                                     understand how this may impact your future
                                     finances?
                                 </h2>

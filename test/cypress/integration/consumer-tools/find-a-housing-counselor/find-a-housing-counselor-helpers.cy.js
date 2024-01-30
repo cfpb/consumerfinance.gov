@@ -1,4 +1,5 @@
-import mapboxAPIResponses from '../../../fixtures/mapbox-api.json';
+import responseMapboxAPIStreets from '../../../fixtures/fahc-mapbox-api-streets.json';
+import responseMapboxAPIText from '../../../fixtures/fahc-mapbox-api-text.json';
 
 export class FindAHousingCounselor {
   open() {
@@ -12,24 +13,22 @@ export class FindAHousingCounselor {
         url: /api\.mapbox\.com\/styles\/v1\/mapbox\/streets-v\d+\?access_token/,
       },
       (request) => {
-        request.reply(mapboxAPIResponses.streets);
-      }
+        request.reply(responseMapboxAPIStreets);
+      },
     ).as('mapboxStreets');
     cy.intercept(
       {
         url: /api\.mapbox\.com\/v\d+/,
       },
       (request) => {
-        request.reply(mapboxAPIResponses.text);
-      }
+        request.reply(responseMapboxAPIText);
+      },
     ).as('mapboxText');
   }
 
   searchZipCode(zipCode) {
     cy.get('#hud_hca_api_query').type(zipCode);
-    cy.get('.m-form-field-with-button_wrapper').within(() => {
-      cy.get('button').click();
-    });
+    cy.get('[data-cy=btn-fahc-submit]').click();
   }
 
   resultsSection() {

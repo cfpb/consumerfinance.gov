@@ -3,8 +3,7 @@
 In order to provide a broad, configurable search and filtering interface across areas of our site, we have implemented a custom StreamField block, [FilterableList](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L802), that allows a user to specify what filters are available, how to order results, and which pages should be included in the search.
 
 - [How It Works](#how-it-works)
-  - [FilterableListMixin](#filterablelistmixin)
-  - [CategoryFilterableMixin](#categoryfilterablemixin)
+  - [AbstractFilterablePage](#abstractfilterablepage)
 - [Forms](#forms)
   - [FilterableListForm](#filterablelistform)
   - [EnforcementActionsFilterForm](#enforcementactionsfilterform)
@@ -17,15 +16,13 @@ In order to provide a broad, configurable search and filtering interface across 
 
 ## How It Works
 
-The journey on how a page gets a filterable form is not necessarily a straight or simple path, but it is something that is important to know. To start, the page must support the `FilterableList` block within a StreamField as we mentioned earlier, but from there we start to see some divergence. In order to utilize the `FilterableList` the page must support one of the following two classes: `FilterableListMixin` or `CategoryFilterableMixin`.
+The journey on how a page gets a filterable form is not necessarily a straight or simple path, but it is something that is important to know. The page class must both support the `FilterableList` block within its content StreamField and must also inherit from `AbstractFilterablePage`.
 
-### FilterableListMixin
+### AbstractFilterablePage
 
-The more common mixin that pages will extend is the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15). This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_list_wagtail_block`, `get_filterable_root`, and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
+Pges must extend from the `AbstractFilterablePage` class. This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_root` and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
 
-### CategoryFilterableMixin
-
-The [CategoryFilterableMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L199) is an extension of the base `FilterableListMixin` that exposes some new functionality. It modifies how `get_filterable_queryset` operates in that it gets an initial list of pages but limits them to only ones that are assigned a category within a set of initial categories, which is defined as the variable `filterable_categories` on a given page model. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
+Page classes may optionally define `filterable_categories` as a list of categories used to limit search results. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
 
 ### Forms
 
@@ -33,7 +30,7 @@ As of our initial release of Elasticsearch-backed filterable lists in March 2021
 
 #### FilterableListForm
 
-This is the base form that the vast majority of cf.gov uses for filterable lists. It defines the core fields that are visible on the form as well as functions to assist in setting initial data and sanitizing form input. The important information regarding `FilterableListForm` is that it defines the function `get_page_set`, which is responsible for invoking a search query. The logic regarding how to pass categories into the search object is due to the previously mentioned `CategoryFilterableMixin`, which modifies the initial search parameters to enforce a category search if and only if the `filterable_categories` list is passed into the form when initialized.
+This is the base form that the vast majority of cf.gov uses for filterable lists. It defines the core fields that are visible on the form as well as functions to assist in setting initial data and sanitizing form input. The important information regarding `FilterableListForm` is that it defines the function `get_page_set`, which is responsible for invoking a search query.
 
 #### EnforcementActionsFilterForm
 

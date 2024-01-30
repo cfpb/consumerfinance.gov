@@ -5,7 +5,6 @@ const defaultProps = {
 
 /**
  * Data structure to manipulate a list of `maxElements` elements.
- *
  * @param {object} props - The properties that configure this data structure.
  * @param {number} props.maxElements - The maximum number of elements
  *   the data structure can hold.
@@ -33,7 +32,6 @@ function selectedItems(props) {
 
   /**
    * TODO: Add jsdocs.
-   *
    * @param item
    */
   function add(item) {
@@ -44,7 +42,6 @@ function selectedItems(props) {
 
   /**
    * TODO: Add jsdocs.
-   *
    * @param item
    */
   function remove(item) {

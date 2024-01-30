@@ -3,7 +3,6 @@ const jsonpP = jsonpPModule.default;
 
 /**
  * Call the Census geospatial API.
- *
  * @param {number} x - Latitude.
  * @param {number} y - Longitude.
  * @param {string} layer - Layer ID.

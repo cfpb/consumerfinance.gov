@@ -1,6 +1,8 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
-const regs3kMainContent = document.querySelector('.regulations3k');
+const regs3kMainContent = document.querySelector(
+  '.regulations3k #content_main',
+);
 const regs3kWayfinder = document.querySelector('.o-regulations-wayfinder');
 let wayfinderOffset = 0;
 if (regs3kWayfinder !== null) {
@@ -16,14 +18,12 @@ const wayfinderRegex = {
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't
  * support `scrollY` so use whichever works.
- *
  * @returns {Function} Browser-supported y offset method.
  */
 const scrollY = () => window.scrollY || window.pageYOffset;
 
 /**
  * getFirstMatch - Get the first match of a REGEX
- *
  * @param {string} haystack - String to search
  * @param {string} needle - REGEX to search for
  * @returns {string} Matched string or empty string
@@ -37,7 +37,6 @@ const getFirstMatch = (haystack, needle) => {
 
 /**
  * getYLocation - Get Y location of provided element on the page.
- *
  * @param {HTMLElement} el - HTML element.
  * @returns {number} Pixel value of vertical page location of element.
  */
@@ -49,7 +48,6 @@ const getYLocation = (el) => {
 /**
  * getParagraphPositions - Get an array of all paragraphs with their IDs
  * mapped to their Y position (number of pixels from top of page).
- *
  * @param {NodeList} paragraphs - Nodelist of HTML elements with IDs.
  * @returns {Array} Array of objects w/ paragraph IDs and y positions.
  */
@@ -72,7 +70,6 @@ const getParagraphPositions = (paragraphs) => {
 
 /**
  * getCurrentParagraph - Get paragraph closest to viewport's current position.
- *
  * @param {number} currentPosition - Current viewport Y coordinate.
  * @param {Array} paragraphs - List of paragraphs on the page.
  * @returns {string} HTML ID of closest paragraph
@@ -91,13 +88,12 @@ const getCurrentParagraph = (currentPosition, paragraphs) => {
 
 /**
  * updateUrlHash - Update the page's URL hash w/ the closest paragraph.
- *
  * @returns {undefined} Returned value from window.history.replaceState.
  */
 const updateUrlHash = () => {
   const currentParagraph = getCurrentParagraph(
     scrollY() + wayfinderOffset,
-    paragraphPositions
+    paragraphPositions,
   );
   // Setting the window state to `.` removes the URL hash
   const hash = currentParagraph ? `#${currentParagraph}` : '.';
@@ -106,7 +102,6 @@ const updateUrlHash = () => {
 
 /**
  * getCommentMarker - Does the legwork for the more complex comment markers.
- *
  * @param {string} label - data-label of the current paragraph.
  * @returns {string} formatted comment marker.
  */
@@ -148,7 +143,6 @@ const getCommentMarker = (label) => {
 
 /**
  * getWayfinderInfo - process paragraph to create wayfinder.
- *
  * @param {string} label - label of current paragraph.
  * @param {string} sectionTitle - title of current section.
  * @returns {object} object of the values for wayfinder.
@@ -169,7 +163,7 @@ const getWayfinderInfo = (label, sectionTitle) => {
     // For appendices, the wayfinder should look like "Appendix A"
     sectionFormattedTitle = getFirstMatch(
       sectionTitle,
-      wayfinderRegex.appendixTitle
+      wayfinderRegex.appendixTitle,
     );
     paragraphMarker = '';
   } else {
@@ -188,7 +182,6 @@ const getWayfinderInfo = (label, sectionTitle) => {
 
 /**
  * updateWayfinder - Update the Wayfinder element with current paragraph info.
- *
  * @param {boolean} scroll - if true, the function will scroll the current
  *   paragraph into view.
  * @param {object} wayfinder - wayfinder HTML element.
@@ -204,11 +197,11 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     let sectionFormattedTitle;
     let wayfinderInfo;
     const wayfinderLink = wayfinder.querySelector(
-      '.o-regulations-wayfinder_link'
+      '.o-regulations-wayfinder_link',
     );
     const currentParagraph = getCurrentParagraph(
       scrollY() + wayfinderOffset,
-      paragraphPositions
+      paragraphPositions,
     );
 
     if (currentParagraph) {
@@ -231,7 +224,7 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     }
 
     wayfinder.querySelector(
-      '.o-regulations-wayfinder_section-title'
+      '.o-regulations-wayfinder_section-title',
     ).textContent = sectionFormattedTitle;
     wayfinder.querySelector('.o-regulations-wayfinder_marker').textContent =
       paragraphMarker;
@@ -247,7 +240,6 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
 
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions.
- *
  * @returns {Array} Array of paragraph positions.
  */
 const updateParagraphPositions = () => {
@@ -255,7 +247,7 @@ const updateParagraphPositions = () => {
   const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for (let i = 0; i < paragraphs.length; i++) {
-    const hiddenParagraphContainer = paragraphs[i].closest('.u-hidden');
+    const hiddenParagraphContainer = paragraphs[i].closest('[hidden]');
     if (!hiddenParagraphContainer) {
       visibleParagraphs.push(paragraphs[i]);
     }
@@ -266,7 +258,6 @@ const updateParagraphPositions = () => {
 
 /**
  * debounce - Ensure our callbacks fire only after the action has stopped.
- *
  * @param {string} event - Event name.
  * @param {number} delay - Time to wait in milliseconds.
  * @param {Function} cb - Function to be called after action has stopped.
@@ -282,7 +273,7 @@ const debounce = (event, delay, cb) => {
         cb();
       }, delay);
     },
-    false
+    false,
   );
   return timeout;
 };

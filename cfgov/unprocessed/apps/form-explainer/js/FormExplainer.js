@@ -15,7 +15,6 @@ let UNDEFINED;
 
 /**
  * FormExplainer
- *
  * @class
  * @classdesc Initializes a new Form Explainer.
  * @param {HTMLElement} element - Base DOM element.
@@ -30,7 +29,6 @@ class FormExplainer {
 
   /**
    * Initialize the FormExplainer.
-   *
    * @returns {FormExplainer} An instance.
    */
   init() {
@@ -45,7 +43,6 @@ class FormExplainer {
 
   /**
    * Initialize the UI after instatiation.
-   *
    * @param {object} elements - Current page DOM elements.
    */
   initializeUI(elements) {
@@ -96,7 +93,7 @@ class FormExplainer {
 
     DT.removeClass(
       '.o-expandable__form-explainer, .image-map_overlay',
-      className
+      className,
     );
 
     if (target.getAttribute('href') !== null) {
@@ -117,14 +114,13 @@ class FormExplainer {
 
   /**
    * Open the expandable and scroll into the viewport.
-   *
    * @param {HTMLElement} imageOverlay - Image overlay, which was clicked.
    * @param {HTMLElement} targetExpandable - Target expandable.
    * current focus.
    */
   openAndScrollToExpandable(imageOverlay, targetExpandable) {
     const targetExpandableTarget = targetExpandable.querySelector(
-      '.o-expandable_target'
+      '.o-expandable_header',
     );
 
     window.setTimeout(() => {
@@ -138,18 +134,17 @@ class FormExplainer {
 
   /**
    * Set the UI elements for the page
-   *
    * @returns {object} DOM elements for the page.
    */
   setUIElements() {
     const explain = DT.getEl('.explain');
     const explainPagination = explain.querySelector('.explain_pagination');
     const explainPageBtns = explain.querySelectorAll(
-      '.form-explainer_page-buttons button'
+      '.form-explainer_page-buttons button',
     );
     const pages = explain.querySelectorAll('.explain_page');
     const formExplainerLinks = explain.querySelectorAll(
-      '.form-explainer_page-link'
+      '.form-explainer_page-link',
     );
 
     return Object.assign(this.elements, {
@@ -163,7 +158,6 @@ class FormExplainer {
 
   /**
    * Return explainer page element based on page number.
-   *
    * @param {number} pageNum - Number of explainer page.
    * @returns {object} Page DOM element.
    */
@@ -173,7 +167,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {string} direction - 'next' or 'prev'.
    */
   paginate(direction) {
@@ -192,7 +185,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {number} pageNum - Number of the current page.
    * @param {Function} callback - Function to invode after scroll.
    * @param {boolean} shouldScrollIntoView - Whether to scroll the page into view.
@@ -220,7 +212,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {number} pageCount - Number of pages.
    */
   setPageCount(pageCount) {
@@ -231,7 +222,6 @@ class FormExplainer {
   /**
    * Switch pages by fading pages in / out and
    * updating the UI accordingly.
-   *
    * @param {number} currentPage - Current page Number.
    * @param {number} newPage - New page number.
    */
@@ -284,13 +274,13 @@ class FormExplainer {
       (event) => {
         event.preventDefault();
         this.updateAttention(event.target, CSS.HOVER_HAS_ATTENTION);
-      }
+      },
     );
 
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents('.o-expandable_target', 'focus', (event) => {
+    DT.bindEvents('.o-expandable_header', 'focus', (event) => {
       const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
@@ -312,17 +302,17 @@ class FormExplainer {
      * update the image overlay position and hover styles.
      */
     DT.bindEvents(
-      '.o-expandable__form-explainer .o-expandable_target',
+      '.o-expandable__form-explainer .o-expandable_header',
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {
           const closestFormExplainer = event.target.closest(
-            '.o-expandable__form-explainer'
+            '.o-expandable__form-explainer',
           );
 
           this.updateAttention(closestFormExplainer, CSS.HAS_ATTENTION);
         }
-      }
+      },
     );
   }
 }

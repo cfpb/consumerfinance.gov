@@ -1,6 +1,8 @@
 export class AskCfpbAnswerPage {
   open() {
-    cy.visit('/ask-cfpb/').get('.ask-categories article li a').first().click();
+    cy.visit(
+      '/ask-cfpb/what-effect-will-shopping-for-an-auto-loan-have-on-my-credit-en-15/',
+    );
   }
 
   getFirstLinkInSummary() {

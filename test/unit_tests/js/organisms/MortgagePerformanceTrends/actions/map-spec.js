@@ -72,7 +72,7 @@ describe('Mortgage Performance map action creators', () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getMetroData()),
-        })
+        }),
       );
     });
 
@@ -98,7 +98,7 @@ describe('Mortgage Performance map action creators', () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getCountyData()),
-        })
+        }),
       );
     });
 

@@ -13,7 +13,7 @@ from teachers_digital_platform.models.activity_index_page import (
 class PagingTestCases(TestCase, WagtailTestUtils):
     def test_validate_results_per_page_default_id_five(self):
         mock_request = HttpRequest()
-        default_per_page = 5
+        default_per_page = 10
         results_per_page = validate_results_per_page(mock_request)
         self.assertEqual(results_per_page, default_per_page)
 

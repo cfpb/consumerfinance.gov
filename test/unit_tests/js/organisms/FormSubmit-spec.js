@@ -22,4 +22,32 @@ describe('FormSubmit', () => {
       expect(formSubmit.init()).toBeInstanceOf(FormSubmit);
     });
   });
+
+  describe('getMessage()', () => {
+    it('should return the correct messages based on the state', () => {
+      // Return generic error message if wrong state was passed.
+      expect(thisFormSubmit.getMessage('TYPO', 'en')).toEqual('Error.');
+
+      // Return error message.
+      expect(thisFormSubmit.getMessage('ERROR', 'es')).toEqual(
+        'Había un error en su presentación. Por favor, inténtelo más tarde.',
+      );
+
+      // Return success message.
+      expect(thisFormSubmit.getMessage('SUCCESS', 'en')).toEqual(
+        'Your submission was successfully received.',
+      );
+      expect(thisFormSubmit.getMessage('SUCCESS', 'ar')).toEqual(
+        'تم استلام طلبك  بنجاح.',
+      );
+      expect(thisFormSubmit.getMessage('SUCCESS', 'zh-Hant')).toEqual(
+        '您提交的資料已被成功接收。',
+      );
+
+      // Return english message by default if the language isn't found.
+      expect(thisFormSubmit.getMessage('SUCCESS', 'de')).toEqual(
+        'Your submission was successfully received.',
+      );
+    });
+  });
 });

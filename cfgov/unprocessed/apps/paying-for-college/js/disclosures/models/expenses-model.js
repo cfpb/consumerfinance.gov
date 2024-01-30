@@ -17,7 +17,6 @@ const expensesModel = {
 
   /**
    * Initializes this model
-   *
    * @param {object} expenses - object containing unformatted API values
    */
   init: function (expenses) {
@@ -40,13 +39,13 @@ const expensesModel = {
         model.other +
         model.entertainment +
         model.clothing +
-        model.taxes
+        model.taxes,
     );
 
     model.monthlyLeftover = Math.round(
       financialValues.monthlySalary -
         model.totalMonthlyExpenses -
-        financialValues.loanMonthly
+        financialValues.loanMonthly,
     );
 
     this.values = model;
@@ -55,7 +54,6 @@ const expensesModel = {
   /**
    * Turns a salary number into a salary range for use in retrieving
    * the correct BLS expense values.
-   *
    * @param {number} salary - Number value of salary
    * @returns {string} salaryRange - String representing salary range
    */
@@ -92,7 +90,6 @@ const expensesModel = {
    * Changes the various expenses values based on the region
    * and salary parameters. Uses the 'stored' Object in this
    * model to find correct values.
-   *
    * @param {string} region - BLS region code
    * @param {number} salary - Annual salary
    */

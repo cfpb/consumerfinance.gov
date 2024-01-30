@@ -73,11 +73,7 @@
 {# BODY items #}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
-{%- endblock %}
-
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom regulations3k
+    {{ super() }} content__hide-horizontal-overflow regulations3k
 {%- endblock %}
 
 {% block content_main %}
@@ -133,30 +129,26 @@
 
         <section class="block block__flush-top">
             <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section.title}}">
-                <div class="content_wrapper">
-                    <div class="content_sidebar content__flush-top content__flush-bottom">
+                <div class="o-regulations-wayfinder_wrapper">
+                    <div class="o-regulations-wayfinder_sidebar">
                         <span class="h4">
                             {{ regulation.short_name }}
                         </span>
                     </div>
-                    <div class="content_main content__flush-top content__flush-bottom">
-                        <div class="o-regulations-wayfinder__content">
-                            <div class="o-regulations-wayfinder__heading">
-                                <a href="#" class="h4 o-regulations-wayfinder_link">
-                                    <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
-                                </a>
-                            </div>
-                            <div class="o-regulations-wayfinder__version">
-                                {% if requested_version.effective_date < current_version.effective_date %}
-                                    Previous version (effective
-                                    {{ ap_date(requested_version.effective_date) }} to
-                                    {{ ap_date(next_version.effective_date) }})
-                                {% endif %}
-                                {% if requested_version.effective_date > current_version.effective_date %}
-                                    Future version (effective
-                                    {{ ap_date(requested_version.effective_date) }})
-                                {% endif %}
-                            </div>
+                    <div class="o-regulations-wayfinder_content">
+                        <a href="#" class="h4 o-regulations-wayfinder_link">
+                            <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                        </a>
+                        <div class="o-regulations-wayfinder_version">
+                            {% if requested_version.effective_date < current_version.effective_date %}
+                                Previous version (effective
+                                {{ ap_date(requested_version.effective_date) }} to
+                                {{ ap_date(next_version.effective_date) }})
+                            {% endif %}
+                            {% if requested_version.effective_date > current_version.effective_date %}
+                                Future version (effective
+                                {{ ap_date(requested_version.effective_date) }})
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -303,7 +295,7 @@
     {% else %}
         {% if page.sidefoot %}
             <aside class="o-prefooter">
-                {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+                {{ streamfield_sidefoot.render(page.sidefoot) }}
             </aside>
         {% endif %}
     {% endif %}

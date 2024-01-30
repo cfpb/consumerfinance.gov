@@ -1,14 +1,8 @@
 export class ActivitySearch {
   open() {
     cy.visit(
-      '/consumer-tools/educator-tools/youth-financial-education/teach/activities/'
+      '/consumer-tools/educator-tools/youth-financial-education/teach/activities/',
     );
-  }
-
-  toggleFilter(label) {
-    cy.get('.content_sidebar').within(() => {
-      cy.contains(label).click();
-    });
   }
 
   selectFilter(name, value) {
@@ -19,8 +13,8 @@ export class ActivitySearch {
     return cy.get('.results_filters-clear');
   }
 
-  resultsFilterTag(filterName) {
-    return cy.get(`[data-value="#building-block--${filterName}"]`);
+  resultsFilterTag() {
+    return cy.get('[data-value="#activity_duration--15-20-minutes"]');
   }
 
   resultsCountEmpty() {
@@ -29,8 +23,10 @@ export class ActivitySearch {
 
   search(term) {
     cy.get('#search-text').type(term);
-    cy.get('form[action="."]').within(() => {
-      cy.get('button').first().click();
-    });
+    cy.get('form[action="."]')
+      .first()
+      .within(() => {
+        cy.get('button').first().click();
+      });
   }
 }

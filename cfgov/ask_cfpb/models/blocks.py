@@ -38,13 +38,11 @@ class AskAnswerContent(blocks.StreamBlock):
             ),
         ]
     )
-    table_block = organisms.AtomicTableBlock(
-        table_options={"renderer": "html"}
-    )
-    tip = Tip()
+    table = organisms.Table()
+    tip = Tip(label="Tip (floats right)")
     video_player = organisms.VideoPlayer()
-    how_to_schema = HowTo()
-    faq_schema = FAQ()
+    how_to_schema = HowTo(label="Google Schema - How To")
+    faq_schema = FAQ(label="Google Schema - FAQ")
 
     class Meta:
         template = "v1/includes/blocks/schema/content-block.html"

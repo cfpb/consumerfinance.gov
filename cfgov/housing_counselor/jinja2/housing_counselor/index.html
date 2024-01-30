@@ -40,7 +40,7 @@
                             by calling 1-855-411-CFPB (2372).
                             You can also access a list of nationwide
                             HUD-approved counseling agencies at:
-                            https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm
+                            https://www.hud.gov/program_offices/housing/sfh/hcc/hcc_home
                         </p>
                     </div><!-- end .hud_hca_api_print-header -->
 
@@ -65,7 +65,7 @@
                                     offer independent advice, often at little or
                                     no cost to you. There is also a
                                     <a class="a-link a-link__icon"
-                                       href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm">
+                                       href="https://www.hud.gov/program_offices/housing/sfh/hcc/hcc_home">
                                         <span class="a-link_text">list of nationwide HUD-approved counseling agencies</span></a>.
                                 </p>
                                 <p>
@@ -80,7 +80,7 @@
                                           content-l_col
                                           content-l_col-1-3">
                                 <header class="m-slug-header">
-                                    <h2 class="a-heading">
+                                    <h2 class="m-slug-header_heading">
                                         Coronavirus affecting your mortgage or housing?
                                     </h2>
                                 </header>
@@ -144,22 +144,24 @@
                                                    placeholder="Please enter a five-digit ZIP code">
                                         </div>
 
-                                        <div class="m-form-field-with-button_wrapper">
-                                            <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
-                                            <div class="m-form-field-with-button_info">
-                                                <p>
-                                                    This tool is powered by
-                                                    <a class="a-link a-link__icon"
-                                                       href="https://data.hud.gov/housing_counseling.html">
-                                                        <span class="a-link_text">HUD's</span>
-                                                        {{ svg_icon('external-link') }}</a>
-                                                    official list of housing counselors.
-                                                </p>
-                                                <p>
-                                                    If you notice errors in the housing counselor data,
-                                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-                                                </p>
-                                            </div>
+                                        <button class="a-btn a-btn__full-on-xs"
+                                                type="submit"
+                                                data-cy="btn-fahc-submit">
+                                            Find a counselor
+                                        </button>
+                                        <div class="m-form-field-with-button_info">
+                                            <p>
+                                                This tool is powered by
+                                                <a class="a-link a-link__icon"
+                                                    href="https://data.hud.gov/housing_counseling.html">
+                                                    <span class="a-link_text">HUD's</span>
+                                                    {{ svg_icon('external-link') }}</a>
+                                                official list of housing counselors.
+                                            </p>
+                                            <p>
+                                                If you notice errors in the housing counselor data,
+                                                contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                                            </p>
                                         </div>
                                     </div>
                                 </form>

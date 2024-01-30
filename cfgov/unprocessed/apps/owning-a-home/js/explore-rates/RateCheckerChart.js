@@ -6,7 +6,6 @@ import highchartsExport from 'highcharts/modules/exporting';
 
 /**
  * RateCheckerChart
- *
  * @class
  * @classdesc Creates the left-hand side chart on /owning-a-home/explore-rates/
  * @returns {RateCheckerChart} An instance.
@@ -46,7 +45,6 @@ function RateCheckerChart() {
 
   /**
    * Initialize and create highcharts-related instances.
-   *
    * @returns {RateCheckerChartMenu} A menu instance.
    */
   function _createHighcharts() {
@@ -56,67 +54,12 @@ function RateCheckerChart() {
         type: 'column',
         animation: false,
       },
-      title: {
-        text: '',
-      },
-      xAxis: {
-        categories: [1, 2, 3, 4, 5],
-      },
-      yAxis: [
-        {
-          title: {
-            text: '',
-          },
-          labels: {
-            formatter: function () {
-              return this.value > 9 ? this.value + '+' : this.value;
-            },
-          },
-          max: 10,
-          min: 0,
-        },
-        {
-          title: {
-            text: 'Number of lenders offering rate',
-          },
-        },
-      ],
       series: [
         {
           name: 'Number of Lenders',
-          data: [1, 1, 1, 1, 1],
           showInLegend: false,
-          dataLabels: {
-            enabled: true,
-            useHTML: true,
-            crop: false,
-            overflow: 'none',
-            defer: true,
-            color: '#919395',
-            x: 2,
-            y: 2,
-            formatter: function () {
-              const point = this.point;
-              window.setTimeout(function () {
-                if (point.y > 9) {
-                  point.dataLabel.attr({
-                    y: -32,
-                    x: point.plotX - 24,
-                  });
-                }
-              });
-              return (
-                '<div class="data-label"><span class="data-label_number">' +
-                this.x +
-                '</span><br>|</div>'
-              );
-            },
-          },
         },
       ],
-      credits: {
-        text: '',
-      },
       tooltip: {
         useHTML: true,
         formatter: function () {
@@ -144,7 +87,6 @@ function RateCheckerChart() {
 
   /**
    * Render (or update) the _highCharts chart.
-   *
    * @param {object} data - Data processed from the API.
    */
   function render(data) {
@@ -167,7 +109,6 @@ function RateCheckerChart() {
 
   /**
    * Set the state of the slider.
-   *
    * @param {number} state - 0 = okay, 1 = warning state.
    */
   function setStatus(state) {
@@ -198,7 +139,6 @@ function RateCheckerChart() {
 
   /**
    * Show an error alert.
-   *
    * @param {number} [state] - Pass RateCheckerChart.STATUS_WARNING
    *   or RateCheckerChart.STATUS_ERROR.
    */

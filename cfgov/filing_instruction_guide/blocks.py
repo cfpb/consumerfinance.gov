@@ -13,10 +13,6 @@ content_block_options = [
     ("content", blocks.RichTextBlock(icon="edit")),
     ("info_unit_group", organisms.InfoUnitGroup()),
     ("well", organisms.Well()),
-    (
-        "table_block",
-        organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-    ),
     ("simple_chart", organisms.SimpleChart()),
     ("expandable_group", organisms.ExpandableGroup()),
     ("expandable", organisms.Expandable()),

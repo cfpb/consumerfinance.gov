@@ -171,7 +171,7 @@ class PageCreationTestCase(TestCase):
     def test_browse_filterable_page_with_optional_arguments(self):
         """browse filterable page should be created correctly with one or \
             more optional arguments provided"""
-        path = create_browse_filterable_page("Test", "test", None, True)
+        path = create_browse_filterable_page("Test", "test", None)
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
@@ -179,7 +179,7 @@ class PageCreationTestCase(TestCase):
     def test_browse_page_with_optional_arguments(self):
         """browse page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_browse_page("Test", "test", None, True)
+        path = create_browse_page("Test", "test", None)
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)

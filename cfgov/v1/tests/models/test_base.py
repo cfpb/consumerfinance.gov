@@ -74,23 +74,6 @@ class TestCFGOVPageContext(TestCase):
         test_context = self.page.get_context(self.request)
         self.assertEqual(test_context["banners"].count(), 2)
 
-    def test_get_context_no_schema_json(self):
-        test_context = self.page.get_context(self.request)
-        self.assertNotIn("schema_json", test_context)
-
-    def test_get_context_with_schema_json(self):
-        self.page.schema_json = {
-            "@type": "SpecialAnnouncement",
-            "@context": "http://schema.org",
-            "category": "https://www.wikidata.org/wiki/Q81068910",
-            "name": "Special announcement headline",
-            "text": "Special announcement details",
-            "datePosted": "2020-03-17",
-            "expires": "2020-03-24",
-        }
-        test_context = self.page.get_context(self.request)
-        self.assertIn("schema_json", test_context)
-
     def test_get_context_sets_meta_description_from_search_description(self):
         result = "Correct Meta Description"
         self.page = LandingPage(
@@ -136,24 +119,6 @@ class TestCFGOVPageContext(TestCase):
         test_context = self.page.get_context(self.request)
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
-
-    def test_get_context_sets_meta_description_from_preview_description(self):
-        expected = "Correct Meta Description"
-        self.page = AbstractFilterPage(
-            title="test",
-            preview_description="<p>" + expected + "</p>",
-            header=json.dumps(
-                [
-                    {
-                        "type": "text_introduction",
-                        "value": {"intro": "Incorrect Meta Description"},
-                    },
-                ]
-            ),
-        )
-        test_context = self.page.get_context(self.request)
-        result = test_context["meta_description"]
-        self.assertEqual(" " + expected + " ", result)
 
     def test_get_context_sets_meta_description_from_header_text_introduction_intro(
         self,

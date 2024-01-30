@@ -4,7 +4,6 @@ from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.blocks import StreamValue
-from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.tests.utils import get_test_image_file
 from wagtail.models import Site
 
@@ -23,7 +22,6 @@ from v1.models import (
     Contact,
     LandingPage,
     LearnPage,
-    Resource,
     SublandingPage,
 )
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -56,15 +54,6 @@ class OrganismsTestCase(TestCase):
         )
         contact.save()
         return contact
-
-    def create_resource(self):
-        thumb = CFGOVImage.objects.create(
-            title="test resource thumbnail", file=get_test_image_file()
-        )
-
-        resource = Resource(title="Test Resource")
-        resource.thumbnail = thumb
-        resource.save()
 
     def test_well(self):
         """Well content correctly displays on a Landing Page"""
@@ -141,39 +130,6 @@ class OrganismsTestCase(TestCase):
         publish_page(child=landing_page)
         response = django_client.get("/landing/")
         self.assertContains(response, "Info Unit Group")
-
-    def test_tableblock(self):
-        """Table correctly displays on a Learn Page"""
-        learn_page = LearnPage(title="Learn Page", slug="learn")
-        learn_page.content = StreamValue(
-            learn_page.content.stream_block, [atomic.table_block], True
-        )
-        publish_page(child=learn_page)
-        response = django_client.get("/learn/")
-        self.assertContains(response, "Header One")
-        self.assertContains(response, "Row 1-1")
-        self.assertContains(response, "Row 2-1")
-
-    def test_tableblock_missing_attributes(self):
-        """Table correctly displays when value dict is missing attributes"""
-        table_context = dict(atomic.table_block)
-        value = table_context.get("value")
-        del value["first_row_is_table_header"]
-        del value["first_col_is_header"]
-        table = TableBlock()
-        html = str(table.render(table.to_python(value)))
-
-        self.assertRegex(html, "Header One")
-        self.assertRegex(html, "Row 1-1")
-        self.assertRegex(html, "Row 2-1")
-
-        self.assertIsNone(value.get("first_row_is_table_header"), None)
-        self.assertIsNone(value.get("first_col_is_header"), None)
-
-        with self.assertRaises(KeyError):
-            value["first_row_is_table_header"]
-        with self.assertRaises(KeyError):
-            value["first_col_is_header"]
 
     def test_expandable_group(self):
         """Expandable group correctly displays on a Browse Page"""
@@ -281,79 +237,6 @@ class OrganismsTestCase(TestCase):
             ),
         )
         self.assertContains(response, "January 2018")
-
-    def test_resource_list(self):
-        """Resource List renders thumbnails when show_thumbnails is True"""
-        browse_page = BrowsePage(
-            title="Browse Page",
-            slug="browse",
-        )
-        browse_page.content = StreamValue(
-            browse_page.content.stream_block,
-            [atomic.snippet_list_show_thumbnails_false],
-            True,
-        )
-        publish_page(child=browse_page)
-
-        self.create_resource()
-
-        response = self.client.get("/browse/")
-        self.assertContains(response, "Test Resource List")
-        self.assertContains(response, "Test Resource")
-
-    def test_resource_list_show_thumbnails_false(self):
-        """Resource List doesn't show thumbs when show_thumbnails is False"""
-        no_thumbnails_page = BrowsePage(
-            title="No Thumbnails Page",
-            slug="no-thumbnails",
-        )
-        no_thumbnails_page.content = StreamValue(
-            no_thumbnails_page.content.stream_block,
-            [atomic.snippet_list_show_thumbnails_false],
-            True,
-        )
-        publish_page(child=no_thumbnails_page)
-
-        self.create_resource()
-
-        response = self.client.get("/no-thumbnails/")
-        self.assertNotContains(response, "o-resource-list_list-thumbnail")
-
-    def test_resource_list_show_thumbnails_true(self):
-        """Resource List shows thumbnails when show_thumbnails is True"""
-        thumbnails_page = BrowsePage(
-            title="Thumbnails Page",
-            slug="thumbnails",
-        )
-        thumbnails_page.content = StreamValue(
-            thumbnails_page.content.stream_block,
-            [atomic.snippet_list_show_thumbnails_true],
-            True,
-        )
-        publish_page(child=thumbnails_page)
-
-        self.create_resource()
-
-        response = self.client.get("/thumbnails/")
-        self.assertContains(response, "o-resource-list_list-thumbnail")
-
-    def test_resource_list_set_col_width(self):
-        """Resource List Assets column width is fixed when set"""
-        assets_width_page = BrowsePage(
-            title="Assets Width Test Page",
-            slug="assets-width",
-        )
-        assets_width_page.content = StreamValue(
-            assets_width_page.content.stream_block,
-            [atomic.snippet_list_actions_column_width_40],
-            True,
-        )
-        publish_page(child=assets_width_page)
-
-        self.create_resource()
-
-        response = self.client.get("/assets-width/")
-        self.assertContains(response, 'u-w40pct"')
 
 
 class FeaturedContentTests(TestCase):

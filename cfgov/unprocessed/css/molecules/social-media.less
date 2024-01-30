@@ -1,98 +1,57 @@
-/* topdoc
-  name: Social Media
-  family: cfgov-molecules
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="m-social-media m-social-media__share">
-            <h5 class="m-social-media_heading">Share this</h5>
-            <ul class="m-list">
-                <li class="m-list_item">
-                    <a class="m-social-media_icon" href="#">
-                        {{ svg_icon('email') }}
-                        <span class="u-visually-hidden">
-                            Share by email
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-social-media.m-social-media__share
-            .m-social-media_heading
-            ul.m-list
-              li.m-list_item
-                .m-social-media_icon
-                  .cf-icon-svg
-                  span.u-visually-hidden
-      notes:
-        - "m-social-media__follow modifier is identical
-           but does not include the heading."
-  tags:
-    - cfgov-molecules
-*/
-
 .m-social-media {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: unit(10px / @base-font-size-px, rem);
+  column-gap: unit(30px / @base-font-size-px, rem);
 
-  // This could be wrapped in the `m-social-media__share` modifier,
-  // but it's ok on its own too.
-  &_heading {
-    .heading-5();
-    display: inline-block;
-    // 0.25em subtracted to compensate for inline spacing
-    padding-right: unit(@grid_gutter-width / @font-size - 0.25em, em);
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
-
-  .m-list {
-    display: inline-block;
-    vertical-align: middle;
-
-    .m-list_item {
-      // 0.25em subtracted to compensate for inline spacing
-      margin-right: unit(
-        (@grid_gutter-width / 2) / @base-font-size-px - 0.25em,
-        em
-      );
-      margin-bottom: 0;
-    }
-
-    .m-list_item:last-child {
-      margin-right: 0;
-    }
+  &_icons {
+    display: flex;
+    gap: unit(10px / @base-font-size-px, rem);
   }
 
   &_icon {
     color: @gray-dark;
-    font-size: unit(@grid_gutter-width / @base-font-size-px, em);
+    font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
     line-height: 1;
     .u-link__colors( @gray-dark, @pacific-80 );
     .u-link__no-border();
   }
 
-  &_print {
-    padding-left: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    border-left: 1px solid @black;
+  // Only for elements in "share" (m-social-media__share) section.
+  &__share {
+    .m-social-media_heading {
+      .heading-5();
+      margin: auto 0;
+    }
+
+    .m-social-media_print {
+      padding-left: unit(10px / @base-font-size-px, rem);
+      border-left: 1px solid @black;
+    }
   }
 
   // Hide on print.
   .respond-to-print( {
-    & {
-      display: none;
-    }
-  } );
+    display: none;
+  });
+
+  // Hide print when JS is off.
+  .no-js &_print {
+    display: none;
+  }
 }
 
-.no-js .m-social-media_print {
-  display: none;
-}
+// Right-to-left (RTL) layout.
+html[lang='ar'] .m-social-media__share {
+  .m-social-media_print {
+    padding-left: 0;
+    border-left: none;
+    padding-right: unit(10px / @base-font-size-px, rem);
+    border-right: 1px solid @black;
+  }
 
-/* topdoc
-    name: EOF
-    eof: true
-*/
+  // TODO: Scrutinize usage of unordered list and see if it can be removed.
+  .m-list_item:first-child {
+    margin-right: 0;
+  }
+}

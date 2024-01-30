@@ -1,6 +1,5 @@
 /**
  * FormModel
- *
  * @class
  * @classdesc Initializes a new FormModel utility.
  * This class represents a form as a collection (Map) of the various input
@@ -93,7 +92,6 @@ function FormModel(form) {
 
   /**
    * Get the text associated with a form field's label.
-   *
    * @param {HTMLElement} field - A form field.
    * @param {boolean} isInGroup - Flag used determine if field is in group.
    * @returns {string} The label of the field.
@@ -126,7 +124,6 @@ function FormModel(form) {
    * Retrieve a string representing the type of an element.
    * May be a custom data-type attribute, the type attribute (of INPUT elements)
    * or the lowercased HTML tag name.
-   *
    * @param {HTMLElement} elem - The HTML element to check. An input usually.
    * @returns {string} A type string for the element.
    */

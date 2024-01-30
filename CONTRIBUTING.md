@@ -58,20 +58,20 @@ When in doubt, mimic the styles and patterns in the existing codebase.
 Within the root directory, run `npx browserslist` to output the set of browser
 targets given to `autoprefixer` (CSS) transpiling.
 
-!!! note
-A browserslist string is used in `package.json`.
-See the
-[browserslist docs](https://github.com/browserslist/browserslist#full-list)
-for information on this string and the defaults.
+> [!NOTE]
+> A browserslist string is used in `package.json`.
+> See the
+> [browserslist docs](https://github.com/browserslist/browserslist#full-list)
+> for information on this string and the defaults.
 
 For JavaScript, `esbuild` uses the [`es6`](http://es6-features.org/) target and
 our code conditionally includes JavaScript in browsers that
 [support fetch](https://caniuse.com/fetch).
 
-!!! note
-JavaScript may still
-be delivered to legacy browsers in the form of our analytics and
-related scripts.
+> [!NOTE]
+> JavaScript may still
+> be delivered to legacy browsers in the form of our analytics and
+> related scripts.
 
 #### Browser Testing
 

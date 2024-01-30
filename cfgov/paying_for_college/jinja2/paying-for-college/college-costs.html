@@ -3,7 +3,7 @@
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'v1/includes/atoms/radio-button.html' as radio %}
 {% import 'v1/includes/molecules/notification.html' as notification with context %}
-{% from 'college-cost-blocks/macros/financial-item-expandable.html' import expandable with context %}
+{% from 'college-cost-blocks/macros/financial-item-flyout.html' import flyout with context %}
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
 {% import 'college-cost-blocks/macros/financial-item-text.html' as text_item with context %}
 {% import 'college-cost-blocks/macros/number-callout.html' as number_callout with context %}
@@ -14,10 +14,8 @@
 {%- endblock css %}
 
 {% block content scoped %}
-    {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
     <main class="content college-costs" data-state_gotstarted="false"
-          id="main"
-          {{ accessible_languages.render() }}> <!-- content__hide-horizontal-overflow removed for position sticky to work-->
+          id="main"> <!-- content__hide-horizontal-overflow removed for position sticky to work-->
         {%- include 'college-cost-blocks/0-intro.html' -%}
         <div class="college-costs_app-segment content content__1-3 block block__flush-top">
             <div class="content_wrapper">

@@ -4,7 +4,6 @@ import PLUS_ROUND_ICON from '@cfpb/cfpb-icons/src/icons/plus-round.svg';
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.
- *
  * @param {string} address - An address.
  * @param {Array} duplicates - An array of addresses.
  * @returns {boolean} True if it is a duplicate, false otherwise.
@@ -67,7 +66,6 @@ function isValid(row) {
 
 /**
  * Add an address table row to the page's markup.
- *
  * @param {object} result - Address data.
  */
 function render(result) {
@@ -140,7 +138,7 @@ function pushAddress(row, addresses) {
       ', ' +
       row.data.State +
       ' ' +
-      row.data.Zip
+      row.data.Zip,
   );
   return addresses;
 }

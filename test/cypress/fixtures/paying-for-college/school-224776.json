@@ -1,0 +1,112 @@
+{
+  "books": "1500",
+  "city": "Dallas",
+  "cohortRankByControl": {
+    "grad_rate": {
+      "cohort_count": 1100,
+      "percentile_rank": 12
+    },
+    "repay_3yr": {
+      "cohort_count": 1285,
+      "percentile_rank": 17
+    },
+    "median_total_debt": {
+      "cohort_count": 1283,
+      "percentile_rank": 30
+    }
+  },
+  "cohortRankByHighestDegree": {
+    "grad_rate": {
+      "cohort_count": 1621,
+      "percentile_rank": 10
+    },
+    "repay_3yr": {
+      "cohort_count": 1850,
+      "percentile_rank": 13
+    },
+    "median_total_debt": {
+      "cohort_count": 1851,
+      "percentile_rank": 29
+    }
+  },
+  "cohortRankByState": {
+    "grad_rate": {
+      "cohort_count": 81,
+      "percentile_rank": 19
+    },
+    "repay_3yr": {
+      "cohort_count": 103,
+      "percentile_rank": 17
+    },
+    "median_total_debt": {
+      "cohort_count": 100,
+      "percentile_rank": 35
+    }
+  },
+  "control": "For-profit",
+  "defaultRate": "0.145",
+  "enrollment": 587,
+  "gradRate": "0.223",
+  "highestDegree": "Graduate degree",
+  "medianAnnualPay": 33400,
+  "medianAnnualPay6Yr": 26900,
+  "medianMonthlyDebt": "260.33",
+  "medianTotalDebt": "12667.0",
+  "netPriceAvg": 19032,
+  "netPriceAvgSlices": {
+    "0_30k": 16833,
+    "30k_48k": 19680,
+    "48k_75k": 20816,
+    "75k_110k": 23013,
+    "110k_plus": 23184
+  },
+  "nicknames": "",
+  "offersPerkins": false,
+  "onCampusAvail": "No",
+  "online": false,
+  "otherOffCampus": "5899",
+  "otherOnCampus": null,
+  "otherWFamily": "4129",
+  "predominantDegree": "Bachelor's degree",
+  "programCodes": {
+    "graduate": [],
+    "undergrad": [
+      {
+        "code": "444",
+        "name": "Graphic Design",
+        "level": "Bachelor's degree",
+        "salary": 26591
+      }
+    ]
+  },
+  "programCount": 5,
+  "programsPopular": [
+    "Visual and Performing Arts",
+    "Personal and Culinary Services",
+    "Computer and Information Sciences and Support Services",
+    "Business, Management, Marketing, and Related Support Services",
+    "Communications Technologies/Technicians and Support Services"
+  ],
+  "rateAssociateTransfer": null,
+  "rateDefault": "0.145",
+  "rateGraduation": "0.223",
+  "rateRepay3yr": "0.2547585840",
+  "region": "SO",
+  "repay3yr": "0.2547585840",
+  "roomBrdOffCampus": "6652",
+  "roomBrdOnCampus": null,
+  "school": "The Art Institute of Dallas",
+  "schoolID": 224776,
+  "schoolSalary": 33400,
+  "settlementSchool": "edmc",
+  "state": "TX",
+  "tuitionGradInDis": "14208",
+  "tuitionGradInS": "14208",
+  "tuitionGradOss": "14208",
+  "tuitionUnderInDis": "17568",
+  "tuitionUnderInS": 17568,
+  "tuitionUnderOoss": 17568,
+  "underInvestigation": false,
+  "url": "www.artinstitutes.edu/dallas/",
+  "zip5": "75231"
+}

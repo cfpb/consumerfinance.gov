@@ -3,7 +3,6 @@ import { extractSeries, overrideStyles } from './utils.js';
 
 /**
  * Generates an array of filters, bucketed based on key if present
- *
  * @param {object} filter - Object with a filter key and possible label
  * @param {object} data - The raw chart data
  * @param {boolean} isDate - Whether the data should be stored as JS dates
@@ -43,7 +42,7 @@ function processDate(option) {
 function makeSelectFilterDOM(options, chartNode, filter) {
   const id = Math.random() + filter.key;
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters'
+    'o-simple-chart_filters',
   )[0];
 
   const wrapper = document.createElement('div');
@@ -107,7 +106,7 @@ function makeSelectFilterDOM(options, chartNode, filter) {
  */
 function makeRadioFilterDOM(buckets, chartNode, filter) {
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters'
+    'o-simple-chart_filters',
   )[0];
   const radios = [];
 
@@ -179,7 +178,6 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
 
 /**
  * Filters raw or transformed data by a select prop.
- *
  * @param {Array} data - Transformed or raw chart data.
  * @param {object} filterProp - Key on which to filter.
  * @param {object} filterVal - Value of the selectNode against
@@ -198,7 +196,6 @@ function filterData(data, filterProp, filterVal) {
 
 /**
  * Wires up filter elements when provided filters
- *
  * @param {object} dataAttributes - Data passed via data-* tags
  * @param {object} chartNode - The DOM node of the current chart
  * @param {object} chart - The initialized chart
@@ -283,4 +280,4 @@ function attachFilters(selectors, chart, dataAttributes, data) {
   });
 }
 
-export { initFilters, makeSelectFilterDOM };
+export { initFilters };

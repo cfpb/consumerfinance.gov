@@ -161,7 +161,7 @@ describe('Dropdown utils', () => {
   it('should highlight the dropdown', () => {
     dropDownUtils('foo').showHighlight();
     expect(getDivClassList(containerDom).contains('highlight-dropdown')).toBe(
-      true
+      true,
     );
   });
 
@@ -169,7 +169,7 @@ describe('Dropdown utils', () => {
     dropDownUtils('foo').showHighlight();
     dropDownUtils('foo').hideHighlight();
     expect(getDivClassList(containerDom).contains('highlight-dropdown')).toBe(
-      false
+      false,
     );
   });
 });

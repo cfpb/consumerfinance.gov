@@ -1,11 +1,3 @@
-/* topdoc
-  name: Base styles for definition lists
-  family: cf-core
-  notes:
-    - "Sets the term and definition in-line to each other but broken into rows"
-  tags:
-    - cf-core
-*/
 dt {
   .h5();
   display: inline-block;
@@ -21,26 +13,12 @@ dd {
   display: inline;
   margin-left: 0.2em;
 
-  &:after {
+  &::after {
     display: block;
     content: '';
   }
 }
 
-/* topdoc
-  name: Eyebrow
-  family: cf-typography
-  notes:
-    - "Sets a class alias for eyebrow-style headings"
-  tags:
-    - cf-core
-*/
-
 .eyebrow {
   .heading-5();
 }
-
-/* topdoc
-  name: EOF
-  eof: true
-*/

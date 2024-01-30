@@ -1,12 +1,30 @@
-{% extends 'v1/layouts/content-base.html' %}
+{% extends 'v1/layouts/base.html' %}
 
-{% block body_content scoped %}
-<div class="content_wrapper">
-    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-        {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
-        <section class="content_main-inner" {{ accessible_languages.render() }}>
-            {% block content_main scoped -%}{%- endblock %}
-        </section>
-    </div>
-</div>
+{% block content scoped %}
+    {# content_modifiers block is only used by story_page.html #}
+    <main class="content {% block content_modifiers -%}{%- endblock %}"
+          id="main">
+        {% block content_intro -%}{%- endblock %}
+        {% block pre_content scoped -%}
+            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
+                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+            {% endif %}
+
+            {% if breadcrumb_items | length > 0 %}
+                <div class="content_wrapper">
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                {{ breadcrumbs.render(breadcrumb_items) }}
+                </div>
+            {% endif %}
+        {%- endblock %}
+        {% block body_content scoped %}
+        <div class="content_wrapper">
+            <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
+                <section class="content_main-inner">
+                    {% block content_main scoped -%}{%- endblock %}
+                </section>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
 {% endblock %}

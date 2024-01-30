@@ -97,13 +97,7 @@ def create_landing_page(
     return new_page.get_url(None, site)
 
 
-def create_sublanding_filterable_page(
-    page_title,
-    page_slug,
-    parent_path=None,
-    has_filter=True,
-    filter_is_expanded=False,
-):
+def create_sublanding_filterable_page(page_title, page_slug, parent_path=None):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -116,22 +110,6 @@ def create_sublanding_filterable_page(
 
     # create page, add it as a child of parent, save, and publish
     new_page = SublandingFilterablePage(title=page_title, slug=page_slug)
-
-    # if page has a filter, add it
-    if has_filter:
-        new_page.content = json.dumps(
-            [
-                {
-                    "type": "filter_controls",
-                    "value": {
-                        "is_expanded": filter_is_expanded,
-                        "categories": {"page_type": "blog"},
-                        "topic_filtering": "sort_alphabetically",
-                        "language": True,
-                    },
-                }
-            ]
-        )
 
     try:
         parent.add_child(instance=new_page)
@@ -200,8 +178,6 @@ def create_browse_filterable_page(
     page_title,
     page_slug,
     parent_path=None,
-    has_filter=True,
-    filter_is_expanded=False,
 ):
     # create a new page and set it as the child of an existing page
     # get the current site
@@ -215,22 +191,6 @@ def create_browse_filterable_page(
 
     # create page, add it as a child of parent, save, and publish
     new_page = BrowseFilterablePage(title=page_title, slug=page_slug)
-
-    # if page has a filter, add it
-    if has_filter:
-        new_page.content = json.dumps(
-            [
-                {
-                    "type": "filter_controls",
-                    "value": {
-                        "is_expanded": filter_is_expanded,
-                        "categories": {"page_type": "research-reports"},
-                        "topic_filtering": "sort_alphabetically",
-                        "language": True,
-                    },
-                }
-            ]
-        )
 
     try:
         parent.add_child(instance=new_page)

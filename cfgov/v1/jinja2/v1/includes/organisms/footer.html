@@ -17,7 +17,6 @@
 {% macro render( language='en' ) %}
 {% import 'v1/includes/molecules/social-media.html' as social_media with context %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
-{% set external_redirect_url = '/external-site/?ext_url=' %}
 <footer class="o-footer">
     <div class="wrapper wrapper__match-content">
 
@@ -182,11 +181,11 @@
                 <ul class="o-footer_list m-list">
                     <li class="m-list_item">
                         <a class="m-list_link a-link"
-                           href="{{ _('https://usa.gov/') }}">{{ _('USA.gov') }}</a>
+                           href="{{ _('https://www.usa.gov/') }}">{{ _('USA.gov') }}</a>
                     </li>
                     <li class="m-list_item">
                         <a class="m-list_link a-link"
-                           href="https://www.federalreserve.gov/oig/default.htm">Office of Inspector General</a>
+                           href="https://oig.federalreserve.gov/">Office of Inspector General</a>
                     </li>
                     {% if language == 'es'%}
                     <li class="m-list_item">

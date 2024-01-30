@@ -5,6 +5,7 @@
 .m-search-hero {
   overflow: auto;
 
+  // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     @supports ( display: flex ) {
       display: flex;
@@ -15,6 +16,7 @@
 .m-search-hero_text {
   box-sizing: border-box;
 
+  // Desktop and above.
   .respond-to-min(@bp-med-min, {
     float: left;
     width: 60%;
@@ -29,6 +31,7 @@
   box-sizing: border-box;
   display: none;
 
+  // Desktop and above.
   .respond-to-min(@bp-med-min, {
     display: block;
     float: right;

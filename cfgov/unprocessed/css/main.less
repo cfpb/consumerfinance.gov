@@ -42,15 +42,10 @@
 // CF Tables
 @import (less) 'enhancements/tables.less';
 
-// CF ???
-@import (less) 'enhancements/print.less';
-
 /* Base patterns
    ========================================================================== */
 
 @import (less) 'images.less';
-@import (less) 'media.less';
-@import (less) 'meta.less';
 @import (less) 'misc.less';
 @import (less) 'schema.less';
 
@@ -63,9 +58,8 @@
    ========================================================================== */
 
 @import (less) 'atoms/overlay.less';
-@import (less) 'atoms/partially-styled-link.less';
-@import (less) 'atoms/rule-break.less';
 @import (less) 'atoms/tag.less';
+@import (less) 'atoms/rule-break.less';
 
 /* Molecule pieces
    ========================================================================== */
@@ -75,25 +69,24 @@
 @import (less) 'molecules/file-input.less';
 @import (less) 'molecules/form-field-with-button.less';
 @import (less) 'molecules/full-width-media.less';
-@import (less) 'molecules/global-banner.less';
 @import (less) 'molecules/global-eyebrow.less';
 @import (less) 'molecules/global-header-cta.less';
 @import (less) 'molecules/global-search.less';
 @import (less) 'molecules/info-unit.less';
 @import (less) 'molecules/inset.less';
 @import (less) 'molecules/translation-links.less';
-@import (less) 'molecules/nav-link.less';
 @import (less) 'molecules/related-metadata.less';
 @import (less) 'molecules/related-posts.less';
 @import (less) 'molecules/social-media.less';
+@import (less) 'molecules/tags.less';
 
 /* Organism pieces
    ========================================================================== */
 @import (less) 'organisms/ask-search.less';
 @import (less) 'organisms/audio-player.less';
-@import (less) 'organisms/email-popup.less';
 @import (less) 'organisms/footer.less';
 @import (less) 'organisms/form.less';
+@import (less) 'organisms/filterable-list-controls.less';
 @import (less) 'organisms/full-width-text-group.less';
 @import (less) 'organisms/header.less';
 @import (less) 'organisms/info-unit-group.less';
@@ -101,9 +94,8 @@
 @import (less) 'organisms/mega-menu.less';
 @import (less) 'organisms/post-preview.less';
 @import (less) 'organisms/prefooter.less';
-@import (less) 'organisms/read-more.less';
 @import (less) 'organisms/resource-list.less';
-@import (less) 'organisms/secondary-navigation.less';
+@import (less) 'organisms/secondary-nav.less';
 @import (less) 'organisms/sidebar-breakout.less';
 @import (less) 'organisms/sidebar-content.less';
 @import (less) 'organisms/video-player.less';
@@ -124,12 +116,15 @@
   text-align: center;
 }
 
-.o-card-group__flow .o-card-group_cards {
-  justify-content: center;
-}
-
 @horizontal-rule: @gray-40;
 
 body {
   -webkit-font-smoothing: antialiased;
+}
+
+// Make Arial the first-line font in Vietnamese pages' main content area.
+// This is used because Avenir Next does not contain all Vietnamese diacritics.
+// See https://[GHE]/Design-Development/Design-and-Content-Team/issues/175
+html[lang='vi'] body main {
+  font-family: Arial, 'Avenir Next', sans-serif;
 }

@@ -43,7 +43,6 @@ function initializeFinancialValues() {
 
 /**
  * updateFinancial - Update a property of the financial model
- *
  * @param {string} name - The name of the property to update
  * @param {*} value - The new value of the property
  * @param {boolean} updateView - (defaults true) should view be updated?
@@ -54,7 +53,6 @@ function updateFinancial(name, value, updateView) {
 
 /**
  * createFinancial - Create a new financial property
- *
  * @param {string} name - The name of the property to update
  * @param {*} value - The new value of the property
  */
@@ -71,7 +69,6 @@ function recalculateFinancials() {
 
 /**
  * updateExpense - Update a property of the expense model
- *
  * @param {string} name - The name of the property to update
  * @param {*} value - The new value of the property
  */
@@ -88,7 +85,6 @@ function recalculateExpenses() {
 
 /**
  * updateRegion - Update the region of the expenses model
- *
  * @param {string} region - A two-character string of the new region
  */
 function updateRegion(region) {
@@ -111,7 +107,6 @@ function clearFinancialCosts() {
 
 /**
  * getTopThreePrograms - Update the expenses with stored values
- *
  * @param {string} programs - list of top programs (programsPopular)
  * @returns {string} - top three programs
  */
@@ -144,7 +139,6 @@ function setSchoolValues(data) {
 
 /**
  * updateSchoolData - Fetch API data for school and update the model
- *
  * @param {string} iped - The id of the school
  * @returns {object} Promise of the XHR request
  */
@@ -168,7 +162,7 @@ function updateSchoolData(iped) {
 
         // Take only the top 3 programs
         schoolModel.values.programsTopThree = getTopThreePrograms(
-          schoolModel.values.programsPopular
+          schoolModel.values.programsPopular,
         );
 
         // add the full state name to the schoolModel
@@ -178,13 +172,13 @@ function updateSchoolData(iped) {
         if (programInfo) {
           financialModel.setValue(
             'salary_annual',
-            convertStringToNumber(programInfo.salary)
+            convertStringToNumber(programInfo.salary),
           );
           stateModel.setValue('programName', programInfo.name);
         } else {
           financialModel.setValue(
             'salary_annual',
-            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
+            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr')),
           );
         }
 
@@ -204,7 +198,7 @@ function updateSchoolData(iped) {
         iped = iped.replace(/\D/g, '');
         console.log(
           'An error occurred when accessing school data for ' + iped,
-          error
+          error,
         );
       });
   });
@@ -220,7 +214,6 @@ function updateFinancialsFromSchool() {
 
 /**
  * parseQueryParameters - put query values into models
- *
  * @param {object} queryObj - an Object containing query key/value pairs
  */
 function parseQueryParameters(queryObj) {
@@ -241,7 +234,7 @@ function parseQueryParameters(queryObj) {
         financialModel.setValue(
           'plusLoan_gradPlus',
           convertStringToNumber(queryObj[key]),
-          false
+          false,
         );
       }
     }
@@ -251,13 +244,12 @@ function parseQueryParameters(queryObj) {
   financialModel.setValue(
     'other_programLength',
     convertStringToNumber(queryObj.lenp),
-    false
+    false,
   );
 }
 
 /**
  * updateModelsFromQueryString - Translate query values into model values
- *
  * @param {object} queryObj - An object representing the url query string.
  */
 function updateModelsFromQueryString(queryObj) {
@@ -291,7 +283,6 @@ function updateModelsFromQueryString(queryObj) {
 
 /**
  * updateExpensesFromQueryObj - Update expenses with queryObj values
- *
  * @param {object} queryObj - An object representing the url query string.
  */
 function updateExpensesFromQueryObj(queryObj) {

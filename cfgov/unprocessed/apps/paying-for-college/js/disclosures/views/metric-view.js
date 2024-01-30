@@ -1,6 +1,4 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
+import $ from '../utils/dollar-sign.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
 import { formatUSD } from '../../../../../js/modules/util/format.js';
@@ -44,13 +42,11 @@ const metricView = {
   init: function () {
     this.settlementStatus = getSchool.values().settlementSchool || false;
     this.setMetrics(this.metrics);
-    this.updateGraphs();
     this.updateDebtBurden();
   },
 
   /**
    * Helper function which sets up metrics data
-   *
    * @param {object} metrics - An object of metrics
    * @returns {object} metrics with additional values added
    */
@@ -74,7 +70,6 @@ const metricView = {
   /**
    * Helper function that checks metric object to determine if they
    * are better or worse than the national metric
-   *
    * @param {object} metrics - the metrics object
    * @returns {string} the result of the check
    */
@@ -99,7 +94,6 @@ const metricView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} format - Type of number, for formatting
@@ -116,7 +110,6 @@ const metricView = {
 
   /**
    * Fixes overlapping points on a bar graph
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   fixOverlap: function ($graph) {
@@ -125,9 +118,9 @@ const metricView = {
     const metricKey = $graph.attr('data-metric');
     const metrics = metricView.metrics[metricKey];
     const schoolHeight = $school.find('.bar-graph_label').height();
-    const schoolTop = $school.position().top;
+    const schoolTop = $school.top();
     const nationalHeight = $national.find('.bar-graph_label').height();
-    const nationalTop = $national.position().top;
+    const nationalTop = $national.top();
     let $higherPoint = $national;
     let $lowerPoint = $school;
     // nationalPointHeight is the smaller and gives just the right offset
@@ -139,7 +132,7 @@ const metricView = {
       $lowerPoint = $national;
     }
     const $higherLabels = $higherPoint.find(
-      '.bar-graph_label, .bar-graph_value'
+      '.bar-graph_label, .bar-graph_value',
     );
 
     // If the values are equal, handle the display with CSS only
@@ -152,22 +145,24 @@ const metricView = {
       nationalTop <= schoolTop + schoolHeight &&
       nationalTop + nationalHeight >= schoolTop
     ) {
-      $higherLabels.css({
-        'padding-bottom': offset,
-        top: -offset,
+      $higherLabels.each((elem) => {
+        elem.style.paddingBottom = offset;
+        elem.style.top = -offset;
       });
 
       /* Need to reset the z-index since fixOverlap is called on page load and
          again when a verification button is clicked */
-      $higherPoint.css('z-index', 'auto');
-      $lowerPoint.css('z-index', 'auto');
-      $lowerPoint.css('z-index', 100);
+      $higherPoint.each((elem) => {
+        elem.style.zIndex = 'auto';
+      });
+      $lowerPoint.each((elem) => {
+        elem.style.zIndex = 100;
+      });
     }
   },
 
   /**
    * Sets text of each point on a bar graph (or a class if a point is missing)
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphValues: function ($graph) {
@@ -189,7 +184,6 @@ const metricView = {
 
   /**
    * Sets the position of each point on a bar graph
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphPositions: function ($graph) {
@@ -201,7 +195,7 @@ const metricView = {
     const min = $graph.attr('data-graph-min');
     const max = $graph.attr('data-graph-max');
     const $school = $graph.find('.bar-graph_point__you');
-    const $national = $graph.find('bar-graph_point__average');
+    const $national = $graph.find('.bar-graph_point__average');
     const bottoms = {};
     const bottomOffset = 20;
 
@@ -218,13 +212,16 @@ const metricView = {
       bottoms.school = graphHeight;
       $graph.addClass('bar-graph__high-point');
     }
-    $school.css('bottom', bottoms.school);
-    $national.css('bottom', bottoms.national);
+    $school.each((elem) => {
+      elem.style.bottom = bottoms.school + 'px';
+    });
+    $national.each((elem) => {
+      elem.style.bottom = bottoms.national + 'px';
+    });
   },
 
   /**
    * Classifies school value in relation to the national average
-   *
    * @param {number|NaN} metricKey - metric to be checked
    * @returns {string} Classes to add to the notification box
    */
@@ -277,23 +274,21 @@ const metricView = {
 
   /**
    * Adds the correct classes to metric notification boxes.
-   *
    * @param {object} $notification - jQuery object of the notification box.
    * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function ($notification, notificationClasses) {
-    $notification
-      .attr('class', 'metric_notification')
-      .addClass(notificationClasses);
+    $notification.attr('class', 'metric_notification');
+    $notification.addClass(notificationClasses);
   },
 
   /**
    * Hides the metric notification boxes for settlement schools.
-   *
    * @param {object} $notification - jQuery object of the notification box.
    */
   hideNotificationClasses: function ($notification) {
-    $notification.attr('class', 'metric_notification').hide();
+    $notification.attr('class', 'metric_notification');
+    $notification.hide();
   },
 
   /**
@@ -301,8 +296,8 @@ const metricView = {
    */
   updateGraphs: function () {
     const $graphs = $('.bar-graph');
-    $graphs.each(function () {
-      const $graph = $(this);
+    $graphs.each((elem) => {
+      const $graph = $(elem);
       const metricKey = $graph.attr('data-metric');
       const notificationClasses = metricView.getNotifications(metricKey);
       const $notification = $graph.siblings('.metric_notification');
@@ -320,7 +315,6 @@ const metricView = {
 
   /**
    * Calculates the student's debt burden.
-   *
    * @param {number} monthlyLoanPayment - Student's monthly loan payment after
    *   graduation.
    * @param {monthlySalary} monthlySalary - Student's estimated monthly salary
@@ -334,7 +328,6 @@ const metricView = {
 
   /**
    * Calculates a monthly salary from an annual salary.
-   *
    * @param {number} annualSalary - Annual salary.
    * @returns {number} Monthly salary.
    */
@@ -361,8 +354,8 @@ const metricView = {
     values.debtBurden = values.loanMonthly / values.monthlySalary;
 
     // Update debt burden elements
-    $elements.each(function () {
-      const $ele = $(this);
+    $elements.each((elem) => {
+      const $ele = $(elem);
       const prop = $ele.attr('data-debt-burden');
       let format = 'currency';
       if (prop === 'debtBurden') {
@@ -395,7 +388,6 @@ const metricView = {
 
   /**
    * Updates graph content with source - Program or School.
-   *
    * @param {object} $graph - jQuery object of the graph containing the points.
    */
   setGraphSources: function ($graph) {
@@ -415,7 +407,6 @@ const metricView = {
 
   /**
    * Updates view for settlement schools.
-   *
    * @param {object} $graph - jQuery object of the graph.
    */
   updateForSettlement: function ($graph) {

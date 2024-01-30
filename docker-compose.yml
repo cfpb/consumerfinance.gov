@@ -51,20 +51,3 @@ services:
       PGPORT: 5432
       ES_HOST: elasticsearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
-  docs:
-    build:
-      context: ./
-      dockerfile: ./docker/docs/Dockerfile
-    ports:
-      - 127.0.0.1:8888:8888
-    environment:
-      LANG: en_US.utf8
-      LC_ALL: en_US.utf8
-    volumes:
-      - ./:/src/consumerfinance.gov
-    entrypoint:
-      - sh
-      - /src/consumerfinance.gov/docker/docs/entrypoint.sh
-    working_dir: /src/consumerfinance.gov
-    stdin_open: true
-    tty: true

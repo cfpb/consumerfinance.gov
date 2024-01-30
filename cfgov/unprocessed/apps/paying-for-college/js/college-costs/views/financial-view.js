@@ -11,7 +11,7 @@ import {
   updateFinancial,
   updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
-import numberToMoney from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
@@ -31,7 +31,7 @@ const financialView = {
   _handleSeeStepsClick: function () {
     // TODO - This could all be written better.
     const selected = document.querySelector(
-      '.action-plan_choices .highlighted input[checked="true"]'
+      '.action-plan_choices .highlighted input[checked="true"]',
     );
     document.querySelectorAll('[data-action-plan]').forEach((elem) => {
       elem.classList.remove('active');
@@ -48,9 +48,9 @@ const financialView = {
     this._financialItems.forEach((elem) => {
       if (!selectorMatches(elem, ':focus')) {
         const prop = elem.dataset.financialItem;
-        const isRate = prop.substr(0, 5) === 'rate_';
-        const isFee = prop.substr(0, 4) === 'fee_';
-        const isHours = prop.substr(-5, 5) === 'Hours';
+        const isRate = prop.slice(0, 5) === 'rate_';
+        const isFee = prop.slice(0, 4) === 'fee_';
+        const isHours = prop.slice(-5) === 'Hours';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue(prop);
 
@@ -65,7 +65,7 @@ const financialView = {
         } else if (isHours) {
           val = Math.round(val * 10) / 10 + ' hours';
         } else {
-          val = numberToMoney({ amount: val, decimalPlaces: 0 });
+          val = formatUSD({ amount: val, decimalPlaces: 0 });
         }
 
         if (elem.tagName === 'INPUT') {
@@ -81,13 +81,13 @@ const financialView = {
   init: function () {
     this._financialItems = document.querySelectorAll('[data-financial-item]');
     this._financialInputs = document.querySelectorAll(
-      'input[data-financial-item]'
+      'input[data-financial-item]',
     );
     this._financialSpans = document.querySelectorAll(
-      'span[data-financial-item]'
+      'span[data-financial-item]',
     );
     this._costsOfferButton = document.querySelector(
-      '.costs_button-section button'
+      '.costs_button-section button',
     );
     _addInputListeners();
     _addButtonListeners();
@@ -111,21 +111,20 @@ function _addInputListeners() {
 function _addButtonListeners() {
   financialView._costsOfferButton.addEventListener(
     'click',
-    _handleCostsButtonClick
+    _handleCostsButtonClick,
   );
 }
 
 /**
  * Event handling for financial-item INPUT changes.
- *
  * @param {KeyboardEvent} event - The triggering keyboard event.
  */
 function _handleInputChange(event) {
   clearTimeout(financialView._inputChangeTimeout);
   const elem = event.target;
   const name = elem.dataset.financialItem;
-  const isRate = name.substr(0, 5) === 'rate_';
-  const isFee = name.substr(0, 4) === 'fee_';
+  const isRate = name.slice(0, 5) === 'rate_';
+  const isFee = name.slice(0, 4) === 'fee_';
   let value = convertStringToNumber(elem.value);
 
   financialView._currentInput = elem;
@@ -147,7 +146,6 @@ function _handleInputChange(event) {
 
 /**
  * Event handling for input clicks.
- *
  * @param {MouseEvent} event - The triggering click event object.
  */
 function _handleInputClick(event) {
@@ -162,7 +160,7 @@ function _handleInputClick(event) {
  */
 function _handleCostsButtonClick() {
   const checkedButton = document.querySelector(
-    'input[name="costs-offer-radio"]:checked'
+    'input[name="costs-offer-radio"]:checked',
   );
   let answer = '';
 

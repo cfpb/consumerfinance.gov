@@ -2,9 +2,10 @@
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import rangesliderJs from 'rangeslider-js';
 
+const BASE_CLASS = 'a-range';
+
 /**
  * Slider
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -12,7 +13,6 @@ import rangesliderJs from 'rangeslider-js';
  * @returns {Slider} An instance.
  */
 function Slider(element) {
-  const BASE_CLASS = 'a-range';
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector(`.${BASE_CLASS}_input`);
   const _labelDom = _dom.querySelector(`.${BASE_CLASS}_text`);
@@ -98,7 +98,6 @@ function Slider(element) {
 
   /**
    * Set the state of the slider.
-   *
    * @param {number} state - 0 = okay, 1 = warning state.
    */
   function setState(state) {

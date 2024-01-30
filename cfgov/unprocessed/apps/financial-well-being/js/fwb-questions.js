@@ -8,7 +8,6 @@ let questionStates;
 /**
  * Checks the selection status of a group of radio inputs,
  * belonging to a parent fieldset
- *
  * @param {HTMLElement} childRadios - An array of DOM elements.
  * @returns {boolean} The status of the group of inputs
  */
@@ -28,7 +27,6 @@ function checkQuestionState(childRadios) {
 /**
  * Checks the status of each fieldset to determine if
  * the user has completed the form
- *
  * @returns {boolean} The completion status of the form
  */
 function checkFormCompletion() {
@@ -46,7 +44,6 @@ function checkFormCompletion() {
 /**
  * Event handler to prevent clicking the submit button before
  * the form is completed
- *
  * @param {object} event - The event object for the click event.
  */
 function handleDisabledSubmit(event) {
@@ -74,7 +71,6 @@ function enableSubmit() {
 /**
  * Updates the status of the fieldset in the data store
  * and checks if the form has been completed
- *
  * @param {HTMLElement} input - A DOM element
  */
 function handleRadio(input) {
@@ -91,7 +87,6 @@ function handleRadio(input) {
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
- *
  * @param {HTMLElement} el - A DOM element
  */
 function handleAnalytics(el) {

@@ -52,6 +52,7 @@ class JobCategory(models.Model):
 
     class Meta:
         ordering = ["job_category"]
+        verbose_name_plural = "Job categories"
 
 
 class ServiceType(models.Model):

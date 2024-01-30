@@ -1,36 +1,3 @@
-/* topdoc
-  name: Form Field with Button
-  family: cfgov-molecules
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="name">
-                    <b>label text</b>(required)
-                </label>
-                <input id="" type="" name="" placeholder=""
-                class="m-form-field-with-button_field a-text-input">
-            </div>
-            <p class="short-desc">
-            </p>
-            <input class="a-btn a-btn__full-on-xs" type="" value="">
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-form-field-with-button
-            .form-group
-              label
-                b
-              .m-form-field-with-button_field.a-text-input
-            .short-desc
-            .btn btn__full
-  tags:
-    - cfgov-molecules
-*/
-
 // TODO: Look into merging email-signup and form-field-with-button styles
 // Form field with button isn't used anywhere else
 .m-form-field-with-button {
@@ -42,30 +9,4 @@
   .a-btn {
     margin-top: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
   }
-
-  &__inline-info {
-    .respond-to-min( 321px, {
-      .m-form-field-with-button_wrapper {
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: wrap-reverse;
-        justify-content: space-between;
-      }
-
-      .m-form-field-with-button_info {
-        order: 1;
-      }
-
-      .a-btn {
-        width: auto;
-        margin-right: unit( ( @grid_gutter-width / 3 ) / @base-font-size-px, em );
-      }
-    } );
-  }
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/

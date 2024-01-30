@@ -20,10 +20,10 @@ const HTML_SNIPPET = `
         <button class="a-btn a-btn__link u-hide-on-xs u-hide-on-sm o-expandable-facets_target" type="button">
           <span class="u-visually-hidden">Expand children</span>
           <span aria-hidden="true">Earn</span>
-          <span class="o-expandable-facets_cue o-expandable-facets_cue-open" aria-label="Show">
+          <span class="o-expandable-facets_cue o-expandable-facets_cue-open" role="img" aria-label="Show">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 988.2 1200" class="cf-icon-svg"><path d="M494.1 967.2c-17.3 0-33.8-6.8-46-19L18.6 518.6c-25.1-25.6-24.8-66.8.8-91.9 25.3-24.8 65.8-24.8 91.1 0l383.6 383.6 383.6-383.6c25.6-25.1 66.8-24.8 91.9.8 24.8 25.3 24.8 65.8 0 91.1L540.1 948.1c-12.2 12.2-28.7 19.1-46 19.1z"></path></svg>
           </span>
-          <span class="o-expandable-facets_cue o-expandable-facets_cue-close" aria-label="Hide">
+          <span class="o-expandable-facets_cue o-expandable-facets_cue-close" role="img" aria-label="Hide">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 988.7 1200" class="cf-icon-svg"><path d="M923.6 967.6c-17.3 0-33.8-6.8-46-19L494.1 565 110.5 948.5c-25.6 25.1-66.8 24.8-91.9-.8-24.8-25.3-24.8-65.8 0-91.1l429.5-429.5c25.4-25.4 66.5-25.4 91.9 0l429.6 429.5c25.4 25.4 25.4 66.5.1 91.9-12.3 12.3-28.8 19.1-46.1 19.1z"></path></svg>
           </span>
         </button>
@@ -56,15 +56,14 @@ describe('Expandable facets', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent('Event');
-    event.initEvent('load', true, true);
+    const event = new Event('load', { bubbles: true, cancelable: true });
     window.dispatchEvent(event);
 
     ef = document.querySelector('.o-expandable-facets');
     expandableFacet = new ExpandableFacets(ef);
     expandableFacet.init();
     efLabel = document.querySelector(
-      '.o-expandable-facets_checkbox ~ .a-label'
+      '.o-expandable-facets_checkbox ~ .a-label',
     );
     efTarget = document.querySelector('.o-expandable-facets_target');
     efBody = document.querySelector('.o-expandable-facets_content');
@@ -89,10 +88,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(true);
 
     simulateEvent('click', efTarget);
@@ -100,10 +99,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(false);
     expect(efTarget.classList.contains('is-open')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(false);
   });
 
@@ -121,10 +120,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded')
+      efBody.classList.contains('o-expandable-facets_content__expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed')
+      efBody.classList.contains('o-expandable-facets_content__collapsed'),
     ).toEqual(true);
   });
 });

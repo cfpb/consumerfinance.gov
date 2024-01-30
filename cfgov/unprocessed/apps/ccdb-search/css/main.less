@@ -1,4 +1,4 @@
-@import '../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css';
+@import url('../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css');
 @import (reference) 'cfpb-core.less';
 
 // TODO: !important's are added for styles that are overriding ccdb5-ui styles.
@@ -6,10 +6,9 @@
   max-width: 1200px !important;
 }
 
-@tablet: ~'only screen and (min-width: 600px) and (max-width: 900px)';
-
 .wrapper__match-content {
-  @media @tablet {
+  // Tablet size.
+  @media only screen and (min-width: 600px) and (max-width: 900px) {
     padding-left: 30px !important;
     padding-right: 30px !important;
   }
@@ -26,13 +25,14 @@
   position: relative;
   padding: 0 unit(15px / 16px, em) !important;
 
-  .respond-to-max( @bp-sm-max, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     padding: 0 unit( 10px / 16px, em ) !important;
-  } );
+  });
 
   // Overrides for design system.
-  .o-expandable_target .o-expandable_cue-close,
-  .o-expandable_target .o-expandable_cue-open {
+  .o-expandable_header .o-expandable_cue-close,
+  .o-expandable_header .o-expandable_cue-open {
     display: block !important;
   }
 
@@ -55,8 +55,8 @@
     height: auto;
   }
 
-  // Overrides for styles in meta.less
-  .tags {
+  // Overrides for styles in tags.less
+  .m-tags {
     padding-left: 0;
   }
 }

@@ -72,9 +72,10 @@
         outline-offset: 1px;
       }
     }
-  } );
+  });
 
   // Expandable overrides
+  // TODO: Make this its own component.
 
   .o-expandable-group .o-expandable {
     border: 4px solid transparent;
@@ -87,16 +88,17 @@
     }
 
     &.has-attention {
-      .respond-to-min( @bp-sm-min, {
+      // Tablet and above.
+      .respond-to-min(@bp-sm-min, {
         transform: translateX( unit( -@grid_gutter-width / 2 / @base-font-size-px, em ) );
       });
 
-      .o-expandable_link {
+      .o-expandable_cues {
         color: @black;
       }
     }
 
-    .o-expandable_content__expanded:before {
+    .o-expandable_content[data-open='true']::before {
       border: none;
     }
 
@@ -112,7 +114,7 @@
       &.o-expandable__form-explainer-category-@{index} {
         background-color: @@tint;
 
-        .o-expandable_target {
+        .o-expandable_header {
           background-color: @@light;
         }
 
@@ -124,18 +126,18 @@
         }
 
         &.has-attention {
-          .o-expandable_target {
+          .o-expandable_header {
             background-color: @@med;
           }
         }
 
         &.has-attention {
-          .o-expandable_target {
+          .o-expandable_header {
             background-color: @@med;
           }
         }
       }
-    } );
+    });
 
     &.o-expandable__form-explainer + h3 {
       margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -146,7 +148,7 @@
     max-width: 80%;
   }
 
-  .o-expandable_link {
+  .o-expandable_cues {
     display: block;
     width: 20%;
     text-align: right;
@@ -156,13 +158,15 @@
   .explain {
     margin: 0 auto unit(60px / @base-font-size-px, em);
 
-    .respond-to-max( @bp-xs-max, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
       &_image-map {
         display:flex;
       }
     });
 
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       &_container{
         display:flex;
       }
@@ -190,25 +194,21 @@
       &_pagination {
         margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
       }
-    } );
+    });
   }
 
   .explain_page {
     // Position is needed to allow .explain_image-map
     // to stick to the bottom of .explain_page.
-    .respond-to-min( @bp-sm-min, {
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
       position: relative;
-    } );
+    });
   }
 
   .explain_pagination {
     margin-top: unit(15px / @base-font-size-px, em);
     .u-clearfix();
-  }
-
-  .explain_pagination .pagination_form {
-    padding-top: unit(11px / @base-font-size-px, em);
-    padding-bottom: unit(10px / @base-font-size-px, em);
   }
 
   .form-explainer_page-buttons {
@@ -246,11 +246,12 @@
         padding: 0 unit(@grid_gutter-width / 2 / @base-font-size-px, em);
         cursor: pointer;
 
-        .respond-to-min( @bp-sm-min, {
+        // Tablet and above.
+        .respond-to-min(@bp-sm-min, {
           padding: 0;
           border-bottom-width: 1px;
           margin: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        } );
+        });
 
         &.current-page {
           &,

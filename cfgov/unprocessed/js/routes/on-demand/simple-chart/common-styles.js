@@ -24,7 +24,7 @@ const styles = {
     events: {
       render: function () {
         const zoomText = this.container.querySelector(
-          '.highcharts-range-selector-buttons > text'
+          '.highcharts-range-selector-buttons > text',
         );
         if (zoomText && zoomText.textContent !== 'Select time range')
           zoomText.textContent = 'Select time range';
@@ -52,7 +52,7 @@ const styles = {
     itemMarginBottom: 4,
     itemStyle: {
       color: colorMap['@gray'],
-      fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
+      fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: 16,
     },
     itemHiddenStyle: {

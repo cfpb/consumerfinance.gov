@@ -12,14 +12,14 @@ from django.views.generic.base import RedirectView, TemplateView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
-from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_re_path
 from flags.views import FlaggedTemplateView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls,
 )
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from ask_cfpb.views import (
     ask_autocomplete,
@@ -28,11 +28,7 @@ from ask_cfpb.views import (
     view_answer,
 )
 from core.decorators import akamai_no_store
-from core.views import (
-    CacheTaggedTemplateView,
-    ExternalURLNoticeView,
-    govdelivery_subscribe,
-)
+from core.views import CacheTaggedTemplateView, govdelivery_subscribe
 from housing_counselor.views import (
     HousingCounselorPDFView,
     HousingCounselorView,
@@ -155,11 +151,6 @@ urlpatterns = [
         RedirectView.as_view(
             url="/about-us/doing-business-with-us/%(path)s", permanent=True
         ),
-    ),
-    re_path(
-        r"^external-site/$",
-        ExternalURLNoticeView.as_view(),
-        name="external-site",
     ),
     re_path(
         r"^subscriptions/new/$", govdelivery_subscribe, name="govdelivery"
@@ -394,10 +385,6 @@ urlpatterns = [
         ),
     ),
     re_path(r"^sitemap\.xml$", akamai_no_store(sitemap), name="sitemap"),
-    re_path(
-        r"^consumer-tools/educator-tools/youth-financial-education/",
-        include("teachers_digital_platform.urls"),
-    ),
     re_path(
         r"^regulations3k-service-worker.js$",
         TemplateView.as_view(

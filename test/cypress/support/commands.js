@@ -48,7 +48,7 @@ Cypress.Commands.add(
         }
       })
       .focus({ log: false });
-  }
+  },
 );
 
 /**
@@ -61,11 +61,11 @@ Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
 
     expect(rect.top).not.to.be.greaterThan(
       bottom,
-      `Expected element not to be below the visible scrolled area`
+      `Expected element not to be below the visible scrolled area`,
     );
     expect(rect.top).to.be.greaterThan(
       0 - rect.height,
-      `Expected element not to be above the visible scrolled area`
+      `Expected element not to be above the visible scrolled area`,
     );
   });
 });

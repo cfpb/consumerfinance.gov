@@ -1,44 +1,8 @@
-/* topdoc
-  name: Item Introduction
-  family: cfgov-organisms
-  patterns:
-    - name: Default example
-      markup: |
-        <div class="o-item-introduction">
-            <div class="h4">…</div>
-            <h1>…</h1>
-            <p class="short-desc">…</p>
-            <p class="short-desc">
-              By <a href="#">AuthorA</a> -
-              <span><time>DEC 24, 2015</time></span>
-            </p>
-            <div>
-              [social media molecule]
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .o-item-introduction
-            .h4
-            h1
-            .short-desc
-            .short-desc
-              a
-              span
-                time
-            div
-              [social media molecule]
-  tags:
-    - cfgov-organisms
-*/
-
 .o-item-introduction {
-  margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+  margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, rem);
 
-  .short-desc {
-    padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+  &_intro {
+    padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
   }
 
   .lead-paragraph {
@@ -46,15 +10,10 @@
   }
 
   .meta {
-    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, rem);
 
     .byline {
       .heading-4();
     }
   }
 }
-
-/* topdoc
-    name: EOF
-    eof: true
-*/

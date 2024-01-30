@@ -45,10 +45,10 @@ function initialize() {
 
   const transition = new ExpandableFacetTransition(
     this.ui.content,
-    customClasses
+    customClasses,
   );
   this.transition = transition.init(
-    ExpandableFacetTransition.CLASSES.COLLAPSED
+    ExpandableFacetTransition.CLASSES.COLLAPSED,
   );
 
   if (this.ui.content.classList.contains(customClasses.OPEN_DEFAULT)) {
@@ -76,7 +76,6 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- *
  * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState(element) {

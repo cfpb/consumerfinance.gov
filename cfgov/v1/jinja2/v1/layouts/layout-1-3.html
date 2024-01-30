@@ -1,4 +1,4 @@
-{% extends 'v1/layouts/content-base.html' %}
+{% extends 'v1/layouts/base.html' %}
 
 {% block skip_nav_target -%}
     {# Overrides the default skip nav target of #main so that we skip over the
@@ -7,18 +7,43 @@
     #content_main
 {%- endblock %}
 
-{% block body_content scoped %}
-<div class="content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
-    <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
-        {% block content_sidebar scoped -%}{%- endblock %}
-    </aside>
-    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}"
-         id="content_main">
-        {% block content_main scoped -%}{%- endblock %}
-    </div>
-</div>
+{% if page and not breadcrumb_items %}
+{% set breadcrumb_items = page.get_breadcrumbs(request) %}
+{% endif %}
+
+{% block content scoped %}
+    <main class="u-layout-grid u-layout-grid__1-3
+                 {% block content_modifiers -%}{%- endblock %}"
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
+
+        <div class="u-layout-grid_wrapper">
+        {% block hero -%}{%- endblock %}
+        {% block pre_content scoped -%}
+            {% if breadcrumb_items | length > 0 %}
+                <div class="u-layout-grid_breadcrumbs">
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                {{ breadcrumbs.render(breadcrumb_items) }}
+                </div>
+            {% endif %}
+        {%- endblock %}
+        {% block body_content scoped %}
+        <aside class="u-layout-grid_secondary-nav">
+            {% import 'v1/includes/organisms/secondary-nav.html' as secondary_nav with context %}
+            {{ secondary_nav.render() }}
+        </aside>
+        <div class="u-layout-grid_main"
+                id="content_main">
+            {% block content_main scoped -%}{%- endblock %}
+        </div>
+        {% endblock %}
+        </div>
+    </main>
 {% endblock %}
 
-{% block content_modifiers -%}
-    content__1-3
-{%- endblock %}
+{% block javascript scoped %}
+    {{ super() }}
+    <script>
+      jsl(['{{ static("js/routes/on-demand/secondary-nav.js") }}']);
+    </script>
+{% endblock javascript %}

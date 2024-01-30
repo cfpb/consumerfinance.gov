@@ -48,7 +48,6 @@ function injectMapboxJS() {
 
 /**
  * Event handler for successful load of mapbox JavaScript file.
- *
  * @param {Event} evt - The event object from the load event.
  */
 function scriptLoaded(evt) {
@@ -70,7 +69,7 @@ function initializeMap() {
       .map('hud_hca_api_map_container')
       .setView([40, -80], 2)
       .addLayer(
-        window.L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11')
+        window.L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'),
       );
 
     if (hudData.counseling_agencies) {
@@ -83,7 +82,6 @@ function initializeMap() {
  * Cache the map marker result item DOM references so that a DOM lookup doesn't
  * happen every time a map marker is clicked. The lookup happens on the first
  * click and then is stored in the markerDomCache object.
- *
  * @param {number} num - The index of the result item.
  * @returns {HTMLElement} The DOM node of the result item.
  */
@@ -100,7 +98,6 @@ function queryMarkerDom(num) {
 
 /**
  * Takes the data and plots the markers, etc, on the map.
- *
  * @param {object} data - data returned from the API.
  */
 function updateMap(data) {

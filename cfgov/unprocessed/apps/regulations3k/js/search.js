@@ -33,7 +33,6 @@ function attachHandlers() {
 
 /**
  * Remove a filter from the search results page.
- *
  * @param {Event} event - Click event.
  */
 function clearFilter(event) {
@@ -44,7 +43,7 @@ function clearFilter(event) {
   }
   target = event.target.closest('.a-tag');
   const checkbox = document.querySelector(
-    `#regulation-${target.getAttribute('data-value')}`
+    `#regulation-${target.getAttribute('data-value')}`,
   );
   // Remove the filter tag
   removeTag(target);
@@ -58,7 +57,6 @@ function clearFilter(event) {
 /**
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
- *
  * @param {Node} tag - Filter tag HTML element.
  */
 function removeTag(tag) {
@@ -69,7 +67,6 @@ function removeTag(tag) {
 
 /**
  * Remove all filters from the search results page.
- *
  * @param {Event} event - Click event.
  */
 function clearFilters(event) {
@@ -88,7 +85,6 @@ function clearFilters(event) {
 
 /**
  * Handle keyword search form submission.
- *
  * @param {Event} event - Click event.
  * @returns {string} New page URL with search terms.
  */
@@ -108,7 +104,6 @@ function handleSubmit(event) {
 
 /**
  * Handle filter change events.
- *
  * @param {Event} event - Click event.
  */
 function handleFilter(event) {

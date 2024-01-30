@@ -24,6 +24,32 @@ const hooks = {
     }));
   },
 
+  cct_yoy_transform(d) {
+    return d['Number of Loans'].map((v, i) => {
+      return {
+        x: v[0],
+        loans: v[1] * 100,
+        volume: d['Dollar Volume'][i][1] * 100,
+      };
+    });
+  },
+
+  cct_age_30(d) {
+    return d.filter((v) => v.age_group === 'Younger than 30');
+  },
+
+  cct_age_30_44(d) {
+    return d.filter((v) => v.age_group === 'Age 30-44');
+  },
+
+  cct_age_45_64(d) {
+    return d.filter((v) => v.age_group === 'Age 45-64');
+  },
+
+  cct_age_65(d) {
+    return d.filter((v) => v.age_group === 'Age 65 and older');
+  },
+
   getDateString(x) {
     return new Date(x).toLocaleDateString('en-US', {
       month: 'short',

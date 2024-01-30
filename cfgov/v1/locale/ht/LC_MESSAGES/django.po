@@ -91,7 +91,7 @@ msgstr ""
 #: v1/jinja2/v1/includes/molecules/global-search.html:40
 #: v1/jinja2/v1/includes/organisms/video-player.html:63
 msgid "Close"
-msgstr ""
+msgstr "Fèmen"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:76
 #: v1/jinja2/v1/includes/molecules/global-search.html:79
@@ -176,25 +176,25 @@ msgid "Back to top"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
-msgid "https://usa.gov/"
+msgid "https://www.usa.gov/"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:185
 msgid "USA.gov"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:21
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:22
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22
 msgid "Table of contents"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:17
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:17
 msgid "Section navigation"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:18
-msgid "In this section"
-msgstr ""
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
+msgid "Navigate this section"
+msgstr "Vizite seksyon sa a"
 
 #: v1/jinja2/v1/includes/organisms/video-player.html:60
 msgid "Close video"

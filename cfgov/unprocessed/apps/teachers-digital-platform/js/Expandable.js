@@ -44,11 +44,11 @@ function initialize() {
   this.transition = transition.init();
   this.transition.addEventListener(
     'expandBegin',
-    expandBeginHandler.bind(this)
+    expandBeginHandler.bind(this),
   );
   this.transition.addEventListener(
     'collapseEnd',
-    collapseEndHandler.bind(this)
+    collapseEndHandler.bind(this),
   );
 
   if (
@@ -69,7 +69,7 @@ function initialize() {
   if (this.isAccordionGroup) {
     eventObserver.addEventListener(
       'accordionActivated',
-      _accordionActivatedHandler.bind(this)
+      _accordionActivatedHandler.bind(this),
     );
   }
 }
@@ -93,7 +93,6 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- *
  * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState(element) {
@@ -108,7 +107,6 @@ function toggleTargetState(element) {
 
 /**
  * Retrieve the label text of the expandable header.
- *
  * @returns {string} The text of the expandable's label.
  */
 function getLabelText() {
@@ -118,7 +116,7 @@ function getLabelText() {
 const Expandable = AtomicComponent.extend({
   ui: {
     base: '.o-expandable',
-    target: '.o-expandable_target',
+    target: '.o-expandable_header',
     content: '.o-expandable_content',
     header: '.o-expandable_header',
     label: '.o-expandable_label',
@@ -132,7 +130,7 @@ const Expandable = AtomicComponent.extend({
   },
 
   events: {
-    'click .o-expandable_target': 'expandableClickHandler',
+    'click .o-expandable_header': 'expandableClickHandler',
   },
 
   transition: null,

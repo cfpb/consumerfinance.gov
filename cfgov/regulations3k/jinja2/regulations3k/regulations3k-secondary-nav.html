@@ -1,0 +1,54 @@
+{# ==========================================================================
+
+   secondary_nav.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Secondary Navigation organism within eregulations.
+
+   ========================================================================== #}
+
+{% macro render() %}
+    {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
+    {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
+    <nav class="o-regs3k-navigation o-expandable__padded"
+         aria-label="Section navigation">
+        <button class="o-regs3k-navigation_header o-expandable_header">
+            <span class="h4 o-expandable_label">
+                Table of Contents
+            </span>
+            <span class="o-expandable_cues">
+                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                    {{ svg_icon('down') }}
+                </span>
+                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                    {{ svg_icon('up') }}
+                </span>
+            </span>
+        </button>
+        <div class="o-regs3k-sections">
+            {%- for subpart in nav_items %}
+                {% set sec_nav_settings = {
+                    'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
+                    'is_expanded': nav_items[subpart].expanded
+                } %}
+                {% call() expandable(sec_nav_settings) %}
+                {% for section in nav_items[subpart].sections %}
+                    {{ _navlink(section.title, section.url, section.active) }}
+                {%- endfor %}
+                {% endcall %}
+            {%- endfor %}
+        </div>
+    </nav>
+{% endmacro %}
+
+{% macro _navlink(text, href, current=false) %}
+<a class="o-secondary-nav_link
+          o-secondary-nav_link__parent
+          {{ 'o-secondary-nav_link__current' if current else '' }}"
+   {{ 'href=' ~ href | e if not current else '' }}>
+    {{ text | e }}
+</a>
+{% endmacro %}

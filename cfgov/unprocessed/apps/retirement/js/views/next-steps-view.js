@@ -18,7 +18,6 @@ function init(ageRightNow = 0, fullRetirementAge = 0) {
 /**
  * This function updates the text in Step 3
  * based on the user's chosen retirement age.
- *
  * @param {number} fullAge - The user's full retirement age.
  */
 function chooseClaimingAge(fullAge) {
@@ -27,7 +26,7 @@ function chooseClaimingAge(fullAge) {
   } else {
     const age = parseInt(
       $('#retirement-age-selector').find('option:selected').val(),
-      10
+      10,
     );
 
     $('.next-step-description').hide();
@@ -51,7 +50,7 @@ function chooseClaimingAge(fullAge) {
         {
           scrollTop: $('#retirement-age-selector').offset().top - 20,
         },
-        300
+        300,
       );
     }
   }
@@ -60,7 +59,6 @@ function chooseClaimingAge(fullAge) {
 /**
  * This function limits the age selector in Step 3 to
  * the user's current age or higher.
- *
  * @param {number} currentAge - The user's current age.
  */
 function limitAgeSelector(currentAge) {

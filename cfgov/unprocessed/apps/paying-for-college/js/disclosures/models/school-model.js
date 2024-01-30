@@ -23,7 +23,6 @@ const schoolModel = {
 
   /**
    * Fixes certain API values for use in this app
-   *
    * @param {object} values - object containing unformatted API values
    * @returns {object} object with reformatted values
    */
@@ -68,7 +67,7 @@ const schoolModel = {
       values.monthlyRent = Math.round(values.nationalHousing / 12);
       values.monthlyFood = Math.round(values.nationalFood / 12);
       values.monthlyTransportation = Math.round(
-        values.nationalTransportation / 12
+        values.nationalTransportation / 12,
       );
       values.monthlyInsurance = Math.round(values.nationalHealthcare / 12);
       values.monthlySavings = Math.round(values.nationalRetirement / 12);
@@ -78,7 +77,7 @@ const schoolModel = {
       values.monthlyRent = Math.round(values.regionalHousing / 12);
       values.monthlyFood = Math.round(values.regionalFood / 12);
       values.monthlyTransportation = Math.round(
-        values.regionalTransportation / 12
+        values.regionalTransportation / 12,
       );
       values.monthlyInsurance = Math.round(values.regionalHealthcare / 12);
       values.monthlySavings = Math.round(values.regionalRetirement / 12);

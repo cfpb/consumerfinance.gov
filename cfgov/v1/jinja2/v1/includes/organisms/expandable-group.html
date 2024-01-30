@@ -18,28 +18,24 @@
    value.is_accordion:      Whether this group is an accordion or not.
                             Default is false.
 
+   value.expandables        A list of expandables.
+
+   value.is_faq:            Whether expandables should be output with
+                            FAQ schema.
+
    value.has_top_rule_line: Whether there is a top gray rule.
                             Default is false.
                             Used in 'render_block.html' to modify classes
                             on wrapping 'div.block'.
 
-   value.is_faq:            Whether expandables should be output with
-                            FAQ schema.
-
    ========================================================================== #}
 
-<div
-    {%- if value.heading %}
-        id="{{ value.heading | slugify_unique }}"
-    {% endif -%}
->
-    {% if value.has_rule %}
-        <div class="a-rule-break"></div>
-    {% endif %}
-
-    {% if value.heading %}
-        <h3>{{ value.heading }}</h3>
-    {% endif %}
+{% if value.heading %}
+<div id="{{ value.heading | slugify_unique }}">
+    <h3>{{ value.heading }}</h3>
+{% else %}
+<div>
+{% endif %}
 
     {% if value.body %}
         <p>{{ value.body | safe }}</p>

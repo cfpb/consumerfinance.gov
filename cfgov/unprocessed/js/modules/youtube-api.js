@@ -9,7 +9,6 @@ let _scriptLoaded;
 
 /**
  * Attach a callback to be called when the YouTube API is ready.
- *
  * @param {Function} callback - function to call when the API is ready.
  */
 function attachAPIReadyCallback(callback) {
@@ -37,8 +36,7 @@ function attachAPIReadyCallback(callback) {
 /**
  * Load Youtube max res image if it exists.
  * TODO: Replace this method by calling the Youtube data API.
- *       https://developers.google.com/youtube/v3/getting-started#fields
- *
+ * https://developers.google.com/youtube/v3/getting-started#fields
  * @param {string} videoId - A YouTube video ID.
  * @returns {string} The image URL.
  */
@@ -54,7 +52,6 @@ function fetchImageURL(videoId) {
  * Configure and load a new YouTube Player instance into a supplied <iframe>
  * from the YouTube embed API, which should have been set on the
  * global window object.
- *
  * @param {HTMLElement} iframeContainerDom - A reference to <iframe>
  *   to embed the video.
  * @param {string} videoId - A YouTube video ID.

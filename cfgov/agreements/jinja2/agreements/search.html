@@ -8,11 +8,14 @@
 
 <main class="content content__2-1 content__bleedbar">
     <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/" class="breadcrumbs_link">Home</a>
-            <a href="/credit-cards/" class="breadcrumbs_link">Credit cards</a>
-            <a href="/credit-cards/agreements" class="breadcrumbs_link">Credit card agreement database</a>
-        </nav>
+        {% set breadcrumb_items = [
+          ({'href':'/','title':'Home'}),
+          ({'href':'/data-research/credit-card-data/','title':'Credit cards'}),
+          ({'href':'/credit-cards/agreements/','title':'Credit card agreement database'}),
+        ] %}
+
+        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+        {{ breadcrumbs.render(breadcrumb_items) }}
     </div>
     <div class="content_wrapper">
         <div class="content_main">
@@ -122,7 +125,7 @@
             <div class="block block__flush-top">
                 <div class="m-related-links">
                     <header class="m-slug-header">
-                        <h2 id="issuer-select" class="a-heading">
+                        <h2 id="issuer-select" class="m-slug-header_heading">
                             Search again
                         </h2>
                     </header>

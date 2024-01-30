@@ -1,4 +1,3 @@
-from collections import Counter
 from datetime import date
 from operator import itemgetter
 
@@ -9,6 +8,9 @@ from django.core.exceptions import ValidationError
 from django.forms import widgets
 
 from wagtail.images.forms import BaseImageForm
+
+from dateutil import parser
+from taggit.models import Tag
 
 from v1.models import enforcement_action_page
 from v1.util import ERROR_MESSAGES, ref
@@ -125,8 +127,6 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.filterable_search = kwargs.pop("filterable_search")
-        self.wagtail_block = kwargs.pop("wagtail_block")
-        self.filterable_categories = kwargs.pop("filterable_categories")
 
         # This cache key is used for caching the topics, page_ids,
         # and the full set of Elasticsearch results for this form used to
@@ -161,7 +161,7 @@ class FilterableListForm(forms.Form):
         all_filterable_results = cache.get(
             f"{self.cache_key_prefix}-all_filterable_results"
         )
-        if all_filterable_results is None:
+        if not all_filterable_results:
             all_filterable_results = self.filterable_search.get_raw_results()
             cache.set(
                 f"{self.cache_key_prefix}-all_filterable_results",
@@ -172,77 +172,54 @@ class FilterableListForm(forms.Form):
     def get_all_page_ids(self):
         """Return a list of all possible filterable page ids"""
         page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
-        if page_ids is None:
+        if not page_ids:
             page_ids = [
                 result.meta.id for result in self.all_filterable_results
             ]
             cache.set(f"{self.cache_key_prefix}-page_ids", page_ids)
         return page_ids
 
-    def get_categories(self):
-        categories = self.cleaned_data.get("categories")
-
-        # If no categories are submitted by the form
-        if categories == []:
-            # And we have defined a prexisting set of categories
-            # to limit results by Using CategoryFilterableMixin
-            if self.filterable_categories not in ([], None):
-                return ref.get_category_children(self.filterable_categories)
-        return categories
-
-    def get_order_by(self):
-        if self.wagtail_block is not None:
-            return self.wagtail_block.value.get("order_by", "-date_published")
-        else:
-            return "-date_published"
-
     def get_page_set(self):
-        categories = self.get_categories()
-
         self.filterable_search.filter(
             topics=self.cleaned_data.get("topics"),
-            categories=categories,
+            categories=self.cleaned_data.get("categories"),
             language=self.cleaned_data.get("language"),
             to_date=self.cleaned_data.get("to_date"),
             from_date=self.cleaned_data.get("from_date"),
         )
 
-        results = self.filterable_search.search(
-            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
-        )
+        results = self.filterable_search.search(self.cleaned_data.get("title"))
 
         return results
 
     def first_page_date(self):
-        if len(self.all_filterable_results) > 0:
-            first_post = self.all_filterable_results[0]
-            return first_post.date_published.date()
-        return date(2010, 1, 1)
+        if not self.all_filterable_results:
+            return date(2010, 1, 1)
 
-    def prepare_options(self, arr):
-        """
-        Returns an ordered list of tuples of the format
-        ('tag-slug-name', 'Tag Display Name')
-        """
-        arr = Counter(arr).most_common()  # Order by most to least common
-        # Grab only the first tuple in the generated tuple,
-        # which includes a count we do not need
-        return [x[0] for x in arr]
+        min_start_date = parser.parse(
+            self.all_filterable_results.aggregations.min_start_date.value_as_string
+        )
 
-    # Populate Topics' choices
+        return min_start_date.date()
+
+    @staticmethod
+    def get_filterable_topics(page_ids):
+        """Given a set of page IDs, return the list of filterable topics"""
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
+        ).values_list("slug", "name")
+
+        return tags.distinct().order_by("name")
+
     def set_topics(self, page_ids):
-        if self.wagtail_block:
-            # Cache the topics for this filterable list form to avoid
-            # repeated database lookups of the same data.
-            sentinel = object()
-            topics = cache.get(f"{self.cache_key_prefix}-topics")
-            if topics is None or topics is sentinel:
-                topics = self.wagtail_block.block.get_filterable_topics(
-                    page_ids, self.wagtail_block.value
-                )
-                cache.set(f"{self.cache_key_prefix}-topics", topics)
+        # Cache the topics for this filterable list form to avoid
+        # repeated database lookups of the same data.
+        topics = cache.get(f"{self.cache_key_prefix}-topics")
+        if not topics:
+            topics = self.get_filterable_topics(page_ids)
+            cache.set(f"{self.cache_key_prefix}-topics", topics)
 
-            self.fields["topics"].choices = topics
+        self.fields["topics"].choices = topics
 
     # Populate language choices
     def set_languages(self):
@@ -394,7 +371,7 @@ class EventArchiveFilterForm(FilterableListForm):
             from_date=self.cleaned_data.get("from_date"),
         )
         results = self.filterable_search.search(
-            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
+            title=self.cleaned_data.get("title")
         )
         return results
 

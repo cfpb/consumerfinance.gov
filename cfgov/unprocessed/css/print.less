@@ -1,31 +1,7 @@
-/* ==========================================================================
-   consumerfinance.gov
-   Print
-   ========================================================================== */
-
-/* topdoc
-  name: Print pages
-  family: cfgov-print
-  notes:
-    - "Print pages are barebones printer friendly pages which are also sometimes
-       used as the source to generate PDF's through PDF creation software."
-    - "The `.print` class acts a styling hook. When using the
-       `.respond-to-print()` mixin, all stlyes will be nested under both
-       `@media print` and `.print`."
-  patterns:
-    - name: Usage
-      markup: |
-        <div class="print">
-            <h1 class="superheader">
-                I am a green superheader
-            </h1>
-        </div>
-      notes:
-        - "To trigger a print page simply add the `.print` class to a containing
-           element."
-  tags:
-    - cfgov-print
-*/
+/* "The `.print` class acts a styling hook. When using the
+  `.respond-to-print()` mixin, all stlyes will be nested under both
+  `@media print` and `.print`."
+ */
 
 .respond-to-print({
   a {
@@ -49,10 +25,8 @@
   }
 
   a[href^="/ask-cfpb/"]:after,
-  a[href^="/external-site"]:after,
-  a[href*="consumerfinance.gov/ask-cfpb"]:after,
-  a[href*="consumerfinance.gov/external-site"]:after {
-    // Output original href for links with external site interstitial.
+  a[href*="consumerfinance.gov/ask-cfpb"]:after {
+    // Use short URL when printing Ask CFPB links.
     content: " (" attr(data-pretty-href) ")";
   }
 
@@ -229,8 +203,7 @@
   // Solving longstanding issue in Firefox of cutting off inline-block
   // elements after one page.
   @-moz-document url-prefix() {
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
     }
@@ -244,4 +217,16 @@
       display: block !important;
     }
   }
-} );
+
+  // Prevent Chrome from adding in a blank first page
+  @media (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    .content_main {
+      margin: 0;
+      display: block !important;
+    }
+
+    .content_sidebar {
+      display: block !important;
+    }
+  }
+});

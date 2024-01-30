@@ -14,7 +14,7 @@ import {
   handleClearAllClick,
   handleFetchSearchResults,
 } from './tdp-analytics.js';
-import ClearableInput from './ClearableInput.js';
+import { ClearableInput } from './ClearableInput.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -45,7 +45,7 @@ function attachHandlers() {
   cfExpandables.init();
   expandableFacets.init();
   const inputContainsLabel = document.querySelector(
-    '.tdp-activity-search .input-contains-label'
+    '.tdp-activity-search .input-contains-label',
   );
   if (inputContainsLabel) {
     const clearableInput = new ClearableInput(inputContainsLabel);
@@ -69,7 +69,6 @@ function addDataGtmIgnore() {
 
 /**
  * Remove a filter from the search results page.
- *
  * @param {Event} event - Click event
  */
 function clearFilter(event) {
@@ -92,7 +91,6 @@ function clearFilter(event) {
 /**
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
- *
  * @param {Node} tag - Filter tag HTML element
  */
 function removeTag(tag) {
@@ -103,7 +101,6 @@ function removeTag(tag) {
 
 /**
  * Remove all filters from the search results page.
- *
  * @param {Event} event - Click event
  */
 function clearFilters(event) {
@@ -125,7 +122,6 @@ function clearFilters(event) {
 
 /**
  * Trigger a form submit after Clear Search is clicked.
- *
  * @param {Event} event - Click event
  */
 function clearSearch(event) {
@@ -137,7 +133,6 @@ function clearSearch(event) {
 
 /**
  * Handle keyword search form submission.
- *
  * @param {Event} event - Click event
  * @returns {string} New page URL with search terms
  */
@@ -152,13 +147,12 @@ function handleSubmit(event) {
 
 /**
  * fetch search results based on filters and keywords.
- *
  * @param {NodeList} filters - List of filter checkboxes
  * @returns {string} New page URL with search terms
  */
 function fetchSearchResults(filters = []) {
   const searchContainer = document.querySelector(
-    '#tdp-search-facets-and-results'
+    '#tdp-search-facets-and-results',
   );
   const baseUrl = window.location.href.split('?')[0];
   const searchField = document.querySelector('input[name=q]');
@@ -197,7 +191,6 @@ function fetchSearchResults(filters = []) {
 
 /**
  * Handle filter change events.
- *
  * @param {Event} event - Click event
  * @param {HTMLElement} target - DOM element
  * @returns {string} New page URL with search terms
@@ -245,7 +238,6 @@ function handleFilter(event, target = null) {
 
 /**
  * Traverse parents and update their checkbox values.
- *
  * @param {HTMLElement} element - DOM element
  */
 function _updateParentFilter(element) {
@@ -271,7 +263,7 @@ function _updateParentFilter(element) {
   // Loop through ancestors and make sure they are checked or unchecked
   const parentWrapper = wrapper.parentElement.parentElement;
   const parentCheckbox = parentWrapper.querySelector(
-    'div>input[type=checkbox]'
+    'div>input[type=checkbox]',
   );
   if (parentCheckbox && parentCheckbox.parentElement === parentWrapper) {
     _updateParentFilter(parentCheckbox);

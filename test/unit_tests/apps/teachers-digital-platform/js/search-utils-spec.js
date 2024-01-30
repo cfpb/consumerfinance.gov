@@ -56,7 +56,7 @@ describe('The TDP search utils', () => {
     expect(cancelError.msg).toEqual('Search request was cancelled.');
     const unknownError = handleError();
     expect(unknownError.msg).toEqual(
-      'Sorry, our search engine is temporarily down.'
+      'Sorry, our search engine is temporarily down.',
     );
   });
 

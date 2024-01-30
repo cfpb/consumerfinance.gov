@@ -40,15 +40,15 @@ TODO: Note that this is a copy of our standard expandable for TDP,
             o-expandable__padded
             {{ 'o-expandable__background' if value.is_midtone else '' }}
             {{ 'o-expandable__border' if value.is_bordered else '' }}">
-    <button class="o-expandable_header o-expandable_target" type="button">
+    <button class="o-expandable_header" type="button">
         <span class="h4 o-expandable_label">
             {{ value.label }}
         </span>
-        <span class="o-expandable_link">
-            <span class="o-expandable_cue-open" aria-label="{{ _('Show') }}">
+        <span class="o-expandable_cues">
+            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" aria-label="{{ _('Hide') }}">
+            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>

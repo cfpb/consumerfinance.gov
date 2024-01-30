@@ -30,7 +30,6 @@ const promiseCache = {};
 
 /**
  * Fetches JSON data
- *
  * @param {string} url - The url to fetch data from
  * @param {boolean} isCSV - Whether the data to fetch is a CSV
  * @returns {Promise} Promise that resolves to JSON data
@@ -65,7 +64,6 @@ function fetchData(url, isCSV) {
 
 /**
  * Selects appropriate chart import style
- *
  * @param {string} type - The chart type as defined in the organism
  * @returns {object} The appropriately loaded style object
  */
@@ -84,7 +82,6 @@ function getDefaultChartObject(type) {
 
 /**
  * Overrides default chart options using provided Wagtail configurations
- *
  * @param {object} data - The data to provide to the chart
  * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The configured style object
@@ -110,7 +107,7 @@ function makeChartOptions(data, dataAttributes) {
   if (xAxisSource && chartType !== 'datetime') {
     defaultObj.xAxis.categories = getCategoriesFromXAxisSource(
       data.raw,
-      xAxisSource
+      xAxisSource,
     );
   }
 
@@ -174,7 +171,6 @@ function makeChartOptions(data, dataAttributes) {
 
 /**
  * Adds projected months to config object for Highcharts.
- *
  * @param {object} chartObject - The config object for Highcharts.
  * @param {number} numMonths - The number of months input into wagtail field.
  * @returns {object} The config object with projected months.
@@ -211,7 +207,7 @@ function addProjectedMonths(chartObject, numMonths) {
       .text(
         `Values after ${projectedDate.humanFriendly} are projected`,
         this.plotWidth - 218,
-        165
+        165,
       )
       .css({
         fontSize: '15px',
@@ -238,7 +234,6 @@ function addProjectedMonths(chartObject, numMonths) {
 
 /**
  * Resolves provided x axis or series data
- *
  * @param {Array} rawData - Data provided to the chart
  * @param {string} key - Key to resolve from data, or categories provided directly
  * @returns {Array} Resolved array of data
@@ -253,7 +248,6 @@ function getCategoriesFromXAxisSource(rawData, key) {
 
 /**
  * Selects whether to use inline data or fetch data that matches a url
- *
  * @param {string} source - Source provided from wagtail
  * @returns {Promise} Promise resolving to either fetched JSON or parsed inline JSON
  */
@@ -277,7 +271,6 @@ function buildCharts() {
 
 /**
  * Initializes a chart
- *
  * @param {object} chartNode - The DOM node of the current chart
  */
 function buildChart(chartNode) {
@@ -306,7 +299,6 @@ function buildChart(chartNode) {
 
       initFilters(dataAttributes, chartNode, chart, data);
     }
-
     // Make sure chart is displayed properly on print
     window.matchMedia('print').addListener(function () {
       chart.reflow();
