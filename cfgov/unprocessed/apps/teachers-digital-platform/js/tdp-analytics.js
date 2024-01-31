@@ -186,6 +186,14 @@ const handleClearAllClick = (event) => {
     return;
   }
 
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: 'remove filter',
+    label: target.textContent.trim(),
+  });
+
+  // GA4.
   return sendEvent({
     event: 'clear_button_click',
     button_label: tagNames.join('|'),
@@ -211,6 +219,14 @@ const handleFetchSearchResults = (searchTerm) => {
 
     // Check if result count is 0
     if (resultsCount === '0') {
+      // Old analytics. TODO: Remove when completely on GA4.
+      sendEvent({
+        event: 'TDP Search Tool',
+        action: 'noSearchResults',
+        label: searchTerm.toLowerCase() + ':0',
+      });
+
+      // GA4.
       sendEvent({
         event: 'search',
         search_term: searchTerm.toLowerCase() + ':0',
@@ -218,7 +234,14 @@ const handleFetchSearchResults = (searchTerm) => {
         no_search_results: true,
       });
     } else {
-      // Send the keyword to Analytics.
+      // Old analytics. TODO: Remove when completely on GA4.
+      sendEvent({
+        event: 'TDP Search Tool',
+        action: 'search',
+        label: searchTerm.toLowerCase(),
+      });
+
+      // GA4.
       sendEvent({
         event: 'search',
         search_term: searchTerm.toLowerCase(),

@@ -309,24 +309,22 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/cfpb-analytics@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.2.1.tgz#cb8fdbac7d1ccec12309abbffe1ee59ea5abff5e"
-  integrity sha512-mZlqt2kdLF3oSUd0FzXX021VhW584Wfl19G2cCnufkn2e+4nuFQoj4NGCCyCzAPFic1FKzCq0hGMXCANlYeIOw==
+"@cfpb/cfpb-analytics@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.0.tgz#24bc49913c5b45a216b8d47fa8f3f2e1a11e8c3e"
+  integrity sha512-wr0Ubh7XP4HFfMlZ3DjjaX2FX7D9frzED9b6ddu/4xDq+B/SU/9xCUQHXiCK63AZQ7Wmg7bFIwkzfRSg+RKwHg==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.21.9"
+    "@cfpb/cfpb-atomic-component" "^0.35.0"
 
 "@cfpb/cfpb-atomic-component@0.35.0", "@cfpb/cfpb-atomic-component@^0.35.0":
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.35.0.tgz#c636b9f675beedbba8b35a5103d5b01bb97dc49d"
   integrity sha512-AwK4X+wAoSyfhOwPC792reiVjMnFUCN47WrelCq6D7eabHl9wi4LiZPf+Gonm6jv++O+ph/bz4SK55Y4yF1oUw==
 
-"@cfpb/cfpb-atomic-component@^0.21.9":
-  version "0.21.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.21.9.tgz#9d4a66236979a22afa0222fb0c5b1e88cc9b1b37"
-  integrity sha512-bxFrKQ+9w7B6s80QydlJhY5D8w2d/4qxcB0Wp/pal1nq/Ho6fWOhcsGvM0/Am9Yw1gvhUCEjbSk0JgoLI9BItw==
-  dependencies:
-    ftdomdelegate "3.1.0"
+"@cfpb/cfpb-atomic-component@^0.35.0":
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.35.0.tgz#c636b9f675beedbba8b35a5103d5b01bb97dc49d"
+  integrity sha512-AwK4X+wAoSyfhOwPC792reiVjMnFUCN47WrelCq6D7eabHl9wi4LiZPf+Gonm6jv++O+ph/bz4SK55Y4yF1oUw==
 
 "@cfpb/cfpb-buttons@0.35.0", "@cfpb/cfpb-buttons@^0.35.0":
   version "0.35.0"
@@ -2794,11 +2792,6 @@ fsevents@^2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
-ftdomdelegate@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ftdomdelegate/-/ftdomdelegate-3.1.0.tgz#f22a1bb3dba7ed0e239125487923899a16448963"
-  integrity sha512-sEGlE4xTcwl7RxW8ypB2jUbKAWxG4iE7YLmko9AKdGUn2BY1fkg5zeC0Ec9Ac770iDpAqgzXdzO4KrPi3sasug==
 
 function-bind@^1.1.1, function-bind@^1.1.2:
   version "1.1.2"
