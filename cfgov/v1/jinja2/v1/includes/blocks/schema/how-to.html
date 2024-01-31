@@ -42,10 +42,10 @@
 
 
 <div itemscope
-     itemtype="http://schema.org/HowTo"
+     itemtype="https://schema.org/HowTo"
      class="schema-block schema-block__how-to">
     {%- if value.title %}
-        <{{ value.title_tag }} itemprop="name" 
+        <{{ value.title_tag }} itemprop="name"
                                class="schema-block_title
                                {% if not value.show_title %}
                                u-visually-hidden
@@ -64,12 +64,12 @@
         <ol>
             {% for step in value.steps %}
                 <li class="schema-block_item"
-                    {% if step.anchor_tag %} 
+                    {% if step.anchor_tag %}
                     id="{{ step.anchor_tag }}"
                     {% endif %}>
                     <div itemprop="step"
                          itemscope
-                         itemtype="http://schema.org/HowToStep">
+                         itemtype="https://schema.org/HowToStep">
                         <p itemprop="name">
                             {{'<b>'|safe if value.step_title_tag == 'b' else '' }}
                                 {{ step.title }}
@@ -85,16 +85,16 @@
     {% else %}
         {% for step in value.steps %}
             <div class="schema-block_item"
-                 {% if step.anchor_tag %} 
+                 {% if step.anchor_tag %}
                  id="{{ step.anchor_tag }}"
                  {% endif %}>
                 <div itemprop="step"
                      itemscope
-                     itemtype="http://schema.org/HowToStep">
+                     itemtype="https://schema.org/HowToStep">
                     <{{ value.step_title_tag if value.step_title_tag != 'b' else 'p' }}>
                         {{'<b>'|safe if value.step_title_tag == 'b' else '' }}
                             {{ loop.index | string + '. ' if value.has_numbers else '' }}
-                            <span itemprop="name">{{ step.title }}</span> 
+                            <span itemprop="name">{{ step.title }}</span>
                         {{'</b>'|safe if value.step_title_tag == 'b' else '' }}
                     </{{ value.step_title_tag if value.step_title_tag != 'b' else 'p' }}>
                     <div itemprop="text">
@@ -103,5 +103,5 @@
                 </div>
             </div>
         {% endfor %}
-    {% endif %}  
+    {% endif %}
 </div>

@@ -14,7 +14,6 @@ const jsPaths = [
   `${routes}/ask-cfpb/single.js`,
   `${routes}/credit-cards/single.js`,
   `${routes}/es/single.js`,
-  `${routes}/external-site.js`,
   // js for specific pages, based on url
   `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
 

@@ -42,7 +42,7 @@ Verifique sus beneficios basados en su propio registro de ingresos \
 del Seguro Social \
 <a href="https://www.ssa.gov/espanol/jubilacion2/calculadora.html" \
 target="_blank" rel="noopener noreferrer">aquí</a> o \
-<a href="http://www.socialsecurity.gov/espanol/agencia/contacto/" \
+<a href="https://www.ssa.gov/espanol/agencia/contacto/" \
 target="_blank" rel="noopener noreferrer">comuníquese</a> \
 con la Administración del Seguro Social.\
 """

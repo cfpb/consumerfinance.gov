@@ -139,7 +139,7 @@ class AnswerPageDocumentTest(TestCase):
 
     def test_to_field(self):
         doc = Document()
-        for f in ["question", "statement"]:
+        for f in ["question"]:
             nameField = doc.to_field(f, AnswerPage._meta.get_field(f))
             self.assertIsInstance(nameField, fields.TextField)
             self.assertEqual(nameField._path, [f])
@@ -148,11 +148,6 @@ class AnswerPageDocumentTest(TestCase):
         )
         self.assertIsInstance(dateField, fields.DateField)
         self.assertEqual(dateField._path, ["last_edited"])
-        intField = doc.to_field(
-            "featured_rank", AnswerPage._meta.get_field("featured_rank")
-        )
-        self.assertIsInstance(intField, fields.IntegerField)
-        self.assertEqual(intField._path, ["featured_rank"])
 
     def test_to_field_with_unknown_field(self):
         doc = Document()

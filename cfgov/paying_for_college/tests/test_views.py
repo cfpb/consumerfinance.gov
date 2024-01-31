@@ -12,6 +12,7 @@ from model_bakery import baker
 from paying_for_college.models import (
     ConstantCap,
     ConstantRate,
+    Notification,
     Program,
     School,
 )
@@ -22,26 +23,47 @@ from paying_for_college.views import (
     get_program,
     get_program_length,
     get_school,
+    url_is_safe,
     validate_oid,
     validate_pid,
 )
 
 
+VALID_OID = "6FAF7E32FDD6BBE420F887F90B1E11E0E7D4561C"
+VALID_URL_BASE = (
+    "https://consumerfinance.gov/paying-for-college2/"
+    "understanding-your-financial-aid-offer/offer/"
+)
+VALID_URL = (
+    f"{VALID_URL_BASE}?iped=154022&pid=BAPM&totl=70950&"
+    f"tuit=14160&unsl=6000&oid={VALID_OID}"
+)
+INVALID_URLS = [
+    (
+        f"{VALID_URL_BASE}?iped=154022&pid=BAPM&totl=70950&oid={VALID_OID}&"
+        "totl={70950}"  # brackets not allowed
+    ),
+    (
+        f"{VALID_URL_BASE}?iped=154022&pid=BAPM&totl=70950&oid={VALID_OID}&"
+        "totl=<70950>"  # angle brackets not allowed
+    ),
+]
+
+
 class ValidatorTests(unittest.TestCase):
-    """check the oid validator"""
+    """Check the oid, error, and url validators."""
 
     max_oid = (
         "6ca1a60a72b3d4640b20a683d63a40297b7c45c4df479cd93cd57d9c44820069"
         "eb71d168eedd531bb488cd2e58d3dbbce8ee80c02ef6fc9623479510adedf704"
     )
-    good_oid = "9e0280139f3238cbc9702c7b0d62e5c238a835d0"
     bad_oid = '9e0<script>console.log("hi")</script>5d0'
     short_oid = "9e45a3e7"
 
     def test_validate_oid(self):
         self.assertFalse(validate_oid(self.bad_oid))
         self.assertFalse(validate_oid(self.short_oid))
-        self.assertTrue(validate_oid(self.good_oid))
+        self.assertTrue(validate_oid(VALID_OID))
         self.assertTrue(validate_oid(self.max_oid))
 
     def test_validate_pid(self):
@@ -50,6 +72,11 @@ class ValidatorTests(unittest.TestCase):
         self.assertFalse(validate_pid("{value}"))
         self.assertFalse(validate_pid("DROP TABLE;"))
         self.assertTrue(validate_pid("108b"))
+
+    def test_validate_url(self):
+        self.assertTrue(url_is_safe(VALID_URL))
+        for invalid_url in INVALID_URLS:
+            self.assertFalse(url_is_safe(invalid_url))
 
 
 class TestViews(django.test.TestCase):
@@ -342,29 +369,54 @@ class VerifyViewTest(django.test.TestCase):
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_bad_id(self):
-        self.post_data["iped"] = ""
+        post_data = copy.copy(self.post_data)
+        post_data["iped"] = ""
         resp = self.client.post(
             self.url,
-            json.dumps(self.post_data),
+            json.dumps(post_data),
             content_type="application/json",
         )
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_bad_oid(self):
-        self.post_data["iped"] = "243197"
-        self.post_data["oid"] = "f38283b5b7c939a058889f997949efa566script"
+        post_data = copy.copy(self.post_data)
+        post_data["iped"] = "243197"
+        post_data["oid"] = "f38283b5b7c939a058889f997949efa566script"
         resp = self.client.post(
             self.url,
-            json.dumps(self.post_data),
+            json.dumps(post_data),
             content_type="application/json",
         )
         self.assertEqual(resp.status_code, 400)
 
     def test_verify_view_no_data(self):
-        self.post_data = {}
         resp = self.client.post(
             self.url,
-            json.dumps(self.post_data),
+            json.dumps({}),
             content_type="application/json",
         )
         self.assertEqual(resp.status_code, 400)
+
+    def test_verify_view_receives_unknown_error_msg(self):
+        post_data = copy.copy(self.post_data)
+        post_data["errors"] = "This is an unexpected error msg"
+        resp = self.client.post(
+            self.url,
+            json.dumps(post_data),
+            content_type="application/json",
+        )
+        self.assertEqual(resp.status_code, 200)
+        payload = json.loads(resp.content)
+        self.assertIn("Verification recorded", payload["result"])
+
+    def test_verify_view_handles_unsafe_urls(self):
+        post_data = copy.copy(self.post_data)
+        post_data["URL"] = INVALID_URLS[1]
+        resp = self.client.post(
+            self.url,
+            json.dumps(post_data),
+            content_type="application/json",
+        )
+        notification = Notification.objects.order_by("-pk").first()
+        self.assertIn("Unsafe URL found", notification.url)
+        self.assertEqual(resp.status_code, 200)

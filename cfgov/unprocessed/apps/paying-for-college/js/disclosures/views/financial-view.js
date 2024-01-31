@@ -946,8 +946,9 @@ const financialView = {
         const $toggles = $('[data-repayment-section] input');
         const term = $ele.val();
         publish.financialData('repaymentTerm', term);
-        $toggles.prop('checked', false);
-        $toggles.filter('[value="' + term + '"]').prop('checked', true);
+        $toggles.elements.forEach((v) => {
+          v.value == term ? (v.checked = true) : (v.checked = false);
+        });
         financialView.updateView(getFinancial.values());
         expensesView.updateView(getExpenses.values());
         analyticsSendEvent({

@@ -61,6 +61,7 @@ const app = {
               schoolData,
               programData,
             );
+            const $step2 = $('.continue_controls button');
 
             /* If PID exists, update the financial model and view based
            on program data */
@@ -83,6 +84,9 @@ const app = {
             // Update expenses model bases on region and salary
             const region = schoolValues.BLSAverage.slice(0, 2);
             $('#bls-region-select').val(region).change();
+            $step2.removeClass('a-btn__disabled');
+            $step2.find('svg').remove();
+            $step2.elements[0].removeAttribute('disabled');
           });
       }
       // set financial caps based on data

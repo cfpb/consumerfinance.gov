@@ -270,11 +270,8 @@ export default `
                 </p>
                 <p data-block-key="cqkhf">Data fields are presented below in the order they are recorded in the register. For a machine-readable view of the data specification, see the following link:</p>
                 <p data-block-key="cvu2g">
-                    <a
-                        class="a-link a-link__icon"
-                        data-pretty-href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/file-spec/2024-data-points.csv"
-                        href="/external-site/?ext_url=https%3A%2F%2Fraw.githubusercontent.com%2Fcfpb%2Fsbl-content%2F2024-v1%2Ffig-files%2Ffile-spec%2F2024-data-points.csv&amp;signature=jrgqXzi2d6hV-VE-numRx1bXLyTwa7Usqzn9MutXBQw"
-                    >
+                    <a class="a-link a-link__icon"
+                       href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/file-spec/2024-data-points.csv">
                         <span class="a-link_text">Data spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -3427,11 +3424,8 @@ export default `
                     specification in CSV file format, see the following link:
                 </p>
                 <p data-block-key="abnhl">
-                    <a
-                        class="a-link a-link__icon"
-                        data-pretty-href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/validation-spec/2024-validations.csv"
-                        href="/external-site/?ext_url=https%3A%2F%2Fraw.githubusercontent.com%2Fcfpb%2Fsbl-content%2F2024-v1%2Ffig-files%2Fvalidation-spec%2F2024-validations.csv&amp;signature=HdI0XGTZaegt0jmhqUDuAjK7ThZuvzStvkhdUXa3ZWQ"
-                    >
+                    <a class="a-link a-link__icon"
+                       href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/validation-spec/2024-validations.csv">
                         <span class="a-link_text">Validation spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path

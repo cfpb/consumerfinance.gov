@@ -24,7 +24,7 @@
 
 {# BODY items #}
 
-{% block hero -%}
+{% block content_intro -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}

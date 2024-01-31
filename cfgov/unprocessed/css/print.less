@@ -25,10 +25,8 @@
   }
 
   a[href^="/ask-cfpb/"]:after,
-  a[href^="/external-site"]:after,
-  a[href*="consumerfinance.gov/ask-cfpb"]:after,
-  a[href*="consumerfinance.gov/external-site"]:after {
-    // Output original href for links with external site interstitial.
+  a[href*="consumerfinance.gov/ask-cfpb"]:after {
+    // Use short URL when printing Ask CFPB links.
     content: " (" attr(data-pretty-href) ")";
   }
 

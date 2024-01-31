@@ -24,9 +24,9 @@
 {%- endblock %}
 
 {% block og_image %}
-        <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 
 {% block css %}
@@ -49,32 +49,31 @@
 
 {% block content_main %}
     <h1>{{ _('Your financial well-being score') }}</h1>
-
-{% if user_score %}
-    <p class="lead-paragraph">
-        {{ _('You’ve taken a good step in understanding your financial picture.') }}
-    </p>
-{% elif (current_language == 'en') %}
-    <div class="u-mb15">
-        {{ notification.render(
-            'warning',
-            true,
-            'We never collect or store answers to the financial well-being questionnaire.',
-	          'If you would like to see your score and answers on the page below,
-            please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
-        ) }}
-    </div>
-{% else %}
-    <div class="u-mb15">
-        {{ notification.render(
-            'warning',
-            true,
-            'No guardamos sus respuestas.',
-            'Si usted desea obtener su puntuación y respuestas en esta página,
-            necesita completar el <a href="../">cuestionario</a>.' | safe
-        ) }}
-    </div>
-{% endif %}
+    {% if user_score %}
+        <p class="lead-paragraph">
+            {{ _('You’ve taken a good step in understanding your financial picture.') }}
+        </p>
+    {% elif (current_language == 'en') %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'We never collect or store answers to the financial well-being questionnaire.',
+                'If you would like to see your score and answers on the page below,
+                please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
+            ) }}
+        </div>
+    {% else %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'No guardamos sus respuestas.',
+                'Si usted desea obtener su puntuación y respuestas en esta página,
+                necesita completar el <a href="../">cuestionario</a>.' | safe
+            ) }}
+        </div>
+    {% endif %}
 
 
     <p>
@@ -512,7 +511,7 @@
         </ul>
     </div>
     {% endif %}
-    <div class="block">
+    <div class="block block__flush-top">
         <header class="m-slug-header">
             <h2 class="m-slug-header_heading">{{ _('About this questionnaire') }}</h2>
         </header>
@@ -525,19 +524,7 @@
         </a>
     </div>
 
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
-        </header>
-        <p>
-            {{ _('The content on this page provides general consumer information.') }}
-            {{ _('It is not legal advice or regulatory guidance.') }}
-            {{ _('The CFPB updates this information periodically.') }}
-            {{ _('This information may include links or references to third-party resources or content.') }}
-            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
-            {{ _('There may be other resources that also serve your needs.') }}
-        </p>
-    </div>
+    {% include '_disclaimer.html' %}
 {% endblock %}
 
 {% block javascript scoped %}

@@ -13,13 +13,14 @@
 {%- endblock %}
 
 {% block og_image %}
-        <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
-        <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+    <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 
 {% block css -%}
     {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/financial-well-being/css/main.css') }}">
     <style>
         .m-hero {
             background-color: #7eb7e8;
@@ -35,11 +36,8 @@
     </style>
 {%- endblock %}
 
-{% block hero -%}
-    <section class="m-hero
-                    block
-                    block__flush-top
-                    block__flush-bottom">
+{% block content_intro -%}
+    <section class="m-hero">
         <div class="m-hero_wrapper wrapper">
             <div class="m-hero_text">
                 <h1 class="m-hero_heading">{{ _('Find out your financial well-being') }}</h1>
@@ -61,15 +59,22 @@
     {% include "_templates/no_js.html" %}
     <div class="u-js-only">
 
-        <p>
-        {% if (current_language == 'en') %}
-        <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
-        {% else %}
-        <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
-        {% endif %}
-        </p>
-
         <h2>{{ _('Here’s how it works:') }}</h2>
+
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render({
+            'language': 'en' if current_language == 'en' else 'es',
+            'links': [
+            {
+                'href': url('fwb_home_en'),
+                'language': 'en',
+                'text': 'English'
+            },{
+                'href': url('fwb_home_es'),
+                'language': 'es',
+                'text': 'Spanish'
+            }]
+        }) }}
 
         <p>
             <b>{{ _('Answer the questions and get your score.') }}</b>
@@ -930,15 +935,17 @@
                 </div>
             </div>
 
-            <div class="o-form_group">
-                <input class="submit-quiz a-btn"
-                    id="submit-quiz"
-                    type="submit"
-                    value="{{ _('Get my score') }}"
-                    title="Please answer all questions to get your score"
-                    data-gtm-action="Questionnaire Submitted"
-                    data-gtm-label="Get my score"
-                    data-gtm-category="Financial Well-Being Tool Interaction">
+            <div class="block block__flush-top">
+                <div class="o-form_group">
+                    <input class="submit-quiz a-btn"
+                        id="submit-quiz"
+                        type="submit"
+                        value="{{ _('Get my score') }}"
+                        title="Please answer all questions to get your score"
+                        data-gtm-action="Questionnaire Submitted"
+                        data-gtm-label="Get my score"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                </div>
             </div>
         </form>
     </div>
@@ -969,85 +976,7 @@
         </a>
     </div>
 
-    {% if (current_language == 'en') %}
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
-                Latest blog posts
-            </h2>
-        </header>
-        <div class="m-related-posts_list-container">
-
-            <ul class="m-related-posts_list
-                       m-list
-                       m-list__unstyled
-                       m-list__spaced">
-
-                <li class="m-list_item">
-                    <h3 class="h4 u-mb5">
-                        <a href="/about-us/blog/were-working-better-serve-people-through-financial-coaching/"
-                          class="m-list_link">
-                            We’re working to better serve people through financial coaching
-                        </a>
-                    </h3>
-                    <p class="a-date">
-                        <span class="datetime">
-                            <time class="datetime_date" datetime="2017-08-17T00:00:00.000000">
-                              AUG 17, 2017
-                            </time>
-                        </span>
-                    </p>
-                </li>
-                <li class="m-list_item">
-                    <h3 class="h4 u-mb5">
-                        <a href="/about-us/blog/effective-financial-education-five-principles-and-how-use-them/"
-                          class="m-list_link">
-                            Effective financial education: Five principles and how to use them
-                        </a>
-                    </h3>
-                    <p class="a-date">
-                        <span class="datetime">
-                            <time class="datetime_date" datetime="2017-06-14T00:00:00.000000">
-                              JUN 14, 2017
-                            </time>
-                        </span>
-                    </p>
-                </li>
-                <li class="m-list_item">
-                    <h3 class="h4 u-mb5">
-                        <a href="/about-us/blog/four-elements-define-personal-financial-well-being/"
-                           class="m-list_link">
-                            Four elements define personal financial well-being
-                        </a>
-                    </h3>
-                    <p class="a-date">
-                        <span class="datetime">
-                            <time class="datetime_date" datetime="2015-01-27T00:00:00.000000">
-                              JAN 27, 2015
-                            </time>
-                        </span>
-                    </p>
-                </li>
-
-            </ul>
-
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('Legal disclaimer') }}</h2>
-        </header>
-        <p>
-            {{ _('The content on this page provides general consumer information.') }}
-            {{ _('It is not legal advice or regulatory guidance.') }}
-            {{ _('The CFPB updates this information periodically.') }}
-            {{ _('This information may include links or references to third-party resources or content.') }}
-            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
-            {{ _('There may be other resources that also serve your needs.') }}
-        </p>
-    </div>
+    {% include '_disclaimer.html' %}
 {%- endblock %}
 
 {% block javascript scoped %}

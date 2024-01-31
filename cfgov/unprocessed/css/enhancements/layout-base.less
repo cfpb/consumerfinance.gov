@@ -10,7 +10,6 @@
       grid-template-areas:
         'c-breadcrumbs'
         'c-secondary-nav'
-        'c-hero'
         'c-main'
         'c-sidebar'
         'c-prefooter';
@@ -24,6 +23,7 @@
 
     &_main {
       grid-area: c-main;
+      padding-top: unit(30px / @base-font-size-px, rem);
     }
 
     &_sidebar {
@@ -38,16 +38,43 @@
       grid-area: c-prefooter;
     }
 
-    // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
-    .m-hero,
-    &_hero {
-      grid-area: c-hero;
-    }
+    // Tablet and below.
+    .respond-to-max(@bp-sm-max, {
+      &_breadcrumbs {
+        padding-left: unit(30px / @base-font-size-px, rem);
+        padding-right: unit(30px / @base-font-size-px, rem);
+        margin-left: unit(-30px / @base-font-size-px, rem);
+        margin-right: unit(-30px / @base-font-size-px, rem);
+        background: @gray-5;
+        border-bottom: 1px solid @gray-40;
+      }
+    });
+
+    // Tablet only.
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
+      .u-layout-grid {
+        &_breadcrumbs {
+          padding-left: unit(15px / @base-font-size-px, rem);
+          padding-right: unit(15px / @base-font-size-px, rem);
+        }
+      }
+    });
+
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
+      &_main {
+        padding-top: unit((45px / @base-font-size-px), rem);
+      }
+
+      &_breadcrumbs ~ &_main {
+        padding-top: unit(30px / @base-font-size-px, rem);
+      }
+    });
   }
 
   // Set default line width.
   .u-layout-grid_main,
-  .u-layout-grid_intro {
+  .u-layout-grid_content-intro {
     dd,
     dt,
     h3,

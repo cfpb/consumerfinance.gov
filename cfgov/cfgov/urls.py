@@ -28,11 +28,7 @@ from ask_cfpb.views import (
     view_answer,
 )
 from core.decorators import akamai_no_store
-from core.views import (
-    CacheTaggedTemplateView,
-    ExternalURLNoticeView,
-    govdelivery_subscribe,
-)
+from core.views import CacheTaggedTemplateView, govdelivery_subscribe
 from housing_counselor.views import (
     HousingCounselorPDFView,
     HousingCounselorView,
@@ -155,11 +151,6 @@ urlpatterns = [
         RedirectView.as_view(
             url="/about-us/doing-business-with-us/%(path)s", permanent=True
         ),
-    ),
-    re_path(
-        r"^external-site/$",
-        ExternalURLNoticeView.as_view(),
-        name="external-site",
     ),
     re_path(
         r"^subscriptions/new/$", govdelivery_subscribe, name="govdelivery"

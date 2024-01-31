@@ -312,7 +312,6 @@ class AskReportView(ReportView):
         "primary_portal_topic",
         "portal_category.all",
         "related_questions.all",
-        "related_resource",
         "language",
     ]
     export_headings = {
@@ -330,7 +329,6 @@ class AskReportView(ReportView):
         "primary_portal_topic": "Primary portal topic",
         "portal_category.all": "Portal categories",
         "related_questions.all": "Related questions",
-        "related_resource": "Related resource",
         "language": "Language",
     }
 
@@ -371,9 +369,6 @@ class AskReportView(ReportView):
         },
         "related_questions.all": {
             "csv": partial(join_values_with_pipe, key="id")
-        },
-        "related_resource": {
-            "csv": partial(process_related_item, key="title")
         },
     }
 

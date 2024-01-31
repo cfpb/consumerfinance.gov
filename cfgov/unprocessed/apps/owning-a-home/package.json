@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "@cfpb/jumbo-mortgage": "4.0.0",
+    "@cfpb/jumbo-mortgage": "5.0.0",
     "amortize": "1.1.0",
     "highcharts": "7.2.2",
     "jquery": "3.6.0",

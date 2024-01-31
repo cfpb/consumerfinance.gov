@@ -2,7 +2,7 @@
 {% import 'v1/includes/molecules/social-media.html' as social_media with context %}
 
 
-{% macro render(streamfield, half_width=false) %}
+{% macro render(streamfield) %}
     {% for block in streamfield %}
         {% if 'related_posts' in block.block_type %}
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">

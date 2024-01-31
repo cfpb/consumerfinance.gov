@@ -1,13 +1,14 @@
-import importlib
 import logging
 import shutil
 from contextlib import redirect_stdout
 from io import StringIO
 
-from django.apps import apps
 from django.conf import settings
-from django.db import connection
-from django.db.migrations.loader import MigrationLoader
+from django.contrib.auth.models import Group
+from django.contrib.contenttypes.models import ContentType
+
+from wagtail.coreutils import get_supported_content_language_variant
+from wagtail.models import Collection, Locale, Page, Site
 
 from django_slowtests.testrunner import DiscoverSlowestTestsRunner
 
@@ -34,51 +35,81 @@ class TestRunner(DiscoverSlowestTestsRunner):
     def setup_databases(self, **kwargs):
         dbs = super().setup_databases(**kwargs)
 
-        # Ensure that certain key data migrations are always run even if
-        # tests are being run with most migrations disabled (e.g. using
-        # settings.MIGRATION_MODULES).
-        self.run_required_data_migrations()
+        # If dbs is empty, it means we don't have a test database; this can
+        # happen if e.g. we're only running tests that don't require one.
+        if dbs:
+            # Some required Wagtail data (like the default site) are created in
+            # Wagtail migrations. If we're skipping migrations when running
+            # tests, we need to create this data ourselves.
+            if settings.SKIP_DJANGO_MIGRATIONS:
+                self.initial_wagtail_data()
 
-        # Set up additional required test data that isn't contained in data
-        # migrations, for example an admin user.
-        initial_data.run()
+            # Set up our own additional required test data.
+            initial_data.run()
 
         return dbs
 
-    def run_required_data_migrations(self):
-        if not settings.MIGRATION_MODULES:
-            return
+    def initial_wagtail_data(self):
+        """Populate required Wagtail data.
 
-        migration_methods = (
-            (
-                "wagtailcore",
-                "wagtail.migrations.0054_initial_locale",
-                "initial_locale",
-            ),
-            (
-                "wagtailcore",
-                "wagtail.migrations.0002_initial_data",
-                "initial_data",
-            ),
-            (
-                "wagtailcore",
-                "wagtail.migrations.0025_collection_initial_data",
-                "initial_data",
+        This logic comes from these Wagtail migrations:
+
+        - wagtailcore.0001_squashed_0016_change_page_url_path_to_text_field
+        - wagtailcore.0025_collection_initial_data
+        - wagtailcore.0054_initial_locale
+        """
+        # Create default Locale object.
+        Locale.objects.create(
+            language_code=get_supported_content_language_variant(
+                settings.LANGUAGE_CODE
             ),
         )
 
-        loader = MigrationLoader(connection)
+        # Create Page content type.
+        page_content_type, _ = ContentType.objects.get_or_create(
+            model="page", app_label="wagtailcore"
+        )
 
-        for app_name, migration, method in migration_methods:
-            if not self.is_migration_applied(loader, app_name, migration):
-                print("applying migration {}".format(migration))
-                module = importlib.import_module(migration)
-                getattr(module, method)(apps, None)
+        # Create root Wagtail page.
+        Page.objects.create(
+            title="Root",
+            slug="root",
+            content_type=page_content_type,
+            path="0001",
+            depth=1,
+            numchild=1,
+            url_path="/",
+        )
 
-    @staticmethod
-    def is_migration_applied(loader, app_name, migration):
-        migration_name = migration.split(".")[-1]
-        return (app_name, migration_name) in loader.applied_migrations
+        # Create temporary homepage (this will be deleted by our initial_data).
+        homepage = Page.objects.create(
+            title="Welcome to your new Wagtail site!",
+            slug="home",
+            content_type=page_content_type,
+            path="00010001",
+            depth=2,
+            numchild=0,
+            url_path="/home/",
+        )
+
+        # Create default site (this will be updated by our initial_data).
+        Site.objects.get_or_create(
+            hostname="localhost",
+            root_page_id=homepage.id,
+            is_default_site=True,
+        )
+
+        # Create default collection.
+        Collection.objects.create(
+            name="Root",
+            path="0001",
+            depth=1,
+            numchild=0,
+        )
+
+        # Create default groups.
+        Group.objects.get_or_create(name="Editors")
+        Group.objects.get_or_create(name="Moderators")
 
 
 class StdoutCapturingTestRunner(TestRunner):

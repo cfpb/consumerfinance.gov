@@ -36,13 +36,16 @@
 
 <div class="o-item-introduction">
     {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
-        {{ category_slug.render(category=page.categories.first().name, href=filter_page_url) }}
+        <div class="o-item-introduction_intro">
+            {{ category_slug.render(category=page.categories.first().name, href=filter_page_url) }}
+        </div>
     {% endif %}
 
     {% if value.heading -%}
         <h1>{{ value.heading | safe }}</h1>
 
-        {% include "v1/includes/molecules/translation-links.html" %}
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render(value) }}
     {%- endif %}
 
     {% if value.paragraph %}

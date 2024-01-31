@@ -9,7 +9,6 @@ function resetFileName() {
 
 /**
  * Set a filename for a file input.
- *
  * @param {string} fileName - A filename.
  */
 function setFileName(fileName) {
@@ -27,7 +26,6 @@ function resetError() {
 
 /**
  * Display an error message.
- *
  * @param {string} message - An error message.
  */
 function setError(message) {

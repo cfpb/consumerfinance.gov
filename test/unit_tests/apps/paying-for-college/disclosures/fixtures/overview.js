@@ -960,7 +960,7 @@ export default `
                                                 private-loans_remove-btn" type="button" title="Remove this private loan">
                                                     Remove
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
-                                                
+
                                                 </button>
                                             </div>
                                             <div class="form-group_item">
@@ -1022,8 +1022,8 @@ export default `
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
                                         <button class="a-btn a-btn__link
                                         private-loans_add-btn" type="button" title="Add another private loan" data-add-loan-button="true">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__plus-round"><path d="M16.416 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V5.42a.792.792 0 1 0-1.583 0V8.8H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 1 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791Z"></path></svg>
@@ -2344,13 +2344,13 @@ export default `
                                     consider a different program with a higher
                                     projected earning potential. Ask your
                                     admission representative or search for
-                                    gainful employment information on your <a href="http://www.southuniversity.edu/west-palm-beach#location=West%20Palm%20Beach,%20FL" target="_blank" rel="noopener noreferrer" class="school-link">school’s website</a>
+                                    gainful employment information on your <a href="https://www.southuniversity.edu/west-palm-beach#location=West%20Palm%20Beach,%20FL" target="_blank" rel="noopener noreferrer" class="school-link">school’s website</a>
                                     to learn more about job placement rates and
                                     the average salaries of graduates.
                                 </p>
                             </section>
-                            
-                            
+
+
                             <section class="option option__work-while-studying option__settlement">
                                 <h3 class="option_heading">
                                     Think about working while you study.
@@ -2363,7 +2363,7 @@ export default `
                                     can help reduce the amount of money you need
                                     to borrow to pay for school, resulting in
                                     long-term benefits of reducing overall debt.
-                                    Check out <a class="a-link a-link__icon" data-pretty-href="http://www.careeronestop.org/JobSearch/job-search.aspx" href="/external-site/?ext_url=http%3A%2F%2Fwww.careeronestop.org%2FJobSearch%2Fjob-search.aspx&amp;signature=dkL9DBqw7Ycnf7hZLkIjcWS2guLtjNj_1doUdoq9P1Q" rel="noopener noreferrer" target="_blank"><span class="a-link_text">resources for finding a
+                                    Check out <a class="a-link a-link__icon" href="https://www.careeronestop.org/jobsearch/job-search.aspx" rel="noopener noreferrer" target="_blank"><span class="a-link_text">resources for finding a
                                     job</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>, including links to job search
                                     sites, tips for writing a
                                     résumé, and more.

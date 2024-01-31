@@ -4,13 +4,7 @@ from django.test import TestCase
 from wagtail.models import Site
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models import (
-    Contact,
-    EmailSignUp,
-    RelatedResource,
-    ReusableText,
-    SublandingPage,
-)
+from v1.models import Contact, EmailSignUp, ReusableText, SublandingPage
 
 
 class TestUnicodeCompatibility(TestCase):
@@ -18,23 +12,6 @@ class TestUnicodeCompatibility(TestCase):
         contact = Contact(heading="Unicod\xeb")
         self.assertEqual(str(contact), "Unicod\xeb")
         self.assertIsInstance(str(contact), str)
-
-
-class TestTranslations(TestCase):
-    def test_related_resource_translations(self):
-        test_resource = RelatedResource(
-            title="English title",
-            title_es="Spanish title",
-            text="English text.",
-            text_es="Spanish text.",
-        )
-        self.assertEqual(str(test_resource), test_resource.title)
-        self.assertEqual(test_resource.trans_title(), test_resource.title)
-        self.assertEqual(test_resource.trans_text(), test_resource.text)
-        self.assertEqual(
-            test_resource.trans_title("es"), test_resource.title_es
-        )
-        self.assertEqual(test_resource.trans_text("es"), test_resource.text_es)
 
 
 class TestModelStrings(TestCase):
