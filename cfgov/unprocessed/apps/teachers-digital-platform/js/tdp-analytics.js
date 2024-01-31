@@ -64,6 +64,14 @@ const handleExpandableClick = (event) => {
   }
   label = label.textContent.trim();
 
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
   return sendEvent(action, label);
 };
 
@@ -80,6 +88,14 @@ const handleFilterClick = (event) => {
   const action = checkbox.checked ? 'filter' : 'remove filter';
   const label = checkbox.getAttribute('aria-label');
 
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
   return sendEvent(action, label);
 };
 
@@ -102,6 +118,14 @@ const handleClearFilterClick = (event) => {
   const action = 'remove filter';
   const label = target.textContent.trim();
 
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
   return sendEvent(action, label);
 };
 
@@ -145,6 +169,15 @@ const handlePaginationClick = (event) => {
   label = isNextButton
     ? parseInt(label[1], 10) - 1
     : parseInt(label[1], 10) + 1;
+
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
   return sendEvent(action, label);
 };
 
@@ -171,11 +204,13 @@ const handleClearAllClick = (event) => {
   if (!clearBtn) {
     return;
   }
+
   const tagsWrapper = clearBtn.parentElement;
   const tags = tagsWrapper.querySelectorAll('.a-tag');
   if (!tags || tags.length === 0) {
     return;
   }
+
   const tagNames = [];
   for (let i = 0; i < tags.length; i++) {
     if (tagsWrapper.contains(tags[i])) {
@@ -189,8 +224,8 @@ const handleClearAllClick = (event) => {
   // Old analytics. TODO: Remove when completely on GA4.
   sendEvent({
     event: 'TDP Search Tool',
-    action: 'remove filter',
-    label: target.textContent.trim(),
+    action: 'clear all filters',
+    label: tagNames.join('|'),
   });
 
   // GA4.
