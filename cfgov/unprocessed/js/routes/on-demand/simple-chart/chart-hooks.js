@@ -15,6 +15,21 @@ const cci_quarterMap = {
 
 const msYear = 365 * 24 * 60 * 60 * 1000;
 
+/**
+ *
+ * @param {string} age - Age to pluck from the data
+ * @returns {Function} A hook function
+ */
+function make_cct_age_yoy(age) {
+  return (d) =>
+    d[age].map((v) => {
+      return {
+        x: v[0],
+        percent: v[1] * 100,
+      };
+    });
+}
+
 const hooks = {
   // Example transform
   monotonicY(data) {
@@ -32,6 +47,22 @@ const hooks = {
         volume: d['Dollar Volume'][i][1] * 100,
       };
     });
+  },
+
+  cct_age_yoy_30(d) {
+    return make_cct_age_yoy('Younger than 30')(d);
+  },
+
+  cct_age_yoy_30_44(d) {
+    return make_cct_age_yoy('30-44')(d);
+  },
+
+  cct_age_yoy_45_64(d) {
+    return make_cct_age_yoy('45-64')(d);
+  },
+
+  cct_age_yoy_65(d) {
+    return make_cct_age_yoy('65 and older')(d);
   },
 
   cct_age_30(d) {
