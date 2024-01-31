@@ -229,7 +229,7 @@ const handleFetchSearchResults = (searchTerm) => {
       // GA4.
       sendEvent({
         event: 'search',
-        search_term: searchTerm.toLowerCase() + ':0',
+        search_term: searchTerm.toLowerCase(),
         results_count: 0,
         no_search_results: true,
       });
