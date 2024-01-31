@@ -36,7 +36,7 @@ function attachHandlers() {
  * @param {Event} event - Click event.
  */
 function clearFilter(event) {
-  let target = event.currentTarget;
+  const target = event.currentTarget;
   const checkbox = document.querySelector(
     `#regulation-${target.getAttribute('data-value')}`,
   );
@@ -65,7 +65,7 @@ function removeTag(tag) {
  * @param {Event} event - Click event.
  */
 function clearFilters(event) {
-  let filterTags = document.querySelectorAll('.filters_tags .a-tag');
+  const filterTags = document.querySelectorAll('.filters_tags .a-tag');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,
