@@ -36,12 +36,7 @@ function attachHandlers() {
  * @param {Event} event - Click event.
  */
 function clearFilter(event) {
-  // Continue only if the X icon was clicked and not the parent button
-  let target = event.target.tagName.toLowerCase();
-  if (target !== 'svg' && target !== 'path') {
-    return;
-  }
-  target = event.target.closest('.a-tag');
+  let target = event.currentTarget;
   const checkbox = document.querySelector(
     `#regulation-${target.getAttribute('data-value')}`,
   );
@@ -70,14 +65,10 @@ function removeTag(tag) {
  * @param {Event} event - Click event.
  */
 function clearFilters(event) {
-  let filterIcons = document.querySelectorAll('.filters_tags svg');
-  // IE doesn't support forEach w/ node lists so convert it to an array.
-  filterIcons = Array.prototype.slice.call(filterIcons);
-  filterIcons.forEach((filterIcon) => {
-    const target = filterIcon.closest('.a-tag');
+  let filterTags = document.querySelectorAll('.filters_tags .a-tag');
+  filterTags.forEach((filterTag) => {
     clearFilter({
-      target: filterIcon,
-      value: target,
+      currentTarget: filterTag,
     });
   });
   handleFilter(event);

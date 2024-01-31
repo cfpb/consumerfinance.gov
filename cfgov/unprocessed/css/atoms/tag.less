@@ -4,13 +4,27 @@
    ========================================================================== */
 
 .a-tag {
-  cursor: default;
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin: 5px 15px 10px 0;
-  background-color: @gray-20;
-  font-size: 14px;
+  border: 1px solid @teal;
+  padding: 4px 10px;
+  background-color: @teal-20;
+  margin-right: 4px;
+  border-radius: unit(3px / @base-font-size-px, rem);
+  font-weight: 500;
+  color: @black;
+
+  &:hover {
+    background-color: @teal-40;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 1px dotted @teal;
+    outline-offset: 1px;
+  }
+
+  &:active {
+    background-color: @teal;
+  }
 
   .cf-icon-svg {
     display: inline-block;
@@ -18,7 +32,8 @@
     cursor: pointer;
   }
 
-  a {
-    color: inherit;
+  a& {
+    // Colors for :link, :visited, :hover, :focus, :active.
+    .u-link__colors( @black, @black, @black, @black, @black );
   }
 }
