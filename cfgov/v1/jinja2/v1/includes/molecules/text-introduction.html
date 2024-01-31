@@ -41,7 +41,7 @@
     <h1>{{ value.heading }}</h1>
 
     {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-    {{ translation_links.render(value) }}
+    {{ translation_links.render() }}
 {%- endif %}
 
 {% if value.intro.source %}
