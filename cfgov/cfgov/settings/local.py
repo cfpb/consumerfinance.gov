@@ -10,7 +10,7 @@ if sys.version_info[0] < 3:
     raise Exception(
         "Python 2 is no longer supported. "
         "If you are running in a virtual environment, please see "
-        "http://cfpb.github.io/consumerfinance.gov/running-virtualenv/"
+        "https://cfpb.github.io/consumerfinance.gov/running-virtualenv/"
         "#reinstalling-the-virtual-environment "
         "for how to reinstall."
     )

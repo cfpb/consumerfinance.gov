@@ -66,7 +66,7 @@ class SchemaBlocksTestCase(TestCase):
         }
         expected_html = (
             "<div itemscope"
-            '     itemtype="http://schema.org/HowTo"'
+            '     itemtype="https://schema.org/HowTo"'
             '     class="schema-block schema-block__how-to">'
             '<h2 itemprop="name" class="schema-block_title">test title</h2>'  # noqa
             '<div itemprop="description" class="schema-block_description">'
@@ -76,7 +76,7 @@ class SchemaBlocksTestCase(TestCase):
             '<li class="schema-block_item">'
             '<div itemprop="step"'
             "     itemscope"
-            '     itemtype="http://schema.org/HowToStep">'
+            '     itemtype="https://schema.org/HowToStep">'
             '<p itemprop="name">Step one</p>'
             '<div itemprop="text">Step content</div>'
             "</div>"
@@ -99,16 +99,16 @@ class SchemaBlocksTestCase(TestCase):
             ],
         }
         expected_html = (
-            '<div itemscope="" itemtype="http://schema.org/FAQPage" '
+            '<div itemscope="" itemtype="https://schema.org/FAQPage" '
             'class="schema-block schema-block__faq">'
             '<div itemprop="description" class="schema-block_description">'
             "test description"
             "</div>"
             '<div itemscope="" itemprop="mainEntity" '
-            'itemtype="http://schema.org/Question" class="schema-block_item">'  # noqa
+            'itemtype="https://schema.org/Question" class="schema-block_item">'  # noqa
             '<h2 itemprop="name">Question one</h2>'
             '<div itemprop="acceptedAnswer" itemscope="" '
-            'itemtype="http://schema.org/Answer">'
+            'itemtype="https://schema.org/Answer">'
             '<div itemprop="text">Answer content</div>'
             "</div>"
             "</div>"
