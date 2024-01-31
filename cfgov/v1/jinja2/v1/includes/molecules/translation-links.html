@@ -26,7 +26,7 @@
 
     ======================================================================== #}
 
-{% macro render(links=None, modifier_classes="") %}
+{% macro render(links=none, modifier_classes="") %}
     {% set links = links or (page and page.get_translation_links(request)) %}
 
     {%- if links and links | length > 1 %}
