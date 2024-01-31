@@ -259,7 +259,7 @@ describe('The TDP custom analytics', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('', () => {
+  it('should send an analytics event when no search results are found', () => {
     document.body.innerHTML = EMPTY_SEARCH_HTML;
     const spy = jest.fn();
 
@@ -267,7 +267,8 @@ describe('The TDP custom analytics', () => {
 
     handleFetchSearchResults('Not Found');
 
-    expect(spy.mock.calls[0][0]).toEqual('noSearchResults');
-    expect(spy.mock.calls[0][1]).toEqual('not found:0');
+    expect(JSON.stringify(spy.mock.calls[0][0])).toEqual(
+      '{"event":"TDP Search Tool","action":"noSearchResults","label":"not found:0"}',
+    );
   });
 });
