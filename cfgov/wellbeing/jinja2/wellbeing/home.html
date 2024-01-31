@@ -62,9 +62,8 @@
         <h2>{{ _('Here’s how it works:') }}</h2>
 
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-        {{ translation_links.render({
-            'language': 'en' if current_language == 'en' else 'es',
-            'links': [
+        {{ translation_links.render(
+            links=[
             {
                 'href': url('fwb_home_en'),
                 'language': 'en',
@@ -74,7 +73,7 @@
                 'language': 'es',
                 'text': 'Spanish'
             }]
-        }) }}
+        ) }}
 
         <p>
             <b>{{ _('Answer the questions and get your score.') }}</b>

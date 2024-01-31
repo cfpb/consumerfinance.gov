@@ -33,9 +33,8 @@
                 </p>
 
                 {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-                {{ translation_links.render({
-                    'language': 'en' if current_language == 'en' else 'es',
-                    'links': [
+                {{ translation_links.render(
+                    links=[
                     {
                         'href': '../',
                         'language': 'en',
@@ -45,7 +44,7 @@
                         'language': 'es',
                         'text': 'Spanish'
                     }]
-                }) }}
+                ) }}
                 <div class="o-well">
                     {% if current_language == 'en' %}
                     <p>The Social Security Administration offers
