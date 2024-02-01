@@ -4,10 +4,6 @@
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
 {% block content_main %}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
