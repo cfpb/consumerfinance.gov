@@ -7,10 +7,6 @@
   <link rel="stylesheet" href="{{ static('css/on-demand/job_listing_page.css') }}">
 {%- endblock css %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
 {% block content_main %}
 
     {% set usajobs_links = page.usajobs_application_links.all() %}
