@@ -82,6 +82,7 @@ const handleExpandableClick = (event) => {
  */
 const handleFilterClick = (event) => {
   const filters = event.currentTarget.querySelector('.filters');
+  if (!filters) return;
   const checkbox = filters.closest('.a-checkbox') || event.target;
   if (!checkbox.classList.contains('a-checkbox')) {
     return;
