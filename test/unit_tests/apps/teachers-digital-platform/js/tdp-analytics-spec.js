@@ -215,18 +215,7 @@ describe('The TDP custom analytics', () => {
     expect(() => bindAnalytics()).not.toThrow();
   });
 
-  it('should send an analytics event when a filter clear icon is clicked', () => {
-    const clearIcon = document.querySelector('.results_filters svg');
-    const spy = jest.fn();
-
-    bindAnalytics(spy);
-
-    simulateEvent('click', clearIcon);
-
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should NOT send an analytics event when a filter is clicked (but not its clear icon)', () => {
+  it('should send an analytics event when a filter is clicked', () => {
     const filterTag = document.querySelector('.results_filters .a-tag');
     const spy = jest.fn();
 
@@ -234,7 +223,7 @@ describe('The TDP custom analytics', () => {
 
     simulateEvent('click', filterTag);
 
-    expect(spy).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should send an analytics event when a pagination button is clicked', () => {
