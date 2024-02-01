@@ -8,6 +8,7 @@ on:
 
 jobs:
   Build:
+    if: github.repository == 'cfpb/consumerfinance.gov'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
