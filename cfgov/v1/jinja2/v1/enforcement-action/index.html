@@ -26,10 +26,6 @@
     {%- endfor %}
 {% endblock %}
 
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content enforcement-action-sidebar
-{%- endblock %}
-
 {% block content_sidebar scoped -%}
     {{ related_metadata_enforcement_action.render() }}
     {{ streamfield_sidefoot.render(page.sidefoot) }}

@@ -1,6 +1,6 @@
 # Wagtail pages
 
-[Wagtail pages](http://docs.wagtail.io/en/stable/topics/pages.html) are
+[Wagtail pages](https://docs.wagtail.org/en/stable/topics/pages.html) are
 [Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/)
 that are constructed of
 [fields](#fields), [StreamFields](#streamfields), and [panels](#panels)

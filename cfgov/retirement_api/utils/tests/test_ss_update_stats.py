@@ -113,13 +113,13 @@ class UpdateSsStatsTests(TestCase):
 
     def test_make_soup(self):
         """Given a url, make a request and return beautifulsoup for parsing."""
-        url = "http://www.socialsecurity.gov/OACT/ProgData/nra.html"
+        url = "https://www.ssa.gov/OACT/ProgData/nra.html"
         soup = make_soup(url)
         self.assertTrue("Social Security" in soup.find("h1").text)
 
     @mock.patch("requests.get")
     def test_make_soup_error(self, mock_requests):
-        url = "http://www.socialsecurity.gov/xxxx/"
+        url = "https://www.ssa.gov/xxxx/"
         mock_requests.return_value.reason = "Not found"
         soup = make_soup(url)
         self.assertEqual(soup, "")
