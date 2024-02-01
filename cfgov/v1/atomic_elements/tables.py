@@ -71,6 +71,7 @@ class CaseDocketTable(blocks.StructBlock):
 
 class Table(blocks.StructBlock):
     heading = HeadingBlock(required=False)
+    text_introduction = blocks.CharBlock(required=False)
     options = blocks.MultipleChoiceBlock(
         choices=[
             ("is_full_width", "Display the table at full width"),
