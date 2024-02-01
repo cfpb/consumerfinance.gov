@@ -8,6 +8,11 @@
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/homepage/css/main.css') }}">
+{% endblock %}
+
 {% block content_main_modifiers -%}
 content_main__flush-inner
 {%- endblock %}
