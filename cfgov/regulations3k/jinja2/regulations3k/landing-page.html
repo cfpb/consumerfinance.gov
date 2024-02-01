@@ -36,10 +36,6 @@
     {%- endfor %}
 {% endblock content_main %}
 
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
-
 {% block content_sidebar scoped -%}
     {{ recent_notices }}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
