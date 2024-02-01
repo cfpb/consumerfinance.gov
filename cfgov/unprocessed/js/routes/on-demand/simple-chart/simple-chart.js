@@ -270,6 +270,19 @@ function buildCharts() {
 }
 
 /**
+ *
+ * @param {string} rawTransform - The string input into the transform field
+ * @returns {object} transform object with function and args
+ */
+function getTransformObject(rawTransform = '') {
+  const parsed = rawTransform.split('___');
+  return {
+    transformMethod: parsed[0],
+    args: parsed.slice(1),
+  };
+}
+
+/**
  * Initializes a chart
  * @param {object} chartNode - The DOM node of the current chart
  */
@@ -279,8 +292,11 @@ function buildChart(chartNode) {
   const { source, transform, chartType } = dataAttributes;
 
   resolveData(source.trim()).then((raw) => {
+    const { transformMethod, args } = getTransformObject(transform);
     const transformed =
-      transform && chartHooks[transform] ? chartHooks[transform](raw) : null;
+      transformMethod && chartHooks[transformMethod]
+        ? chartHooks[transformMethod](raw, ...args)
+        : null;
 
     const series = extractSeries(transformed || raw, dataAttributes);
 
