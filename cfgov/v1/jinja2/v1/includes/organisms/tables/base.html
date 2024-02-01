@@ -1,97 +1,97 @@
 {# ==========================================================================
 
-  Table - https://cfpb.github.io/design-system/components/tables
+   Table - https://cfpb.github.io/design-system/components/tables
 
-  Creates table markup when given:
+   Creates table markup when given:
 
-  value.heading:            Optional heading to render before the table.
+   value.heading:            Optional heading to render before the table.
 
-  value.text_introduction:  Optional text to render before the table.
+   value.text_introduction:  Optional text to render before the table.
 
-  value.data:               Wagtail StreamValue for TypedTableBlock, or an
-                            equivalent dictionary structure like this:
+   value.data:               Wagtail StreamValue for TypedTableBlock, or an
+                             equivalent dictionary structure like this:
 
-                            {
-                                columns: [
-                                    {'heading': 'Column 1'},
-                                    {'heading': 'Column 2'},
-                                    ...
-                                ],
-                                rows [
-                                    ['a', 'b', ...],
-                                    ['c', 'd', ...],
-                                    ...
-                                ]
-                            }
+                             {
+                                 columns: [
+                                     {'heading': 'Column 1'},
+                                     {'heading': 'Column 2'},
+                                     ...
+                                 ],
+                                 rows [
+                                     ['a', 'b', ...],
+                                     ['c', 'd', ...],
+                                     ...
+                                 ]
+                             }
 
-  value.options:            Enabled configuration options as a list of strings.
-                            For example: ['stack_on_mobile'].
-                            See list of supported options below.
+   value.options:            Enabled configuration options as a list of strings.
+                             For example: ['stack_on_mobile'].
+                             See list of supported options below.
 
-  Supported configuration options:
+   Supported configuration options:
 
-  first_column_header:    Style the first column as a header.
+   first_column_header:    Style the first column as a header.
 
-  is_full_width:          Display the table at full width.
+   is_full_width:          Display the table at full width.
 
-  stack_on_mobile:        Stack the table columns on mobile.
+   stack_on_mobile:        Stack the table columns on mobile.
 
-  ========================================================================== #}
+   ========================================================================== #}
 
-  {%- set first_column_header = 'first_column_header' in (value.options or []) -%}
-  {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
-  {%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
+{%- set first_column_header = 'first_column_header' in (value.options or []) -%}
+{%- set is_full_width = 'is_full_width' in (value.options or []) -%}
+{%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
-  {% if value.heading -%}
-      {% include_block value.heading %}
-  {%- endif %}
+{% if value.heading -%}
+    {% include_block value.heading %}
+{%- endif %}
 
-  {% if value.text_introduction -%}
-      <p class="u-mb30">{{ value.text_introduction }}</p>
-  {%- endif %}
+{% if value.text_introduction -%}
+    <p class="u-mb30">{{ value.text_introduction }}</p>
+{%- endif %}
 
-  <table class="o-table
-      {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
-      {{- ' u-w100pct' if is_full_width else '' -}}
-  ">
-      {% if value.data.columns | selectattr('heading') | list -%}
-      <thead>
-          <tr>
-              {% for col in value.data.columns %}
-                  {% if col.heading -%}
-                      <th scope="col">{{ col.heading }}</th>
-                  {%- endif %}
-              {% endfor %}
-          </tr>
-      </thead>
-      {%- endif %}
-      <tbody>
-          {% for row in value.data.rows %}
-              <tr>
-                  {% for block in row %}
-                      {%- set attrs = "" -%}
+<table class="o-table
+    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
+    {{- ' u-w100pct' if is_full_width else '' -}}
+">
+    {% if value.data.columns | selectattr('heading') | list -%}
+    <thead>
+        <tr>
+            {% for col in value.data.columns %}
+                {% if col.heading -%}
+                    <th scope="col">{{ col.heading }}</th>
+                {%- endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    {%- endif %}
+    <tbody>
+        {% for row in value.data.rows %}
+            <tr>
+                {% for block in row %}
+                    {%- set attrs = "" -%}
 
-                      {%- if first_column_header and loop.first -%}
-                          {% set tag = "th" %}
-                          {% set attrs = attrs ~ (' scope="row"' | safe) %}
-                      {%- else -%}
-                          {% set tag = "td" %}
-                      {%- endif -%}
+                    {%- if first_column_header and loop.first -%}
+                        {% set tag = "th" %}
+                        {% set attrs = attrs ~ (' scope="row"' | safe) %}
+                    {%- else -%}
+                        {% set tag = "td" %}
+                    {%- endif -%}
 
-                      {%- set col_heading = value.data.columns[loop.index0].heading -%}
-                      {%- if stack_on_mobile and col_heading -%}
-                          {% set attrs = attrs ~
-                              (' data-label="' | safe) ~
-                              (col_heading | escape) ~
-                              ('"' | safe)
-                          %}
-                      {%- endif -%}
+                    {%- set col_heading = value.data.columns[loop.index0].heading -%}
+                    {%- if stack_on_mobile and col_heading -%}
+                        {% set attrs = attrs ~
+                            (' data-label="' | safe) ~
+                            (col_heading | escape) ~
+                            ('"' | safe)
+                        %}
+                    {%- endif -%}
 
-                      <{{ tag }}{{ attrs }}>
-                          {%- include_block block -%}
-                      </{{ tag }}>
-                  {% endfor %}
-              </tr>
-          {% endfor %}
-      </tbody>
-  </table>
+                    <{{ tag }}{{ attrs }}>
+                        {%- include_block block -%}
+                    </{{ tag }}>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
