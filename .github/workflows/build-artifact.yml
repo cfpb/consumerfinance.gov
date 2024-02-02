@@ -2,9 +2,7 @@ name: 'Build cf.gov artifact'
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
+  merge_group:
   workflow_dispatch:
 
 jobs:
