@@ -1,6 +1,7 @@
 name: 'Build cf.gov artifact'
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -10,39 +11,43 @@ jobs:
   Build:
     if: github.repository == 'cfpb/consumerfinance.gov'
     runs-on: ubuntu-latest
+    env:
+      ARTIFACT_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-            node-version: '16.x'
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Build frontend
-        run: yarn run build
-
-      - name: Run the build process with Docker
-        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185
-        with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-            image: ghcr.io/${{ github.repository }}-builder:main
-            options: -v ${{ github.workspace }}:/cfgov
-            run: |
-              source scl_source enable rh-python38
-              ./call_create.sh
-
-      - name: Upload arifact
-        uses: keithweaver/aws-s3-github-action@46dd0263ee582cbb2e81ad88209198d26d7a67c6
-        with:
-          command: cp
-          source: cfgov_current_build.zip
-          destination: s3://${{ secrets.BUCKET }}/cfgov_${{ github.sha }}_build.zip
-          aws_access_key_id: ${{ secrets.BUILD_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.BUILD_SECRET_ACCESS_KEY }}
-          aws_region: us-east-1
+      - name: echo
+        run: echo "$GITHUB_SHA / $ARTIFACT_SHA"
+      #      - name: Check out the repo
+      #        uses: actions/checkout@v3
+      #
+      #      - name: Set up Node
+      #        uses: actions/setup-node@v3
+      #        with:
+      #            node-version: '16.x'
+      #
+      #      - name: Install dependencies
+      #        run: yarn
+      #
+      #      - name: Build frontend
+      #        run: yarn run build
+      #
+      #      - name: Run the build process with Docker
+      #        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185
+      #        with:
+      #            registry: ghcr.io
+      #            username: ${{ github.actor }}
+      #            password: ${{ secrets.GITHUB_TOKEN }}
+      #            image: ghcr.io/${{ github.repository }}-builder:main
+      #            options: -v ${{ github.workspace }}:/cfgov
+      #            run: |
+      #              source scl_source enable rh-python38
+      #              ./call_create.sh
+      #
+      #      - name: Upload arifact
+      #        uses: keithweaver/aws-s3-github-action@46dd0263ee582cbb2e81ad88209198d26d7a67c6
+      #        with:
+      #          command: cp
+      #          source: cfgov_current_build.zip
+      #          destination: s3://${{ secrets.BUCKET }}/cfgov_${{ github.sha }}_build.zip
+      #          aws_access_key_id: ${{ secrets.BUILD_ACCESS_KEY_ID }}
+      #          aws_secret_access_key: ${{ secrets.BUILD_SECRET_ACCESS_KEY }}
+      #          aws_region: us-east-1
