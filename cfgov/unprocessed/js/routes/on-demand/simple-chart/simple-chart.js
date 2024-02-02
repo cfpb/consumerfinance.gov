@@ -202,12 +202,11 @@ function addProjectedMonths(chartObject, numMonths) {
     commonRenderCallback.apply(this, arguments);
 
     if (this.projectedMonthsLabel) this.projectedMonthsLabel.destroy();
-
     this.projectedMonthsLabel = this.renderer
       .text(
         `Values after ${projectedDate.humanFriendly} are projected`,
         this.plotWidth - 218,
-        165,
+        this.plotWidth < 450 ? 120 : 165,
       )
       .css({
         fontSize: '15px',
