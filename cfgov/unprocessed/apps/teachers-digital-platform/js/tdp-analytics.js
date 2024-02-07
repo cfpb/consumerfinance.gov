@@ -171,7 +171,10 @@ const handlePaginationClick = (event) => {
     action = 'previous page';
   } else if (isGoButton) {
     action = 'goto page';
-    label = searchContent.querySelector('.m-pagination_current-page').value;
+    label =
+      'page ' +
+      searchContent.querySelector('.m-pagination_current-page').value +
+      searchContent.querySelectorAll('.m-pagination_label')[1].textContent;
   }
 
   // Old analytics. TODO: Remove when completely on GA4.
