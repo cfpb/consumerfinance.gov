@@ -111,7 +111,7 @@ export class AdminPage {
   }
 
   copyRegulation() {
-    this.getFirstTableRow().find('.children').click();
+    this.getFirstTableRow().find('.children a').click();
     this.getFirstTableRow().contains('Copy').should('be.visible');
     this.getFirstTableRow().contains('Copy').click();
     this.setRegulationEffectiveDate('3099-01-01');
