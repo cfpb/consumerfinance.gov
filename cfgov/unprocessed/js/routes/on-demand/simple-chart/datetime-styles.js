@@ -123,7 +123,7 @@ const datetime = {
             buttonSpacing: 30,
             buttonPosition: {
               align: 'center',
-              x: -70,
+              x: -90,
               y: 95,
             },
           },
