@@ -64,7 +64,7 @@ jobs:
         run: sudo apt-get install gettext
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: 3.8
 
@@ -108,7 +108,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: 3.8
 

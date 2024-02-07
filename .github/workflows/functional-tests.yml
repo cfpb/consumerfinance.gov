@@ -49,7 +49,7 @@ jobs:
           node-version: '20.x'
 
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5.0.0
       with:
         python-version: 3.8
 
