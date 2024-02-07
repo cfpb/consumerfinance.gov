@@ -39,7 +39,7 @@ jobs:
               ./call_create.sh
 
       - name: Upload arifact
-        uses: keithweaver/aws-s3-github-action@v1
+        uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
           command: cp
           source: cfgov_current_build.zip
