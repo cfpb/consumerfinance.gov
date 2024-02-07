@@ -65,7 +65,7 @@ const tilemap = {
     rules: [
       {
         condition: {
-          maxWidth: 660,
+          maxWidth: 600,
         },
         chartOptions: {
           chart: {

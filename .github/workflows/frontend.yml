@@ -17,22 +17,7 @@ jobs:
             node-version: '20.x'
 
       - name: Install dependencies
-        run: |
-          yarn
+        run: yarn
 
       - name: Test Javascript
         run: yarn run test
-
-      - name: Build Javascript
-        run: yarn build
-
-      - name: Zip static files
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -q -r frontend.zip ./cfgov/static_built
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend_${{ github.sha }}
-          path: frontend.zip

@@ -132,7 +132,7 @@ const styles = {
     rules: [
       {
         condition: {
-          maxWidth: 600,
+          maxWidth: 540,
         },
         chartOptions: {
           chart: {
