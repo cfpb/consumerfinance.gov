@@ -211,6 +211,8 @@ class AnswerLandingPage(LandingPage):
 
         return portal_cards
 
+    subpage_types = ["AnswerPage"]
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request)
         context["portal_cards"] = self.get_portal_cards()
