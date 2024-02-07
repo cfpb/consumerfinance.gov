@@ -27,7 +27,7 @@ jobs:
         run: yarn run build
 
       - name: Run the build process with Docker
-        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185
+        uses: addnab/docker-run-action@3
         with:
             registry: ghcr.io
             username: ${{ github.actor }}
@@ -39,7 +39,7 @@ jobs:
               ./call_create.sh
 
       - name: Upload arifact
-        uses: keithweaver/aws-s3-github-action@46dd0263ee582cbb2e81ad88209198d26d7a67c6
+        uses: keithweaver/aws-s3-github-action@1
         with:
           command: cp
           source: cfgov_current_build.zip
