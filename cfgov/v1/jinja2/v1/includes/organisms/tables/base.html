@@ -1,40 +1,42 @@
 {# ==========================================================================
 
-Table - https://cfpb.github.io/design-system/components/tables
+   Table - https://cfpb.github.io/design-system/components/tables
 
-Creates table markup when given:
+   Creates table markup when given:
 
-value.heading:  Optional heading to render before the table.
+   value.heading:            Optional heading to render before the table.
 
-value.data:     Wagtail StreamValue for TypedTableBlock, or an equivalent
-                dictionary structure like this:
+   value.text_introduction:  Optional text to render before the table.
 
-                {
-                    columns: [
-                        {'heading': 'Column 1'},
-                        {'heading': 'Column 2'},
-                        ...
-                    ],
-                    rows [
-                        ['a', 'b', ...],
-                        ['c', 'd', ...],
-                        ...
-                    ]
-                }
+   value.data:               Wagtail StreamValue for TypedTableBlock, or an
+                             equivalent dictionary structure like this:
 
-value.options:  Enabled configuration options as a list of strings.
-                For example: ['stack_on_mobile'].
-                See list of supported options below.
+                             {
+                                 columns: [
+                                     {'heading': 'Column 1'},
+                                     {'heading': 'Column 2'},
+                                     ...
+                                 ],
+                                 rows [
+                                     ['a', 'b', ...],
+                                     ['c', 'd', ...],
+                                     ...
+                                 ]
+                             }
 
-Supported configuration options:
+   value.options:            Enabled configuration options as a list of strings.
+                             For example: ['stack_on_mobile'].
+                             See list of supported options below.
 
-first_column_header:    Style the first column as a header.
+   Supported configuration options:
 
-is_full_width:          Display the table at full width.
+   first_column_header:    Style the first column as a header.
 
-stack_on_mobile:        Stack the table columns on mobile.
+   is_full_width:          Display the table at full width.
 
-========================================================================== #}
+   stack_on_mobile:        Stack the table columns on mobile.
+
+   ========================================================================== #}
 
 {%- set first_column_header = 'first_column_header' in (value.options or []) -%}
 {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
@@ -42,6 +44,10 @@ stack_on_mobile:        Stack the table columns on mobile.
 
 {% if value.heading -%}
     {% include_block value.heading %}
+{%- endif %}
+
+{% if value.text_introduction -%}
+    <p class="u-mb30">{{ value.text_introduction }}</p>
 {%- endif %}
 
 <table class="o-table

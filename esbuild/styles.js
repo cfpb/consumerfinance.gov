@@ -14,6 +14,7 @@ const styledApps = [
   'financial-well-being',
   'find-a-housing-counselor',
   'form-explainer',
+  'homepage',
   'know-before-you-owe',
   'owning-a-home',
   'paying-for-college',

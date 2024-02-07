@@ -22,9 +22,8 @@
         <h1>{{ _('There was a problem with your submission') }}</h1>
 
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-        {{ translation_links.render({
-            'language': 'en' if current_language == 'en' else 'es',
-            'links': [
+        {{ translation_links.render(
+            links=[
             {
                 'href': url('fwb_error_en'),
                 'language': 'en',
@@ -34,7 +33,7 @@
                 'language': 'es',
                 'text': 'Spanish'
             }]
-        }) }}
+        ) }}
 
         <p class="lead-paragraph">
             {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}

@@ -3,10 +3,6 @@
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
 {% block content_main %}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
@@ -24,10 +20,6 @@
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
-
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
 
 {% block content_sidebar scoped -%}
     {{ streamfield_sidefoot.render(page.sidefoot) }}

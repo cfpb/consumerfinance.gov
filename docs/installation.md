@@ -153,7 +153,7 @@ to assist developers with linting without thinking.
 
 !!! note
 
-    Our frontend requires [Node.js 16](https://nodejs.org/en/)
+    Our frontend requires [Node.js 20](https://nodejs.org/en/)
     with
     [Yarn](https://yarnpkg.com/).
     We prefer
@@ -165,16 +165,16 @@ to assist developers with linting without thinking.
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
     ```
 
-    Node 16 must then be installed once nvm is installed:
+    Node 20 must then be installed once nvm is installed:
 
     ```sh
-    nvm install 16
+    nvm install 20
     ```
 
-    Node.js 16 can then be used in any sh using:
+    Node.js 20 can then be used in any sh using:
 
     ```sh
-    nvm use 16
+    nvm use 20
     ```
 
     Yarn must then be installed:
