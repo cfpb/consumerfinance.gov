@@ -27,7 +27,7 @@ jobs:
         run: yarn run build
 
       - name: Run the build process with Docker
-        uses: addnab/docker-run-action@v3
+        uses: addnab/docker-run-action@v3.0.0
         with:
             registry: ghcr.io
             username: ${{ github.actor }}
