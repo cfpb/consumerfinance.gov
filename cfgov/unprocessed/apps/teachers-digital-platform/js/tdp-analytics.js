@@ -8,6 +8,7 @@ let searchContent;
  * @returns {object} Event data
  */
 let sendEvent = (payload) => {
+  console.log('sendEvent', payload);
   analyticsSendEvent(payload);
   return payload;
 };
