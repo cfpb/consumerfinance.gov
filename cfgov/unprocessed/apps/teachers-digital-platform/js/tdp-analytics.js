@@ -160,10 +160,7 @@ const handlePaginationClick = (event) => {
     searchContent.querySelector('.m-pagination_current-page').value,
     10,
   );
-  let label;
-  if (isNextButton || isPrevButton) {
-    label = currPage + (isNextButton ? 1 : -1);
-  }
+  let label = currPage;
 
   let action;
   if (isNextButton) {
