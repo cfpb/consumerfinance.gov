@@ -8,7 +8,7 @@ from django.test import TestCase as DjangoTestCase
 
 from wagtail.models import Site
 
-from v1.management.commands.report_raw_html import find_pattern
+from v1.management.commands.page_search import find_pattern
 from v1.models import BrowsePage
 
 
@@ -90,10 +90,8 @@ class FindPatternTestCase(TestCase):
         self.assertEqual(path, path_to_match + ["0", "myblock"])
 
 
-class ReportRawHTMLTestCase(DjangoTestCase):
+class PageSearchTestCase(DjangoTestCase):
     def setUp(self):
-        html_text = "<p>Some rich text&lt;br&gt;here.</p>"
-
         full_width_text = json.dumps(
             [
                 {
@@ -101,14 +99,14 @@ class ReportRawHTMLTestCase(DjangoTestCase):
                     "value": [
                         {
                             "type": "content",
-                            "value": html_text,
+                            "value": "<p>Some rich text here.</p>",
                         },
                     ],
                 },
             ]
         )
 
-        page = BrowsePage(title="test", slug="testpage")
+        page = BrowsePage(title="Great test page", slug="testpage")
         page.content = full_width_text
 
         site_root = Site.objects.get(is_default_site=True).root_page
@@ -116,17 +114,32 @@ class ReportRawHTMLTestCase(DjangoTestCase):
 
         page.save_revision().publish()
 
-    def test_report_raw_html_with_page_type_and_field(self):
+    def test_search_streamfield(self):
         output = StringIO()
-        call_command("report_raw_html", "v1.BrowsePage.content", stdout=output)
+        call_command("page_search", "-s", "rich text", stdout=output)
         self.assertIn(
             "0.full_width_text.0.content",
             output.getvalue(),
         )
 
-    def test_report_raw_html(self):
+    def test_search_regular_field(self):
         output = StringIO()
-        call_command("report_raw_html", stdout=output)
+        call_command("page_search", "-s", "great", stdout=output)
+        self.assertIn(
+            "title",
+            output.getvalue(),
+        )
+
+    def test_search_with_page_type_and_field(self):
+        output = StringIO()
+        call_command(
+            "page_search",
+            "-s",
+            "rich text",
+            "-p",
+            "v1.BrowsePage.content",
+            stdout=output,
+        )
         self.assertIn(
             "0.full_width_text.0.content",
             output.getvalue(),
