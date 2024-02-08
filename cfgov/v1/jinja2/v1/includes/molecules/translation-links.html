@@ -28,6 +28,7 @@
 
 {% macro render(links=none, modifier_classes="") %}
     {% set links = links or (page and page.get_translation_links(request)) %}
+    {% set language = (language or page.language) | default( 'en' ) %}
 
     {%- if links and links | length > 1 %}
     <div class="block block__sub {{ modifier_classes }}">
