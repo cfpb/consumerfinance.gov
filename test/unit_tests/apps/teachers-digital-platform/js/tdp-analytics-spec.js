@@ -176,7 +176,7 @@ const HTML_SNIPPET = `
                        pattern="[0-9]*"
                        inputmode="numeric"
                        value="22">
-                of 149
+                <span class="m-pagination_label"> of 149</span>
             </label>
             <button class="a-btn
                            a-btn__link
@@ -226,7 +226,7 @@ describe('The TDP custom analytics', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should send an analytics event when a pagination button is clicked', () => {
+  it('should send an analytics event when next pagination button is clicked', () => {
     const paginationButton = document.querySelector('.m-pagination_btn-next');
     const spy = jest.fn();
 
