@@ -283,10 +283,6 @@ class TestScripts(django.test.TestCase):
             100,
         )
 
-    def test_icomma(self):
-        icomma_test = update_ipeds.icomma(445999)
-        self.assertTrue(icomma_test == "445,999")
-
     def test_fix_zip5(self):
         fixzip3 = update_colleges.fix_zip5("501")
         self.assertTrue(fixzip3 == "00501")
