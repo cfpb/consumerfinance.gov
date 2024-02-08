@@ -156,12 +156,13 @@ const handlePaginationClick = (event) => {
     return;
   }
 
+  let currPage = parseInt(
+    searchContent.querySelector('.m-pagination_current-page').value,
+    10,
+  );
   let label;
   if (isNextButton || isPrevButton) {
-    label = paginator.href.match(/\?.*page=(\d+)/);
-    label = isNextButton
-      ? parseInt(label[1], 10) - 1
-      : parseInt(label[1], 10) + 1;
+    label = currPage + (isNextButton ? 1 : -1);
   }
 
   let action;
@@ -173,7 +174,7 @@ const handlePaginationClick = (event) => {
     action = 'goto page';
     label =
       'page ' +
-      searchContent.querySelector('.m-pagination_current-page').value +
+      currPage +
       searchContent.querySelectorAll('.m-pagination_label')[1].textContent;
   }
 
