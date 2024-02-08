@@ -49,7 +49,7 @@ jobs:
           node-version: '20.x'
 
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: 3.8
 
@@ -62,7 +62,7 @@ jobs:
       run: ./refresh-data.sh test.sql.gz
 
     - name: Run Cypress
-      uses: cypress-io/github-action@v6.6.0
+      uses: cypress-io/github-action@v6
       with:
         build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
@@ -72,7 +72,7 @@ jobs:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           CYPRESS_ENVIRONMENT: github
     - name: Store any Cypress failure screenshots
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: cypress_failure_screenshots

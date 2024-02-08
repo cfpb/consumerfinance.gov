@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
             fetch-depth: 0
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3.0.0
         id: filter
         with:
           filters: |
@@ -21,15 +21,15 @@ jobs:
 
       - name: Set up Helm
         if: steps.filter.outputs.helmlint == 'true'
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
           version: v3.9.2
 
       - name: Install Python3
         if: steps.filter.outputs.helmlint == 'true'
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7
+          python-version: 3.8
 
       - name: Update Dependencies
         if: steps.filter.outputs.helmlint == 'true'
@@ -38,7 +38,7 @@ jobs:
 
       - name: Set up chart-testing
         if: steps.filter.outputs.helmlint == 'true'
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v2
 
       - name: Run chart-testing (lint)
         if: steps.filter.outputs.helmlint == 'true'
