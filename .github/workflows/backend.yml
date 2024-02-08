@@ -64,7 +64,7 @@ jobs:
         run: sudo apt-get install gettext
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
 
@@ -92,7 +92,7 @@ jobs:
       - name: Store test coverage
         # Submit coverage from our prefered tox run only
         if: matrix.toxenv == 'unittest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend_coverage
           path: ./coverage.xml
@@ -108,7 +108,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
 
@@ -118,7 +118,7 @@ jobs:
           pip install -r requirements/ci.txt
 
       - name: Retrieve backend coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: backend_coverage
           path: backend_coverage

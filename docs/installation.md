@@ -162,16 +162,16 @@ to assist developers with linting without thinking.
     nvm can be installed using:
 
     ```sh
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | sh
     ```
 
-    Node 20 must then be installed once nvm is installed:
+    Node must then be installed once nvm is installed:
 
     ```sh
     nvm install 20
     ```
 
-    Node.js 20 can then be used in any sh using:
+    Node can then be used in any sh using:
 
     ```sh
     nvm use 20
