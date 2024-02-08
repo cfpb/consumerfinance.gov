@@ -61,6 +61,8 @@ class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
         "searchable using standard search filters module."
     )
 
+    subpage_types = ["DocumentDetailPage", "BlogPage"]
+
 
 class ResearchHubPage(SublandingFilterablePage):
     template = "v1/sublanding-page/filterable.html"
