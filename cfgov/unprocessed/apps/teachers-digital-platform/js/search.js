@@ -72,12 +72,7 @@ function addDataGtmIgnore() {
  * @param {Event} event - Click event
  */
 function clearFilter(event) {
-  // Continue only if the X icon was clicked and not the parent button
-  let target = event.target.tagName.toLowerCase();
-  if (target !== 'svg' && target !== 'path') {
-    return;
-  }
-  target = event.target.closest('.a-tag');
+  const target = event.currentTarget;
   const checkbox = document.querySelector(target.getAttribute('data-value'));
   // Remove the filter tag
   removeTag(target);
@@ -107,14 +102,10 @@ function clearFilters(event) {
   // Handle Analytics here before tags vanish.
   handleClearAllClick(event);
 
-  let filterIcons = document.querySelectorAll('.a-tag svg');
-  // IE doesn't support forEach w/ node lists so convert it to an array.
-  filterIcons = Array.prototype.slice.call(filterIcons);
-  filterIcons.forEach((filterIcon) => {
-    const target = filterIcon.closest('button');
+  const filterTags = document.querySelectorAll('.a-tag');
+  filterTags.forEach((filterTag) => {
     clearFilter({
-      target: filterIcon,
-      value: target,
+      currentTarget: filterTag,
     });
   });
   handleFilter(event);

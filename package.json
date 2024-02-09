@@ -17,7 +17,7 @@
   },
   "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
   "dependencies": {
-    "@cfpb/cfpb-analytics": "0.1.4",
+    "@cfpb/cfpb-analytics": "0.3.0",
     "@cfpb/cfpb-atomic-component": "0.35.0",
     "@cfpb/cfpb-buttons": "0.35.0",
     "@cfpb/cfpb-core": "0.35.0",
