@@ -2,5 +2,5 @@
 django-cprofile-middleware==1.0.5
 django-debug-toolbar==3.4.0
 django-sslserver==0.22
-pre-commit==2.18.1
+pre-commit==3.5.0
 tox==3.25.0
