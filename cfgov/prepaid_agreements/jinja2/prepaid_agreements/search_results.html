@@ -120,10 +120,10 @@
     {% if filters | length %}
 
         <div class="filters_applied">
-            <div class="filters_tags">
-                <span class="filters_applied-label">
+            <span class="filters_applied-label">
                 Filters applied:
             </span>
+            <div class="filters_tags">
                 {% set filters_to_remove = [] %}
                 {% for filter in filters %}
                     {% if filter in valid_filters %}
@@ -138,13 +138,13 @@
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
-
-                {% set clear_url = remove_url_parameter(request, filters) %}
-                <a class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
-                        data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
-                    Clear all filters
-                </a>
             </div>
+
+            {% set clear_url = remove_url_parameter(request, filters) %}
+            <a class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
+                    data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
+                Clear all filters
+            </a>
         </div>
     {% endif %}
 

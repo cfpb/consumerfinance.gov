@@ -80,7 +80,7 @@ describe('The Regs3K search page', () => {
     expect(numFilters).toEqual(0);
   });
 
-  it('should not clear a filter when its tag is clicked', () => {
+  it('should clear a filter when its tag is clicked', () => {
     const div = document.querySelector('div.a-tag');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
@@ -88,7 +88,7 @@ describe('The Regs3K search page', () => {
 
     simulateEvent('click', div);
     numFilters = document.querySelectorAll('div.a-tag').length;
-    expect(numFilters).toEqual(1);
+    expect(numFilters).toEqual(0);
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {

@@ -135,8 +135,15 @@
     border-left: 1px solid @gray-40;
   }
 
-  .results_filters {
+  .results_filters,
+  .results_filters-tags {
     display: flex;
+    gap: 15px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .results_filters {
     padding-top: unit(15px / @base-font-size-px, em);
 
     // Desktop and above.
@@ -145,16 +152,12 @@
       padding-left: unit( 30px / @base-font-size-px, em );
       padding-right: unit( 30px / @base-font-size-px, em );
     });
-
-    .a-tag {
-      background-color: @green-20;
-    }
   }
 
   .results_filters-label {
     flex-shrink: 0;
     line-height: 2.25;
-    margin-right: unit(30px / @base-font-size-px, em);
+    font-weight: 600;
   }
 
   .results_list {

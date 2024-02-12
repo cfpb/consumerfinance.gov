@@ -87,10 +87,6 @@ NEW_SCHOOL_DATA_POINTS = {
 # CLOSEDAT: Date institution closed
 
 
-def icomma(value):
-    return intcomma(value, use_l10n=False)
-
-
 def unzip_file(filepath):
     """Unzip a .zip file and store contents in the ipeds directory."""
     zip_ref = zipfile.ZipFile(filepath, "r")
@@ -256,9 +252,9 @@ def load_values(dry_run=True):
             "- {} new school records "
             "would have been created".format(
                 SCRIPT,
-                icomma(points),
-                icomma(updated),
-                icomma(oncampus),
+                intcomma(points),
+                intcomma(updated),
+                intcomma(oncampus),
                 len(missing),
             )
         )
@@ -266,7 +262,7 @@ def load_values(dry_run=True):
     msg = (
         "{} updated {} data points for {} schools;\n"
         "{} new school records were created".format(
-            SCRIPT, icomma(points), icomma(updated), len(missing)
+            SCRIPT, intcomma(points), intcomma(updated), len(missing)
         )
     )
     return msg
