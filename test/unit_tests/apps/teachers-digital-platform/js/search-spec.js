@@ -182,7 +182,7 @@ describe('The TDP search page', () => {
 
     simulateEvent('click', div);
     numFilters = document.querySelectorAll('div.a-tag').length;
-    expect(numFilters).toEqual(2);
+    expect(numFilters).toEqual(1);
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {

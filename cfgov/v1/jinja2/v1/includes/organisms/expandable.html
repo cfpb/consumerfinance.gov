@@ -36,7 +36,7 @@
             {{ 'o-expandable__background' if value.is_midtone else '' }}
             {{ 'o-expandable__border' if value.is_bordered else '' }}
             {{ 'o-expandable__onload-open' if value.is_expanded else '' }}"
-     {{ 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
+     {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
         if value.is_faq else '' }} >
     <button class="o-expandable_header" type="button">
         <span class="h4 o-expandable_label"
@@ -54,7 +54,7 @@
     </button>
 
     <div class="o-expandable_content"
-          {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer"'
+          {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer"'
         if value.is_faq else '' }}>
         {% if value.is_faq %}<div itemprop='text'>{% endif %}
             {% if caller is defined %}

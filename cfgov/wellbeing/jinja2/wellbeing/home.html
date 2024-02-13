@@ -61,8 +61,9 @@
 
         <h2>{{ _('Here’s how it works:') }}</h2>
 
-        {% set value = {
-            'links': [
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render(
+            links=[
             {
                 'href': url('fwb_home_en'),
                 'language': 'en',
@@ -72,9 +73,7 @@
                 'language': 'es',
                 'text': 'Spanish'
             }]
-        } %}
-        {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-        {% include "v1/includes/molecules/translation-links.html" %}
+        ) }}
 
         <p>
             <b>{{ _('Answer the questions and get your score.') }}</b>

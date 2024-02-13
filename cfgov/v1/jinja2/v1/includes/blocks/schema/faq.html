@@ -17,7 +17,7 @@
 
    value.question.anchor_tag         Anchor tag for question section
 
-   value.question.question           Text of question   
+   value.question.question           Text of question
 
    value.question.answer_contents    Output of streamblock
 
@@ -25,7 +25,7 @@
 
 
 <div itemscope=""
-     itemtype="http://schema.org/FAQPage"
+     itemtype="https://schema.org/FAQPage"
      class="schema-block schema-block__faq">
     {% if value.description %}
   	<div itemprop="description" class="schema-block_description">
@@ -35,13 +35,13 @@
   	{% for question in value.questions %}
   		  <div itemscope=""
              itemprop="mainEntity"
-             itemtype="http://schema.org/Question"
+             itemtype="https://schema.org/Question"
              class="schema-block_item"
              {% if question.anchor_tag %}id="{{ question.anchor_tag }}"{% endif %}>
     		    <h2 itemprop="name">{{ question.question }}</h2>
-    		    <div itemprop="acceptedAnswer" 
+    		    <div itemprop="acceptedAnswer"
                  itemscope=""
-                 itemtype="http://schema.org/Answer">
+                 itemtype="https://schema.org/Answer">
                 <div itemprop="text">
                   {% include_block question.answer_content %}
                 </div>

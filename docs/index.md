@@ -15,15 +15,15 @@ The standard technology stack for development of consumerfinance.gov within the 
 - [Python 3.8](https://docs.python.org/3.8/) and [pip (Python package manager)](https://pip.pypa.io/en/stable/user_guide/)
 - [Jinja2 templates](https://jinja.palletsprojects.com/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for version.
 - [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/wagtail.txt) for version.
-- [PostgreSQL 10.5](https://www.postgresql.org/) is the database we use in production and locally.
-- [Psycopg](http://initd.org/psycopg/) is the Python library that lets Python talk to Postgres. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for current version.
+- [PostgreSQL 13.13](https://www.postgresql.org/) is the database we use in production and locally.
+- [Psycopg](https://www.psycopg.org/) is the Python library that lets Python talk to Postgres. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for current version.
 - Additional dependencies, listed below.
 
 ## Additional dependencies
 
 - [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
-- [Node](http://nodejs.org) and [yarn](https://yarnpkg.com/):
+- [Node](https://nodejs.org) and [yarn](https://yarnpkg.com/):
   Used for downloading and managing front-end dependencies and assets. Front-end dependencies are listed in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json) file.
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)

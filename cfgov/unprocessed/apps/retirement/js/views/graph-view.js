@@ -195,7 +195,7 @@ function initIndicator() {
   const $indicator = $('#graph_slider-input');
 
   /* Need both onchange and oninput to work in all browsers
-      http://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ */
+      https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ */
   $indicator.on('change input', function () {
     const indicatorValue = Number($(this).val());
     setAgeWithIndicator(indicatorValue);

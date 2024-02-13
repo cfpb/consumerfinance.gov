@@ -25,7 +25,7 @@ PFC_ROOT = Path(__file__).resolve().parents[2]
 # In early 2020, the latest data came from the 2018-2019 academic year.
 DATA_YEAR = datetime.datetime.now().year - 2
 ipeds_directory = "{}/data_sources/ipeds".format(PFC_ROOT)
-ipeds_data_url = "http://nces.ed.gov/ipeds/datacenter/data"
+ipeds_data_url = "https://nces.ed.gov/ipeds/datacenter/data/"
 data_slug = "IC{}_AY".format(DATA_YEAR)
 dictionary_slug = "IC{}_AY_Dict".format(DATA_YEAR)
 
@@ -85,10 +85,6 @@ NEW_SCHOOL_DATA_POINTS = {
 # NEWID: the UNITID for merged schools
 # DEATHYR: Year institution was deleted from IPEDS
 # CLOSEDAT: Date institution closed
-
-
-def icomma(value):
-    return intcomma(value, use_l10n=False)
 
 
 def unzip_file(filepath):
@@ -256,9 +252,9 @@ def load_values(dry_run=True):
             "- {} new school records "
             "would have been created".format(
                 SCRIPT,
-                icomma(points),
-                icomma(updated),
-                icomma(oncampus),
+                intcomma(points),
+                intcomma(updated),
+                intcomma(oncampus),
                 len(missing),
             )
         )
@@ -266,7 +262,7 @@ def load_values(dry_run=True):
     msg = (
         "{} updated {} data points for {} schools;\n"
         "{} new school records were created".format(
-            SCRIPT, icomma(points), icomma(updated), len(missing)
+            SCRIPT, intcomma(points), intcomma(updated), len(missing)
         )
     )
     return msg

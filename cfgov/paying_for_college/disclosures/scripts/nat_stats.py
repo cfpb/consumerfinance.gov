@@ -6,7 +6,7 @@ from pathlib import Path
 FIXTURES_DIR = Path(__file__).resolve().parents[2]
 NAT_DATA_FILE = "{0}/fixtures/national_stats.json".format(FIXTURES_DIR)
 BACKUP_FILE = "{0}/fixtures/national_stats_backup.json".format(FIXTURES_DIR)
-# source for BLS_FILE: http://www.bls.gov/cex/#tables_long
+# source for BLS_FILE: https://www.bls.gov/cex/#tables_long
 BLS_FILE = "{0}/fixtures/bls_data.json".format(FIXTURES_DIR)
 LENGTH_MAP = {
     "earnings": {2: "median_earnings_l4", 4: "median_earnings_4"},

@@ -1,17 +1,13 @@
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
+let searchContent;
+
 /**
  * Sends the user interaction to Analytics
- * @param {string} action - The user's action
- * @param {string} label - The label associated with the action
+ * @param {object} payload - Payload of arbitrary key/value analytics data.
  * @returns {object} Event data
  */
-let sendEvent = (action, label) => {
-  const payload = {
-    event: 'TDP Search Tool',
-    action: action,
-    label: label,
-  };
+let sendEvent = (payload) => {
   analyticsSendEvent(payload);
   return payload;
 };
@@ -52,6 +48,8 @@ const getExpandableState = (expandable) => {
 };
 
 /**
+ * Old analytics (UA). TODO: Remove when completely on GA4.
+ *
  * handleExpandableClick - Listen for clicks within a search page's content
  * and report to GA if they opened or closed an expandable.
  * @param {event} event - Click event.
@@ -70,7 +68,11 @@ const handleExpandableClick = (event) => {
   }
   label = label.textContent.trim();
 
-  return sendEvent(action, label);
+  return sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
 };
 
 /**
@@ -79,14 +81,28 @@ const handleExpandableClick = (event) => {
  * @returns {object|undefined} Event data.
  */
 const handleFilterClick = (event) => {
-  const checkbox = event.target;
+  const filters = event.currentTarget.querySelector('.filters');
+  if (!filters) return;
+  const checkbox = filters.closest('.a-checkbox') || event.target;
   if (!checkbox.classList.contains('a-checkbox')) {
     return;
   }
   const action = checkbox.checked ? 'filter' : 'remove filter';
   const label = checkbox.getAttribute('aria-label');
 
-  return sendEvent(action, label);
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
+  return sendEvent({
+    event: 'filter',
+    action,
+    label,
+  });
 };
 
 /**
@@ -95,33 +111,29 @@ const handleFilterClick = (event) => {
  * @returns {object|undefined} Event data.
  */
 const handleClearFilterClick = (event) => {
-  // Continue only if the X icon was clicked and not the parent button
-  let target = event.target.tagName.toLowerCase();
-  if (target !== 'svg' && target !== 'path') {
+  const tags = event.currentTarget.querySelector('.results_filters-tags');
+  if (!tags) return;
+  const tag = tags.closest('.a-tag') || event.target;
+  if (!tag.classList.contains('a-tag')) {
     return;
   }
-  target = event.target.closest('.a-tag[data-js-hook=behavior_clear-filter]');
 
-  if (!target) {
-    return;
-  }
   const action = 'remove filter';
-  const label = target.textContent.trim();
+  const label = tag.textContent.trim();
 
-  return sendEvent(action, label);
-};
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
 
-/**
- * getPaginator - Find the paginator the user clicked.
- * @param {event} event - Click event
- * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
- */
-const getPaginator = (event) => {
-  const el = event.target.closest('.a-btn') || event.target;
-  if (el.classList.contains('a-btn')) {
-    return el;
-  }
-  return null;
+  // GA4.
+  return sendEvent({
+    event: 'filter',
+    action,
+    label,
+  });
 };
 
 /**
@@ -130,41 +142,56 @@ const getPaginator = (event) => {
  * @returns {object|undefined} Event data.
  */
 const handlePaginationClick = (event) => {
-  const paginator = getPaginator(event);
-  if (!paginator) {
+  const paginator = event.target.closest('.a-btn') || event.target;
+  if (!paginator.classList.contains('a-btn')) {
     return;
   }
 
   const isNextButton = paginator.classList.contains('m-pagination_btn-next');
   const isPrevButton = paginator.classList.contains('m-pagination_btn-prev');
+  const isGoButton = paginator.classList.contains('m-pagination_btn-submit');
   const isDisabled = paginator.classList.contains('a-btn__disabled');
 
-  if (!paginator.href || isDisabled || (!isNextButton && !isPrevButton)) {
+  if (isDisabled || (!isNextButton && !isPrevButton && !isGoButton)) {
     return;
   }
 
-  const action = isNextButton ? 'next page' : 'previous page';
-  let label = paginator.href.match(/\?.*page=(\d+)/);
-  if (!label) {
-    return;
-  }
-  label = isNextButton
-    ? parseInt(label[1], 10) - 1
-    : parseInt(label[1], 10) + 1;
-  return sendEvent(action, label);
-};
+  let currPageDom = searchContent.querySelector('.m-pagination_current-page');
 
-/**
- * getClearBtn - Find the clear all filters button.
- * @param {event} event - Click event
- * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
- */
-const getClearBtn = (event) => {
-  const el = event.target.closest('.results_filters-clear') || event.target;
-  if (el.classList.contains('results_filters-clear')) {
-    return el;
+  // This is the actual page number we're on.
+  let currPage = parseInt(currPageDom.getAttribute('value'), 10);
+  // This is the page that's set in the page counter.
+  let selPage = parseInt(currPageDom.value, 10);
+  let ofTotalPagesTxt = searchContent.querySelectorAll('.m-pagination_label')[1]
+    .textContent;
+  let usePage = currPage;
+
+  let label;
+  let action;
+  if (isNextButton) {
+    action = 'next page';
+  } else if (isPrevButton) {
+    action = 'previous page';
+  } else if (isGoButton) {
+    action = 'goto page';
+    usePage = selPage;
   }
-  return null;
+
+  label = `page ${usePage}${ofTotalPagesTxt}`;
+
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: action,
+    label: label,
+  });
+
+  // GA4.
+  return sendEvent({
+    event: 'pagination',
+    action,
+    label,
+  });
 };
 
 /**
@@ -173,15 +200,13 @@ const getClearBtn = (event) => {
  * @returns {object|undefined} Event data.
  */
 const handleClearAllClick = (event) => {
-  const clearBtn = getClearBtn(event);
-  if (!clearBtn) {
-    return;
-  }
+  const clearBtn = event.currentTarget;
   const tagsWrapper = clearBtn.parentElement;
   const tags = tagsWrapper.querySelectorAll('.a-tag');
   if (!tags || tags.length === 0) {
     return;
   }
+
   const tagNames = [];
   for (let i = 0; i < tags.length; i++) {
     if (tagsWrapper.contains(tags[i])) {
@@ -191,9 +216,19 @@ const handleClearAllClick = (event) => {
   if (tagNames.length === 0) {
     return;
   }
-  const action = 'clear all filters';
-  const label = tagNames.join('|');
-  return sendEvent(action, label);
+
+  // Old analytics. TODO: Remove when completely on GA4.
+  sendEvent({
+    event: 'TDP Search Tool',
+    action: 'clear all filters',
+    label: tagNames.join(' | '),
+  });
+
+  // GA4.
+  return sendEvent({
+    event: 'clear_all_filters',
+    label: tagNames.join(' | '),
+  });
 };
 
 /**
@@ -207,25 +242,43 @@ const handleFetchSearchResults = (searchTerm) => {
   }
 
   // Send the keywords that return 0 results to Analytics.
-  const resultsCountBlock = document.querySelector(
-    '#tdp-search-facets-and-results .results_count',
-  );
+  const resultsCountBlock = searchContent.querySelector('.results_count');
   if (resultsCountBlock) {
     const resultsCount = resultsCountBlock.getAttribute('data-results-count');
 
     // Check if result count is 0
     if (resultsCount === '0') {
-      const action = 'noSearchResults';
-      const label = searchTerm.toLowerCase() + ':0';
+      // Old analytics. TODO: Remove when completely on GA4.
+      sendEvent({
+        event: 'TDP Search Tool',
+        action: 'noSearchResults',
+        label: searchTerm.toLowerCase() + ':0',
+      });
 
-      sendEvent(action, label);
+      // GA4.
+      sendEvent({
+        event: 'search',
+        search_term: searchTerm.toLowerCase(),
+        results_count: 0,
+        no_search_results: true,
+      });
+    } else {
+      // Old analytics. TODO: Remove when completely on GA4.
+      sendEvent({
+        event: 'TDP Search Tool',
+        action: 'search',
+        label: searchTerm.toLowerCase(),
+      });
+
+      // GA4.
+      sendEvent({
+        event: 'search',
+        search_term: searchTerm.toLowerCase(),
+        results_count: resultsCount,
+        no_search_results: false,
+      });
     }
   }
-
-  // Send the keyword to Analytics.
-  const action = 'search';
-  const label = searchTerm.toLowerCase();
-  sendEvent(action, label);
 };
 
 /**
@@ -234,12 +287,13 @@ const handleFetchSearchResults = (searchTerm) => {
  */
 const bindAnalytics = (spyMethod) => {
   if (spyMethod) {
+    // TODO: sendEvent exists so it can be mocked in the unit tests.
+    //       Look into rewriting the tests to mock analyticsSendEvent.
     sendEvent = spyMethod;
   }
 
-  const searchContent = document.querySelector(
-    '#tdp-search-facets-and-results',
-  );
+  searchContent = document.querySelector('#tdp-search-facets-and-results');
+
   if (searchContent) {
     searchContent.addEventListener('click', (event) => {
       handleExpandableClick(event);

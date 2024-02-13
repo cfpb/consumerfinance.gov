@@ -481,7 +481,9 @@ class SimpleChart(blocks.StructBlock):
     transform = blocks.CharBlock(
         required=False,
         help_text="Name the javascript function in chart-hooks.js to run "
-        "on the provided data before handing it to the chart",
+        "on the provided data before handing it to the chart. Can also "
+        "provide '___'-separated arguments to this function "
+        "which are passed in as arguments 2 to n",
     )
 
     x_axis_label = blocks.CharBlock(required=False)

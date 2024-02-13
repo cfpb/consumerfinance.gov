@@ -202,12 +202,11 @@ function addProjectedMonths(chartObject, numMonths) {
     commonRenderCallback.apply(this, arguments);
 
     if (this.projectedMonthsLabel) this.projectedMonthsLabel.destroy();
-
     this.projectedMonthsLabel = this.renderer
       .text(
         `Values after ${projectedDate.humanFriendly} are projected`,
         this.plotWidth - 218,
-        165,
+        this.plotWidth < 450 ? 120 : 165,
       )
       .css({
         fontSize: '15px',
@@ -218,14 +217,16 @@ function addProjectedMonths(chartObject, numMonths) {
   /* Add a zone to each series with a dotted line starting
      at the projected data starting point */
   chartObject.series = chartObject.series.map((singluarSeries) => {
+    let projectedStyle = { dashStyle: 'dot' };
+    if (chartObject.chart?.type === 'column') {
+      projectedStyle = { color: '#addc91' };
+    }
     singluarSeries.zoneAxis = 'x';
     singluarSeries.zones = [
       {
         value: projectedDate.timestamp,
       },
-      {
-        dashStyle: 'dot',
-      },
+      projectedStyle,
     ];
     return singluarSeries;
   });
@@ -270,6 +271,19 @@ function buildCharts() {
 }
 
 /**
+ *
+ * @param {string} rawTransform - The string input into the transform field
+ * @returns {object} transform object with function and args
+ */
+function getTransformObject(rawTransform = '') {
+  const parsed = rawTransform.split('___');
+  return {
+    transformMethod: parsed[0],
+    args: parsed.slice(1),
+  };
+}
+
+/**
  * Initializes a chart
  * @param {object} chartNode - The DOM node of the current chart
  */
@@ -279,8 +293,11 @@ function buildChart(chartNode) {
   const { source, transform, chartType } = dataAttributes;
 
   resolveData(source.trim()).then((raw) => {
+    const { transformMethod, args } = getTransformObject(transform);
     const transformed =
-      transform && chartHooks[transform] ? chartHooks[transform](raw) : null;
+      transformMethod && chartHooks[transformMethod]
+        ? chartHooks[transformMethod](raw, ...args)
+        : null;
 
     const series = extractSeries(transformed || raw, dataAttributes);
 

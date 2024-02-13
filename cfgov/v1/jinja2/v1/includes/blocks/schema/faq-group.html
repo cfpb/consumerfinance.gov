@@ -37,7 +37,7 @@
     {% for item in value.faq_items %}
     <div itemscope=""
          itemprop="mainEntity"
-         itemtype="http://schema.org/Question"
+         itemtype="https://schema.org/Question"
          class="block
                {{ 'block__flush-top' if loop.index == 1 else '' }}
                {{ 'block__padded-top block__border-top'
@@ -48,7 +48,7 @@
         </{{ value.question_tag }}>
         <div itemprop="acceptedAnswer"
              itemscope=""
-             itemtype="http://schema.org/Answer">
+             itemtype="https://schema.org/Answer">
             <div itemprop="text">
                 {% for block in item.answer -%}
                     {{ render_block.render(block, loop.index) }}

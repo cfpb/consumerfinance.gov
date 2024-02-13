@@ -23,7 +23,7 @@
 {% endif %}
 <html lang="{{ language }}" class="no-js"
 {%- if is_faq_page %}
-itemscope="" itemtype="http://schema.org/FAQPage"
+itemscope="" itemtype="https://schema.org/FAQPage"
 {% endif -%}>
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
@@ -198,11 +198,6 @@ itemscope="" itemtype="http://schema.org/FAQPage"
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-    // Begin custom event code.
-    j.addEventListener('load',function(){
-    d.dispatchEvent(new CustomEvent('gtmloaded', {bubbles:true}));
-    },{once:true});
-    // End custom event code.
     f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
     {# End Google Tag Manager #}

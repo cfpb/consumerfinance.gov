@@ -27,8 +27,9 @@
 {% block content_main %}
     <h1>{{ _('Why financial well-being?') }}</h1>
 
-    {% set value = {
-        'links': [
+    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {{ translation_links.render(
+        links=[
         {
             'href': url('fwb_about_en'),
             'language': 'en',
@@ -38,9 +39,7 @@
             'language': 'es',
             'text': 'Spanish'
         }]
-    } %}
-    {% set temp = value.update({'language':'en'} if (current_language == 'en') else {'language':'es'} )%}
-    {% include "v1/includes/molecules/translation-links.html" %}
+    ) }}
 
     <p class="lead-paragraph">
         {{ _('At the CFPB, we work to help consumers like you take control of your financial life to reach your own life goals,') }}

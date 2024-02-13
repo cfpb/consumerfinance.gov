@@ -19,10 +19,10 @@
         <div class="m-form-field u-mb15">
             {% set selections = filters['issuer_name'] %}
             <label class="a-label a-label__heading"
-                   for="card_type">
+                   for="issuer_name">
                 Issuer name
             </label>
-            <select name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
+            <select id="issuer_name" name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" class="o-multiselect">
                 {% for issuer in active_filters['issuer_name'] %}
                     <option
                         value="{{ issuer }}"
@@ -120,10 +120,10 @@
     {% if filters | length %}
 
         <div class="filters_applied">
-            <div class="filters_tags">
-                <span class="filters_applied-label">
+            <span class="filters_applied-label">
                 Filters applied:
             </span>
+            <div class="filters_tags">
                 {% set filters_to_remove = [] %}
                 {% for filter in filters %}
                     {% if filter in valid_filters %}
@@ -138,13 +138,13 @@
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
-
-                {% set clear_url = remove_url_parameter(request, filters) %}
-                <a class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
-                        data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
-                    Clear all filters
-                </a>
             </div>
+
+            {% set clear_url = remove_url_parameter(request, filters) %}
+            <a class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
+                    data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
+                Clear all filters
+            </a>
         </div>
     {% endif %}
 

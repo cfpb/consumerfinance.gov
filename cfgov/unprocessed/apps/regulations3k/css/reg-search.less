@@ -11,18 +11,21 @@
   }
 }
 
+.filters_applied,
+.filters_tags {
+  display: flex;
+  gap: 15px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
 .filters_applied {
   padding: 30px 15px;
   border-bottom: 1px solid @gray-40;
+
   &-label {
-    display: inline-block;
-    margin-right: 15px;
     font-weight: 600;
   }
-}
-
-.filters_tags {
-  display: inline-block;
 }
 
 .search_results {

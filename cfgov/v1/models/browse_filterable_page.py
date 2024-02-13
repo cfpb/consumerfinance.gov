@@ -70,6 +70,8 @@ class BrowseFilterablePage(AbstractFilterablePage, AbstractBrowsePage):
         "be searchable using standard search filters module."
     )
 
+    subpage_types = ["DocumentDetailPage", "EventPage", "BrowsePage"]
+
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
     template = "v1/browse-filterable/index.html"
@@ -87,6 +89,8 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
     @staticmethod
     def get_search_class():
         return EnforcementActionFilterablePagesDocumentSearch
+
+    subpage_types = ["EnforcementActionPage"]
 
 
 class EventArchivePage(BrowseFilterablePage):
@@ -110,3 +114,4 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(BrowseFilterablePage):
     template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]
+    subpage_types = ["NewsroomPage"]

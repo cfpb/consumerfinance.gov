@@ -2,9 +2,9 @@
 
     Render a list of translation links, given:
 
-    value.language: The current page language code, e.g. "en".
+    links: A list of translation links.
 
-    value.links:    A list of translation links.
+    modifier_classes: classes to add to the translation links container.
 
     Each translation link should have:
 
@@ -26,31 +26,30 @@
 
     ======================================================================== #}
 
-{%- if page %}
-    {% set value = {
-        "language": ( language or page.language )| default( "en" ),
-        "links": page.get_translation_links( request ),
-    } %}
-{% endif -%}
+{% macro render(links=none, modifier_classes="") %}
+    {% set links = links or (page and page.get_translation_links(request)) %}
+    {% set language = (language or page.language) | default( 'en' ) %}
 
-{%- if value.links and value.links|length > 1 %}
-<div class="block block__sub">
-    <ul dir="ltr" class="m-translation-links">
-        {%- for link in value.links %}
-            {%- set render_link = value.language and link.language != value.language %}
-            <li>
-            {%- if render_link %}
-                <a href="{{ link.href }}"
-                lang="{{ link.language }}"
-                hreflang="{{ link.language }}"
-                translate="no">
-            {%- endif %}
-            {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
-            {% if render_link %}
-                </a>
-            {% endif -%}
-            </li>
-        {% endfor -%}
-    </ul>
-</div>
-{%- endif %}
+    {%- if links and links | length > 1 %}
+    <div class="block block__sub {{ modifier_classes }}">
+        <ul dir="ltr" class="m-translation-links">
+            {%- for link in links %}
+                {# language is set by the context in the base template. #}
+                {%- set render_link = language and link.language != language %}
+                <li>
+                {%- if render_link %}
+                    <a href="{{ link.href }}"
+                    lang="{{ link.language }}"
+                    hreflang="{{ link.language }}"
+                    translate="no">
+                {%- endif %}
+                {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
+                {% if render_link %}
+                    </a>
+                {% endif -%}
+                </li>
+            {% endfor -%}
+        </ul>
+    </div>
+    {%- endif %}
+{% endmacro %}

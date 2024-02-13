@@ -12,9 +12,6 @@
     "url": "https://github.com/cfpb/consumerfinance.gov.git"
   },
   "license": "SEE LICENSE IN TERMS.md",
-  "engines": {
-    "node": ">=10.x"
-  },
   "dependencies": {
     "ftdomdelegate": "3.1.0"
   },

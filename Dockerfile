@@ -57,7 +57,7 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:16-alpine as cfgov-node-builder
+FROM node:20-alpine as cfgov-node-builder
 
 ENV APP_HOME /src/consumerfinance.gov
 WORKDIR ${APP_HOME}
