@@ -42,14 +42,14 @@ function switchComparisons(category) {
  * @param {HTMLElement} el - A dom element
  */
 function handleAnalytics(el) {
+  const event = el.getAttribute('data-gtm-category');
   const action = el.getAttribute('data-gtm-action');
   const label = el.getAttribute('data-gtm-label');
-  const category = el.getAttribute('data-gtm-category');
 
   analyticsSendEvent({
+    event,
     action,
     label,
-    category,
   });
 }
 
