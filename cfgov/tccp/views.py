@@ -2,8 +2,8 @@ from urllib.parse import urlencode
 
 from django.db.models import Count, Min
 from django.shortcuts import redirect, reverse
-from django.urls import reverse_lazy
 from django.template.defaultfilters import title
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 
 import django_filters.rest_framework

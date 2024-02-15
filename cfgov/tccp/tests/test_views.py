@@ -4,10 +4,11 @@ from urllib.parse import quote
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
 
-from .baker import baker
 from tccp.enums import CreditTierChoices
 from tccp.models import CardSurveyData
 from tccp.views import CardListView, LandingPageView
+
+from .baker import baker
 
 
 class LandingPageViewTests(TestCase):

@@ -1,10 +1,9 @@
-from unittest import mock
-
 from django.test import TestCase
 
-from .baker import baker
 from tccp.filterset import CardSurveyDataFilterSet
 from tccp.models import CardSurveyData
+
+from .baker import baker
 
 
 class CardSurveyDataFilterSetTests(TestCase):

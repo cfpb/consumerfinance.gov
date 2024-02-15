@@ -1,7 +1,7 @@
 from django_filters import rest_framework as filters
 
 from .enums import CreditTierChoices, StateChoices
-from .filters import OrderingFilter, CheckboxFilter, YesNoFilter
+from .filters import CheckboxFilter, OrderingFilter, YesNoFilter
 from .models import CardSurveyData
 from .widgets import Select
 
