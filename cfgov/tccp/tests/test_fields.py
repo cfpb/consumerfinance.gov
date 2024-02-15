@@ -2,14 +2,12 @@ from django.core import serializers
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
 
 from tccp.fields import JSONListField, YesNoBooleanField
 
-from .models import YEAR_IN_SCHOOL_CHOICES, YearsInSchool
+from .testapp.models import YEAR_IN_SCHOOL_CHOICES, YearsInSchool
 
 
-@isolate_apps()
 class JSONListFieldTests(SimpleTestCase):
     def check_construction(self, **kwargs):
         class TestModel(models.Model):
@@ -77,7 +75,7 @@ class JSONListFieldTests(SimpleTestCase):
 
     serialization_test_value = ["FR", "SO"]
     serialization_test_json = (
-        '[{"model": "tccp.yearsinschool", "pk": null, '
+        '[{"model": "tccp_tests.yearsinschool", "pk": null, '
         '"fields": {"years": ["FR", "SO"]}}]'
     )
 
@@ -94,7 +92,6 @@ class JSONListFieldTests(SimpleTestCase):
         self.assertEqual(instance.years, self.serialization_test_value)
 
 
-@isolate_apps()
 class JSONListFieldModelTests(TestCase):
     def check_save_and_refresh(self, value, **kwargs):
         instance = YearsInSchool(years=value)
