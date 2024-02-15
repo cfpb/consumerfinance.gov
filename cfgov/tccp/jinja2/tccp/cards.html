@@ -1,0 +1,70 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{% from 'tccp/macros/data_published.html' import data_published %}
+{% from 'tccp/macros/filter_form.html' import filter_form with context %}
+{% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
+
+{% block javascript scoped %}
+{{ super() }}
+<script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
+{% endblock %}
+
+{% block content_main %}
+
+<h1>Card search results</h1>
+
+<p>
+    Filter and sort the {{ total_count or "" }} cards in our database
+    to find cards that have the features that fit your situation.
+</p>
+
+<div id="o-filterable-list-controls" class="o-filterable-list-controls">
+    {% call() expandable({
+        "label": "Refine and sort cards",
+        "is_bordered": true,
+        "is_expanded": true,
+        "is_midtone": true
+    }) %}
+        {{ filter_form(form) }}
+    {% endcall %}
+</div>
+
+
+<div class="block">
+    <div class="o-filterable-list-results">
+
+        {% if count -%}
+            <h3>{{ count }} cards</h3>
+        {%- else -%}
+            There are no results for your search.
+        {%- endif %}
+
+        {% if first_report_date -%}
+            {{ data_published(first_report_date) }}
+        {%- endif %}
+
+        {%- set card_columns = [
+            {'heading': 'Card'},
+            {'heading': 'Purchase APR'}
+        ] %}
+        {%- set card_rows = [] %}
+        {%- for card in results %}
+            {% do card_rows.append( [
+                ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
+                'XX.X%'
+            ] ) %}
+        {% endfor %}
+        {%- with value = {
+            'data': {
+                'columns': card_columns,
+                'rows': card_rows
+            },
+            'options': ['is_stacked', 'stack_on_mobile']
+        } %}
+            {% include 'v1/includes/organisms/tables/base.html' %}
+        {% endwith %}
+    </div>
+</div>
+
+{% endblock content_main %}

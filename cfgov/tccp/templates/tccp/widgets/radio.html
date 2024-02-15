@@ -1,0 +1,8 @@
+{% for group, options, index in widget.optgroups %}
+    {% for option in options %}
+    <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+        {% include option.template_name with widget=option %}
+    </div>
+    {% endfor %}
+{% endfor %}
+</fieldset>
