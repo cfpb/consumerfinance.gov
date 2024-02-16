@@ -46,13 +46,15 @@
 
         {%- set card_columns = [
             {'heading': 'Card'},
-            {'heading': 'Purchase APR'}
+            {'heading': 'Purchase APR'},
+            {'heading': 'Transfer APR'}
         ] %}
         {%- set card_rows = [] %}
         {%- for card in results %}
             {% do card_rows.append( [
                 ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
-                'XX.X%'
+                card.purchase_apr,
+                card.transfer_apr
             ] ) %}
         {% endfor %}
         {%- with value = {

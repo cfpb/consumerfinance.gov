@@ -74,8 +74,6 @@ class CardSurveyDataFilterSetTests(TestCase):
         self.assertQuerysetEqual(fs.qs, [cards[2], cards[0], cards[1]])
 
     def test_sorting_by_low_fees(self):
-        "late_fees", "late_fee_dollars"
-
         cards = [
             baker.make(
                 CardSurveyData,
