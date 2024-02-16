@@ -49,7 +49,7 @@ class CardSurveyData(models.Model):
     geographic_restrictions = models.TextField(null=True, blank=True)
     professional_affiliation = models.TextField(null=True, blank=True)
     other = models.TextField(null=True, blank=True)
-    secured_card = YesNoBooleanField()
+    secured_card = YesNoBooleanField(db_index=True)
     targeted_credit_tiers = JSONListField(choices=enums.CreditTierChoices)
     purchase_apr_offered = YesNoBooleanField()
     purchase_apr_vary_by_balance = YesNoBooleanField(null=True, blank=True)
@@ -87,19 +87,21 @@ class CardSurveyData(models.Model):
         choices=enums.IndexTypeChoices, null=True, blank=True
     )
     purchase_apr_vary_by_credit_tier = YesNoBooleanField(null=True, blank=True)
-    purchase_apr_poor = models.FloatField(null=True, blank=True)
-    purchase_apr_good = models.FloatField(null=True, blank=True)
-    purchase_apr_great = models.FloatField(null=True, blank=True)
+    purchase_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
+    purchase_apr_good = models.FloatField(null=True, blank=True, db_index=True)
+    purchase_apr_great = models.FloatField(
+        null=True, blank=True, db_index=True
+    )
     purchase_apr_min = models.FloatField(null=True, blank=True)
     purchase_apr_median = models.FloatField(null=True, blank=True)
     purchase_apr_max = models.FloatField(null=True, blank=True)
-    introductory_apr_offered = YesNoBooleanField()
+    introductory_apr_offered = YesNoBooleanField(db_index=True)
     introductory_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
     )
-    intro_apr_poor = models.FloatField(null=True, blank=True)
-    intro_apr_good = models.FloatField(null=True, blank=True)
-    intro_apr_great = models.FloatField(null=True, blank=True)
+    intro_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
+    intro_apr_good = models.FloatField(null=True, blank=True, db_index=True)
+    intro_apr_great = models.FloatField(null=True, blank=True, db_index=True)
     intro_apr_min = models.FloatField(null=True, blank=True)
     intro_apr_median = models.FloatField(null=True, blank=True)
     intro_apr_max = models.FloatField(null=True, blank=True)
@@ -110,9 +112,11 @@ class CardSurveyData(models.Model):
     balance_transfer_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
     )
-    transfer_apr_poor = models.FloatField(null=True, blank=True)
-    transfer_apr_good = models.FloatField(null=True, blank=True)
-    transfer_apr_great = models.FloatField(null=True, blank=True)
+    transfer_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
+    transfer_apr_good = models.FloatField(null=True, blank=True, db_index=True)
+    transfer_apr_great = models.FloatField(
+        null=True, blank=True, db_index=True
+    )
     transfer_apr_min = models.FloatField(null=True, blank=True)
     transfer_apr_median = models.FloatField(null=True, blank=True)
     transfer_apr_max = models.FloatField(null=True, blank=True)
@@ -124,9 +128,9 @@ class CardSurveyData(models.Model):
     cash_advance_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
     )
-    advance_apr_poor = models.FloatField(null=True, blank=True)
-    advance_apr_good = models.FloatField(null=True, blank=True)
-    advance_apr_great = models.FloatField(null=True, blank=True)
+    advance_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
+    advance_apr_good = models.FloatField(null=True, blank=True, db_index=True)
+    advance_apr_great = models.FloatField(null=True, blank=True, db_index=True)
     advance_apr_min = models.FloatField(null=True, blank=True)
     advance_apr_median = models.FloatField(null=True, blank=True)
     advance_apr_max = models.FloatField(null=True, blank=True)
@@ -167,7 +171,7 @@ class CardSurveyData(models.Model):
     purchase_transaction_fee_calculation = models.TextField(
         null=True, blank=True
     )
-    balance_transfer_fees = YesNoBooleanField()
+    balance_transfer_fees = YesNoBooleanField(db_index=True)
     balance_transfer_fee_types = JSONListField(
         choices=enums.BalanceTransferFeeTypeChoices, blank=True
     )
@@ -200,7 +204,7 @@ class CardSurveyData(models.Model):
     foreign_transaction_fee_calculation = models.TextField(
         null=True, blank=True
     )
-    late_fees = YesNoBooleanField()
+    late_fees = YesNoBooleanField(db_index=True)
     late_fee_types = JSONListField(
         choices=enums.LateFeeTypeChoices, blank=True
     )
@@ -251,16 +255,27 @@ class CardSurveyData(models.Model):
     telephone_number_for_consumers = models.TextField(null=True, blank=True)
 
     class Meta:
-        # Add an index to potentially optimize filtering on the
-        # targeted_credit_tiers field. In practice PostgreSQL won't use this
-        # index unless it's faster than doing a table scan, which it likely
-        # won   't be unless we have a very large number of cards. Still, there's
-        # no harm in defining the index in case or for future use.
         indexes = [
+            # Add an index to potentially optimize filtering on the
+            # targeted_credit_tiers field. In practice PostgreSQL won't use
+            # this index unless it's faster than doing a table scan, which it
+            # likely won't be unless we have a very large number of cards.
+            # Still,there's no harm in defining the index for future use.
             GinIndex(
-                name="targeted_credit_tiers_idx",
+                name="tccp_targeted_credit_tiers_idx",
                 fields=["targeted_credit_tiers"],
                 opclasses=["jsonb_path_ops"],
+            ),
+            # Do the same for the rewards field.
+            GinIndex(
+                name="tccp_rewards_idx",
+                fields=["rewards"],
+                opclasses=["jsonb_path_ops"],
+            ),
+            # Also add a joint index to speed up sorting by late fees.
+            models.Index(
+                fields=["late_fees", "late_fee_dollars"],
+                name="tccp_late_fee_sorting_idx",
             ),
         ]
 

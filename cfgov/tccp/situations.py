@@ -57,7 +57,7 @@ SITUATIONS = [
         details_intro_have=True,
         details=["No annual fee", "Low late payment fee"],
         query={
-            "ordering": "late_fee_dollars",
+            "ordering": "low_fees",
             "no_periodic_fees": True,
         },
     ),

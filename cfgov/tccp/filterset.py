@@ -1,7 +1,9 @@
+from django.db.models import F
+
 from django_filters import rest_framework as filters
 
 from .enums import CreditTierChoices, StateChoices
-from .filters import CheckboxFilter, OrderingFilter, YesNoFilter
+from .filters import CardOrderingFilter, CheckboxFilter, YesNoFilter
 from .models import CardSurveyData
 from .widgets import Select
 
@@ -9,7 +11,7 @@ from .widgets import Select
 class CardSurveyDataFilterSet(filters.FilterSet):
     targeted_credit_tiers = filters.ChoiceFilter(
         choices=CreditTierChoices[1:],
-        lookup_expr="contains",
+        method="filter_targeted_credit_tiers",
         label="Your credit score",
         initial=CreditTierChoices[2][0],
         null_label=None,
@@ -36,17 +38,8 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         exclude=True,
     )
     rewards = YesNoFilter(label="Offers rewards")
-    ordering = OrderingFilter(
-        choices=[
-            ("purchase_apr", "Lowest purchase APR"),
-            ("transfer_apr", "Lowest balance transfer APR"),
-            ("late_fee_dollars", "Lowest first late fee"),
-        ],
-        label="Sort by",
-        initial="purchase_apr",
-        null_label=None,
-        empty_label=None,
-        widget=Select,
+    ordering = CardOrderingFilter(
+        label="Sort by", null_label=None, empty_label=None, widget=Select
     )
 
     class Meta:
@@ -69,6 +62,34 @@ class CardSurveyDataFilterSet(filters.FilterSet):
                 data[name] = initial
 
         super().__init__(data, *args, **kwargs)
+
+    def filter_targeted_credit_tiers(self, queryset, name, value):
+        # While filtering by the specified credit tier we can also annotate the
+        # queryset with some new column aliases that make it easier to sort by,
+        # filter by, and display APRs.
+        #
+        # For example, each card has columns purchase_apr_poor,
+        # purchase_apr_good, and purchase_apr_great. We want to be able to
+        # easily sort by, filter by, and display a card's purchase APR, based
+        # on the tier being filtered. So we define a new alias column simply
+        # named purchase_apr which we can use for this purpose.
+        #
+        # We similarly define intro_apr, transfer_apr, and advance_apr.
+        tier_column_suffix = {
+            CreditTierChoices[1][0]: "poor",
+            CreditTierChoices[2][0]: "good",
+            CreditTierChoices[3][0]: "great",
+        }[value]
+
+        queryset = queryset.annotate(
+            **{
+                f"{basename}_apr": F(f"{basename}_apr_{tier_column_suffix}")
+                for basename in ("purchase", "intro", "transfer", "advance")
+            }
+        )
+
+        # After annotating we do the actual filtering by credit tier.
+        return queryset.filter(**{f"{name}__contains": value})
 
     def filter_geo_availability(self, queryset, name, value):
         return queryset.available_in(value)

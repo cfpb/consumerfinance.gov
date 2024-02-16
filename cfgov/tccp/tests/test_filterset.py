@@ -72,3 +72,27 @@ class CardSurveyDataFilterSetTests(TestCase):
             queryset=qs,
         )
         self.assertQuerysetEqual(fs.qs, [cards[2], cards[0], cards[1]])
+
+    def test_sorting_by_low_fees(self):
+        "late_fees", "late_fee_dollars"
+
+        cards = [
+            baker.make(
+                CardSurveyData,
+                targeted_credit_tiers=["Credit scores from 620 to 719"],
+                late_fees=late_fees,
+                late_fee_dollars=late_fee_dollars,
+            )
+            for late_fees, late_fee_dollars in [
+                (False, 3),
+                (True, 4),
+                (False, 1),
+                (True, 2),
+            ]
+        ]
+
+        qs = CardSurveyData.objects.all()
+        fs = CardSurveyDataFilterSet({"ordering": "low_fees"}, queryset=qs)
+        self.assertQuerysetEqual(
+            fs.qs, [cards[2], cards[0], cards[3], cards[1]]
+        )
