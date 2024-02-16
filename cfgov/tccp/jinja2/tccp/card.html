@@ -1,26 +1,118 @@
-{% extends "v1/layouts/layout-full.html" %}
+{% extends "v1/layouts/layout-2-1.html" %}
 
 {% from 'tccp/macros/data_published.html' import data_published %}
 
+{% block css%}
+    {{ super() }}
+    <style>
+        dt {
+            margin-top: 15px;
+        }
+        dt,
+        dd {
+            display: block;
+        }
+        dd {
+            margin-left: 0;
+        }
+        dd + dd {
+            margin-top: 15px;
+        }
+        dd::after {
+            content: none;
+        }
+        dd .o-table {
+            margin-top: 10px;
+        }
+    </style>
+{% endblock css%}
+
 {% block content_main %}
 
-<h1>{{ card.product_name }}</h1>
+<h1>{{ card.institution_name }} {{ card.product_name }}</h1>
 
 {{ data_published(card.report_date) }}
 
-<h2 class="h3">Availability</h2>
-
-<h3 class="h5">Location</h3>
-
-{% if not card.state_limitations %}
-Available to anyone in the United States
-{% else %}
-Available in {{ card.state_limitations | join(", ") }}
-{% endif %}
-
-<h3 class="h5">Credit scores</h3>
-
-Available to credit scores: {{ card.targeted_credit_tiers | join(", ") }}
+<h2>Availability</h2>
+<dl class="m-list">
+    <dt>Location</dt>
+    <dd>
+        {% if not card.state_limitations %}
+            Available to anyone in the United States
+        {% else %}
+            Available only to people who live in
+            {% if card.pertains_to_specific_counties %}
+                specific counties in
+            {% endif %}
+            {{ card.state_limitations | join(", ") }}
+        {% endif %}
+    </dd>
+    {% if card.requirements_for_opening %}
+        <dt>Other requirements</dt>
+        {% for requirement in card.geographic_restrictions, card.professional_affiliation, card.other%}
+            {% if requirement is not none %}
+                <dd>{{ requirement }}</dd>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <dt>Credit score</dt>
+    <dd>
+        This card is targeted to people with these credit scores:
+        <table class="o-table">
+            <thead>
+                <tr>
+                    <th>No credit score</th>
+                    <th>619 or less</th>
+                    <th>620–719</th>
+                    <th>720 or greater</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% if "No credit score" is in card.targeted_credit_tiers %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if "Credit score 619 or less" is in card.targeted_credit_tiers %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if "Credit scores from 620 to 719" is in card.targeted_credit_tiers %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if "Credit score of 720 or greater" is in card.targeted_credit_tiers %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </dd>
+    <dt>
+        Secured card
+    </dt>
+    <dd>
+        {% if card.secured_card %}
+            Yes
+        {% else %}
+            No
+        {% endif %}
+    </dd>
+</dl>
+<h2>Purchases</h2>
 
 <h3 class="h5">Other fields that haven't been styled yet</h3>
 
