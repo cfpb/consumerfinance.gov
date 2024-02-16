@@ -2,12 +2,14 @@ from django.core import serializers
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.test import SimpleTestCase, TestCase
+from django.test.utils import isolate_apps
 
 from tccp.fields import JSONListField, YesNoBooleanField
 
 from .testapp.models import YEAR_IN_SCHOOL_CHOICES, YearsInSchool
 
 
+@isolate_apps()
 class JSONListFieldTests(SimpleTestCase):
     def check_construction(self, **kwargs):
         class TestModel(models.Model):

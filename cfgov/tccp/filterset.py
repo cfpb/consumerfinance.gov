@@ -30,7 +30,6 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         "periodic_fee_type",
         method="filter_for_empty_list",
         label="No account fee",
-        exclude=True,
     )
     no_late_payment_fee = CheckboxFilter(
         "late_fees", label="No late payment fee"
@@ -40,7 +39,9 @@ class CardSurveyDataFilterSet(filters.FilterSet):
     )
     introductory_apr_offered = CheckboxFilter(label="Introductory APR offers")
     secured_card = CheckboxFilter(label="Secured card")
-    rewards = CheckboxFilter(label="Offers rewards")
+    rewards = CheckboxFilter(
+        label="Offers rewards", method="filter_for_nonempty_list"
+    )
     ordering = CardOrderingFilter(
         label="Sort by", null_label=None, empty_label=None, widget=Select
     )
@@ -99,3 +100,6 @@ class CardSurveyDataFilterSet(filters.FilterSet):
 
     def filter_for_empty_list(self, queryset, name, value):
         return queryset.filter(**{name: []}) if value else queryset
+
+    def filter_for_nonempty_list(self, queryset, name, value):
+        return queryset.exclude(**{name: []}) if value else queryset
