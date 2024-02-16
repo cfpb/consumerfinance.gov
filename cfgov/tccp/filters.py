@@ -33,7 +33,5 @@ class CheckboxFilter(filters.BooleanFilter):
         )
         super().__init__(*args, **kwargs)
 
-
-class YesNoFilter(CheckboxFilter):
     def filter(self, qs, value):
-        return super().filter(qs, "Yes") if value else qs
+        return super().filter(qs, True) if value else qs
