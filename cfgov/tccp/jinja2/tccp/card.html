@@ -1,0 +1,44 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{% from 'tccp/macros/data_published.html' import data_published %}
+
+{% block content_main %}
+
+<h1>{{ card.product_name }}</h1>
+
+{{ data_published(card.report_date) }}
+
+<h2 class="h3">Availability</h2>
+
+<h3 class="h5">Location</h3>
+
+{% if not card.state_limitations %}
+Available to anyone in the United States
+{% else %}
+Available in {{ card.state_limitations | join(", ") }}
+{% endif %}
+
+<h3 class="h5">Credit scores</h3>
+
+Available to credit scores: {{ card.targeted_credit_tiers | join(", ") }}
+
+<h3 class="h5">Other fields that haven't been styled yet</h3>
+
+<table class="o-table o-table__striped">
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in card._meta.fields %}
+        <tr>
+            <td>{{ field.name }}</td>
+            <td>{{ card.__getattribute__(field.name) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content_main %}
