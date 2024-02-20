@@ -49,8 +49,8 @@
     </dd>
     {% if card.requirements_for_opening %}
         <dt>Other requirements</dt>
-        {% for requirement in card.geographic_restrictions, card.professional_affiliation, card.other%}
-            {% if requirement is not none %}
+        {% for requirement in [card.geographic_restrictions, card.professional_affiliation, card.other] %}
+            {% if requirement %}
                 <dd>{{ requirement }}</dd>
             {% endif %}
         {% endfor %}
@@ -58,45 +58,27 @@
     <dt>Credit score</dt>
     <dd>
         This card is targeted to people with these credit scores:
+        {% set scores = [
+            "No credit score",
+            "619 or less",
+            "620 to 719",
+            "720 or greater"]
+        %}
         <table class="o-table">
             <thead>
                 <tr>
-                    <th>No credit score</th>
-                    <th>619 or less</th>
-                    <th>620–719</th>
-                    <th>720 or greater</th>
+                    {% for score in scores %}
+                    <th>{{ score }}</th>
+                    {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    {% for score in scores %}
                     <td>
-                        {% if "No credit score" is in card.targeted_credit_tiers %}
-                            Yes
-                        {% else %}
-                            No
-                        {% endif %}
+                        {{ "Yes" if score in card.targeted_credit_tiers|string else "No" }}
                     </td>
-                    <td>
-                        {% if "Credit score 619 or less" is in card.targeted_credit_tiers %}
-                            Yes
-                        {% else %}
-                            No
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if "Credit scores from 620 to 719" is in card.targeted_credit_tiers %}
-                            Yes
-                        {% else %}
-                            No
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if "Credit score of 720 or greater" is in card.targeted_credit_tiers %}
-                            Yes
-                        {% else %}
-                            No
-                        {% endif %}
-                    </th>
+                    {% endfor %}
                 </tr>
             </tbody>
         </table>
@@ -105,11 +87,7 @@
         Secured card
     </dt>
     <dd>
-        {% if card.secured_card %}
-            Yes
-        {% else %}
-            No
-        {% endif %}
+        {{ "Yes" if card.secured_card else "No" }}
     </dd>
 </dl>
 <h2>Purchases</h2>
