@@ -30,6 +30,7 @@ class CardSurveyDataFilterSetTests(TestCase):
                 availability_of_credit_card_plan="One State/Territory",
                 state=state,
                 targeted_credit_tiers=["Credit scores from 620 to 719"],
+                purchase_apr_good=0.99,
                 _quantity=3,
             )
 

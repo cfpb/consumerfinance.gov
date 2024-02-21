@@ -3,6 +3,7 @@
 {% from 'tccp/macros/data_published.html' import data_published %}
 {% from 'tccp/macros/filter_form.html' import filter_form with context %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
+{% import 'v1/includes/molecules/notification.html' as notification %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% block javascript scoped %}
@@ -21,7 +22,7 @@
 
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
-        "label": "Refine and sort cards",
+        "label": "Customize results",
         "is_bordered": true,
         "is_expanded": true,
         "is_midtone": true
@@ -31,30 +32,47 @@
 </div>
 
 
-<div class="block">
+
+<div class="block block__sub">
     <div class="o-filterable-list-results">
 
         {% if count -%}
-            <h3>{{ count }} cards</h3>
+        {{- notification.render(
+            'success',
+            true,
+            count ~ ' result' ~ count | pluralize()
+        ) -}}
         {%- else -%}
-            There are no results for your search.
+        {{- notification.render(
+            'warning',
+            true,
+            'There are no results for your search.'
+        ) -}}
         {%- endif %}
 
-        {% if first_report_date -%}
+        <p>
+            {% if first_report_date -%}
             {{ data_published(first_report_date) }}
-        {%- endif %}
+            {%- endif %}
+        </p>
 
         {%- set card_columns = [
             {'heading': 'Card'},
             {'heading': 'Purchase APR'},
-            {'heading': 'Transfer APR'}
+            {'heading': 'Availability'},
+            {'heading': 'Account fee'},
+            {'heading': 'Secured'},
+            {'heading': 'Rewards'},
         ] %}
         {%- set card_rows = [] %}
         {%- for card in results %}
             {% do card_rows.append( [
                 ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
-                card.purchase_apr,
-                card.transfer_apr
+                ('%.2f%%' | format(card.purchase_apr * 100)) if card.purchase_apr else 'None',
+                ('Regionally: ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
+                (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
+                card.secured_card,
+                (card.rewards | join(', ')) if card.rewards else 'None'
             ] ) %}
         {% endfor %}
         {%- with value = {

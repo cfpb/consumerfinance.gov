@@ -3,7 +3,7 @@ from django.db.models import F
 from django_filters import rest_framework as filters
 
 from .enums import CreditTierChoices, StateChoices
-from .filters import CardOrderingFilter, CheckboxFilter, YesNoFilter
+from .filters import CardOrderingFilter, CheckboxFilter
 from .models import CardSurveyData
 from .widgets import Select
 
@@ -22,22 +22,26 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         choices=StateChoices,
         method="filter_geo_availability",
         label="Availability",
-        null_label="Available everywhere in the US",
-        empty_label="Show me cards regardless of where they are available",
+        null_label="National",
+        empty_label="Select availability",
         widget=Select,
     )
-    no_balance_transfer_fees = YesNoFilter(
-        "balance_transfer_fees", label="No balance transfer fees", exclude=True
-    )
-    introductory_apr_offered = YesNoFilter(label="Introductory APR offers")
-    secured_card = YesNoFilter(label="Secured card")
-    no_periodic_fees = CheckboxFilter(
+    no_account_fee = CheckboxFilter(
         "periodic_fee_type",
         method="filter_for_empty_list",
-        label="No periodic fees",
-        exclude=True,
+        label="No account fee",
     )
-    rewards = YesNoFilter(label="Offers rewards")
+    no_late_payment_fee = CheckboxFilter(
+        "late_fees", label="No late payment fee"
+    )
+    no_balance_transfer_fee = CheckboxFilter(
+        "balance_transfer_fees", label="No balance transfer fee", exclude=True
+    )
+    introductory_apr_offered = CheckboxFilter(label="Introductory APR offers")
+    secured_card = CheckboxFilter(label="Secured card")
+    rewards = CheckboxFilter(
+        label="Offers rewards", method="filter_for_nonempty_list"
+    )
     ordering = CardOrderingFilter(
         label="Sort by", null_label=None, empty_label=None, widget=Select
     )
@@ -96,3 +100,6 @@ class CardSurveyDataFilterSet(filters.FilterSet):
 
     def filter_for_empty_list(self, queryset, name, value):
         return queryset.filter(**{name: []}) if value else queryset
+
+    def filter_for_nonempty_list(self, queryset, name, value):
+        return queryset.exclude(**{name: []}) if value else queryset

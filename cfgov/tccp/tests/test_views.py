@@ -49,6 +49,7 @@ class CardListViewTests(TestCase):
         baker.make(
             CardSurveyData,
             targeted_credit_tiers="Credit score of 720 or greater",
+            purchase_apr_great=0.99,
             _quantity=5,
         )
         baker.make(
@@ -62,15 +63,15 @@ class CardListViewTests(TestCase):
         request = RequestFactory().get(f"/{querystring}")
         return view(request)
 
-    def test_no_querystring_filters_by_all_credit_scores(self):
+    def test_no_querystring_filters_by_good_tier(self):
         response = self.make_request()
-        self.assertContains(response, "8 cards")
+        self.assertContains(response, "There are no results for your search.")
 
     def test_filter_by_no_credit_score(self):
         response = self.make_request(
             "?targeted_credit_tiers=Credit+score+of+720+or+greater"
         )
-        self.assertContains(response, "5 cards")
+        self.assertContains(response, "5 results")
 
     def test_invalid_json_query_renders_error(self):
         response = self.make_request("?format=json&targeted_credit_tiers=foo")
