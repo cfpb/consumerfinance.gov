@@ -65,7 +65,7 @@
                 aria-label="{{ link.aria_label }}"
             {%- endif %}>
             <span class="a-link__partially-styled_plain">{{ link_text }} </span>
-            <span class="a-link__partially-styled_underlined">Read answer</span>
+            <span class="a-link__partially-styled_underlined">{{ _('Read answer') }}</span>
         </a>
     {%- endset -%}
     {{ link | safe }}
