@@ -545,3 +545,15 @@ class ContentWithAnchor(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "v1/includes/molecules/full-width-text-anchor.html"
+
+
+class FeatureCard(blocks.StructBlock):
+    category = atoms.Hyperlink()
+    icon = blocks.TextBlock()
+    footer_label = blocks.TextBlock()
+
+    links = blocks.ListBlock(atoms.Hyperlink())
+
+    class Meta:
+        icon = "edit"
+        template = "v1/includes/molecules/feature-card.html"

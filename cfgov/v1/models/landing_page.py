@@ -19,6 +19,7 @@ class LandingPage(CFGOVPage):
         [
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("well", organisms.Well()),
+            ("feature_cards", organisms.FeatureCards()),
         ],
         blank=True,
         use_json_field=True,

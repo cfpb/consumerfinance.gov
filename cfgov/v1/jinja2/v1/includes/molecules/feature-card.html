@@ -1,0 +1,85 @@
+{# ==========================================================================
+
+    Feature Card
+
+   ==========================================================================
+
+   Description:
+
+   Create a feature card molecule when given:
+
+   value:                        Object defined from a StreamField block.
+
+   value.category:               A set of values related to the card category
+                                  (title), including:
+
+   value.category.url:           A string for the URL of the category page.
+
+   value.category.text:          A string for the title of the category.
+                               
+   value.category.aria_label:    (Optional) An aria-label for the category page link.
+
+   value.icon:                   A string corresponding to an SVG icon.
+
+   value.footer_label:           A tuple of items related to the card, including:
+
+   value.links:                  A tuple of items to create a list
+                                 of links, containing:
+
+   value.links[i].url:           A string for the URL of the link.
+
+   value.links[i].text:          A string for the text of the link.
+
+   value.links[i].aria_label:    (Optional) An aria-label for the link.
+
+   ========================================================================== #}
+
+{%- from 'v1/includes/blocks/heading.html' import heading without context %}
+
+{%- macro feature_card(value) -%}
+
+<article class="m-card">
+    <h2 class="m-card_heading">
+        <a class="" href="{{ value.category.url }}">
+<span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
+<span>{{ value.category.text }}</span>
+</a>
+    </h2>
+     
+<ul class="m-list">
+{%- for link in value.links %}
+<li class="m-list_item">
+{%- if link.text is not none and link.text.find('@') > -1 -%}
+    {%- if not value.emails is defined -%}
+        {%- do value.update({'emails':[{'url':link.text}]}) -%}
+    {%- endif -%}
+    {% include 'contact-email.html' with context %}
+{%- else -%}
+    {%- set link_text = link.text if link.text
+        else 'Learn More' -%}
+
+    {%- set link -%}
+        <a class="a_link a-link__partially-styled"
+            href="{{ link.url }}"
+            {%- if link.aria_label -%}
+                aria-label="{{ link.aria_label }}"
+            {%- endif %}>
+            <span class="a-link__partially-styled_plain">{{ link_text }} </span>
+            <span class="a-link__partially-styled_underlined">Read answer</span>
+        </a>
+    {%- endset -%}
+    {{ link | safe }}
+{%- endif %}
+</li>
+{%- endfor %}
+</ul>
+
+<div class="m-card_footer">
+    <a href="{{ value.category.url }}">
+        {{ value.footer_label }}
+    </a>
+    </div>
+
+</article>
+
+{% endmacro %}

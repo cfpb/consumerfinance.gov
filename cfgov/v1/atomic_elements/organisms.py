@@ -1139,3 +1139,11 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "v1/includes/organisms/data_snapshot.html"
+
+
+class FeatureCards(blocks.StructBlock):
+    feature_cards = blocks.ListBlock(molecules.FeatureCard(), default=list())
+
+    class Meta:
+        icon = "list-ul"
+        template = "v1/includes/organisms/feature-cards.html"
