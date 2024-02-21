@@ -161,6 +161,10 @@ msgstr "Comparta esta información en"
 msgid "Visit us on"
 msgstr "Visítenos en"
 
+#: /v1/jinja2/v1/includes/molecules/feature-card.html:68
+msgid "Read answer"
+msgstr "Leer la respuesta"
+
 #: v1/jinja2/v1/includes/organisms/ask-search.html:44
 msgid "/ask-cfpb/search/"
 msgstr "/es/obtener-respuestas/buscar/"
