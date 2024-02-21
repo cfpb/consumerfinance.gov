@@ -358,10 +358,10 @@
     "@cfpb/cfpb-core" "^0.37.0"
     "@cfpb/cfpb-icons" "^0.37.0"
 
-"@cfpb/cfpb-forms@0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.37.0.tgz#940eefd30011935198ba987b346f75a72c50d75a"
-  integrity sha512-KLPv9L/pF5zM0VoqJMjEOuoCO0EGw6lyQOY6a8nshPluTJwnNTFTcmsdu3n9ywWlHApbC1Hv12U9Hf8HZvR6FA==
+"@cfpb/cfpb-forms@0.37.1":
+  version "0.37.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.37.1.tgz#ae97b8519495b0724cf50dd2742d733f2a2e5c71"
+  integrity sha512-aYIYGFP2tdLjxgyi6QrrqljFPewpgmZTDeqI7OK38YWmea6l9IHEh5fqZnYXztSqsRBdf0B2H5B5mXnjCPQ4UQ==
   dependencies:
     "@cfpb/cfpb-buttons" "^0.37.0"
     "@cfpb/cfpb-core" "^0.37.0"
