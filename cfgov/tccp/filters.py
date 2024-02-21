@@ -23,6 +23,10 @@ class CardOrderingFilter(filters.OrderingFilter):
         if value[0] == "low_fees":
             return qs.order_by("late_fees", "late_fee_dollars")
 
+        # Otherwise, if we're sorting by APR, we want to exclude any cards
+        # that don't specify an APR.
+        qs = qs.exclude(**{f"{value[0]}__isnull": True})
+
         return super().filter(qs, value)
 
 
@@ -33,7 +37,5 @@ class CheckboxFilter(filters.BooleanFilter):
         )
         super().__init__(*args, **kwargs)
 
-
-class YesNoFilter(CheckboxFilter):
     def filter(self, qs, value):
-        return super().filter(qs, "Yes") if value else qs
+        return super().filter(qs, True) if value else qs

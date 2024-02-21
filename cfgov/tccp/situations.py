@@ -31,7 +31,7 @@ SITUATIONS = [
         ],
         query={
             "ordering": "transfer_apr",
-            "no_balance_transfer_fees": True,
+            "no_balance_transfer_fee": True,
         },
     ),
     Situation(
@@ -58,7 +58,7 @@ SITUATIONS = [
         details=["No annual fee", "Low late payment fee"],
         query={
             "ordering": "low_fees",
-            "no_periodic_fees": True,
+            "no_account_fee": True,
         },
     ),
     Situation(
