@@ -8,6 +8,6 @@ urlpatterns = [
     path("", views.LandingPageView.as_view(), name="landing_page"),
     path("cards/", views.CardListView.as_view(), name="cards"),
     path(
-        "cards/<int:pk>/", views.CardDetailView.as_view(), name="card_detail"
+        "cards/<slug:pk>/", views.CardDetailView.as_view(), name="card_detail"
     ),
 ]
