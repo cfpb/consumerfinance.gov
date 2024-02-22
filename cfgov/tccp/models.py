@@ -33,6 +33,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
 
 class CardSurveyData(models.Model):
+    slug = models.SlugField(max_length=255, primary_key=True)
     institution_name = models.TextField()
     product_name = models.TextField()
     report_date = models.DateField()

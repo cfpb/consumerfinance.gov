@@ -6,6 +6,7 @@ from django.db import transaction
 
 from tccp.dataset import read_survey_data_from_stream
 from tccp.models import CardSurveyData
+from tccp.utils import get_card_slugifier
 
 
 class Command(BaseCommand):
@@ -19,6 +20,8 @@ class Command(BaseCommand):
         )
 
     def handle(self, **options):
+        slugify_card = get_card_slugifier()
+
         with transaction.atomic():
             CardSurveyData.objects.all().delete()
 
@@ -26,6 +29,7 @@ class Command(BaseCommand):
                 options["filename"]
             ):
                 card = CardSurveyData(**survey_data)
+                card.slug = slugify_card(card)
 
                 try:
                     card.full_clean()
