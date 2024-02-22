@@ -18,25 +18,25 @@
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
         <div class="u-layout-grid_wrapper">
-        {% block hero -%}{%- endblock %}
-        {% block pre_content scoped -%}
-            {% if breadcrumb_items | length > 0 %}
-                <div class="u-layout-grid_breadcrumbs">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
+            {% block hero -%}{%- endblock %}
+            {% block pre_content scoped -%}
+                {% if breadcrumb_items | length > 0 %}
+                    <div class="u-layout-grid_breadcrumbs">
+                        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                        {{ breadcrumbs.render(breadcrumb_items) }}
+                    </div>
+                {% endif %}
+            {%- endblock %}
+            {% block body_content scoped %}
+                <aside class="u-layout-grid_secondary-nav">
+                    {% import 'v1/includes/organisms/secondary-nav.html' as secondary_nav with context %}
+                    {{ secondary_nav.render() }}
+                </aside>
+                <div class="u-layout-grid_main"
+                        id="content_main">
+                    {% block content_main scoped -%}{%- endblock %}
                 </div>
-            {% endif %}
-        {%- endblock %}
-        {% block body_content scoped %}
-        <aside class="u-layout-grid_secondary-nav">
-            {% import 'v1/includes/organisms/secondary-nav.html' as secondary_nav with context %}
-            {{ secondary_nav.render() }}
-        </aside>
-        <div class="u-layout-grid_main"
-                id="content_main">
-            {% block content_main scoped -%}{%- endblock %}
-        </div>
-        {% endblock %}
+            {% endblock %}
         </div>
     </main>
 {% endblock %}

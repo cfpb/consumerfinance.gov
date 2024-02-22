@@ -52,18 +52,6 @@
       }
     }
 
-    // Tablet and above.
-    .respond-to-min(@bp-sm-min, {
-      .u-layout-grid {
-        &_wrapper {
-          // This handles collapsing of the breadcrumbs space if they are absent.
-          grid-template-rows: min-content 1fr;
-          padding-left: unit(30px / @base-font-size-px, rem);
-          padding-right: unit(30px / @base-font-size-px, rem);
-        }
-      }
-    });
-
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       .u-layout-grid {
