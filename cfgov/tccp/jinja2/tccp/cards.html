@@ -61,17 +61,27 @@
             {'heading': 'Purchase APR'},
             {'heading': 'Availability'},
             {'heading': 'Account fee'},
-            {'heading': 'Secured'},
-            {'heading': 'Rewards'},
+            {'heading': 'Late payment fee'},
+            {'heading': 'First late fee'},
+            {'heading': 'Balance transfer APR'},
+            {'heading': 'Balance transfer fee'},
+            {'heading': 'Secured card'},
+            {'heading': 'Introductory APR offers'},
+            {'heading': 'Offers rewards'},
         ] %}
         {%- set card_rows = [] %}
         {%- for card in results %}
             {% do card_rows.append( [
                 ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
                 ('%.2f%%' | format(card.purchase_apr * 100)) if card.purchase_apr else 'None',
-                ('Regionally: ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
+                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
-                card.secured_card,
+                'Yes' if card.late_fees else 'No',
+                ('$' ~ card.late_fee_dollars) if card.late_fee_dollars else 'None',
+                ('%.2f%%' | format(card.transfer_apr * 100)) if card.transfer_apr else 'None',
+                'Yes' if balance_transfer_fees else 'No',
+                'Yes' if card.secured_card else 'No',
+                'Yes' if card.introductory_apr_offered else 'No',
                 (card.rewards | join(', ')) if card.rewards else 'None'
             ] ) %}
         {% endfor %}
