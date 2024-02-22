@@ -30,6 +30,10 @@ msgstr "revisado"
 msgid "Read full answer"
 msgstr "Leer más"
 
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:82
+msgid "Learn more about"
+msgstr "Sepa más sobre"
+
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:95
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:83
 msgid "Don't see what you're looking for?"

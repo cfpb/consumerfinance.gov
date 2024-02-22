@@ -172,7 +172,7 @@ msgstr "/es/obtener-respuestas/buscar/"
 #: v1/jinja2/v1/includes/organisms/ask-search.html:47
 #: v1/jinja2/v1/includes/organisms/ask-search.html:63
 msgid "Search for your question"
-msgstr "Busca su pregunta"
+msgstr "Busque su pregunta"
 
 #: v1/jinja2/v1/includes/organisms/ask-search.html:93
 msgid "Search Ask CFPB for your question"
