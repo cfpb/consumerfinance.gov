@@ -77,7 +77,7 @@
                 ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
                 'Yes' if card.late_fees else 'No',
-                ('$' ~ card.late_fee_dollars) if card.late_fee_dollars else 'None',
+                '$' ~ (card.late_fee_dollars or '0'),
                 ('%.2f%%' | format(card.transfer_apr * 100)) if card.transfer_apr else 'None',
                 'Yes' if balance_transfer_fees else 'No',
                 'Yes' if card.secured_card else 'No',

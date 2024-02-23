@@ -87,11 +87,13 @@ class CardSurveyDataFilterSetTests(TestCase):
                 (True, 4),
                 (False, 1),
                 (True, 2),
+                (True, None),
+                (False, None),
             ]
         ]
 
         qs = CardSurveyData.objects.all()
         fs = CardSurveyDataFilterSet({"ordering": "low_fees"}, queryset=qs)
         self.assertQuerysetEqual(
-            fs.qs, [cards[2], cards[0], cards[3], cards[1]]
+            fs.qs, [cards[5], cards[2], cards[0], cards[3], cards[1]]
         )
