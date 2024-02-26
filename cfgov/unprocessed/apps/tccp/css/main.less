@@ -12,7 +12,7 @@
     tr,
     th,
     td {
-      padding: unit((12px / @base-font-size-px), em);
+      padding: unit((10px / @base-font-size-px), rem);
     }
 
     thead,
@@ -25,7 +25,7 @@
       display: none;
       &[data-column] {
         display: block;
-        margin-bottom: 0.5rem;
+        margin-bottom: unit((8px / @base-font-size-px), rem);
         border-bottom: 1px solid @table-border;
       }
     }
@@ -33,8 +33,8 @@
     td:last-child {
       &:not([data-column]) {
         border-bottom: 1px solid @table-border;
-        margin-bottom: unit((10px / @base-font-size-px), em);
-        padding-bottom: unit((20px / @base-font-size-px), em);
+        margin-bottom: unit((10px / @base-font-size-px), rem);
+        padding-bottom: unit((20px / @base-font-size-px), rem);
       }
     }
 
@@ -43,7 +43,7 @@
         .heading-5();
         display: block;
         margin-top: 0;
-        margin-bottom: unit((5px / @base-font-size-px), em);
+        margin-bottom: unit((5px / @base-font-size-px), rem);
         content: attr(data-label);
         line-height: 1.83333333;
       }
@@ -55,8 +55,9 @@
       }
     }
   }
-  // Override .o-table_cell__right-align on non-mobile
+
   @media only screen and (min-width: @bp-sm-min) {
+    // Override .o-table_cell__right-align on non-mobile devices
     th,
     td {
       text-align: left;
