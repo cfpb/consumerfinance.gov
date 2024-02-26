@@ -11,6 +11,11 @@
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
 {% endblock %}
 
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
+{% endblock %}
+
 {% block content_main %}
 
 <h1>Card search results</h1>
@@ -57,8 +62,8 @@
         </p>
 
         {%- set card_columns = [
-            {'heading': 'Card'},
-            {'heading': 'Purchase APR'},
+            {'heading': 'Card', 'preserve_column_on_mobile': true},
+            {'heading': 'Purchase APR', 'preserve_column_on_mobile': true, 'right_align': true},
             {'heading': 'Availability'},
             {'heading': 'Account fee'},
             {'heading': 'Late payment fee'},
@@ -90,7 +95,7 @@
                 'columns': card_columns,
                 'rows': card_rows
             },
-            'options': ['is_stacked', 'stack_on_mobile']
+            'options': ['stack_on_mobile']
         } %}
             {% include 'v1/includes/organisms/tables/base.html' %}
         {% endwith %}
