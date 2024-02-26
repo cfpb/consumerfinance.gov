@@ -1,0 +1,11 @@
+{% extends "v1/layouts/base.html" %}
+
+{% import 'v1/includes/organisms/post-preview.html' as preview %}
+
+{% block content %}
+<div class="wrapper content_wrapper">
+    <div class="content_main">
+        {{ preview.render( post ) }}
+    </div>
+</div>
+{% endblock %}
