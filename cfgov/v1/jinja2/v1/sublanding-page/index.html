@@ -10,7 +10,7 @@
     {% if page.sidebar_breakout %}
         {% import 'v1/includes/organisms/sidebar-breakout.html' as sidebar_breakout with context %}
         {% call(block) sidebar_breakout.render() %}
-            {{ render_stream_child(block) }}
+            {% include_block block %}
         {% endcall %}
     {% endif %}
 {% endblock %}

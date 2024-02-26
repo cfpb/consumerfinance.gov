@@ -58,7 +58,7 @@
     <div class="o-sidebar-contact-info_contacts">
         {% if value.contact.contact_info %}
             {% for block in value.contact.contact_info %}
-                {{ render_stream_child(block) }}
+                {% include_block block %}
             {% endfor %}
         {% endif %}
     </div>
