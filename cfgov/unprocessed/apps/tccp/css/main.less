@@ -1,0 +1,65 @@
+@import (reference) '../../../css/main.less';
+
+.o-table__stack-on-small-hybrid {
+  // We don't want responsive table styles applied to the `print` media type
+  // so we're not using .respond-to-max(@bp-xs-max ) here.
+  @media only screen and (max-width: @bp-xs-max) {
+    --columns: 0;
+
+    display: grid;
+    grid-template-columns: repeat(var(--columns), auto);
+
+    tr,
+    th,
+    td {
+      padding: unit((12px / @base-font-size-px), em);
+    }
+
+    thead,
+    tbody,
+    tr {
+      display: contents;
+    }
+
+    th {
+      display: none;
+      &[data-column] {
+        display: block;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid @table-border;
+      }
+    }
+
+    td:last-child {
+      &:not([data-column]) {
+        border-bottom: 1px solid @table-border;
+        margin-bottom: unit((10px / @base-font-size-px), em);
+        padding-bottom: unit((20px / @base-font-size-px), em);
+      }
+    }
+
+    td[data-label] {
+      &::before {
+        .heading-5();
+        display: block;
+        margin-top: 0;
+        margin-bottom: unit((5px / @base-font-size-px), em);
+        content: attr(data-label);
+        line-height: 1.83333333;
+      }
+      &:not([data-column]) {
+        grid-column: 1 / span var(--columns);
+      }
+      &[data-column]::before {
+        display: none;
+      }
+    }
+  }
+  // Override .o-table_cell__right-align on non-mobile
+  @media only screen and (min-width: @bp-sm-min) {
+    th,
+    td {
+      text-align: left;
+    }
+  }
+}
