@@ -53,11 +53,11 @@ SITUATIONS = [
         },
     ),
     Situation(
-        title="Avoid fees",
+        title="Avoid annual fees",
         details_intro_have=True,
-        details=["No annual fee", "Low late payment fee"],
+        details=["No annual fee"],
         query={
-            "ordering": "low_fees",
+            "ordering": "purchase_apr",
             "no_account_fee": True,
         },
     ),

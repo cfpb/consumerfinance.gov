@@ -31,9 +31,6 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         method="filter_for_empty_list",
         label="No account fee",
     )
-    no_late_payment_fee = CheckboxFilter(
-        "late_fees", label="No late payment fee"
-    )
     no_balance_transfer_fee = CheckboxFilter(
         "balance_transfer_fees", label="No balance transfer fee", exclude=True
     )
