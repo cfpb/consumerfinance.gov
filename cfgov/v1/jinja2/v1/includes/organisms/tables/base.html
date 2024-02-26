@@ -43,14 +43,12 @@
 
    stack_on_mobile:        Stack the table columns on mobile.
 
-   stack_on_mobile_hybrid: Stack *some* table columns on mobile. Experimental.
-
    ========================================================================== #}
 
 {%- set first_column_header = 'first_column_header' in (value.options or []) -%}
 {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
 {%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
-{%- set stack_on_mobile_hybrid = 'stack_on_mobile_hybrid' in (value.options or []) -%}
+
 
 {% if value.heading -%}
     {% include_block value.heading %}
@@ -68,6 +66,8 @@
         {%- do columns_to_right_align.append(loop.index0) if col.right_align %}
     {% endfor %}
 {%- endif %}
+
+{%- set stack_on_mobile_hybrid = true if stack_on_mobile and columns_to_preserve_on_mobile -%}
 
 <table class="o-table
     {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
