@@ -15,17 +15,17 @@
     flex-direction: row;
 
     .m-list_item + .m-list_item {
-      border-left: 1px solid @white;
+      border-left: 1px solid var(--white);
       padding-left: unit( 30px / @base-font-size-px, rem);
     }
   });
 }
 
 .error-page {
-  background-color: @gray-dark;
+  background-color: var(--gray-dark);
 
   &_main {
-    color: @white;
+    color: var(--white);
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
@@ -38,8 +38,8 @@
     });
 
     .a-link__jump {
-      color: @white;
-      border-color: @white;
+      color: var(--white);
+      border-color: var(--white);
       margin-top: unit((@grid_gutter-width / 4) / @base-font-size-px, em);
     }
   }
@@ -47,7 +47,7 @@
   &_404 {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      background: @gray-dark url('/static/img/plug-538x655.png') no-repeat top right;
+      background: var(--gray-dark) url('/static/img/plug-538x655.png') no-repeat top right;
       background-size: 269px 327px;
     });
   }
@@ -55,7 +55,7 @@
   &_500 {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      background: @gray-dark url('/static/img/server-706x619.png') no-repeat center right;
+      background: var(--gray-dark) url('/static/img/server-706x619.png') no-repeat center right;
       background-size: 353px 310px;
     });
   }

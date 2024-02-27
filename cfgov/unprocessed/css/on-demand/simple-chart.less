@@ -89,22 +89,22 @@
   }
 
   .highcharts-navigator-mask-inside {
-    fill: @gray-30;
+    fill: var(--gray-30);
     fill-opacity: 0.1;
   }
   .highcharts-navigator-handle {
-    stroke: @gray;
-    fill: @gray-5;
+    stroke: var(--gray);
+    fill: var(--gray-5);
   }
   .highcharts-navigator-outline {
-    stroke: @gray-40;
+    stroke: var(--gray-40);
   }
 
   .highcharts-navigator-xaxis > text {
     font-size: 12px !important;
   }
   .highcharts-xaxis-grid.highcharts-navigator-xaxis > .highcharts-grid-line {
-    stroke: @gray-40;
+    stroke: var(--gray-40);
   }
 
   /* Testing line patterns
@@ -144,7 +144,7 @@
   .highcharts-axis-line,
   .highcharts-tick,
   .highcharts-grid-line {
-    stroke: @gray-20;
+    stroke: var(--gray-20);
   }
   .highcharts-button {
     font-size: 14px;
@@ -161,8 +161,8 @@
       }
     }
     text {
-      color: @gray !important;
-      fill: @gray !important;
+      color: var(--gray) !important;
+      fill: var(--gray) !important;
       transform: translate(0, 5px);
       font-size: @base-font-size-px;
       font-weight: 400;
@@ -244,7 +244,7 @@
     }
     .legend-color {
       height: 15px;
-      border: 1px solid @gray-60;
+      border: 1px solid var(--gray-60);
       width: 19.5%;
       &:not(:nth-child(2)) {
         border-left: none;

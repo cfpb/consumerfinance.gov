@@ -52,7 +52,7 @@ body {
 
   // Make the pseudo-element have an outline.
   &:focus::after {
-    outline: 1px dotted @pacific;
+    outline: 1px dotted var(--pacific);
   }
 
   // Create the dimensions for the pseudo-element focus rectangle.
@@ -79,17 +79,17 @@ body {
 // Default link hover menu items.
 .u-hover-link-desktop() {
   &:hover {
-    .u-bar-left( @green );
+    .u-bar-left( var(--green) );
   }
 }
 
 // Adjustments for links with icons, desktop.
 .u-hover-link-icon-desktop() {
   &:hover {
-    .u-bar-left( @green, -@menu_link_hover_bar_px - 8px );
+    .u-bar-left( var(--green), -@menu_link_hover_bar_px - 8px );
 
     .cf-icon-svg {
-      fill: @black;
+      fill: var(--black);
     }
   }
 }
@@ -104,14 +104,14 @@ body {
 // A default link on mobile.
 .u-hover-link-mobile() {
   &:hover {
-    color: @black;
-    .u-bar-left( @green );
+    color: var(--black);
+    .u-bar-left( var(--green) );
 
     // This is for the link with icon, which is
     // combined with this helper because the
     // hover bar doesn't need separate treatment.
     .cf-icon-svg {
-      fill: @black;
+      fill: var(--black);
     }
   }
 }
@@ -188,7 +188,7 @@ body {
 .u-current-link-desktop() {
   &,
   &:hover {
-    .u-bar-left( @black );
+    .u-bar-left( var(--black) );
   }
 }
 
@@ -196,7 +196,7 @@ body {
 .u-current-link-icon-desktop() {
   &,
   &:hover {
-    .u-bar-left( @black, -@menu_link_hover_bar_px - 8px );
+    .u-bar-left( var(--black), -@menu_link_hover_bar_px - 8px );
   }
 }
 
@@ -204,7 +204,7 @@ body {
 .u-current-link-mobile() {
   &,
   &:hover {
-    .u-bar-left( @black );
+    .u-bar-left( var(--black) );
   }
 }
 
@@ -258,7 +258,7 @@ body {
 
       & .cf-icon-svg {
         display: inline;
-        color: @pacific;
+        color: var(--pacific);
         margin-right: 6px;
       }
     }
@@ -268,7 +268,7 @@ body {
   &_content-1 {
     &-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( @black );
+      .u-link__colors( var(--black) );
 
       display: block;
     }
@@ -279,15 +279,15 @@ body {
   &_content-3 {
     &-overview {
       display: block;
-      border-bottom: 1px solid @gray-40;
+      border-bottom: 1px solid var(--gray-40);
     }
 
     &-link,
     &-overview-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( @pacific, @pacific, @black, @pacific, @black );
+      .u-link__colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
       &:hover:focus {
-        color: @black;
+        color: var(--black);
       }
 
       display: block;
@@ -321,10 +321,10 @@ body {
       top: 0;
       z-index: 20;
 
-      background: @white;
+      background: var(--white);
       border: none;
-      border-right: 1px solid @gray-40;
-      color: @black;
+      border-right: 1px solid var(--gray-40);
+      color: var(--black);
       font-size: 18px;
 
       .js & {
@@ -332,7 +332,7 @@ body {
       }
 
       &:focus {
-        outline: 1px dotted @black;
+        outline: 1px dotted var(--black);
       }
 
       .o-mega-menu_trigger-close {
@@ -344,10 +344,10 @@ body {
       }
 
       &[aria-expanded="true"] {
-        background: @gray-10;
-        border-left: 1px solid @gray-40;
-        border-right: 1px solid @gray-40;
-        color: @black;
+        background: var(--gray-10);
+        border-left: 1px solid var(--gray-40);
+        border-right: 1px solid var(--gray-40);
+        color: var(--black);
 
         .o-mega-menu_trigger-close {
           display: block;
@@ -361,7 +361,7 @@ body {
       // Hover state for (x) close button.
       @media (hover: hover) {
         &:hover {
-          background: @gray-20;
+          background: var(--gray-20);
         }
       }
     }
@@ -375,9 +375,9 @@ body {
       box-sizing: border-box;
       width: 100%;
 
-      background-color: @gray-5;
-      border-top: 1px solid @gray-40;
-      border-bottom: 1px solid @gray-40;
+      background-color: var(--gray-5);
+      border-top: 1px solid var(--gray-40);
+      border-bottom: 1px solid var(--gray-40);
 
       .js & {
         position: absolute;
@@ -396,15 +396,15 @@ body {
         width: 100%;
         padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         border: none;
-        border-bottom: 1px solid @gray-40;
+        border-bottom: 1px solid var(--gray-40);
         position: relative;
-        background-color: @gray-10;
+        background-color: var(--gray-10);
         font-weight: 500;
         text-align: left;
         text-transform: uppercase;
 
         &:focus {
-          outline: 1px dotted @pacific;
+          outline: 1px dotted var(--pacific);
         }
 
         .cf-icon-svg {
@@ -413,13 +413,13 @@ body {
 
         // Hover state for back button.
         &:hover {
-          background: @gray-20;
+          background: var(--gray-20);
         }
       }
 
       &-overview {
         display: block;
-        border-bottom: 1px solid @gray-40;
+        border-bottom: 1px solid var(--gray-40);
       }
 
       &-wrapper {
@@ -434,7 +434,7 @@ body {
       }
 
       &-item {
-        border-bottom: 1px solid @gray-40;
+        border-bottom: 1px solid var(--gray-40);
       }
 
       &-overview-heading-text {
@@ -447,7 +447,7 @@ body {
       &-overview-link {
         position: relative;
         // Colors for :link, :visited, :hover, :focus, :active.
-        .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @navy-dark );
+        .u-link__colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
 
         padding-top: unit( 15px / 18px, em );
         padding-bottom: unit( 15px / 18px, em );
@@ -466,7 +466,7 @@ body {
           transform: translateY( -50% );
 
           .cf-icon-svg {
-            fill: @green;
+            fill: var(--green);
           }
         }
 
@@ -541,7 +541,7 @@ body {
 
       // add border between title and following list
       &:not(&__hidden) + ul {
-        border-top: 1px solid @gray-40;
+        border-top: 1px solid var(--gray-40);
       }
     }
   });
@@ -564,7 +564,7 @@ body {
       z-index: 20;
       height: 1px;
       content: '';
-      box-shadow: 0px 1px 0px 0px @gray-40;
+      box-shadow: 0px 1px 0px 0px var(--gray-40);
     }
 
     &_trigger {
@@ -659,7 +659,7 @@ body {
 
           // Change hover border color.
           &:after {
-            background: @gray-40;
+            background: var(--gray-40);
           }
         }
 
@@ -668,10 +668,10 @@ body {
         &:active {
           position: relative;
           top: 1px;
-          background-color: @gray-5;
+          background-color: var(--gray-5);
 
           // Important needed to override global link style override.
-          border: 1px solid @gray-40 !important;
+          border: 1px solid var(--gray-40) !important;
           border-bottom: none !important;
         }
 
@@ -688,9 +688,9 @@ body {
 
         &[aria-expanded="true"]:focus {
           outline: none;
-          box-shadow: 0 -4px 5px 0 @pacific-40,
-          -5px -2px 5px 0 @pacific-40,
-          5px -2px 5px 0 @pacific-40;
+          box-shadow: 0 -4px 5px 0 var(--pacific-40),
+          -5px -2px 5px 0 var(--pacific-40),
+          5px -2px 5px 0 var(--pacific-40);
         }
 
         &[aria-expanded="true"]:hover,
@@ -703,7 +703,7 @@ body {
             content: '';
             width: 100%;
             height: unit( 10px / @base-font-size-px, em );
-            background: @gray-5;
+            background: var(--gray-5);
           }
         }
 
@@ -737,7 +737,7 @@ body {
         &__current {
           // Change the selection bar to black.
           &:after {
-            background-color: @black;
+            background-color: var(--black);
           }
         }
 
@@ -773,8 +773,8 @@ body {
       }
 
       &-wrapper {
-        background-color: @gray-5;
-        border: 1px solid @gray-40;
+        background-color: var(--gray-5);
+        border: 1px solid var(--gray-40);
         box-shadow: 0 5px 5px 0px rgba( 0, 0, 0, 0.2 );
 
         padding: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -850,7 +850,7 @@ body {
         padding-top: unit( 30px / @base-font-size-px, em );
         padding-bottom: unit( 30px / @base-font-size-px, em );
         margin-bottom: unit( 30px / @base-font-size-px, em );
-        border: 1px solid @gray-40;
+        border: 1px solid var(--gray-40);
         border-top: 6px solid @gold;
         box-sizing: border-box;
       }

@@ -19,7 +19,7 @@
   }
 
   .page-intro {
-    border-bottom: 1px solid @gray-10;
+    border-bottom: 1px solid var(--gray-10);
   }
 
   .rc-illu-inner {
@@ -54,7 +54,7 @@
     .grid_column( 4 );
     .grid_push( 8 );
 
-    background: @gray-5;
+    background: var(--gray-5);
 
     p:last-child,
     section p:last-child {
@@ -75,7 +75,7 @@
 
     section {
       padding: unit(30px / @base-font-size-px, em) 0;
-      border-top: 1px solid @gray-10;
+      border-top: 1px solid var(--gray-10);
     }
 
     section:first-child,
@@ -172,17 +172,17 @@
     padding: unit(4px / @base-font-size-px, em)
       unit(10px / @base-font-size-px, em) unit(4px / @base-font-size-px, em)
       unit(8px / @base-font-size-px, em);
-    border: 2px solid @green-60;
+    border: 2px solid var(--green-60);
     margin: 0 2px;
-    background-color: @white;
-    color: @gray-dark;
+    background-color: var(--white);
+    color: var(--gray-dark);
   }
 
   .chart {
     position: relative;
     padding-top: unit(40px / @base-font-size-px, em);
-    border-top: 1px solid @gray-10;
-    border-bottom: 1px solid @gray-10;
+    border-top: 1px solid var(--gray-10);
+    border-bottom: 1px solid var(--gray-10);
     margin: unit(20px / @base-font-size-px, em)
       unit(20px / @base-font-size-px, em) unit(20px / @base-font-size-px, em) 0;
 
@@ -225,7 +225,7 @@
   }
 
   .data-label_number {
-    background-color: @white;
+    background-color: var(--white);
   }
 
   .chart-caption {
@@ -303,7 +303,7 @@
 
   .rc-comparison-subsection {
     padding: 1em 0;
-    border-top: 1px solid @gray-10;
+    border-top: 1px solid var(--gray-10);
   }
 
   .interest-cost {
@@ -334,7 +334,7 @@
       top: 0.5em;
       left: 5px;
       display: block;
-      color: @gray-80;
+      color: var(--gray-80);
     }
   }
 
@@ -410,9 +410,9 @@
     left: -30px;
     width: 20px;
     height: 20px;
-    background: @green-60;
+    background: var(--green-60);
     border-radius: 20px;
-    color: @black;
+    color: var(--black);
     content: counter(li);
     counter-increment: li;
     font-size: 12px;
@@ -429,7 +429,7 @@
     position: absolute;
     top: 30%;
     padding: 1em 2em 1em 3em;
-    background: @white;
+    background: var(--white);
   }
 
   .chart-menu {
@@ -440,7 +440,7 @@
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
     border-bottom: 1px solid transparent;
-    background-color: @white;
+    background-color: var(--white);
     font-size: 13px;
 
     &_btn {
@@ -448,8 +448,8 @@
       padding: unit(5px / @base-font-size-px, em)
         unit(15px / @base-font-size-px, em);
       border: none;
-      background-color: @white;
-      color: @pacific;
+      background-color: var(--white);
+      color: var(--pacific);
       font-weight: 500;
       outline: none;
       text-align: left;
@@ -472,14 +472,14 @@
         margin: 0;
 
         &:hover {
-          background-color: @gray-5;
-          color: @pacific;
+          background-color: var(--gray-5);
+          color: var(--pacific);
         }
       }
     }
 
     &__open {
-      border-color: @gray-10;
+      border-color: var(--gray-10);
 
       .chart-menu_options {
         height: 110px;
@@ -492,7 +492,7 @@
   }
 
   .credit-note-ctr {
-    border-top: 1px solid @gray-10;
+    border-top: 1px solid var(--gray-10);
   }
 
   .m-notification__borderless {
@@ -556,7 +556,7 @@
     .interest-cost {
       margin-bottom: 0.5em;
       font-weight: 600;
-      color: @gray-60;
+      color: var(--gray-60);
     }
   });
 

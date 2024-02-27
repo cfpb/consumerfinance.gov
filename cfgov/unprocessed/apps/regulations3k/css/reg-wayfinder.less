@@ -10,11 +10,11 @@
 .o-regulations-wayfinder {
   box-sizing: border-box;
   width: 100%;
-  border-bottom: 2px solid @green;
+  border-bottom: 2px solid var(--green);
   position: fixed;
   left: 0;
-  background-color: @white;
-  box-shadow: 0 3px 8px -6px @black;
+  background-color: var(--white);
+  box-shadow: 0 3px 8px -6px var(--black);
   transition: top 0.1s ease-in-out;
   z-index: 100;
   padding-left: unit(15px / @base-font-size-px, rem);
@@ -56,7 +56,7 @@
       position: relative;
 
       &:after {
-        border-right: 1px solid @gray-40;
+        border-right: 1px solid var(--gray-40);
         content: '';
         position: absolute;
         right: -1px;
