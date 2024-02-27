@@ -29,7 +29,7 @@
     "@cfpb/cfpb-notifications": "0.37.0",
     "@cfpb/cfpb-pagination": "0.37.0",
     "@cfpb/cfpb-tables": "0.37.0",
-    "@cfpb/cfpb-typography": "0.37.0",
+    "@cfpb/cfpb-typography": "0.37.2",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.17",
     "cfpb-chart-builder": "6.4.2",
@@ -45,12 +45,12 @@
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
-    "cypress": "13.6.5",
+    "cypress": "13.6.6",
     "cypress-fail-fast": "7.1.0",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-jsdoc": "48.1.0",
+    "eslint-plugin-jsdoc": "48.2.0",
     "eslint-plugin-jsx-a11y": "6.8.0",
     "eslint-plugin-react": "7.33.2",
     "jest": "29.7.0",
