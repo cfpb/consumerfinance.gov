@@ -35,7 +35,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
 class CardSurveyData(models.Model):
     slug = models.SlugField(max_length=255, primary_key=True)
     institution_name = models.TextField()
-    product_name = models.TextField()
+    product_name = models.TextField(db_index=True)
     report_date = models.DateField()
     availability_of_credit_card_plan = models.TextField(
         choices=enums.GeoAvailabilityChoices
@@ -205,7 +205,7 @@ class CardSurveyData(models.Model):
     foreign_transaction_fee_calculation = models.TextField(
         null=True, blank=True
     )
-    late_fees = YesNoBooleanField(db_index=True)
+    late_fees = YesNoBooleanField()
     late_fee_types = JSONListField(
         choices=enums.LateFeeTypeChoices, blank=True
     )

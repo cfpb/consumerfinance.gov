@@ -14,8 +14,6 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             "balance_transfer_fees",
             "introductory_apr_offered",
-            "late_fees",
-            "late_fee_dollars",
             "periodic_fee_type",
             "product_name",
             "purchase_apr",
