@@ -17,7 +17,7 @@
   },
   "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
   "dependencies": {
-    "@cfpb/cfpb-analytics": "0.3.0",
+    "@cfpb/cfpb-analytics": "0.3.1",
     "@cfpb/cfpb-atomic-component": "0.37.0",
     "@cfpb/cfpb-buttons": "0.37.0",
     "@cfpb/cfpb-core": "0.37.0",
@@ -47,7 +47,7 @@
   "devDependencies": {
     "cypress": "13.6.6",
     "cypress-fail-fast": "7.1.0",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsdoc": "48.2.0",
