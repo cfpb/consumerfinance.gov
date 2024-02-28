@@ -34,23 +34,11 @@
 
     <div class="o-form_group">
         <fieldset class="o-form_fieldset">
-            <legend class="a-legend">Fees</legend>
+            <legend class="a-legend">Features</legend>
 
             {{ render_field(form.no_account_fee, "checkbox") }}
 
-            {{ render_field(form.no_late_payment_fee, "checkbox") }}
-
-            {{ render_field(form.no_balance_transfer_fee, "checkbox")}}
-        </fieldset>
-    </div>
-
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
-            <legend class="a-legend">Features</legend>
-
-            {{ render_field(form.secured_card, "checkbox") }}
-
-            {{ render_field(form.introductory_apr_offered, "checkbox") }}
+            {{ render_field(form.no_balance_transfer_fee, "checkbox") }}
 
             {{ render_field(form.rewards, "checkbox") }}
         </fieldset>

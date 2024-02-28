@@ -75,6 +75,8 @@ exclude = [
     # standards
     "cfgov/cfgov/settings",
 ]
+
+[tool.ruff.lint]
 ignore = [
     # Assigned Lambdas are fine.
     "E731",

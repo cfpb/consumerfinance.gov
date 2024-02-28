@@ -10,7 +10,7 @@ class CardOrderingFilter(filters.OrderingFilter):
                 "choices": [
                     ("purchase_apr", "Lowest purchase APR"),
                     ("transfer_apr", "Lowest balance transfer APR"),
-                    ("low_fees", "Lowest fees"),
+                    ("product_name", "Card name"),
                 ],
                 "initial": "purchase_apr",
             }
@@ -18,16 +18,24 @@ class CardOrderingFilter(filters.OrderingFilter):
         super().__init__(*args, **kwargs)
 
     def filter(self, qs, value):
-        # If "low_fees" is selected, order first by cards without late fees
-        # (boolean), then by first late fee in dollars, in ascending order.
-        if value[0] == "low_fees":
-            return qs.order_by("late_fees", "late_fee_dollars")
+        ordering = []
 
-        # Otherwise, if we're sorting by APR, we want to exclude any cards
-        # that don't specify an APR.
-        qs = qs.exclude(**{f"{value[0]}__isnull": True})
+        if value[0] == "purchase_apr":
+            # If we're sorting by purchase APR, we sort by the tier-specific
+            # purchase APR that we previously annotated.
+            ordering = ["purchase_apr_for_tier"]
+        elif value[0] == "transfer_apr":
+            # If we're sorting by transfer APR, we want to exclude cards that
+            # don't have either a tier-specific APR or a {minimum, maximum}
+            # range, which we previously coalesced into the
+            # transfer_apr_for_ordering field.
+            qs = qs.exclude(transfer_apr_for_ordering__isnull=True)
 
-        return super().filter(qs, value)
+            # We then order by that column first and purchase APR second.
+            ordering = ["transfer_apr_for_ordering", "purchase_apr_for_tier"]
+
+        # We always specify product name as the fallback ordering.
+        return super().filter(qs, ordering + ["product_name"])
 
 
 class CheckboxFilter(filters.BooleanFilter):

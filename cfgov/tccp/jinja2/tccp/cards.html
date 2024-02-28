@@ -1,6 +1,7 @@
 {% extends "v1/layouts/layout-full.html" %}
 
 {% from 'tccp/macros/data_published.html' import data_published %}
+{% from 'tccp/macros/fields.html' import apr, apr_range %}
 {% from 'tccp/macros/filter_form.html' import filter_form with context %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
@@ -9,6 +10,11 @@
 {% block javascript scoped %}
 {{ super() }}
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
 {% block content_main %}
@@ -57,21 +63,25 @@
         </p>
 
         {%- set card_columns = [
-            {'heading': 'Card'},
-            {'heading': 'Purchase APR'},
+            {'heading': 'Card', 'preserve_column_on_mobile': true},
+            {'heading': 'Purchase APR', 'preserve_column_on_mobile': true, 'right_align': true},
             {'heading': 'Availability'},
             {'heading': 'Account fee'},
-            {'heading': 'Secured'},
-            {'heading': 'Rewards'},
+            {'heading': 'Balance transfer APR'},
+            {'heading': 'Balance transfer fee'},
+            {'heading': 'Offers rewards'},
         ] %}
         {%- set card_rows = [] %}
         {%- for card in results %}
             {% do card_rows.append( [
                 ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
-                ('%.2f%%' | format(card.purchase_apr * 100)) if card.purchase_apr else 'None',
-                ('Regionally: ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
+                apr(card.purchase_apr_for_tier),
+                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
-                card.secured_card,
+                apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else (
+                    apr_range(card.transfer_apr_min, card.transfer_apr_max) if card.transfer_apr_min is not none else 'None'
+                ),
+                'Yes' if card.balance_transfer_fees else 'No',
                 (card.rewards | join(', ')) if card.rewards else 'None'
             ] ) %}
         {% endfor %}
@@ -80,7 +90,7 @@
                 'columns': card_columns,
                 'rows': card_rows
             },
-            'options': ['is_stacked', 'stack_on_mobile']
+            'options': ['stack_on_mobile']
         } %}
             {% include 'v1/includes/organisms/tables/base.html' %}
         {% endwith %}

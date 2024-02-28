@@ -1,5 +1,5 @@
 import json
-from urllib.parse import quote
+from urllib.parse import quote_plus
 
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
@@ -26,7 +26,7 @@ class LandingPageViewTests(TestCase):
 
         response = self.make_request(
             "?credit_tier="
-            + quote(tier)
+            + quote_plus(tier)
             + "&situation=Have+a+lower+monthly+payment"
         )
         self.assertEqual(response.status_code, 302)
@@ -34,7 +34,7 @@ class LandingPageViewTests(TestCase):
             response["Location"],
             reverse("tccp:cards")
             + "?targeted_credit_tiers="
-            + quote(tier)
+            + quote_plus(tier)
             + "&ordering=purchase_apr",
         )
 

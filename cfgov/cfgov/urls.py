@@ -240,7 +240,9 @@ urlpatterns = [
             namespace="prepaid_agreements",
         ),
     ),
-    re_path(r"^consumer-tools/credit-cards/find-cards/", include("tccp.urls")),
+    re_path(
+        r"^consumer-tools/credit-cards/explore-cards/", include("tccp.urls")
+    ),
     re_path(
         r"^consumer-tools/retirement/",
         include("retirement_api.urls", namespace="retirement_api"),
