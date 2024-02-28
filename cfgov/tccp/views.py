@@ -22,7 +22,7 @@ from .serializers import CardSurveyDataSerializer
 class LandingPageView(FlaggedTemplateView):
     flag_name = "TCCP"
     template_name = "tccp/landing_page.html"
-    heading = "Find cards for your situation"
+    heading = "Explore cards for your situation"
     breadcrumb_items = [
         {
             "title": "Credit cards",
@@ -48,7 +48,10 @@ class LandingPageView(FlaggedTemplateView):
     def redirect_to_results(self, credit_tier, situation):
         return redirect(
             reverse("tccp:cards")
-            + f"?targeted_credit_tiers={credit_tier}&{urlencode(situation.query)}"
+            + "?"
+            + urlencode(
+                dict(targeted_credit_tiers=credit_tier, **situation.query)
+            )
         )
 
 

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 
@@ -7,7 +7,7 @@ class Situation:
     title: str
     details_intro_have: bool
     details: List[str]
-    query: dict
+    query: dict = field(default_factory=dict)
 
     def __str__(self):
         return self.title
@@ -38,37 +38,19 @@ SITUATIONS = [
         title="Make a big purchase",
         details_intro_have=True,
         details=[
-            "Low purchase interest rates",
-            (
-                "Introductory interest rate offers",
-                (
-                    "(and give you more information on what to look out for with "
-                    "introductory offers)"
-                ),
-            ),
+            "Low purchase interest rates (but this isn't a good idea!)",
         ],
-        query={
-            "ordering": "purchase_apr",
-            "introductory_apr_offered": True,
-        },
     ),
     Situation(
         title="Avoid annual fees",
         details_intro_have=True,
         details=["No annual fee"],
-        query={
-            "ordering": "purchase_apr",
-            "no_account_fee": True,
-        },
+        query={"no_account_fee": True},
     ),
     Situation(
         title="Build credit",
         details_intro_have=False,
-        details=["Are secured"],
-        query={
-            "ordering": "purchase_apr",
-            "secured_card": True,
-        },
+        details=["Are targeted for your credit score range"],
     ),
     Situation(
         title="Earn rewards",
@@ -79,10 +61,7 @@ SITUATIONS = [
                 "(like cash back, travel points, or other rewards)",
             )
         ],
-        query={
-            "ordering": "purchase_apr",
-            "rewards": True,
-        },
+        query={"rewards": True},
     ),
 ]
 
