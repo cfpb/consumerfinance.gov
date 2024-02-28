@@ -55,7 +55,7 @@ class AskSearch(blocks.StructBlock):
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=False, label="Well")
+    content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
 
     class Meta:
         icon = "placeholder"
@@ -551,7 +551,7 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = blocks.RichTextBlock(icon="edit")
+    content = v1_blocks.UnescapedRichTextBlock(icon="edit")
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
