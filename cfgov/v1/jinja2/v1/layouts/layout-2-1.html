@@ -5,7 +5,8 @@
 {% endif %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__2-1 {% block content_modifiers -%}{%- endblock %}"
+    <main class="u-layout-grid u-layout-grid__2-1
+                 {% block content_modifiers -%}{%- endblock %}"
           id="main"
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
