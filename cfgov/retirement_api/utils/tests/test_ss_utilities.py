@@ -224,26 +224,26 @@ class UtilitiesTests(unittest.TestCase):
         self.assertTrue(diff3 in [1, 2])
 
     def test_get_current_age(self):
-        age_pairs = [
-            (self.today.replace(year=self.today.year - 1), 1),
-            (str(self.today.replace(year=self.today.year - 1)), 1),
-            (self.today.replace(year=self.today.year - 20), 20),
-            (self.today.replace(year=self.today.year - 60), 60),
-            (self.today, 0),
-            # Invalid birthdays return an age of None.
-            ("xx", None),
-            # Birthdays in the future return an age of None.
-            (self.today + datetime.timedelta(days=2), None),
-        ]
-        for birthday, expected_age in age_pairs:
-            self.assertEqual(get_current_age(birthday), expected_age)
-
-    @mock.patch("retirement_api.utils.ss_utilities.datetime.date")
-    def test_get_current_age_leapyear(self, mock_date):
-        mock_date.today.return_value = date(2015, 1, 29)
-        mock_date.side_effect = lambda *args, **kw: date(*args, **kw)
-        age_pair = ("2-29-1980", 34)
-        self.assertEqual(get_current_age(age_pair[0]), age_pair[1])
+        for birthday, today, expected_age in [
+            ("1-1-1964", "1-1-2024", 60),
+            ("1-1-1964", "12-31-2023", 59),
+            ("2-29-1980", "1-29-2015", 34),
+            ("2-29-2024", "3-1-2124", 100),
+            ("2-29-2024", "2-29-2124", 100),
+            ("2-29-2024", "2-28-2124", 99),
+            ("2-29-2024", "2-28-2025", 0),
+            ("2-29-2024", "3-1-2025", 1),
+            ("6-1-2020", "5-31-2020", None),
+            ("6-1-2020", "6-1-2020", 0),
+            ("6-1-2020", "5-31-2021", 0),
+            ("6-1-2020", "6-1-2021", 1),
+            ("xx", "12-31-2024", None),
+        ]:
+            with self.subTest(
+                birthday=birthday, today=today, expected_age=expected_age
+            ):
+                with freeze_time(today):
+                    self.assertEqual(get_current_age(birthday), expected_age)
 
     def test_interpolate_benefits(self):
         mock_results = copy.deepcopy(self.sample_results)
