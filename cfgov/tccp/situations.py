@@ -38,7 +38,7 @@ SITUATIONS = [
         title="Make a big purchase",
         details_intro_have=True,
         details=[
-            "Low purchase interest rates (but this isn't a good idea!)",
+            "Low purchase interest rates",
         ],
     ),
     Situation(
