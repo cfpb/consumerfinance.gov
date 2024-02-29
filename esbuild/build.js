@@ -13,7 +13,7 @@ const baseConfig = {
   bundle: true,
   minify: true,
   sourcemap: true,
-  external: ['*.png', '*.woff', '*.woff2', '*.gif'],
+  external: ['*.png', '*.woff2', '*.gif'],
   loader: {
     '.svg': 'text',
   },

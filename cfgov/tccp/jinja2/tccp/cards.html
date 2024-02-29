@@ -1,0 +1,100 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{% from 'tccp/macros/data_published.html' import data_published %}
+{% from 'tccp/macros/fields.html' import apr, apr_range %}
+{% from 'tccp/macros/filter_form.html' import filter_form with context %}
+{% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
+{% import 'v1/includes/molecules/notification.html' as notification %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
+
+{% block javascript scoped %}
+{{ super() }}
+<script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
+{% endblock %}
+
+{% block content_main %}
+
+<h1>Card search results</h1>
+
+<p>
+    Filter and sort the {{ total_count or "" }} cards in our database
+    to find cards that have the features that fit your situation.
+</p>
+
+<div id="o-filterable-list-controls" class="o-filterable-list-controls">
+    {% call() expandable({
+        "label": "Customize results",
+        "is_bordered": true,
+        "is_expanded": true,
+        "is_midtone": true
+    }) %}
+        {{ filter_form(form) }}
+    {% endcall %}
+</div>
+
+
+
+<div class="block block__sub">
+    <div class="o-filterable-list-results">
+
+        {% if count -%}
+        {{- notification.render(
+            'success',
+            true,
+            count ~ ' result' ~ count | pluralize()
+        ) -}}
+        {%- else -%}
+        {{- notification.render(
+            'warning',
+            true,
+            'There are no results for your search.'
+        ) -}}
+        {%- endif %}
+
+        <p>
+            {% if first_report_date -%}
+            {{ data_published(first_report_date) }}
+            {%- endif %}
+        </p>
+
+        {%- set card_columns = [
+            {'heading': 'Card', 'preserve_column_on_mobile': true},
+            {'heading': 'Purchase APR', 'preserve_column_on_mobile': true, 'right_align': true},
+            {'heading': 'Availability'},
+            {'heading': 'Account fee'},
+            {'heading': 'Balance transfer APR'},
+            {'heading': 'Balance transfer fee'},
+            {'heading': 'Offers rewards'},
+        ] %}
+        {%- set card_rows = [] %}
+        {%- for card in results %}
+            {% do card_rows.append( [
+                ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
+                apr(card.purchase_apr_for_tier),
+                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
+                (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
+                apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else (
+                    apr_range(card.transfer_apr_min, card.transfer_apr_max) if card.transfer_apr_min is not none else 'None'
+                ),
+                'Yes' if card.balance_transfer_fees else 'No',
+                (card.rewards | join(', ')) if card.rewards else 'None'
+            ] ) %}
+        {% endfor %}
+        {%- with value = {
+            'data': {
+                'columns': card_columns,
+                'rows': card_rows
+            },
+            'options': ['stack_on_mobile']
+        } %}
+            {% include 'v1/includes/organisms/tables/base.html' %}
+        {% endwith %}
+    </div>
+</div>
+
+{% endblock content_main %}

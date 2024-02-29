@@ -90,11 +90,11 @@ function handleRadio(input) {
  * @param {HTMLElement} el - A DOM element
  */
 function handleAnalytics(el) {
+  const event = el.getAttribute('data-gtm-category');
   const action = el.getAttribute('data-gtm-action');
   const label = el.getAttribute('data-gtm-label');
-  const category = el.getAttribute('data-gtm-category');
 
-  analyticsSendEvent({ action, label, category });
+  analyticsSendEvent({ event, action, label });
 }
 
 /**

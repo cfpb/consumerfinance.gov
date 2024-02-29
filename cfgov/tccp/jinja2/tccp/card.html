@@ -1,0 +1,114 @@
+{% extends "v1/layouts/layout-2-1.html" %}
+
+{% from 'tccp/macros/data_published.html' import data_published %}
+
+{% block css%}
+    {{ super() }}
+    <style>
+        dt {
+            margin-top: 15px;
+        }
+        dt,
+        dd {
+            display: block;
+        }
+        dd {
+            margin-left: 0;
+        }
+        dd + dd {
+            margin-top: 15px;
+        }
+        dd::after {
+            content: none;
+        }
+        dd .o-table {
+            margin-top: 10px;
+        }
+    </style>
+{% endblock css%}
+
+{% block content_main %}
+
+<h1>{{ card.institution_name }} {{ card.product_name }}</h1>
+
+{{ data_published(card.report_date) }}
+
+<h2>Availability</h2>
+<dl class="m-list">
+    <dt>Location</dt>
+    <dd>
+        {% if not card.state_limitations %}
+            Available to anyone in the United States
+        {% else %}
+            Available only to people who live in
+            {% if card.pertains_to_specific_counties %}
+                specific counties in
+            {% endif %}
+            {{ card.state_limitations | join(", ") }}
+        {% endif %}
+    </dd>
+    {% if card.requirements_for_opening %}
+        <dt>Other requirements</dt>
+        {% for requirement in [card.geographic_restrictions, card.professional_affiliation, card.other] %}
+            {% if requirement %}
+                <dd>{{ requirement }}</dd>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <dt>Credit score</dt>
+    <dd>
+        This card is targeted to people with these credit scores:
+        {% set scores = [
+            "No credit score",
+            "619 or less",
+            "620 to 719",
+            "720 or greater"]
+        %}
+        <table class="o-table">
+            <thead>
+                <tr>
+                    {% for score in scores %}
+                    <th>{{ score }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for score in scores %}
+                    <td>
+                        {{ "Yes" if score in card.targeted_credit_tiers|string else "No" }}
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </dd>
+    <dt>
+        Secured card
+    </dt>
+    <dd>
+        {{ "Yes" if card.secured_card else "No" }}
+    </dd>
+</dl>
+<h2>Purchases</h2>
+
+<h3 class="h5">Other fields that haven't been styled yet</h3>
+
+<table class="o-table o-table__striped">
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in card._meta.fields %}
+        <tr>
+            <td>{{ field.name }}</td>
+            <td>{{ card.__getattribute__(field.name) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content_main %}

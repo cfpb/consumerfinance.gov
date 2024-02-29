@@ -30,6 +30,10 @@ msgstr "revisado"
 msgid "Read full answer"
 msgstr "Leer más"
 
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:82
+msgid "Learn more about"
+msgstr "Sepa más sobre"
+
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:95
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:83
 msgid "Don't see what you're looking for?"
@@ -38,11 +42,6 @@ msgstr "¿No encuentra lo que busca?"
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:98
 msgid "Browse related questions"
 msgstr "Otras preguntas"
-
-#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:111
-#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:90
-msgid "Learn more about"
-msgstr "Sepa más sobre"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:19
 msgid "Search our library of answers"
@@ -87,10 +86,6 @@ msgstr "Por favor escriba su búsqueda arriba"
 #: ask_cfpb/jinja2/ask-cfpb/landing-page.html:6
 msgid "Read answer"
 msgstr "Leer la respuesta"
-
-#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:31
-msgid "Browse questions by category"
-msgstr "Examinar las preguntas por categoría"
 
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:32
 msgid "Read more"

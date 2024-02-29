@@ -156,17 +156,17 @@ const handlePaginationClick = (event) => {
     return;
   }
 
-  let currPageDom = searchContent.querySelector('.m-pagination_current-page');
+  const currPageDom = searchContent.querySelector('.m-pagination_current-page');
 
   // This is the actual page number we're on.
-  let currPage = parseInt(currPageDom.getAttribute('value'), 10);
+  const currPage = parseInt(currPageDom.getAttribute('value'), 10);
   // This is the page that's set in the page counter.
-  let selPage = parseInt(currPageDom.value, 10);
-  let ofTotalPagesTxt = searchContent.querySelectorAll('.m-pagination_label')[1]
-    .textContent;
+  const selPage = parseInt(currPageDom.value, 10);
+  const ofTotalPagesTxt = searchContent.querySelectorAll(
+    '.m-pagination_label',
+  )[1].textContent;
   let usePage = currPage;
 
-  let label;
   let action;
   if (isNextButton) {
     action = 'next page';
@@ -177,7 +177,7 @@ const handlePaginationClick = (event) => {
     usePage = selPage;
   }
 
-  label = `page ${usePage}${ofTotalPagesTxt}`;
+  const label = `page ${usePage}${ofTotalPagesTxt}`;
 
   // Old analytics. TODO: Remove when completely on GA4.
   sendEvent({
