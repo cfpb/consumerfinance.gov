@@ -21,7 +21,7 @@
 {% block content_main %}
     {% if page.has_hero -%}
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-        {{ translation_links.render() }}
+        {{ translation_links.render(modifier_classes='block__flush-top') }}
     {%- endif %}
 
     {% for block in page.content -%}
