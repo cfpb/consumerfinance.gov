@@ -1,9 +1,11 @@
 @layer layout-base {
   // Establish the wrapper inside the grid container as the grid element.
   .u-layout-grid {
+    --layout-max-width: 1170px;
+
     &_wrapper {
       display: grid;
-      max-width: 1170px;
+      max-width: var(--layout-max-width);
       margin: 0 auto;
       padding-left: unit(15px / @base-font-size-px, rem);
       padding-right: unit(15px / @base-font-size-px, rem);
@@ -98,5 +100,11 @@
     label {
       max-width: 41.875rem;
     }
+  }
+
+  // "Breakout" container that bleeds out of the grid to the screen edge.
+  .u-layout-grid_breakout {
+    width: 100vw;
+    margin-left: calc(-50vw + (var(--layout-max-width) / 2));
   }
 }
