@@ -29,6 +29,7 @@
   }
 
   .intro {
+    margin-top: 15px;
     margin-bottom: 30px;
 
     .content-l_col + .content-l_col {
@@ -36,15 +37,8 @@
     }
   }
 
-  [lang='es'] .intro {
-    margin-top: 30px;
-  }
-
-  [lang='en'] .intro {
-    margin-top: 15px;
-  }
-
-  @media (min-width: 850px) {
+  // Desktop and above.
+  .respond-to-min(@bp-med-min, {
     .intro {
       margin-bottom: 45px;
 
@@ -53,22 +47,10 @@
         width: 200px;
         background-size: 200px;
         background-repeat: no-repeat;
-      }
-    }
-
-    [lang='es'] .intro {
-      margin-top: 60px;
-      .img {
-        background-image: url('/static/apps/retirement/img/before-you-claim-es.png');
-      }
-    }
-
-    [lang='en'] .intro {
-      .img {
         background-image: url('/static/apps/retirement/img/before-you-claim.png');
       }
     }
-  }
+  } );
 
   h1 span.header-line {
     display: block;
@@ -87,10 +69,6 @@
     margin-bottom: 30px;
   }
 
-  .step-one .birthdate-inputs label.input-labels {
-    margin-right: 5px;
-  }
-
   .step-one label.input-labels .input-labels_block {
     display: block;
     margin-bottom: 8px;
@@ -101,15 +79,11 @@
     padding-left: 10px;
   }
 
-  .birthdate-inputs p {
-    margin-bottom: 8px;
-  }
-
   .estimated-benefits-description {
     margin: 1em 0 0;
     padding: 1em 0;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid @gray-20;
+    border-bottom: 1px solid @gray-20;
 
     p {
       margin-bottom: 0;
@@ -142,7 +116,7 @@
     left: 40px;
 
     #full-age-benefits-text {
-      color: #919395;
+      color: @gray-60;
     }
 
     .graph__bar {
@@ -154,7 +128,7 @@
     }
 
     .graph__background {
-      background: #e3e4e5;
+      background: @gray-10;
       height: 1px;
       left: 0;
     }
@@ -168,7 +142,7 @@
     }
 
     .age-text {
-      color: #919395;
+      color: @gray-60;
       cursor: pointer;
       position: absolute;
       top: 292px;
@@ -179,7 +153,7 @@
         height: 25px;
 
         p {
-          color: #000;
+          color: @black;
           font-weight: bolder;
         }
       }
@@ -259,12 +233,7 @@
     padding: 0;
   }
 
-  .compared-to-full {
-    display: none;
-  }
-
   .selected-retirement-age-container {
-    height: 77px;
     margin-bottom: 30px;
 
     p {
@@ -354,24 +323,6 @@
     margin-top: 0;
   }
 
-  [lang='es'] .step-two .question-working img {
-    display: block;
-    box-sizing: border-box;
-    background: url('/static/apps/retirement/img/sus60s.png') no-repeat;
-    width: 200px;
-    height: 200px;
-    padding-left: 200px; /* Move english image out of view */
-  }
-
-  [lang='es'] .step-two .question-expenses img {
-    display: block;
-    box-sizing: border-box;
-    background: url('/static/apps/retirement/img/gastos.png') no-repeat;
-    width: 200px;
-    height: 200px;
-    padding-left: 200px; /* Move english image out of view */
-  }
-
   .step-two .question,
   .step-three .hidden-content {
     display: none;
@@ -428,11 +379,8 @@
      Medium and small screens
   ==================================================================== */
 
-  @media (max-width: 1190px) {
-    .birthdate-inputs {
-      border-width: 0 15px;
-    }
-
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
     #step-one-form {
       margin-bottom: 30px;
     }
@@ -464,19 +412,18 @@
     .step-two .lifestyle-response > p:last-child {
       margin-bottom: 0;
     }
-  }
+  } );
 
   /* ====================================================================
      Medium screens
   ==================================================================== */
 
-  @media (max-width: 1190px) and (min-width: 1100px) {
+  // Tablet only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
     p.y-axis-label {
       top: 310px;
     }
-  }
 
-  @media (max-width: 1100px) and (min-width: 850px) {
     .step-one {
       padding-top: 30px;
     }
@@ -519,7 +466,7 @@
     }
 
     div.question {
-      border-top: 1px solid #ccc;
+      border-top: 1px solid @gray-20;
       margin-right: 25px;
       margin-left: 15px;
       padding-top: 30px;
@@ -569,13 +516,14 @@
       margin-top: 60px;
       margin-bottom: 60px;
     }
-  }
+  } );
 
   /* ====================================================================
      Small screens
   ==================================================================== */
 
-  @media (max-width: 849px) {
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
     .content-l {
       margin-left: 0;
       margin-right: 0;
@@ -593,11 +541,6 @@
 
     #step-one-form .content-l_col-1-3 {
       max-width: 236px;
-    }
-
-    .birthdate-inputs p,
-    .step-one label.input-labels .input-labels_block {
-      margin-bottom: 0;
     }
 
     #salary-input {
@@ -675,7 +618,7 @@
     }
 
     .question {
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid @gray-20;
       padding-top: 30px;
       padding-bottom: 30px;
     }
@@ -693,14 +636,6 @@
       margin-top: 0;
       margin-bottom: 15px;
       max-width: 200px;
-    }
-
-    [lang='es'] .step-two .question-working img {
-      display: inline-block;
-    }
-
-    [lang='es'] .step-two .question-expenses img {
-      display: inline-block;
     }
 
     .content-l.step-two h2 + .question.h3 {
@@ -733,7 +668,7 @@
       margin-top: 30px;
       margin-bottom: 30px;
     }
-  }
+  } );
 
   /* TOOLTIPS */
   div[data-tooltip-name] {
@@ -744,14 +679,14 @@
   }
 
   *[data-tooltip-target] {
-    cursor: auto;
+    cursor: pointer;
     border-bottom: none;
     color: @pacific;
   }
 
   #tooltip-container {
-    background-color: #e4e2e0;
-    border: 0 solid #000;
+    background-color: @gray-10;
+    border: 0 solid @black;
     display: none;
     font-style: normal;
     padding: 15px;
@@ -772,7 +707,7 @@
      styled tip appear along the top of the tooltip. */
     .outertip {
       border: 0 solid transparent;
-      border-bottom-color: #000;
+      border-bottom-color: @black;
       content: ' ';
       height: 0;
       position: absolute;
@@ -783,7 +718,7 @@
 
     .innertip {
       border: 7px solid transparent;
-      border-bottom-color: #e4e2e0;
+      border-bottom-color: @gray-10;
       content: ' ';
       height: 0;
       position: absolute;
@@ -796,9 +731,49 @@
   .tooltip-target {
     border-width: 0;
     border-style: dotted;
-    border-color: #0072ce;
-    color: #0072ce;
+    border-color: @pacific;
+    color: @pacific;
     cursor: pointer;
     text-decoration: none;
+  }
+}
+
+/* ====================================================================
+    Spanish page overrides
+==================================================================== */
+
+[lang='es'] #claiming-social-security {
+  .intro {
+    margin-top: 30px;
+
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
+      margin-top: 60px;
+      .img {
+        background-image: url('/static/apps/retirement/img/before-you-claim-es.png');
+      }
+    } );
+  }
+
+  .step-two .question-expenses img,
+  .step-two .question-working img {
+    display: block;
+    box-sizing: border-box;
+    width: 200px;
+    height: 200px;
+    padding-left: 200px; /* Move image out of view */
+
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      display: inline-block;
+    } );
+  }
+
+  .step-two .question-expenses img {
+    background: url('/static/apps/retirement/img/gastos.png') no-repeat;
+  }
+
+  .step-two .question-working img {
+    background: url('/static/apps/retirement/img/sus60s.png') no-repeat;
   }
 }
