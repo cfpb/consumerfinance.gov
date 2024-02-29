@@ -83,7 +83,10 @@ def get_current_age(dob):
             DOB = parser.parse(dob).date()
         except (TypeError, ValueError):
             return None
-    if DOB < today:
+
+    if DOB == today:
+        return 0
+    elif DOB < today:
         try:  # when dob is 2/29 and the current year is not a leap year
             birthday = DOB.replace(year=today.year)
         except ValueError:

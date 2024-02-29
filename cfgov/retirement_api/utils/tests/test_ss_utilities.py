@@ -226,15 +226,17 @@ class UtilitiesTests(unittest.TestCase):
     def test_get_current_age(self):
         age_pairs = [
             (self.today.replace(year=self.today.year - 1), 1),
-            ("{0}".format(self.today.replace(year=self.today.year - 1)), 1),
+            (str(self.today.replace(year=self.today.year - 1)), 1),
             (self.today.replace(year=self.today.year - 20), 20),
             (self.today.replace(year=self.today.year - 60), 60),
-            (self.today, (0 or None)),
-            ("xx", (0 or None)),
-            (self.today + datetime.timedelta(days=2), (0 or None)),
+            (self.today, 0),
+            # Invalid birthdays return an age of None.
+            ("xx", None),
+            # Birthdays in the future return an age of None.
+            (self.today + datetime.timedelta(days=2), None),
         ]
-        for pair in age_pairs:
-            self.assertTrue(get_current_age(pair[0]) == pair[1])
+        for birthday, expected_age in age_pairs:
+            self.assertEqual(get_current_age(birthday), expected_age)
 
     @mock.patch("retirement_api.utils.ss_utilities.datetime.date")
     def test_get_current_age_leapyear(self, mock_date):
