@@ -12,14 +12,12 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CardSurveyData
         fields = [
-            "balance_transfer_fees",
-            "introductory_apr_offered",
             "periodic_fee_type",
             "product_name",
             "purchase_apr_for_tier",
+            "rewards",
             "secured_card",
             "state_limitations",
-            "rewards",
             "transfer_apr_for_tier",
             "transfer_apr_min",
             "transfer_apr_max",

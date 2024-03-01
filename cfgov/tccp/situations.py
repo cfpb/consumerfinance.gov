@@ -5,8 +5,8 @@ from typing import List
 @dataclass
 class Situation:
     title: str
-    details_intro_have: bool
     details: List[str]
+    details_intro_have: bool = field(default_factory=bool)
     query: dict = field(default_factory=dict)
 
     def __str__(self):
@@ -24,14 +24,11 @@ SITUATIONS = [
     ),
     Situation(
         title="Transfer a balance",
-        details_intro_have=True,
         details=[
             "Low balance transfer interest rates",
-            "No balance transfer fee",
         ],
         query={
             "ordering": "transfer_apr",
-            "no_balance_transfer_fee": True,
         },
     ),
     Situation(
@@ -49,12 +46,10 @@ SITUATIONS = [
     ),
     Situation(
         title="Build credit",
-        details_intro_have=False,
         details=["Are targeted for your credit score range"],
     ),
     Situation(
         title="Earn rewards",
-        details_intro_have=False,
         details=[
             (
                 "Have rewards",
