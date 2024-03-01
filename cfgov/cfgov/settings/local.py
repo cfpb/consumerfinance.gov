@@ -120,3 +120,7 @@ CSP_IMG_SRC += (_placeholder_domain,)
 # The middleware's profiling is only available if DEBUG=True
 MIDDLEWARE += ("django_cprofile_middleware.middleware.ProfilerMiddleware",)
 DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
+
+# If DEPLOY_ENVIRONMENT hasn't been set by the environment in base.py,
+# default it to local.
+DEPLOY_ENVIRONMENT = DEPLOY_ENVIRONMENT or "local"

@@ -626,8 +626,9 @@ FLAGS = {
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
     # TCCP credit card finder
     "TCCP": [
-        ("environment is not", "beta", True),
-        ("environment is not", "production", True),
+        ("environment is", "dev4"),
+        ("environment is", "local"),
+        ("environment is", "test"),
     ],
 }
 
