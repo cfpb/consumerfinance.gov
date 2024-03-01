@@ -1,12 +1,16 @@
 {% extends "v1/layouts/layout-2-1.html" %}
 
 {% from 'tccp/macros/data_published.html' import data_published %}
+{% from 'tccp/macros/fields.html' import apr, apr_range %}
 
 {% block css%}
     {{ super() }}
     <style>
         dt {
             margin-top: 15px;
+        }
+        dt:last-of-type {
+            margin-bottom: 0.5em;
         }
         dt,
         dd {
@@ -34,7 +38,7 @@
 {{ data_published(card.report_date) }}
 
 <h2>Availability</h2>
-<dl class="m-list">
+<dl>
     <dt>Location</dt>
     <dd>
         {% if not card.state_limitations %}
@@ -91,6 +95,62 @@
     </dd>
 </dl>
 <h2>Purchases</h2>
+{% if card.purchase_apr_offered %}
+<dl>
+    <dt>Purchase APR</dt>
+    {#
+        There are lots of possible variations for how purchase APR can be
+        structured, and we want readable content for all cases. So, for cards
+        that list:
+            - Min and max APRs but no median: "13.74% - 23.99%"
+            - Min, max, and median APRs: "15.90% - 21.00% (15.53% median APR)"
+            - Median APR but no min or max APR: "29.74% median APR"
+            - Min and max APRs are the same: "29.99%"
+            - APRs that vary by credit tier: a table showing each tier's APR
+            - No APRs: "The issuer did not submit APR information for this card"
+    #}
+    <dd>
+        {% if card.purchase_apr_min or card.purchase_apr_max or card.purchase_apr_median %}
+            {% set purchase_apr_range = apr_range(card.purchase_apr_min, card.purchase_apr_max) if card.purchase_apr_min and card.purchase_apr_max %}
+            {% set purchase_apr_median = apr(card.purchase_apr_median) if card.purchase_apr_median %}
+            {{ purchase_apr_range if purchase_apr_range }}
+            {{ '(' if purchase_apr_median and purchase_apr_range and purchase_apr_median != purchase_apr_range }}{{ purchase_apr_median + ' median APR' if purchase_apr_median and purchase_apr_median != purchase_apr_range }}{{ ')' if purchase_apr_median and purchase_apr_range and purchase_apr_median != purchase_apr_range }}
+            {{ 'with median APRs varying by credit score:' if card.purchase_apr_vary_by_credit_tier }}
+        {% endif %}
+        {% if card.purchase_apr_vary_by_credit_tier %}
+            <table class="o-table">
+                <thead>
+                    <tr>
+                        <th>619 or less</th>
+                        <th>620 to 719</th>
+                        <th>720 or greater</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ apr(card.purchase_apr_poor) }}
+                        </td>
+                        <td>
+                            {{ apr(card.purchase_apr_good) }}
+                        </td>
+                        <td>
+                            {{ apr(card.purchase_apr_great) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        {% if not card.purchase_apr_min and not card.purchase_apr_median and
+              not card.purchase_apr_max and not card.purchase_apr_poor and
+              not card.purchase_apr_good and not card.purchase_apr_great %}
+            The issuer did not submit APR information for this card
+        {% endif %}
+    </dd>
+</dl>
+{% else %}
+<p>This card does not offer a purchase APR.</p>
+{% endif %}
 
 <h3 class="h5">Other fields that haven't been styled yet</h3>
 
