@@ -3,33 +3,11 @@
 {% from 'tccp/macros/data_published.html' import data_published %}
 {% from 'tccp/macros/fields.html' import apr, apr_range %}
 
+
 {% block css %}
     {{ super() }}
-    <style>
-        dt {
-            margin-top: 15px;
-        }
-        dt:last-of-type {
-            margin-bottom: 0.5em;
-        }
-        dt,
-        dd {
-            display: block;
-        }
-        dd {
-            margin-left: 0;
-        }
-        dd + dd {
-            margin-top: 15px;
-        }
-        dd::after {
-            content: none;
-        }
-        dd .o-table {
-            margin-top: 10px;
-        }
-    </style>
-{% endblock css%}
+    <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
+{% endblock %}
 
 {% block content_main %}
 
@@ -38,7 +16,7 @@
 {{ data_published(card.report_date) }}
 
 <h2>Availability</h2>
-<dl>
+<dl class="m-list m-list__card-details">
     <dt>Location</dt>
     <dd>
         {% if not card.state_limitations %}
@@ -101,7 +79,7 @@
 </dl>
 <h2>Purchases</h2>
 {% if card.purchase_apr_offered %}
-    <dl>
+    <dl class="m-list m-list__card-details">
         <dt>Purchase APR</dt>
         {#
             There are lots of possible variations for how purchase APR can be

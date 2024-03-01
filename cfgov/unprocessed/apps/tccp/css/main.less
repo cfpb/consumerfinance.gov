@@ -65,3 +65,28 @@
     }
   }
 }
+
+.m-list__card-details {
+  dt {
+    margin-top: 15px;
+  }
+  dt:last-of-type {
+    margin-bottom: 0.5em;
+  }
+  dt,
+  dd {
+    display: block;
+  }
+  dd {
+    margin-left: 0;
+  }
+  dd + dd {
+    margin-top: 15px;
+  }
+  dd::after {
+    content: none;
+  }
+  dd .o-table {
+    margin-top: 10px;
+  }
+}
