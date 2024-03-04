@@ -22,7 +22,7 @@ from .serializers import CardSurveyDataSerializer
 class LandingPageView(FlaggedTemplateView):
     flag_name = "TCCP"
     template_name = "tccp/landing_page.html"
-    heading = "Explore cards for your situation"
+    heading = "Explore credit cards for your situation"
     breadcrumb_items = [
         {
             "title": "Credit cards",
