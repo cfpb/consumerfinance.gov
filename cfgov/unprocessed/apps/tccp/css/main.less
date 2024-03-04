@@ -23,6 +23,31 @@
   }
 }
 
+// Overrides to the make the directory table pattern sticky
+// https://cfpb.github.io/design-system/components/tables#responsive-stacked-table-with-header-directory-table
+@media only screen and (max-width: @bp-xs-max) {
+  .o-table__entry-header-on-small {
+    border-top: 0;
+
+    & > tbody td:first-child {
+      position: sticky;
+      margin-top: -1px;
+      margin-bottom: 0;
+      top: 0;
+      border-top: 1px solid @table-border;
+    }
+
+    & > tbody > tr {
+      margin-bottom: 0;
+    }
+
+    td:last-child {
+      margin-bottom: 0;
+      padding-bottom: unit((30px / @base-font-size-px), em);
+    }
+  }
+}
+
 .o-table__stack-on-small-hybrid {
   // We don't want responsive table styles applied to the `print` media type
   // so we're not using .respond-to-max(@bp-xs-max ) here.

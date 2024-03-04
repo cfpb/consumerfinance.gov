@@ -63,8 +63,8 @@
         </p>
 
         {%- set card_columns = [
-            {'heading': 'Card', 'preserve_column_on_mobile': true},
-            {'heading': 'Purchase APR', 'preserve_column_on_mobile': true, 'right_align': true},
+            {'heading': 'Card'},
+            {'heading': 'Purchase APR'},
             {'heading': 'Availability'},
             {'heading': 'Account fee'},
             {'heading': 'Balance transfer APR'},
@@ -90,7 +90,7 @@
                 'columns': card_columns,
                 'rows': card_rows
             },
-            'options': ['stack_on_mobile']
+            'options': ['directory_table']
         } %}
             {% include 'v1/includes/organisms/tables/base.html' %}
         {% endwith %}
