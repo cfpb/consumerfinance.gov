@@ -15,7 +15,7 @@ class Situation:
 
 SITUATIONS = [
     Situation(
-        title="Have a lower monthly payment",
+        title="Pay less interest",
         details_intro_have=True,
         details=["Low interest rates"],
         query={
