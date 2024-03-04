@@ -25,9 +25,7 @@ class LandingPageViewTests(TestCase):
         tier = CreditTierChoices[2][0]
 
         response = self.make_request(
-            "?credit_tier="
-            + quote_plus(tier)
-            + "&situation=Have+a+lower+monthly+payment"
+            "?credit_tier=" + quote_plus(tier) + "&situation=Pay+less+interest"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
