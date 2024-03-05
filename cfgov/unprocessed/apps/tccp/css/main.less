@@ -1,5 +1,53 @@
 @import (reference) '../../../css/main.less';
 
+.respond-to-min(@bp-sm-min, {
+  .o-form_group {
+    max-width: unit((380px / @base-font-size-px), em);
+  }
+});
+
+.m-btn-group {
+  .u-btn-helper {
+    width: 100%;
+    margin-top: unit((15px / @base-font-size-px), em);
+    text-align: center;
+    a {
+      border-bottom-width: 1px;
+    }
+    .respond-to-min(@bp-sm-min, {
+      display: inline-block;
+      width: auto;
+      margin-top: 0;
+      margin-left: unit((6px / @btn-font-size), em);
+    });
+  }
+}
+
+// Overrides to the make the directory table pattern sticky
+// https://cfpb.github.io/design-system/components/tables#responsive-stacked-table-with-header-directory-table
+@media only screen and (max-width: @bp-xs-max) {
+  .o-table__entry-header-on-small {
+    border-top: 0;
+
+    & > tbody td:first-child {
+      position: sticky;
+      margin-top: -1px;
+      margin-bottom: 0;
+      top: 0;
+      border-top: 1px solid @table-border;
+    }
+
+    & > tbody > tr {
+      margin-bottom: 0;
+    }
+
+    td:last-child {
+      margin-bottom: 0;
+      padding-bottom: unit((30px / @base-font-size-px), em);
+    }
+  }
+}
+
 .o-table__stack-on-small-hybrid {
   // We don't want responsive table styles applied to the `print` media type
   // so we're not using .respond-to-max(@bp-xs-max ) here.
@@ -63,5 +111,30 @@
     td {
       text-align: left;
     }
+  }
+}
+
+.m-list__card-details {
+  dt {
+    margin-top: 15px;
+  }
+  dt:last-of-type {
+    margin-bottom: 0.5em;
+  }
+  dt,
+  dd {
+    display: block;
+  }
+  dd {
+    margin-left: 0;
+  }
+  dd + dd {
+    margin-top: 15px;
+  }
+  dd::after {
+    content: none;
+  }
+  dd .o-table {
+    margin-top: 10px;
   }
 }
