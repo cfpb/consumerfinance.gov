@@ -300,7 +300,8 @@ class FeaturedContentTests(TestCase):
         ):
             self.assertIn(
                 f'<a class="m-list_link"\n                       '
-                f'href="{url}"\n                       >{text}</a>',
+                f'href="{url}"\n                       >{text}'
+                f"\n                    </a>",
                 html,
             )
 
