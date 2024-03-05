@@ -6,7 +6,7 @@ from tccp.situations import SITUATIONS, get_situation_by_title
 class SituationTests(SimpleTestCase):
     def test_get_situation_by_title_valid(self):
         self.assertEqual(
-            get_situation_by_title("Have a lower monthly payment"),
+            get_situation_by_title("Pay less interest"),
             SITUATIONS[0],
         )
 
