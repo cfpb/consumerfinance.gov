@@ -3,8 +3,13 @@ from urllib.parse import quote
 
 from django.utils import timezone
 
-import pytz
 import requests
+
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
@@ -61,7 +66,7 @@ def import_agreements_data(agreements_data):
         created_time = datetime.strptime(
             item["created_date"], "%Y-%m-%d %H:%M:%S"
         )
-        created_time = created_time.replace(tzinfo=pytz.timezone("EST"))
+        created_time = created_time.replace(tzinfo=zoneinfo.ZoneInfo("EST"))
 
         product_id = (
             item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")

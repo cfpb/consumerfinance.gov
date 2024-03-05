@@ -1,5 +1,6 @@
 # These packages are installed from PyPI.
 base36==0.1.1
+backports.zoneinfo==0.2.1
 beautifulsoup4==4.11.2
 boto3==1.34.54
 django-autocomplete-light==3.11.0
