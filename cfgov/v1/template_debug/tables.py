@@ -33,6 +33,9 @@ table_test_cases = {
     "Stack on mobile": {
         "options": ["stack_on_mobile"],
     },
+    "Stack on mobile, directory table": {
+        "options": ["directory_table"],
+    },
     # The hybrid stack on mobile CSS currently lives within the TCCP app.
     # It will eventually be made more generally available.
     "Hybrid stack on mobile": {

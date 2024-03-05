@@ -43,11 +43,14 @@
 
    stack_on_mobile:        Stack the table columns on mobile.
 
+   directory_table:        Uses first column data to stack rows.
+
    ========================================================================== #}
 
 {%- set first_column_header = 'first_column_header' in (value.options or []) -%}
 {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
-{%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
+{%- set directory_table = 'directory_table' in (value.options or []) -%}
+{%- set stack_on_mobile = directory_table or ('stack_on_mobile' in (value.options or [])) -%}
 
 {% if value.heading -%}
     {% include_block value.heading %}
@@ -71,6 +74,7 @@
 <table class="o-table
     {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
     {{- ' o-table__stack-on-small-hybrid' if stack_on_mobile_hybrid else '' -}}
+    {{- ' o-table__entry-header-on-small' if directory_table else '' -}}
     {{- ' u-w100pct' if is_full_width else '' -}}
 " {{- 'style="--columns: ' | safe ~ columns_to_preserve_on_mobile | length ~ '"' | safe if stack_on_mobile_hybrid else '' -}} >
     {% if value.data.columns | selectattr('heading') | list -%}

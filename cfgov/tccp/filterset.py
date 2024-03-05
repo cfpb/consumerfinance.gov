@@ -29,9 +29,6 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         method="filter_for_empty_list",
         label="No account fee",
     )
-    no_balance_transfer_fee = CheckboxFilter(
-        "balance_transfer_fees", label="No balance transfer fee", exclude=True
-    )
     rewards = CheckboxFilter(
         label="Offers rewards", method="filter_for_nonempty_list"
     )
