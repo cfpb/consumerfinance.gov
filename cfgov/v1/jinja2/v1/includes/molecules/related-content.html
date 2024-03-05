@@ -49,9 +49,9 @@
                   {%- if link.aria_label -%}
                     aria-label="{{ link.aria_label }}"
                   {% endif -%}>
-                  {% if link.make_link_boldface == True%}<strong>{% endif %}
+                  {% if link.make_link_boldface %}<strong>{% endif %}
                   {{ link.text }}
-                  {% if link.make_link_boldface == True%}</strong>{% endif %}
+                  {% if link.make_link_boldface %}</strong>{% endif %}
             </li>
         {% endfor %}
         </ul>

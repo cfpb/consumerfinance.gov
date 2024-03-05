@@ -62,9 +62,9 @@
                   {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
                       <li class="m-list_item">
                           <a class="m-list_link" href="{{ link.url }}">
-                            {% if link.make_link_boldface == True %}<strong>{% endif %}
+                            {% if link.make_link_boldface %}<strong>{% endif %}
                             {{ link.text }}
-                            {% if link.make_link_boldface == True %}</strong>{% endif %}
+                            {% if link.make_link_boldface %}</strong>{% endif %}
                           </a>
                       </li>
                   {% if loop.last %}</ul>{% endif %}
