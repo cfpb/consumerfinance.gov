@@ -1,13 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 
 @dataclass
 class Situation:
     title: str
-    details_intro_have: bool
     details: List[str]
-    query: dict
+    details_intro_have: bool = field(default_factory=bool)
+    query: dict = field(default_factory=dict)
 
     def __str__(self):
         return self.title
@@ -15,7 +15,7 @@ class Situation:
 
 SITUATIONS = [
     Situation(
-        title="Have a lower monthly payment",
+        title="Pay less interest",
         details_intro_have=True,
         details=["Low interest rates"],
         query={
@@ -24,14 +24,11 @@ SITUATIONS = [
     ),
     Situation(
         title="Transfer a balance",
-        details_intro_have=True,
         details=[
             "Low balance transfer interest rates",
-            "No balance transfer fee",
         ],
         query={
             "ordering": "transfer_apr",
-            "no_balance_transfer_fee": True,
         },
     ),
     Situation(
@@ -39,50 +36,27 @@ SITUATIONS = [
         details_intro_have=True,
         details=[
             "Low purchase interest rates",
-            (
-                "Introductory interest rate offers",
-                (
-                    "(and give you more information on what to look out for with "
-                    "introductory offers)"
-                ),
-            ),
         ],
-        query={
-            "ordering": "purchase_apr",
-            "introductory_apr_offered": True,
-        },
     ),
     Situation(
         title="Avoid annual fees",
         details_intro_have=True,
         details=["No annual fee"],
-        query={
-            "ordering": "purchase_apr",
-            "no_account_fee": True,
-        },
+        query={"no_account_fee": True},
     ),
     Situation(
         title="Build credit",
-        details_intro_have=False,
-        details=["Are secured"],
-        query={
-            "ordering": "purchase_apr",
-            "secured_card": True,
-        },
+        details=["Are targeted for your credit score range"],
     ),
     Situation(
         title="Earn rewards",
-        details_intro_have=False,
         details=[
             (
                 "Have rewards",
                 "(like cash back, travel points, or other rewards)",
             )
         ],
-        query={
-            "ordering": "purchase_apr",
-            "rewards": True,
-        },
+        query={"rewards": True},
     ),
 ]
 

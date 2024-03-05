@@ -2,7 +2,8 @@ import re
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
-from django.db.models import Q
+from django.db.models import F, Q
+from django.db.models.functions import Coalesce
 
 from . import enums
 from .fields import CurrencyField, JSONListField, YesNoBooleanField
@@ -31,6 +32,52 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         return self.filter(q)
 
+    def for_credit_tier(self, credit_tier):
+        qs = self
+
+        # While filtering by the specified credit tier we can also annotate the
+        # queryset with some new column aliases that make it easier to sort by,
+        # filter by, and display APRs.
+        #
+        # For example, each card has columns purchase_apr_poor,
+        # purchase_apr_good, and purchase_apr_great. We want to be able to
+        # easily sort by, filter by, and display a card's purchase APR, based
+        # on the tier being filtered. So we define a new alias column simply
+        # named purchase_apr_for_tier which we can use for this purpose.
+        #
+        # We similarly define transfer_apr_for_tier.
+        tier_column_suffix = {
+            enums.CreditTierChoices[1][0]: "poor",
+            enums.CreditTierChoices[2][0]: "good",
+            enums.CreditTierChoices[3][0]: "great",
+        }[credit_tier]
+
+        qs = qs.annotate(
+            **{
+                f"{basename}_apr_for_tier": F(
+                    f"{basename}_apr_{tier_column_suffix}"
+                )
+                for basename in ("purchase", "transfer")
+            }
+        )
+
+        # We also want to define a transfer_apr_for_ordering so that we can
+        # sort either by transfer_apr_for_tier or transfer_apr_min, depending
+        # on whether those columns is defined.
+        qs = qs.annotate(
+            transfer_apr_for_ordering=Coalesce(
+                "transfer_apr_for_tier", "transfer_apr_min"
+            )
+        )
+
+        # After annotating we do the actual filtering by credit tier.
+        qs = qs.filter(targeted_credit_tiers__contains=credit_tier)
+
+        # We also exclude cards that don't have a purchase APR for this tier.
+        qs = qs.exclude(purchase_apr_for_tier__isnull=True)
+
+        return qs
+
 
 class CardSurveyData(models.Model):
     slug = models.SlugField(max_length=255, primary_key=True)
@@ -50,7 +97,7 @@ class CardSurveyData(models.Model):
     geographic_restrictions = models.TextField(null=True, blank=True)
     professional_affiliation = models.TextField(null=True, blank=True)
     other = models.TextField(null=True, blank=True)
-    secured_card = YesNoBooleanField(db_index=True)
+    secured_card = YesNoBooleanField()
     targeted_credit_tiers = JSONListField(choices=enums.CreditTierChoices)
     purchase_apr_offered = YesNoBooleanField()
     purchase_apr_vary_by_balance = YesNoBooleanField(null=True, blank=True)
@@ -96,7 +143,7 @@ class CardSurveyData(models.Model):
     purchase_apr_min = models.FloatField(null=True, blank=True)
     purchase_apr_median = models.FloatField(null=True, blank=True)
     purchase_apr_max = models.FloatField(null=True, blank=True)
-    introductory_apr_offered = YesNoBooleanField(db_index=True)
+    introductory_apr_offered = YesNoBooleanField()
     introductory_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
     )
