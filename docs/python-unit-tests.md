@@ -109,7 +109,7 @@ If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:
 
 ```sh
-tox -e unittest regulations3k.tests.test_regdown
+tox -e unittest -- regulations3k.tests.test_regdown
 ```
 
 If you would like to skip running Django migrations when testing, set the
