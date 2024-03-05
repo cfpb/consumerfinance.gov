@@ -27,8 +27,8 @@ home price, down payment, and more can affect mortgage interest rates.
           href="{{ static('apps/owning-a-home/css/main.css') }}">
 {% endblock %}
 
-{% block body_content %}
-    <div class="block block__flush-top block__padded-top">
+{% block content_main %}
+    <div class="block block__flush-top">
 
         {% include "_templates/no_js.html" %}
 
@@ -587,7 +587,7 @@ home price, down payment, and more can affect mortgage interest rates.
         <!-- END .rate-checker -->
     </div>
 
-    <div class="u-mt30 rate-checker_links">
+    <div class="rate-checker_links">
         {% import "_templates/brand-footer.html" as brand_footer %}
         {% set footer_links = [ {
             "img": static("apps/owning-a-home/img/footer_calculator.png"),

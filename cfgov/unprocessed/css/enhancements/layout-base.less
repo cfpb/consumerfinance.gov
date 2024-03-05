@@ -105,6 +105,10 @@
   // "Breakout" container that bleeds out of the grid to the screen edge.
   .u-layout-grid_breakout {
     width: 100vw;
-    margin-left: calc(-50vw + (var(--layout-max-width) / 2));
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
   }
 }

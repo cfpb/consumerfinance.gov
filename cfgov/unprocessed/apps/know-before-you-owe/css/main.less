@@ -1,10 +1,4 @@
-// Newer design system
 @import (reference) 'cfpb-core.less';
-
-.kbyo-video {
-  margin-top: 3.75em;
-  margin-bottom: 3.75em;
-}
 
 .kbyo-tools,
 .kbyo-timeline {
@@ -15,7 +9,7 @@
 .kbyo-mortgage-disclosures,
 .kbyo-timeline {
   padding-top: 1.875em;
-  padding-bottom: 2.8125em;
+  padding-bottom: unit(45px / @base-font-size-px, rem);
 }
 
 .kbyo-professional-resources,
@@ -23,8 +17,7 @@
   background-color: @gray-5;
   border-bottom: 1px solid @gray-10;
   border-top: 1px solid @gray-10;
-  padding-top: 2.8125em;
-  padding-bottom: 2.8125em;
+  padding-top: unit(45px / @base-font-size-px, rem);
 }
 
 .o-info-unit-group .content-l:first-child {
@@ -33,7 +26,7 @@
 
 // Compare page.
 .kbyo-compare-intro {
-  padding-bottom: 2.8125em;
+  padding-bottom: unit(45px / @base-font-size-px, rem);
 }
 
 .kbyo-compare-tiles {
@@ -42,7 +35,7 @@
 }
 
 .kbyo-compare-col {
-  padding-bottom: 2.8125em;
+  padding-bottom: unit(45px / @base-font-size-px, rem);
 }
 
 @media only all and (min-width: 50em) {
