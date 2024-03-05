@@ -6,7 +6,11 @@ from django.test.utils import isolate_apps
 
 from tccp.fields import JSONListField, YesNoBooleanField
 
-from .testapp.models import YEAR_IN_SCHOOL_CHOICES, YearsInSchool
+from .testapp.models import (
+    YEAR_IN_SCHOOL_CHOICES,
+    NullableYearsInSchool,
+    YearsInSchool,
+)
 
 
 @isolate_apps()
@@ -77,12 +81,12 @@ class JSONListFieldTests(SimpleTestCase):
 
     serialization_test_value = ["FR", "SO"]
     serialization_test_json = (
-        '[{"model": "tccp_tests.yearsinschool", "pk": null, '
+        '[{"model": "tccp_tests.nullableyearsinschool", "pk": null, '
         '"fields": {"years": ["FR", "SO"]}}]'
     )
 
     def test_serialization(self):
-        instance = YearsInSchool(years=self.serialization_test_value)
+        instance = NullableYearsInSchool(years=self.serialization_test_value)
         serialized = serializers.serialize("json", [instance])
         self.assertEqual(serialized, self.serialization_test_json)
 
@@ -90,16 +94,25 @@ class JSONListFieldTests(SimpleTestCase):
         instance = list(
             serializers.deserialize("json", self.serialization_test_json)
         )[0].object
-        self.assertIsInstance(instance, YearsInSchool)
+        self.assertIsInstance(instance, NullableYearsInSchool)
         self.assertEqual(instance.years, self.serialization_test_value)
 
 
 class JSONListFieldModelTests(TestCase):
     def check_save_and_refresh(self, value, **kwargs):
-        instance = YearsInSchool(years=value)
+        instance = NullableYearsInSchool(years=value)
         instance.save()
         instance.refresh_from_db()
         self.assertEqual(instance.years, kwargs.get("expected", value))
+
+    def test_save_and_refresh_none(self):
+        self.check_save_and_refresh(None, expected=[])
+
+    def test_save_and_refresh_none_not_nullable(self):
+        instance = YearsInSchool(years=None)
+        instance.save()
+        instance.refresh_from_db()
+        self.assertEqual(instance.years, [])
 
     def test_save_and_refresh_empty_list(self):
         self.check_save_and_refresh([])
@@ -117,10 +130,10 @@ class JSONListFieldModelTests(TestCase):
         self.check_save_and_refresh("FR; SO", expected=["FR", "SO"])
 
     def test_query_empty_list_valid(self):
-        qs = YearsInSchool.objects.filter(years=[])
+        qs = NullableYearsInSchool.objects.filter(years=[])
         self.assertFalse(qs.exists())
 
-        YearsInSchool.objects.create(years=[])
+        NullableYearsInSchool.objects.create(years=[])
         self.assertTrue(qs.exists())
 
     def test_query_by_invalid_type(self):
