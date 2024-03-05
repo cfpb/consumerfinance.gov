@@ -116,6 +116,7 @@ def editor_css():
         "css/form-explainer.css",
         "css/general-enhancements.css",
         "css/heading-block.css",
+        "css/expandable-block.css",
         "css/model-admin.css",
         "css/simple-chart-admin.css",
     ]

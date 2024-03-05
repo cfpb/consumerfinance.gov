@@ -22,6 +22,8 @@
 
         link.aria_label: (Optional) Assistive ARIA text for screenreaders.
 
+        link.make_link_boldface: (Optional) Sets bold formatting for the link.
+
    value.image:     (Optional) An ImageBasic atom.
 
    value.video:     (Optional) A VideoPlayer organism.
@@ -44,7 +46,9 @@
                     <a class="m-list_link"
                        href="{{ link.url }}"
                        {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
+                       {% if link.make_link_boldface == True%}<strong>{% endif %}
                        {{- link.text | default( link.url ) -}}
+                       {% if link.make_link_boldface == True%}</strong>{% endif %}
                     </a>
                 </li>
             {% endfor %}

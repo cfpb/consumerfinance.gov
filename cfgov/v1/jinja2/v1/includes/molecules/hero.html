@@ -10,35 +10,39 @@
 
    Create a hero molecule.
 
-   value:                  Object defined from a StreamField block.
+   value:                           Object defined from a StreamField block.
 
-   value.heading:          A string containing title of module.
+   value.heading:                   A string containing title of module.
 
-   value.body:             A string containing the content to display below
-                           the heading (typically a paragraph).
+   value.heading_with_line_break:   A string containing part of the module title
+                                    in a case where it breaks to a second line
+                                    at a specific point in the text.
 
-   value.image:            An image object containing the image to be
-                           placed adjacent to the text.
+   value.body:                      A string containing the content to display below
+                                    the heading (typically a paragraph).
 
-   value.small_image:      An image object containing the alternate image
-                           for smaller screens when bleeding or overlaying
-                           at larger screen sizes.
+   value.image:                     An image object containing the image to be
+                                    placed adjacent to the text.
 
-   value.background_color: A string containing the color code (in any format)
-                           to set as the hero background color.
+   value.small_image:               An image object containing the alternate image
+                                    for smaller screens when bleeding or overlaying
+                                    at larger screen sizes.
 
-   value.is_white_text:    A boolean to change the text color to white.
+   value.background_color:          A string containing the color code (in any format)
+                                    to set as the hero background color.
 
-   value.is_bleeding:      A boolean that indicates that the image bleeds
-                           vertically.
+   value.is_white_text:             A boolean to change the text color to white.
 
-   value.is_overlay:       A boolean to change the hero to an overlay hero.
+   value.is_bleeding:               A boolean that indicates that the image bleeds
+                                    vertically.
 
-   value.is_50_50:         A boolean to split the hero's heading/image area
-                           50/50 and add a border around the container.
+   value.is_overlay:                A boolean to change the hero to an overlay hero.
 
-   value.is_jumbo:         A boolean that indicates whether the image is
-                           extra large (jumbo).
+   value.is_50_50:                  A boolean to split the hero's heading/image area
+                                    50/50 and add a border around the container.
+
+   value.is_jumbo:                  A boolean that indicates whether the image is
+                                    extra large (jumbo).
 
    ========================================================================== #}
 
@@ -62,7 +66,11 @@
                 {{- ' m-hero__jumbo' if value.is_jumbo else '' }}">
     <div class="m-hero_wrapper">
         <div class="m-hero_text">
-            <h1 class="m-hero_heading">{{ value.heading | safe }}</h1>
+            <h1 class="m-hero_heading">{{ value.heading | safe }}
+                {% if value.heading_with_line_break %}
+                <br /> {{ value.heading_with_line_break }}
+                {% endif %}
+            </h1>
             <div class="m-hero_subhead">
                 {{ value.body | safe }}
             </div>

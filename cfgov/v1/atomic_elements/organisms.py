@@ -570,13 +570,17 @@ class FullWidthText(blocks.StreamBlock):
 
 class BaseExpandable(blocks.StructBlock):
     label = blocks.CharBlock(required=False)
+    icon = blocks.CharBlock(required=False)
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)
+    larger_heading = blocks.BooleanBlock(required=False)
+    expanded_padding = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = "list-ul"
         template = "v1/includes/organisms/expandable.html"
+        form_classname = "struct-block base-expandable"
         label = "Expandable"
 
     class Media:

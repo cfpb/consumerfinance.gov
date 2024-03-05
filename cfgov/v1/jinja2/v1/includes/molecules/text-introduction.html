@@ -29,6 +29,8 @@
 
    value.links[i].aria_label: (Optional) An aria-label for the link.
 
+   value.links[i].make_link_boldface: (Optional) Sets bold formatting for the link.
+
    value.has_rule:            Whether or not to render a rule line
                               (border-bottom) at the bottom of the molecule.
 
@@ -59,7 +61,9 @@
                 <a class="m-list_link"
                    href="{{ link.url }}"
                    {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
-                    {{ link.text }}
+                   {% if link.make_link_boldface == True%}<strong>{% endif %}
+                   {{ link.text }}
+                   {% if link.make_link_boldface == True%}</strong>{% endif %}
                 </a>
             </li>
         {% if loop.last %}</ul>{% endif %}

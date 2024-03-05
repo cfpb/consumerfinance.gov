@@ -39,11 +39,14 @@
      {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
         if value.is_faq else '' }} >
     <button class="o-expandable_header" type="button">
-        <span class="h4 o-expandable_label"
-              {{'itemprop="name"' if value.is_faq else ''}}>
+        <span class="{{ 'h2' if value.larger_heading else 'h4 '}} o-expandable_label"
+              {{'itemprop="name"' if value.is_faq else ''}}
+              {{ 'style="padding:15px 0;"' if value.expanded_padding else ''}}>
+            {% if value.icon %} {{ svg_icon( value.icon ) }} {% endif %} 
             {{ value.label }}
         </span>
-        <span class="o-expandable_cues">
+        <span class="o-expandable_cues"
+        {{ 'style="padding-top:15px;"' if value.expanded_padding else ''}}>
             <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
