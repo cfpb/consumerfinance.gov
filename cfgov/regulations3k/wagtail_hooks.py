@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from treemodeladmin.helpers import TreeAdminURLHelper
 from treemodeladmin.options import TreeModelAdmin
@@ -30,8 +30,8 @@ class RegsURLHelper(TreeAdminURLHelper):
         )
 
         if specific_instance is not None and parent_instance is not None:
-            crumb_text = force_text(specific_instance).replace(
-                force_text(parent_instance) + ", ", ""
+            crumb_text = force_str(specific_instance).replace(
+                force_str(parent_instance) + ", ", ""
             )
 
         return (index_url, crumb_text)

@@ -22,7 +22,7 @@ class S3UtilsTests(TestCase):
         self.assertEqual(reader.fieldnames, ["a", "b", "c"])
         self.assertEqual(sorted(next(reader).values()), ["d", "e", "f"])
 
-    @moto.mock_s3
+    @moto.mock_aws
     @override_settings(AWS_STORAGE_BUCKET_NAME="test.bucket")
     def test_bake_csv_to_s3(self):
         s3 = boto3.resource("s3")

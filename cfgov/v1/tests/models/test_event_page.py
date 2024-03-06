@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.test.utils import override_settings
 
-import pytz
 import responses
 from freezegun import freeze_time
 
@@ -25,7 +24,7 @@ class EventPageTests(TestCase):
 
         page = EventPage(
             title="Super fun event",
-            start_dt=datetime.datetime.now(pytz.UTC),
+            start_dt=datetime.datetime.now(datetime.timezone.utc),
             venue_city="Boston",
             venue_state="MA",
         )
@@ -42,7 +41,9 @@ class EventPageTests(TestCase):
     def test_future_event_with_start_date(self):
         page = EventPage(
             title="Future event with start date",
-            start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 5, tzinfo=datetime.timezone.utc
+            ),
         )
         save_new_page(page)
         self.assertEqual("future", page.event_state)
@@ -59,7 +60,9 @@ class EventPageTests(TestCase):
     def test_future_event_with_livestream_default_date(self):
         page = EventPage(
             title="Future event with livestream date defaulting to start date",
-            start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 5, tzinfo=datetime.timezone.utc
+            ),
             live_stream_availability=True,
         )
         save_new_page(page)
@@ -69,9 +72,13 @@ class EventPageTests(TestCase):
     def test_future_event_with_livestream_date(self):
         page = EventPage(
             title="Future event with livestream date",
-            start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 5, tzinfo=datetime.timezone.utc
+            ),
             live_stream_availability=True,
-            live_stream_date=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
+            live_stream_date=datetime.datetime(
+                2011, 1, 4, tzinfo=datetime.timezone.utc
+            ),
         )
         save_new_page(page)
         self.assertEqual("future", page.event_state)
@@ -89,10 +96,14 @@ class EventPageTests(TestCase):
     def test_present_event_with_livestream_and_end_date(self):
         page = EventPage(
             title="Present event with livestream",
-            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 2, tzinfo=datetime.timezone.utc
+            ),
             live_stream_availability=True,
-            live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
+            live_stream_date=datetime.datetime(
+                2011, 1, 2, tzinfo=datetime.timezone.utc
+            ),
+            end_dt=datetime.datetime(2011, 1, 4, tzinfo=datetime.timezone.utc),
         )
         save_new_page(page)
         self.assertEqual("present", page.event_state)
@@ -109,7 +120,9 @@ class EventPageTests(TestCase):
     def test_present_event_without_livestream_or_end_date(self):
         page = EventPage(
             title="Present event without livestream",
-            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 2, tzinfo=datetime.timezone.utc
+            ),
         )
         save_new_page(page)
         self.assertEqual("present", page.event_state)
@@ -126,8 +139,10 @@ class EventPageTests(TestCase):
     def test_past_event_with_video(self):
         page = EventPage(
             title="Past event with video",
-            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 1, tzinfo=datetime.timezone.utc
+            ),
+            end_dt=datetime.datetime(2011, 1, 2, tzinfo=datetime.timezone.utc),
             archive_video_id="Aa1Bb2Cc3Dc",
         )
         save_new_page(page)
@@ -145,8 +160,10 @@ class EventPageTests(TestCase):
     def test_past_event_without_video(self):
         page = EventPage(
             title="Past event without video",
-            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2011, 1, 1, tzinfo=datetime.timezone.utc
+            ),
+            end_dt=datetime.datetime(2011, 1, 2, tzinfo=datetime.timezone.utc),
         )
         save_new_page(page)
         self.assertEqual("past", page.event_state)
@@ -159,7 +176,9 @@ class EventPageTests(TestCase):
 
     def assertValidationFails(self, expected_msg, **kwargs):
         page = EventPage(
-            title="test", start_dt=datetime.datetime.now(pytz.UTC), **kwargs
+            title="test",
+            start_dt=datetime.datetime.now(datetime.timezone.utc),
+            **kwargs,
         )
 
         with self.assertRaisesRegex(ValidationError, expected_msg):
@@ -180,9 +199,9 @@ class EventPageTests(TestCase):
     def test_failing_validation_live_start_date(self):
         self.assertValidationFails(
             "Cannot be on or after Event End.",
-            end_dt=datetime.datetime.now(pytz.UTC)
+            end_dt=datetime.datetime.now(datetime.timezone.utc)
             + datetime.timedelta(hours=1),
             live_stream_availability=True,
-            live_stream_date=datetime.datetime.now(pytz.UTC)
+            live_stream_date=datetime.datetime.now(datetime.timezone.utc)
             + datetime.timedelta(hours=2),
         )

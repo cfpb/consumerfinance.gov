@@ -448,7 +448,7 @@ AXES_ENABLED = True
 AXES_VERBOSE = False
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
-AXES_ONLY_USER_FAILURES = True
+AXES_LOCKOUT_PARAMETERS = ["username"]
 AXES_LOCKOUT_CALLABLE = "login.views.lockout"
 LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 
@@ -712,21 +712,6 @@ CSRF_REQUIRED_PATHS = (
     "/admin",
     "/django-admin",
 )
-
-
-# Django 3.2 Baseline required settings
-# exempt beta from CSRF settings until it's converted to https
-SECURE_REFERRER_POLICY = "same-origin"  # 1
-SESSION_COOKIE_SAMESITE = "Strict"  # 3
-X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
-
-if DEPLOY_ENVIRONMENT:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_HTTPONLY = True  # 22
-    CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True  # 26
-    SECURE_HSTS_SECONDS = 600
-    SECURE_CONTENT_TYPE_NOSNIFF = True  # 26
 
 # Cache Settings
 CACHES = {

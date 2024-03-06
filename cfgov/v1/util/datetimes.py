@@ -1,9 +1,16 @@
 import re
 from datetime import date, datetime
 
+from django.utils.timezone import is_aware, make_aware
+
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from pytz import timezone
+
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 
 # This utility file exists to support date input fields that are typeable
@@ -27,10 +34,11 @@ def convert_date(date, tz):
     """
     if date and isinstance(date, str):
         date = parser.parse(date, default=datetime.today().replace(day=1))
+
     if isinstance(date, datetime) and tz:
-        this_tz = timezone(tz)
-        if date.tzinfo is None:
-            return this_tz.localize(date)
+        this_tz = zoneinfo.ZoneInfo(tz)
+        if not is_aware(date):
+            return make_aware(date, this_tz)
         return date.astimezone(this_tz)
     return date
 

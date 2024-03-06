@@ -35,6 +35,7 @@ jobs:
           - validate-assets
           - validate-translations
           - unittest
+          - unittest-django42
 
     services:
       postgres:
