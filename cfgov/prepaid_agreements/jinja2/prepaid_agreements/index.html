@@ -1,3 +1,7 @@
+{% set breadcrumb_items = [{
+    'href': '/data-research/prepaid-accounts/',
+    'title': 'Prepaid Account Agreements'
+}]%}
 {% extends 'v1/layouts/layout-full.html' %}
 
 {# HEAD items #}
@@ -24,14 +28,7 @@
 {%- endblock %}
 
 {% block content_main scoped %}
-    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-    {% set breadcrumb_items = [{
-        'href': '/data-research/prepaid-accounts/',
-        'title': 'Prepaid Account Agreements'
-    }]%}
-    {{ breadcrumbs.render(breadcrumb_items) }}
-
-    <div class="content_wrapper search_form">
+    <div class="search_form">
         <div class="block block__sub search_intro">
             <h1>Prepaid product agreements database</h1>
             <div class="lead-paragraph u-readable-width">
@@ -91,7 +88,7 @@
         </div>
     </div>
 
-    <div class="content_wrapper search_results">
+    <div class="block block__flush-top search_results">
         {% include 'search_results.html' %}
     </div>
 {% endblock %}
