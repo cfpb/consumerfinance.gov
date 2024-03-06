@@ -83,7 +83,7 @@ def environment(**options):
     # always defined and always renders debug information regardless of the
     # value of settings.DEBUG:
     #
-    # https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#debug
+    # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#debug
     if settings.DEBUG:
         extensions = options.setdefault("extensions", [])
         debug_extension = "jinja2.ext.debug"
