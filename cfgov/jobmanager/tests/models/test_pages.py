@@ -9,8 +9,6 @@ from django.utils import timezone
 from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
 
-import pytz
-
 from jobmanager.models.django import (
     Grade,
     JobCategory,
@@ -23,11 +21,17 @@ from jobmanager.models.pages import JobListingPage
 from v1.models.snippets import ReusableText
 
 
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
+
+
 class JobListingPageQuerySetTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         today = timezone.localtime(
-            timezone=pytz.timezone(settings.TIME_ZONE)
+            timezone=zoneinfo.ZoneInfo(settings.TIME_ZONE)
         ).date()
 
         root_page = Site.objects.get(is_default_site=True).root_page

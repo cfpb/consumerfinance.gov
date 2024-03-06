@@ -5,7 +5,11 @@ from django.test import RequestFactory, TestCase
 
 from wagtail.models import Page, Site
 
-from pytz import timezone
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory
@@ -98,14 +102,14 @@ class RelatedPostsTestCase(TestCase):
         self.events_child1 = EventPage(
             title="events child 1",
             date_published=dt.date(2016, 9, 7),
-            start_dt=dt.datetime.now(timezone("UTC")),
+            start_dt=dt.datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
         self.events_child1.tags.add("tag 1")
 
         self.events_child2 = EventPage(
             title="events child 2",
             date_published=dt.date(2016, 9, 5),
-            start_dt=dt.datetime.now(timezone("UTC")),
+            start_dt=dt.datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
         self.events_child2.tags.add("tag 2")
 

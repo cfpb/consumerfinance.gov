@@ -23,7 +23,7 @@ def govdelivery_subscribe(request):
     the user, then either redirects to an error/success page (non-AJAX) or
     in the case of AJAX, returns some JSON to tell the front-end.
     """
-    is_ajax = request.is_ajax()
+    is_ajax = request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
     if is_ajax:
         passing_response = JsonResponse({"result": "pass"})
         failing_response = JsonResponse({"result": "fail"})

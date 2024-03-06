@@ -9,7 +9,6 @@ from django.test import TestCase
 
 from wagtail.models import Site
 
-import pytz
 from freezegun import freeze_time
 
 from v1.models.browse_filterable_page import (
@@ -130,13 +129,17 @@ class TestArchiveEvents(TestCase):
         events_page.add_child(instance=archive_page)
         current_event_page = EventPage(
             title="Current event",
-            start_dt=datetime.datetime(2020, 2, 1, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2020, 2, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 2, 1, tzinfo=datetime.timezone.utc
+            ),
+            end_dt=datetime.datetime(2020, 2, 2, tzinfo=datetime.timezone.utc),
         )
         events_page.add_child(instance=current_event_page)
         future_event_page = EventPage(
             title="Future event",
-            start_dt=datetime.datetime(2020, 3, 1, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 3, 1, tzinfo=datetime.timezone.utc
+            ),
         )
         events_page.add_child(instance=future_event_page)
 
@@ -182,13 +185,17 @@ class TestArchiveEvents(TestCase):
         events_page.add_child(instance=archive_page)
         single_day_event_page = EventPage(
             title="Single-day event with implied end_dt",
-            start_dt=datetime.datetime(2020, 2, 1, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 2, 1, tzinfo=datetime.timezone.utc
+            ),
         )
         events_page.add_child(instance=single_day_event_page)
         multi_day_event_page = EventPage(
             title="Multi-day event",
-            start_dt=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2020, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 1, 1, tzinfo=datetime.timezone.utc
+            ),
+            end_dt=datetime.datetime(2020, 1, 2, tzinfo=datetime.timezone.utc),
         )
         events_page.add_child(instance=multi_day_event_page)
 
@@ -243,13 +250,17 @@ class TestArchiveEvents(TestCase):
         already_archived_event_page = EventPage(
             title="Already archived event page",
             slug="event",
-            start_dt=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 1, 1, tzinfo=datetime.timezone.utc
+            ),
         )
         archive_page.add_child(instance=already_archived_event_page)
         same_slug_event_page = EventPage(
             title="To-be-archived event page",
             slug="event",
-            start_dt=datetime.datetime(2020, 1, 2, tzinfo=pytz.UTC),
+            start_dt=datetime.datetime(
+                2020, 1, 2, tzinfo=datetime.timezone.utc
+            ),
         )
         events_page.add_child(instance=same_slug_event_page)
 

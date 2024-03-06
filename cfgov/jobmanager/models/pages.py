@@ -18,7 +18,12 @@ from wagtail.admin.panels import (
 from wagtail.fields import RichTextField
 from wagtail.models import PageManager, PageQuerySet
 
-import pytz
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
+
 from modelcluster.fields import ParentalManyToManyField
 
 from jobmanager.models.django import (
@@ -35,7 +40,7 @@ from v1.models.snippets import ReusableText
 class JobListingPageQuerySet(PageQuerySet):
     def open(self):
         today = timezone.localtime(
-            timezone=pytz.timezone(settings.TIME_ZONE)
+            timezone=zoneinfo.ZoneInfo(settings.TIME_ZONE)
         ).date()
 
         return (

@@ -1,5 +1,6 @@
+from urllib.parse import quote as urlquote
+
 from django.db import models
-from django.utils.http import urlquote
 
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Orderable

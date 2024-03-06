@@ -2,10 +2,16 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-import pytz
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
+
+from django.utils.timezone import make_aware
 
 
-eastern = pytz.timezone("US/Eastern")
+eastern = zoneinfo.ZoneInfo("US/Eastern")
 
 
 class FilterableFeed(Feed):
@@ -39,7 +45,7 @@ class FilterableFeed(Feed):
         # this seems to require a datetime
         item_date = item.date_published
         naive = datetime.combine(item_date, datetime.min.time())
-        return eastern.localize(naive)
+        return make_aware(naive, eastern)
 
     def item_description(self, item):
         return item.search_description
