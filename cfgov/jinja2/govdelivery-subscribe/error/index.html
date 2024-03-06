@@ -9,13 +9,15 @@
 {%- endblock %}
 
 {% block content_main %}
-    <h1>{{ svg_icon('error-round') }} Please try again.</h1>
-    <p>
-        Your subscription was not successfully received.<br>
-        Please go back and check the following:
-    </p>
-    <ol>
-        <li>Please include a valid email address.</li>
-        <li>Please choose at least one category in the list of checkboxes.</li>
-    </ol>
+    <div class="block block__flush-top">
+        <h1>{{ svg_icon('error-round') }} Please try again.</h1>
+        <p>
+            Your subscription was not successfully received.<br>
+            Please go back and check the following:
+        </p>
+        <ol>
+            <li>Please include a valid email address.</li>
+            <li>Please choose at least one category in the list of checkboxes.</li>
+        </ol>
+    </div>
 {% endblock %}

@@ -5,7 +5,6 @@ const HTML_SNIPPET = `
 <div class="o-filterable-list-controls" id="o-filterable-list-controls">
 
 <div class="o-expandable
-            o-expandable__padded
             o-expandable__background
             o-expandable__border">
     <button class="o-expandable_header" type="button">

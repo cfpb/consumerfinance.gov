@@ -102,7 +102,7 @@
     </form>
 
 </aside>
-<section id="tdp-search-results" class="content_main content__flush-all-on-small content__flush-bottom results" tabindex="-1">
+<section id="tdp-search-results" class="content_main results" tabindex="-1">
     <div class="results_header">
         {% if page.results.total_results and page.results.total_results > 0 %}
             <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
@@ -153,7 +153,7 @@
     </div>
     {% if activities %}
         <div class="results_list">
-            <ul class="m-list__unstyled">
+            <ul class="m-list m-list__unstyled">
                 {% for result in activities %}
                     {% if result %}
                     <li class="u-mb30">{% include "activity_search_result.html" %}</li>

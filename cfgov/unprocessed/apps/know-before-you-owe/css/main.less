@@ -1,35 +1,12 @@
-// Newer design system
 @import (reference) 'cfpb-core.less';
-
-.kbyo-video {
-  margin-top: 3.75em;
-  margin-bottom: 3.75em;
-}
-
-.kbyo-tools,
-.kbyo-mortgage-disclosures,
-.kbyo-timeline {
-  border-top: 1px solid @gray-10;
-  padding-top: 1.875em;
-  padding-bottom: 2.8125em;
-}
 
 .kbyo-professional-resources,
 .kbyo-footer {
   background-color: @gray-5;
   border-bottom: 1px solid @gray-10;
   border-top: 1px solid @gray-10;
-  padding-top: 2.8125em;
-  padding-bottom: 2.8125em;
-}
-
-.o-info-unit-group .content-l:first-child {
-  margin-top: 0;
-}
-
-// Compare page.
-.kbyo-compare-intro {
-  padding-bottom: 2.8125em;
+  padding-top: unit(60px / @base-font-size-px, rem);
+  padding-bottom: unit(60px / @base-font-size-px, rem);
 }
 
 .kbyo-compare-tiles {
@@ -38,7 +15,7 @@
 }
 
 .kbyo-compare-col {
-  padding-bottom: 2.8125em;
+  padding-bottom: unit(45px / @base-font-size-px, rem);
 }
 
 @media only all and (min-width: 50em) {
@@ -95,20 +72,7 @@
   z-index: 80;
 }
 
-.kbyo-footer {
-  background-color: @gray-5;
-  border-bottom: 1px solid @gray-10;
-  border-top: 1px solid @gray-10;
-  padding-top: 2.8125em;
-}
-
 // Timeline page.
 .kbyo-timeline-page__date {
   color: @gray-90;
-}
-
-.kbyo-timeline-page__event {
-  border-top: 1px solid @gray-10;
-  padding-top: 1.875em;
-  margin-bottom: 1.875em;
 }

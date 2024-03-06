@@ -110,11 +110,7 @@ Prefixed with `o-` in class names.
 ### HTML
 
 ```html
-<div
-  class="o-expandable
-         o-expandable__padded
-         o-expandable__midtone"
->
+<div class="o-expandable">
   <button class="o-expandable_header">
     <div class="o-expandable_label">…</div>
   </button>

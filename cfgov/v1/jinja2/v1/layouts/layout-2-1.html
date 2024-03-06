@@ -5,39 +5,39 @@
 {% endif %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__2-1 {% block content_modifiers -%}{%- endblock %}"
+    <main class="u-layout-grid u-layout-grid__2-1
+                 {% block content_modifiers -%}{%- endblock %}"
           id="main"
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
         {% if self.content_intro() %}
-        <div class="u-layout_content-intro">
-            {% block content_intro scoped -%}{%- endblock %}
-        </div>
+            <div class="u-layout_content-intro">
+                {% block content_intro scoped -%}{%- endblock %}
+            </div>
         {% endif %}
 
         <div class="u-layout-grid_wrapper">
+            {% block pre_content scoped -%}
+                {% if not breadcrumb_items and page and page.get_breadcrumbs %}
+                    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+                {% endif %}
 
-        {% block pre_content scoped -%}
-            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
-                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-            {% endif %}
+                {% if breadcrumb_items | length > 0 %}
+                    <div class="u-layout-grid_breadcrumbs">
+                        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                        {{ breadcrumbs.render(breadcrumb_items) }}
+                    </div>
+                {% endif %}
+            {%- endblock %}
 
-            {% if breadcrumb_items | length > 0 %}
-                <div class="u-layout-grid_breadcrumbs">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
+            {% block body_content scoped %}
+                <div class="u-layout-grid_main">
+                    {% block content_main scoped -%}{%- endblock %}
                 </div>
-            {% endif %}
-        {%- endblock %}
-
-        {% block body_content scoped %}
-        <div class="u-layout-grid_main">
-            {% block content_main scoped -%}{%- endblock %}
-        </div>
-        <aside class="u-layout-grid_sidebar">
-            {% block content_sidebar scoped -%}{%- endblock %}
-        </aside>
-        {% endblock %}
+                <aside class="u-layout-grid_sidebar">
+                    {% block content_sidebar scoped -%}{%- endblock %}
+                </aside>
+            {% endblock %}
         </div>
     </main>
 {% endblock %}

@@ -79,17 +79,12 @@ class TestMetaImage(TestCase):
         AWS_STORAGE_BUCKET_NAME="test_s3_bucket",
         DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage",
     )
+    @moto.mock_aws
     def test_template_image_image_url_s3(self):
         """Meta image links should work if using S3 storage."""
-        mock_s3 = moto.mock_s3()
-        mock_s3.start()
-
         s3 = boto3.client("s3")
         s3.create_bucket(Bucket="test_s3_bucket")
 
-        try:
-            # There should be no root required as the image rendition URL
-            # should generate a fully qualified S3 path.
-            self.check_template_meta_image_url(expected_root="")
-        finally:
-            mock_s3.stop()
+        # There should be no root required as the image rendition URL
+        # should generate a fully qualified S3 path.
+        self.check_template_meta_image_url(expected_root="")

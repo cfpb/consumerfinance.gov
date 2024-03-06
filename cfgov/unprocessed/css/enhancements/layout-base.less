@@ -1,9 +1,11 @@
 @layer layout-base {
   // Establish the wrapper inside the grid container as the grid element.
   .u-layout-grid {
+    --layout-max-width: 1170px;
+
     &_wrapper {
       display: grid;
-      max-width: 1170px;
+      max-width: var(--layout-max-width);
       margin: 0 auto;
       padding-left: unit(15px / @base-font-size-px, rem);
       padding-right: unit(15px / @base-font-size-px, rem);
@@ -52,16 +54,21 @@
 
     // Tablet only.
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      .u-layout-grid {
-        &_breadcrumbs {
-          padding-left: unit(15px / @base-font-size-px, rem);
-          padding-right: unit(15px / @base-font-size-px, rem);
-        }
+      &_breadcrumbs {
+        padding-left: unit(15px / @base-font-size-px, rem);
+        padding-right: unit(15px / @base-font-size-px, rem);
       }
     });
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
+      &_wrapper {
+        // This handles collapsing of the breadcrumbs space if they are absent.
+        grid-template-rows: min-content 1fr;
+        padding-left: unit(30px / @base-font-size-px, rem);
+        padding-right: unit(30px / @base-font-size-px, rem);
+      }
+
       &_main {
         padding-top: unit((45px / @base-font-size-px), rem);
       }
@@ -70,6 +77,13 @@
         padding-top: unit(30px / @base-font-size-px, rem);
       }
     });
+  }
+
+  // Modifier to remove max-width value. Used on CCDB, for example.
+  .u-layout-grid__full-width {
+    .u-layout-grid_wrapper {
+      max-width: initial;
+    }
   }
 
   // Set default line width.
@@ -86,5 +100,15 @@
     label {
       max-width: 41.875rem;
     }
+  }
+
+  // "Breakout" container that bleeds out of the grid to the screen edge.
+  .u-layout-grid_breakout {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
   }
 }

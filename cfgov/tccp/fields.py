@@ -67,6 +67,9 @@ class JSONListField(models.JSONField):
     def get_prep_value(self, value):
         return super().get_prep_value(self.ensure_list(value))
 
+    def get_db_prep_save(self, value, connection):
+        return super().get_db_prep_save(self.ensure_list(value), connection)
+
     def to_python(self, value):
         return super().to_python(self.ensure_list(value))
 

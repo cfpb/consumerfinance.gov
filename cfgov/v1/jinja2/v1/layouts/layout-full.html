@@ -1,30 +1,41 @@
 {% extends 'v1/layouts/base.html' %}
 
-{% block content scoped %}
-    {# content_modifiers block is only used by story_page.html #}
-    <main class="content {% block content_modifiers -%}{%- endblock %}"
-          id="main">
-        {% block content_intro -%}{%- endblock %}
-        {% block pre_content scoped -%}
-            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
-                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-            {% endif %}
+{% if page and not breadcrumb_items %}
+    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+{% endif %}
 
-            {% if breadcrumb_items | length > 0 %}
-                <div class="content_wrapper">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
-                </div>
-            {% endif %}
-        {%- endblock %}
-        {% block body_content scoped %}
-        <div class="content_wrapper">
-            <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-                <section class="content_main-inner">
-                    {% block content_main scoped -%}{%- endblock %}
-                </section>
+{% block content scoped %}
+    {# content_modifiers block is only used by story_page.html, 404.html, and 500.html #}
+    <main class="u-layout-grid {% block content_modifiers -%}{%- endblock %}"
+          id="main"
+          {% if language == 'ar' %} dir="rtl" {% endif %}>
+
+        {% if self.content_intro() %}
+            <div class="u-layout_content-intro">
+                {% block content_intro scoped -%}{%- endblock %}
             </div>
+        {% endif %}
+
+        <div class="u-layout-grid_wrapper">
+            {% block pre_content scoped -%}
+                {% if not breadcrumb_items and page and page.get_breadcrumbs %}
+                    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+                {% endif %}
+
+                {% if breadcrumb_items | length > 0 %}
+                    <div class="u-layout-grid_breadcrumbs">
+                        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                        {{ breadcrumbs.render(breadcrumb_items) }}
+                    </div>
+                {% endif %}
+            {%- endblock %}
+
+            {% block body_content scoped %}
+                {# content_main_modifiers block is only used by the homepage #}
+                <div class="u-layout-grid_main {% block content_main_modifiers -%}{%- endblock %}">
+                    {% block content_main scoped -%}{%- endblock %}
+                </div>
+            {% endblock %}
         </div>
-        {% endblock %}
     </main>
 {% endblock %}
