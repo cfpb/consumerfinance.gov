@@ -713,21 +713,6 @@ CSRF_REQUIRED_PATHS = (
     "/django-admin",
 )
 
-
-# Django 3.2 Baseline required settings
-# exempt beta from CSRF settings until it's converted to https
-SECURE_REFERRER_POLICY = "same-origin"  # 1
-SESSION_COOKIE_SAMESITE = "Strict"  # 3
-X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
-
-if DEPLOY_ENVIRONMENT:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_HTTPONLY = True  # 22
-    CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True  # 26
-    SECURE_HSTS_SECONDS = 600
-    SECURE_CONTENT_TYPE_NOSNIFF = True  # 26
-
 # Cache Settings
 CACHES = {
     "default": {
