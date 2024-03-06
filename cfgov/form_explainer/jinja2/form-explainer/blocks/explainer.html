@@ -84,7 +84,6 @@
 {% macro render_term( item, page_num, category_index, note_index ) %}
 {% set id = 'page-' + page_num | string + '-category-' + category_index | string + '-note-'  + note_index | string %}
 <div class="o-expandable
-            o-expandable__padded
             o-expandable__form-explainer
             o-expandable__form-explainer-category-{{ category_index }}"
      id="{{ id }}">
