@@ -69,6 +69,13 @@
 
 // Regs3K secondary nav header
 .o-regs3k-navigation {
+  // TODO:
+  // This is an override for the non-conforming use of o-expandable__padded
+  // in the iRegs secondary nav. Remove this when that component is overhauled.
+  &.o-expandable__padded .o-expandable_label {
+    padding: 0 !important;
+  }
+
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
     padding: unit( 10px / @base-font-size-px, em )
