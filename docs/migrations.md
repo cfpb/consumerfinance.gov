@@ -20,8 +20,8 @@ additionally, changing field names or types on an existing block will require a
 The following links may be useful for setting context or diving deeper
 into the concepts presented throughout this page:
 
-- [Django migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/)
-- [Django data migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
+- [Django migrations documentation](https://docs.djangoproject.com/en/stable/topics/migrations/)
+- [Django data migrations documentation](https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations)
 - [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations)
 
 ## Do I need to create a migration?
@@ -42,11 +42,11 @@ Example model changes that require a migration:
 Example model changes that do not require a migration:
 
 - Adding, removing, renaming, or modifying a model class method
-- Modifying a model class [manager](https://docs.djangoproject.com/en/1.11/topics/db/managers/)
+- Modifying a model class [manager](https://docs.djangoproject.com/en/stable/topics/db/managers/)
 
 The best way to tell if your changes require a migration is to ask Django to
 determine that for you. Django's
-[makemigrations](https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemigrations)
+[makemigrations](https://docs.djangoproject.com/en/stable/ref/django-admin/#django-admin-makemigrations)
 management command can be used for this purpose:
 
 ```bash
@@ -73,7 +73,7 @@ migrations a more descriptive name.
 
 Any time you add or change a field on a Django model, Wagtail page model
 (which are a particular kind of Django model), or StreamField block class, a
-[Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations)
+[Django schema migration](https://docs.djangoproject.com/en/stable/topics/migrations)
 will be required. This includes changes as small as modifying the `help_text` string.
 
 To automatically generate a schema migration,
@@ -111,7 +111,7 @@ migrations are in conflict with one another.
 
 ## Data migrations
 
-[Data migrations](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
+[Data migrations](https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations)
 are required any time you:
 
 - rename an existing field
@@ -195,7 +195,7 @@ so that instead of a series of files detailing every change over time
 we have a smaller set that just describes the current state of models in the code.
 
 Django provides an automated
-[squashing](https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations)
+[squashing](https://docs.djangoproject.com/en/stable/topics/migrations/#squashing-migrations)
 process for migrations, but this is often not optimal when migrations contain manual `RunPython` blocks are present.
 Before running `squashmigrations`, search existing migrations for `RunPython` blocks without `elidable=True`, and
 correct them to have `elidable=True`. This will tell `squashmigrations` to drop that `RunPython` block.

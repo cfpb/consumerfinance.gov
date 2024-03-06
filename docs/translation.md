@@ -1,6 +1,6 @@
 # Translation
 
-As consumerfinance.gov is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/1.11/topics/i18n/translation/). What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.
+As consumerfinance.gov is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/stable/topics/i18n/translation/). What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.
 
 ## Overview
 
@@ -135,11 +135,11 @@ There are a few things to avoid to make sure the strings are picked up by `makem
 + _("Hello %(world_name)s" % {'world_name': world_name})
 ```
 
-Django's documentation [has some additional information on the limitations of translatable strings and gettext](https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation).
+Django's documentation [has some additional information on the limitations of translatable strings and gettext](https://docs.djangoproject.com/en/stable/topics/i18n/translation/#standard-translation).
 
-#### Do mark variable strings for translation with [`gettext_noop`](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op)
+#### Do mark variable strings for translation with [`gettext_noop`](https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op)
 
-If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that `makemessages` will pick it up, use Django's [`gettext_noop`](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op):
+If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that `makemessages` will pick it up, use Django's [`gettext_noop`](https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op):
 
 ```python
 from django.utils.translation import gettext_noop

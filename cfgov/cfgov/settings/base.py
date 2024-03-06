@@ -146,7 +146,7 @@ if "CSP_ENFORCE" in os.environ:
 ROOT_URLCONF = "cfgov.urls"
 
 # We support two different template engines: Django templates and Jinja2
-# templates. See https://docs.djangoproject.com/en/dev/topics/templates/
+# templates. See https://docs.djangoproject.com/en/stable/topics/templates/
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
