@@ -67,9 +67,9 @@
     <div class="m-hero_wrapper">
         <div class="m-hero_text">
             <h1 class="m-hero_heading">{{ value.heading | safe }}
-                {% if value.heading_with_line_break %}
-                <br /> {{ value.heading_with_line_break }}
-                {% endif %}
+                {% if value.heading_continued %}
+                <br> {{ value.heading_continued }}
+                {% endif %}p
             </h1>
             <div class="m-hero_subhead">
                 {{ value.body | safe }}

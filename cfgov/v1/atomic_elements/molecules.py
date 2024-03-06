@@ -84,7 +84,7 @@ class AbstractHero(blocks.StructBlock):
         ),
     )
 
-    heading_with_line_break = blocks.CharBlock(
+    heading_continued = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
             "Use if the heading needs to break to a second line"

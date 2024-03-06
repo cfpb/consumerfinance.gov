@@ -32,7 +32,7 @@
 
    value.links[i].aria_label:    (Optional) An aria-label for the link.
    
-   value.links[i].make_link_boldface: (Optional) Sets bold formatting for the link.
+   value.links[i].is_link_boldface: (Optional) Sets bold formatting for the link.
 
    format:                       Code for the layout of the parent Info Unit
                                  Group, used to determine whether to add the
@@ -125,9 +125,9 @@
                             {%- if link.aria_label -%}
                                 aria-label="{{ link.aria_label }}"
                             {%- endif %}>
-                            {% if link.make_link_boldface %}<strong>{% endif %}
+                            {% if link.is_link_boldface %}<strong>{% endif %}
                             {{ link_text }}
-                            {% if link.make_link_boldface %}</strong>{% endif %}
+                            {% if link.is_link_boldface %}</strong>{% endif %}
                         </a>
                     {%- endset -%}
                     {{ link | safe }}

@@ -574,8 +574,8 @@ class BaseExpandable(blocks.StructBlock):
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)
-    larger_heading = blocks.BooleanBlock(required=False)
-    expanded_padding = blocks.BooleanBlock(required=False)
+    is_larger_heading = blocks.BooleanBlock(required=False)
+    is_expanded_padding = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = "list-ul"
