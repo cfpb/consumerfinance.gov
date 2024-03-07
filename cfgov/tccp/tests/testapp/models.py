@@ -12,7 +12,11 @@ YEAR_IN_SCHOOL_CHOICES = [
 ]
 
 
-class YearsInSchool(models.Model):
+class NullableYearsInSchool(models.Model):
     years = JSONListField(
         choices=YEAR_IN_SCHOOL_CHOICES, null=True, blank=True
     )
+
+
+class YearsInSchool(models.Model):
+    years = JSONListField(choices=YEAR_IN_SCHOOL_CHOICES, blank=True)

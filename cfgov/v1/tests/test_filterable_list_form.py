@@ -5,8 +5,6 @@ from django.test import TestCase, override_settings
 
 from wagtail.models import Site
 
-from pytz import timezone
-
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
@@ -29,6 +27,12 @@ from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
 
 
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
+
+
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
     def setUp(self):
         self.blog1 = BlogPage(title="test page")
@@ -44,14 +48,16 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
             CFGOVPageCategory(name="info-for-consumers")
         )
         self.event1 = EventPage(
-            title="test page 2", start_dt=datetime.now(timezone("UTC"))
+            title="test page 2",
+            start_dt=datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
         self.event1.tags.add("bar")
         self.cool_event = EventPage(
-            title="Cool Event", start_dt=datetime.now(timezone("UTC"))
+            title="Cool Event", start_dt=datetime.now(zoneinfo.ZoneInfo("UTC"))
         )
         self.awesome_event = EventPage(
-            title="Awesome Event", start_dt=datetime.now(timezone("UTC"))
+            title="Awesome Event",
+            start_dt=datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
         publish_page(self.blog1)
         publish_page(self.blog2)
@@ -196,7 +202,8 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         )
 
         event = EventPage(
-            title="test page 2", start_dt=datetime.now(timezone("UTC"))
+            title="test page 2",
+            start_dt=datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
         event.tags.add("bar")
         publish_page(event)

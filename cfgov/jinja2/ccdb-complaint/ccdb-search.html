@@ -13,6 +13,10 @@
     The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.
 {% endblock %}
 
+{% block content_modifiers -%}
+  {{ super() }} u-layout-grid__full-width
+{%- endblock %}
+
 {% block content_main_modifiers -%}
   {{ super() }} ccdb-search
 {%- endblock %}

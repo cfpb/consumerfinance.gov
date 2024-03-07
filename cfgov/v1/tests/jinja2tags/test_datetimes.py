@@ -3,7 +3,11 @@ from unittest import TestCase
 
 from django.template import engines
 
-from pytz import timezone
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 
 class DatetimesExtensionTests(TestCase):
@@ -32,7 +36,7 @@ class DatetimesExtensionTests(TestCase):
                         0,
                         0,
                         0,
-                        tzinfo=timezone("America/New_York"),
+                        tzinfo=zoneinfo.ZoneInfo("America/New_York"),
                     ),
                     "tz": "America/Chicago",
                 }

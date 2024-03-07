@@ -8,7 +8,6 @@ import beforeExpandableTransitionInit, {
 const HTML_SNIPPET = `
   <div id="test-div"
      class="o-expandable
-            o-expandable__padded
             o-expandable__background
             ">
     <button class="o-expandable_header" type="button">

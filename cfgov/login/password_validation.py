@@ -34,7 +34,7 @@ class AgeValidator:
         self.hours = hours
 
     def validate(self, password, user=None):
-        if user is None:  # pragma: no cover
+        if user is None or user.pk is None:  # pragma: no cover
             return
 
         # When a new user is created, they should be able to change their
@@ -61,7 +61,7 @@ class HistoryValidator:
         self.count = count
 
     def validate(self, password, user=None):
-        if user is None:  # pragma: no cover
+        if user is None or user.pk is None:  # pragma: no cover
             return
 
         queryset = user.password_history.order_by("-created")[: self.count]
