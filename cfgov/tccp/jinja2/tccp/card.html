@@ -287,6 +287,121 @@
             {% endif %}
         </dd>
     </dl>
+    <h2>Balance transfers</h2>
+    {% if card.balance_transfer_offered %}
+        <dl class="m-list m-list__card-details">
+            <dt>Balance transfer APR</dt>
+            {# Transfer APRs are displayed the same way as purchase APRs #}
+            <dd>
+                {% if card.transfer_apr_min is not none
+                    or card.transfer_apr_max is not none
+                    or card.transfer_apr_median is not none
+                %}
+                    {% set transfer_apr_range =
+                        apr_range(card.transfer_apr_min, card.transfer_apr_max) if
+                        card.transfer_apr_min is not none
+                        and card.transfer_apr_max is not none
+                    %}
+                    {% set transfer_apr_median = apr(card.transfer_apr_median) if
+                        card.transfer_apr_median is not none
+                    %}
+                    {{ transfer_apr_range if transfer_apr_range }}
+                    {{ '(' if transfer_apr_median
+                        and transfer_apr_range
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{- transfer_apr_median ~ ' median balance transfer APR' if
+                        transfer_apr_median
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{- ')' if transfer_apr_median
+                        and transfer_apr_range
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{ 'with median balance transfer APRs varying by credit score:' if
+                        card.balance_transfer_apr_vary_by_credit_tier
+                    }}
+                {% endif %}
+                {% if card.balance_transfer_apr_vary_by_credit_tier %}
+                    <table class="o-table">
+                        <thead>
+                            <tr>
+                                <th>619 or less</th>
+                                <th>620 to 719</th>
+                                <th>720 or greater</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ apr(card.transfer_apr_poor) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.transfer_apr_good) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.transfer_apr_great) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                {{ 'The issuer did not submit balance transfer APR information for this card'
+                    if card.transfer_apr_min is none
+                    and card.transfer_apr_median is none
+                    and card.transfer_apr_max is none
+                    and card.transfer_apr_poor is none
+                    and card.transfer_apr_good is none
+                    and card.transfer_apr_great is none
+                }}
+            </dd>
+            <dt>Balance transfer fee</dt>
+            <dd>
+                {# Similar to how foreign transaction fees display #}
+                {% if card.balance_transfer_fees %}
+                    {{ '$' ~ card.balance_transfer_fee_dollars if
+                        card.balance_transfer_fee_dollars is not none
+                    }}
+                    {{ ' or ' if card.balance_transfer_fee_dollars is not none
+                        and card.balance_transfer_fee_percentage is not none
+                    }}
+                    {{ apr(card.balance_transfer_fee_percentage) if
+                        card.balance_transfer_fee_percentage is not none
+                    }}
+                    {% if card.minimum_balance_transfer_fee_amount is not none %}
+                    {% set balance_transfer_fee_minimum =
+                        card.minimum_balance_transfer_fee_amount | float
+                    %}
+                    {{ '($' ~ '%.2f' | format(balance_transfer_fee_minimum) ~
+                        ' minimum)' if card.minimum_balance_transfer_fee_amount
+                        is not none
+                    }}
+                    {% endif %}
+                    {% if card.balance_transfer_fee_calculation %}
+                    {{ '(' if card.balance_transfer_fee_dollars is not none
+                        or card.balance_transfer_fee_percentage is not none
+                    -}}
+                    {{- card.balance_transfer_fee_calculation -}}
+                    {{- ')' if card.balance_transfer_fee_dollars is not none
+                        or card.balance_transfer_fee_percentage is not none
+                    -}}
+                    {% endif %}
+                {% else %}
+                    None
+                {% endif %}
+            </dd>
+            <dt>Median length promotional period</dt>
+            <dd>
+                {{ '%g' | format(card.median_length_of_balance_transfer_apr) }} months
+            </dd>
+            <dt>Grace period</dt>
+            <dd>
+                {{ 'Yes' if card.balance_transfer_grace_period else 'No' }}
+            </dd>
+        </dl>
+    {% else %}
+        This card does not offer balance transfers.
+    {% endif %}
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
     <h3 class="h5">All fields</h3>
