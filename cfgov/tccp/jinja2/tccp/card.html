@@ -3,6 +3,10 @@
 {% from 'tccp/macros/data_published.html' import data_published %}
 {% from 'tccp/macros/fields.html' import apr, apr_range %}
 
+{% block title -%}
+    {{ card.institution_name }} {{ card.product_name }}
+    | Consumer Financial Protection Bureau
+{%- endblock title %}
 
 {% block css %}
     {{ super() }}
