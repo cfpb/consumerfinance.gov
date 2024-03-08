@@ -14,31 +14,35 @@
 {%- endblock css %}
 
 {% block content_modifiers -%}
-    error_main error_main__500
+    error-page
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    error-page_main error-page_500
 {%- endblock %}
 
 {% block content_main %}
-    <div class="main_wrapper">
-        <div class="error_copy_container">
-            <header class="error_header">
-                <h1>500: Server error</h1>
-                <p class="lead-paragraph">
-                    We can’t find the page you’re looking for.
-                    Visit our homepage for helpful tools and resources,
-                    or contact us and we'll point you in the right direction.
-                </p>
-            </header>
-        </div>
+    <div class="block block__flush-top">
+        <header>
+            <h1>500: Server error</h1>
+            <p class="lead-paragraph">
+                We can’t find the page you’re looking for.
+                Visit our homepage for helpful tools and resources,
+                or contact us and we'll point you in the right direction.
+            </p>
+        </header>
 
-        <aside class="error_action_container">
-            <div class="error_action_col">
-                <a href="/" class="a-btn a-btn__full-on-xs">Visit homepage</a>
-            </div>
-            <div class="error_action_col">
-                <a class="a-btn a-btn__full-on-xs" href="/about-us/contact-us/">
-                    Contact us
-                </a>
-            </div>
+        <aside class="block block__sub">
+            <ul class="m-list m-list__horizontal m-list__divider">
+                <li class="m-list_item">
+                    <a href="/" class="a-btn a-btn__full-on-xs">Visit homepage</a>
+                </li>
+                <li class="m-list_item">
+                    <a class="a-btn a-btn__full-on-xs" href="/about-us/contact-us/">
+                        Contact us
+                    </a>
+                </li>
+            </ul>
         </aside>
 
         <p>Are you sure this is the right web address?
