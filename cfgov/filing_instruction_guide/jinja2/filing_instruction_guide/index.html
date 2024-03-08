@@ -15,7 +15,9 @@
 
 {% block content_main %}
 
-    <div class="eyebrow">{{ page.eyebrow }}</div>
+    {% if page.eyebrow %}
+      <div class="eyebrow">{{ page.eyebrow }}</div>
+    {% endif %}
     <h1>{{ page.page_header }}</h1>
     <div class="lead-paragraph">{{ page.subheader }}</div>
     <div class="block block__border-top u-fig-print-link">
