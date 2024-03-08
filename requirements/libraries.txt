@@ -24,11 +24,6 @@ govdelivery==1.4.0
 Jinja2==3.1.3
 lxml==5.1.0
 opensearch-py==2.4.2
-# psycopg2 > 2.9.6 causes cf.gov to hang locally for people with on-network
-# Macs, so we'll pin to 2.9.6 for now.
-# See https://github.com/psycopg/psycopg2/issues/1645
-# and https://github.com/dbt-labs/dbt-core/issues/9303#issuecomment-1864934933
-# for the details.
 psycopg2-binary==2.9.6
 python-dateutil==2.9.0
 regdown==1.0.7
