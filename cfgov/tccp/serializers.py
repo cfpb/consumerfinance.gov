@@ -19,6 +19,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
             "rewards",
             "secured_card",
             "state_limitations",
+            "top_25_institution",
             "transfer_apr_for_tier",
             "transfer_apr_min",
             "transfer_apr_max",
