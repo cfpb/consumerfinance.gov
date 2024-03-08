@@ -258,7 +258,7 @@
                     - Dollar or percentage and calculation: "3.00% (whatever text was submitted)"
             #}
             {% if card.foreign_transaction_fees %}
-                {{ '$'~card.foreign_transaction_fee_dollars if
+                {{ '$' ~ card.foreign_transaction_fee_dollars if
                     card.foreign_transaction_fee_dollars is not none
                 }}
                 {{ apr(card.foreign_transaction_fee_percentage) if
