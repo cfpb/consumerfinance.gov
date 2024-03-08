@@ -400,7 +400,7 @@
             </dd>
         </dl>
     {% else %}
-        This card does not offer balance transfers.
+        <p>This card does not offer balance transfers.</p>
     {% endif %}
     <h2>Cash advances</h2>
     {% if card.cash_advance_apr_offered %}
@@ -516,7 +516,7 @@
             {% endif %}
         </dl>
     {% else %}
-        This card does not offer cash advances.
+        <p>This card does not offer cash advances.</p>
     {% endif %}
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
