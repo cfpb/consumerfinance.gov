@@ -46,6 +46,7 @@
      class="schema-block schema-block__how-to">
     {%- if value.title %}
         <{{ value.title_tag }} itemprop="name"
+                               id="{{ value.title | slugify_unique }}"
                                class="schema-block_title
                                {% if not value.show_title %}
                                u-visually-hidden
