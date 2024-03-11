@@ -64,13 +64,6 @@
     padding: 0;
   }
 
-  /* Prevent blank sheet at the end of the page. */
-  main,
-  .content_main {
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
   /* Item result row. */
   tr {
     display: grid !important;

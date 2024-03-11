@@ -31,8 +31,7 @@ function toolTipper(elem) {
   const content = document.querySelector(contentSel).innerHTML;
   const innerTip = $ttc.find('.innertip');
   const outerTip = $ttc.find('.outertip');
-  const pageSel = '#main .content_wrapper';
-  const pagePadding = parseInt($(pageSel).css('padding-left'), 10);
+  const pagePadding = 10;
   let newLeft;
   let elemCenter;
   let elemRightOffset;
@@ -99,7 +98,6 @@ function toolTipper(elem) {
   window.addEventListener('resize', function () {
     if ($('#tooltip-container').is(':visible')) {
       $('#tooltip-container').hide();
-      toolTipper($('[data-tooltip-current-target]'));
     }
   });
 }
