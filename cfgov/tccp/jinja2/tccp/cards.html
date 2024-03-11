@@ -67,8 +67,10 @@
         </p>
 
         {%- macro card_name_cell(card) -%}
-            <div class="a-card-institution-name">{{ card.institution_name }}</div>
-            <a href="{{ card.url }}">{{ card.product_name }}</a>
+            <a href="{{ card.url }}">
+                <div class="a-card-institution-name">{{ card.institution_name }}</div>
+                <div>{{ card.product_name }}</div>
+            </a>
         {%- endmacro -%}
 
         {%- set card_columns = [
