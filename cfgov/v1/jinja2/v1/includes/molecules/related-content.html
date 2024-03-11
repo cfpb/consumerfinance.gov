@@ -24,6 +24,8 @@
 
     value.links[i].aria_label: (Optional) An aria-label for the link.
 
+    value.links[i].is_link_boldface: (Optional) Sets bold formatting for the link.
+
    ========================================================================== #}
 
 {%- macro render(value) -%}
@@ -46,8 +48,10 @@
                   class="m-list_link"
                   {%- if link.aria_label -%}
                     aria-label="{{ link.aria_label }}"
-                  {% endif -%}
-                >{{ link.text }}</a>
+                  {% endif -%}>
+                  {% if link.is_link_boldface %}<strong>{% endif %}
+                  {{ link.text }}
+                  {% if link.is_link_boldface %}</strong>{% endif %}
             </li>
         {% endfor %}
         </ul>

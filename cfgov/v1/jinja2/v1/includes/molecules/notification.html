@@ -23,8 +23,9 @@
                 Defaults to none.
 
    links:       Array of link objects, which each contain:
-                - text (required): text of link.
-                - url:             link url.
+                - text (required):      text of link.
+                - url:                  link url.
+                - is_link_boldface:     sets bold formatting.
                 Defaults to an empty array.
 
    ========================================================================== #}
@@ -61,7 +62,9 @@
                   {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
                       <li class="m-list_item">
                           <a class="m-list_link" href="{{ link.url }}">
-                              {{ link.text }}
+                            {% if link.is_link_boldface %}<strong>{% endif %}
+                            {{ link.text }}
+                            {% if link.is_link_boldface %}</strong>{% endif %}
                           </a>
                       </li>
                   {% if loop.last %}</ul>{% endif %}

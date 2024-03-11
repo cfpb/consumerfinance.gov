@@ -43,6 +43,7 @@ class Hyperlink(blocks.StructBlock):
         '"Learn more" that is not descriptive on its own).',
     )
     url = blocks.CharBlock(default="/", required=False)
+    is_link_boldface = blocks.BooleanBlock(default=False, required=False)
 
     def __init__(self, required=True):
         self.is_required = required
