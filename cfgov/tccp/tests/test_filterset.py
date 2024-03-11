@@ -39,3 +39,46 @@ class CardSurveyDataFilterSetTests(TestCase):
 
         fs = CardSurveyDataFilterSet({"geo_availability": "PA"}, queryset=qs)
         self.assertEqual(fs.qs.count(), 3)
+
+    def test_filter_by_no_account_fee(self):
+        baker.make(
+            CardSurveyData,
+            targeted_credit_tiers=["Credit scores from 620 to 719"],
+            purchase_apr_good=0.99,
+            periodic_fee_type=["Annual"],
+        )
+
+        qs = CardSurveyData.objects.all()
+        self.assertEqual(qs.count(), 1)
+
+        fs = CardSurveyDataFilterSet({"no_account_fee": False}, queryset=qs)
+        self.assertEqual(fs.qs.count(), 1)
+
+        fs = CardSurveyDataFilterSet({"no_account_fee": True}, queryset=qs)
+        self.assertEqual(fs.qs.count(), 0)
+
+    def test_filter_by_rewards(self):
+        baker.make(
+            CardSurveyData,
+            targeted_credit_tiers=["Credit scores from 620 to 719"],
+            purchase_apr_good=0.99,
+            rewards=["Cashback rewards"],
+        )
+
+        qs = CardSurveyData.objects.all()
+        self.assertEqual(qs.count(), 1)
+
+        fs = CardSurveyDataFilterSet(
+            {"rewards": ["Cashback rewards"]}, queryset=qs
+        )
+        self.assertEqual(fs.qs.count(), 1)
+
+        fs = CardSurveyDataFilterSet(
+            {"rewards": ["Other rewards"]}, queryset=qs
+        )
+        self.assertEqual(fs.qs.count(), 0)
+
+        fs = CardSurveyDataFilterSet(
+            {"rewards": ["Cashback rewards", "Other rewards"]}, queryset=qs
+        )
+        self.assertEqual(fs.qs.count(), 1)

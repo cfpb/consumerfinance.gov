@@ -1,7 +1,12 @@
+from functools import reduce
+from operator import or_
+
+from django.db.models import Q
+
 from django_filters import rest_framework as filters
 
-from .enums import CreditTierChoices, StateChoices
-from .filters import CardOrderingFilter, CheckboxFilter
+from .enums import CreditTierChoices, RewardsChoices, StateChoices
+from .filters import CardOrderingFilter, CheckboxFilter, MultipleCheckboxFilter
 from .models import CardSurveyData
 from .widgets import Select
 
@@ -32,8 +37,10 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         method="filter_for_empty_list",
         label="No account fee",
     )
-    rewards = CheckboxFilter(
-        label="Offers rewards", method="filter_for_nonempty_list"
+    rewards = MultipleCheckboxFilter(
+        choices=RewardsChoices,
+        label="Offers rewards",
+        method="filter_for_contains",
     )
     ordering = CardOrderingFilter(
         label="Sort by", null_label=None, empty_label=None, widget=Select
@@ -69,5 +76,16 @@ class CardSurveyDataFilterSet(filters.FilterSet):
     def filter_for_empty_list(self, queryset, name, value):
         return queryset.filter(**{name: []}) if value else queryset
 
-    def filter_for_nonempty_list(self, queryset, name, value):
-        return queryset.exclude(**{name: []}) if value else queryset
+    def filter_for_contains(self, queryset, name, value):
+        if value:
+            queryset = queryset.filter(
+                reduce(
+                    or_,
+                    [
+                        Q(**{f"{name}__contains": subvalue})
+                        for subvalue in value
+                    ],
+                )
+            )
+
+        return queryset

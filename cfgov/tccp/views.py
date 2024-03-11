@@ -50,7 +50,11 @@ class LandingPageView(FlaggedTemplateView):
             reverse("tccp:cards")
             + "?"
             + urlencode(
-                dict(targeted_credit_tiers=credit_tier, **situation.query)
+                [
+                    ("targeted_credit_tiers", credit_tier),
+                    *situation.query,
+                ],
+                doseq=True,
             )
         )
 
