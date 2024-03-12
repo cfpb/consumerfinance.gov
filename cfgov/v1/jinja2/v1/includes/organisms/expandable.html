@@ -27,20 +27,24 @@
    value.is_faq:          Whether the Expandable should be output with FAQ
                           schema attributes.
 
+   value.group_index_slug: Optional slug inherited from an Expandable Group.
+
    ========================================================================== #}
 
 {% macro expandable(value) %}
 
 <div class="o-expandable
-            {{ 'o-expandable__padded' if value.expanded_padding else '' }}
+            {{ 'o-expandable__padded' if value.is_expanded_padding else '' }}
             {{ 'o-expandable__background' if value.is_midtone else '' }}
             {{ 'o-expandable__border' if value.is_bordered else '' }}
             {{ 'o-expandable__onload-open' if value.is_expanded else '' }}"
+     id="{{ value.group_index_slug if value.group_index_slug else value.label | slugify_unique }}"
      {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
         if value.is_faq else '' }} >
     <button class="o-expandable_header" type="button">
-        <span class="h4 o-expandable_label"
+        <span class="{{ 'h2' if value.is_larger_heading else 'h4'}} o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
+            {% if value.icon %} {{ svg_icon( value.icon ) }} {% endif %} 
             {{ value.label }}
         </span>
         <span class="o-expandable_cues">

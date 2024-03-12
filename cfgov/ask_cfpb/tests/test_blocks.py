@@ -68,7 +68,8 @@ class SchemaBlocksTestCase(TestCase):
             "<div itemscope"
             '     itemtype="https://schema.org/HowTo"'
             '     class="schema-block schema-block__how-to">'
-            '<h2 itemprop="name" class="schema-block_title">test title</h2>'  # noqa
+            '<h2 itemprop="name" class="schema-block_title" id="test-title">'
+            "test title</h2>"  # noqa
             '<div itemprop="description" class="schema-block_description">'
             "test description"
             "</div>"
