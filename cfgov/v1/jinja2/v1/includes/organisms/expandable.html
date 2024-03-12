@@ -44,7 +44,7 @@
     <button class="o-expandable_header" type="button">
         <span class="{{ 'h2' if value.is_larger_heading else 'h4'}} o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
-            {% if value.icon %} {{ svg_icon( value.icon ) }} {% endif %} 
+            {% if value.icon %} {{ svg_icon( value.icon ) }}&nbsp; {% endif %} 
             {{ value.label }}
         </span>
         <span class="o-expandable_cues">
