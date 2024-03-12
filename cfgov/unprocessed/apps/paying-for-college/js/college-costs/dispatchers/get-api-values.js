@@ -65,7 +65,8 @@ function getSchoolData(iped) {
   const url =
     '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/school/' +
-    iped;
+    iped +
+    '/';
 
   return getApi(url);
 }
