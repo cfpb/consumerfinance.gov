@@ -25,7 +25,7 @@
 
     &_main {
       grid-area: c-main;
-      padding-top: unit(30px / @base-font-size-px, rem);
+      padding-top: unit((30px / @base-font-size-px), rem);
     }
 
     &_sidebar {
@@ -69,12 +69,23 @@
         padding-right: unit(30px / @base-font-size-px, rem);
       }
 
-      &_main {
-        padding-top: unit((45px / @base-font-size-px), rem);
+      // If we do not have breadcrumbs, the gap above the content is larger…
+      &_main,
+      &_secondary-nav {
+        margin-top: unit((15px / @base-font-size-px), rem);
       }
 
-      &_breadcrumbs ~ &_main {
-        padding-top: unit(30px / @base-font-size-px, rem);
+      // …than if we do have breadcrumbs
+      &_breadcrumbs ~ &_main,
+      &_breadcrumbs ~ &_secondary-nav {
+        margin-top: 0;
+      }
+    });
+
+    // Desktop and above.
+    .respond-to-min(@bp-med-min, {
+      &_secondary-nav {
+        padding-top: unit((30px / @base-font-size-px), rem);
       }
     });
   }
