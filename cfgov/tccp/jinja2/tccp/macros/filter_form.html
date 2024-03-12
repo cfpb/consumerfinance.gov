@@ -39,8 +39,14 @@
             {{ render_field(form.small_institution, "checkbox") }}
 
             {{ render_field(form.no_account_fee, "checkbox") }}
+        </fieldset>
+    </div>
 
-            {{ render_field(form.rewards, "checkbox") }}
+    <div class="o-form_group">
+        <fieldset class="o-form_fieldset">
+            <legend class="a-legend">Rewards</legend>
+
+            {{ form.rewards }}
         </fieldset>
     </div>
 

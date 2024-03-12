@@ -2,6 +2,8 @@ from django import forms
 
 from django_filters import rest_framework as filters
 
+from .widgets import CheckboxSelectMultiple
+
 
 class CardOrderingFilter(filters.OrderingFilter):
     def __init__(self, *args, **kwargs):
@@ -47,3 +49,12 @@ class CheckboxFilter(filters.BooleanFilter):
 
     def filter(self, qs, value):
         return super().filter(qs, True) if value else qs
+
+
+class MultipleCheckboxFilter(filters.MultipleChoiceFilter):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault(
+            "widget",
+            CheckboxSelectMultiple(),
+        )
+        super().__init__(*args, **kwargs)
