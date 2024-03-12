@@ -302,6 +302,11 @@ class CardSurveyData(models.Model):
     website_for_consumer = models.TextField(null=True, blank=True)
     telephone_number_for_consumers = models.TextField(null=True, blank=True)
 
+    # This field doesn't currently exist in the TCCP dataset.
+    # See tccp.management.commands.patch_tccp.
+    # Once this is added to the dataset, the default=False can be removed.
+    top_25_institution = YesNoBooleanField(default=False, db_index=True)
+
     class Meta:
         indexes = [
             # Add an index to potentially optimize filtering on the
