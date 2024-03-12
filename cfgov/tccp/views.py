@@ -63,6 +63,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = CardSurveyDataFilterSet
     template_name = "tccp/cards.html"
+    heading = "Customize for your situation"
     breadcrumb_items = LandingPageView.breadcrumb_items + [
         {
             "title": LandingPageView.heading,
@@ -117,6 +118,8 @@ class CardListView(FlaggedViewMixin, ListAPIView):
 
             response.data.update(
                 {
+                    "title": title(self.heading),
+                    "heading": self.heading,
                     "breadcrumb_items": self.breadcrumb_items,
                     "form": filterset.form,
                     "total_count": statistics["count"],

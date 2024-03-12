@@ -24,13 +24,15 @@
 
     value.links[i].aria_label: (Optional) An aria-label for the link.
 
+    value.links[i].is_link_boldface: (Optional) Sets bold formatting for the link.
+
    ========================================================================== #}
 
 {%- macro render(value) -%}
 <div class="m-related-links">
     {% if value.heading %}
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header_heading" id="{{ value.heading | slugify_unique }}">
                 {{ value.heading }}
             </h2>
         </header>
@@ -46,8 +48,11 @@
                   class="m-list_link"
                   {%- if link.aria_label -%}
                     aria-label="{{ link.aria_label }}"
-                  {% endif -%}
-                >{{ link.text }}</a>
+                  {% endif -%}>
+                  {% if link.is_link_boldface %}<strong>{% endif %}
+                  {{ link.text }}
+                  {% if link.is_link_boldface %}</strong>{% endif %}
+                </a>
             </li>
         {% endfor %}
         </ul>

@@ -1,4 +1,4 @@
-{% extends "v1/layouts/base.html" %}
+{% extends "v1/layouts/layout-full.html" %}
 
 {% block title %}Debugging template {{ debug_template_name }}{% endblock %}
 
@@ -28,9 +28,8 @@
 
 {% block header %}{% endblock %}
 
-{% block content %}
-<div class="content_wrapper">
-    <div class="content_main">
+{% block content_main %}
+    <div class="block block__flush-top">
         <h1>{{ debug_template_name }}</h1>
 
         {% if debug_test_cases %}
@@ -54,7 +53,6 @@
         </div>
         {% endfor %}
     </div>
-</div>
 {% endblock %}
 
 {% block wagtailuserbar %}{% endblock %}

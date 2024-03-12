@@ -7,6 +7,10 @@
 {% import 'v1/includes/molecules/notification.html' as notification %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
+{% block title -%}
+    {{ title }} | {{ super() }}
+{%- endblock title %}
+
 {% block javascript scoped %}
 {{ super() }}
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
@@ -19,7 +23,7 @@
 
 {% block content_main %}
 
-<h1>Card search results</h1>
+<h1>{{ heading }}</h1>
 
 <p>
     Filter and sort the {{ total_count or "" }} cards in our database
@@ -62,6 +66,13 @@
             {%- endif %}
         </p>
 
+        {%- macro card_name_cell(card) -%}
+            <a href="{{ card.url }}">
+                <div class="a-card-institution-name">{{ card.institution_name }}</div>
+                <div>{{ card.product_name }}</div>
+            </a>
+        {%- endmacro -%}
+
         {%- set card_columns = [
             {'heading': 'Credit card'},
             {'heading': 'Purchase APR'},
@@ -73,7 +84,7 @@
         {%- set card_rows = [] %}
         {%- for card in results %}
             {% do card_rows.append( [
-                ('<a href="' ~ card.url ~ '">' ~ card.product_name ~ '</a>') | safe,
+                card_name_cell(card) | safe,
                 apr(card.purchase_apr_for_tier),
                 ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
