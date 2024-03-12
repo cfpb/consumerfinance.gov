@@ -1,6 +1,6 @@
 {% extends 'v1/layouts/base.html' %}
 
-{% if page and not breadcrumb_items %}
+{% if page and page.get_breadcrumbs and not breadcrumb_items %}
     {% set breadcrumb_items = page.get_breadcrumbs(request) %}
 {% endif %}
 
