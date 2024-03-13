@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 
+from tccp import enums
+
 
 @dataclass
 class Situation:
@@ -18,18 +20,14 @@ SITUATIONS = [
         title="Pay less interest",
         details_intro_have=True,
         details=["Low interest rates"],
-        query={
-            "ordering": "purchase_apr",
-        },
+        query=[("ordering", "purchase_apr")],
     ),
     Situation(
         title="Transfer a balance",
         details=[
             "Low balance transfer interest rates",
         ],
-        query={
-            "ordering": "transfer_apr",
-        },
+        query=[("ordering", "transfer_apr")],
     ),
     Situation(
         title="Make a big purchase",
@@ -42,7 +40,7 @@ SITUATIONS = [
         title="Avoid annual fees",
         details_intro_have=True,
         details=["No annual fee"],
-        query={"no_account_fee": True},
+        query=[("no_account_fee", True)],
     ),
     Situation(
         title="Build credit",
@@ -56,7 +54,7 @@ SITUATIONS = [
                 "(like cash back, travel points, or other rewards)",
             )
         ],
-        query={"rewards": True},
+        query=[("rewards", reward) for reward in dict(enums.RewardsChoices)],
     ),
 ]
 
