@@ -23,6 +23,14 @@
   }
 }
 
+// Some cards list a lot of available locations and disrupt the table layout.
+// Cap the width of the availability cell on non-mobile screens to prevent this.
+@media only screen and (min-width: @bp-sm-min) {
+  td[data-label='Availability'] {
+    max-width: unit((350px / @base-font-size-px), em);
+  }
+}
+
 // Overrides to the make the directory table pattern sticky
 // https://cfpb.github.io/design-system/components/tables#responsive-stacked-table-with-header-directory-table
 @media only screen and (max-width: @bp-xs-max) {
