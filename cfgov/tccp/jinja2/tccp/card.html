@@ -552,6 +552,42 @@
                 }}
             </dd>
         {% endif %}
+        <dt>Late fee</dt>
+        <dd>
+            {% if card.late_fees %}
+                {{ '$' ~ card.late_fee_dollars ~ ' for the first late payment' if
+                    card.late_fee_dollars
+                }}
+                {{ 'and' if card.late_fee_dollars
+                    and card.late_fee_six_month_billing_cycle
+                }}
+                {{ '$' ~ card.late_fee_six_month_billing_cycle ~
+                    ' for a late payment within six billing cycles of another
+                    late payment' if card.late_fee_six_month_billing_cycle
+                }}
+                {# A handful of cards specify neither a first nor repeat late
+                    fee and put all late fee info in the late_fee_policy_details
+                    field. For cards like that, we'll show the details here and
+                    not show the "Late fee policy details" item.
+                #}
+                {{ card.late_fee_policy_details if card.late_fee_types ==
+                    ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                }}
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {# See the comment above: we won't show this if we're already showing
+            late fee details in the "Late fee" item, i.e. if the card has *only*
+            policy details chosen in late_fee_types
+        #}
+        {% if card.late_fee_policy_details
+            and card.late_fee_types !=
+            ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+        %}
+            <dt>Late fee policy details</dt>
+            <dd>{{ card.late_fee_policy_details }}</dd>
+        {% endif %}
     </dl>
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
