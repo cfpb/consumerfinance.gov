@@ -45,17 +45,10 @@
     <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
 {%- endblock css %}
 
-
-{# BODY items #}
-
-{% block content_main_modifiers -%}
-    content__1-3
-{%- endblock %}
-
 {% block content_main scoped %}
 
-<div class="content_wrapper search_form">
-    <div class="block block__sub search_intro">
+<div class="block block__flush-top block__flush-bottom search_form">
+    <div class="search_intro">
         <h1>
             Search
             <span class="search_intro__all">
@@ -78,8 +71,8 @@
     </div>
 </div>
 {% if page.results.search_query %}
-<div class="content_wrapper search_results">
-    <div class="block block__flush-top">
+<div class="search_results">
+    <div class="block block__flush-top content content__1-3">
         <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
             <h3>Refine results</h3>
             <form action="." method="get" data-js-hook="behavior_change-filter">
@@ -191,7 +184,7 @@
     </div>
 </div>
 {% else %}
-<div class="content_wrapper search_results_empty">
+<div class="block block__flush-top search_results_empty">
     <p class="results_initial__all">
         Search for a term above, then filter the results to find what you’re looking for.
     </p>

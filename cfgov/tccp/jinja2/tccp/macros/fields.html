@@ -1,0 +1,11 @@
+{%- macro apr(value) -%}
+    {{ ('%.2f%%' | format(value * 100)) if value is not none else "N/A" }}
+{%- endmacro -%}
+
+{%- macro apr_range(min, max) -%}
+    {% if min == max -%}
+        {{ apr(min) }}
+    {%- else -%}
+        {{ apr(min) }} - {{ apr(max) }}
+    {%- endif %}
+{%- endmacro -%}

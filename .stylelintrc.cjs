@@ -47,6 +47,7 @@ module.exports = {
     'declaration-property-value-no-unknown': null,
     'function-no-unknown': [true, { ignoreFunctions: ['unit'] }],
     'media-feature-range-notation': ['prefix'],
+    'media-query-no-invalid': null,
     'no-descending-specificity': null,
     'number-max-precision': 10,
     'rule-empty-line-before': [

@@ -1,0 +1,548 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+
+{% from 'tccp/macros/data_published.html' import data_published %}
+{% from 'tccp/macros/fields.html' import apr, apr_range %}
+
+{% block title -%}
+    {{ card.institution_name }} {{ card.product_name }}
+    | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
+{% endblock %}
+
+{% block content_main %}
+<div class="block block__flush-top">
+
+    <h1>{{ card.institution_name }} {{ card.product_name }}</h1>
+
+    {{ data_published(card.report_date) }}
+
+    <h2>Availability</h2>
+    <dl class="m-list m-list__card-details">
+        <dt>Location</dt>
+        <dd>
+            {% if not card.state_limitations %}
+                Available to anyone in the United States
+            {% else %}
+                Available only to people who live in
+                {{ 'specific counties in ' if card.pertains_to_specific_counties }}
+                {{ card.state_limitations | join(", ") }}
+            {% endif %}
+        </dd>
+        {% if card.requirements_for_opening %}
+            <dt>Other requirements</dt>
+            {% for requirement in [
+                card.geographic_restrictions,
+                card.professional_affiliation,
+                card.other
+            ] %}
+                {% if requirement %}
+                    <dd>{{ requirement }}</dd>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <dt>Credit score</dt>
+        <dd>
+            This card is targeted to people with these credit scores:
+            {% set scores = [
+                "No credit score",
+                "619 or less",
+                "620 to 719",
+                "720 or greater"
+            ] %}
+            <table class="o-table">
+                <thead>
+                    <tr>
+                        {% for score in scores %}
+                            <th>{{ score }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for score in scores %}
+                            <td>
+                                {{ "Yes" if
+                                    score in card.targeted_credit_tiers | string
+                                    else "No"
+                                }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </dd>
+        <dt>
+            Secured card
+        </dt>
+        <dd>
+            {{ "Yes" if card.secured_card else "No" }}
+        </dd>
+    </dl>
+    <h2>Purchases</h2>
+    <dl class="m-list m-list__card-details">
+        {% if card.purchase_apr_offered %}
+            <dt>Purchase APR</dt>
+            {#
+                There are lots of possible variations for how purchase APR can be
+                structured. We want readable content for all cases. So, for cards
+                that list:
+                    - Min and max APRs but no median: "13.74% - 23.99%"
+                    - Min, max, median APRs: "15.90% - 21.00% (15.53% median APR)"
+                    - Median APR but no min or max APR: "29.74% median APR"
+                    - Min and max APRs are the same: "29.99%"
+                    - APRs that vary by credit tier: a table showing each tier's APR
+                    - No APRs: "The issuer did not submit APR information for this card"
+            #}
+            <dd>
+                {% if card.purchase_apr_min is not none
+                    or card.purchase_apr_max is not none
+                    or card.purchase_apr_median is not none
+                %}
+                    {% set purchase_apr_range =
+                        apr_range(card.purchase_apr_min, card.purchase_apr_max) if
+                        card.purchase_apr_min is not none
+                        and card.purchase_apr_max is not none
+                    %}
+                    {% set purchase_apr_median = apr(card.purchase_apr_median) if
+                        card.purchase_apr_median is not none
+                    %}
+                    {{ purchase_apr_range if purchase_apr_range }}
+                    {{ '(' if purchase_apr_median
+                        and purchase_apr_range
+                        and purchase_apr_median != purchase_apr_range
+                    }}
+                    {{- purchase_apr_median ~ ' median APR' if purchase_apr_median
+                        and purchase_apr_median != purchase_apr_range
+                    }}
+                    {{- ')' if purchase_apr_median
+                        and purchase_apr_range
+                        and purchase_apr_median != purchase_apr_range
+                    }}
+                    {{ 'with median APRs varying by credit score:' if
+                        card.purchase_apr_vary_by_credit_tier
+                    }}
+                {% endif %}
+                {% if card.purchase_apr_vary_by_credit_tier %}
+                    <table class="o-table">
+                        <thead>
+                            <tr>
+                                <th>619 or less</th>
+                                <th>620 to 719</th>
+                                <th>720 or greater</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ apr(card.purchase_apr_poor) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.purchase_apr_good) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.purchase_apr_great) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                {{ 'The issuer did not submit APR information for this card'
+                    if card.purchase_apr_min is none
+                    and card.purchase_apr_median is none
+                    and card.purchase_apr_max is none
+                    and card.purchase_apr_poor is none
+                    and card.purchase_apr_good is none
+                    and card.purchase_apr_great is none
+                }}
+            </dd>
+        {% else %}
+            <dd>This card does not offer a purchase APR.</dd>
+        {% endif %}
+        {# No cards in the June 2023 data have this fee, so we'll handle it with
+            a very simple yes/no to future-proof it just in case
+        #}
+        {% if card.purchase_transaction_fees %}
+            <dt>Purchase transaction fee</dt>
+            <dd>Yes</dd>
+        {% endif %}
+        <dt>Purchase APR variabilty</dt>
+        <dd>
+            The purchase APR is
+            {{ 'variable' if 'V' in card.index else 'fixed' }}
+            {% if card.purchase_apr_index %}
+                based on the value of the
+                {{ card.variable_rate_index | join | lower }}
+                index
+            {% endif %}
+        </dd>
+        {% if card.introductory_apr_offered %}
+            <dt>Introductory APR</dt>
+            {# Intro APRs are displayed the same way as purchase APRs #}
+            <dd>
+                {% if card.intro_apr_min is not none
+                    or card.intro_apr_max is not none
+                    or card.intro_apr_median is not none
+                %}
+                    {% set intro_apr_range =
+                        apr_range(card.intro_apr_min, card.intro_apr_max) if
+                        card.intro_apr_min is not none
+                        and card.intro_apr_max is not none
+                    %}
+                    {% set intro_apr_median = apr(card.intro_apr_median) if
+                        card.intro_apr_median is not none
+                    %}
+                    {{ intro_apr_range if intro_apr_range }}
+                    {{ '(' if intro_apr_median
+                        and intro_apr_range
+                        and intro_apr_median != intro_apr_range
+                    }}
+                    {{- intro_apr_median ~ ' median introductory APR' if
+                        intro_apr_median
+                        and intro_apr_median != intro_apr_range
+                    }}
+                    {{- ')' if intro_apr_median
+                        and intro_apr_range
+                        and intro_apr_median != intro_apr_range
+                    }}
+                    {{ 'with median introductory APRs varying by credit score:' if
+                        card.introductory_apr_vary_by_credit_tier
+                    }}
+                {% endif %}
+                {% if card.introductory_apr_vary_by_credit_tier %}
+                    <table class="o-table">
+                        <thead>
+                            <tr>
+                                <th>619 or less</th>
+                                <th>620 to 719</th>
+                                <th>720 or greater</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ apr(card.intro_apr_poor) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.intro_apr_good) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.intro_apr_great) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                {{ 'The issuer did not submit APR information for this card'
+                    if card.intro_apr_min is none
+                    and card.intro_apr_median is none
+                    and card.intro_apr_max is none
+                    and card.intro_apr_poor is none
+                    and card.intro_apr_good is none
+                    and card.intro_apr_great is none
+                }}
+            </dd>
+            <dt>Median length of introductory APR</dt>
+            <dd>
+                {{ '%g' | format(card.median_length_of_introductory_apr) }} months
+            </dd>
+        {% endif %}
+        <dt>Foreign transaction fee</dt>
+        <dd>
+            {#
+                How variations of foreign transaction fees should display:
+                    - No fee: "None"
+                    - Dollar amount: "$3.00"
+                    - Percentage: "3.00%"
+                    - Calculation: "Whatever text was submitted"
+                    - With minimum fee amount: add "($0.50 minimum)" to the end
+                    - Dollar or percentage and calculation: "3.00% (whatever text was submitted)"
+            #}
+            {% if card.foreign_transaction_fees %}
+                {{ '$' ~ card.foreign_transaction_fee_dollars if
+                    card.foreign_transaction_fee_dollars is not none
+                }}
+                {{ apr(card.foreign_transaction_fee_percentage) if
+                    card.foreign_transaction_fee_percentage is not none
+                }}
+                {% if card.minimum_foreign_transaction_fee_amount is not none %}
+                {% set foreign_transaction_fee_minimum =
+                    card.minimum_foreign_transaction_fee_amount | float
+                %}
+                {{ '($' ~ '%.2f' | format(foreign_transaction_fee_minimum) ~
+                    ' minimum)' if card.minimum_foreign_transaction_fee_amount is
+                    not none
+                }}
+                {% endif %}
+                {% if card.foreign_transaction_fee_calculation %}
+                {{ '(' if card.foreign_transaction_fee_dollars is not none
+                    or card.foreign_transaction_fee_percentage is not none
+                -}}
+                {{- card.foreign_transaction_fee_calculation -}}
+                {{- ')' if card.foreign_transaction_fee_dollars is not none
+                    or card.foreign_transaction_fee_percentage is not none
+                -}}
+                {% endif %}
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+    </dl>
+    <h2>Balance transfers</h2>
+    {% if card.balance_transfer_offered %}
+        <dl class="m-list m-list__card-details">
+            <dt>Balance transfer APR</dt>
+            {# Transfer APRs are displayed the same way as purchase APRs #}
+            <dd>
+                {% if card.transfer_apr_min is not none
+                    or card.transfer_apr_max is not none
+                    or card.transfer_apr_median is not none
+                %}
+                    {% set transfer_apr_range =
+                        apr_range(card.transfer_apr_min, card.transfer_apr_max) if
+                        card.transfer_apr_min is not none
+                        and card.transfer_apr_max is not none
+                    %}
+                    {% set transfer_apr_median = apr(card.transfer_apr_median) if
+                        card.transfer_apr_median is not none
+                    %}
+                    {{ transfer_apr_range if transfer_apr_range }}
+                    {{ '(' if transfer_apr_median
+                        and transfer_apr_range
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{- transfer_apr_median ~ ' median balance transfer APR' if
+                        transfer_apr_median
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{- ')' if transfer_apr_median
+                        and transfer_apr_range
+                        and transfer_apr_median != transfer_apr_range
+                    }}
+                    {{ 'with median balance transfer APRs varying by credit score:' if
+                        card.balance_transfer_apr_vary_by_credit_tier
+                    }}
+                {% endif %}
+                {% if card.balance_transfer_apr_vary_by_credit_tier %}
+                    <table class="o-table">
+                        <thead>
+                            <tr>
+                                <th>619 or less</th>
+                                <th>620 to 719</th>
+                                <th>720 or greater</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ apr(card.transfer_apr_poor) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.transfer_apr_good) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.transfer_apr_great) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                {{ 'The issuer did not submit balance transfer APR information for this card'
+                    if card.transfer_apr_min is none
+                    and card.transfer_apr_median is none
+                    and card.transfer_apr_max is none
+                    and card.transfer_apr_poor is none
+                    and card.transfer_apr_good is none
+                    and card.transfer_apr_great is none
+                }}
+            </dd>
+            <dt>Balance transfer fee</dt>
+            <dd>
+                {# Similar to how foreign transaction fees display #}
+                {% if card.balance_transfer_fees %}
+                    {{ '$' ~ card.balance_transfer_fee_dollars if
+                        card.balance_transfer_fee_dollars is not none
+                    }}
+                    {{ ' or ' if card.balance_transfer_fee_dollars is not none
+                        and card.balance_transfer_fee_percentage is not none
+                    }}
+                    {{ apr(card.balance_transfer_fee_percentage) if
+                        card.balance_transfer_fee_percentage is not none
+                    }}
+                    {% if card.minimum_balance_transfer_fee_amount is not none %}
+                    {% set balance_transfer_fee_minimum =
+                        card.minimum_balance_transfer_fee_amount | float
+                    %}
+                    {{ '($' ~ '%.2f' | format(balance_transfer_fee_minimum) ~
+                        ' minimum)' if card.minimum_balance_transfer_fee_amount
+                        is not none
+                    }}
+                    {% endif %}
+                    {% if card.balance_transfer_fee_calculation %}
+                    {{ '(' if card.balance_transfer_fee_dollars is not none
+                        or card.balance_transfer_fee_percentage is not none
+                    -}}
+                    {{- card.balance_transfer_fee_calculation -}}
+                    {{- ')' if card.balance_transfer_fee_dollars is not none
+                        or card.balance_transfer_fee_percentage is not none
+                    -}}
+                    {% endif %}
+                {% else %}
+                    None
+                {% endif %}
+            </dd>
+            <dt>Median length promotional period</dt>
+            <dd>
+                {{ '%g' | format(card.median_length_of_balance_transfer_apr) }} months
+            </dd>
+            <dt>Grace period</dt>
+            <dd>
+                {{ 'Yes' if card.balance_transfer_grace_period else 'No' }}
+            </dd>
+        </dl>
+    {% else %}
+        <p>This card does not offer balance transfers.</p>
+    {% endif %}
+    <h2>Cash advances</h2>
+    {% if card.cash_advance_apr_offered %}
+        <dl class="m-list m-list__card-details">
+            <dt>Cash advance APR</dt>
+            {# Cash advance APRs are displayed the same way as purchase APRs #}
+            <dd>
+                {% if card.advance_apr_min is not none
+                    or card.advance_apr_max is not none
+                    or card.advance_apr_median is not none
+                %}
+                    {% set advance_apr_range =
+                        apr_range(card.advance_apr_min, card.advance_apr_max) if
+                        card.advance_apr_min is not none
+                        and card.advance_apr_max is not none
+                    %}
+                    {% set advance_apr_median = apr(card.advance_apr_median) if
+                        card.advance_apr_median is not none
+                    %}
+                    {{ advance_apr_range if advance_apr_range }}
+                    {{ '(' if advance_apr_median
+                        and advance_apr_range
+                        and advance_apr_median != advance_apr_range
+                    }}
+                    {{- advance_apr_median ~ ' median cash advance APR' if
+                        advance_apr_median
+                        and advance_apr_median != advance_apr_range
+                    }}
+                    {{- ')' if advance_apr_median
+                        and advance_apr_range
+                        and advance_apr_median != advance_apr_range
+                    }}
+                    {{ 'with median cash advance APRs varying by credit score:' if
+                        card.cash_advance_apr_vary_by_credit_tier
+                    }}
+                {% endif %}
+                {% if card.cash_advance_apr_vary_by_credit_tier %}
+                    <table class="o-table">
+                        <thead>
+                            <tr>
+                                <th>619 or less</th>
+                                <th>620 to 719</th>
+                                <th>720 or greater</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ apr(card.advance_apr_poor) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.advance_apr_good) }}
+                                </td>
+                                <td>
+                                    {{ apr(card.advance_apr_great) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                {{ 'The issuer did not submit cash advance APR information for this card'
+                    if card.advance_apr_min is none
+                    and card.advance_apr_median is none
+                    and card.advance_apr_max is none
+                    and card.advance_apr_poor is none
+                    and card.advance_apr_good is none
+                    and card.advance_apr_great is none
+                }}
+            </dd>
+            <dt>Cash advance fee</dt>
+            <dd>
+                {# Similar to how foreign transaction fees display #}
+                {% if card.cash_advance_fees %}
+                    {{ '$' ~ card.cash_advance_fee_dollars if
+                        card.cash_advance_fee_dollars is not none
+                    }}
+                    {{ ' or ' if card.cash_advance_fee_dollars is not none
+                        and card.cash_advance_fee_percentage is not none
+                    }}
+                    {{ apr(card.cash_advance_fee_percentage) if
+                        card.cash_advance_fee_percentage is not none
+                    }}
+                    {% if card.minimum_cash_advance_fee_amount is not none %}
+                    {% set cash_advance_fee_minimum =
+                        card.minimum_cash_advance_fee_amount | float
+                    %}
+                    {{ '($' ~ '%.2f' | format(cash_advance_fee_minimum) ~
+                        ' minimum)' if card.minimum_cash_advance_fee_amount
+                        is not none
+                    }}
+                    {% endif %}
+                    {% if card.cash_advance_fee_calculation %}
+                    {{ '(' if card.cash_advance_fee_dollars is not none
+                        or card.cash_advance_fee_percentage is not none
+                    -}}
+                    {{- card.cash_advance_fee_calculation -}}
+                    {{- ')' if card.cash_advance_fee_dollars is not none
+                        or card.cash_advance_fee_percentage is not none
+                    -}}
+                    {% endif %}
+                {% else %}
+                    None
+                {% endif %}
+            </dd>
+            {% if card.cash_advance_fees %}
+                <dt>Cash advance fee frequency</dt>
+                <dd>
+                {{ 'The fee is charged for each cash advance transaction' if
+                    card.cash_advance_fee_for_each_transaction else
+                    'The fee is charged once per billing cycle'
+                }}
+                </dd>
+            {% endif %}
+        </dl>
+    {% else %}
+        <p>This card does not offer cash advances.</p>
+    {% endif %}
+
+    {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
+    <h3 class="h5">All fields</h3>
+
+    <table class="o-table o-table__striped">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field in card._meta.fields %}
+            <tr>
+                <td>{{ field.name }}</td>
+                <td>{{ card.__getattribute__(field.name) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+{% endblock content_main %}

@@ -570,13 +570,17 @@ class FullWidthText(blocks.StreamBlock):
 
 class BaseExpandable(blocks.StructBlock):
     label = blocks.CharBlock(required=False)
+    icon = blocks.CharBlock(required=False)
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)
+    is_larger_heading = blocks.BooleanBlock(required=False)
+    is_expanded_padding = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = "list-ul"
         template = "v1/includes/organisms/expandable.html"
+        form_classname = "struct-block base-expandable"
         label = "Expandable"
 
     class Media:
@@ -1139,3 +1143,11 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "v1/includes/organisms/data_snapshot.html"
+
+
+class FeatureCards(blocks.StructBlock):
+    feature_cards = blocks.ListBlock(molecules.FeatureCard(), default=list())
+
+    class Meta:
+        icon = "list-ul"
+        template = "v1/includes/organisms/feature-cards.html"

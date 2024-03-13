@@ -1,0 +1,70 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+
+{% block title -%}
+    {{ title }} | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
+{% endblock %}
+
+{% block content_main %}
+
+<div class="content_wrapper">
+    <div class="block block__sub">
+        <h1>{{ heading }}</h1>
+        <p class="lead-paragraph">
+            We know people use credit cards for many reasons.
+            Our database of {{ num_cards or "" }}
+            cards can help you find ones that are best for you.
+        </p>
+    </div>
+
+    <div class="block block__sub">
+        <form action="." method="get">
+
+            <div class="o-form_group">
+                <div class="m-form-field m-form-field__select">
+                    <label
+                        class="a-label a-label__heading"
+                        for="{{ form.credit_tier.id_for_label}}"
+                    >
+                        {{ form.credit_tier.label }}
+                    </label>
+
+                    {{ form.credit_tier }}
+                </div>
+            </div>
+
+            <p>
+                If you don’t know your credit score,
+                <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/">find out for free</a>
+                or play around to find out how credit score affects rates.
+            </p>
+
+            <legend class="a-legend">
+                I’m looking for a card that will help me...
+            </legend>
+
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    {{ form.situation }}
+                </fieldset>
+            </div>
+
+            <div class="m-btn-group">
+                <button class="a-btn a-btn__full-on-xs" title="See cards for your situation">See cards for your situation</button>
+                <div class="u-btn-helper">
+                    Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock content_main %}
+

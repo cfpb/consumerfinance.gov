@@ -68,6 +68,21 @@
   }
 
   &_content {
+    padding: 0 unit((15px / @base-font-size-px), em);
+
+    // The divider between _header and _content.
+    &::before {
+      content: '';
+      display: block;
+      border-top: 1px solid @expandable__border;
+      padding-top: unit((15px / @base-font-size-px), em);
+    }
+
+    &::after {
+      padding-bottom: unit((15px / @base-font-size-px), em);
+      width: 100%;
+    }
+
     // A clearfix prevents twitchy animations from occurring when margins
     // collapse and extend past the bounds of the expandable.
     .u-clearfix();
@@ -113,6 +128,8 @@
   //
 
   &_header {
+    padding: unit((10px / @base-font-size-px), em)
+      unit((15px / @base-font-size-px), em);
     display: flex;
     justify-content: space-between;
 
@@ -126,34 +143,6 @@
     .o-expandable_label {
       // Grow to available width.
       flex-grow: 1;
-    }
-  }
-
-  //
-  // Padded expandable modifier
-  //
-
-  &__padded {
-    .o-expandable_header {
-      padding: unit((10px / @base-font-size-px), em)
-        unit((15px / @base-font-size-px), em);
-    }
-
-    .o-expandable_content {
-      padding: 0 unit((15px / @base-font-size-px), em);
-
-      // The divider between _header and _content.
-      &::before {
-        content: '';
-        display: block;
-        border-top: 1px solid @expandable__border;
-        padding-top: unit((15px / @base-font-size-px), em);
-      }
-
-      &::after {
-        padding-bottom: unit((15px / @base-font-size-px), em);
-        width: 100%;
-      }
     }
   }
 
@@ -178,7 +167,7 @@
   //
 
   &-group {
-    .o-expandable__padded {
+    .o-expandable {
       border-bottom: 1px solid @expandable__border;
 
       &:first-child {

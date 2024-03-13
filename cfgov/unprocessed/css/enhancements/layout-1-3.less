@@ -12,15 +12,6 @@
     // Tablet and below.
     .respond-to-max(@bp-sm-max, {
       .u-layout-grid {
-        &_breadcrumbs {
-          padding-left: unit(30px / @base-font-size-px, rem);
-          padding-right: unit(30px / @base-font-size-px, rem);
-          margin-left: unit(-30px / @base-font-size-px, rem);
-          margin-right: unit(-30px / @base-font-size-px, rem);
-          background: @gray-5;
-          border-bottom: 1px solid @gray-40;
-        }
-
         &_secondary-nav {
           // Hide this element when it has a secondary nav DOM.
           &:has(nav.o-secondary-nav__no-children) {
@@ -33,24 +24,9 @@
     // Tablet only.
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
       .u-layout-grid {
-        &_breadcrumbs {
-          padding-left: unit(15px / @base-font-size-px, rem);
-          padding-right: unit(15px / @base-font-size-px, rem);
-        }
-
         &_secondary-nav {
           margin-left: unit(-30px / @base-font-size-px, rem);
           margin-right: unit(-30px / @base-font-size-px, rem);
-        }
-      }
-    });
-
-    // Tablet and above.
-    .respond-to-min(@bp-sm-min, {
-      .u-layout-grid {
-        &_wrapper {
-          padding-left: unit(30px / @base-font-size-px, rem);
-          padding-right: unit(30px / @base-font-size-px, rem);
         }
       }
     });
@@ -70,7 +46,6 @@
 
         &_main,
         &_secondary-nav {
-          padding-top: unit( (30px / @base-font-size-px ), rem );
           margin-left: 0;
         }
       }

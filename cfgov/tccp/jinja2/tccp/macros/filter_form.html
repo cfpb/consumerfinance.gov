@@ -1,0 +1,77 @@
+{%- import 'v1/includes/macros/time.html' as time -%}
+{%- import 'v1/includes/molecules/notification.html' as notification -%}
+
+{%- macro render_field(field, field_type) -%}
+<div class="m-form-field m-form-field__{{ field_type }}">
+    {# Checkboxes render the label after the input. #}
+    {% if field_type == "checkbox" -%}
+        {{ field }}
+    {%- endif %}
+
+    <label
+        class="a-label
+        {%- if field_type == "select" %} a-label__heading{% endif -%}"
+        for="{{ field.id_for_label }}">
+        {{ field.label }}
+    </label>
+
+    {# Checkboxes render the label after the input. #}
+    {% if field_type != "checkbox" -%}
+        {{ field }}
+    {%- endif %}
+</div>
+{%- endmacro -%}
+
+{%- macro render_form_fields(form) -%}
+<div class="content-l_col content-l_col-1">
+    <div class="o-form_group">
+        {{ render_field(form.targeted_credit_tiers, "select") }}
+    </div>
+
+    <div class="o-form_group">
+        {{ render_field(form.geo_availability, "select") }}
+    </div>
+
+    <div class="o-form_group">
+        <fieldset class="o-form_fieldset">
+            <legend class="a-legend">Features</legend>
+
+            {{ render_field(form.small_institution, "checkbox") }}
+
+            {{ render_field(form.no_account_fee, "checkbox") }}
+        </fieldset>
+    </div>
+
+    <div class="o-form_group">
+        <fieldset class="o-form_fieldset">
+            <legend class="a-legend">Rewards</legend>
+
+            {{ form.rewards }}
+        </fieldset>
+    </div>
+
+    <div class="o-form_group">
+        {{ render_field(form.ordering, "select") }}
+    </div>
+</div>
+{%- endmacro -%}
+
+{%- macro filter_form(form) -%}
+
+<form action="." method="get">
+    <div class="content-l">
+
+        {{ render_form_fields(form) }}
+
+        <div class="content-l_col content-l_col-1 m-btn-group">
+            <button type="submit" class="a-btn" title="Apply filters">
+                Apply filters
+            </button>
+            <a class="a-btn a-btn__link a-btn__warning" href="{{ request.path }}">
+                Clear filters
+            </a>
+        </div>
+    </div>
+</form>
+
+{%- endmacro %}

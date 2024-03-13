@@ -71,7 +71,6 @@
               block
               block__padded-top
               block__border-top
-              block__flush-bottom
               u-js-only">
               <div class="content-l">
                 <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
@@ -229,7 +228,7 @@
                 </div>
                 <div class="graph_slider">
                     <label for="graph_slider-input" class="u-visually-hidden">Select a claiming age</label>
-                    <input id="graph_slider-input" type="range" min="62" max="70" step="1">
+                    <input id="graph_slider-input" class="a-range" type="range" min="62" max="70" step="1">
                 </div>
             </div>
             <p class="y-axis-label">{{ _("Estimated benefits") }}</p>
@@ -896,7 +895,7 @@
         </div>
     </div>
     <hr class="before-step-three">
-    <div class="step-three">
+    <div class="step-three block">
         <h2><strong>{{STEP}} 3: </strong>{{ _("Learn your next steps") }}</h2>
         <div class="hidden-content">
             <h3 id="retirement-selector-label">

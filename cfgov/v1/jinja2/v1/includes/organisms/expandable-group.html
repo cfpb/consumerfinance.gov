@@ -30,8 +30,10 @@
 
    ========================================================================== #}
 
+
 {% if value.heading %}
-<div id="{{ value.heading | slugify_unique }}">
+{% set group_slug = value.heading | slugify_unique %}
+<div id="{{ group_slug }}">
     <h3>{{ value.heading }}</h3>
 {% else %}
 <div>
@@ -46,7 +48,10 @@
         {# Should be a stack of Expandable instances. #}
         {% if value.expandables %}
             {% for expandable in value.expandables %}
-              {% do expandable.update({'is_faq': value.is_faq}) %}
+              {% do expandable.update({
+                  'is_faq': value.is_faq,
+                  'group_index_slug': group_slug + '-' + loop.index | string if group_slug else None
+               })%}
                 {{ expandable }}
             {% endfor %}
         {% endif %}

@@ -54,7 +54,7 @@
             {{ _('You’ve taken a good step in understanding your financial picture.') }}
         </p>
     {% elif (current_language == 'en') %}
-        <div class="u-mb15">
+        <div class="block block__sub">
             {{ notification.render(
                 'warning',
                 true,
@@ -64,7 +64,7 @@
             ) }}
         </div>
     {% else %}
-        <div class="u-mb15">
+        <div class="block block__sub">
             {{ notification.render(
                 'warning',
                 true,
@@ -151,7 +151,6 @@
         </p>
     {% if user_score %}
         <div class="o-expandable
-                    o-expandable__padded
                     o-expandable__border">
             <button class="o-expandable_header">
                 <span class="o-expandable_label">

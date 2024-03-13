@@ -83,6 +83,15 @@ class AbstractHero(blocks.StructBlock):
             "</ul>"
         ),
     )
+
+    heading_continued = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            "Use if the heading needs to break to a second line"
+            "at a specific point in the text."
+        ),
+    )
+
     body = blocks.RichTextBlock(
         label="Sub-heading",
         required=False,
@@ -545,3 +554,15 @@ class ContentWithAnchor(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "v1/includes/molecules/full-width-text-anchor.html"
+
+
+class FeatureCard(blocks.StructBlock):
+    category = atoms.Hyperlink()
+    icon = blocks.TextBlock()
+    footer_label = blocks.TextBlock()
+
+    links = blocks.ListBlock(atoms.Hyperlink())
+
+    class Meta:
+        icon = "edit"
+        template = "v1/includes/molecules/feature-card.html"

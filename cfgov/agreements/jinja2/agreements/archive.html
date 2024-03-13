@@ -4,64 +4,54 @@
     Credit card agreement database archive | Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block content %}
-<main class="content content__2-1 content__bleedbar">
-    <div class="content_wrapper">
-      {% set breadcrumb_items = [
-        ({'href':'/','title':'Home'}),
-        ({'href':'/data-research/credit-card-data/','title':'Credit cards'}),
-        ({'href':'/credit-cards/agreements/','title':'Credit card agreement database'}),
-      ] %}
+{% set breadcrumb_items = [
+  ({'href':'/','title':'Home'}),
+  ({'href':'/data-research/credit-card-data/','title':'Credit cards'}),
+  ({'href':'/credit-cards/agreements/','title':'Credit card agreement database'}),
+] %}
 
-      {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-      {{ breadcrumbs.render(breadcrumb_items) }}
-    </div>
-    <div class="content_wrapper">
-        <div class="content_main">
-            <div class="block block__flush-top">
-                <h1>Credit card agreement archive</h1>
-                {% if agreements | length == 0 %}
-                  We encountered an error fetching the credit card agreement archive. Please try again.
-                {% endif %}
-                <ul class="m-list m-list__links u-mt15 cc-links">
-                  {% for agreement in agreements %}
-                    {% set year = agreement[-11:-7] %}
-                    {% set quarter = agreement[-6:-4] %}
-                    {% set name = quarter + "-" + year %}
-                    <li class="m-list m-list__links">
-                      <a href="https://files.consumerfinance.gov/{{agreement}}">
-                        {% if loop.index == 1 %}
+{% block content_main %}
+    <div class="block block__flush-top">
+        <h1>Credit card agreement archive</h1>
+        {% if agreements | length == 0 %}
+            We encountered an error fetching the credit card agreement archive. Please try again.
+        {% endif %}
+        <ul class="m-list m-list__links u-mt15 cc-links">
+            {% for agreement in agreements %}
+                {% set year = agreement[-11:-7] %}
+                {% set quarter = agreement[-6:-4] %}
+                {% set name = quarter + "-" + year %}
+                <li class="m-list m-list__links">
+                    <a href="https://files.consumerfinance.gov/{{agreement}}">
+                    {% if loop.index == 1 %}
                         <span style="font-size: 22px; line-height:3">Download all most recent agreements ({{name}})</span>
-                        {% else %}
+                    {% else %}
                         Archived {{name}} agreements
-                        {% endif %}
-                      </a>
-                    {% if name in flexibilities %}
-                      <br/>
-                      <span style="font-size:14px">
-                        Agreements may include omissions due to the Bureau’s COVID-19
-                        <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
-                          regulatory flexibility statement
-                        </a>
-                      </span>
                     {% endif %}
-                    {% if notes[name] %}
-                      <br/>
-                      <span style="font-size:14px">
+                    </a>
+                {% if name in flexibilities %}
+                    <br/>
+                    <span style="font-size:14px">
+                    Agreements may include omissions due to the Bureau’s COVID-19
+                    <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
+                        regulatory flexibility statement
+                    </a>
+                    </span>
+                {% endif %}
+                {% if notes[name] %}
+                    <br/>
+                    <span style="font-size:14px">
                         {{notes[name]}}
-                      </span>
-                    {% endif %}
-                    </li>
-                  {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <aside class="content_sidebar o-sidebar-content">
-            <div class="block block__flush-top">
-                {% include '_need_help.html' %}
-            </div>
-        </aside>
+                    </span>
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-</main>
+{% endblock %}
+
+{% block content_sidebar scoped  %}
+    <div class="block block__flush-top">
+        {% include '_need_help.html' %}
+    </div>
 {% endblock %}

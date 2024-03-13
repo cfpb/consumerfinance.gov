@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory, TestCase
@@ -9,8 +11,8 @@ from login.views import lockout
 class TestLockoutView(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
-        self.session_middleware = SessionMiddleware()
-        self.messages_middleware = MessageMiddleware()
+        self.session_middleware = SessionMiddleware(mock.MagicMock())
+        self.messages_middleware = MessageMiddleware(mock.MagicMock())
 
     def test_lockout_view_redirects(self):
         request = self.factory.post("/admin/login")
