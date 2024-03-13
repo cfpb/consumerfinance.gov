@@ -1,3 +1,2 @@
+// See https://htmx.org/
 import 'htmx.org';
-
-window.htmx = require('htmx.org');
