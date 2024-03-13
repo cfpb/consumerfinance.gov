@@ -58,7 +58,7 @@
 
 {%- macro filter_form(form) -%}
 
-<form action="." method="get">
+<form action="." method="get" hx-boost="true" hx-trigger="change delay:1s">
     <div class="content-l">
 
         {{ render_form_fields(form) }}
