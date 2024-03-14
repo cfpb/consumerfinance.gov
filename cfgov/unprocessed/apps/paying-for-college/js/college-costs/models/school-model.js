@@ -36,6 +36,16 @@ const schoolModel = {
   },
 
   /**
+   * bulkSetValue - Used to set a value
+   * @param {Array} tuples - values to update
+   */
+  bulkSetValue: (tuples) => {
+    tuples.forEach((v) => {
+      schoolModel.setValue(v[0], v[1], false)
+    });
+  },
+
+  /**
    * Reformats the programCodes array into an Object keyed by program ID
    */
   createProgramLists: function () {

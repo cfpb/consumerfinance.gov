@@ -129,12 +129,7 @@ const schoolView = {
       const input = document.querySelector(
         'INPUT[name="' + name + '"][value="' + value + '"]',
       );
-      if (input !== null) {
-        const label = input
-          .closest('.m-form-field__radio')
-          .querySelector('LABEL');
-        label.click();
-      }
+      input.checked = true;
     }
   },
 

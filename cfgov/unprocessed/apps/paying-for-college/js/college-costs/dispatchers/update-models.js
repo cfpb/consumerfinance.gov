@@ -7,6 +7,7 @@ import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
 import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
+import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
@@ -144,64 +145,58 @@ function setSchoolValues(data) {
  */
 function updateSchoolData(iped) {
   stateModel.setValue('schoolID', iped);
-  return new Promise((resolve, reject) => {
-    getSchoolData(iped)
-      .then((resp) => {
-        const data = JSON.parse(resp.responseText);
-        setSchoolValues(data);
-        const pid = getStateValue('pid');
+  return getSchoolData(iped)
+    .then((resp) => {
+      const data = JSON.parse(resp.responseText);
+      setSchoolValues(data);
+      const pid = getStateValue('pid');
 
-        // Create objects of programs keyed by program ID
-        schoolModel.createProgramLists();
-        const programInfo = getProgramInfo(pid);
+      // Create objects of programs keyed by program ID
+      schoolModel.createProgramLists();
+      const programInfo = getProgramInfo(pid);
 
-        // If we have a pid, validate it has info
-        if (!programInfo) {
-          stateModel.setValue('pid', false);
-        }
+      // If we have a pid, validate it has info
+      if (!programInfo) {
+        stateModel.setValue('pid', false);
+      }
 
-        // Take only the top 3 programs
-        schoolModel.values.programsTopThree = getTopThreePrograms(
-          schoolModel.values.programsPopular,
+      // Take only the top 3 programs
+      schoolModel.values.programsTopThree = getTopThreePrograms(
+        schoolModel.values.programsPopular,
+      );
+
+      // add the full state name to the schoolModel
+      schoolModel.values.stateName = getStateByCode(schoolModel.values.state);
+
+      // Some values must migrate to the financial model
+      if (programInfo) {
+        financialModel.setValue(
+          'salary_annual',
+          convertStringToNumber(programInfo.salary),
         );
-
-        // add the full state name to the schoolModel
-        schoolModel.values.stateName = getStateByCode(schoolModel.values.state);
-
-        // Some values must migrate to the financial model
-        if (programInfo) {
-          financialModel.setValue(
-            'salary_annual',
-            convertStringToNumber(programInfo.salary),
-          );
-          stateModel.setValue('programName', programInfo.name);
-        } else {
-          financialModel.setValue(
-            'salary_annual',
-            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr')),
-          );
-        }
-
-        // Update expenses by region
-        if ({}.hasOwnProperty.call(schoolModel.values, 'region')) {
-          document.querySelector('#expenses__region').value =
-            schoolModel.values.region;
-          updateRegion(schoolModel.values.region);
-        }
-
-        updateSchoolView();
-
-        resolve(true);
-      })
-      .catch(function (error) {
-        reject(error);
-        iped = iped.replace(/\D/g, '');
-        console.log(
-          'An error occurred when accessing school data for ' + iped,
-          error,
+        stateModel.setValue('programName', programInfo.name);
+      } else {
+        financialModel.setValue(
+          'salary_annual',
+          convertStringToNumber(getSchoolValue('medianAnnualPay6Yr')),
         );
-      });
-  });
+      }
+
+      // Update expenses by region
+      if ({}.hasOwnProperty.call(schoolModel.values, 'region')) {
+        document.querySelector('#expenses__region').value =
+          schoolModel.values.region;
+        updateRegion(schoolModel.values.region);
+      }
+      updateSchoolView();
+    })
+    .catch(function (error) {
+      iped = iped.replace(/\D/g, '');
+      console.log(
+        'An error occurred when accessing school data for ' + iped,
+        error,
+      );
+    });
 }
 
 /**
@@ -218,34 +213,47 @@ function updateFinancialsFromSchool() {
  */
 function parseQueryParameters(queryObj) {
   const modelMatch = {
-    expensesModel: expensesModel.setValue,
-    financialModel: financialModel.setValue,
-    schoolModel: schoolModel.setValue,
-    stateModel: stateModel.setValue,
+    expensesModel: expensesModel.bulkSetValue,
+    financialModel: financialModel.bulkSetValue,
+    schoolModel: schoolModel.bulkSetValue,
+    stateModel: stateModel.bulkSetValue,
   };
 
-  for (const key in queryObj) {
-    if ({}.hasOwnProperty.call(urlParameters, key)) {
-      const match = urlParameters[key].split('.');
-      modelMatch[match[0]](match[1], queryObj[key], false);
+  const modelArrays = {
+    expensesModel: [],
+    financialModel: [],
+    schoolModel: [],
+    stateModel: [],
+  };
 
-      // plus can mean either type of loan (they are mutually exclusive)
-      if (key === 'plus') {
-        financialModel.setValue(
-          'plusLoan_gradPlus',
-          convertStringToNumber(queryObj[key]),
-          false,
-        );
-      }
+  Object.keys(queryObj).forEach((key) => {
+    const match = urlParameters[key].split('.');
+    modelArrays[match[0]].push([match[1], queryObj[key]]);
+
+    if (key === 'plus') {
+      modelArrays.financialModel.push([
+        'plusLoan_gradPlus',
+        convertStringToNumber(queryObj[key]),
+      ]);
     }
-  }
+  });
 
   // Copy programLength into the financial model
-  financialModel.setValue(
+  modelArrays.financialModel.push([
     'other_programLength',
     convertStringToNumber(queryObj.lenp),
-    false,
-  );
+  ]);
+
+  Object.keys(modelMatch).forEach((key) => {
+    modelMatch[key](modelArrays[key]);
+  });
+
+  stateModel._setProgramLevel();
+  stateModel._setSalaryAvailable();
+  stateModel._checkRequiredFields();
+  recalculateFinancials();
+  updateFinancialViewAndFinancialCharts();
+  expensesView.updateExpensesView();
 }
 
 /**
@@ -274,37 +282,10 @@ function updateModelsFromQueryString(queryObj) {
   }
 
   parseQueryParameters(queryObj);
-  if ({}.hasOwnProperty.call(queryObj, 'iped')) {
-    updateSchoolData(queryObj.iped).then(() => {
-      updateExpensesFromQueryObj(queryObj);
-    });
-  }
-}
 
-/**
- * updateExpensesFromQueryObj - Update expenses with queryObj values
- * @param {object} queryObj - An object representing the url query string.
- */
-function updateExpensesFromQueryObj(queryObj) {
-  const params = [
-    'houx',
-    'fdx',
-    'clhx',
-    'trnx',
-    'hltx',
-    'entx',
-    'retx',
-    'taxx',
-    'chcx',
-    'othx',
-  ];
-  params.forEach((key) => {
-    if ({}.hasOwnProperty.call(urlParameters, key)) {
-      const prop = urlParameters[key].split('.')[1];
-      expensesModel.setValue(prop, queryObj[key], false);
-    }
-  });
-  expensesView.updateExpensesView();
+  if ({}.hasOwnProperty.call(queryObj, 'iped')) {
+    updateSchoolData(queryObj.iped);
+  }
 }
 
 export {
