@@ -58,7 +58,7 @@
 
 {%- macro filter_form(form) -%}
 
-<form action="." method="get" hx-boost="true" hx-trigger="change delay:1s" hx-swap="show:none">
+<form action="." method="get" hx-boost="true" hx-trigger="change" hx-swap="show:none" hx-indicator=".htmx-container" >
     <div class="content-l">
 
         {{ render_form_fields(form) }}
@@ -66,6 +66,9 @@
         <div class="content-l_col content-l_col-1 m-btn-group">
             <button type="submit" class="a-btn" title="Apply filters">
                 Apply filters
+                <span class="a-btn_icon a-btn_icon__on-right htmx-spinner">
+                    {{ svg_icon('updating') }}
+                </span>
             </button>
             <a class="a-btn a-btn__link a-btn__warning" href="{{ request.path }}">
                 Clear filters
