@@ -588,6 +588,56 @@
             <dt>Late fee policy details</dt>
             <dd>{{ card.late_fee_policy_details }}</dd>
         {% endif %}
+        <dt>Over-limit fee</dt>
+        <dd>
+            {% if card.over_limit_fees %}
+                {{ '$' ~ card.over_limit_fee_dollars if
+                    card.over_limit_fee_dollars
+                }}
+                {# A handful of cards specify only over-limit fee details and
+                    not a fixed dollar amount. For cards like that, we'll show
+                    the details here and not show the "Over-limit fee details."
+                #}
+                {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
+                    ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                }}
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {# See the comment above: we won't show this if we're already showing
+            over-limit fee details in the "Over-limit fee" item, i.e. if the
+            card has *only* details chosen in over_limit_fee_types.
+        #}
+        {% if card.overlimit_fee_detail
+            and card.over_limit_fee_types !=
+            ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+        %}
+            <dt>Over-limit fee details</dt>
+            <dd>{{ card.overlimit_fee_detail }}</dd>
+        {% endif %}
+        {% if card.other_fees %}
+            {% for fee_name in [card.other_fee_name, card.other_fee_name_2,
+                card.other_fee_name_3, card.other_fee_name_4,
+                card.other_fee_name_5
+            ] %}
+                {% if fee_name %}
+                    <dt>{{ fee_name }}</dt>
+                    <dd>
+                        {% if loop.first %}
+                            {{ '$' ~ '%.2f' | format(card.other_fee_amount | float) ~ ' (' ~
+                                card.other_fee_explanation | lower ~ ')'
+                            }}
+                        {% else %}
+                            {{ '$' ~ '%.2f' | format(card['other_fee_amount_' ~ loop.index] | float) ~ ' (' ~
+                                card['other_fee_explanation_' ~ loop.index] | lower ~
+                                ')'
+                            }}
+                        {% endif %}
+                    </dd>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </dl>
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
