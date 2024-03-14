@@ -43,7 +43,7 @@
            {{ 'disabled' if value.disabled else ''}}>
     <label class="a-label"
            for="{{ id }}">
-        {{ value.label }}
+        {{ value.label | safe}}
     </label>
 </{{ el }}>
 
