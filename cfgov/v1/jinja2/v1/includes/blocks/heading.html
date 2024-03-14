@@ -29,7 +29,7 @@
 {%- if value.level_class %} class="{{ value.level_class }}"
 {%- endif %} id="{{ value.text | slugify_unique }}">
     {%- if value.icon %}{{ svg_icon( value.icon ) }} {% endif %}
-    {{- value.text | safe -}}
+    {{- value.text -}}
 </{{ value.level }}>
 
 {%- endif %}

@@ -13,7 +13,7 @@
         {% elif loop.index == 1 %}
         <div class="block
                     block__flush-top">
-            {{ render_stream_child(block) }}
+            {% include_block block %}
         </div>
         {% endif %}
     {% endfor %}
