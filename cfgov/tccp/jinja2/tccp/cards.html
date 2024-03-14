@@ -27,7 +27,7 @@
 <h1>{{ heading }}</h1>
 
 <p>
-    Filter and sort the {{ total_count or "" }} cards in our database
+    Filter and sort the {{ stats_all.count or "" }} cards in our database
     to find cards that have the features that fit your situation.
 </p>
 
@@ -42,7 +42,7 @@
     {% endcall %}
 </div>
 
-
+{% set purchase_apr_adjectives = ["less", "average", "more"] %}
 
 <div class="block block__sub">
     <div class="o-filterable-list-results">
@@ -61,9 +61,25 @@
         ) -}}
         {%- endif %}
 
+        <div class="block__sub">
+            <div class="a-label__heading">Key</div>
+
+            {% for adjective in purchase_apr_adjectives %}
+                <p class="u-mb0">
+                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+                        {%- for i in range(loop.index) -%}
+                            {{ svg_icon("dollar-round") }}
+                        {%- endfor -%}
+
+                        Pay {{ adjective }} interest
+                    </span>
+                </p>
+            {% endfor %}
+        </div>
+
         <p>
-            {% if first_report_date -%}
-            {{ data_published(first_report_date) }}
+            {% if stats_all.first_report_date -%}
+            {{ data_published(stats_all.first_report_date) }}
             {%- endif %}
         </p>
 
@@ -72,6 +88,22 @@
                 <div class="a-card-institution-name">{{ card.institution_name }}</div>
                 <div>{{ card.product_name }}</div>
             </a>
+        {%- endmacro -%}
+
+        {%- macro purchase_apr_cell(card) -%}
+            {%- set adjective = purchase_apr_adjectives[
+                card.purchase_apr_for_tier_rating
+            ] -%}
+
+            {{- apr(card.purchase_apr_for_tier) -}}
+
+            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+                {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
+                    {{ svg_icon("dollar-round") }}
+                {% endfor -%}
+
+                <strong>Pay {{ adjective }} interest</strong>
+            </span>
         {%- endmacro -%}
 
         {%- set card_columns = [
@@ -86,7 +118,7 @@
         {%- for card in results %}
             {% do card_rows.append( [
                 card_name_cell(card) | safe,
-                apr(card.purchase_apr_for_tier),
+                purchase_apr_cell(card) | safe,
                 ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
                 apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),

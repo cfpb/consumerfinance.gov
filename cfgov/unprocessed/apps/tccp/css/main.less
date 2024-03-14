@@ -128,6 +128,28 @@
   margin-bottom: 0;
 }
 
+.a-card-purchase-apr-rating {
+  .cf-icon-svg:first-of-type {
+    margin-left: unit((4px / @base-font-size-px), em);
+  }
+
+  .cf-icon-svg:last-of-type {
+    margin-right: unit((4px / @base-font-size-px), em);
+  }
+
+  &__less .cf-icon-svg {
+    color: @green;
+  }
+
+  &__average .cf-icon-svg {
+    color: @gold;
+  }
+
+  &__more .cf-icon-svg {
+    color: @red;
+  }
+}
+
 .m-list__card-details {
   dt {
     margin-top: 15px;

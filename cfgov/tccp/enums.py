@@ -44,6 +44,13 @@ CreditTierChoices = [
 ]
 
 
+CreditTierColumns = [
+    ("Credit score 619 or less", "poor"),
+    ("Credit scores from 620 to 719", "good"),
+    ("Credit score of 720 or greater", "great"),
+]
+
+
 FeaturesChoices = make_choices(
     "Contactless Payments",
     "Chip card",

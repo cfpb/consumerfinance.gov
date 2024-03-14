@@ -50,7 +50,9 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         model = CardSurveyData
         fields = []
 
-    def __init__(self, data=None, *args, **kwargs):
+    def __init__(self, data=None, summary_stats=None, *args, **kwargs):
+        self.summary_stats = summary_stats
+
         # Set field defaults to their initial values, if not set.
         #
         # https://django-filter.readthedocs.io/en/stable/guide/tips.html#using-initial-values-as-defaults
@@ -68,7 +70,7 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         super().__init__(data, *args, **kwargs)
 
     def filter_targeted_credit_tiers(self, queryset, name, value):
-        return queryset.for_credit_tier(value)
+        return queryset.for_credit_tier(value, self.summary_stats)
 
     def filter_geo_availability(self, queryset, name, value):
         return queryset.available_in(value)

@@ -6,6 +6,7 @@ from .models import CardSurveyData
 class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     periodic_fee_type = serializers.JSONField()
     purchase_apr_for_tier = serializers.FloatField()
+    purchase_apr_for_tier_rating = serializers.IntegerField()
     rewards = serializers.JSONField()
     transfer_apr_for_tier = serializers.FloatField()
 
@@ -16,6 +17,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
             "periodic_fee_type",
             "product_name",
             "purchase_apr_for_tier",
+            "purchase_apr_for_tier_rating",
             "rewards",
             "secured_card",
             "state_limitations",

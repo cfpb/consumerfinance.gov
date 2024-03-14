@@ -4,7 +4,6 @@ from urllib.parse import quote_plus
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
 
-from tccp.enums import CreditTierChoices
 from tccp.models import CardSurveyData
 from tccp.views import CardListView, LandingPageView
 
@@ -22,7 +21,7 @@ class LandingPageViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_situation_redirect(self):
-        tier = CreditTierChoices[2][0]
+        tier = "Credit scores from 620 to 719"
 
         response = self.make_request(
             "?credit_tier=" + quote_plus(tier) + "&situation=Pay+less+interest"
@@ -46,13 +45,11 @@ class CardListViewTests(TestCase):
     def setUpTestData(cls):
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers="Credit score of 720 or greater",
             purchase_apr_great=0.99,
             _quantity=5,
         )
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers="No credit score",
             _quantity=3,
         )
 
