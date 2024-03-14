@@ -1,10 +1,7 @@
-import html
-
 from django.utils.module_loading import import_string
 
 from jinja2 import pass_context
 from jinja2.ext import Extension
-from markupsafe import Markup
 
 from core.feature_flags import environment_is
 from v1.jinja2tags.datetimes import DatetimesExtension
@@ -64,25 +61,6 @@ def is_filter_selected(context, fieldname, value):
     ]
 
     return value in query_string_values
-
-
-def render_stream_child(context, stream_child):
-    rendered = stream_child.render(context=context)
-
-    # This logic is needed because historically we have supported the
-    # inclusion of raw HTML tags in any Wagtail text or rich text block.
-    # Ideally we could remove this logic, but before we do so we need to
-    # eliminate all such tags from our field content.
-    #
-    # By default all blocks are unescaped, but individual blocks can disable
-    # this behavior by setting unescape=False in their Meta class. Once all
-    # blocks have been audited for raw HTML tags, and all have unescape set
-    # to False, this logic can be removed, and we can simplify our templates
-    # to use {% include_block %} instead of {{ render_stream_child }}.
-    if getattr(stream_child.block.meta, "unescape", True):
-        rendered = html.unescape(rendered)
-
-    return Markup(rendered)
 
 
 def unique_id_in_context(context):
@@ -149,7 +127,6 @@ class V1Extension(Extension):
                 "is_blog": ref.is_blog,
                 "is_report": ref.is_report,
                 "is_filter_selected": pass_context(is_filter_selected),
-                "render_stream_child": pass_context(render_stream_child),
                 "unique_id_in_context": pass_context(unique_id_in_context),
                 "app_url": app_url,
                 "app_page_url": app_page_url,

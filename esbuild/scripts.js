@@ -42,6 +42,7 @@ const jsPaths = [
   `${apps}/rural-or-underserved-tool/js/common.js`,
   `${apps}/teachers-digital-platform/js/index.js`,
   `${apps}/filing-instruction-guide/js/fig-init.js`,
+  `${apps}/tccp/js/index.js`,
 ];
 
 /**

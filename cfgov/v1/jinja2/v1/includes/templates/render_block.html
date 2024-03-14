@@ -12,7 +12,7 @@
    {% endif %}
 
    <div class="{{ block_classes | unique | join(' ') }}">
-      {{ render_stream_child( block ) }}
+      {% include_block block %}
    </div>
 
    {# TODO: Rename `has_rule` to `has_bottom_rule_line` #}
