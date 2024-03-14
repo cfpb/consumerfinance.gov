@@ -7,7 +7,7 @@ from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
-from v1.blocks import AnchorLink, HeadingBlock
+from v1.blocks import AnchorLink, HeadingBlock, UnescapedRichTextBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
@@ -37,7 +37,7 @@ class TextIntroduction(blocks.StructBlock):
     )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    body = UnescapedRichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(
         required=False,
