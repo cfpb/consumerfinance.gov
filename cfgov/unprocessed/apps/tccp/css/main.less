@@ -23,6 +23,21 @@
   }
 }
 
+// htmx loading indicators https://htmx.org/attributes/hx-indicator/
+.htmx-spinner {
+  display: none;
+}
+
+// Show the spinner and dim the results when a request is in flight
+.htmx-request {
+  .htmx-spinner {
+    display: inline;
+  }
+  .htmx-results {
+    opacity: 0.5;
+  }
+}
+
 // Some cards list a lot of available locations and disrupt the table layout.
 // Cap the width of the availability cell on non-mobile screens to prevent this.
 @media only screen and (min-width: @bp-sm-min) {
