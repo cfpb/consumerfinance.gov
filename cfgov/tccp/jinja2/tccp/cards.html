@@ -22,6 +22,10 @@
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} htmx-container
+{%- endblock %}
+
 {% block content_main %}
 
 <h1>{{ heading }}</h1>
@@ -45,7 +49,7 @@
 {% set purchase_apr_adjectives = ["less", "average", "more"] %}
 
 <div class="block block__sub">
-    <div class="o-filterable-list-results">
+    <div class="o-filterable-list-results htmx-results">
 
         {% if count -%}
         {{- notification.render(
