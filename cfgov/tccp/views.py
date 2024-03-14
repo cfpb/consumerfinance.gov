@@ -1,18 +1,17 @@
 from urllib.parse import urlencode
 
-from django.db.models import Count, Min
 from django.shortcuts import redirect, reverse
 from django.template.defaultfilters import title
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 
-import django_filters.rest_framework
 from flags.views import FlaggedTemplateView, FlaggedViewMixin
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
+from .filter_backend import StatsProvidingDjangoFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
 from .models import CardSurveyData
@@ -41,7 +40,7 @@ class LandingPageView(FlaggedTemplateView):
                 "heading": self.heading,
                 "breadcrumb_items": self.breadcrumb_items,
                 "form": LandingPageForm(),
-                "num_cards": CardSurveyData.objects.count(),
+                "stats": CardSurveyData.objects.get_summary_statistics(),
             }
         )
 
@@ -64,7 +63,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
     serializer_class = CardSurveyDataSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [StatsProvidingDjangoFilterBackend]
     filterset_class = CardSurveyDataFilterSet
     template_name = "tccp/cards.html"
     heading = "Customize for your situation"
@@ -81,7 +80,8 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     def list(self, request, *args, **kwargs):
         render_format = request.accepted_renderer.format
         queryset = self.get_queryset()
-        filter_backend = self.filter_backends[0]()
+        summary_stats = queryset.get_summary_statistics()
+        filter_backend = self.filter_backends[0](summary_stats)
 
         try:
             filtered_queryset = filter_backend.filter_queryset(
@@ -104,6 +104,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             {
                 "count": len(serializer.data),
                 "results": serializer.data,
+                "stats_all": summary_stats,
             }
         )
 
@@ -114,20 +115,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                 request, filtered_queryset, self
             )
 
-            # We also compute some statistics over the full dataset.
-            statistics = queryset.aggregate(
-                count=Count("pk"),
-                first_report_date=Min("report_date"),
-            )
-
             response.data.update(
                 {
                     "title": title(self.heading),
                     "heading": self.heading,
                     "breadcrumb_items": self.breadcrumb_items,
                     "form": filterset.form,
-                    "total_count": statistics["count"],
-                    "first_report_date": statistics["first_report_date"],
                 }
             )
 

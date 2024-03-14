@@ -1,4 +1,5 @@
 from django.test import SimpleTestCase, TestCase
+from django.utils import timezone
 
 from tccp.models import CardSurveyData
 
@@ -56,7 +57,6 @@ class CardSurveyDataQuerySetTests(TestCase):
     def test_for_credit_tier(self):
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers=["Credit score 619 or less"],
             purchase_apr_poor=9.99,
             transfer_apr_poor=8.88,
             transfer_apr_min=7.77,
@@ -65,7 +65,6 @@ class CardSurveyDataQuerySetTests(TestCase):
 
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers=["Credit score 619 or less"],
             purchase_apr_poor=None,
             transfer_apr_poor=None,
             transfer_apr_min=None,
@@ -74,7 +73,6 @@ class CardSurveyDataQuerySetTests(TestCase):
 
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers=["Credit score of 720 or greater"],
             purchase_apr_great=9.99,
             transfer_apr_great=None,
             transfer_apr_min=7.77,
@@ -88,10 +86,11 @@ class CardSurveyDataQuerySetTests(TestCase):
         self.assertQuerysetEqual(
             qs_poor.values_list(
                 "purchase_apr_for_tier",
+                "purchase_apr_for_tier_rating",
                 "transfer_apr_for_tier",
                 "transfer_apr_for_ordering",
             ),
-            [(9.99, 8.88, 8.88)],
+            [(9.99, 2, 8.88, 8.88)],
         )
 
         qs_great = CardSurveyData.objects.for_credit_tier(
@@ -101,8 +100,57 @@ class CardSurveyDataQuerySetTests(TestCase):
         self.assertQuerysetEqual(
             qs_great.values_list(
                 "purchase_apr_for_tier",
+                "purchase_apr_for_tier_rating",
                 "transfer_apr_for_tier",
                 "transfer_apr_for_ordering",
             ),
-            [(9.99, None, 7.77)],
+            [(9.99, 2, None, 7.77)],
+        )
+
+    def test_get_summary_statistics(self):
+        today = timezone.now().date()
+
+        baker.make(
+            CardSurveyData,
+            report_date=today,
+            purchase_apr_poor=3,
+            purchase_apr_good=2,
+            purchase_apr_great=1,
+        )
+
+        baker.make(
+            CardSurveyData,
+            report_date=today,
+            purchase_apr_poor=9,
+            purchase_apr_good=6,
+            purchase_apr_great=3,
+        )
+
+        baker.make(
+            CardSurveyData,
+            report_date=today,
+            purchase_apr_great=0,
+        )
+
+        self.assertEqual(
+            CardSurveyData.objects.get_summary_statistics(),
+            {
+                "count": 3,
+                "first_report_date": today,
+                "purchase_apr_poor_count": 2,
+                "purchase_apr_poor_min": 3,
+                "purchase_apr_poor_max": 9,
+                "purchase_apr_poor_pct25": 4.5,
+                "purchase_apr_poor_pct50": 6,
+                "purchase_apr_good_count": 2,
+                "purchase_apr_good_min": 2,
+                "purchase_apr_good_max": 6,
+                "purchase_apr_good_pct25": 3,
+                "purchase_apr_good_pct50": 4,
+                "purchase_apr_great_count": 3,
+                "purchase_apr_great_min": 0,
+                "purchase_apr_great_max": 3,
+                "purchase_apr_great_pct25": 0.5,
+                "purchase_apr_great_pct50": 1,
+            },
         )

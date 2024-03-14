@@ -44,6 +44,12 @@
   td[data-label='Availability'] {
     max-width: unit((350px / @base-font-size-px), em);
   }
+  td[data-label='Purchase APR'] {
+    min-width: unit((215px / @base-font-size-px), em);
+    .cf-icon-svg:first-of-type {
+      margin-left: 0;
+    }
+  }
 }
 
 // Overrides to the make the directory table pattern sticky
@@ -141,6 +147,34 @@
   .heading-5( @text-shadow: @gray );
   color: @gray;
   margin-bottom: 0;
+}
+
+.a-card-purchase-apr-rating {
+  // Put the APR ratings on their own line on non-mobile devices
+  @media only screen and (min-width: @bp-sm-min) {
+    display: flex;
+    align-items: center;
+  }
+
+  .cf-icon-svg:first-of-type {
+    margin-left: unit((4px / @base-font-size-px), em);
+  }
+
+  .cf-icon-svg:last-of-type {
+    margin-right: unit((2px / @base-font-size-px), em);
+  }
+
+  &__less .cf-icon-svg {
+    color: @green;
+  }
+
+  &__average .cf-icon-svg {
+    color: @gold;
+  }
+
+  &__more .cf-icon-svg {
+    color: @red;
+  }
 }
 
 .m-list__card-details {
