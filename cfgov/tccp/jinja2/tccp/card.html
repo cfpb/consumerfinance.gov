@@ -643,6 +643,32 @@
             {% endfor %}
         {% endif %}
     </dl>
+    <h2>Rewards and perks</h2>
+    <dl class="m-list m-list__card-details">
+        <dt>Rewards</dt>
+        <dd>
+            {% if card.rewards %}
+            <ul>
+                {% for reward in card.rewards %}
+                    <li>
+                        {{ 'Cash back' if reward == 'Cashback rewards' }}
+                        {{ 'Travel-related rewards' if reward == 'Travel-related rewards' }}
+                        {{ card.other_rewards if reward == 'Other rewards' }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {% if card.services %}
+            <dt>Services</dt>
+        {% endif %}
+        {% if card.card_features %}
+            <dt>Card features</dt>
+        {% else %}
+        {% endif %}
+    </dl>
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
     <h3 class="h5">All fields</h3>
