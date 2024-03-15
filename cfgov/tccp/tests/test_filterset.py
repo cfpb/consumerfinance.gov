@@ -12,18 +12,18 @@ class CardSurveyDataFilterSetTests(TestCase):
             CardSurveyDataFilterSet().data,
             {
                 "ordering": "purchase_apr",
-                "targeted_credit_tiers": "Credit scores from 620 to 719",
+                "credit_tier": "Credit scores from 620 to 719",
             },
         )
 
     def test_field_value_used_if_specified(self):
         data = {
             "ordering": "purchase_apr",
-            "targeted_credit_tiers": "Credit score of 720 or greater",
+            "credit_tier": "Credit score of 720 or greater",
         }
         self.assertEqual(CardSurveyDataFilterSet(data).data, data)
 
-    def test_filter_by_geo_availability(self):
+    def test_filter_by_location(self):
         for state in ["NJ", "NY", "PA"]:
             baker.make(
                 CardSurveyData,
@@ -36,7 +36,7 @@ class CardSurveyDataFilterSetTests(TestCase):
         qs = CardSurveyData.objects.all()
         self.assertEqual(qs.count(), 9)
 
-        fs = CardSurveyDataFilterSet({"geo_availability": "PA"}, queryset=qs)
+        fs = CardSurveyDataFilterSet({"location": "PA"}, queryset=qs)
         self.assertEqual(fs.qs.count(), 3)
 
     def test_filter_by_no_account_fee(self):

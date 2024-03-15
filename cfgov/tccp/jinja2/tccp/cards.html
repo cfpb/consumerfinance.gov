@@ -113,7 +113,6 @@
         {%- set card_columns = [
             {'heading': 'Credit card'},
             {'heading': 'Purchase APR'},
-            {'heading': 'Availability'},
             {'heading': 'Account fee'},
             {'heading': 'Balance transfer APR'},
             {'heading': 'Offers rewards'},
@@ -123,7 +122,6 @@
             {% do card_rows.append( [
                 card_name_cell(card) | safe,
                 purchase_apr_cell(card) | safe,
-                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
                 apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
                 (card.rewards | join(', ')) if card.rewards else 'None'

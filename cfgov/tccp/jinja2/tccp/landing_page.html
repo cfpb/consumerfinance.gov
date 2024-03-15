@@ -45,6 +45,19 @@
                 or play around to find out how credit score affects rates.
             </p>
 
+            <div class="o-form_group">
+                <div class="m-form-field m-form-field__select">
+                    <label
+                        class="a-label a-label__heading"
+                        for="{{ form.location.id_for_label}}"
+                    >
+                        {{ form.location.label }}
+                    </label>
+
+                    {{ form.location }}
+                </div>
+            </div>
+
             <legend class="a-legend">
                 I’m looking for a card that will help me...
             </legend>
