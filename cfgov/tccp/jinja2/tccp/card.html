@@ -1,7 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
-{% from 'tccp/macros/data_published.html' import data_published %}
-{% from 'tccp/macros/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/data_published.html' import data_published %}
+{% from 'tccp/includes/fields.html' import apr, apr_range %}
 
 {% block title -%}
     {{ card.institution_name }} {{ card.product_name }}
@@ -667,3 +667,7 @@
 </div>
 
 {% endblock content_main %}
+
+{% block content_sidebar %}
+    {%- include "tccp/includes/sidebar.html" -%}
+{% endblock content_sidebar %}

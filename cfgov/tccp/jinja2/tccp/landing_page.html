@@ -1,4 +1,4 @@
-{% extends "v1/layouts/layout-full.html" %}
+{% extends "v1/layouts/layout-2-1.html" %}
 
 {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
 
@@ -81,3 +81,6 @@
 
 {% endblock content_main %}
 
+{% block content_sidebar %}
+    {%- include "tccp/includes/sidebar.html" -%}
+{% endblock content_sidebar %}
