@@ -548,7 +548,7 @@
             <dt>Fee varies?</dt>
             <dd>
                 {{ '$' ~ card.periodic_min ~ '–'  ~ card.periodic_max ~
-                    ' (' ~ card.fee_explanation | lower ~ ')'
+                    ' (' ~ card.fee_explanation ~ ')'
                 }}
             </dd>
         {% endif %}
@@ -570,6 +570,7 @@
                     field. For cards like that, we'll show the details here and
                     not show the "Late fee policy details" item.
                 #}
+                {# TODO: Refactor to not use the exact string #}
                 {{ card.late_fee_policy_details if card.late_fee_types ==
                     ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
                 }}
@@ -581,6 +582,7 @@
             late fee details in the "Late fee" item, i.e. if the card has *only*
             policy details chosen in late_fee_types
         #}
+        {# TODO: Refactor to not use the exact string #}
         {% if card.late_fee_policy_details
             and card.late_fee_types !=
             ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
@@ -598,6 +600,7 @@
                     not a fixed dollar amount. For cards like that, we'll show
                     the details here and not show the "Over-limit fee details."
                 #}
+                {# TODO: Refactor to not use the exact string #}
                 {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
                     ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
                 }}
@@ -609,6 +612,7 @@
             over-limit fee details in the "Over-limit fee" item, i.e. if the
             card has *only* details chosen in over_limit_fee_types.
         #}
+        {# TODO: Refactor to not use the exact string #}
         {% if card.overlimit_fee_detail
             and card.over_limit_fee_types !=
             ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
