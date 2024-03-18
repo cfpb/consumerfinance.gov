@@ -67,9 +67,7 @@
     {% endcall %}
 </div>
 
-{%- set purchase_apr_adjectives = [
-    "less than average", "average", "more than average"
-] %}
+{%- set purchase_apr_adjectives = ["less", "average", "more"] %}
 
 <div class="block block__sub">
     <div class="o-filterable-list-results htmx-results">
@@ -93,12 +91,12 @@
 
             {% for adjective in purchase_apr_adjectives %}
                 <p class="u-mb0">
-                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective | slugify }}">
+                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
                         {%- for i in range(loop.index) -%}
                             {{ svg_icon("dollar-round") }}
                         {%- endfor -%}
 
-                        Pay {{ adjective }} interest
+                        Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
                     </span>
                 </p>
             {% endfor %}
@@ -124,7 +122,7 @@
 
             {{- apr(card.purchase_apr_for_tier) -}}
 
-            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective | slugify }}">
+            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
                 {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
                     {{ svg_icon("dollar-round") }}
                 {% endfor -%}
