@@ -16,7 +16,7 @@
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
         <h2>The most recent data</h2>
-        <p>We recommend using the most recent data, which include the full time series and all revisions. These data cover {{ from_month_formatted }}&ndash;{{ thru_month_formatted }}. In this update we use Connecticut’s new FIPS codes that changed in 2022 to nine county-equivalent boundaries.</p>
+        <p>We recommend using the most recent data, which include the full time series and all revisions. These data cover {{ from_month_formatted }}{{ '&ndash;' | safe }}{{ thru_month_formatted }}. In this update we use Connecticut’s new FIPS codes that changed in 2022 to nine county-equivalent boundaries.</p>
     </div>
 </div>
 
@@ -98,7 +98,7 @@
 {% set archive_90 = download_files[date]['percent_90'] %}
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
-        <h4> Download archival data {{ from_month_formatted }}&ndash;{{ download_files[date]['thru_month'] }}</h4>
+      <h4> Download archival data {{ from_month_formatted }}{{ '&ndash;' | safe }}{{ download_files[date]['thru_month'] }}</h4>
     </div>
 </div>
 <div class="block block__flush-top">
