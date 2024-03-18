@@ -60,6 +60,11 @@
 
     & > tbody td:first-child {
       position: sticky;
+      box-sizing: border-box;
+      width: 100vw;
+      margin-left: -(@grid_gutter-width / 2);
+      padding-right: @grid_gutter-width / 2;
+      padding-left: @grid_gutter-width / 2;
       margin-top: -1px;
       margin-bottom: 0;
       top: 0;
