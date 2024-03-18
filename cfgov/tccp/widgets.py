@@ -10,10 +10,6 @@ class RadioSelect(forms.RadioSelect):
         super().__init__(attrs=attrs, **kwargs)
 
 
-class LandingPageRadioSelect(RadioSelect):
-    option_template_name = "tccp/widgets/landing_page_radio_option.html"
-
-
 class CheckboxSelectMultiple(forms.CheckboxSelectMultiple):
     option_template_name = "tccp/widgets/checkbox_option.html"
 
@@ -21,6 +17,10 @@ class CheckboxSelectMultiple(forms.CheckboxSelectMultiple):
         attrs = attrs or {}
         attrs.setdefault("class", "a-checkbox")
         super().__init__(attrs=attrs, **kwargs)
+
+
+class SituationSelectMultiple(CheckboxSelectMultiple):
+    option_template_name = "tccp/widgets/situation_checkbox_option.html"
 
 
 class Select(forms.Select):

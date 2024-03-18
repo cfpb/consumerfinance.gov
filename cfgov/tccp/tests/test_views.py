@@ -27,7 +27,7 @@ class LandingPageViewTests(TestCase):
             "?location=NY"
             + "&credit_tier="
             + quote_plus(tier)
-            + "&situation=Pay+less+interest"
+            + "&situations=Pay+less+interest"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -36,6 +36,7 @@ class LandingPageViewTests(TestCase):
             + "?credit_tier="
             + quote_plus(tier)
             + "&location=NY"
+            + "&situations=Pay+less+interest"
             + "&ordering=purchase_apr",
         )
 

@@ -1,6 +1,7 @@
 from functools import reduce
 from operator import or_
 
+from django import forms
 from django.db.models import Q
 
 from django_filters import rest_framework as filters
@@ -8,6 +9,7 @@ from django_filters import rest_framework as filters
 from .enums import CreditTierChoices, RewardsChoices, StateChoices
 from .filters import CardOrderingFilter, CheckboxFilter, MultipleCheckboxFilter
 from .models import CardSurveyData
+from .situations import SituationChoices, get_situation_by_title
 from .widgets import Select
 
 
@@ -27,6 +29,12 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         label="Available in location",
         empty_label="Everywhere",
         widget=Select,
+    )
+    situations = filters.TypedMultipleChoiceFilter(
+        choices=SituationChoices,
+        coerce=get_situation_by_title,
+        method="filter_noop",
+        widget=forms.MultipleHiddenInput,
     )
     small_institution = CheckboxFilter(
         "top_25_institution", label="Small institution", exclude=True
@@ -89,4 +97,7 @@ class CardSurveyDataFilterSet(filters.FilterSet):
                 )
             )
 
+        return queryset
+
+    def filter_noop(self, queryset, name, value):
         return queryset

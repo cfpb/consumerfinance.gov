@@ -23,6 +23,17 @@ class CardSurveyDataFilterSetTests(TestCase):
         }
         self.assertEqual(CardSurveyDataFilterSet(data).data, data)
 
+    def test_filter_by_situations_noop(self):
+        baker.make(CardSurveyData, purchase_apr_good=0.99, _quantity=10)
+
+        qs = CardSurveyData.objects.all()
+        self.assertEqual(qs.count(), 10)
+
+        fs = CardSurveyDataFilterSet(
+            {"situations": ["Pay less interest"]}, queryset=qs
+        )
+        self.assertEqual(fs.qs.count(), 10)
+
     def test_filter_by_location(self):
         for state in ["NJ", "NY", "PA"]:
             baker.make(
@@ -42,7 +53,6 @@ class CardSurveyDataFilterSetTests(TestCase):
     def test_filter_by_no_account_fee(self):
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers=["Credit scores from 620 to 719"],
             purchase_apr_good=0.99,
             periodic_fee_type=["Annual"],
         )
@@ -59,7 +69,6 @@ class CardSurveyDataFilterSetTests(TestCase):
     def test_filter_by_rewards(self):
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers=["Credit scores from 620 to 719"],
             purchase_apr_good=0.99,
             rewards=["Cashback rewards"],
         )
