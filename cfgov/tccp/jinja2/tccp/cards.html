@@ -124,7 +124,7 @@
 
             {{- apr(card.purchase_apr_for_tier) -}}
 
-            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective | slugify }}">
                 {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
                     {{ svg_icon("dollar-round") }}
                 {% endfor -%}
