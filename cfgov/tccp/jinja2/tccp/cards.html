@@ -1,8 +1,8 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% from 'tccp/macros/data_published.html' import data_published %}
-{% from 'tccp/macros/fields.html' import apr, apr_range %}
-{% from 'tccp/macros/filter_form.html' import filter_form with context %}
+{% from 'tccp/includes/data_published.html' import data_published %}
+{% from 'tccp/includes/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/filter_form.html' import filter_form with context %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}

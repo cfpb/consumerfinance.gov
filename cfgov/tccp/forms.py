@@ -9,7 +9,7 @@ class LandingPageForm(forms.Form):
     credit_tier = forms.ChoiceField(
         choices=CreditTierChoices[1:],
         initial=CreditTierChoices[2],
-        label="Your credit score",
+        label="Your credit score range",
         widget=Select(),
     )
     location = forms.ChoiceField(
