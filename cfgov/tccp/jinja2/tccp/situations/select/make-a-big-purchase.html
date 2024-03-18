@@ -1,0 +1,41 @@
+{%- import 'v1/includes/molecules/notification.html' as notification -%}
+
+<p>
+    We’ll show you cards where you’ll:
+</p>
+<ul>
+    <li class="has-icon">
+        {{ svg_icon("dollar-round") }}
+        <span>
+            <strong>Pay less than average interest</strong>
+            (for your credit tier)
+        </span>
+    </li>
+</ul>
+<p>
+    <div class="m-notification m-notification__warning m-notification__visible">
+        {{ svg_icon("warning-round") }}
+
+        <div class="m-notification_content">
+            <div class="h4 m-notification_message">
+                What about 0% offers?
+            </div>
+
+            <div class="m-notification_explanation">
+                If a card has promotional interest, ensure you’re on track to
+                pay off the balance within the promotional period, or you
+                could end up owing more in interest than the original
+                purchase amount.
+            </div>
+
+            <p>
+                <a
+                    class="a-link a-link__jump"
+                    href="/ask-cfpb/what-is-a-credit-card-interest-rate-what-does-apr-mean-en-44/"
+                >
+                    <span class="a-link_text">More about intro APRs</span>
+                </a>
+            </p>
+        </div>
+    </div>
+</p>

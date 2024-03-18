@@ -3,6 +3,7 @@ from typing import List
 from urllib.parse import urlencode
 
 from django.template import loader
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from tccp import enums
@@ -22,7 +23,7 @@ class Situation:
 
     def render(self, viewname):
         template = f"tccp/situations/{viewname}/{self.slug}.html"
-        return loader.get_template(template).render()
+        return mark_safe(loader.get_template(template).render())
 
     @property
     def select_html(self):
@@ -99,7 +100,8 @@ SITUATIONS = [
     Situation("Pay less interest", {"ordering": "purchase_apr"}),
     Situation("Transfer a balance", {"ordering": "transfer_apr"}),
     Situation("Make a big purchase"),
-    Situation("Avoid annual fees", {"no_account_fee": True}),
+    Situation("Avoid fees", {"no_account_fee": True}),
+    Situation("Build credit"),
     Situation("Earn rewards", {"rewards": list(dict(enums.RewardsChoices))}),
 ]
 

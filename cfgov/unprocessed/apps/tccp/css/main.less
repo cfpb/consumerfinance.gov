@@ -38,6 +38,18 @@
 .a-label_helper ul {
   list-style: disc;
   padding-left: 1.125em;
+
+  li.has-icon {
+    display: flex;
+    align-items: baseline;
+    margin-left: -16px;
+
+    .cf-icon-svg {
+      display: inline;
+      margin-right: 6px;
+      color: @green;
+    }
+  }
 }
 
 // Some cards list a lot of available locations and disrupt the table layout.
@@ -166,7 +178,7 @@
     margin-right: unit((2px / @base-font-size-px), em);
   }
 
-  &__less .cf-icon-svg {
+  &__less-than-average .cf-icon-svg {
     color: @green;
   }
 
@@ -174,7 +186,7 @@
     color: @gold;
   }
 
-  &__more .cf-icon-svg {
+  &__more-than-average .cf-icon-svg {
     color: @red;
   }
 }

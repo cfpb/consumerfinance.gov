@@ -33,25 +33,28 @@
 </div>
 
 <h1>{{ heading }}</h1>
-{% set situations = form.cleaned_data.situations %}
-{% if not situations %}
-    <h1>{{ heading }}</h1>
 
-    <p>
-        Filter and sort the {{ stats_all or "" }} cards in our database
-        to find cards that have the features that fit your situation.
-    </p>
-{% else %}
-    <h1>You’re looking to...</h1>
+<div class="block block__sub">
+    {% set situations = form.cleaned_data.situations %}
+    {% if not situations %}
+        <p>
+            Filter and sort the {{ stats_all.count or "" }} cards in our database
+            to find cards that have the features that fit your situation.
+        </p>
+    {% else %}
+        <h2>You’re looking to...</h2>
 
-    {% for situation in situations %}
-        <div class="block block__sub">
-            <div class="o-well">
-                {{ situation.results_html }}
+        {% for situation in situations %}
+            <div class="block block__sub">
+                <div class="o-well">
+                    <h3>{{ situation.title }}</h3>
+
+                    {{ situation.results_html }}
+                </div>
             </div>
-        </div>
-    {% endfor %}
-{% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
 
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
@@ -64,7 +67,9 @@
     {% endcall %}
 </div>
 
-{% set purchase_apr_adjectives = ["less", "average", "more"] %}
+{%- set purchase_apr_adjectives = [
+    "less than average", "average", "more than average"
+] %}
 
 <div class="block block__sub">
     <div class="o-filterable-list-results htmx-results">
@@ -88,7 +93,7 @@
 
             {% for adjective in purchase_apr_adjectives %}
                 <p class="u-mb0">
-                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective | slugify }}">
                         {%- for i in range(loop.index) -%}
                             {{ svg_icon("dollar-round") }}
                         {%- endfor -%}
