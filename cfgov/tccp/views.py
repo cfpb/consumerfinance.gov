@@ -44,13 +44,14 @@ class LandingPageView(FlaggedTemplateView):
             }
         )
 
-    def redirect_to_results(self, credit_tier, situation):
+    def redirect_to_results(self, credit_tier, location, situation):
         return redirect(
             reverse("tccp:cards")
             + "?"
             + urlencode(
                 [
-                    ("targeted_credit_tiers", credit_tier),
+                    ("credit_tier", credit_tier),
+                    ("location", location),
                     *situation.query,
                 ],
                 doseq=True,

@@ -25,11 +25,11 @@
 {%- macro render_form_fields(form) -%}
 <div class="content-l_col content-l_col-1">
     <div class="o-form_group">
-        {{ render_field(form.targeted_credit_tiers, "select") }}
+        {{ render_field(form.credit_tier, "select") }}
     </div>
 
     <div class="o-form_group">
-        {{ render_field(form.geo_availability, "select") }}
+        {{ render_field(form.location, "select") }}
     </div>
 
     <div class="o-form_group">
