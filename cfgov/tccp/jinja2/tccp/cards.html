@@ -33,17 +33,31 @@
 </div>
 
 <h1>{{ heading }}</h1>
+{% set situations = form.cleaned_data.situations %}
+{% if not situations %}
+    <h1>{{ heading }}</h1>
 
-<p>
-    Filter and sort the {{ stats_all.count or "" }} cards in our database
-    to find cards that have the features that fit your situation.
-</p>
+    <p>
+        Filter and sort the {{ stats_all or "" }} cards in our database
+        to find cards that have the features that fit your situation.
+    </p>
+{% else %}
+    <h1>You’re looking to...</h1>
+
+    {% for situation in situations %}
+        <div class="block block__sub">
+            <div class="o-well">
+                {{ situation.results_html }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
         "label": "Customize results",
         "is_bordered": true,
-        "is_expanded": true,
+        "is_expanded": not situations,
         "is_midtone": true
     }) %}
         {{ filter_form(form) }}

@@ -53,6 +53,9 @@
     <div class="o-form_group">
         {{ render_field(form.ordering, "select") }}
     </div>
+
+    {# This is a hidden field. #}
+    {{ form.situations }}
 </div>
 {%- endmacro -%}
 
