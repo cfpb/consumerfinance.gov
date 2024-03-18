@@ -36,18 +36,17 @@
 }
 
 .a-label_helper ul {
-  list-style: disc;
-  padding-left: 1.125em;
-
-  li.has-icon {
+  .m-list_item__has-icon {
     display: flex;
-    align-items: baseline;
-    margin-left: -16px;
 
     .cf-icon-svg {
       display: inline;
       margin-right: 6px;
       color: @green;
+    }
+
+    span {
+      margin-top: unit((-1px / @base-font-size-px), em);
     }
   }
 }
