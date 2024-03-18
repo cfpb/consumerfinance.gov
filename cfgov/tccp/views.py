@@ -50,10 +50,14 @@ class LandingPageView(FlaggedTemplateView):
             reverse("tccp:cards")
             + "?"
             + urlencode(
-                {
-                    "credit_tier": credit_tier,
-                    "location": location,
-                }
+                [
+                    ("credit_tier", credit_tier),
+                    ("location", location),
+                    *(
+                        ("situations", situation.title)
+                        for situation in situations
+                    ),
+                ]
             )
             + "&"
             + Situation.get_combined_query(situations)
