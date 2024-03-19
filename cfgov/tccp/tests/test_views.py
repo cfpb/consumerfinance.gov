@@ -70,6 +70,14 @@ class CardListViewTests(TestCase):
 
     def test_no_querystring_filters_by_good_tier(self):
         response = self.make_request()
+        self.assertContains(response, "Consumer Financial Protection Bureau")
+        self.assertContains(response, "There are no results for your search.")
+
+    def test_partial_includes_only_results(self):
+        response = self.make_request("?partial=1")
+        self.assertNotContains(
+            response, "Consumer Financial Protection Bureau"
+        )
         self.assertContains(response, "There are no results for your search.")
 
     def test_filter_by_no_credit_score(self):

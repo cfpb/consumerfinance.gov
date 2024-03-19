@@ -69,7 +69,6 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     serializer_class = CardSurveyDataSerializer
     filter_backends = [CardSurveyDataFilterBackend]
     filterset_class = CardSurveyDataFilterSet
-    template_name = "tccp/cards.html"
     heading = "Customize for your situation"
     breadcrumb_items = LandingPageView.breadcrumb_items + [
         {
@@ -80,6 +79,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
 
     def get_queryset(self):
         return self.model.objects.all()
+
+    def get_template_names(self):
+        if "partial" in self.request.GET:
+            return ["tccp/includes/card_list.html"]
+        else:
+            return ["tccp/cards.html"]
 
     def list(self, request, *args, **kwargs):
         render_format = request.accepted_renderer.format
