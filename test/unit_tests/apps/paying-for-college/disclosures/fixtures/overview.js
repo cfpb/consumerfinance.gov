@@ -2370,62 +2370,62 @@ export default `
                                 </p>
                             </section>
                         </div>
-                        <aside class="get-options__sidebar column-well
-                        column-well__emphasis content_sidebar">
+                        <aside class="get-options__sidebar
+                                      column-well
+                                      column-well__emphasis
+                                      content_sidebar">
                             <div class="column-well_content">
-                                <div class="followup__all">
-                                    <h3 class="option__take-action-header">
-                                        What you can do
-                                    </h3>
-                                    <p>
-                                        You can adjust some of the offer amounts
-                                        in the tool using some of the strategies
-                                        outlined above. For instance, you can
-                                        try reducing the amount of federal or
-                                        private loans to see how it affects your
-                                        overall debt and you can try reducing
-                                        your out-of-school expenses.
-                                    </p>
-                                    <p>
-                                        Changing amounts in this tool has no
-                                        effect on what financial aid is
-                                        actually being offered. If you want to
-                                        move forward with different amounts,
-                                        you will need to contact your school’s
-                                        financial aid representative to have
-                                        your financial aid package updated.
-                                    </p>
-                                    <h4>
-                                        Useful resources for new
-                                        college students
-                                    </h4>
-                                    <div>
-                                        <a class="a-link a-link__icon" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="_blank"><span class="a-link_text">College
-                                        Scorecard</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
-                                        <p>Compare <a href="https://collegescorecard.ed.gov/school/?133465" target="_blank" rel="noopener noreferrer" class="scorecard-school a-link a-link__icon">your
-                                            school </a>’s annual costs,
-                                            graduation rates, and post-college
-                                            earnings.</p>
-                                    </div>
-                                    <p>
-                                        <a class="a-link a-link__icon" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="_blank"><span class="a-link_text">Questions to ask
-                                         your college</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
-                                    </p>
-                                    <div>
-                                        <a class="a-link a-link__icon" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="_blank"><span class="a-link_text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
-                                        <p>Apply for federal, state, and school
-                                            financial aid.</p>
-                                    </div>
-                                    <div>
-                                        <a href="https://www.consumerfinance.gov/paying-for-college/choose-a-student-loan/" target="_blank" rel="noopener noreferrer">Student
-                                        loan guide</a>
-                                        <p>Choose a student loan that’s right
-                                            for you.</p>
-                                    </div>
-                                    <div>
-                                        <a href="https://www.consumerfinance.gov/paying-for-college/manage-your-college-money/" target="_blank" rel="noopener noreferrer">Student banking guide</a>
-                                        <p>Manage your college money.</p>
-                                    </div>
+                                <h3 class="option__take-action-header">
+                                    What you can do
+                                </h3>
+                                <p>
+                                    You can adjust some of the offer amounts
+                                    in the tool using some of the strategies
+                                    outlined above. For instance, you can
+                                    try reducing the amount of federal or
+                                    private loans to see how it affects your
+                                    overall debt and you can try reducing
+                                    your out-of-school expenses.
+                                </p>
+                                <p>
+                                    Changing amounts in this tool has no
+                                    effect on what financial aid is
+                                    actually being offered. If you want to
+                                    move forward with different amounts,
+                                    you will need to contact your school’s
+                                    financial aid representative to have
+                                    your financial aid package updated.
+                                </p>
+                                <h4>
+                                    Useful resources for new
+                                    college students
+                                </h4>
+                                <div>
+                                    <a class="a-link a-link__icon" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="_blank"><span class="a-link_text">College
+                                    Scorecard</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                    <p>Compare <a href="https://collegescorecard.ed.gov/school/?133465" target="_blank" rel="noopener noreferrer" class="scorecard-school a-link a-link__icon">your
+                                        school </a>’s annual costs,
+                                        graduation rates, and post-college
+                                        earnings.</p>
+                                </div>
+                                <p>
+                                    <a class="a-link a-link__icon" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="_blank"><span class="a-link_text">Questions to ask
+                                        your college</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                </p>
+                                <div>
+                                    <a class="a-link a-link__icon" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="_blank"><span class="a-link_text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                    <p>Apply for federal, state, and school
+                                        financial aid.</p>
+                                </div>
+                                <div>
+                                    <a href="https://www.consumerfinance.gov/paying-for-college/choose-a-student-loan/" target="_blank" rel="noopener noreferrer">Student
+                                    loan guide</a>
+                                    <p>Choose a student loan that’s right
+                                        for you.</p>
+                                </div>
+                                <div>
+                                    <a href="https://www.consumerfinance.gov/paying-for-college/manage-your-college-money/" target="_blank" rel="noopener noreferrer">Student banking guide</a>
+                                    <p>Manage your college money.</p>
                                 </div>
                             </div>
                         </aside>
