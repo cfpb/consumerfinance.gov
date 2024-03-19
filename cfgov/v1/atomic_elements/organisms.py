@@ -560,6 +560,9 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
+    reusable_notification = v1_blocks.ReusableNotificationChooserBlock(
+        "v1.ReusableNotification"
+    )
     email_signup = v1_blocks.EmailSignUpChooserBlock()
     well = Well()
 
