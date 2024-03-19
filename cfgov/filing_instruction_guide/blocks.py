@@ -17,7 +17,6 @@ content_block_options = [
     ("expandable_group", organisms.ExpandableGroup()),
     ("expandable", organisms.Expandable()),
     ("video_player", organisms.VideoPlayer()),
-    ("snippet_list", organisms.ResourceList()),
     ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
     ("faq_group", schema.FAQGroup()),
 ]
