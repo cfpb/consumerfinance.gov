@@ -667,11 +667,9 @@
                 <ul>
                     {% for service in card.services %}
                         <li>
-                            {% if service != 'Other' %}
-                                {{ service }}
-                            {% else %}
-                                {{ card.other_services }}
-                            {% endif %}
+                            {{ service if service != 'Other' else
+                                card.other_services
+                            }}
                         </li>
                     {% endfor %}
                 </ul>
@@ -683,11 +681,9 @@
                 <ul>
                     {% for feature in card.card_features %}
                         <li>
-                            {% if feature != 'Other' %}
-                                {{ feature }}
-                            {% else %}
-                                {{ card.other_card_features }}
-                            {% endif %}
+                            {{ feature if feature != 'Other' else
+                                card.other_card_features
+                            }}
                         </li>
                     {% endfor %}
                 </ul>
