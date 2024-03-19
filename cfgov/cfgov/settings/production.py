@@ -185,8 +185,21 @@ SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_HSTS_SECONDS = 600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+
+# Ensure that the SECURITY_KEY meets baseline requirements:
+# - > 50 chars
+# - 5 or more unique characters
+# - Not prefixed with django-insecure
+if (
+    len(SECRET_KEY) < 50
+    or len(set(SECRET_KEY)) < 5
+    or "django-insecure" in SECRET_KEY
+):
+    raise ImproperlyConfigured(
+        "SECRET_KEY does not meet complexity requirements."
+    )
