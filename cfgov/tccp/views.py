@@ -11,11 +11,12 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .filter_backend import StatsProvidingDjangoFilterBackend
+from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
 from .models import CardSurveyData
 from .serializers import CardSurveyDataSerializer
+from .situations import Situation
 
 
 class LandingPageView(FlaggedTemplateView):
@@ -44,17 +45,22 @@ class LandingPageView(FlaggedTemplateView):
             }
         )
 
-    def redirect_to_results(self, credit_tier, situation):
+    def redirect_to_results(self, credit_tier, location, situations):
         return redirect(
             reverse("tccp:cards")
             + "?"
             + urlencode(
                 [
-                    ("targeted_credit_tiers", credit_tier),
-                    *situation.query,
-                ],
-                doseq=True,
+                    ("credit_tier", credit_tier),
+                    ("location", location),
+                    *(
+                        ("situations", situation.title)
+                        for situation in situations
+                    ),
+                ]
             )
+            + "&"
+            + Situation.get_combined_query(situations)
         )
 
 
@@ -63,7 +69,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
     serializer_class = CardSurveyDataSerializer
-    filter_backends = [StatsProvidingDjangoFilterBackend]
+    filter_backends = [CardSurveyDataFilterBackend]
     filterset_class = CardSurveyDataFilterSet
     template_name = "tccp/cards.html"
     heading = "Customize for your situation"
@@ -110,17 +116,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
 
         # If we're rendering HTML, we need to augment the response context.
         if render_format == "html":
-            # We need a form object to render.
-            filterset = filter_backend.get_filterset(
-                request, filtered_queryset, self
-            )
-
             response.data.update(
                 {
                     "title": title(self.heading),
                     "heading": self.heading,
                     "breadcrumb_items": self.breadcrumb_items,
-                    "form": filterset.form,
+                    "form": filter_backend.used_filterset.form,
                 }
             )
 

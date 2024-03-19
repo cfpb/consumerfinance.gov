@@ -1,8 +1,8 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% from 'tccp/macros/data_published.html' import data_published %}
-{% from 'tccp/macros/fields.html' import apr, apr_range %}
-{% from 'tccp/macros/filter_form.html' import filter_form with context %}
+{% from 'tccp/includes/data_published.html' import data_published %}
+{% from 'tccp/includes/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/filter_form.html' import filter_form with context %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
@@ -28,25 +28,46 @@
 
 {% block content_main %}
 
+<div class="htmx-progress">
+    <div class="htmx-progress-bar"></div>
+</div>
+
 <h1>{{ heading }}</h1>
 
-<p>
-    Filter and sort the {{ stats_all.count or "" }} cards in our database
-    to find cards that have the features that fit your situation.
-</p>
+<div class="block block__sub">
+    {% set situations = form.cleaned_data.situations %}
+    {% if not situations %}
+        <p>
+            Filter and sort the {{ stats_all.count or "" }} cards in our database
+            to find cards that have the features that fit your situation.
+        </p>
+    {% else %}
+        <h2>You’re looking to...</h2>
+
+        {% for situation in situations %}
+            <div class="block block__sub">
+                <div class="o-well">
+                    <h3>{{ situation.title }}</h3>
+
+                    {{ situation.results_html }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
 
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
         "label": "Customize results",
         "is_bordered": true,
-        "is_expanded": true,
+        "is_expanded": not situations,
         "is_midtone": true
     }) %}
         {{ filter_form(form) }}
     {% endcall %}
 </div>
 
-{% set purchase_apr_adjectives = ["less", "average", "more"] %}
+{%- set purchase_apr_adjectives = ["less", "average", "more"] %}
 
 <div class="block block__sub">
     <div class="o-filterable-list-results htmx-results">
@@ -75,7 +96,7 @@
                             {{ svg_icon("dollar-round") }}
                         {%- endfor -%}
 
-                        Pay {{ adjective }} interest
+                        Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
                     </span>
                 </p>
             {% endfor %}
@@ -113,7 +134,6 @@
         {%- set card_columns = [
             {'heading': 'Credit card'},
             {'heading': 'Purchase APR'},
-            {'heading': 'Availability'},
             {'heading': 'Account fee'},
             {'heading': 'Balance transfer APR'},
             {'heading': 'Offers rewards'},
@@ -123,7 +143,6 @@
             {% do card_rows.append( [
                 card_name_cell(card) | safe,
                 purchase_apr_cell(card) | safe,
-                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
                 (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
                 apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
                 (card.rewards | join(', ')) if card.rewards else 'None'

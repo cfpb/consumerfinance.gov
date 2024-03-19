@@ -1,6 +1,7 @@
 from functools import reduce
 from operator import or_
 
+from django import forms
 from django.db.models import Q
 
 from django_filters import rest_framework as filters
@@ -8,26 +9,32 @@ from django_filters import rest_framework as filters
 from .enums import CreditTierChoices, RewardsChoices, StateChoices
 from .filters import CardOrderingFilter, CheckboxFilter, MultipleCheckboxFilter
 from .models import CardSurveyData
+from .situations import SituationChoices, get_situation_by_title
 from .widgets import Select
 
 
 class CardSurveyDataFilterSet(filters.FilterSet):
-    targeted_credit_tiers = filters.ChoiceFilter(
+    credit_tier = filters.ChoiceFilter(
         choices=CreditTierChoices[1:],
-        method="filter_targeted_credit_tiers",
+        method="filter_credit_tier",
         label="Your credit score",
         initial=CreditTierChoices[2][0],
         null_label=None,
         empty_label=None,
         widget=Select,
     )
-    geo_availability = filters.ChoiceFilter(
+    location = filters.ChoiceFilter(
         choices=StateChoices,
-        method="filter_geo_availability",
-        label="Availability",
-        null_label="National",
-        empty_label="Select availability",
+        method="filter_location",
+        label="Available in location",
+        empty_label="Everywhere",
         widget=Select,
+    )
+    situations = filters.TypedMultipleChoiceFilter(
+        choices=SituationChoices,
+        coerce=get_situation_by_title,
+        method="filter_noop",
+        widget=forms.MultipleHiddenInput,
     )
     small_institution = CheckboxFilter(
         "top_25_institution", label="Small institution", exclude=True
@@ -69,10 +76,10 @@ class CardSurveyDataFilterSet(filters.FilterSet):
 
         super().__init__(data, *args, **kwargs)
 
-    def filter_targeted_credit_tiers(self, queryset, name, value):
+    def filter_credit_tier(self, queryset, name, value):
         return queryset.for_credit_tier(value, self.summary_stats)
 
-    def filter_geo_availability(self, queryset, name, value):
+    def filter_location(self, queryset, name, value):
         return queryset.available_in(value)
 
     def filter_for_empty_list(self, queryset, name, value):
@@ -90,4 +97,7 @@ class CardSurveyDataFilterSet(filters.FilterSet):
                 )
             )
 
+        return queryset
+
+    def filter_noop(self, queryset, name, value):
         return queryset

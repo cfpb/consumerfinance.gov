@@ -23,18 +23,34 @@
   }
 }
 
-// htmx loading indicators https://htmx.org/attributes/hx-indicator/
-.htmx-spinner {
+.a-checkbox + .a-label > .a-label_helper {
   display: none;
 }
 
-// Show the spinner and dim the results when a request is in flight
-.htmx-request {
-  .htmx-spinner {
-    display: inline;
-  }
-  .htmx-results {
-    opacity: 0.5;
+.a-checkbox:checked + .a-label > .a-label_helper {
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.a-label_helper .m-list {
+  list-style: square;
+  padding-left: 1.125em;
+
+  .m-list_item__has-icon {
+    display: flex;
+
+    .cf-icon-svg {
+      display: inline;
+      margin-right: 6px;
+      color: @green;
+    }
+
+    span {
+      margin-top: unit((-1px / @base-font-size-px), em);
+    }
   }
 }
 
@@ -199,5 +215,86 @@
   }
   dd .o-table {
     margin-top: 10px;
+  }
+}
+
+// htmx animated progress bar
+// See https://htmx.org/attributes/hx-indicator/
+.htmx-progress {
+  display: none;
+
+  .htmx-request & {
+    display: inline;
+  }
+
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  height: unit((5px / @base-font-size-px), rem);
+  width: 100%;
+
+  .htmx-progress-bar {
+    background-color: @green;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: inherit;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      will-change: left, right;
+      animation: indeterminate 2.5s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+        infinite;
+    }
+    &::after {
+      animation-name: indeterminate-short;
+    }
+  }
+}
+
+// Dim search results while inflight
+.htmx-request .htmx-results {
+  opacity: 0.5;
+}
+
+// Hide form submit button for htmx users
+html.js form[hx-boost] {
+  .o-form_group:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-btn-group {
+    display: none;
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  40% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  40% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
   }
 }

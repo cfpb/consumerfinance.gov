@@ -24,14 +24,19 @@ class LandingPageViewTests(TestCase):
         tier = "Credit scores from 620 to 719"
 
         response = self.make_request(
-            "?credit_tier=" + quote_plus(tier) + "&situation=Pay+less+interest"
+            "?location=NY"
+            + "&credit_tier="
+            + quote_plus(tier)
+            + "&situations=Pay+less+interest"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response["Location"],
             reverse("tccp:cards")
-            + "?targeted_credit_tiers="
+            + "?credit_tier="
             + quote_plus(tier)
+            + "&location=NY"
+            + "&situations=Pay+less+interest"
             + "&ordering=purchase_apr",
         )
 
@@ -64,24 +69,24 @@ class CardListViewTests(TestCase):
 
     def test_filter_by_no_credit_score(self):
         response = self.make_request(
-            "?targeted_credit_tiers=Credit+score+of+720+or+greater"
+            "?credit_tier=Credit+score+of+720+or+greater"
         )
         self.assertContains(response, "5 results")
 
     def test_invalid_json_query_renders_error(self):
-        response = self.make_request("?format=json&targeted_credit_tiers=foo")
+        response = self.make_request("?format=json&credit_tier=foo")
         self.assertEqual(response.status_code, 400)
 
         response.render()
         self.assertEqual(
             json.loads(response.content),
             {
-                "targeted_credit_tiers": [
+                "credit_tier": [
                     "Select a valid choice. foo is not one of the available choices."
                 ]
             },
         )
 
     def test_invalid_html_query_renders_empty_page(self):
-        response = self.make_request("?targeted_credit_tiers=foo")
+        response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
