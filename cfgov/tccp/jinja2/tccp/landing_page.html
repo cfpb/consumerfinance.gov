@@ -1,4 +1,4 @@
-{% extends "v1/layouts/layout-full.html" %}
+{% extends "v1/layouts/layout-2-1.html" %}
 
 {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
 
@@ -18,8 +18,20 @@
         <h1>{{ heading }}</h1>
         <p class="lead-paragraph">
             We know people use credit cards for many reasons.
-            Our database of {{ num_cards or "" }}
+            Our database of {{ stats.count or "" }}
             cards can help you find ones that are best for you.
+        </p>
+    </div>
+
+    <div class="block block__sub">
+        <h2 class="h3">
+            How is this comparison tool different than others you may have used?
+        </h2>
+        <p>
+            You’ll find a larger pool of cards, likely including banks you’ve never
+            heard of that have great rates. We collect this data every 6 months and
+            never require instutitions to pay to have their results shown, allowing
+            you to see all of the options available to you.
         </p>
     </div>
 
@@ -36,14 +48,27 @@
                     </label>
 
                     {{ form.credit_tier }}
+
+                    <small class="a-label_helper a-label_helper__block">
+                        If you don’t know it,
+                        <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/"
+                            >find your credit score</a>.
+                    </small>
                 </div>
             </div>
 
-            <p>
-                If you don’t know your credit score,
-                <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/">find out for free</a>
-                or play around to find out how credit score affects rates.
-            </p>
+            <div class="o-form_group">
+                <div class="m-form-field m-form-field__select">
+                    <label
+                        class="a-label a-label__heading"
+                        for="{{ form.location.id_for_label}}"
+                    >
+                        {{ form.location.label }}
+                    </label>
+
+                    {{ form.location }}
+                </div>
+            </div>
 
             <legend class="a-legend">
                 I’m looking for a card that will help me...
@@ -51,7 +76,7 @@
 
             <div class="o-form_group">
                 <fieldset class="o-form_fieldset">
-                    {{ form.situation }}
+                    {{ form.situations }}
                 </fieldset>
             </div>
 
@@ -68,3 +93,6 @@
 
 {% endblock content_main %}
 
+{% block content_sidebar %}
+    {%- include "tccp/includes/sidebar.html" -%}
+{% endblock content_sidebar %}

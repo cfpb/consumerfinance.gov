@@ -1,2 +1,2 @@
 -r base.txt
-newrelic==9.7.0
+newrelic

@@ -20,7 +20,7 @@
 {% set metro_meta = csv_meta['MetroArea'] %}
 {% set state_meta = csv_meta['State'] %}
 {% set data_vis_color = 'blue' if time_frame == '30-89' else 'navy' %}
-{% if time_frame == '30-89' %} {% set time_frame_styled = '30&ndash;89'%} {% else %} {% set time_frame_styled = time_frame %}{% endif %}
+{% if time_frame == '30-89' %} {% set time_frame_styled = '30&ndash;89' | safe %} {% else %} {% set time_frame_styled = time_frame %}{% endif %}
 
 <div class="o-full-width-text-group" id="mp-line-chart-container" data-chart-time-span="{{ time_frame }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">

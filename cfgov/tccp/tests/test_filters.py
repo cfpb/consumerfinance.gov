@@ -11,7 +11,6 @@ class CardOrderingFilterTests(TestCase):
         for apr in [2.9, 0.9, 99.9, 0]:
             baker.make(
                 CardSurveyData,
-                targeted_credit_tiers=["Credit score 619 or less"],
                 purchase_apr_poor=apr,
             )
 
@@ -32,7 +31,6 @@ class CardOrderingFilterTests(TestCase):
         ]:
             baker.make(
                 CardSurveyData,
-                targeted_credit_tiers=["Credit score 619 or less"],
                 purchase_apr_poor=purchase_apr,
                 transfer_apr_poor=transfer_apr,
             )
