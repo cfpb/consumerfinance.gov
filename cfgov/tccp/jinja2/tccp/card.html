@@ -663,10 +663,35 @@
         </dd>
         {% if card.services %}
             <dt>Services</dt>
+            <dd>
+                <ul>
+                    {% for service in card.services %}
+                        <li>
+                            {% if service != 'Other' %}
+                                {{ service }}
+                            {% else %}
+                                {{ card.other_services }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </dd>
         {% endif %}
         {% if card.card_features %}
             <dt>Card features</dt>
-        {% else %}
+            <dd>
+                <ul>
+                    {% for feature in card.card_features %}
+                        <li>
+                            {% if feature != 'Other' %}
+                                {{ feature }}
+                            {% else %}
+                                {{ card.other_card_features }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </dd>
         {% endif %}
     </dl>
 
