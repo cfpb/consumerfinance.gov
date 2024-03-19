@@ -41,9 +41,6 @@ const questionView = {
       questionView.$optionsWrapper.addClass(
         'get-options__settlement content_main',
       );
-      questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main',
-      );
       questionView.$transferCredits.remove();
       questionView.$exploreSchools.remove();
       questionView.$takeAction.remove();
