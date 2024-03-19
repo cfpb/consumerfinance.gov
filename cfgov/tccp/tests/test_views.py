@@ -27,7 +27,8 @@ class LandingPageViewTests(TestCase):
             "?location=NY"
             + "&credit_tier="
             + quote_plus(tier)
-            + "&situations=Pay+less+interest"
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -36,8 +37,12 @@ class LandingPageViewTests(TestCase):
             + "?credit_tier="
             + quote_plus(tier)
             + "&location=NY"
-            + "&situations=Pay+less+interest"
-            + "&ordering=purchase_apr",
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
+            + "&no_account_fee=True"
+            + "&rewards=Cashback+rewards"
+            + "&rewards=Travel-related+rewards"
+            + "&rewards=Other+rewards",
         )
 
     def test_invalid_query_still_renders_page(self):
