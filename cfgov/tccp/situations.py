@@ -1,6 +1,4 @@
 from dataclasses import dataclass, field
-from typing import List
-from urllib.parse import urlencode
 
 from django.template import loader
 from django.utils.safestring import mark_safe
@@ -34,14 +32,14 @@ class Situation:
         return self.render("results")
 
     @classmethod
-    def get_combined_query(cls, situations):
-        """Build a situation query from a list of situations.
+    def get_nonconflicting_params(cls, situations):
+        """Get nonconflicting parameters for a list of situations.
 
         Consider a list of situation params like this:
 
-          - scenario 1: {"a": 1, "b": 2}
-          - scenario 2: {"c": [3, 4]}
-          - scenario 3: {"a": 5, "b": 2}
+          - situation 1: {"a": 1, "b": 2}
+          - situation 2: {"c": [3, 4]}
+          - situation 3: {"a": 5, "b": 2}
 
         This method drops parameter "a" because it is specified by two
         different situations with two different values. It keeps parameter "b"
@@ -50,37 +48,15 @@ class Situation:
         specified by one situation, even though it has multiple values for that
         situation.
 
-        The list of combined parameters then looks like:
+        The list of combined parameters returned thus looks like:
 
         {"b": 2, "c": [3, 4]}
-
-        This method further converts this to a valid URL querystring, returning:
-
-        "b=2&c=3&c=4"
         """
-        return cls.get_querystring(
-            cls.get_unique_params(situation.params for situation in situations)
-        )
-
-    @classmethod
-    def get_querystring(cls, params: dict):
-        param_pairs = []
-
-        for k, v in params.items():
-            if isinstance(v, list):
-                param_pairs.extend((k, vv) for vv in v)
-            else:
-                param_pairs.append((k, v))
-
-        return urlencode(param_pairs, doseq=True)
-
-    @classmethod
-    def get_unique_params(cls, params_list: List[dict]):
         duplicate_keys = []
         unique_params = {}
 
-        for params in params_list:
-            for k, v in params.items():
+        for situation in situations:
+            for k, v in situation.params.items():
                 if k in duplicate_keys:
                     continue
 

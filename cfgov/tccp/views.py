@@ -1,3 +1,4 @@
+from operator import attrgetter
 from urllib.parse import urlencode
 
 from django.shortcuts import redirect, reverse
@@ -50,17 +51,14 @@ class LandingPageView(FlaggedTemplateView):
             reverse("tccp:cards")
             + "?"
             + urlencode(
-                [
-                    ("credit_tier", credit_tier),
-                    ("location", location),
-                    *(
-                        ("situations", situation.title)
-                        for situation in situations
-                    ),
-                ]
+                {
+                    "credit_tier": credit_tier,
+                    "location": location,
+                    "situations": list(map(attrgetter("title"), situations)),
+                    **Situation.get_nonconflicting_params(situations),
+                },
+                doseq=True,
             )
-            + "&"
-            + Situation.get_combined_query(situations)
         )
 
 
