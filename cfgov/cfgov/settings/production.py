@@ -185,8 +185,30 @@ SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_HSTS_SECONDS = 600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+
+# Require the SECRET_KEY as an environment variable
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ImproperlyConfigured(
+        "The SECRET_KEY environment variable must be set"
+    )
+
+# Secret key fallbacks that allow the rotation of the secret key.
+# This environment variable should be a JSON array if fallbacks are available.
+# This list is empty (no old fallback secret keys) if the environment variable
+# SECRET_KEY_FALLBACKS is not set.
+try:
+    SECRET_KEY_FALLBACKS = json.loads(
+        os.environ.get("SECRET_KEY_FALLBACKS", "[]")
+    )
+except (TypeError, ValueError):
+    raise ImproperlyConfigured(
+        "Environment variable SECRET_KEY_FALLBACKS is not valid JSON. "
+        "Expected a JSON array of fallback secret keys."
+    )
