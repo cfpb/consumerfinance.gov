@@ -64,12 +64,12 @@
 </div>
 
 <div class="block block__sub">
-    <div class="o-filterable-list-results htmx-results">
+    <div class="o-filterable-list-results o-filterable-list-results__partial htmx-results">
         {% include "tccp/includes/card_list.html" %}
     </div>
-</div>
-
-    </div>
+    <button data-js-hook="behavior_show-more" class="a-btn a-btn__link a-btn__warning a-btn__full-on-xs u-mt20 u-js-only">
+        Show more results with higher interest rates
+    </button>
 </div>
 
 {% endblock content_main %}

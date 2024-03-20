@@ -37,11 +37,9 @@
     </dl>
 </div>
 
-<p>
-    {% if stats_all.first_report_date -%}
-    {{ data_published(stats_all.first_report_date) }}
-    {%- endif %}
-</p>
+{% if stats_all.first_report_date -%}
+{{ data_published(stats_all.first_report_date) }}
+{%- endif %}
 
 {%- macro card_name_cell(card) -%}
     <a href="{{ card.url }}">
