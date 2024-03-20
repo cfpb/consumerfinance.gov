@@ -704,7 +704,7 @@
                 {% if ' ' is not in card.website_for_consumer %}
                     {# TODO: Do we need to run this through link middelware? #}
                     <a href="{{ card.website_for_consumer }}">
-                        {{ card.website_for_consumer }}
+                        {{- card.website_for_consumer -}}
                     </a>
                 {% else %}
                     {{ card.website_for_consumer }}
@@ -714,10 +714,7 @@
         {% if card.telephone_number_for_consumers %}
             <dt>Phone</dt>
             <dd>
-                {# TODO: Do we want this marked up as a phone link? #}
-                <a href="tel:{{ card.telephone_number_for_consumers }}">
-                    {{ card.telephone_number_for_consumers }}
-                </a>
+                {{ card.telephone_number_for_consumers }}
             </dd>
         {% endif %}
     </dl>
