@@ -690,6 +690,29 @@
             </dd>
         {% endif %}
     </dl>
+    <h2>Fine print</h2>
+    <dl class="m-list m-list__card-details">
+        <dt>Grace period</dt>
+        <dd>
+            {{ card.grace_period ~ ' days until interest begins to accrue on
+                purchases' if grace_period_offered else 'None, interest begins
+                accruing on purchases immediately'
+            }}
+        </dd>
+        <dt>Minimum finance charge</dt>
+        <dd>
+            {{ '$' ~ '%.2f' | format(card.minimum_finance_charge_dollars | float)
+                if card.minimum_finance_charge else 'None'
+            }}
+        </dd>
+        <dt>Balance computation method</dt>
+        <dd>
+            {{ card.balance_computation_method | join(', ') if 'Other' is not in
+                card.balance_computation_method else
+                card.balance_computation_method_details
+            }}
+        </dd>
+    </dl>
     <h2>Contact information</h2>
     <dl class="m-list m-list__card-details">
         {% if card.website_for_consumer %}
