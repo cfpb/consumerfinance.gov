@@ -1,10 +1,6 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range %}
 {% from 'tccp/includes/filter_form.html' import filter_form with context %}
-{% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
-{% import 'v1/includes/molecules/notification.html' as notification %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
@@ -67,96 +63,12 @@
     {% endcall %}
 </div>
 
-{%- set purchase_apr_adjectives = ["less", "average", "more"] %}
-
 <div class="block block__sub">
     <div class="o-filterable-list-results htmx-results">
+        {% include "tccp/includes/card_list.html" %}
+    </div>
+</div>
 
-        {% if count -%}
-        {{- notification.render(
-            'success',
-            true,
-            count ~ ' result' ~ count | pluralize()
-        ) -}}
-        {%- else -%}
-        {{- notification.render(
-            'warning',
-            true,
-            'There are no results for your search.'
-        ) -}}
-        {%- endif %}
-
-        <div class="block__sub">
-            <div class="a-label__heading">Key</div>
-
-            {% for adjective in purchase_apr_adjectives %}
-                <p class="u-mb0">
-                    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
-                        {%- for i in range(loop.index) -%}
-                            {{ svg_icon("dollar-round") }}
-                        {%- endfor -%}
-
-                        Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
-                    </span>
-                </p>
-            {% endfor %}
-        </div>
-
-        <p>
-            {% if stats_all.first_report_date -%}
-            {{ data_published(stats_all.first_report_date) }}
-            {%- endif %}
-        </p>
-
-        {%- macro card_name_cell(card) -%}
-            <a href="{{ card.url }}">
-                <div class="a-card-institution-name">{{ card.institution_name }}</div>
-                <div>{{ card.product_name }}</div>
-            </a>
-        {%- endmacro -%}
-
-        {%- macro purchase_apr_cell(card) -%}
-            {%- set adjective = purchase_apr_adjectives[
-                card.purchase_apr_for_tier_rating
-            ] -%}
-
-            {{- apr(card.purchase_apr_for_tier) -}}
-
-            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
-                {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
-                    {{ svg_icon("dollar-round") }}
-                {% endfor -%}
-
-                <strong>Pay {{ adjective }} interest</strong>
-            </span>
-        {%- endmacro -%}
-
-        {%- set card_columns = [
-            {'heading': 'Credit card'},
-            {'heading': 'Purchase APR'},
-            {'heading': 'Account fee'},
-            {'heading': 'Balance transfer APR'},
-            {'heading': 'Offers rewards'},
-        ] %}
-        {%- set card_rows = [] %}
-        {%- for card in results %}
-            {% do card_rows.append( [
-                card_name_cell(card) | safe,
-                purchase_apr_cell(card) | safe,
-                (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
-                apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
-                (card.rewards | join(', ')) if card.rewards else 'None'
-            ] ) %}
-        {% endfor %}
-        {%- with value = {
-            'data': {
-                'columns': card_columns,
-                'rows': card_rows
-            },
-            'options': ['directory_table']
-        } %}
-            {% include 'v1/includes/organisms/tables/base.html' %}
-        {% endwith %}
     </div>
 </div>
 
