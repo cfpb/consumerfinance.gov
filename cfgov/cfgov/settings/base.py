@@ -632,9 +632,6 @@ FLAGS = {
         ("environment is", "local"),
         ("environment is", "test"),
     ],
-    "TCCP_DEBUG_DETAILS": [
-        ("environment is", "local"),
-    ],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [

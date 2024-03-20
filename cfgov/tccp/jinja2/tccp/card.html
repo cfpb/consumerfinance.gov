@@ -16,7 +16,8 @@
 {% block content_main %}
 <div class="block block__flush-top">
 
-    <h1>{{ card.institution_name }} {{ card.product_name }}</h1>
+    <div class="eyebrow">{{ card.institution_name }}</div>
+    <h1>{{ card.product_name }}</h1>
 
     {{ data_published(card.report_date) }}
 
@@ -717,7 +718,7 @@
     <dl class="m-list m-list__card-details">
         {% if card.website_for_consumer %}
             <dt>Website</dt>
-            <dd class="a-card-url">
+            <dd>
                 {# Some issuers submitted more than one URL for a card. In all
                     of those instances, the URLs are separated with a space, so
                     we'll only turn the submitted URL into a link if it doesn't
@@ -740,27 +741,6 @@
             </dd>
         {% endif %}
     </dl>
-
-    {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
-    <h3 class="h5">All fields</h3>
-
-    <table class="o-table o-table__striped">
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for field in card._meta.fields %}
-            <tr>
-                <td>{{ field.name }}</td>
-                <td>{{ card.__getattribute__(field.name) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
 </div>
 
 {% endblock content_main %}
