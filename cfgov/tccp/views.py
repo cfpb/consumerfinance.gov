@@ -81,7 +81,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         return self.model.objects.all()
 
     def get_template_names(self):
-        if "partial" in self.request.GET:
+        if self.request.htmx:
             return ["tccp/includes/card_list.html"]
         else:
             return ["tccp/cards.html"]

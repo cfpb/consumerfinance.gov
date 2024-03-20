@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     "wagtail_draftail_anchors",
     "tccp",
     "django_filters",
+    "django_htmx"
 )
 
 MIDDLEWARE = (
@@ -122,6 +123,7 @@ MIDDLEWARE = (
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "core.middleware.PathBasedCsrfViewMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
