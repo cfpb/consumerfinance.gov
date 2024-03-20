@@ -21,7 +21,7 @@
 
     {{ data_published(card.report_date) }}
 
-    <h2>Availability</h2>
+    <h2>Application requirements</h2>
     <dl class="m-list m-list__card-details">
         <dt>Location</dt>
         <dd>
@@ -77,7 +77,7 @@
             </table>
         </dd>
         <dt>
-            Secured card
+            Down payment required?
         </dt>
         <dd>
             {{ "Yes" if card.secured_card else "No" }}
