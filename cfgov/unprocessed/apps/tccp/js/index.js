@@ -1,7 +1,8 @@
-// See https://htmx.org/
-import 'htmx.org';
-
+import htmx from 'htmx.org';
 import { attach } from '@cfpb/cfpb-atomic-component';
+
+// See https://htmx.org/docs/#caching
+htmx.config.getCacheBusterParam = true;
 
 /**
  * Initialize some things.
