@@ -702,7 +702,6 @@
                     up.
                 #}
                 {% if ' ' is not in card.website_for_consumer %}
-                    {# TODO: Do we need to run this through link middelware? #}
                     <a href="{{ card.website_for_consumer }}">
                         {{- card.website_for_consumer -}}
                     </a>
