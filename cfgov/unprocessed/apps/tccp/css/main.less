@@ -72,6 +72,21 @@
   }
 }
 
+// "Show more results" functionality for JS users
+// Only show the first 10 results
+html.js .o-filterable-list-results__partial {
+  table {
+    tr:nth-child(10) {
+      border-bottom: 1px solid @table-border;
+      margin-bottom: unit((10px / @base-font-size-px), em);
+    }
+
+    tr:nth-child(n + 11) {
+      display: none;
+    }
+  }
+}
+
 // Some cards list a lot of available locations and disrupt the table layout.
 // Cap the width of the availability cell on non-mobile screens to prevent this.
 @media only screen and (min-width: @bp-sm-min) {
