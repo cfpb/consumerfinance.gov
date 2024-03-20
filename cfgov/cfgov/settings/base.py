@@ -114,7 +114,7 @@ INSTALLED_APPS = (
     "wagtail_draftail_anchors",
     "tccp",
     "django_filters",
-    "django_htmx"
+    "django_htmx",
 )
 
 MIDDLEWARE = (
