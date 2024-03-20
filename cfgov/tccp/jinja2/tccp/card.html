@@ -690,6 +690,33 @@
             </dd>
         {% endif %}
     </dl>
+    <h2>Contact information</h2>
+    <dl class="m-list m-list__card-details">
+        {% if card.website_for_consumer %}
+            <dt>Website</dt>
+            <dd class="a-card-url">
+                {# Some issuers submitted more than one URL for a card. In all
+                    of those instances, the URLs are separated with a space, so
+                    we'll only turn the submitted URL into a link if it doesn't
+                    have a space in it for now. TODO: maybe split multiple URLs
+                    up.
+                #}
+                {% if ' ' is not in card.website_for_consumer %}
+                    <a href="{{ card.website_for_consumer }}">
+                        {{- card.website_for_consumer -}}
+                    </a>
+                {% else %}
+                    {{ card.website_for_consumer }}
+                {% endif %}
+            </dd>
+        {% endif %}
+        {% if card.telephone_number_for_consumers %}
+            <dt>Phone</dt>
+            <dd>
+                {{ card.telephone_number_for_consumers }}
+            </dd>
+        {% endif %}
+    </dl>
 
     {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
     <h3 class="h5">All fields</h3>
