@@ -21,17 +21,20 @@
 
 <div class="block__sub">
     <div class="a-label__heading">Key</div>
-    {% for adjective in purchase_apr_adjectives %}
-        <p class="u-mb0">
-            <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+    <dl>
+        {% for adjective in purchase_apr_adjectives %}
+        <div class="u-mb0 a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+            <dt>
                 {%- for i in range(loop.index) -%}
                     {{ svg_icon("dollar-round") }}
                 {%- endfor -%}
-
+            </dt>
+            <dd>
                 Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
-            </span>
-        </p>
-    {% endfor %}
+            </dd>
+        </div>
+        {% endfor %}
+    </dl>
 </div>
 
 {% if stats_all.first_report_date -%}
