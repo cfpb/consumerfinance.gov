@@ -23,7 +23,7 @@
     <div class="a-label__heading">Key</div>
     <dl>
         {% for adjective in purchase_apr_adjectives %}
-        <div class="u-mb0 a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}"">
+        <div class="u-mb0 a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
             <dt>
                 {%- for i in range(loop.index) -%}
                     {{ svg_icon("dollar-round") }}
