@@ -124,3 +124,13 @@ DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 # If DEPLOY_ENVIRONMENT hasn't been set by the environment in base.py,
 # default it to local.
 DEPLOY_ENVIRONMENT = DEPLOY_ENVIRONMENT or "local"
+
+
+# Baking
+INSTALLED_APPS += (
+    "bakery",
+    "wagtailbakery",
+    "archival",
+)
+BUILD_DIR = "/tmp/cfgov-archive/"
+BAKERY_VIEWS = ("wagtailbakery.views.AllPagesView",)
