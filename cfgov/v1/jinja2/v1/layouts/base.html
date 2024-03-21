@@ -65,7 +65,7 @@ itemscope="" itemtype="https://schema.org/FAQPage"
     <base target="_blank">
     {% endif %}
 
-    <link rel="canonical" href="{{ request.build_absolute_uri().split('?')[0] | lower }}">
+    <link rel="canonical" href={{ ("https://" ~ request.get_host() ~ request.path) | lower }}>
 
     {# Open Graph properties #}
 
