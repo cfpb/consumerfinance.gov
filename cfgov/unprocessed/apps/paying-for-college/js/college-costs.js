@@ -31,7 +31,6 @@ function init() {
 
   financialView.updateFinancialItems();
   appView.updateUI();
-
   updateModelsFromQueryString(query);
 }
 

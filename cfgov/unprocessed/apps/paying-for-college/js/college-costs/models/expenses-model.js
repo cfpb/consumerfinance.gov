@@ -57,6 +57,7 @@ const expensesModel = {
   },
 
   /**
+   * 
    * setValue - Used to set a value
    * @param {string} name - Property name
    * @param {number} value - New value of property
@@ -68,6 +69,16 @@ const expensesModel = {
     if (updateView !== false) {
       updateExpensesView();
     }
+  },
+
+  /**
+   * bulkSetValue - Used to set a value
+   * @param {Array} tuples - values to update
+   */
+  bulkSetValue: (tuples) => {
+    tuples.forEach((v) => {
+      expensesModel.values[v[0]] = convertStringToNumber(v[1]);
+    });
   },
 
   /**
