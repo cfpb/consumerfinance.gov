@@ -25,11 +25,11 @@
 {%- macro render_form_fields(form) -%}
 <div class="content-l_col content-l_col-1">
     <div class="o-form_group">
-        {{ render_field(form.targeted_credit_tiers, "select") }}
+        {{ render_field(form.credit_tier, "select") }}
     </div>
 
     <div class="o-form_group">
-        {{ render_field(form.geo_availability, "select") }}
+        {{ render_field(form.location, "select") }}
     </div>
 
     <div class="o-form_group">
@@ -53,12 +53,22 @@
     <div class="o-form_group">
         {{ render_field(form.ordering, "select") }}
     </div>
+
+    {# This is a hidden field. #}
+    {{ form.situations }}
 </div>
 {%- endmacro -%}
 
 {%- macro filter_form(form) -%}
 
-<form action="." method="get" hx-boost="true" hx-trigger="change delay:1s" hx-swap="show:none">
+<form action="."
+    method="get"
+    hx-boost="true"
+    hx-trigger="change"
+    hx-swap="show:none"
+    hx-indicator=".htmx-container"
+    hx-target=".htmx-results"
+    hx-push-url="false">
     <div class="content-l">
 
         {{ render_form_fields(form) }}
