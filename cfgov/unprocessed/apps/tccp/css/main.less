@@ -6,6 +6,20 @@
   }
 });
 
+// @TODO refactor and remove this override
+// See https://github.com/cfpb/consumerfinance.gov/pull/8247
+.o-form_fieldset {
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    margin-right: 4px;
+  }
+}
+
 .m-btn-group {
   .u-btn-helper {
     width: 100%;
@@ -131,6 +145,7 @@ html.js .o-filterable-list-results__partial {
   }
 }
 
+// @TODO: Remove this pattern, we went in another direction
 .o-table__stack-on-small-hybrid {
   // We don't want responsive table styles applied to the `print` media type
   // so we're not using .respond-to-max(@bp-xs-max ) here.
