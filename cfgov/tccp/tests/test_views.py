@@ -4,6 +4,8 @@ from urllib.parse import quote_plus
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
 
+from django_htmx.middleware import HtmxMiddleware
+
 from tccp.models import CardSurveyData
 from tccp.views import CardListView, LandingPageView
 
@@ -27,7 +29,8 @@ class LandingPageViewTests(TestCase):
             "?location=NY"
             + "&credit_tier="
             + quote_plus(tier)
-            + "&situations=Pay+less+interest"
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -36,8 +39,12 @@ class LandingPageViewTests(TestCase):
             + "?credit_tier="
             + quote_plus(tier)
             + "&location=NY"
-            + "&situations=Pay+less+interest"
-            + "&ordering=purchase_apr",
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
+            + "&no_account_fee=True"
+            + "&rewards=Cashback+rewards"
+            + "&rewards=Travel-related+rewards"
+            + "&rewards=Other+rewards",
         )
 
     def test_invalid_query_still_renders_page(self):
@@ -58,16 +65,24 @@ class CardListViewTests(TestCase):
             _quantity=3,
         )
 
-    def make_request(self, querystring=""):
-        view = CardListView.as_view()
-        request = RequestFactory().get(f"/{querystring}")
+    def make_request(self, querystring="", **kwargs):
+        view = HtmxMiddleware(CardListView.as_view())
+        request = RequestFactory().get(f"/{querystring}", **kwargs)
         return view(request)
 
     def test_no_querystring_filters_by_good_tier(self):
         response = self.make_request()
+        self.assertContains(response, "Consumer Financial Protection Bureau")
         self.assertContains(response, "There are no results for your search.")
 
-    def test_filter_by_no_credit_score(self):
+    def test_htmx_includes_only_results(self):
+        response = self.make_request(**{"HTTP_HX-Request": "true"})
+        self.assertNotContains(
+            response, "Consumer Financial Protection Bureau"
+        )
+        self.assertContains(response, "There are no results for your search.")
+
+    def test_filter_by_credit_score(self):
         response = self.make_request(
             "?credit_tier=Credit+score+of+720+or+greater"
         )

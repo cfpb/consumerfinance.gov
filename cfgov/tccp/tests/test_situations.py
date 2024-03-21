@@ -16,31 +16,28 @@ class SituationTests(SimpleTestCase):
         with self.assertRaises(KeyError):
             get_situation_by_title("invalid")
 
-    def test_get_unique_params(self):
+    def test_get_nonconflicting_params(self):
         self.assertEqual(
-            Situation.get_unique_params(
-                [{"a": 1, "b": 2}, {"c": [3, 4]}, {"a": 5, "b": 2}]
+            Situation.get_nonconflicting_params(
+                [
+                    Situation("one", {"a": 1, "b": 2}),
+                    Situation("two", {"c": [3, 4]}),
+                    Situation("three", {"a": 5, "b": 2}),
+                ]
             ),
             {"b": 2, "c": [3, 4]},
         )
 
-    def test_get_unique_params_multiple_duplicates(self):
+    def test_get_get_nonconflicting_params_multiple_duplicates(self):
         self.assertEqual(
-            Situation.get_unique_params([{"a": 1}, {"a": 2}, {"a": 1}]),
-            {},
-        )
-
-    def test_get_querystring(self):
-        self.assertEqual(
-            Situation.get_querystring({"a": 1, "b": [2, 3]}), "a=1&b=2&b=3"
-        )
-
-    def test_get_combined_query(self):
-        self.assertEqual(
-            Situation.get_combined_query(
-                [Situation("foo", {"a": 1}), Situation("bar", {"b": 2})]
+            Situation.get_nonconflicting_params(
+                [
+                    Situation("one", {"a": 1}),
+                    Situation("two", {"a": 2}),
+                    Situation("three", {"a": 1}),
+                ]
             ),
-            "a=1&b=2",
+            {},
         )
 
 

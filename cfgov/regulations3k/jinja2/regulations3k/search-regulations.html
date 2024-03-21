@@ -48,20 +48,13 @@
 {% block content_main scoped %}
 
 <div class="block block__flush-top block__flush-bottom search_form">
-    <div class="search_intro">
-        <h1>
-            Search
-            <span class="search_intro__all">
-                regulations
-            </span>
-        </h1>
-        <div class="lead-paragraph">
-            <p>
-                <span class="search_intro__all">
-                    Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
-                </span>
-            </p>
-        </div>
+    <h1>
+        Search regulations
+    </h1>
+    <div class="lead-paragraph">
+        <p>
+            Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
+        </p>
     </div>
     <div class="search_wrapper u-mt30">
         {{ search_bar.render(
