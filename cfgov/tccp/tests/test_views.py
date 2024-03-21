@@ -7,7 +7,7 @@ from django.test import RequestFactory, TestCase
 from django_htmx.middleware import HtmxMiddleware
 
 from tccp.models import CardSurveyData
-from tccp.views import CardListView, LandingPageView
+from tccp.views import CardDetailView, CardListView, LandingPageView
 
 from .baker import baker
 
@@ -105,3 +105,23 @@ class CardListViewTests(TestCase):
     def test_invalid_html_query_renders_empty_page(self):
         response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
+
+
+class CardDetailViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        baker.make(
+            CardSurveyData,
+            slug="test-card",
+            product_name="Test Card",
+        )
+
+    def make_request(self, slug):
+        view = CardDetailView.as_view()
+        request = RequestFactory().get("/")
+        return view(request, **{"slug": slug})
+
+    def test_get(self):
+        response = self.make_request("test-card")
+        self.assertContains(response, "Test Card")
+        self.assertContains(response, "m-breadcrumb")

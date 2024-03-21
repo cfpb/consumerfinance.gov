@@ -139,3 +139,14 @@ class CardDetailView(FlaggedViewMixin, DetailView):
     model = CardSurveyData
     context_object_name = "card"
     template_name = "tccp/card.html"
+    breadcrumb_items = CardListView.breadcrumb_items + [
+        {
+            "title": CardListView.heading,
+            "href": reverse_lazy("tccp:cards"),
+        }
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumb_items"] = self.breadcrumb_items
+        return context
