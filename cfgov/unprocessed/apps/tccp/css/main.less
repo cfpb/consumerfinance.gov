@@ -6,6 +6,20 @@
   }
 });
 
+// @TODO refactor and remove this override
+// See https://github.com/cfpb/consumerfinance.gov/pull/8247
+.o-form_fieldset {
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    margin-right: 4px;
+  }
+}
+
 .m-btn-group {
   .u-btn-helper {
     width: 100%;
@@ -20,6 +34,89 @@
       margin-top: 0;
       margin-left: unit((6px / @btn-font-size), em);
     });
+  }
+}
+
+.a-checkbox + .a-label > .a-label_helper {
+  display: none;
+}
+
+.a-checkbox:checked + .a-label > .a-label_helper {
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.a-label_helper .m-list {
+  list-style: square;
+  padding-left: 1.125em;
+
+  .m-list_item {
+    margin-left: unit((15px / @base-font-size-px), em);
+  }
+
+  .m-list_item__has-icon {
+    display: flex;
+    margin-left: 0;
+
+    .cf-icon-svg {
+      display: inline;
+      margin-right: 6px;
+      color: @green;
+    }
+
+    span {
+      margin-top: unit((-1px / @base-font-size-px), em);
+    }
+  }
+}
+
+.tool-features {
+  .cf-icon-svg__credit-card-round {
+    color: @gold;
+  }
+
+  .cf-icon-svg__court-round {
+    color: @gray;
+  }
+
+  .cf-icon-svg__disabled-round {
+    color: @red;
+  }
+
+  .cf-icon-svg__dollar-round {
+    color: @green;
+  }
+}
+
+// "Show more results" functionality for JS users
+// Only show the first 10 results
+html.js .o-filterable-list-results__partial {
+  table {
+    tr:nth-child(10) {
+      border-bottom: 1px solid @table-border;
+      margin-bottom: unit((10px / @base-font-size-px), em);
+    }
+
+    tr:nth-child(n + 11) {
+      display: none;
+    }
+  }
+}
+
+// Some cards list a lot of available locations and disrupt the table layout.
+// Cap the width of the availability cell on non-mobile screens to prevent this.
+@media only screen and (min-width: @bp-sm-min) {
+  td[data-label='Availability'] {
+    max-width: unit((350px / @base-font-size-px), em);
+  }
+  td[data-label='Purchase APR'] {
+    min-width: unit((215px / @base-font-size-px), em);
+    .cf-icon-svg:first-of-type {
+      margin-left: 0;
+    }
   }
 }
 
@@ -48,6 +145,7 @@
   }
 }
 
+// @TODO: Remove this pattern, we went in another direction
 .o-table__stack-on-small-hybrid {
   // We don't want responsive table styles applied to the `print` media type
   // so we're not using .respond-to-max(@bp-xs-max ) here.
@@ -120,6 +218,34 @@
   margin-bottom: 0;
 }
 
+.a-card-purchase-apr-rating {
+  // Put the APR ratings on their own line on non-mobile devices
+  @media only screen and (min-width: @bp-sm-min) {
+    display: flex;
+    align-items: center;
+  }
+
+  .cf-icon-svg:first-of-type {
+    margin-left: unit((4px / @base-font-size-px), em);
+  }
+
+  .cf-icon-svg:last-of-type {
+    margin-right: unit((2px / @base-font-size-px), em);
+  }
+
+  &__less .cf-icon-svg {
+    color: @green;
+  }
+
+  &__average .cf-icon-svg {
+    color: @gold;
+  }
+
+  &__more .cf-icon-svg {
+    color: @red;
+  }
+}
+
 .m-list__card-details {
   dt {
     margin-top: 15px;
@@ -142,5 +268,86 @@
   }
   dd .o-table {
     margin-top: 10px;
+  }
+}
+
+// htmx animated progress bar
+// See https://htmx.org/attributes/hx-indicator/
+.htmx-progress {
+  display: none;
+
+  .htmx-request & {
+    display: inline;
+  }
+
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  height: unit((5px / @base-font-size-px), rem);
+  width: 100%;
+
+  .htmx-progress-bar {
+    background-color: @pacific;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: inherit;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      will-change: left, right;
+      animation: indeterminate 2.5s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+        infinite;
+    }
+    &::after {
+      animation-name: indeterminate-short;
+    }
+  }
+}
+
+// Dim search results while inflight
+.htmx-request .htmx-results {
+  opacity: 0.5;
+}
+
+// Hide form submit button for htmx users
+html.js form[hx-boost] {
+  .o-form_group:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-btn-group {
+    display: none;
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  40% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  40% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
   }
 }

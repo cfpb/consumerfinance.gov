@@ -1,10 +1,6 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% from 'tccp/macros/data_published.html' import data_published %}
-{% from 'tccp/macros/fields.html' import apr, apr_range %}
-{% from 'tccp/macros/filter_form.html' import filter_form with context %}
-{% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
-{% import 'v1/includes/molecules/notification.html' as notification %}
+{% from 'tccp/includes/filter_form.html' import filter_form with context %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
@@ -14,6 +10,7 @@
 {% block javascript scoped %}
 {{ super() }}
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
+<script src="{{ static( 'apps/tccp/js/index.js' ) }}"></script>
 {% endblock %}
 
 {% block css %}
@@ -21,87 +18,58 @@
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} htmx-container
+{%- endblock %}
+
 {% block content_main %}
+
+<div class="htmx-progress">
+    <div class="htmx-progress-bar"></div>
+</div>
 
 <h1>{{ heading }}</h1>
 
-<p>
-    Filter and sort the {{ total_count or "" }} cards in our database
-    to find cards that have the features that fit your situation.
-</p>
+<div class="block block__sub">
+    {% set situations = form.cleaned_data.situations %}
+    {% if not situations %}
+        <p>
+            Filter and sort the {{ stats_all.count or "" }} cards in our database
+            to find cards that have the features that fit your situation.
+        </p>
+    {% else %}
+        <h2>You’re looking to...</h2>
+
+        {% for situation in situations %}
+            <div class="block block__sub">
+                <div class="o-well">
+                    <h3>{{ situation.title }}</h3>
+
+                    {{ situation.results_html }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
 
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
         "label": "Customize results",
         "is_bordered": true,
-        "is_expanded": true,
+        "is_expanded": not situations,
         "is_midtone": true
     }) %}
         {{ filter_form(form) }}
     {% endcall %}
 </div>
 
-
-
 <div class="block block__sub">
-    <div class="o-filterable-list-results">
-
-        {% if count -%}
-        {{- notification.render(
-            'success',
-            true,
-            count ~ ' result' ~ count | pluralize()
-        ) -}}
-        {%- else -%}
-        {{- notification.render(
-            'warning',
-            true,
-            'There are no results for your search.'
-        ) -}}
-        {%- endif %}
-
-        <p>
-            {% if first_report_date -%}
-            {{ data_published(first_report_date) }}
-            {%- endif %}
-        </p>
-
-        {%- macro card_name_cell(card) -%}
-            <a href="{{ card.url }}">
-                <div class="a-card-institution-name">{{ card.institution_name }}</div>
-                <div>{{ card.product_name }}</div>
-            </a>
-        {%- endmacro -%}
-
-        {%- set card_columns = [
-            {'heading': 'Credit card'},
-            {'heading': 'Purchase APR'},
-            {'heading': 'Availability'},
-            {'heading': 'Account fee'},
-            {'heading': 'Balance transfer APR'},
-            {'heading': 'Offers rewards'},
-        ] %}
-        {%- set card_rows = [] %}
-        {%- for card in results %}
-            {% do card_rows.append( [
-                card_name_cell(card) | safe,
-                apr(card.purchase_apr_for_tier),
-                ('Regionally; ' ~ card.state_limitations | join(', ')) if card.state_limitations else 'Nationally',
-                (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
-                apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
-                (card.rewards | join(', ')) if card.rewards else 'None'
-            ] ) %}
-        {% endfor %}
-        {%- with value = {
-            'data': {
-                'columns': card_columns,
-                'rows': card_rows
-            },
-            'options': ['directory_table']
-        } %}
-            {% include 'v1/includes/organisms/tables/base.html' %}
-        {% endwith %}
+    <div class="o-filterable-list-results o-filterable-list-results__partial htmx-results">
+        {% include "tccp/includes/card_list.html" %}
     </div>
+    <button data-js-hook="behavior_show-more" class="a-btn a-btn__link a-btn__warning a-btn__full-on-xs u-mt20 u-js-only">
+        Show more results with higher interest rates
+    </button>
 </div>
 
 {% endblock content_main %}

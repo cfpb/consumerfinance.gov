@@ -17,7 +17,7 @@
     {% for block in value %}
         {% set block_type = block.block_type %}
         {% if 'content_with_anchor' in block_type %}
-                {{ render_stream_child(block) | safe }}
+            {% include_block block %}
         {% elif 'content' in block_type %}
             <div class="m-full-width-text">
                 {{ block.value | safe }}
