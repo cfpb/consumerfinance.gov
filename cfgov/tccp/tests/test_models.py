@@ -30,6 +30,7 @@ class CardSurveyDataQuerySetTests(TestCase):
     def test_for_credit_tier(self):
         baker.make(
             CardSurveyData,
+            targeted_credit_tiers=["Credit score 619 or less"],
             purchase_apr_poor=9.99,
             transfer_apr_poor=8.88,
             transfer_apr_min=7.77,
@@ -46,6 +47,7 @@ class CardSurveyDataQuerySetTests(TestCase):
 
         baker.make(
             CardSurveyData,
+            targeted_credit_tiers=["Credit score of 720 or greater"],
             purchase_apr_great=9.99,
             transfer_apr_great=None,
             transfer_apr_min=7.77,
@@ -86,6 +88,11 @@ class CardSurveyDataQuerySetTests(TestCase):
         baker.make(
             CardSurveyData,
             report_date=today,
+            targeted_credit_tiers=[
+                "Credit score 619 or less",
+                "Credit scores from 620 to 719",
+                "Credit score of 720 or greater",
+            ],
             purchase_apr_poor=3,
             purchase_apr_good=2,
             purchase_apr_great=1,
@@ -94,6 +101,11 @@ class CardSurveyDataQuerySetTests(TestCase):
         baker.make(
             CardSurveyData,
             report_date=today,
+            targeted_credit_tiers=[
+                "Credit score 619 or less",
+                "Credit scores from 620 to 719",
+                "Credit score of 720 or greater",
+            ],
             purchase_apr_poor=9,
             purchase_apr_good=6,
             purchase_apr_great=3,
@@ -102,6 +114,11 @@ class CardSurveyDataQuerySetTests(TestCase):
         baker.make(
             CardSurveyData,
             report_date=today,
+            targeted_credit_tiers=[
+                "Credit score 619 or less",
+                "Credit scores from 620 to 719",
+                "Credit score of 720 or greater",
+            ],
             purchase_apr_great=0,
         )
 

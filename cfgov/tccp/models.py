@@ -77,6 +77,10 @@ class CardSurveyDataQuerySet(models.QuerySet):
         # We exclude cards that don't have a purchase APR for this tier.
         qs = qs.exclude(purchase_apr_for_tier__isnull=True)
 
+        # We also exclude those cards that aren't "specifically targeted" for
+        # this tier.
+        qs = qs.filter(targeted_credit_tiers__contains=credit_tier)
+
         # Finally, we want to annotate each card with a rating based on how
         # its purchase APR compares with other cards within the same tier.
         #
