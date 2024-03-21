@@ -12,6 +12,8 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
+from v1.models.home_page import image_passthrough
+
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
@@ -43,6 +45,7 @@ class LandingPageView(FlaggedTemplateView):
                 "breadcrumb_items": self.breadcrumb_items,
                 "form": LandingPageForm(),
                 "stats": CardSurveyData.objects.get_summary_statistics(),
+                "image_passthrough": image_passthrough,
             }
         )
 
