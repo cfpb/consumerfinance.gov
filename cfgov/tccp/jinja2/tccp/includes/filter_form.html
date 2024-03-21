@@ -61,7 +61,14 @@
 
 {%- macro filter_form(form) -%}
 
-<form action="." method="get" hx-boost="true" hx-trigger="change" hx-swap="show:none" hx-indicator=".htmx-container" >
+<form action="."
+    method="get"
+    hx-boost="true"
+    hx-trigger="change"
+    hx-swap="show:none"
+    hx-indicator=".htmx-container"
+    hx-target=".htmx-results"
+    hx-push-url="false">
     <div class="content-l">
 
         {{ render_form_fields(form) }}
