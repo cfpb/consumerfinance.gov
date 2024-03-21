@@ -100,6 +100,16 @@ const financialModel = {
   },
 
   /**
+   * bulkSetValue - Used to set a value
+   * @param {Array} tuples - values to update
+   */
+  bulkSetValue: (tuples) => {
+    tuples.forEach((v) => {
+      financialModel.values[v[0]] = convertStringToNumber(v[1]);
+    });
+  },
+
+  /**
    * _calculateTotals - Recalculate all relevant totals
    */
   _calculateTotals: () => {
