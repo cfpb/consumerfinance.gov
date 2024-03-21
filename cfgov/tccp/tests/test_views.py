@@ -57,6 +57,7 @@ class CardListViewTests(TestCase):
     def setUpTestData(cls):
         baker.make(
             CardSurveyData,
+            targeted_credit_tiers=["Credit score of 720 or greater"],
             purchase_apr_great=0.99,
             _quantity=5,
         )
