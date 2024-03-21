@@ -35,7 +35,6 @@ class SublandingPage(CFGOVPage):
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("well", organisms.Well()),
-            ("snippet_list", organisms.ResourceList()),
             ("post_preview_snapshot", organisms.PostPreviewSnapshot()),
             ("contact", organisms.MainContactInfo()),
             ("table", organisms.Table()),
