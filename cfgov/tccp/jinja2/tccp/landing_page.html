@@ -11,47 +11,58 @@
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
+{% block content_intro %}
+
+{% with
+    value = {
+        "heading": heading,
+        "body": (
+            "We know people use credit cards for many reasons. " ~
+            "Our database of " ~
+            (stats.count or "") ~
+            " cards can help you find ones that are best for you."
+        ),
+        "image": {
+            "url": static("apps/tccp/img/explore-credit-cards-hero-lg.png"),
+            "height": 390,
+            "width": 940
+        },
+        "small_image": {
+            "url": static("apps/tccp/img/explore-credit-cards-hero-lg.png"),
+            "height": 390,
+            "width": 1140
+        },
+        "background_color": "#FFE1B9"
+    },
+    image = image_passthrough
+%}
+    {% include "v1/includes/molecules/hero.html" with context %}
+{% endwith %}
+
+{% endblock content_intro %}
+
 {% block content_main %}
 
 <div class="content_wrapper">
-    <div class="block block__sub">
-        <h1>{{ heading }}</h1>
-        <p class="lead-paragraph">
-            We know people use credit cards for many reasons.
-            Our database of {{ stats.count or "" }}
-            cards can help you find ones that are best for you.
-        </p>
-    </div>
-
-    <div class="block block__sub">
+    <div class="block block__sub block__flush-top">
         <h2 class="h3">
             How is this comparison tool different than others you may have used?
         </h2>
         <p>
-            <ul class="m-list m-list__unstyled tool-features">
-                <li class="m-list_item m-list_item__has-icon">
-                    {{ svg_icon("credit-card-round") }}
-                    <span>
-                        larger pool of cards, likely including banks you’ve never heard of with great rates
-                    </span>
+            <ul class="m-list">
+                <li class="m-list_item">
+                    Larger pool of cards, likely including banks you’ve never heard of with great rates
                 </li>
                 <li class="m-list_item m-list_item__has-icon">
-                    {{ svg_icon("court-round") }}
                     <a
                         href="/data-research/credit-card-data/terms-credit-card-plans-survey/"
-                    >issuers required by law to submit data to us</a>
+                    >Issuers required by law to submit data to us</a>
                 </li>
                 <li class="m-list_item m-list_item__has-icon">
-                    {{ svg_icon("disabled-round") }}
-                    <span>
-                        no paid advertising
-                    </span>
+                    No paid advertising
                 </li>
                 <li class="m-list_item m-list_item__has-icon">
-                    {{ svg_icon("dollar-round") }}
-                    <span>
-                        card interest is rated, to help you compare
-                    </span>
+                    Card interest is rated, to help you compare
                 </li>
             </ul>
         </p>
