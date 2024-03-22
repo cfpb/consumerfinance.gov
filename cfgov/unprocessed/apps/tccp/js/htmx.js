@@ -54,6 +54,14 @@ webStorageProxy.setItem(
   window.location.pathname + window.location.search,
 );
 
+// Disable htmx localStorage cache. We've found CFPB pages are
+// large enough that htmx hits the localStorage limit pretty
+// quickly and throws harmless-but-annoying `historyCacheError`
+// console errors.
+// See https://htmx.org/attributes/hx-history/
+// See https://htmx.org/events/#htmx:historyCacheError
+document.body.setAttribute('hx-history', 'false');
+
 // Add htmx extensions to the dom and initialize them
 document.body.setAttribute('hx-ext', 'htmx-url-param, store-tccp-filter-path');
 htmx.process(document.body);
