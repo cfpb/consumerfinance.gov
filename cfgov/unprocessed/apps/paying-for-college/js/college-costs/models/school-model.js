@@ -41,7 +41,7 @@ const schoolModel = {
    */
   bulkSetValue: (tuples) => {
     tuples.forEach((v) => {
-      schoolModel.setValue(v[0], v[1], false)
+      schoolModel.setValue(v[0], v[1], false);
     });
   },
 

@@ -16,17 +16,17 @@
 }
 
 .struct-block.base-expandable div[data-contentpath='label'] {
-    display: inline-block;
-    margin-right: -0.25em;
-    margin-left: 2%;
-    vertical-align: top;
-    width: 70%;
+  display: inline-block;
+  margin-right: -0.25em;
+  margin-left: 2%;
+  vertical-align: top;
+  width: 70%;
 }
 
 .struct-block.base-expandable div[data-contentpath='icon'] {
-    display: inline-block;
-    margin-right: -0.25em;
-    margin-left: 2%;
-    vertical-align: top;
-    width: 20%
+  display: inline-block;
+  margin-right: -0.25em;
+  margin-left: 2%;
+  vertical-align: top;
+  width: 20%;
 }
