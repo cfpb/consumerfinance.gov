@@ -72,7 +72,28 @@ input[type='date'] {
   min-height: unit(35px / @base-font-size-px, rem);
 }
 
-input[type='search'],
-input[type='search']::-webkit-search-cancel-button {
-  appearance: auto !important;
+// Make a clear button that resets an input in a search form.
+.m-input-reset {
+  input[type='search']:not(:placeholder-shown) ~ button[type='reset'] {
+    display: block;
+  }
+
+  button[type='reset'] {
+    display: none;
+    border: 1px solid transparent;
+    background-color: transparent;
+    outline: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 3px;
+    top: 6px;
+
+    > svg {
+      pointer-events: none;
+    }
+
+    &:focus {
+      outline: 1px dotted @pacific;
+    }
+  }
 }

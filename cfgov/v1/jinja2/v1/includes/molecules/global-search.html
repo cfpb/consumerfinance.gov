@@ -61,7 +61,9 @@
 
             <div class="o-form__input-w-btn">
                <div class="o-form__input-w-btn_input-container m-form-field">
-                   <div class="a-text-input__full input-contains-label">
+                   <div class="m-input-reset
+                               a-text-input__full
+                               input-contains-label">
                        <label for="m-global-search_query"
                               class="input-contains-label_before
                                      input-contains-label_before__search">
@@ -75,6 +77,9 @@
                               class="a-text-input"
                               value=""
                               placeholder="{{ _('Search the CFPB') }}">
+                        <button type="reset" aria-label="Clear search input">
+                            {{ svg_icon('error') }}
+                        </button>
                    </div>
                </div>
                <div class="o-form__input-w-btn_btn-container">

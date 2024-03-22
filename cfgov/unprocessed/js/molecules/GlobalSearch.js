@@ -26,8 +26,10 @@ function GlobalSearch(element) {
     .querySelector(`.${BASE_CLASS}_trigger-open-label`)
     .innerText.trim();
   const _flyout = new FlyoutMenu(_dom, false);
+  let _searchFormDom;
   let _searchInputDom;
   let _searchBtnDom;
+  let _searchResetDom;
 
   /* The tab trigger adds an element to the end of the element that handles
      cleanup after tabbing out of the element. */
@@ -54,12 +56,18 @@ function GlobalSearch(element) {
 
     _contentDom.classList.remove('u-hidden');
 
+    const searchFormSel = `.${BASE_CLASS}_content-form`;
     const inputContainsLabelSel = `.${BASE_CLASS}_content-form .input-contains-label`;
     const searchBtnSel = `.${BASE_CLASS} .o-form__input-w-btn_btn-container button`;
+    const searchResetSel = `.${BASE_CLASS} button[type='reset']`;
 
     const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
+    _searchFormDom = _contentDom.querySelector(searchFormSel);
     _searchInputDom = inputContainsLabel.querySelector('input');
     _searchBtnDom = _contentDom.querySelector(searchBtnSel);
+    _searchResetDom = _contentDom.querySelector(searchResetSel);
+
+    _searchFormDom.addEventListener('reset', _handleFormReset);
 
     const handleExpandBeginBinded = _handleExpandBegin.bind(this);
     const handleCollapseEndBinded = _handleCollapseEnd.bind(this);
@@ -82,6 +90,10 @@ function GlobalSearch(element) {
     _contentDom.classList.add('u-invisible');
 
     return this;
+  }
+
+  function _handleFormReset(event) {
+    _searchInputDom.select();
   }
 
   /**
@@ -107,7 +119,11 @@ function GlobalSearch(element) {
    * @returns {boolean} True if the passed target is in the desktop view.
    */
   function _isDesktopTarget(target) {
-    return target === _searchInputDom || target === _searchBtnDom;
+    return (
+      target === _searchInputDom ||
+      target === _searchBtnDom ||
+      target === _searchResetDom
+    );
   }
 
   /**
