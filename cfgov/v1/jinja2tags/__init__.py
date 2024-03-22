@@ -12,11 +12,6 @@ from v1.util import ref
 from v1.util.util import get_unique_id
 
 
-def get_model(model_name):
-    model_class = import_string(model_name)
-    return model_class
-
-
 def image_alt_value(image):
     """Given an ImageBasic block or a CFGOVImage rendition as `image`,
     return the appropriate alt text.
@@ -121,7 +116,6 @@ class V1Extension(Extension):
                 "category_label": ref.category_label,
                 "choices_for_page_type": ref.choices_for_page_type,
                 "get_category_icon": ref.get_category_icon,
-                "get_model": get_model,
                 "get_unique_id": get_unique_id,
                 "image_alt_value": image_alt_value,
                 "is_blog": ref.is_blog,
