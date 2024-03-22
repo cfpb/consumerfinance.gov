@@ -37,7 +37,8 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
-  it('should link to card detail pages', () => {
+  // Disabling this test until we add card test data
+  xit('should link to card detail pages', () => {
     exploreCards.openResultsPage();
 
     cy.get('td[data-label="Credit card"] a').first().click();
