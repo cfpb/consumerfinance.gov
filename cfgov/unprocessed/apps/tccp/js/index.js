@@ -1,13 +1,9 @@
 import { attach } from '@cfpb/cfpb-atomic-component';
 
-import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
-
 /**
  * Initialize some things.
  */
 function init() {
-  // Store the card filter query params to web storage for our breadcrumbs
-  webStorageProxy.setItem('tccp-filter-path', window.location.pathname);
   // Attach "show more" click handler
   attach('show-more', 'click', handleShowMore);
 }

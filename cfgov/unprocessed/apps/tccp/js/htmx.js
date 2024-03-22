@@ -35,7 +35,7 @@ htmx.defineExtension('htmx-url-param', {
 });
 
 /**
- * htmx extension that stores the page's pathname in web
+ * htmx extension that stores the page's path in web
  * storage whenever it's updated
  * See https://htmx.org/extensions/
  * See https://htmx.org/events/#htmx:replacedInHistory
@@ -47,6 +47,12 @@ htmx.defineExtension('store-tccp-filter-path', {
     }
   },
 });
+
+// Store the path on page load before htmx has started up
+webStorageProxy.setItem(
+  'tccp-filter-path',
+  window.location.pathname + window.location.search,
+);
 
 // Add htmx extensions to the dom and initialize them
 document.body.setAttribute('hx-ext', 'htmx-url-param, store-tccp-filter-path');
