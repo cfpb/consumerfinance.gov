@@ -26,8 +26,8 @@ htmx.defineExtension('htmx-url-param', {
       event.detail.parameters.htmx = 'true';
     }
     if (name === 'htmx:beforeHistoryUpdate') {
-      event.detail.history.path = event.detail.history.path.replace(
-        /&?htmx=true/,
+      event.detail.history.path = event.detail.history.path.replaceAll(
+        /(&htmx=|(?<=\?)htmx=)true/g,
         '',
       );
     }
