@@ -57,7 +57,6 @@ const expensesModel = {
   },
 
   /**
-   * 
    * setValue - Used to set a value
    * @param {string} name - Property name
    * @param {number} value - New value of property
