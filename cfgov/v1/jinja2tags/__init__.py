@@ -1,5 +1,3 @@
-from django.utils.module_loading import import_string
-
 from jinja2 import pass_context
 from jinja2.ext import Extension
 
