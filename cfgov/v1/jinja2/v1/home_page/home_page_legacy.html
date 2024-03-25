@@ -22,7 +22,7 @@
 {% block content_intro %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
-    {% with image = image_passthrough, value = hardcoded.hero %}
+    {% with value = hardcoded.hero %}
         {% include "v1/includes/molecules/hero.html" with context %}
     {% endwith %}
 
@@ -43,11 +43,7 @@
 {% block content_main %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
-    {% with
-        image = image_passthrough,
-        image_alt_value = image_alt_value_passthrough,
-        value = hardcoded.info_units
-    %}
+    {% with value = hardcoded.info_units %}
         {% include 'v1/includes/organisms/info-unit-group-2.html' %}
     {% endwith %}
 

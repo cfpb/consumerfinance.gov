@@ -78,27 +78,15 @@ IMAGE_ALT_TEXT_HELP_TEXT = (
 class ImageBasicStructValue(blocks.StructValue):
     @property
     def url(self):
-        upload = self.get("upload")
-
-        if upload:
+        if upload := self.get("upload"):
             return upload.get_rendition("original").url
 
     @property
     def alt_text(self):
-        # TODO: This duplicates the logic in v1.jinja2tags.image_alt_value,
-        # which cannot be called here because of a circular import. It would
-        # be better to deprecate the image_alt_value tag in favor of using
-        # this logic wherever we use ImageBasic atoms.
-        alt = self.get("alt")
-        if alt:
+        if alt := self.get("alt"):
             return alt
-
-        upload = self.get("upload")
-        if upload:
+        elif upload := self.get("upload"):
             return upload.alt
-
-        # If this block has no upload defined, its alt text is undefined.
-        return None
 
 
 class ImageBasic(blocks.StructBlock):
