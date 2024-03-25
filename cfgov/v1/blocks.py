@@ -74,6 +74,11 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = "v1/includes/snippets/reusable_text.html"
 
 
+class ReusableNotificationChooserBlock(SnippetChooserBlock):
+    class Meta:
+        template = "v1/includes/snippets/reusable_notification.html"
+
+
 class EmailSignUpChooserBlock(SnippetChooserBlock):
     def __init__(self, **kwargs):
         super().__init__("v1.EmailSignUp", **kwargs)
