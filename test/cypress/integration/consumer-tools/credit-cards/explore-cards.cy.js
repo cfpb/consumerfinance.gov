@@ -47,3 +47,32 @@ describe('Explore credit cards results page', () => {
     cy.get('h2').contains('Application requirements').should('exist');
   });
 });
+
+// Disabling this test until we add card test data
+describe('Explore credit card details page', () => {
+  xit('should have a breadcrumb to the filtered list the user came from', () => {
+    exploreCards.openLandingPage();
+
+    exploreCards.selectCreditTier('Greater than 720');
+    exploreCards.selectLocation('FL');
+    exploreCards.selectSituation('Earn rewards');
+    exploreCards.clickSubmitButton();
+
+    cy.get('td[data-label="Credit card"] a').first().click();
+
+    cy.get('.m-breadcrumbs_crumb:last-child')
+      .should('have.attr', 'href')
+      .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
+      .and('contain', 'location=FL')
+      .and('contain', 'situations=Earn+rewards');
+  });
+  xit('should have a breadcrumb to full list if the user never filtered', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('td[data-label="Credit card"] a').first().click();
+
+    cy.get('.m-breadcrumbs_crumb:last-child')
+      .should('have.attr', 'href')
+      .and('eq', '/consumer-tools/credit-cards/explore-cards/cards/');
+  });
+});
