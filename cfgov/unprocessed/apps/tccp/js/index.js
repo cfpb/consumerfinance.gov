@@ -1,13 +1,10 @@
-import htmx from 'htmx.org';
 import { attach } from '@cfpb/cfpb-atomic-component';
-
-// See https://htmx.org/docs/#caching
-htmx.config.getCacheBusterParam = true;
 
 /**
  * Initialize some things.
  */
 function init() {
+  // Attach "show more" click handler
   attach('show-more', 'click', handleShowMore);
 }
 

@@ -43,6 +43,7 @@ const jsPaths = [
   `${apps}/teachers-digital-platform/js/index.js`,
   `${apps}/filing-instruction-guide/js/fig-init.js`,
   `${apps}/tccp/js/index.js`,
+  `${apps}/tccp/js/htmx.js`,
 ];
 
 /**
