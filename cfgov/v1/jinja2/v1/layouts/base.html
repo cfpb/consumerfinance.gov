@@ -65,14 +65,16 @@ itemscope="" itemtype="https://schema.org/FAQPage"
     <base target="_blank">
     {% endif %}
 
-    <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
+    {% set canonical = request.build_absolute_uri(request.path) | lower %}
+
+    <link rel="canonical" href="{{ canonical }}">
 
     {# Open Graph properties #}
 
     {# Required Open Graph properties #}
     <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="{{ request.build_absolute_uri() | lower }}">
+    <meta property="og:url" content="{{ canonical }}">
 
     {% block og_image %}
         {% if page and page.meta_image %}

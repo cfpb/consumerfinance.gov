@@ -26,12 +26,6 @@ class LandingPageView(FlaggedTemplateView):
     flag_name = "TCCP"
     template_name = "tccp/landing_page.html"
     heading = "Explore credit cards for your situation"
-    breadcrumb_items = [
-        {
-            "title": "Credit cards",
-            "href": "/consumer-tools/credit-cards/",
-        }
-    ]
 
     def get(self, request):
         form = LandingPageForm(request.GET)
@@ -42,7 +36,6 @@ class LandingPageView(FlaggedTemplateView):
             {
                 "title": title(self.heading),
                 "heading": self.heading,
-                "breadcrumb_items": self.breadcrumb_items,
                 "form": LandingPageForm(),
                 "stats": CardSurveyData.objects.get_summary_statistics(),
                 "image_passthrough": image_passthrough,
@@ -73,11 +66,15 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     filter_backends = [CardSurveyDataFilterBackend]
     filterset_class = CardSurveyDataFilterSet
     heading = "Customize for your situation"
-    breadcrumb_items = LandingPageView.breadcrumb_items + [
+    breadcrumb_items = [
+        {
+            "title": "Credit cards",
+            "href": "/consumer-tools/credit-cards/",
+        },
         {
             "title": LandingPageView.heading,
             "href": reverse_lazy("tccp:landing_page"),
-        }
+        },
     ]
 
     def get_queryset(self):
@@ -139,3 +136,14 @@ class CardDetailView(FlaggedViewMixin, DetailView):
     model = CardSurveyData
     context_object_name = "card"
     template_name = "tccp/card.html"
+    breadcrumb_items = CardListView.breadcrumb_items + [
+        {
+            "title": CardListView.heading,
+            "href": reverse_lazy("tccp:cards"),
+        }
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumb_items"] = self.breadcrumb_items
+        return context

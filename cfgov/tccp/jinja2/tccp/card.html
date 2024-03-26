@@ -8,6 +8,11 @@
     | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block javascript scoped %}
+    {{ super() }}
+    <script src="{{ static( 'apps/tccp/js/index.js' ) }}"></script>
+{% endblock %}
+
 {% block css %}
     {{ super() }}
     <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">

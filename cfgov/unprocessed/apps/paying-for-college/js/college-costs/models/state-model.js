@@ -282,15 +282,14 @@ const stateModel = {
     stateModel._updateApplicationState(name);
   },
 
-
   /**
    * bulkSetValue - Used to set a value
    * @param {Array} tuples - values to update
    */
   bulkSetValue: (tuples) => {
     tuples.forEach((v) => {
-      const name = v[0]
-      const value = v[1]
+      const name = v[0];
+      const value = v[1];
 
       if (name === 'activeSection') {
         stateModel.setActiveSection(value);

@@ -1,14 +1,15 @@
-import htmx from 'htmx.org';
 import { attach } from '@cfpb/cfpb-atomic-component';
 
-// See https://htmx.org/docs/#caching
-htmx.config.getCacheBusterParam = true;
+import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 
 /**
  * Initialize some things.
  */
 function init() {
+  // Attach "show more" click handler
   attach('show-more', 'click', handleShowMore);
+  // Make the breadcrumb on the details page go back to a filtered list
+  updateBreadcrumb();
 }
 
 /**
@@ -23,6 +24,19 @@ function handleShowMore(event) {
   results.classList.remove('o-filterable-list-results__partial');
 
   event.target.classList.add('u-hidden');
+}
+
+/**
+ * Update the breadcrumb on the card details page to point back to the filtered
+ * list of cards the user came from. We have to do this client-side to prevent
+ * Akamai from caching the page with a breadcrumb to a filtered list.
+ */
+function updateBreadcrumb() {
+  const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
+  if (breadcrumb.innerText === 'Customize for your situation') {
+    breadcrumb.href =
+      webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
+  }
 }
 
 window.addEventListener('load', () => {
