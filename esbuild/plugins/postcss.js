@@ -9,12 +9,15 @@ const postCSSPlugin = ({ plugins = [], lessOptions = {} }) => ({
   setup(build) {
     build.onLoad({ filter: /.\.less$/ }, async (args) => {
       const fileContent = await readFile(args.path, { encoding: 'utf-8' });
+      if (fileContent.indexOf('pacific') !== -1) {
+        console.log(args.path);
+      }
+
       const lessResult = await less.render(fileContent, {
         ...lessOptions,
         filename: args.path,
         rootpath: dirname(args.path),
       });
-
       const result = await postcss(plugins).process(lessResult.css, {
         from: args.path,
       });
