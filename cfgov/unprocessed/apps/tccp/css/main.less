@@ -1,4 +1,5 @@
-@import (reference) '../../../css/main.less';
+@import (reference) 'cfpb-core.less';
+@import (reference) 'cfpb-buttons.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form_group {
@@ -213,7 +214,7 @@ html.js .o-filterable-list-results__partial {
 }
 
 .a-card-institution-name {
-  .heading-5( @text-shadow: var(--gray) );
+  .heading-5();
   color: var(--gray);
   margin-bottom: 0;
 }
@@ -288,6 +289,7 @@ html.js .o-filterable-list-results__partial {
 
   .htmx-progress-bar {
     background-color: var(--pacific);
+
     &::before,
     &::after {
       content: '';
