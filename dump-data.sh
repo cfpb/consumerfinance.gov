@@ -35,6 +35,7 @@ EOF
         pg_dump \
             --no-owner \
             --no-privileges \
+            ${PGDATABASE:-cfgov}
     ) | gzip > $dump_filename
 }
 
