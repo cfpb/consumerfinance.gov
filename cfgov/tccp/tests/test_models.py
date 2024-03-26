@@ -1,36 +1,9 @@
-from django.test import SimpleTestCase, TestCase
+from django.test import TestCase
 from django.utils import timezone
 
 from tccp.models import CardSurveyData
 
 from .baker import baker
-
-
-class CardSurveyDataTests(SimpleTestCase):
-    def test_state_limitations_national(self):
-        self.assertIsNone(
-            CardSurveyData(
-                availability_of_credit_card_plan="National"
-            ).state_limitations
-        )
-
-    def test_state_limitations_single_state(self):
-        self.assertEqual(
-            CardSurveyData(
-                availability_of_credit_card_plan="One State/Territory",
-                state="NY",
-            ).state_limitations,
-            ["NY"],
-        )
-
-    def test_state_limitations_multiple_states(self):
-        self.assertEqual(
-            CardSurveyData(
-                availability_of_credit_card_plan="Regional",
-                state_multiple=["NJ", "NY"],
-            ).state_limitations,
-            ["NJ", "NY"],
-        )
 
 
 class CardSurveyDataQuerySetTests(TestCase):

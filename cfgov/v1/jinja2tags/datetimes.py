@@ -1,5 +1,8 @@
+from datetime import date
+
 from django.utils.timezone import template_localtime
 
+from dateutil import parser
 from jinja2.ext import Extension
 
 from v1.util.datetimes import convert_date
@@ -11,9 +14,13 @@ def date_formatter(dt, text_format=False):
     return extended_strftime(dt, format)
 
 
-def get_date_string(date, format="%Y-%m-%d", tz="America/New_York"):
-    dt = convert_date(date, tz)
+def get_date_string(value, format="%Y-%m-%d", tz="America/New_York"):
+    dt = convert_date(value, tz)
     return dt.strftime(format)
+
+
+def ensure_date(value):
+    return value if isinstance(value, date) else parser.parse(value).date()
 
 
 class DatetimesExtension(Extension):
@@ -22,6 +29,7 @@ class DatetimesExtension(Extension):
         self.environment.globals.update(
             {
                 "date_formatter": date_formatter,
+                "ensure_date": ensure_date,
                 "localtime": template_localtime,
             }
         )

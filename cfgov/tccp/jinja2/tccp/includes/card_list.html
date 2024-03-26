@@ -73,12 +73,17 @@
 ] %}
 {%- set card_rows = [] %}
 {%- for card in results %}
+    {% set rewards = [] %}
+    {% for reward in card.rewards %}
+        {% do rewards.append(rewards_lookup[reward]) %}
+    {% endfor %}
+
     {% do card_rows.append( [
         card_name_cell(card) | safe,
         purchase_apr_cell(card) | safe,
         (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
         apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
-        (card.rewards | join(', ')) if card.rewards else 'None'
+        (rewards | join(', ')) if rewards else 'None'
     ] ) %}
 {% endfor %}
 {%- with value = {

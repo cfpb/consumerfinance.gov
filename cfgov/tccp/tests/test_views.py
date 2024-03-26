@@ -1,6 +1,7 @@
 import json
 from urllib.parse import quote_plus
 
+from django.http import Http404
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
 
@@ -116,12 +117,34 @@ class CardDetailViewTests(TestCase):
             product_name="Test Card",
         )
 
-    def make_request(self, slug):
+    def make_request(self, slug, querystring=None):
         view = CardDetailView.as_view()
-        request = RequestFactory().get("/")
+        request = RequestFactory().get(f"/{querystring}")
         return view(request, **{"slug": slug})
 
     def test_get(self):
         response = self.make_request("test-card")
         self.assertContains(response, "Test Card")
         self.assertContains(response, "m-breadcrumb")
+
+    def test_get_format_json(self):
+        response = self.make_request("test-card", "?format=json")
+        response.render()
+
+        self.assertEqual(response.status_code, 200)
+        card = json.loads(response.content)
+        self.assertEqual(card["product_name"], "Test Card")
+
+    def test_get_invalid_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("invalid-card")
+
+    def test_get_invalid_json(self):
+        response = self.make_request("invalid-card", "?format=json")
+        response.render()
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            json.loads(response.content),
+            {"detail": "No CardSurveyData matches the given query."},
+        )
