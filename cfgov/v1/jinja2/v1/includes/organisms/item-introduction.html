@@ -36,7 +36,7 @@
 
 <div class="o-item-introduction">
     {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
-        <div class="o-item-introduction_intro">
+        <div class="o-item-introduction__intro">
             {{ category_slug.render(category=page.categories.first().name, href=filter_page_url) }}
         </div>
     {% endif %}

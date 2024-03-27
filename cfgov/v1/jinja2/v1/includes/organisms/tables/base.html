@@ -84,7 +84,7 @@
                 {% if col.heading -%}
                     <th scope="col"
                         {{- ' data-column' if col.preserve_column_on_mobile else '' -}}
-                        {{- ' class="o-table_cell__right-align"' | safe if col.right_align else '' -}}>
+                        {{- ' class="o-table__cell--right-align"' | safe if col.right_align else '' -}}>
                         {{ col.heading }}
                     </th>
                 {%- endif %}
@@ -117,7 +117,7 @@
                         {% set attrs = attrs ~ ' data-column' %}
                     {%- endif -%}
                     {%- if loop.index0 in columns_to_right_align -%}
-                        {% set attrs = attrs ~ ' class="o-table_cell__right-align"' | safe %}
+                        {% set attrs = attrs ~ ' class="o-table__cell--right-align"' | safe %}
                     {%- endif -%}
 
                     <{{ tag }}{{ attrs }}>

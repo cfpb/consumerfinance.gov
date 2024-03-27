@@ -1,6 +1,6 @@
 .college-costs {
   // remove border between sidebar and main content
-  & .content_main {
+  & .content__main {
     position: relative;
 
     &::after {
@@ -41,11 +41,11 @@
   }
 
   // Notification explanation doesn't need top margin unless it follows message
-  .m-notification_explanation {
+  .m-notification__explanation {
     margin-top: 0;
   }
 
-  .m-notification_message + .m-notification_explanation {
+  .m-notification__message + .m-notification__explanation {
     margin-top: unit(5px / @base-font-size-px, em);
   }
 

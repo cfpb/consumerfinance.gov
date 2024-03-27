@@ -52,7 +52,7 @@ const navigationView = {
     );
     const activeElem = navItem.closest('li');
     const activeParent = activeElem.closest(
-      '.o-secondary-nav_list-item__parent',
+      '.o-secondary-nav__list-item__parent',
     );
 
     this._navListItems.forEach((elem) => {
@@ -66,7 +66,7 @@ const navigationView = {
     activeParent.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
     activeParent
-      .querySelectorAll('.o-secondary-nav_list__children li')
+      .querySelectorAll('.o-secondary-nav__list__children li')
       .forEach((elem) => {
         elem.setAttribute('data-nav-is-active', 'True');
       });
@@ -133,7 +133,7 @@ const navigationView = {
     this._nextButton = body.querySelector(
       '.college-costs_tool-section_buttons .btn__next-step',
     );
-    this._contentSidebar = body.querySelector('.content_sidebar');
+    this._contentSidebar = body.querySelector('.content__sidebar');
     this._introduction = body.querySelector('.college-costs_intro-segment');
     this._getStartedBtn = body.querySelector(
       '.college-costs_intro-segment .btn__get-started',

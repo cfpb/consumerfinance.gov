@@ -27,7 +27,7 @@ export class ExploreCreditCards {
   }
 
   openFilterExpandable() {
-    cy.get('.o-filterable-list-controls button.o-expandable_header').click();
+    cy.get('.o-filterable-list-controls button.o-expandable__header').click();
   }
 
   clickShowMoreButton() {

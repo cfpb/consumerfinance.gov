@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
-{% block content_intro %}
+{% block content__intro %}
 
 {% with
     value = {
@@ -39,29 +39,29 @@
     {% include "v1/includes/molecules/hero.html" with context %}
 {% endwith %}
 
-{% endblock content_intro %}
+{% endblock content__intro %}
 
-{% block content_main %}
+{% block content__main %}
 
-<div class="content_wrapper">
+<div class="content__wrapper">
     <div class="block block__sub block__flush-top">
         <h2>
             How is this comparison tool different than others you may have used?
         </h2>
         <p>
             <ul class="m-list">
-                <li class="m-list_item">
+                <li class="m-list__item">
                     Larger pool of cards, likely including banks you’ve never heard of with great rates
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     <a
                         href="/data-research/credit-card-data/terms-credit-card-plans-survey/"
                     >Issuers required by law to submit data to us</a>
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     No paid advertising
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     Card interest is rated, to help you compare
                 </li>
             </ul>
@@ -71,7 +71,7 @@
     <div class="block block__sub">
         <form action="." method="get">
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
                         class="a-label a-label__heading"
@@ -82,7 +82,7 @@
 
                     {{ form.credit_tier }}
 
-                    <small class="a-label_helper a-label_helper__block">
+                    <small class="a-label__helper a-label__helper__block">
                         If you don’t know it,
                         <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/"
                             >find your credit score</a>.
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
                         class="a-label a-label__heading"
@@ -107,8 +107,8 @@
                 I’m looking for a card that will help me...
             </legend>
 
-            <div class="o-form_group">
-                <fieldset class="o-form_fieldset">
+            <div class="o-form__group">
+                <fieldset class="o-form__fieldset">
                     {{ form.situations }}
                 </fieldset>
             </div>
@@ -124,8 +124,8 @@
     </div>
 </div>
 
-{% endblock content_main %}
+{% endblock content__main %}
 
-{% block content_sidebar %}
+{% block content__sidebar %}
     {%- include "tccp/includes/sidebar.html" -%}
-{% endblock content_sidebar %}
+{% endblock content__sidebar %}

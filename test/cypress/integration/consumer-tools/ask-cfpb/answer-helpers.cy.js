@@ -6,10 +6,10 @@ export class AskCfpbAnswerPage {
   }
 
   getFirstLinkInSummary() {
-    return cy.get('.o-summary_content a').first();
+    return cy.get('.o-summary__content a').first();
   }
 
   getSummaryBtn() {
-    return cy.get('.o-summary_btn');
+    return cy.get('.o-summary__btn');
   }
 }

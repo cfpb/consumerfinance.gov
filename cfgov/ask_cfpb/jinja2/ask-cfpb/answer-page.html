@@ -20,7 +20,7 @@
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
 {%- endblock %}
 
-{% block content_main %}
+{% block content__main %}
     <div class="block
                 block__flush-top
                 block__sub">
@@ -52,11 +52,11 @@
         <div class="block block__sub">
 
             <div class="o-summary o-summary__mobile">
-                <div class="o-summary_content answer-text">
+                <div class="o-summary__content answer-text">
                     {% include_block page.answer_content %}
                 </div>
 
-                <button class="o-summary_btn u-hidden">
+                <button class="o-summary__btn u-hidden">
                     {{ _('Read full answer') }}
                     {{ svg_icon('plus-round') }}
                 </button>
@@ -69,15 +69,15 @@
                     <h3>{{ _('Browse related questions') }} </h3>
                     <ul class="m-list m-list__unstyled m-list__links">
                         {% for question in related_questions %}
-                        <li class="m-list_item">
-                            <a href="{{ question.url }}" class="m-list_link">
+                        <li class="m-list__item">
+                            <a href="{{ question.url }}" class="m-list__link">
                                 {{ question.question | safe }}
                             </a>
                         </li>
                         {% endfor %}
                         {% if portal_page %}
-                        <li class="m-list_item m-list_item__last">
-                            <a href="{{ portal_page.url }}" class="m-list_link">
+                        <li class="m-list__item m-list__item__last">
+                            <a href="{{ portal_page.url }}" class="m-list__link">
                                 <b>
                                     {{ _('Learn more about') }}
                                     {{ portal_page.portal_topic.title(page.language) | lower }}
@@ -97,7 +97,7 @@
     </div>
 {% endblock %}
 
-{% block content_sidebar scoped  %}
+{% block content__sidebar scoped  %}
     {% if about_us %}
         <div class="block
                     block__flush-top

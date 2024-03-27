@@ -24,6 +24,6 @@ export class EmailSignup {
   }
 
   successNotification() {
-    return cy.get('.m-notification_message');
+    return cy.get('.m-notification__message');
   }
 }

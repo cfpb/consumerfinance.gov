@@ -24,7 +24,7 @@ describe('MegaMenu', () => {
   describe('collapse', () => {
     it('should not be expanded by default', () => {
       window.innerWidth = 420;
-      const firstContent = navElem.querySelector('.o-mega-menu_content-1');
+      const firstContent = navElem.querySelector('.o-mega-menu__content-1');
       const defaultExpanded = firstContent.getAttribute('aria-expanded');
 
       expect(defaultExpanded).toEqual('false');
@@ -32,8 +32,8 @@ describe('MegaMenu', () => {
 
     it('should expand on click', (done) => {
       window.innerWidth = 420;
-      const firstContent = navElem.querySelector('.o-mega-menu_content-1');
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
+      const firstContent = navElem.querySelector('.o-mega-menu__content-1');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
       let isExpanded;
 
       /**
@@ -61,8 +61,8 @@ describe('MegaMenu', () => {
 
     it('should close when calling the collapse method', (done) => {
       window.innerWidth = 420;
-      const firstContent = navElem.querySelector('.o-mega-menu_content-1');
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
+      const firstContent = navElem.querySelector('.o-mega-menu__content-1');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
       let isExpanded;
 
       /**

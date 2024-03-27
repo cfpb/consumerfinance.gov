@@ -1,10 +1,10 @@
 export class Header {
   headerContent() {
-    return cy.get('.o-header_content');
+    return cy.get('.o-header__content');
   }
 
   headerLogo() {
-    return cy.get('.o-header_logo-img');
+    return cy.get('.o-header__logo-img');
   }
 
   /* Overlay is technically outside of the header,

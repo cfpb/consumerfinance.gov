@@ -22,12 +22,12 @@
 
   // TODO - this will be updated to data-open='true' in newer expandables.
   .o-expandable_target__expanded {
-    .o-expandable_cue-close {
+    .o-expandable__cue-close {
       display: block;
     }
   }
   .o-expandable_target__collapsed {
-    .o-expandable_cue-open {
+    .o-expandable__cue-open {
       display: block;
     }
   }
@@ -35,7 +35,7 @@
 
 // Regs3K secondary nav sections
 .o-regs3k-sections {
-  .o-expandable_header {
+  .o-expandable__header {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       padding-left: 0;
@@ -44,7 +44,7 @@
     padding-right: 0;
   }
 
-  .o-expandable_content {
+  .o-expandable__content {
     padding: 0;
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
@@ -72,7 +72,7 @@
   // TODO:
   // This is an override for the non-conforming use of o-expandable__padded
   // in the iRegs secondary nav. Remove this when that component is overhauled.
-  &.o-expandable__padded .o-expandable_label {
+  &.o-expandable__padded .o-expandable__label {
     padding: 0 !important;
   }
 
@@ -92,14 +92,14 @@
 
     padding: unit(10px / @base-font-size-px, em) 0
       unit(5px / @base-font-size-px, em);
-    .o-expandable_label {
+    .o-expandable__label {
       text-transform: uppercase;
     }
   }
 }
 
 // TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
-.o-secondary-nav_link {
+.o-secondary-nav__link {
   color: @pacific;
 
   &__current {

@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="{{ static('apps/form-explainer/css/main.css') }}">
 {%- endblock css %}
 
-{% block content_main_modifiers -%}
+{% block content__main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
-{% block content_main %}
+{% block content__main %}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}

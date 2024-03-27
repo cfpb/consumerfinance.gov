@@ -64,15 +64,15 @@
     <article class="o-post-preview" lang="{{ post.language }}">
         <div class="m-meta-header">
             {% if show_categories and post.categories.exists()  %}
-            <div class="m-meta-header_item-group">
+            <div class="m-meta-header__item-group">
                 {% import 'v1/includes/macros/category-slug.html' as category_slug %}
                 {% for cat in post.categories.all() %}
-                    <span class="m-meta-header_item">{{ category_slug.render(category=cat.name) }}</span>
+                    <span class="m-meta-header__item">{{ category_slug.render(category=cat.name) }}</span>
                 {% endfor %}
             </div>
             {% endif %}
             {% if show_date %}
-            <div class="m-meta-header_item">
+            <div class="m-meta-header__item">
                 <span class="a-date">
                     {{ date_label | default( '', true ) }}
                     {% if 'EventPage' in post.specific_class.__name__ %}
@@ -92,14 +92,14 @@
         {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
             {% if event.venue_image_type != 'none' %}
-                <div class="o-post-preview_image-container">
+                <div class="o-post-preview__image-container">
                     {% if event.venue_image_type == 'map' %}
-                        <img class="o-post-preview_image"
+                        <img class="o-post-preview__image"
                              src="{{ event.location_image_url() }}"
                              alt="">
                     {% elif event.venue_image_type == 'image' and event.venue_image %}
                         {% set img = image(event.venue_image, 'width-540') %}
-                        <img class="o-post-preview_image"
+                        <img class="o-post-preview__image"
                              src="{{ img.url }}"
                              alt="{{ image_alt_value(img) }}">
                     {% endif %}
@@ -107,7 +107,7 @@
             {% endif %}
         {% endif %}
 
-        <div class="o-post-preview_content">
+        <div class="o-post-preview__content">
         {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
             {% if event.start_dt %}
@@ -120,7 +120,7 @@
             {% endif %}
         {% endif %}
 
-            <h3 class="o-post-preview_title">
+            <h3 class="o-post-preview__title">
                 <a href="{{ post_url }}">
                     {{- post.seo_title or post.title -}}
                 </a>
@@ -129,7 +129,7 @@
             {% if 'EventPage' in post.specific_class.__name__ %}
                 {% set event = post.specific %}
                 {% if event.start_dt %}
-                    <div class="o-post-preview_subtitle">
+                    <div class="o-post-preview__subtitle">
                     {% if event.venue_city and event.venue_state %}
                         {{ event.venue_city }}, {{ event.venue_state }}
                     {% endif %}
@@ -141,17 +141,17 @@
                 {% endif %}
             {% endif %}
             {% if post.comments_close_date %}
-                <div class="o-post-preview_subtitle">
+                <div class="o-post-preview__subtitle">
                     Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
                 </div>
             {% endif %}
             {% if post.search_description %}
-                <div class="o-post-preview_description">
+                <div class="o-post-preview__description">
                     {{ post.search_description }}
                 </div>
             {% endif %}
             {% if post.get_authors() %}
-                <div class="o-post-preview_byline-group">
+                <div class="o-post-preview__byline-group">
                 {% for author in post.get_authors() %}
                     {% if loop.first %}By {% elif loop.last %}and {% endif %}
                     {{ author.name }}</a>

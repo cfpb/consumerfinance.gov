@@ -19,7 +19,7 @@
     </style>
 {% endblock css %}
 
-{% block content_intro %}
+{% block content__intro %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with image = image_passthrough, value = hardcoded.hero %}
@@ -40,7 +40,7 @@
     {% endwith %}
 {% endblock %}
 
-{% block content_main %}
+{% block content__main %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with
@@ -59,4 +59,4 @@
             'cards': hardcoded.cards
         } ) }}
     </section>
-{% endblock content_main %}
+{% endblock content__main %}

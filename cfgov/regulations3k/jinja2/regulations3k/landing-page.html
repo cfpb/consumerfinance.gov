@@ -24,19 +24,19 @@
 
 {# BODY items #}
 
-{% block content_intro -%}
+{% block content__intro -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 
-{% block content_main scoped %}
+{% block content__main scoped %}
     {% for block in page.content -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
-{% endblock content_main %}
+{% endblock content__main %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {{ recent_notices }}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}

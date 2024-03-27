@@ -7,7 +7,7 @@
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_main %}
+{% block content__main %}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
             {{ item_introduction.render(block.value) }}
@@ -34,6 +34,6 @@
     {%- endfor %}
 {% endblock %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}
