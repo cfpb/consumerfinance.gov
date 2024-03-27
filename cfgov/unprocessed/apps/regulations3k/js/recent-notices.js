@@ -7,7 +7,7 @@ const processNotice = (notice) => {
   const li = document.createElement('li');
   a.href = encodeURI(notice.html_url);
   a.textContent = notice.title;
-  li.className = 'm-list_link';
+  li.className = 'm-list__link';
   li.appendChild(a);
   return li;
 };

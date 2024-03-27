@@ -15,10 +15,10 @@
 // .o-expandable
 @expandable-focus: @black;
 
-// .o-expandable_label
+// .o-expandable__label
 @expandable_label-text: @black;
 
-// .o-expandable_cues
+// .o-expandable__cues
 @expandable_cues-text: @pacific;
 
 // .o-expandable modifiers
@@ -27,12 +27,12 @@
 
 // Sizing variables
 
-// .o-expandable_cues
+// .o-expandable__cues
 @expandable_cues-font-size: @btn-font-size;
 
 // Timing variables
 
-// .o-expandable_content__transition
+// .o-expandable__content__transition
 @expandable__transition-speed: 0.25s;
 
 //
@@ -53,16 +53,16 @@
       outline-offset: 1px;
     }
 
-    .o-expandable_cue-close,
-    .o-expandable_cue-open {
+    .o-expandable__cue-close,
+    .o-expandable__cue-open {
       display: none;
     }
 
-    &__expanded .o-expandable_cue-close {
+    &__expanded .o-expandable__cue-close {
       display: block;
     }
 
-    &__collapsed .o-expandable_cue-open {
+    &__collapsed .o-expandable__cue-open {
       display: block;
     }
   }
@@ -133,14 +133,14 @@
     display: flex;
     justify-content: space-between;
 
-    // Using the button element with .o-expandable_header requires setting
+    // Using the button element with .o-expandable__header requires setting
     // an explicit width.
     button& {
       width: 100%;
       text-align: left;
     }
 
-    .o-expandable_label {
+    .o-expandable__label {
       // Grow to available width.
       flex-grow: 1;
     }
@@ -194,7 +194,7 @@
 }
 
 // Used when the set language reads right-to-left
-div[dir='rtl'] .o-expandable_header {
+div[dir='rtl'] .o-expandable__header {
   width: 100%;
   text-align: right;
 }

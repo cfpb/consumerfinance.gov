@@ -12,7 +12,7 @@
     {{ super() }} ask-cfpb-page ask-cfpb-page__search
 {%- endblock %}
 
-{% block content_main %}
+{% block content__main %}
     <div class="block
                 block__flush-top">
         <h1>{{ _('Search our library of answers') }}</h1>
@@ -90,7 +90,7 @@
 
 {% endblock %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {% if about_us %}
         <div class="block block__flush-top about-us-text">
             {{ about_us.text | richtext }}

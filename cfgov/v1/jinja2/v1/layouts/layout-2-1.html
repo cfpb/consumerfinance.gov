@@ -6,23 +6,23 @@
           id="main"
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
-        {% if self.content_intro() %}
+        {% if self.content__intro() %}
             <div class="u-layout_content-intro">
-                {% block content_intro scoped -%}{%- endblock %}
+                {% block content__intro scoped -%}{%- endblock %}
             </div>
         {% endif %}
 
-        <div class="u-layout-grid_wrapper">
+        <div class="u-layout-grid__wrapper">
             {% block pre_content scoped -%}
                 {% include 'v1/layouts/_breadcrumbs.html' %}
             {%- endblock %}
 
             {% block body_content scoped %}
-                <div class="u-layout-grid_main">
-                    {% block content_main scoped -%}{%- endblock %}
+                <div class="u-layout-grid__main">
+                    {% block content__main scoped -%}{%- endblock %}
                 </div>
-                <aside class="u-layout-grid_sidebar">
-                    {% block content_sidebar scoped -%}{%- endblock %}
+                <aside class="u-layout-grid__sidebar">
+                    {% block content__sidebar scoped -%}{%- endblock %}
                 </aside>
             {% endblock %}
         </div>

@@ -67,12 +67,12 @@
     {% import 'v1/includes/molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true, language ) }}
 
-    <div class="o-header_content">
+    <div class="o-header__content">
 
         <div class="wrapper wrapper__match-content">
             {% if language == 'es' %}
-            <a class="o-header_logo" href="/es/">
-                <img class="o-header_logo-img"
+            <a class="o-header__logo" href="/es/">
+                <img class="o-header__logo-img"
                      src="{{ static('img/logo_es_286x50.png') }}"
                      srcset="{{ static('img/logo_es_228x40.png') }} 228w,
                              {{ static('img/logo_es_228x40@2x.png') }} 456w,
@@ -85,8 +85,8 @@
                      alt="Oficina para la Protección Financiera del Consumidor">
             </a>
             {% else %}
-            <a class="o-header_logo" href="/">
-                <img class="o-header_logo-img"
+            <a class="o-header__logo" href="/">
+                <img class="o-header__logo-img"
                      src="{{ static('img/logo_237x50.png') }}"
                      srcset="{{ static('img/logo_161x34.png') }} 161w,
                              {{ static('img/logo_161x34@2x.png') }} 322w,

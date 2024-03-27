@@ -1,14 +1,14 @@
 @import (reference) '../../../css/main.less';
 
 .respond-to-min(@bp-sm-min, {
-  .o-form_group {
+  .o-form__group {
     max-width: unit((380px / @base-font-size-px), em);
   }
 });
 
 // @TODO refactor and remove this override
 // See https://github.com/cfpb/consumerfinance.gov/pull/8247
-.o-form_fieldset {
+.o-form__fieldset {
   ul {
     list-style: none;
     padding-left: 0;
@@ -37,11 +37,11 @@
   }
 }
 
-.a-checkbox + .a-label > .a-label_helper {
+.a-checkbox + .a-label > .a-label__helper {
   display: none;
 }
 
-.a-checkbox:checked + .a-label > .a-label_helper {
+.a-checkbox:checked + .a-label > .a-label__helper {
   display: grid;
   grid-column-start: 1;
   grid-column-end: 3;
@@ -49,15 +49,15 @@
   margin-bottom: 1em;
 }
 
-.a-label_helper .m-list {
+.a-label__helper .m-list {
   list-style: square;
   padding-left: 1.125em;
 
-  .m-list_item {
+  .m-list__item {
     margin-left: unit((15px / @base-font-size-px), em);
   }
 
-  .m-list_item__has-icon {
+  .m-list__item__has-icon {
     display: flex;
     margin-left: 0;
 
@@ -204,7 +204,7 @@ html.js .o-filterable-list-results__partial {
   }
 
   @media only screen and (min-width: @bp-sm-min) {
-    // Override .o-table_cell__right-align on non-mobile devices
+    // Override .o-table__cell--right-align on non-mobile devices
     th,
     td {
       text-align: left;
@@ -313,7 +313,7 @@ html.js .o-filterable-list-results__partial {
 
 // Hide form submit button for htmx users
 html.js form[hx-boost] {
-  .o-form_group:last-child {
+  .o-form__group:last-child {
     margin-bottom: 0;
   }
 

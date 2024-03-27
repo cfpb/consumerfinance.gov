@@ -4,7 +4,7 @@
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 
-{% block content_main %}
+{% block content__main %}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
             {% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
@@ -22,7 +22,7 @@
     {%- endfor %}
 {% endblock %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {{ related_metadata_enforcement_action.render() }}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}

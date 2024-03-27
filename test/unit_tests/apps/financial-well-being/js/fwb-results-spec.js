@@ -20,15 +20,15 @@ const dataLayerEvent = {
 const HTML_SNIPPET = `
 <div class="content">
   <div class="o-expandable">
-    <button class="o-expandable_header">
-      <span class="o-expandable_label">
+    <button class="o-expandable__header">
+      <span class="o-expandable__label">
       </span>
-      <span class="o-expandable_cues">
-        <span class="o-expandable_cue-open" role="img" aria-label="Show"></span>
-        <span class="o-expandable_cue-close" role="img" aria-label="Hide"></span>
+      <span class="o-expandable__cues">
+        <span class="o-expandable__cue-open" role="img" aria-label="Show"></span>
+        <span class="o-expandable__cue-close" role="img" aria-label="Hide"></span>
       </span>
     </button>
-    <div class="o-expandable_content"></div>
+    <div class="o-expandable__content"></div>
   </div>
   <figure class="comparison-chart" id="comparison-chart">
     <div class="comparison-chart_toggle u-js-only">
@@ -110,8 +110,8 @@ describe('fwb-results', () => {
       '.comparison-chart_toggle-button',
     );
     dataPoint = document.querySelectorAll('.comparison_data-point');
-    expandableTarget = document.querySelector('.o-expandable_header');
-    expandableContent = document.querySelector('.o-expandable_content');
+    expandableTarget = document.querySelector('.o-expandable__header');
+    expandableContent = document.querySelector('.o-expandable__content');
     initFwbResults();
   });
 

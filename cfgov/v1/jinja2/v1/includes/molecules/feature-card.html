@@ -39,16 +39,16 @@
 {%- macro feature_card(value) -%}
 
 <article class="m-card">
-    <h2 class="m-card_heading">
+    <h2 class="m-card__heading">
         <a class="" href="{{ value.category.url }}">
-<span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
+<span class="m-card__icon">{{ svg_icon( value.icon ) }}</span>
 <span>{{ value.category.text }}</span>
 </a>
     </h2>
      
 <ul class="m-list">
 {%- for link in value.links %}
-<li class="m-list_item">
+<li class="m-list__item">
 {%- if link.text is not none and link.text.find('@') > -1 -%}
     {%- if not value.emails is defined -%}
         {%- do value.update({'emails':[{'url':link.text}]}) -%}
@@ -74,7 +74,7 @@
 {%- endfor %}
 </ul>
 
-<div class="m-card_footer">
+<div class="m-card__footer">
     <a href="{{ value.category.url }}">
         {{ value.footer_label }}
     </a>

@@ -16,14 +16,14 @@
 
 {% macro _related_posts_list(posts, limit) %}
     {% if limit %}{% set posts = posts[ :limit | int ] %}{% endif %}
-    <ul class="m-related-posts_list
+    <ul class="m-related-posts__list
                m-list
                m-list__unstyled">
         {% for post in posts %}
             {% set post_url = post.url or '' %}
-            <li class="m-list_item">
+            <li class="m-list__item">
                 <h3 class="h4 u-mb5">
-                    <a class="m-list_link"
+                    <a class="m-list__link"
                        href="{{ post_url or post.permalink }}">
                         {{ post.title | safe }}
                     </a>
@@ -78,12 +78,12 @@
 {% macro render( value ) %}
 <div class="m-related-posts">
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
             {{ value.header_title }}
         </h2>
     </header>
     {% for subposts in value.posts %}
-        <div class="m-related-posts_list-container">
+        <div class="m-related-posts__list-container">
             {% if value.show_heading %}
                 <h3 class="h4">
                     {% if subposts.icon %}{{ svg_icon( subposts.icon ) }}{% endif %}
@@ -97,7 +97,7 @@
     <a class="a-link a-link__jump"
        href="{{ value.view_more_url }}"
        aria-label="{{ _('View more related posts') }}">
-        <span class="a-link_text">
+        <span class="a-link__text">
             {{ _('View more') }}
         </span>
     </a>

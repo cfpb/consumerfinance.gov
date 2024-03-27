@@ -15,23 +15,23 @@
       outline-offset: 1px;
     }
 
-    .o-secondary-nav_cue-close,
-    .o-secondary-nav_cue-open {
+    .o-secondary-nav__cue-close,
+    .o-secondary-nav__cue-open {
       display: none;
     }
 
-    &[aria-expanded='false'] .o-secondary-nav_cue-open {
+    &[aria-expanded='false'] .o-secondary-nav__cue-open {
       display: block;
     }
 
-    &[aria-expanded='true'] .o-secondary-nav_cue-close {
+    &[aria-expanded='true'] .o-secondary-nav__cue-close {
       display: block;
     }
   }
 
-  // Using the button element with .o-secondary-nav_header requires setting
+  // Using the button element with .o-secondary-nav__header requires setting
   // an explicit width.
-  button.o-secondary-nav_header {
+  button.o-secondary-nav__header {
     background-color: transparent;
     width: 100%;
     text-align: left;
@@ -184,7 +184,7 @@
 // Right-to-left (RTL) layout.
 html[lang='ar'] {
   .o-secondary-nav {
-    button.o-secondary-nav_header {
+    button.o-secondary-nav__header {
       text-align: right;
     }
 

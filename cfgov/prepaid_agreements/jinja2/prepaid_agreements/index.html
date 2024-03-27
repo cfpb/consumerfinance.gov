@@ -23,11 +23,11 @@
 
 {# BODY items #}
 
-{% block content_main_modifiers -%}
+{% block content__main_modifiers -%}
     content__1-3 prepaid-agreements prepaid-agreements-search
 {%- endblock %}
 
-{% block content_main scoped %}
+{% block content__main scoped %}
     <div class="search_form">
         <div class="block block__sub search_intro">
             <h1>Prepaid product agreements database</h1>
@@ -67,7 +67,7 @@
                     <div class="flex-all">
                         <div class="m-btn-inside-input input-contains-label">
                             <label for="searchText"
-                                   class="input-contains-label_before input-contains-label_before__search"
+                                   class="input-contains-label__before input-contains-label__before__search"
                                    aria-hidden="true">
                                 {{ svg_icon('search') }}
                             </label>

@@ -44,11 +44,11 @@ export class FilingInstructionGuide {
   }
 
   getMobileTOCHeader() {
-    return cy.get('.o-fig_sidebar .o-secondary-nav_header');
+    return cy.get('.o-fig_sidebar .o-secondary-nav__header');
   }
 
   getMobileTOCBody() {
-    return cy.get('.o-secondary-nav_content');
+    return cy.get('.o-secondary-nav__content');
   }
 
   goToSection(section) {
@@ -56,7 +56,7 @@ export class FilingInstructionGuide {
   }
 
   getNavItem(section) {
-    return cy.get(`a.o-secondary-nav_link[href="#${section}"]`);
+    return cy.get(`a.o-secondary-nav__link[href="#${section}"]`);
   }
 
   clickNavItem(section) {
@@ -76,7 +76,7 @@ export class FilingInstructionGuide {
   }
 
   toggleToc() {
-    return cy.get('.o-secondary-nav_header').click();
+    return cy.get('.o-secondary-nav__header').click();
   }
 
   scrollToBottom() {

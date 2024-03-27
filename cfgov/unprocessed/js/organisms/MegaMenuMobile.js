@@ -49,7 +49,7 @@ function MegaMenuMobile(menus) {
 
     // Make root level links disabled to tab and voiceover navigation on init.
     _rootLinksDom = _rootMenuContentDom.querySelectorAll(
-      'a.o-mega-menu_content-1-link,.m-global-eyebrow a',
+      'a.o-mega-menu__content-1-link,.m-global-eyebrow a',
     );
 
     return this;
@@ -135,7 +135,7 @@ function MegaMenuMobile(menus) {
 
       // Back button on the 2nd level menu clicked.
       if (
-        event.trigger.classList.contains('o-mega-menu_content-2-alt-trigger')
+        event.trigger.classList.contains('o-mega-menu__content-2-alt-trigger')
       ) {
         _enableRootMenuContent();
         _activeMenu = _rootMenu;

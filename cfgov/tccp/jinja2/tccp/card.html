@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
-{% block content_main %}
+{% block content__main %}
 <div class="block block__flush-top">
 
     <div class="eyebrow">{{ card.institution_name }}</div>
@@ -748,8 +748,8 @@
     </dl>
 </div>
 
-{% endblock content_main %}
+{% endblock content__main %}
 
-{% block content_sidebar %}
+{% block content__sidebar %}
     {%- include "tccp/includes/sidebar.html" -%}
-{% endblock content_sidebar %}
+{% endblock content__sidebar %}

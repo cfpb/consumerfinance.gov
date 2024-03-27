@@ -2,7 +2,7 @@
 
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_intro -%}
+{% block content__intro -%}
     {% for block in page.header -%}
         {% import 'v1/includes/templates/render_block.html' as render_block with context %}
         {{ render_block.render(block, loop.index) }}
@@ -18,7 +18,7 @@
 {# Remove breadcrumbs #}
 {% block pre_content -%}{% endblock %}
 
-{% block content_main %}
+{% block content__main %}
     {% if page.has_hero -%}
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
         {{ translation_links.render(modifier_classes='block__flush-top') }}
@@ -52,6 +52,6 @@
     {%- endfor %}
 {% endblock %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}

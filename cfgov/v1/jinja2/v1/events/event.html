@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ static('css/on-demand/event.css') }}">
 {%- endblock css %}
 
-{% block content_main %}
+{% block content__main %}
     {% include 'v1/events/_event-detail.html' %}
 
     {% if page.agenda_items %}
@@ -31,7 +31,7 @@
     {% endif %}
 {% endblock %}
 
-{% block content_sidebar %}
+{% block content__sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     <section class="block">
         {% import 'v1/includes/molecules/related-content.html' as related_links %}

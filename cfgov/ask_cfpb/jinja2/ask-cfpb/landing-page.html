@@ -14,13 +14,13 @@
     {{ super() }} ask-cfpb-page ask-cfpb-page__landing
 {%- endblock %}
 
-{% block content_intro -%}
+{% block content__intro -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 
-{% block content_main %}
+{% block content__main %}
     <div class="block block__flush-top">
 
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
@@ -35,7 +35,7 @@
 
 {% endblock %}
 
-{% block content_sidebar scoped -%}
+{% block content__sidebar scoped -%}
     {% if about_us %}
         <div class="block block__flush-top about-us-text">
             {{ about_us.text | richtext }}

@@ -9,7 +9,7 @@ export class Multiselect {
   }
 
   clickAway() {
-    return cy.get('.o-expandable_content').click({ force: true });
+    return cy.get('.o-expandable__content').click({ force: true });
   }
 
   multiSelect(name) {

@@ -1,6 +1,6 @@
 {% extends "v1/layouts/layout-full.html" %}
 
-{% block content_intro %}
+{% block content__intro %}
     {% for block in page.header -%}
         {% if block.block_type == 'features' %}
             <section class="wrapper
@@ -25,7 +25,7 @@
   {{ super() }} content__center-image-bleed content__supersize-headings
 {%- endblock %}
 
-{% block content_main %}
+{% block content__main %}
     {% for block in page.content %}
         <div class="block{{ ' block__flush-top' if loop.first else '' }}">
             {% include_block block %}

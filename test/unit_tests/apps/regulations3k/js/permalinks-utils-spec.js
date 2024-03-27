@@ -29,7 +29,7 @@ const HTML_SNIPPET2 = `
 
 const HTML_SNIPPET3 = `
   <div class="regulations3k">
-    <div id="content_main">
+    <div id="content__main">
       <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
           <div class="o-regulations-wayfinder_sidebar">
               <span class="h4">
@@ -246,7 +246,7 @@ describe('The Regs3K permalinks utils', () => {
     it('should update the wayfinder', () => {
       updateParagraphPositions();
       const mainContent = document.querySelector(
-        '.regulations3k #content_main',
+        '.regulations3k #content__main',
       );
       const wayfinder = document.querySelector('.o-regulations-wayfinder');
 

@@ -10,7 +10,7 @@
   ({'href':'/credit-cards/agreements/','title':'Credit card agreement database'}),
 ] %}
 
-{% block content_main %}
+{% block content__main %}
     <div class="block block__flush-top">
         <h1>Credit card agreement archive</h1>
         {% if agreements | length == 0 %}
@@ -50,7 +50,7 @@
     </div>
 {% endblock %}
 
-{% block content_sidebar scoped  %}
+{% block content__sidebar scoped  %}
     <div class="block block__flush-top">
         {% include '_need_help.html' %}
     </div>

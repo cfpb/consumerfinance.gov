@@ -37,6 +37,6 @@ export class FilterableList {
   }
 
   selectedTopics() {
-    return cy.get('.o-multiselect_choices > li');
+    return cy.get('.o-multiselect__choices > li');
   }
 }

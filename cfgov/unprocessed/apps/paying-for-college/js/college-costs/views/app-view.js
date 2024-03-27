@@ -161,7 +161,7 @@ function _addButtonListeners() {
  * @param {MouseEvent} event - Click event object.
  */
 function _handleDidThisHelpClick(event) {
-  const parent = event.target.closest('.o-form_fieldset');
+  const parent = event.target.closest('.o-form__fieldset');
   sendAnalyticsEvent(
     'Impact question click: ' + parent.dataset.impact,
     event.target.value,

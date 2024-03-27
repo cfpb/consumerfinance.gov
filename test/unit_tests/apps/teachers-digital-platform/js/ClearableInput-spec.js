@@ -6,14 +6,14 @@ let clearBtnDom;
 let inputDom;
 
 const HTML_SNIPPET = `
-<div class="o-form__input-w-btn_input-container">
+<div class="o-form--input-w-btn__input-container">
      <div class="m-btn-inside-input
                  input-contains-label">
-         <label for="query" class="input-contains-label_before
-                                   input-contains-label_before__search">
+         <label for="query" class="input-contains-label__before
+                                   input-contains-label__before__search">
          </label>
-         <label for="query" class="input-contains-label_after
-                                   input-contains-label_after__clear">
+         <label for="query" class="input-contains-label__after
+                                   input-contains-label__after__clear">
          </label>
          <input type="text"
                 title="Search the CFPB"
@@ -27,9 +27,9 @@ const HTML_SNIPPET = `
 describe('ClearableInput', () => {
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    baseDom = document.querySelector('.o-form__input-w-btn_input-container');
+    baseDom = document.querySelector('.o-form--input-w-btn__input-container');
     inputDom = baseDom.querySelector('input');
-    clearBtnDom = baseDom.querySelector('.input-contains-label_after__clear');
+    clearBtnDom = baseDom.querySelector('.input-contains-label__after__clear');
   });
 
   describe('init function', () => {

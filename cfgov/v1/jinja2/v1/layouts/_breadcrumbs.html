@@ -3,7 +3,7 @@
 {% endif %}
 
 {% if breadcrumb_items | length > 0 %}
-    <div class="u-layout-grid_breadcrumbs">
+    <div class="u-layout-grid__breadcrumbs">
         {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
         {{ breadcrumbs.render(breadcrumb_items) }}
     </div>
