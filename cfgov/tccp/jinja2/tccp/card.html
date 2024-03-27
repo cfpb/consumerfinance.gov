@@ -44,7 +44,9 @@
                 Available only to people who live in
                 {{ 'specific counties in ' if card.pertains_to_specific_counties }}
                 {% for state in state_limitations %}
-                    {{ state_lookup[state] }}{% if not loop.last %},{% endif %}
+                    {{ state_lookup[state] -}}
+                    {{- ', ' if not loop.last and loop.length > 2 -}}
+                    {{- 'and ' if loop.index == loop.length - 1}}
                 {% endfor %}
             {% endif %}
         </dd>
