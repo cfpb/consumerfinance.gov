@@ -6,7 +6,7 @@ describe('Explore credit cards landing page', () => {
   it('should show results tailored to the selected situation', () => {
     exploreCards.openLandingPage();
 
-    exploreCards.selectLocation('FL');
+    exploreCards.selectLocation('NY');
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
@@ -37,8 +37,7 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
-  // Disabling this test until we add card test data
-  xit('should link to card detail pages', () => {
+  it('should link to card detail pages', () => {
     exploreCards.openResultsPage();
 
     cy.get('td[data-label="Credit card"] a').first().click();
@@ -48,13 +47,12 @@ describe('Explore credit cards results page', () => {
   });
 });
 
-// Disabling this test until we add card test data
 describe('Explore credit card details page', () => {
-  xit('should have a breadcrumb to the filtered list the user came from', () => {
+  it('should have a breadcrumb to the filtered list the user came from', () => {
     exploreCards.openLandingPage();
 
     exploreCards.selectCreditTier('Greater than 720');
-    exploreCards.selectLocation('FL');
+    exploreCards.selectLocation('NY');
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
@@ -63,10 +61,10 @@ describe('Explore credit card details page', () => {
     cy.get('.m-breadcrumbs_crumb:last-child')
       .should('have.attr', 'href')
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
-      .and('contain', 'location=FL')
+      .and('contain', 'location=NY')
       .and('contain', 'situations=Earn+rewards');
   });
-  xit('should have a breadcrumb to full list if the user never filtered', () => {
+  it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();
 
     cy.get('td[data-label="Credit card"] a').first().click();
