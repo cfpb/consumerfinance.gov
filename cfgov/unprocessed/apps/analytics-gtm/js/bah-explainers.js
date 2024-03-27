@@ -88,7 +88,7 @@ export default function (label) {
     recordExpandableState(expandableID);
 
     let action = 'Expandable collapsed';
-    const label = elem.querySelector('.o-expandable_label');
+    const label = elem.querySelector('.o-expandable__label');
     const text = label.textContent.trim();
     if (expandableStates[expandableID] === true) {
       action = 'Expandable expanded';
@@ -128,7 +128,7 @@ export default function (label) {
     trackFormExplainerPageButtonClick,
   );
   addEventListenerToSelector(
-    '.o-expandable_header',
+    '.o-expandable__header',
     'mouseup',
     trackExpandableTargetsClick,
   );

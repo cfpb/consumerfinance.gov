@@ -116,10 +116,10 @@ function getLabelText() {
 const Expandable = AtomicComponent.extend({
   ui: {
     base: '.o-expandable',
-    target: '.o-expandable_header',
-    content: '.o-expandable_content',
-    header: '.o-expandable_header',
-    label: '.o-expandable_label',
+    target: '.o-expandable__header',
+    content: '.o-expandable__content',
+    header: '.o-expandable__header',
+    label: '.o-expandable__label',
   },
 
   classes: {
@@ -130,7 +130,7 @@ const Expandable = AtomicComponent.extend({
   },
 
   events: {
-    'click .o-expandable_header': 'expandableClickHandler',
+    'click .o-expandable__header': 'expandableClickHandler',
   },
 
   transition: null,

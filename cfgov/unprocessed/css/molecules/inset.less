@@ -4,16 +4,16 @@
   margin-left: auto;
   margin-right: auto;
 
-  &__bottom-rule {
+  &--bottom-rule {
     padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     border-bottom: 1px solid @horizontal-rule;
   }
 
-  &_caption {
+  &__caption {
     margin-top: unit(15px / @base-font-size-px, em);
   }
 
-  &__bordered {
+  &--bordered {
     // Styling for "Tip" insets, most commonly used in Ask CFPB
     border-top: 4px solid var(--teal-60);
     border-bottom: 2px solid var(--teal-40);
@@ -30,12 +30,12 @@
     });
   }
 
-  &.m-inset__170 {
+  &.m-inset--170 {
     // Ensure that 170px inset images are that same size on XS screens
     width: unit(170px / @base-font-size-px, em);
   }
 
-  &__270 {
+  &--270 {
     // Ensure that 270px inset images are that same size on XS screens
     width: unit(270px / @base-font-size-px, em);
   }
@@ -47,7 +47,7 @@
     float: right;
     width: unit( 270px / @base-font-size-px, em );
 
-    &__left {
+    &--left {
       float: left;
       clear: left;
     }
@@ -58,7 +58,7 @@
   });
 
   .respond-to-min(@bp-xl-min, {
-    &__470 {
+    &--470 {
       width: unit( 470px / @base-font-size-px, em );
     }
   });
@@ -77,7 +77,7 @@
     margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
   }
 
-  &__email {
+  &--email {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       box-sizing: border-box;

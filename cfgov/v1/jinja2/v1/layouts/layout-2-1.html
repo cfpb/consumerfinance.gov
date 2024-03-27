@@ -12,16 +12,16 @@
             </div>
         {% endif %}
 
-        <div class="u-layout-grid_wrapper">
+        <div class="u-layout-grid__wrapper">
             {% block pre_content scoped -%}
                 {% include 'v1/layouts/_breadcrumbs.html' %}
             {%- endblock %}
 
             {% block body_content scoped %}
-                <div class="u-layout-grid_main">
+                <div class="u-layout-grid__main">
                     {% block content_main scoped -%}{%- endblock %}
                 </div>
-                <aside class="u-layout-grid_sidebar">
+                <aside class="u-layout-grid__sidebar">
                     {% block content_sidebar scoped -%}{%- endblock %}
                 </aside>
             {% endblock %}

@@ -98,13 +98,13 @@
                 </h2>
             </header>
             <div class="content-l">
-                <div class="event-meta content-l_col content-l_col-1-2">
+                <div class="event-meta content-l__col content-l__col-1-2">
                     {{ event_meta_address(event,
                         address_format ='{venue} {street} {suite}
                         {city}' ~ state_prefix ~ '{state} {zip}'
                     ) }}
                 </div>
-                <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                <div class="content-l__col content-l__col-1-2 event-calendar_container">
                 {% if event_state == 'past' and event.live_stream_availability and not event.archive_video_id %}
                     Video replay will be<br> available shortly
                 {% else %}
@@ -139,13 +139,13 @@
                     {% elif event.post_event_image_type == 'image' %}
                         {# DISPLAY SPECIFICALLY-CHOSEN POST-EVENT IMAGE #}
                         {% set img = image(event.post_event_image, 'width-1416') %}
-                        <img class="o-post-preview_image"
+                        <img class="o-post-preview__image"
                              src="{{ img.url }}"
                              alt="{{ image_alt_value(img) }}">
                     {% else %}
                         {# DISPLAY PLACEHOLDER POST-EVENT IMAGE #}
                         {% set img = image(event.post_event_image, 'width-1416') %}
-                        <img class="o-post-preview_image"
+                        <img class="o-post-preview__image"
                              src="{{ static('img/cfpb_video_cover_card_1380x776.png') }}"
                              alt="">
                     {% endif %}
@@ -156,7 +156,7 @@
                 {% elif event.venue_image_type == 'image' %}
                     {# DISPLAY SPECIFICALLY-CHOSEN VENUE IMAGE #}
                     {% set img = image(event.venue_image, 'width-1416') %}
-                    <img class="o-post-preview_image"
+                    <img class="o-post-preview__image"
                          src="{{ img.url }}"
                          alt="{{ image_alt_value(img) }}">
                 {% endif %}
@@ -183,15 +183,15 @@
 
 {% macro event_agenda(event) %}
   <div class="block
-              block__padded-top
-              block__border-top">
+              block--padded-top
+              block--border-top">
     <h2>Agenda</h2>
     <table class="o-table
                   event-agenda_table
                   o-table__stack-on-small
                   u-w100pct
                   block
-                  block__flush-top">
+                  block--flush-top">
         <thead>
             <tr>
                 <th>Time</th>

@@ -18,7 +18,7 @@
     {% if page.glossary_terms %}
         <dl class="terms" itemscope itemtype="https://schema.org/DefinedTermSet">
         {% for term in page.glossary_terms %}
-            <div class="term {{'' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
+            <div class="term {{'' if loop.index == 1 else 'block block--border-top block--padded-top'}}"
                  id="{{ term.anchor(page.language) }}"
                  itemscope
                  itemtype="https://schema.org/DefinedTerm">
@@ -74,12 +74,12 @@
             </article>
             {% endfor %}
 
-            <div class="block block__sub">
+            <div class="block block--sub">
                 {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
             </div>
         </section>
         {% if not page.portal_category %}
-        <div class="block block__flush-bottom block__padded-bottom">
+        <div class="block block--flush-bottom block--padded-bottom">
             <p class="ask-search-link h4">
                 <span>{{ _("Don't see what you're looking for?") }}</span>
                 <a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a>

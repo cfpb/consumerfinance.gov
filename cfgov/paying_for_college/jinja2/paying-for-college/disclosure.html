@@ -14,35 +14,35 @@
 <main id="main" data-context="{{url_root}}">
     <div id="financial-offer" class="understanding-financial-aid-offer">
         <section class="m-hero">
-            <div class="m-hero_wrapper wrapper">
-                <div class="m-hero_text">
-                    <h1 class="m-hero_heading">
+            <div class="m-hero__wrapper wrapper">
+                <div class="m-hero__text">
+                    <h1 class="m-hero__heading">
                         Understanding your financial aid offer
                     </h1>
-                    <p class="m-hero_subhead">
+                    <p class="m-hero__subhead">
                         This personalized summary will help you evaluate your
                         financial aid offer from your school to see how
                         student debt may impact your future finances. </p>
                 </div>
-                <div class="m-hero_image-wrapper">
-                  <div class="m-hero_image"></div>
+                <div class="m-hero__image-wrapper">
+                  <div class="m-hero__image"></div>
                 </div>
             </div>
         </section>
-        <div class="content_line"></div>
-        <section class="verify step content_wrapper">
-            <div class="content_main">
+        <div class="content__line"></div>
+        <section class="verify step content__wrapper">
+            <div class="content__main">
 
                 <div class="m-notification m-notification__error verify_content"
                      data-missing-data-error="noSchool">
                     {{ svg_icon('error-round') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation">
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation">
                             The information your school provided is missing the school ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right school ID and it's in the correct format.
                         </p>
 
-                        <p class="m-notification_explanation">
+                        <p class="m-notification__explanation">
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         </p>
                     </div>
@@ -51,13 +51,13 @@
                 <div class="m-notification m-notification__error verify_content"
                      data-missing-data-error="noProgram">
                    {{ svg_icon('error-round') }}
-                   <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation">
+                   <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation">
                             The information your school provided is missing the program ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right program ID and it's in the correct format.
                         </p>
 
-                        <p class="m-notification_explanation">
+                        <p class="m-notification__explanation">
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         </p>
                     </div>
@@ -65,13 +65,13 @@
                 <div class="m-notification m-notification__error verify_content"
                      data-missing-data-error="noOffer">
                     {{ svg_icon('error-round') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation"></p>
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation"></p>
                             The information your school provided is missing the offer ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right offer ID and it's in the correct format.
                         </p>
 
-                        <p class="m-notification_explanation"></p>
+                        <p class="m-notification__explanation"></p>
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         </p>
                     </div>
@@ -196,12 +196,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="content_line"></div>
+                <div class="content__line"></div>
             </div>
         </section>
         <section id="info-right" class="information-right" tabindex="-1">
-            <section class="instructions step content_wrapper">
-                <div class="content_main">
+            <section class="instructions step content__wrapper">
+                <div class="content__main">
                     <div class="instructions_wrapper">
                         <div class="instructions_content
                         instructions_content__right">
@@ -246,11 +246,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content_line"></div>
+                    <div class="content__line"></div>
                 </div>
             </section>
-            <section class="review step content_wrapper" data-section="review">
-                <div class="content_main">
+            <section class="review step content__wrapper" data-section="review">
+                <div class="content__main">
                     <div class="review_wrapper">
                         <div class="review_intro">
                             <h2 class="step_heading">
@@ -390,7 +390,7 @@
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -564,7 +564,7 @@
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -620,7 +620,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -818,7 +818,7 @@
                                         data-financial="workstudy"></span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -869,7 +869,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -959,7 +959,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="content_line loans_line" data-section="perkins"></div>
+                                    <div class="content__line loans_line" data-section="perkins"></div>
                                     <div class="form-group_item"
                                     data-section="subsidized">
                                         <div class="aid-form_label-wrapper">
@@ -1011,7 +1011,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="content_line loans_line"
+                                    <div class="content__line loans_line"
                                     data-section="subsidized"></div>
                                     <div class="form-group_item"
                                     data-section="unsubsidized">
@@ -1065,7 +1065,7 @@
                                         </div>
                                     </div>
                                     <div data-section="gradPlus">
-                                      <div class="content_line loans_line"></div>
+                                      <div class="content__line loans_line"></div>
                                       <div class="form-group_item">
                                           <div class="aid-form_label-wrapper">
                                               <label class="form-label"
@@ -1114,7 +1114,7 @@
                                     </div>
                                     <div class="aid-form_inline-subtotal"
                                     data-section="federalLoans">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1480,7 +1480,7 @@
                                         </button>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1577,7 +1577,7 @@
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal" data-section="tuitionpaymentplan">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1655,7 +1655,7 @@
                                     </span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1724,7 +1724,7 @@
                                         data-financial="summaryLoanTotal"></span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1853,7 +1853,7 @@
                                         data-financial="summaryLoanTotal"></span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1950,8 +1950,8 @@
                 </div>
             </section>
             <section class="continue step">
-                <div class="content_wrapper">
-                    <div class="content_main">
+                <div class="content__wrapper">
+                    <div class="content__main">
                         <div class="continue_wrapper">
                             <div class="continue_content">
                                 <h2 class="step_heading">
@@ -1979,9 +1979,9 @@
                     </div>
                 </div>
             </section>
-            <section class="evaluate step content_wrapper"
+            <section class="evaluate step content__wrapper"
             data-section="evaluate">
-                <div class="content_main">
+                <div class="content__main">
                     <div class="evaluate_wrapper">
                         <div class="evaluate_intro">
                             <h2 class="step_heading">
@@ -2792,7 +2792,7 @@
                                     </div>
                                 </form>
                                 <div class="aid-form_summary">
-                                    <div class="content_line
+                                    <div class="content__line
                                     aid-form_equals-line"></div>
                                     <div class="line-item line-item__total">
                                         <div class="line-item_title">
@@ -2935,8 +2935,8 @@
                 </div>
             </section>
             <section class="question step">
-                <div class="content_wrapper">
-                    <div class="content_main">
+                <div class="content__wrapper">
+                    <div class="content__main">
                         <div class="question_wrapper">
                             <div class="question_content">
                                 <h2 class="step_heading step_settlement">
@@ -2985,9 +2985,9 @@
                     </div>
                 </div>
             </section>
-            <section class="get-options step content_wrapper
+            <section class="get-options step content__wrapper
             column-well_wrapper">
-                <div class="content_main">
+                <div class="content__main">
                     <div class="get-options_wrapper">
                         <div class="get-options_intro followup__no-not-sure">
                             <h2 class="step_heading">
@@ -3138,7 +3138,7 @@
                         <aside class="get-options__sidebar
                                       column-well
                                       column-well__emphasis
-                                      content_sidebar">
+                                      content__sidebar">
                             <div class="column-well_content">
                                 <h3 class="option__take-action-header">
                                     What you can do
@@ -3205,9 +3205,9 @@
                     </div>
                 </div>
             </section>
-            <section class="next-steps step content_wrapper">
-                <div class="content_main">
-                    <div class="content_line"></div>
+            <section class="next-steps step content__wrapper">
+                <div class="content__main">
+                    <div class="content__line"></div>
                     <div class="next-steps_wrapper">
                         <div class="next-steps_intro">
                             <h2 class="step_heading">
@@ -3256,7 +3256,7 @@
                                 <button class="a-btn a-btn__full-on-xs"
                                 type="button"
                                 data-gtm_ignore="true">
-                                    <span class="a-btn_icon__on-left">
+                                    <span class="a-btn__icon--on-left">
                                         {{ svg_icon('print') }}
                                     </span>
                                     Print
@@ -3268,8 +3268,8 @@
             </section>
         </section>
         <section id="info-wrong" class="information-wrong" tabindex="-1">
-            <section class="instructions step content_wrapper">
-                <div class="content_main">
+            <section class="instructions step content__wrapper">
+                <div class="content__main">
                     <div class="instructions_wrapper">
                         <div class="instructions_content
                         instructions_content__wrong">

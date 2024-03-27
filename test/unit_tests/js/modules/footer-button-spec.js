@@ -6,11 +6,11 @@ let footerBtnDom;
 
 const HTML_SNIPPET = `
 <div class="skip-nav">
-    <a class="skip-nav_link" href="#main">
+    <a class="skip-nav__link" href="#main">
         Skip to main content
     </a>
 </div>
-<a class="a-btn a-btn__secondary o-footer_top-button"
+<a class="a-btn a-btn__secondary o-footer__top-button"
    data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
    href="#">
     Back to top
@@ -31,7 +31,7 @@ describe('footer-button', () => {
   beforeAll(() => {
     window.scrollTo = scrollTo;
     document.body.innerHTML = HTML_SNIPPET;
-    footerBtnDom = document.querySelector('.o-footer_top-button');
+    footerBtnDom = document.querySelector('.o-footer__top-button');
   });
 
   it(

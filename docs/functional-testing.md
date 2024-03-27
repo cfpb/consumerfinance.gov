@@ -47,7 +47,7 @@ export default class ConsumerTools {
     });
   }
   successNotification() {
-    return cy.get('.m-notification_message');
+    return cy.get('.m-notification__message');
   }
 }
 ```

@@ -34,16 +34,16 @@
 
 <section class="o-featured-content-module
                 {{ 'o-featured-content-module__left' if value.layout_left }}">
-    <div class="o-featured-content-module_text">
+    <div class="o-featured-content-module__text">
         <h2 class="h3">{{ value.heading }}</h2>
 
         <p>{{ value.body }}</p>
 
         {% if value.links %}
-        <ul class="m-list m-list__links">
+        <ul class="m-list m-list--links">
             {% for link in value.links %}
-                <li class="m-list_item">
-                    <a class="m-list_link"
+                <li class="m-list__item">
+                    <a class="m-list__link"
                        href="{{ link.url }}"
                        {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
                        {% if link.is_link_boldface == True%}<strong>{% endif %}
@@ -62,8 +62,8 @@
             {% include 'v1/includes/organisms/video-player.html' %}
         {% endwith %}
     {% elif value.image and value.image.url %}
-        <div class="o-featured-content-module_visual">
-            <img class="o-featured-content-module_img"
+        <div class="o-featured-content-module__visual">
+            <img class="o-featured-content-module__img"
                  src="{{ value.image.url }}"
                  alt="{{ value.image.alt_text }}">
         </div>

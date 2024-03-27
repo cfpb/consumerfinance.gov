@@ -17,7 +17,7 @@
     margin-top: 45px;
   }
 
-  :not(.m-info-unit_heading-text) > h4 {
+  :not(.m-info-unit__heading-text) > h4 {
     .h3();
     margin-top: 30px;
   }
@@ -94,16 +94,16 @@
 
 // TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
 .o-fig_sidebar {
-  .o-secondary-nav_label {
+  .o-secondary-nav__label {
     width: 95%;
   }
 
   // When the sidebar collapses into an expandable,
   // make the expandable's content scrollable
-  .o-secondary-nav_content[data-open='true'] {
+  .o-secondary-nav__content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
-    > .o-secondary-nav_list {
+    > .o-secondary-nav__list {
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
@@ -113,17 +113,17 @@
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    .o-secondary-nav_link {
+    .o-secondary-nav__link {
       padding: unit( 10px / @base-font-size-px, em );
     }
   });
 
-  .o-secondary-nav_link {
+  .o-secondary-nav__link {
     padding-left: unit(24px / @base-font-size-px, em);
     text-indent: unit(-18px / @base-font-size-px, em);
   }
 
-  .o-secondary-nav_list__parents > .o-secondary-nav_link {
+  .o-secondary-nav__list--parents > .o-secondary-nav__link {
     padding-left: unit(10px / @base-font-size-px, em);
     text-indent: unit(-10px / @base-font-size-px, em);
   }

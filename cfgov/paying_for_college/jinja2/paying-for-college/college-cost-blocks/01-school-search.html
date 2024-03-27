@@ -14,7 +14,7 @@
         </p>
         <div class="a-form-alert a-form-alert__error" data-state-based-visibility="school-required" role="alert">
           {{ svg_icon('warning-round') }}
-          <span class="a-form-alert_text">
+          <span class="a-form-alert__text">
               Please enter the school you are considering.
           </span>
         </div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="school-search_additional-info">
-        <div class="block block__sub program-question" id="school-search_program-type">
+        <div class="block block--sub program-question" id="school-search_program-type">
             <h3 class="h4">Select your program type</h3>
             {{ notification.render(
                 'information',
@@ -35,7 +35,7 @@
             ) }}
             <div class="a-form-alert a-form-alert__error" data-state-based-visibility="type-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select your program type.
               </span>
             </div>
@@ -82,7 +82,7 @@
             ) }}
         </div>
 
-        <div class="block block__sub program-select">
+        <div class="block block--sub program-select">
           <h3 class="h4">Select your program</h3>
           <div class="a-select">
             <select id="program-select">
@@ -91,11 +91,11 @@
           </div>
         </div>
 
-        <div class="block block__sub program-question" id="school-search_program-progress">
+        <div class="block block--sub program-question" id="school-search_program-progress">
           <h3 class="h4">How much progress have you made towards this degree, excluding credits from AP/IB exams?</h3>
           <div class="a-form-alert a-form-alert__error" data-state-based-visibility="progress-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select how much progress you have made towards this degree.
               </span>
           </div>
@@ -142,7 +142,7 @@
           }}
         </div>
 
-        <div class="block block__sub program-question" id="school-search_program-length">
+        <div class="block block--sub program-question" id="school-search_program-length">
             <h3 class="h4" data-state-based-visibility="is_first_year-false">How much longer do you expect your program to take, including the coming school year?</h3>
             <h3 class="h4" data-state-based-visibility="is_first_year-true">How long do you expect your program to take, including the coming school year?</h3>
             <div class="undergrad-content">
@@ -155,7 +155,7 @@
             </div>
             <div class="a-form-alert a-form-alert__error" data-state-based-visibility="length-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select your program length.
               </span>
             </div>
@@ -209,11 +209,11 @@
             }}
         </div>
 
-        <div class="block block__sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
+        <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
             <div class="a-form-alert a-form-alert__error" data-state-based-visibility="rate-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select which tuition rate will apply to you.
               </span>
             </div>
@@ -236,11 +236,11 @@
             <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
         </div>
 
-        <div class="block block__sub program-question undergrad-content" id="school-search_program-housing">
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-housing">
             <h3 class="h4">Where do you plan to live while in school?</h3>
             <div class="a-form-alert a-form-alert__error" data-state-based-visibility="housing-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select where you plan to live while in school.
               </span>
             </div>
@@ -270,12 +270,12 @@
             }}
         </div>
 
-        <div class="block block__sub program-question undergrad-content" id="school-search_program-dependency">
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
             <h3 class="h4">Are you considered a dependent or independent student?</h3>
             <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
             <div class="a-form-alert a-form-alert__error" data-state-based-visibility="dependency-required" role="alert">
               {{ svg_icon('warning-round') }}
-              <span class="a-form-alert_text">
+              <span class="a-form-alert__text">
                   Please select whether you are considered a dependent or independent student.
               </span>
             </div>
@@ -304,14 +304,14 @@
             true,
             'Form is incomplete',
             'Please make selections for the following fields on this page:
-            <ul class="m-list m-list__links">
-            <div data-state-based-visibility="school-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></li></div>
-            <div data-state-based-visibility="type-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></li></div>
-            <div data-state-based-visibility="length-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
-            <div data-state-based-visibility="progress-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-progress" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
-            <div data-state-based-visibility="rate-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></li></div>
-            <div data-state-based-visibility="housing-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></li></div>
-            <div data-state-based-visibility="dependency-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></li></div>
+            <ul class="m-list m-list--links">
+            <div data-state-based-visibility="school-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></li></div>
+            <div data-state-based-visibility="type-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></li></div>
+            <div data-state-based-visibility="length-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
+            <div data-state-based-visibility="progress-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-progress" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
+            <div data-state-based-visibility="rate-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></li></div>
+            <div data-state-based-visibility="housing-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></li></div>
+            <div data-state-based-visibility="dependency-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></li></div>
             </ul>' | safe
         ) }}
     </div>

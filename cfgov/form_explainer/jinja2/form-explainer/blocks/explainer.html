@@ -87,21 +87,21 @@
             o-expandable__form-explainer
             o-expandable__form-explainer-category-{{ category_index }}"
      id="{{ id }}">
-    <button class="o-expandable_header"
+    <button class="o-expandable__header"
             tabindex="0">
-        <span class="o-expandable_label">
+        <span class="o-expandable__label">
             {{ item.heading }}
         </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+            <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>
     </button>
-    <div class="o-expandable_content" tabindex="0">
+    <div class="o-expandable__content" tabindex="0">
         {{ item.body | safe }}
     </div>
 </div>

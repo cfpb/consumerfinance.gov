@@ -41,7 +41,7 @@
     {% include "v1/includes/molecules/hero.html" with context %}
 {% endwith %}
 
-{% endblock content_intro %}
+{% endblock content__intro %}
 
 {% block content_main %}
 
@@ -51,18 +51,18 @@
         </h2>
         <p>
             <ul class="m-list">
-                <li class="m-list_item">
+                <li class="m-list__item">
                     Larger pool of cards, likely including banks you’ve never heard of with great rates
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     <a
                         href="{{ url('tccp:about') }}"
                     >Credit card companies are required by law to submit data to us</a>
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     No paid advertising
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item__has-icon">
                     Card interest is rated, to help you compare
                 </li>
             </ul>
@@ -72,7 +72,7 @@
     <div class="block block__flush-top">
         <form action="." method="get">
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
                         class="a-label a-label__heading"
@@ -83,7 +83,7 @@
 
                     {{ form.credit_tier }}
 
-                    <p class="a-label_helper a-label_helper__block">
+                    <small class="a-label__helper a-label__helper--block">
                         If you don’t know it,
                         <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/"
                             >find your credit score</a>.
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
                         class="a-label a-label__heading"
@@ -115,8 +115,8 @@
                 I’m looking for a card that will help me...
             </legend>
 
-            <div class="o-form_group">
-                <fieldset class="o-form_fieldset">
+            <div class="o-form__group">
+                <fieldset class="o-form__fieldset">
                     {{ form.situations }}
                 </fieldset>
             </div>
@@ -131,8 +131,8 @@
         </form>
     </div>
 
-{% endblock content_main %}
+{% endblock content__main %}
 
 {% block content_sidebar %}
     {%- include "tccp/includes/sidebar.html" -%}
-{% endblock content_sidebar %}
+{% endblock content__sidebar %}

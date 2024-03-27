@@ -4,25 +4,25 @@
     {# Overrides the default skip nav target of #main so that we skip over the
        left side nav on pages that extend this template and go right to the
        main content area. #}
-    #content_main
+    #content__main
 {%- endblock %}
 
 {% block content scoped %}
     <main class="u-layout-grid u-layout-grid__1-3
                  {% block content_modifiers -%}{%- endblock %}"
           id="main">
-        <div class="u-layout-grid_wrapper">
+        <div class="u-layout-grid__wrapper">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% include 'v1/layouts/_breadcrumbs.html' %}
         {%- endblock %}
         {% block body_content scoped %}
-        <aside class="u-layout-grid_secondary-nav o-regs3k-sidebar">
+        <aside class="u-layout-grid__secondary-nav o-regs3k-sidebar">
             {% import 'regulations3k/regulations3k-secondary-nav.html' as secondary_nav with context %}
             {{ secondary_nav.render() }}
         </aside>
-        <div class="u-layout-grid_main"
-                id="content_main">
+        <div class="u-layout-grid__main"
+                id="content__main">
             {% block content_main scoped -%}{%- endblock %}
         </div>
         {% endblock %}

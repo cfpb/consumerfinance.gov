@@ -2,34 +2,34 @@ export default `
 <main id="main" data-context="paying-for-college2">
     <div id="financial-offer" class="understanding-financial-aid-offer">
         <section class="m-hero">
-            <div class="m-hero_wrapper wrapper">
-                <div class="m-hero_text">
-                    <h1 class="m-hero_heading">
+            <div class="m-hero__wrapper wrapper">
+                <div class="m-hero__text">
+                    <h1 class="m-hero__heading">
                         Understanding your financial aid offer
                     </h1>
-                    <p class="m-hero_subhead">
+                    <p class="m-hero__subhead">
                         This personalized summary will help you evaluate your
                         financial aid offer from your school to see how
                         student debt may impact your future finances. </p>
                 </div>
-                <div class="m-hero_image-wrapper">
-                  <div class="m-hero_image"></div>
+                <div class="m-hero__image-wrapper">
+                  <div class="m-hero__image"></div>
                 </div>
             </div>
         </section>
-        <div class="content_line"></div>
-        <section class="verify step content_wrapper">
-            <div class="content_main">
+        <div class="content__line"></div>
+        <section class="verify step content__wrapper">
+            <div class="content__main">
 
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noSchool">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation">
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation">
                             The information your school provided is missing the school ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right school ID and it's in the correct format.
                         </p>
 
-                        <p class="m-notification_explanation">
+                        <p class="m-notification__explanation">
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         </p>
                     </div>
@@ -37,26 +37,26 @@ export default `
 
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noProgram">
                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
-                   <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation">
+                   <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation">
                             The information your school provided is missing the program ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right program ID and it's in the correct format.
                         </p>
 
-                        <p class="m-notification_explanation">
+                        <p class="m-notification__explanation">
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         </p>
                     </div>
                 </div>
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noOffer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">Error!</div>
-                        <p class="m-notification_explanation"></p>
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">Error!</div>
+                        <p class="m-notification__explanation"></p>
                             The information your school provided is missing the offer ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right offer ID and it's in the correct format.
                         <p></p>
 
-                        <p class="m-notification_explanation"></p>
+                        <p class="m-notification__explanation"></p>
                             Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
                         <p></p>
                     </div>
@@ -173,12 +173,12 @@ export default `
                         </form>
                     </div>
                 </div>
-                <div class="content_line"></div>
+                <div class="content__line"></div>
             </div>
         </section>
         <section id="info-right" class="information-right" tabindex="-1">
-            <section class="instructions step content_wrapper">
-                <div class="content_main">
+            <section class="instructions step content__wrapper">
+                <div class="content__main">
                     <div class="instructions_wrapper">
                         <div class="instructions_content
                         instructions_content__right">
@@ -221,11 +221,11 @@ export default `
                             </div>
                         </div>
                     </div>
-                    <div class="content_line"></div>
+                    <div class="content__line"></div>
                 </div>
             </section>
-            <section class="review step content_wrapper" data-section="review">
-                <div class="content_main">
+            <section class="review step content__wrapper" data-section="review">
+                <div class="content__main">
                     <div class="review_wrapper">
                         <div class="review_intro">
                             <h2 class="step_heading">
@@ -335,7 +335,7 @@ export default `
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -367,7 +367,7 @@ export default `
                                             </label>
                                             <p class="aid-form_definition">
                                                 Based on financial need,
-                                                <a class="a-link a-link__icon" href="https://studentaid.gov/understand-aid/types/grants/pell" rel="noopener noreferrer" target="_blank"><span class="a-link_text">see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                                <a class="a-link a-link__icon" href="https://studentaid.gov/understand-aid/types/grants/pell" rel="noopener noreferrer" target="_blank"><span class="a-link__text">see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
                                         <div class="aid-form_input-wrapper">
@@ -458,7 +458,7 @@ export default `
                                             <p class="aid-form_definition">
                                                 Money for service members or
                                                 veterans that you don’t have
-                                                to pay back; <a class="a-link a-link__icon" href="https://www.vets.gov/gi-bill-comparison-tool" rel="noopener noreferrer" target="_blank"><span class="a-link_text">see how much the
+                                                to pay back; <a class="a-link a-link__icon" href="https://www.vets.gov/gi-bill-comparison-tool" rel="noopener noreferrer" target="_blank"><span class="a-link__text">see how much the
                                                 GI Bill pays</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
@@ -468,7 +468,7 @@ export default `
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -516,7 +516,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="grantsTotal" id="summary_total-grants-scholarships">10,100</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -686,7 +686,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="workstudy">3,000</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -731,7 +731,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="savingsTotal">18,000</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -803,12 +803,12 @@ export default `
                                                 Reserved for students most in
                                                 need; interest starts
                                                 accumulating 9 months after you
-                                                leave school; <a class="a-link a-link__icon" href="https://studentaid.ed.gov/sa/types/loans/perkins" rel="noopener noreferrer" target="_blank"><span class="a-link_text">
+                                                leave school; <a class="a-link a-link__icon" href="https://studentaid.ed.gov/sa/types/loans/perkins" rel="noopener noreferrer" target="_blank"><span class="a-link__text">
                                                 see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="content_line loans_line" data-section="perkins" style="display: none;"></div>
+                                    <div class="content__line loans_line" data-section="perkins" style="display: none;"></div>
                                     <div class="form-group_item" data-section="subsidized" style="display: none;">
                                         <div class="aid-form_label-wrapper">
                                             <label class="form-label" for="contrib__subsidized">
@@ -847,7 +847,7 @@ export default `
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="content_line loans_line" data-section="subsidized" style="display: none;"></div>
+                                    <div class="content__line loans_line" data-section="subsidized" style="display: none;"></div>
                                     <div class="form-group_item" data-section="unsubsidized">
                                         <div class="aid-form_label-wrapper">
                                             <label class="form-label" for="contrib__unsubsidized">
@@ -888,7 +888,7 @@ export default `
                                         </div>
                                     </div>
                                     <div data-section="gradPlus">
-                                      <div class="content_line loans_line"></div>
+                                      <div class="content__line loans_line"></div>
                                       <div class="form-group_item">
                                           <div class="aid-form_label-wrapper">
                                               <label class="form-label" for="contrib__direct-plus">
@@ -925,7 +925,7 @@ export default `
                                       </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal" data-section="federalLoans">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1031,7 +1031,7 @@ export default `
                                         </button>
                                     </div>
                                     <div class="aid-form_inline-subtotal">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1105,7 +1105,7 @@ export default `
                                         </div>
                                     </div>
                                     <div class="aid-form_inline-subtotal" data-section="tuitionpaymentplan" style="display: block;">
-                                        <div class="content_line
+                                        <div class="content__line
                                         aid-form_equals-line"></div>
                                         <div class="line-item">
                                             <div class="line-item_title">
@@ -1167,7 +1167,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="tuitionRepayYearly" id="summary_total-payment-plans">1,200</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1225,7 +1225,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="summaryLoanTotal">7,200</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1335,7 +1335,7 @@ export default `
                                         <span class="line-item_amount" data-line-item="true" data-financial="summaryLoanTotal">7,200</span>
                                     </div>
                                 </div>
-                                <div class="content_line aid-form_equals-line">
+                                <div class="content__line aid-form_equals-line">
                                 </div>
                                 <div class="line-item line-item__total">
                                     <div class="line-item_title">
@@ -1415,8 +1415,8 @@ export default `
                 </div>
             </section>
             <section class="continue step">
-                <div class="content_wrapper">
-                    <div class="content_main">
+                <div class="content__wrapper">
+                    <div class="content__main">
                         <div class="continue_wrapper">
                             <div class="continue_content">
                                 <h2 class="step_heading">
@@ -1443,8 +1443,8 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="evaluate step content_wrapper" data-section="evaluate">
-                <div class="content_main">
+            <section class="evaluate step content__wrapper" data-section="evaluate">
+                <div class="content__main">
                     <div class="evaluate_wrapper">
                         <div class="evaluate_intro">
                             <h2 class="step_heading">
@@ -1671,7 +1671,7 @@ export default `
                                   payment is <span id="criteria_loan-monthly" data-financial="loanMonthly">$562</span>,
                                   based on standard loan terms of <span data-financial="repaymentTerm" data-currency="false">10</span> years. Once
                                   you leave school, you are able to choose one
-                                  of <a class="a-link a-link__icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="_blank"><span class="a-link_text">several
+                                  of <a class="a-link a-link__icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="_blank"><span class="a-link__text">several
                                   different repayment options for your federal
                                   loans</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a> that may help reduce your monthly
                                   student loan payment.
@@ -1682,7 +1682,7 @@ export default `
                                     qualify for a federal tax credit or
                                     deduction. As a result, when you start
                                     repaying your loans, you may be able to
-                                    <a class="a-link a-link__icon" href="https://www.irs.gov/newsroom/tax-benefits-for-education-information-center" rel="noopener noreferrer" target="_blank"><span class="a-link_text">reduce your
+                                    <a class="a-link a-link__icon" href="https://www.irs.gov/newsroom/tax-benefits-for-education-information-center" rel="noopener noreferrer" target="_blank"><span class="a-link__text">reduce your
                                     federal tax burden</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>. Please consult with
                                     your tax advisor.
                                 </p>
@@ -1767,7 +1767,7 @@ export default `
                                     </div>
                                     <div>
                                         <p>
-                                          <a class="a-link a-link__icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="_blank"><span class="a-link_text">
+                                          <a class="a-link a-link__icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="_blank"><span class="a-link__text">
                                             Learn about other federal repayment options
                                           </span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                         </p>
@@ -1917,7 +1917,7 @@ export default `
                                             (the average national salary for all
                                             students who attended
                                             college)</span> in the region you
-                                            plan to live (Source: <a class="a-link a-link__icon" href="http://www.bls.gov/cex/" rel="noopener noreferrer" target="_blank"><span class="a-link_text">Bureau of Labor
+                                            plan to live (Source: <a class="a-link a-link__icon" href="http://www.bls.gov/cex/" rel="noopener noreferrer" target="_blank"><span class="a-link__text">Bureau of Labor
                                             Statistics</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>). Your expenses may
                                             be higher or lower.
                                         </p>
@@ -2098,7 +2098,7 @@ export default `
                                     </div>
                                 </form>
                                 <div class="aid-form_summary">
-                                    <div class="content_line
+                                    <div class="content__line
                                     aid-form_equals-line"></div>
                                     <div class="line-item line-item__total">
                                         <div class="line-item_title">
@@ -2223,8 +2223,8 @@ export default `
                 </div>
             </section>
             <section class="question step">
-                <div class="content_wrapper">
-                    <div class="content_main">
+                <div class="content__wrapper">
+                    <div class="content__main">
                         <div class="question_wrapper">
                             <div class="question_content">
                                 <h2 class="step_heading step_settlement">
@@ -2261,9 +2261,9 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="get-options step content_wrapper
+            <section class="get-options step content__wrapper
             column-well_wrapper">
-                <div class="content_main">
+                <div class="content__main">
                     <div class="get-options_wrapper">
                         <div class="get-options_intro followup__no-not-sure">
                             <h2 class="step_heading">
@@ -2304,13 +2304,13 @@ export default `
                         </div>
                     </div>
                     <div class="get-options_wrapper">
-                        <div class="get-options__settlement content_main">
+                        <div class="get-options__settlement content__main">
                             <section class="option option__maximize-grants option__settlement">
                                 <h3 class="option_heading">
                                     Maximize all available grants and scholarships.
                                 </h3>
                                 <p>
-                                    Consider applying for <a class="a-link a-link__icon" href="https://studentaid.gov/understand-aid/types/grants" rel="noopener noreferrer" target="_blank"><span class="a-link_text">additional
+                                    Consider applying for <a class="a-link a-link__icon" href="https://studentaid.gov/understand-aid/types/grants" rel="noopener noreferrer" target="_blank"><span class="a-link__text">additional
                                     scholarships and grants</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>,
                                     which provide money you don’t have to repay.
                                     By increasing the amount of this type of
@@ -2326,7 +2326,7 @@ export default `
                                 <p>
                                     Living at home or finding cheaper off-campus
                                     housing can
-                                    <a class="a-link a-link__icon" href="https://studentaid.gov/resources/prepare-for-college/students/choosing-schools/consider-costs#how-can-i" rel="noopener noreferrer" target="_blank"><span class="a-link_text">reduce the
+                                    <a class="a-link a-link__icon" href="https://studentaid.gov/resources/prepare-for-college/students/choosing-schools/consider-costs#how-can-i" rel="noopener noreferrer" target="_blank"><span class="a-link__text">reduce the
                                     cost of attendance</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>, meaning you can
                                     borrow less money overall.
                                 </p>
@@ -2363,7 +2363,7 @@ export default `
                                     can help reduce the amount of money you need
                                     to borrow to pay for school, resulting in
                                     long-term benefits of reducing overall debt.
-                                    Check out <a class="a-link a-link__icon" href="https://www.careeronestop.org/jobsearch/job-search.aspx" rel="noopener noreferrer" target="_blank"><span class="a-link_text">resources for finding a
+                                    Check out <a class="a-link a-link__icon" href="https://www.careeronestop.org/jobsearch/job-search.aspx" rel="noopener noreferrer" target="_blank"><span class="a-link__text">resources for finding a
                                     job</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>, including links to job search
                                     sites, tips for writing a
                                     résumé, and more.
@@ -2373,7 +2373,7 @@ export default `
                         <aside class="get-options__sidebar
                                       column-well
                                       column-well__emphasis
-                                      content_sidebar">
+                                      content__sidebar">
                             <div class="column-well_content">
                                 <h3 class="option__take-action-header">
                                     What you can do
@@ -2401,7 +2401,7 @@ export default `
                                     college students
                                 </h4>
                                 <div>
-                                    <a class="a-link a-link__icon" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="_blank"><span class="a-link_text">College
+                                    <a class="a-link a-link__icon" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="_blank"><span class="a-link__text">College
                                     Scorecard</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                     <p>Compare <a href="https://collegescorecard.ed.gov/school/?133465" target="_blank" rel="noopener noreferrer" class="scorecard-school a-link a-link__icon">your
                                         school </a>’s annual costs,
@@ -2409,11 +2409,11 @@ export default `
                                         earnings.</p>
                                 </div>
                                 <p>
-                                    <a class="a-link a-link__icon" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="_blank"><span class="a-link_text">Questions to ask
+                                    <a class="a-link a-link__icon" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="_blank"><span class="a-link__text">Questions to ask
                                         your college</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                 </p>
                                 <div>
-                                    <a class="a-link a-link__icon" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="_blank"><span class="a-link_text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                    <a class="a-link a-link__icon" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="_blank"><span class="a-link__text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                     <p>Apply for federal, state, and school
                                         financial aid.</p>
                                 </div>
@@ -2432,9 +2432,9 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="next-steps step content_wrapper">
-                <div class="content_main">
-                    <div class="content_line"></div>
+            <section class="next-steps step content__wrapper">
+                <div class="content__main">
+                    <div class="content__line"></div>
                     <div class="next-steps_wrapper">
                         <div class="next-steps_intro">
                             <h2 class="step_heading">
@@ -2481,7 +2481,7 @@ export default `
                             </p>
                             <div class="next-steps_controls">
                                 <button class="a-btn a-btn__full-on-xs" type="button" data-gtm_ignore="true">
-                                    <span class="a-btn_icon__on-left">
+                                    <span class="a-btn__icon--on-left">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__print" viewBox="0 0 14 19"><path d="m8.698 2.358 3.065 3.066v1.95h.16a1.112 1.112 0 0 1 1.109 1.108v4.837a1.112 1.112 0 0 1-1.109 1.108h-.16v1.726a.477.477 0 0 1-.475.475H2.712a.477.477 0 0 1-.475-.475v-1.726h-.16A1.112 1.112 0 0 1 .968 13.32V8.482a1.112 1.112 0 0 1 1.109-1.108h.16v-4.54a.476.476 0 0 1 .475-.476zm-.22 3.876a.61.61 0 0 1-.608-.608v-2.16H3.345v3.908h7.31v-1.14zm2.177 4.512h-7.31v4.773h7.31zm-1.054.874h-5.26v1.109h5.26zm0 1.962h-5.26v1.108h5.26zm2.437-4.485a.554.554 0 1 0-.554.554.554.554 0 0 0 .554-.554z"></path></svg>
                                     </span>
                                     Print
@@ -2493,8 +2493,8 @@ export default `
             </section>
         </section>
         <section id="info-wrong" class="information-wrong" tabindex="-1">
-            <section class="instructions step content_wrapper">
-                <div class="content_main">
+            <section class="instructions step content__wrapper">
+                <div class="content__main">
                     <div class="instructions_wrapper">
                         <div class="instructions_content
                         instructions_content__wrong">

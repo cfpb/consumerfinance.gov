@@ -26,14 +26,14 @@
 <div class="m-call-to-action">
     {% if value.slug_text %}
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
             {{ value.slug_text }}
         </h2>
     </header>
     {% endif %}
 
     {% if value.paragraph_text %}
-    <div class="m-call-to-action_text">
+    <div class="m-call-to-action__text">
         {{ value.paragraph_text | safe }}
     </div>
     {% endif %}

@@ -18,12 +18,12 @@ let sendEvent = (payload) => {
  * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
 const getExpandable = (event) => {
-  let el = event.target.closest('.o-expandable_header');
+  let el = event.target.closest('.o-expandable__header');
   el = el ? el : event.target.closest('.o-expandable-facets_target');
   el = el ? el : event.target;
 
   if (
-    el.classList.contains('o-expandable_header') ||
+    el.classList.contains('o-expandable__header') ||
     el.classList.contains('o-expandable-facets_target')
   ) {
     return el;
@@ -61,7 +61,7 @@ const handleExpandableClick = (event) => {
     return;
   }
   const action = `${getExpandableState(expandable)} filter`;
-  let label = expandable.querySelector('span.o-expandable_label');
+  let label = expandable.querySelector('span.o-expandable__label');
   label = label ? label : expandable.querySelector('span[aria-hidden=true]');
   if (!label) {
     return;
@@ -147,23 +147,25 @@ const handlePaginationClick = (event) => {
     return;
   }
 
-  const isNextButton = paginator.classList.contains('m-pagination_btn-next');
-  const isPrevButton = paginator.classList.contains('m-pagination_btn-prev');
-  const isGoButton = paginator.classList.contains('m-pagination_btn-submit');
+  const isNextButton = paginator.classList.contains('m-pagination__btn-next');
+  const isPrevButton = paginator.classList.contains('m-pagination__btn-prev');
+  const isGoButton = paginator.classList.contains('m-pagination__btn-submit');
   const isDisabled = paginator.classList.contains('a-btn__disabled');
 
   if (isDisabled || (!isNextButton && !isPrevButton && !isGoButton)) {
     return;
   }
 
-  const currPageDom = searchContent.querySelector('.m-pagination_current-page');
+  const currPageDom = searchContent.querySelector(
+    '.m-pagination__current-page',
+  );
 
   // This is the actual page number we're on.
   const currPage = parseInt(currPageDom.getAttribute('value'), 10);
   // This is the page that's set in the page counter.
   const selPage = parseInt(currPageDom.value, 10);
   const ofTotalPagesTxt = searchContent.querySelectorAll(
-    '.m-pagination_label',
+    '.m-pagination__label',
   )[1].textContent;
   let usePage = currPage;
 

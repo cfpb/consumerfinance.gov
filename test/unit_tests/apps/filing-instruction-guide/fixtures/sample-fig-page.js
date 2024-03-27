@@ -1,7 +1,7 @@
 export default `
 <main class="u-layout-grid u-layout-grid__1-3 o-fig" id="main">
-    <div class="u-layout-grid_wrapper">
-        <div class="u-layout-grid_breadcrumbs">
+    <div class="u-layout-grid__wrapper">
+        <div class="u-layout-grid__breadcrumbs">
             <nav class="breadcrumbs" aria-label="Breadcrumbs">
                 <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__left" viewBox="0 0 10 19">
                     <path d="M8.4 17.269a1.026 1.026 0 0 1-.727-.302l-6.801-6.8a1.03 1.03 0 0 1 0-1.456l6.8-6.8a1.03 1.03 0 0 1 1.456 1.455L3.055 9.439l6.073 6.073A1.03 1.03 0 0 1 8.4 17.27z"></path>
@@ -10,24 +10,24 @@ export default `
                 <a href="/data-research/small-business-lending/filing-instructions-guide/"> Small Business Lending Rule Filing Instructions Guides </a>
             </nav>
         </div>
-        <aside class="u-layout-grid_secondary-nav u-layout-grid_secondary-nav__sticky">
+        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav__sticky">
             <div class="o-fig_sidebar">
                 <div class="u-hide-on-tablet">
                     <h3>Table of contents</h3>
                 </div>
                 <nav class="o-secondary-nav" aria-label="Table of contents" data-js-hook="state_atomic_init behavior_flyout-menu">
-                    <button class="o-secondary-nav_header" type="button" aria-expanded="false" data-js-hook="behavior_flyout-menu_trigger">
-                        <span class="o-secondary-nav_label"> Table of contents </span>
-                        <span class="o-secondary-nav_cues">
-                            <span class="o-secondary-nav_cue-open" aria-label="Show">
+                    <button class="o-secondary-nav__header" type="button" aria-expanded="false" data-js-hook="behavior_flyout-menu_trigger">
+                        <span class="o-secondary-nav__label"> Table of contents </span>
+                        <span class="o-secondary-nav__cues">
+                            <span class="o-secondary-nav__cue-open" aria-label="Show">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__down" viewBox="0 0 17 19"><path d="M8.5 15.313a1.026 1.026 0 0 1-.728-.302l-6.8-6.8a1.03 1.03 0 0 1 1.455-1.456L8.5 12.828l6.073-6.073a1.03 1.03 0 0 1 1.455 1.456l-6.8 6.8a1.026 1.026 0 0 1-.728.302z"></path></svg>
                             </span>
-                            <span class="o-secondary-nav_cue-close" aria-label="Hide">
+                            <span class="o-secondary-nav__cue-close" aria-label="Hide">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__up" viewBox="0 0 17 19"><path d="M15.3 15.32a1.026 1.026 0 0 1-.727-.302L8.5 8.946l-6.073 6.072a1.03 1.03 0 0 1-1.456-1.455l6.801-6.8a1.03 1.03 0 0 1 1.456 0l6.8 6.8a1.03 1.03 0 0 1-.727 1.757z"></path></svg>
                             </span>
                         </span>
                     </button>
-                    <div class="o-secondary-nav_content u-max-height-transition u-max-height-zero" data-js-hook="behavior_flyout-menu_content" data-open="false" style="max-height: 1693px;" hidden="">
+                    <div class="o-secondary-nav__content u-max-height-transition u-max-height-zero" data-js-hook="behavior_flyout-menu_content" data-open="false" style="max-height: 1693px;" hidden="">
                         <div id="ctrl-f">
                             <div class="tw-relative tw-pointer-events-auto">
                                 <button type="button" class="tw-border tw-border-slate-600 tw-border-solid tw-w-full md:tw-bg-white tw-flex tw-bg-white tw-mt-2.5 tw-mb-4 tw-items-center tw-text-slate-600 tw-py-1.5 tw-pl-2">
@@ -39,133 +39,133 @@ export default `
                                 </button>
                             </div>
                         </div>
-                        <ul class="o-secondary-nav_list o-secondary-nav_list__parents">
+                        <ul class="o-secondary-nav__list o-secondary-nav__list--parents">
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#1"> 1. What is the filing instructions guide? </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#1"> 1. What is the filing instructions guide? </a>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#2"> 2. Filing process overview </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#2.1"> 2.1. About the small business lending platform </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#2"> 2. Filing process overview </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list__children u-hide-on-desktop">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#2.1"> 2.1. About the small business lending platform </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#2.2"> 2.2. File format </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#2.2"> 2.2. File format </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#3"> 3. Data points </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#uid"> 3.1. Unique identifier </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#3"> 3. Data points </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list__children">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#uid"> 3.1. Unique identifier </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#application-date"> 3.2. Application date </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#application-date"> 3.2. Application date </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link o-secondary-nav_link__current" href="#application-method"> 3.3. Application method </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link o-secondary-nav__link__current" href="#application-method"> 3.3. Application method </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#application-recipient"> 3.4. Application recipient </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#application-recipient"> 3.4. Application recipient </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#credit-type"> 3.5. Credit type </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#credit-type"> 3.5. Credit type </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#credit-purpose"> 3.6. Credit purpose </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#credit-purpose"> 3.6. Credit purpose </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#amount-applied-for"> 3.7. Amount applied for </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#amount-applied-for"> 3.7. Amount applied for </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#amount-approved-or-originated"> 3.8. Amount approved or originated </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#amount-approved-or-originated"> 3.8. Amount approved or originated </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#action-taken"> 3.9. Action taken </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#action-taken"> 3.9. Action taken </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#action-taken-date"> 3.10. Action taken date </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#action-taken-date"> 3.10. Action taken date </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#denial-reasons"> 3.11. Denial reasons </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#denial-reasons"> 3.11. Denial reasons </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#pricing-information"> 3.12. Pricing information </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#pricing-information"> 3.12. Pricing information </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#census-tract"> 3.13. Census tract </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#census-tract"> 3.13. Census tract </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#gross-annual-revenue"> 3.14. Gross annual revenue </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#gross-annual-revenue"> 3.14. Gross annual revenue </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#naics-code"> 3.15. North American Industry Classification System (NAICS) code </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#naics-code"> 3.15. North American Industry Classification System (NAICS) code </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#number-of-workers"> 3.16. Number of workers </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#number-of-workers"> 3.16. Number of workers </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#time-in-business"> 3.17. Time in business </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#time-in-business"> 3.17. Time in business </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#minority-women-lgbtqi-owned-business-status"> 3.18. Minority-owned, women-owned, and LGBTQI+-owned business statuses </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#minority-women-lgbtqi-owned-business-status"> 3.18. Minority-owned, women-owned, and LGBTQI+-owned business statuses </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#number-of-principal-owners"> 3.19. Number of principal owners </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#number-of-principal-owners"> 3.19. Number of principal owners </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-1"> 3.20. Demographic information of principal owner 1 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-1"> 3.20. Demographic information of principal owner 1 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-2"> 3.21. Demographic information of principal owner 2 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-2"> 3.21. Demographic information of principal owner 2 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-3"> 3.22. Demographic information of principal owner 3 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-3"> 3.22. Demographic information of principal owner 3 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-4"> 3.23. Demographic information of principal owner 4 </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#4"> 4. Data validation </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.1"> 4.1. Single-field errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.2"> 4.2. Multi-field errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.3"> 4.3. Register-level errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.4"> 4.4. Single-field warnings </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.5"> 4.5. Multi-field warnings </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-4"> 3.23. Demographic information of principal owner 4 </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#5"> 5. Where to get help </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#4"> 4. Data validation </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list__children u-hide-on-desktop">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.1"> 4.1. Single-field errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.2"> 4.2. Multi-field errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.3"> 4.3. Register-level errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.4"> 4.4. Single-field warnings </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.5"> 4.5. Multi-field warnings </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#6"> 6. Paperwork Reduction Act </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#5"> 5. Where to get help </a>
+                            </li>
+                            <li>
+                                <a class="o-secondary-nav__link o-secondary-nav__link__parent" href="#6"> 6. Paperwork Reduction Act </a>
                             </li>
                         </ul>
                     </div>
                 </nav>
             </div>
         </aside>
-        <div class="u-layout-grid_main content__flush-bottom research-report o-fig_main" id="content_main">
+        <div class="u-layout-grid__main content__flush-bottom research-report o-fig_main" id="content__main">
             <div class="eyebrow"></div>
             <h1>Filing instructions guide for small business lending data collected in 2024</h1>
             <div class="lead-paragraph"></div>
-            <div class="block block__border-top u-fig-print-link">
+            <div class="block block--border-top u-fig-print-link">
                 <a class="a-link a-link__icon" href="javascript:window.print()">
-                    <span class="a-link_text">Print this guide</span>
+                    <span class="a-link__text">Print this guide</span>
                     <svg class="cf-icon-svg cf-icon-svg__print" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="m8.698 2.358 3.065 3.066v1.95h.16a1.112 1.112 0 0 1 1.109 1.108v4.837a1.112 1.112 0 0 1-1.109 1.108h-.16v1.726a.477.477 0 0 1-.475.475H2.712a.477.477 0 0 1-.475-.475v-1.726h-.16A1.112 1.112 0 0 1 .968 13.32V8.482a1.112 1.112 0 0 1 1.109-1.108h.16v-4.54a.476.476 0 0 1 .475-.476zm-.22 3.876a.61.61 0 0 1-.608-.608v-2.16H3.345v3.908h7.31v-1.14zm2.177 4.512h-7.31v4.773h7.31zm-1.054.874h-5.26v1.109h5.26zm0 1.962h-5.26v1.108h5.26zm2.437-4.485a.554.554 0 1 0-.554.554.554.554 0 0 0 .554-.554z"
@@ -272,7 +272,7 @@ export default `
                 <p data-block-key="cvu2g">
                     <a class="a-link a-link__icon"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/file-spec/2024-data-points.csv">
-                        <span class="a-link_text">Data spec (CSV)</span>
+                        <span class="a-link__text">Data spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"
@@ -452,24 +452,24 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(5)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_credit_product"> Field 5: Credit product </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_credit_product"> Field 5: Credit product </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_guarantee"> Field 7: Type of guarantee </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_guarantee"> Field 7: Type of guarantee </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_loan_term"> Field 10: Loan term </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_loan_term"> Field 10: Loan term </a>
                         </li>
                     </ul>
                 </div>
@@ -1232,48 +1232,48 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(12)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
                         </li>
                     </ul>
                 </div>
@@ -2354,33 +2354,33 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -2845,33 +2845,33 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3025,33 +3025,33 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3205,33 +3205,33 @@ export default `
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3426,7 +3426,7 @@ export default `
                 <p data-block-key="abnhl">
                     <a class="a-link a-link__icon"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/validation-spec/2024-validations.csv">
-                        <span class="a-link_text">Validation spec (CSV)</span>
+                        <span class="a-link__text">Validation spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"

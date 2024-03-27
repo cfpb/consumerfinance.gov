@@ -3,7 +3,7 @@
   .u-layout-grid {
     --layout-max-width: 1170px;
 
-    &_wrapper {
+    &__wrapper {
       display: grid;
       max-width: var(--layout-max-width);
       margin: 0 auto;
@@ -19,30 +19,30 @@
     }
 
     // Name all possible content area elements (appearing inside <main>).
-    &_breadcrumbs {
+    &__breadcrumbs {
       grid-area: c-breadcrumbs;
     }
 
-    &_main {
+    &__main {
       grid-area: c-main;
       padding-top: unit((30px / @base-font-size-px), rem);
     }
 
-    &_sidebar {
+    &__sidebar {
       grid-area: c-sidebar;
     }
 
-    &_secondary-nav {
+    &__secondary-nav {
       grid-area: c-secondary-nav;
     }
 
-    &_prefooter {
+    &__prefooter {
       grid-area: c-prefooter;
     }
 
     // Tablet and below.
     .respond-to-max(@bp-sm-max, {
-      &_breadcrumbs {
+      &__breadcrumbs {
         padding-left: unit(30px / @base-font-size-px, rem);
         padding-right: unit(30px / @base-font-size-px, rem);
         margin-left: unit(-30px / @base-font-size-px, rem);
@@ -54,7 +54,7 @@
 
     // Tablet only.
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      &_breadcrumbs {
+      &__breadcrumbs {
         padding-left: unit(15px / @base-font-size-px, rem);
         padding-right: unit(15px / @base-font-size-px, rem);
       }
@@ -62,7 +62,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      &_wrapper {
+      &__wrapper {
         // This handles collapsing of the breadcrumbs space if they are absent.
         grid-template-rows: min-content 1fr;
         padding-left: unit(30px / @base-font-size-px, rem);
@@ -70,36 +70,36 @@
       }
 
       // If we do not have breadcrumbs, the gap above the content is larger…
-      &_main,
-      &_secondary-nav {
+      &__main,
+      &__secondary-nav {
         margin-top: unit((15px / @base-font-size-px), rem);
       }
 
       // …than if we do have breadcrumbs
-      &_breadcrumbs ~ &_main,
-      &_breadcrumbs ~ &_secondary-nav {
+      &__breadcrumbs ~ &__main,
+      &__breadcrumbs ~ &__secondary-nav {
         margin-top: 0;
       }
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      &_secondary-nav {
+      &__secondary-nav {
         padding-top: unit((30px / @base-font-size-px), rem);
       }
     });
   }
 
   // Modifier to remove max-width value. Used on CCDB, for example.
-  .u-layout-grid__full-width {
-    .u-layout-grid_wrapper {
+  .u-layout-grid--full-width {
+    .u-layout-grid__wrapper {
       max-width: initial;
     }
   }
 
   // Set default line width.
-  .u-layout-grid_main,
-  .u-layout-grid_content-intro {
+  .u-layout-grid__main,
+  .u-layout-grid__content-intro {
     dd,
     dt,
     h3,
@@ -114,7 +114,7 @@
   }
 
   // "Breakout" container that bleeds out of the grid to the screen edge.
-  .u-layout-grid_breakout {
+  .u-layout-grid__breakout {
     width: 100vw;
     position: relative;
     left: 50%;

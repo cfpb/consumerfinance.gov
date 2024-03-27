@@ -2,9 +2,9 @@
    {% set block_classes = ['block'] %}
 
    {% if block.value.has_top_rule_line %}
-      {% do block_classes.append('block__padded-top block__border-top') %}
+      {% do block_classes.append('block--padded-top block--border-top') %}
    {% elif index == 1 %}
-      {% do block_classes.append('block__flush-top') %}
+      {% do block_classes.append('block--flush-top') %}
    {% endif %}
 
    {% if block.block.meta.classname %}
@@ -17,6 +17,6 @@
 
    {# TODO: Rename `has_rule` to `has_bottom_rule_line` #}
    {% if block.value.has_rule %}
-      <div class="a-rule-break block block__sub"></div>
+      <div class="a-rule-break block block--sub"></div>
    {% endif %}
 {% endmacro %}

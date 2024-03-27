@@ -282,7 +282,7 @@ function getYourEstimates() {
       }
     } else {
       $('.m-notification').slideDown();
-      $('.m-notification .m-notification_content').html(resp.note);
+      $('.m-notification .m-notification__content').html(resp.note);
       if (resp.current_age >= 71 || resp.current_age < 21) {
         highlightAgeFields(true);
       }

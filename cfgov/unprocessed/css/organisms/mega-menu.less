@@ -2,7 +2,7 @@
 @import (less)
   '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
-// Each content level adds a depth-specific class, such as o-mega-menu_content-1, o-mega-menu_content-2, etc.
+// Each content level adds a depth-specific class, such as o-mega-menu__content-1, o-mega-menu__content-2, etc.
 
 @mobile_trigger_ht__px: 54px;
 
@@ -252,7 +252,7 @@ body {
       align-items: baseline;
 
       // Hide link bottom line from Design System link styles.
-      & .a-link_text {
+      & .a-link__text {
         border-bottom-width: 0;
       }
 
@@ -268,7 +268,7 @@ body {
   &_content-1 {
     &-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( var(--black) );
+      .u-link--colors( var(--black) );
 
       display: block;
     }
@@ -285,7 +285,7 @@ body {
     &-link,
     &-overview-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
+      .u-link--colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
       &:hover:focus {
         color: var(--black);
       }
@@ -335,11 +335,11 @@ body {
         outline: 1px dotted var(--black);
       }
 
-      .o-mega-menu_trigger-close {
+      .o-mega-menu__trigger-close {
         display: none;
       }
 
-      .o-mega-menu_trigger-open {
+      .o-mega-menu__trigger-open {
         display: block;
       }
 
@@ -349,11 +349,11 @@ body {
         border-right: 1px solid var(--gray-40);
         color: var(--black);
 
-        .o-mega-menu_trigger-close {
+        .o-mega-menu__trigger-close {
           display: block;
         }
 
-        .o-mega-menu_trigger-open {
+        .o-mega-menu__trigger-open {
           display: none;
         }
       }
@@ -447,7 +447,7 @@ body {
       &-overview-link {
         position: relative;
         // Colors for :link, :visited, :hover, :focus, :active.
-        .u-link__colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
+        .u-link--colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
 
         padding-top: unit( 15px / 18px, em );
         padding-bottom: unit( 15px / 18px, em );
@@ -509,7 +509,7 @@ body {
       //       Investigate if it can be combined.
       // Remove final border line of last list item.
       &-list-group:last-child {
-        .o-mega-menu_content-3-item:last-child {
+        .o-mega-menu__content-3-item:last-child {
           border-bottom: none;
         }
       }
@@ -579,7 +579,7 @@ body {
     // 1st-level menu - Desktop.
     &_content-1 {
       &[data-open="true"] {
-        .o-mega-menu_content-1-wrapper {
+        .o-mega-menu__content-1-wrapper {
           display: block;
           transform: translateY( 0 );
         }
@@ -603,7 +603,7 @@ body {
         display: table-cell;
 
         .no-js &:hover {
-          .o-mega-menu_content-2 {
+          .o-mega-menu__content-2 {
             display: block;
           }
         }
@@ -767,7 +767,7 @@ body {
       &[data-open="true"] {
         overflow: visible;
 
-        .o-mega-menu_content-2-wrapper {
+        .o-mega-menu__content-2-wrapper {
           display: block;
         }
       }
@@ -957,7 +957,7 @@ body {
   }
 
   // Hide the ">" arrow icon (used on mobile view).
-  .o-mega-menu_content-link-icon-post {
+  .o-mega-menu__content-link-icon-post {
     display: none !important;
   }
 }
@@ -970,16 +970,16 @@ body {
 });
 
 // The following three rules prevent mega-menu linebreak shenanigans
-.o-mega-menu_content-2-item__has-icon .o-mega-menu_content-2-link {
+.o-mega-menu__content-2-item__has-icon .o-mega-menu__content-2-link {
   padding-right: 0;
 }
 
-.o-mega-menu_content-2-item__has-icon {
+.o-mega-menu__content-2-item__has-icon {
   .cf-icon-svg:nth-child(3) {
     margin-left: -20px;
     transform: translateX(25px);
   }
-  .a-link_text:nth-last-child(2) {
+  .a-link__text:nth-last-child(2) {
     display: inline-block;
     margin-left: -5px;
     transform: translateX(5px);

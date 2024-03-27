@@ -632,7 +632,7 @@ class ItemIntroduction(blocks.StructBlock):
     class Meta:
         icon = "form"
         template = "v1/includes/organisms/item-introduction.html"
-        classname = "block__flush-top"
+        classname = "block--flush-top"
 
 
 class FilterableList(BaseExpandable):
@@ -849,7 +849,7 @@ class FeaturedContent(blocks.StructBlock):
         template = "v1/includes/organisms/featured-content.html"
         icon = "doc-full-inverse"
         label = "Featured Content"
-        classname = "block__flush"
+        classname = "block--flush"
         value_class = FeaturedContentStructValue
 
     class Media:

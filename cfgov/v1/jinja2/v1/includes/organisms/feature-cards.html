@@ -23,11 +23,11 @@
         Browse questions by category
     </h2>
 
-    <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
+    <ul class="u-show-on-mobile category__list m-list m-list--links u-mb0">
     {% for card in value.feature_cards %}
-        <li class="m-list_item">
-            <a class="m-list_link a-link a-link__jump a-link__icon-after-text" href="{{ card.category.url }}">
-                <span class="a-link_text">{{ card.category.text }}</span>
+        <li class="m-list__item">
+            <a class="m-list__link a-link a-link--jump a-link--icon-after-text" href="{{ card.category.url }}">
+                <span class="a-link__text">{{ card.category.text }}</span>
                 {{ svg_icon( card.icon ) }}
             </a>
         </li>
@@ -35,8 +35,8 @@
     </ul>
 
     <div class="u-hide-on-mobile question-categories u-mb30">
-        <div class="o-card-group o-card-group__column-2">
-            <div class="o-card-group_cards">
+        <div class="o-card-group o-card-group--column-2">
+            <div class="o-card-group__cards">
 
             {% for card in value.feature_cards %}
                 {{- feature_card(card) }}

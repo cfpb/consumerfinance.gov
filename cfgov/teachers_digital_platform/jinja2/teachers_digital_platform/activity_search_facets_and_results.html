@@ -19,8 +19,8 @@
 {% endmacro %}
 
 {% macro build_form_group(name, items) %}
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
+    <div class="o-form__group">
+        <fieldset class="o-form__fieldset">
             <ul class="m-list m-list__unstyled">
                 {% for facet in items %}
                 <li>
@@ -53,7 +53,7 @@
 
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
 
-<div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
+<div class="results_count block--padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
     {% if page.results.total_results %}
     <h3>
         {% if page.results.total_activities > page.results.total_results %}
@@ -69,7 +69,7 @@
     {% endif %}
 </div>
 
-<aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+<aside class="content__sidebar content__flush-top-on-small content__flush-sides-on-small filters">
     <h3 class="h2">Filter results by</h3>
     <form action="." method="get" data-js-hook="behavior_change-filter">
         <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
@@ -102,7 +102,7 @@
     </form>
 
 </aside>
-<section id="tdp-search-results" class="content_main results" tabindex="-1">
+<section id="tdp-search-results" class="content__main results" tabindex="-1">
     <div class="results_header">
         {% if page.results.total_results and page.results.total_results > 0 %}
             <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">

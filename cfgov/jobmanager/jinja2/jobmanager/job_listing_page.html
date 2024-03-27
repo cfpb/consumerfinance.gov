@@ -34,7 +34,7 @@
 
         <div class="o-summary o-summary__mobile">
             <div id="job-description-expandable"
-                 class="o-summary_content">
+                 class="o-summary__content">
                 <h4>Summary</h4>
                 {{ page.description | safe }}
                 {% if page.responsibilities %}
@@ -70,7 +70,7 @@
                 {% endif %}
             </div>
 
-            <button class="o-summary_btn u-hidden">
+            <button class="o-summary__btn u-hidden">
                 Read full description
                 {{ svg_icon('plus-round') }}
             </button>
@@ -85,21 +85,21 @@
         <h2 id="interested">What to know if you apply</h2>
         <div class="block block__sub">
             <div class="content-l">
-                <div class="content-l_col content-l_col-1-2">
+                <div class="content-l__col content-l__col-1-2">
                     <div class="u-flexible-container">
-                        <iframe class="u-flexible-container_inner"
+                        <iframe class="u-flexible-container__inner"
                                 src="https://www.youtube.com/embed/XCbZnTIeTOY"
                                 frameborder="0"
                                 allowfullscreen>
                         </iframe>
                     </div>
                 </div>
-                <div class="content-l_col content-l_col-1-2">
+                <div class="content-l__col content-l__col-1-2">
                     <p>Put simply, federal hiring rules prioritize fairness. Our video and resources explain how the application process works, important parts to pay attention to, and what to expect after you apply.</p>
                     <a class="a-link
                               a-link__jump"
                         href="/about-us/careers/application-process/">
-                        <span class="a-link_text">Learn about the job application process</span>
+                        <span class="a-link__text">Learn about the job application process</span>
                     </a>
                 </div>
             </div>
@@ -113,8 +113,8 @@
         <div class="block block__sub">
             <div class="content-l">
                 {% for usajobs_link in usajobs_links %}
-                    <div class="content-l_col
-                                {{ 'content-l_col-1-2' if usajobs_links|length > 1 else 'content-l_col-1'}}">
+                    <div class="content-l__col
+                                {{ 'content-l__col-1-2' if usajobs_links|length > 1 else 'content-l__col-1'}}">
                         {% set applicant_type = usajobs_link.applicant_type %}
                         <h4>{{ applicant_type.display_title if applicant_type.display_title else applicant_type }}</h4>
                         <p>{{ applicant_type.description }}</p>
@@ -148,19 +148,19 @@
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header__heading">
                 Working at the CFPB
             </h2>
         </header>
 
-        <ul class="m-list m-list__links">
-            <li class="m-list_item">
-                <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
+        <ul class="m-list m-list--links">
+            <li class="m-list__item">
+                <a href="/about-us/careers/working-at-cfpb" class="m-list__link">
                     Working at the CFPB
                 </a>
             </li>
-            <li class="m-list_item">
-                <a href="/office-civil-rights/" class="m-list_link">
+            <li class="m-list__item">
+                <a href="/office-civil-rights/" class="m-list__link">
                     Office of Civil Rights
                 </a>
             </li>
@@ -174,18 +174,18 @@
     </div>
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header__heading">
                 Learn more about the CFPB's work
             </h2>
         </header>
-        <ul class="m-list m-list__links u-mb0">
-            <li class="m-list_item">
-                <a href="/about-us/blog" class="m-list_link">
+        <ul class="m-list m-list--links u-mb0">
+            <li class="m-list__item">
+                <a href="/about-us/blog" class="m-list__link">
                     CFPB Blog
                 </a>
             </li>
-            <li class="m-list_item">
-                <a href="/about-us/newsroom" class="m-list_link">
+            <li class="m-list__item">
+                <a href="/about-us/newsroom" class="m-list__link">
                     Newsroom
                 </a>
             </li>
@@ -193,7 +193,7 @@
     </div>
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header__heading">
                 Follow us on LinkedIn
             </h2>
         </header>

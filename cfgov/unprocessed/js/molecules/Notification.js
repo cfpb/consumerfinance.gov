@@ -76,12 +76,12 @@ function Notification(element) {
    */
   function _setContent(messageText, explanationText) {
     let content = `
-      <div class="m-notification_message">
+      <div class="m-notification__message">
         ${messageText}
       </div>`;
     if (typeof explanationText !== 'undefined') {
       content += `
-        <p class="m-notification_explanation">
+        <p class="m-notification__explanation">
           ${explanationText}
         </p>`;
     }

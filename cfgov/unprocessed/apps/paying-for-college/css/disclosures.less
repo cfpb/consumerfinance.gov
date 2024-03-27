@@ -97,12 +97,12 @@
    Tool intro
    ========================================================================== */
 
-.understanding-financial-aid-offer .m-hero_image {
+.understanding-financial-aid-offer .m-hero__image {
   background-image: url('/static/apps/paying-for-college/img/intro-195.png');
 }
 
 @media (min-resolution: 192dpi) {
-  .understanding-financial-aid-offer .m-hero_image {
+  .understanding-financial-aid-offer .m-hero__image {
     background-image: url('/static/apps/paying-for-college/img/intro-390.png');
   }
 }
@@ -124,7 +124,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
       margin-bottom: unit(45px / @base-font-size-px, em);
     });
   }
@@ -137,15 +137,15 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(9);
+      .grid__column(9);
     });
 
     .respond-to-min(@bp-lg-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
   }
 
@@ -200,7 +200,7 @@
   &_estimate {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(8);
+      .grid__column(8);
       border: none;
     });
   }
@@ -236,7 +236,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
       padding-bottom: unit(20px / @base-font-size-px, em);
     });
   }
@@ -244,7 +244,7 @@
   &_content {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
   }
 
@@ -259,8 +259,8 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(5);
-      .grid_push(1);
+      .grid__column(5);
+      .grid__push(1);
       padding-top: 0;
       padding-bottom: 0;
       margin-top: 0;
@@ -312,12 +312,12 @@
   .form-label_text-wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(12);
+      .grid__column(12);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(15,24);
+      .grid__column(15,24);
     });
 
     .aid-form_definition {
@@ -328,12 +328,12 @@
   &_input-wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(12);
+      .grid__column(12);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(9,24);
+      .grid__column(9,24);
     });
   }
 
@@ -460,7 +460,7 @@
   .form-group_item {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
@@ -503,7 +503,7 @@
 .line-item {
   @line-item-font-size: 18px;
 
-  .grid_nested-col-group();
+  .grid__nested-col-group();
   margin-bottom: unit(15px / @font-size, em);
   .heading-4();
 
@@ -525,38 +525,38 @@
   }
 
   &_title {
-    .grid_column(7);
+    .grid__column(7);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(8);
+      .grid__column(8);
     });
   }
 
   &_value {
-    .grid_column(5);
+    .grid__column(5);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(5);
+      .grid__column(5);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(4);
+      .grid__column(4);
     });
   }
 
@@ -583,7 +583,7 @@
   &_wrapper {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
 
     & + .criteria {
@@ -594,11 +594,11 @@
   &_intro {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
   }
 }
@@ -612,7 +612,7 @@
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
-    .grid_nested-col-group();
+    .grid__nested-col-group();
     padding-bottom: unit(30px / @base-font-size-px, em);
   });
 
@@ -621,30 +621,30 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(12);
+      .grid__column(12);
     });
   }
 
   &_intro-wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
   &_intro-content {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(12);
+      .grid__column(12);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     .respond-to-min(@bp-lg-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
   }
 
@@ -655,26 +655,26 @@
   &_form-wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
   }
 
   &_summary-wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
       padding-top: unit(30px / @base-font-size-px, em);
       margin-top: 0;
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(4);
-      .grid_push(1);
+      .grid__column(4);
+      .grid__push(1);
 
       &.is_stuck {
-        .grid_column(4);
-        .grid_push(7);
+        .grid__column(4);
+        .grid__push(7);
         margin-left: -20px;
       }
 
@@ -693,12 +693,12 @@
   &_terms {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(12);
+      .grid__column(12);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(15,24);
+      .grid__column(15,24);
       margin-top: unit(-15px / @base-font-size-px, em);
     });
   }
@@ -849,7 +849,7 @@
   &_wrapper {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
 
     & + .criteria {
@@ -860,11 +860,11 @@
   &_intro {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
   }
 }
@@ -883,7 +883,7 @@
   &_wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
 
     &::after {
@@ -896,16 +896,16 @@
   &_intro {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-graph-cols-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(5);
+      .grid__column(5);
     });
   }
 
@@ -923,7 +923,7 @@
 .metric {
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
-    .grid_column(10);
+    .grid__column(10);
   });
 
   .respond-to-range(@bp-sm-min, @bp-graph-cols-min - 1, {
@@ -931,14 +931,14 @@
   });
 
   .respond-to-min(@bp-graph-cols-min, {
-    .grid_column(6);
+    .grid__column(6);
     padding-top: unit(30px / @base-font-size-px, em);
   });
 
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    .grid_column(4);
-    .grid_push(2);
+    .grid__column(4);
+    .grid__push(2);
   });
 
   &_heading {
@@ -1012,18 +1012,18 @@
   @salary-and-debt-font-size: 18px;
 
   &_projection {
-    .grid_nested-col-group();
+    .grid__nested-col-group();
     max-width: unit(380px / @base-font-size-px, em);
     margin-bottom: unit(20px / @base-font-size-px, em);
   }
 
   &_projection-name {
-    .grid_column(7);
+    .grid__column(7);
     .heading-4();
   }
 
   &_projection-value {
-    .grid_column(5);
+    .grid__column(5);
     .heading-4();
     text-align: right;
   }
@@ -1058,17 +1058,17 @@
 
 .debt-burden {
   &_projection {
-    .grid_nested-col-group();
+    .grid__nested-col-group();
     max-width: unit(380px / @base-font-size-px, em);
     margin-bottom: unit(20px / @base-font-size-px, em);
   }
 
   &_projection-name {
-    .grid_column(7);
+    .grid__column(7);
   }
 
   &_projection-value {
-    .grid_column(5);
+    .grid__column(5);
     text-align: right;
   }
 
@@ -1297,13 +1297,13 @@
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
-    .grid_column(10);
+    .grid__column(10);
     padding-bottom: 0;
     border-top: 1px solid var(--gray-40);
   });
 
   .respond-to-min(@bp-graph-cols-min, {
-    .grid_column(6);
+    .grid__column(6);
     padding-top: 0;
     border-top: none;
     margin-top: unit(15px / @base-font-size-px, em);
@@ -1315,7 +1315,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
       border-width: 0;
     });
   }
@@ -1332,34 +1332,34 @@
     .form-label_text-wrapper {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
-        .grid_column(12);
+        .grid__column(12);
       });
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        .grid_column(12,24);
+        .grid__column(12,24);
       });
     }
 
     &_input-wrapper {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
-        .grid_column(12);
+        .grid__column(12);
       });
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        .grid_column(12,24);
+        .grid__column(12,24);
       });
     }
 
     &_sign {
-      .grid_column(3,24);
+      .grid__column(3,24);
       border-width: 0;
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        .grid_column(3);
+        .grid__column(3);
         border-width: 0px;
       });
     }
@@ -1409,14 +1409,14 @@
     &_title {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
-        .grid_column(8);
+        .grid__column(8);
       });
     }
 
     &_value {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
-        .grid_column(4);
+        .grid__column(4);
       });
     }
 
@@ -1464,18 +1464,18 @@
   &_wrapper {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
   &_content {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(8);
+      .grid__column(8);
     });
   }
 
@@ -1507,25 +1507,25 @@
   &_wrapper {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
   &_wrapper + &_wrapper {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
   &_intro {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(8);
+      .grid__column(8);
     });
   }
 
@@ -1537,7 +1537,7 @@
     margin-top: unit(20px / @base-font-size-px, em);
   }
 
-  & + .content_line {
+  & + .content__line {
     display: none;
 
     // Tablet and above.
@@ -1549,12 +1549,12 @@
   &__settlement {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(8);
+      .grid__column(8);
     });
   }
 
@@ -1563,12 +1563,12 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(6);
+      .grid__column(6);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(4);
+      .grid__column(4);
     });
   }
 }
@@ -1578,7 +1578,7 @@
 
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    .grid_column(4);
+    .grid__column(4);
   });
 
   &__maximize-grants,
@@ -1697,7 +1697,7 @@
   &__settlement {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(1, 2);
+      .grid__column(1, 2);
     });
 
     // Top borders on all but the first option on small screens and only the second row of options on larger screens
@@ -1739,18 +1739,18 @@
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       margin-top: unit(45px / @base-font-size-px, em);
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
   }
 
   &_intro {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(10);
+      .grid__column(10);
     });
 
     .respond-to-min(@bp-xl-min, {
-      .grid_column(7);
+      .grid__column(7);
     });
   }
 
@@ -1759,7 +1759,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_nested-col-group();
+      .grid__nested-col-group();
     });
 
     // Desktop and above.
@@ -1774,12 +1774,12 @@
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       margin-top: 0;
-      .grid_column(9);
+      .grid__column(9);
     });
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      .grid_column(4);
+      .grid__column(4);
     });
   }
 
@@ -1802,7 +1802,7 @@
     });
   }
 
-  .content_line {
+  .content__line {
     display: none;
 
     // Tablet and above.

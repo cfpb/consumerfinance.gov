@@ -15,15 +15,15 @@
     {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     <nav class="o-regs3k-navigation"
          aria-label="Section navigation">
-        <button class="o-regs3k-navigation_header o-expandable_header">
-            <span class="o-expandable_label">
+        <button class="o-regs3k-navigation__header o-expandable__header">
+            <span class="o-expandable__label">
                 Table of Contents
             </span>
-            <span class="o-expandable_cues">
-                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+            <span class="o-expandable__cues">
+                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                     {{ svg_icon('down') }}
                 </span>
-                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('up') }}
                 </span>
             </span>
@@ -45,9 +45,9 @@
 {% endmacro %}
 
 {% macro _navlink(text, href, current=false) %}
-<a class="o-secondary-nav_link
-          o-secondary-nav_link__parent
-          {{ 'o-secondary-nav_link__current' if current else '' }}"
+<a class="o-secondary-nav__link
+          o-secondary-nav__link__parent
+          {{ 'o-secondary-nav__link__current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

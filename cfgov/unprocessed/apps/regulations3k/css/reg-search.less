@@ -29,13 +29,13 @@
 }
 
 .search_results {
-  .content_sidebar {
+  .content__sidebar {
     padding: 45px 15px 0;
     border: 1px solid var(--gray-40);
     background-color: var(--gray-5);
 
-    .o-expandable_content,
-    .o-expandable_header {
+    .o-expandable__content,
+    .o-expandable__header {
       border: 0;
       padding: 0;
       &::before,
@@ -63,11 +63,11 @@
         margin-bottom: 0;
       }
     }
-    .o-form_group {
+    .o-form__group {
       margin-bottom: 0;
     }
   }
-  .content_main {
+  .content__main {
     &::after {
       border: 0;
     }
@@ -114,10 +114,10 @@
 // Tablet and below.
 .respond-to-max(@bp-sm-max, {
   .search_results {
-    .content_sidebar {
+    .content__sidebar {
       padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
-    .content_main {
+    .content__main {
       margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
     .results_count {

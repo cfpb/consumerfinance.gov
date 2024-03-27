@@ -32,27 +32,27 @@
 {% macro render() %}
 
 {% set show_enf_data = False %}
-<div class="m-related-metadata block block__flush-top">
+<div class="m-related-metadata block block--flush-top">
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
           Action Details
         </h2>
     </header>
-    <div class="m-related-metadata_item-container">
+    <div class="m-related-metadata__item-container">
         <h3 class="h4">
           Forum
         </h3>
         {{_categories(page.categories)}}
     </div>
     {% if page.court %}
-        <div class="m-related-metadata_item-container">
+        <div class="m-related-metadata__item-container">
             <h3 class="h4">
               Court
             </h3>
             {{page.court}}
         </div>
     {% endif %}
-    <div class="m-related-metadata_item-container">
+    <div class="m-related-metadata__item-container">
         <h3 class="h4">
           Docket number
         </h3>
@@ -61,14 +61,14 @@
         {% endfor %}
     </div>
     {% if page.initial_filing_date %}
-    <div class="m-related-metadata_item-container">
+    <div class="m-related-metadata__item-container">
         <h3 class="h4">
           Initial filing date
         </h3>
         {{_date(page.initial_filing_date)}}
     </div>
     {% endif %}
-    <div class="m-related-metadata_item-container m-related-metadata_status">
+    <div class="m-related-metadata__item-container m-related-metadata__status">
         <h3 class="h4">
           Status
         </h3>
@@ -85,7 +85,7 @@
         >See status definitions</a>
     </div>
     {% if show_enf_data and statutes|length > 0 %}
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             Statutes
           </h3>
@@ -94,7 +94,7 @@
     {% endif %}
     {{_dispositions(page.enforcement_dispositions.all())}}
     {% if show_enf_data and defendant_types|length > 0 %}
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             Defendant/Respondent type
           </h3>
@@ -106,7 +106,7 @@
       </div>
     {% endif %}
     {% if products|length > 0 %}
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             Products
           </h3>
@@ -115,7 +115,7 @@
     {% endif %}
 
     {% if show_enf_data and at_risk_groups|length > 0 %}
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             At Risk Groups
           </h3>
@@ -147,11 +147,11 @@
 {% macro _list(list, is_related_topics=false) %}
 <ul class="m-list
            m-list__unstyled
-           m-list__links
-           m-related-metadata_topics">
+           m-list--links
+           m-related-metadata__topics">
     {% for item in list %}
-    <li class="m-list_item">
-        <span class="m-list_link">{{item}}</span>
+    <li class="m-list__item">
+        <span class="m-list__link">{{item}}</span>
     </li>
     {% endfor %}
 </ul>
@@ -194,7 +194,7 @@
    ========================================================================== #}
 {% macro _dispositions(dispositions) %}
     {% if show_enf_data and dispositions|length > 0 %}
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             Total consumer relief
           </h3>
@@ -202,7 +202,7 @@
             ${{'{:,}'.format(total_consumer_relief)}}
           </div>
       </div>
-      <div class="m-related-metadata_item-container">
+      <div class="m-related-metadata__item-container">
           <h3 class="h4">
             Total civil money penalties
           </h3>
@@ -231,7 +231,7 @@
 {% macro _categories(categories_check) %}
     <ul class="m-list m-list__unstyled">
     {% for category in page.categories.all() %}
-    <li class="m-list_item">
+    <li class="m-list__item">
         <span>{{ category.get_name_display() }}</span>
     </li>
     {% endfor %}

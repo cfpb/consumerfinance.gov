@@ -27,10 +27,10 @@
 
 {% macro data_fields_directory(data_fields) %}
     {% if data_fields.count() > 3 %}
-        <ul class="m-list m-list__links">
+        <ul class="m-list m-list--links">
             {% for field in data_fields %}
-                <li class="m-list_item">
-                    <a class="m-list_link"
+                <li class="m-list__item">
+                    <a class="m-list__link"
                        href="#{{field.info.get('short_name', '')}}">
                             Field {{ field.info.get('field_number', '') }}: {{ field.info.get('title', '') }}
                     </a>

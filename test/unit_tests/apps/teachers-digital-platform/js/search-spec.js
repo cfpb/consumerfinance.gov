@@ -7,11 +7,11 @@ import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teache
 const HTML_SNIPPET = `
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
     <div class="input-contains-label">
-      <label for="search-text" class="input-contains-label_before input-contains-label_before__search">
+      <label for="search-text" class="input-contains-label__before input-contains-label__before__search">
           <span class="u-visually-hidden">The term to search for</span>
       </label>
       <input id="search-text" type="text" autocomplete="off" class="a-text-input" name="q" placeholder="Enter your search term(s)" value="executive">
-      <label for="search-text" class="input-contains-label_after input-contains-label_after__clear u-hidden">Clear</label>
+      <label for="search-text" class="input-contains-label__after input-contains-label__after__clear u-hidden">Clear</label>
     </div>
     <button class="a-btn">Search</button>
   </form>
@@ -23,22 +23,22 @@ const HTML_SNIPPET = `
     <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
     <input type="hidden" name="page" inputmode="numeric" value="1">
     <div class="o-expandable o-expandable__background" data-bound="true">
-      <button class="o-expandable_header o-expandable_target__expanded" type="button">
-        <span class="o-expandable_label">
+      <button class="o-expandable__header o-expandable__target--expanded" type="button">
+        <span class="o-expandable__label">
           Building block
         </span>
-        <span class="o-expandable_cues">
-          <span class="o-expandable_cue-open" role="img" aria-label="Show">
+        <span class="o-expandable__cues">
+          <span class="o-expandable__cue-open" role="img" aria-label="Show">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
           </span>
-          <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+          <span class="o-expandable__cue-close" role="img" aria-label="Hide">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
           </span>
         </span>
       </button>
-      <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 119px;">
-        <div class="o-form_group u-mt15">
-          <fieldset class="o-form_fieldset">
+      <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 119px;">
+        <div class="o-form__group u-mt15">
+          <fieldset class="o-form__fieldset">
             <ul class="m-list m-list__unstyled">
               <li>
                 <div class="m-form-field m-form-field__checkbox">
@@ -65,18 +65,18 @@ const HTML_SNIPPET = `
     </div>
 
     <div class="o-expandable o-expandable__background" data-bound="true">
-      <button class="o-expandable_header o-expandable_target__expanded" type="button">
-        <span class="o-expandable_label">Topic</span>
-        <span class="o-expandable_cues">
-          <span class="o-expandable_cue-open" role="img" aria-label="Show">
+      <button class="o-expandable__header o-expandable__target--expanded" type="button">
+        <span class="o-expandable__label">Topic</span>
+        <span class="o-expandable__cues">
+          <span class="o-expandable__cue-open" role="img" aria-label="Show">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
           </span>
-          <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+          <span class="o-expandable__cue-close" role="img" aria-label="Hide">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
           </span>
         </span>
       </button>
-      <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 337px;">
+      <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 337px;">
         <ul class="m-list m-list__unstyled u-mt15">
           <li class="o-expandable-facets" data-bound="true">
             <div class="m-form-field m-form-field__checkbox">

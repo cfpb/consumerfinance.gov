@@ -44,8 +44,8 @@
             <div class="content-l">
                 <section class="block
                                 block__flush-top
-                                content-l_col
-                                content-l_col-1-2">
+                                content-l__col
+                                content-l__col-1-2">
                     {% import 'v1/includes/molecules/related-content.html' as related_links %}
                     {{- related_links.render({
                         'heading': 'Related links',
@@ -60,7 +60,7 @@
                         }
                     ]}) -}}
                 </section>
-                <section class="block content-l_col content-l_col-1-2">
+                <section class="block content-l__col content-l__col-1-2">
                     {% include 'v1/includes/templates/upcoming-events.html' %}
                 </section>
             </div>

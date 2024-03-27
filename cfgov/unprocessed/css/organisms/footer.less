@@ -4,24 +4,24 @@
   // Adding an extra 5px to the top to account for the absolute positioned
   // social media icons.
   padding-top: unit(50px / @base-font-size-px, em);
-  // There is a 10px margin-bottom on the  last .o-footer_list li's, plus the
+  // There is a 10px margin-bottom on the  last .o-footer__list li's, plus the
   // 50px bottom padding = 60px of total padding at the bottom of the footer.
   padding-bottom: unit(50px / @base-font-size-px, em);
   border-top: 5px solid var(--green);
   background: var(--gray-5);
 
   &_nav-list {
-    .m-list__links();
+    .m-list--links();
 
-    .m-list_link {
+    .m-list__link {
       font-size: unit(18px / @base-font-size-px, em);
-      .u-link__colors( var(--black) );
+      .u-link--colors( var(--black) );
 
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
         margin-right: 1em;
 
-        .u-link__hover-border();
+        .u-link--hover-border();
       });
 
       // Desktop and above.
@@ -31,21 +31,21 @@
       });
     }
 
-    .m-list_link.m-list_link__disabled {
+    .m-list__link.m-list__link__disabled {
       border-bottom: 1px dotted;
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        .u-link__no-border();
+        .u-link--no-border();
       });
     }
   }
 
   &_list {
-    .m-list__links();
+    .m-list--links();
 
-    .m-list_link {
-      .u-link__colors( var(--gray-dark) );
+    .m-list__link {
+      .u-link--colors( var(--gray-dark) );
     }
   }
 
@@ -53,7 +53,7 @@
     position: relative;
     margin-bottom: unit(45px / @base-font-size-px, em);
 
-    .o-footer_top-button {
+    .o-footer__top-button {
       display: block;
       width: 100%;
       text-align: center;
@@ -63,7 +63,7 @@
       margin: -2em auto 2em;
     }
 
-    .o-footer_nav-list {
+    .o-footer__nav-list {
       margin-bottom: 0;
     }
 
@@ -73,14 +73,14 @@
       margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
       border-bottom: 1px solid var(--gray-40);
 
-      .o-footer_top-button {
+      .o-footer__top-button {
         display: none;
       }
 
-      .o-footer_nav-list {
-        .m-list__horizontal();
+      .o-footer__nav-list {
+        .m-list--horizontal();
 
-        .m-list_item {
+        .m-list__item {
           margin-bottom: 0;
         }
       }
@@ -96,16 +96,16 @@
 
   // TODO: Refactor to use Design System Layout package.
   &-middle-left {
-    .o-footer_list {
+    .o-footer__list {
       margin: 0;
     }
 
     // Mobile only.
     .respond-to-max(@bp-xs-max, {
       // Fix doubled border in mobile view.
-      .o-footer_col:nth-child( n+2 ) {
-        .o-footer_list {
-          .m-list_item .m-list_link {
+      .o-footer__col:nth-child( n+2 ) {
+        .o-footer__list {
+          .m-list__item .m-list__link {
             border-top-width: 0;
           }
         }
@@ -114,12 +114,12 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(8);
+      .grid__column(8);
       border-right: 1px solid var(--gray-40);
       border-left: 0;
 
-      .o-footer_col {
-        .grid_column(6);
+      .o-footer__col {
+        .grid__column(6);
         border-left: 0;
         border-right: 0;
         padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -138,8 +138,8 @@
     // Mobile only.
     .respond-to-max(@bp-xs-max, {
       // Fix doubled border in mobile view.
-      .o-footer_list {
-        .m-list_item .m-list_link {
+      .o-footer__list {
+        .m-list__item .m-list__link {
           border-top-width: 0;
         }
       }
@@ -147,9 +147,9 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid_column(4);
+      .grid__column(4);
 
-      .o-footer_list {
+      .o-footer__list {
         padding-left: @grid_gutter-width;
         padding-right: @grid_gutter-width;
       }

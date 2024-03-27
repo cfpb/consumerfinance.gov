@@ -28,7 +28,7 @@
     {% set default_text = 'No information provided' %}
     <h1>{{ product.name }}</h1>
     <div class="content-l">
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l__col content-l__col-1-2">
                 <dl>
                     <dt><h2>Issuer name</h2></dt>
                     <dd>{{ product.issuer_name }}</dd>
@@ -36,7 +36,7 @@
                     <dd>{{ product.prepaid_type if product.prepaid_type else default_text }}</dd>
                 </dl>
             </div>
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l__col content-l__col-1-2">
                 <dl>
                     <dt><h2>Program manager</h2></dt>
                     <dd>{{ product.program_manager if product.program_manager else default_text }}</dd>
@@ -51,15 +51,15 @@
                 {% if product.other_relevant_parties %}
                     {% if product.other_relevant_parties | length > 500 %}
                         <div class="o-summary-minimal">
-                            <div class="o-summary-minimal_content">
+                            <div class="o-summary-minimal__content">
                                 {{ product.other_relevant_parties | replace('\n', '; ') }}
                             </div>
-                            <button class="o-summary-minimal_btn">
-                                <span class="o-summary-minimal_cue-open">
+                            <button class="o-summary-minimal__btn">
+                                <span class="o-summary-minimal__cue-open">
                                     Show full list of relevant parties
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-summary-minimal_cue-close">
+                                <span class="o-summary-minimal__cue-close">
                                     Hide full list of relevant parties
                                     {{ svg_icon('minus-round') }}
                                 </span>
@@ -115,7 +115,7 @@
     {% if support_text %}
         <div class="block block__flush-top">
             <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header__heading">
                 {{ support_text.sidefoot_heading | safe }}
             </h2>
             </header>
@@ -126,7 +126,7 @@
     {% if disclaimer_text %}
         <div class="block">
             <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">
+            <h2 class="m-slug-header__heading">
                 {{ disclaimer_text.sidefoot_heading | safe }}
             </h2>
             </header>

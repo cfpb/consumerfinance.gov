@@ -34,7 +34,7 @@
     {% for block in page.content -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
-{% endblock content_main %}
+{% endblock content__main %}
 
 {% block content_sidebar scoped -%}
     {{ recent_notices }}

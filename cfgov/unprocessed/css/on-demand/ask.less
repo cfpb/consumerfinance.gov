@@ -6,7 +6,7 @@
    Ask CFPB pages at /ask-cfpb/.
    ========================================================================== */
 
-.ask-cfpb-page__see-all {
+.ask-cfpb-page--see-all {
   .search-bar,
   .m-notification,
   .results,
@@ -26,13 +26,13 @@
       padding-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
-    .term_name {
+    .term__name {
       .h2();
 
       display: block;
     }
 
-    .term_definition {
+    .term__definition {
       display: block;
       margin-left: 0;
     }
@@ -56,7 +56,7 @@
       margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
-    .a-btn__link {
+    .a-btn--link {
       margin-left: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
@@ -98,7 +98,7 @@
     article {
       padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
       padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
-      border-top: 1px solid @block__border-top;
+      border-top: 1px solid @block--border-top;
 
       .h3 {
         margin-bottom: 0;
@@ -174,7 +174,7 @@
     font-weight: 500;
   }
 
-  .m-list_item__last {
+  .m-list__item__last {
     padding-top: unit(7px / @base-font-size-px, em);
   }
 
@@ -187,7 +187,7 @@
   // the width of that button to auto lets it overrun its container if needed.
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    .o-form__input-w-btn_btn-container .a-btn {
+    .o-form--input-w-btn__btn-container .a-btn {
       width: auto;
     }
   });
@@ -205,7 +205,7 @@
 
   .answer-module {
     border-top: 3px solid var(--green);
-    border-bottom: 1px solid @block__border-bottom;
+    border-bottom: 1px solid @block--border-bottom;
     padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
     margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
     color: var(--gray);
@@ -244,7 +244,7 @@
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     .m-hero {
-      border-bottom: 1px solid @block__border;
+      border-bottom: 1px solid @block--border;
     }
   });
 
@@ -273,7 +273,7 @@
   // of that button to auto lets it overrun its container if needed.
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    .o-form__input-w-btn_btn-container .a-btn {
+    .o-form--input-w-btn__btn-container .a-btn {
       width: auto;
     }
   });
@@ -292,7 +292,7 @@
   }
 
   .question_summary {
-    border-bottom: 1px solid @block__border-bottom;
+    border-bottom: 1px solid @block--border-bottom;
   }
 }
 

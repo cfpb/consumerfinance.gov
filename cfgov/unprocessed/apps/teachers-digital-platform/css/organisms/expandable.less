@@ -12,27 +12,23 @@
 // Theme variables
 //
 
-// .o-expandable
-@expandable-focus: var(--black);
-
 // .o-expandable_label
-@expandable_label-text: var(--black);
+@expandable__label-text: var(--black);
 
 // .o-expandable_cues
-@expandable_cues-text: var(--pacific);
+@expandable__cues-text: var(--pacific);
 
 // .o-expandable modifiers
 @expandable__background: var(--gray-5);
-@expandable__border: var(--gray-40);
 
 // Sizing variables
 
-// .o-expandable_cues
-@expandable_cues-font-size: @btn-font-size;
+// .o-expandable__cues
+@expandable__cues-font-size: @btn-font-size;
 
 // Timing variables
 
-// .o-expandable_content__transition
+// .o-expandable__content__transition
 @expandable__transition-speed: 0.25s;
 
 //
@@ -42,39 +38,39 @@
 .o-expandable {
   position: relative;
 
-  &_target {
+  &__target {
     padding: 0;
     border: 0;
     background-color: transparent;
     cursor: pointer;
 
     &:focus {
-      outline: 1px dotted @expandable-focus;
+      outline: 1px dotted var(--black);
       outline-offset: 1px;
     }
 
-    .o-expandable_cue-close,
-    .o-expandable_cue-open {
+    .o-expandable__cue-close,
+    .o-expandable__cue-open {
       display: none;
     }
 
-    &__expanded .o-expandable_cue-close {
+    &--expanded .o-expandable__cue-close {
       display: block;
     }
 
-    &__collapsed .o-expandable_cue-open {
+    &--collapsed .o-expandable__cue-open {
       display: block;
     }
   }
 
-  &_content {
+  &__content {
     padding: 0 unit((15px / @base-font-size-px), em);
 
     // The divider between _header and _content.
     &::before {
       content: '';
       display: block;
-      border-top: 1px solid @expandable__border;
+      border-top: 1px solid var(--gray-40);
       padding-top: unit((15px / @base-font-size-px), em);
     }
 
@@ -87,15 +83,15 @@
     // collapse and extend past the bounds of the expandable.
     .u-clearfix();
 
-    &__transition {
+    &--transition {
       transition: max-height @expandable__transition-speed ease-in-out;
     }
 
-    &__collapsed {
+    &--collapsed {
       max-height: 0;
     }
 
-    &__expanded {
+    &--expanded {
       max-height: 1000px;
     }
 
@@ -108,39 +104,39 @@
   // Expandable text elements
   //
 
-  &_label {
+  &__label {
     // Remove default h4 margin style
     margin-bottom: 0;
-    color: @expandable_label-text;
+    color: var(--black);
     font-weight: 500;
   }
 
-  &_cues {
+  &__cues {
     min-width: 60px;
     text-align: right;
-    color: @expandable_cues-text;
-    font-size: unit((@expandable_cues-font-size / @base-font-size-px), em);
-    line-height: unit((@base-line-height-px / @expandable_cues-font-size));
+    color: var(--pacific);
+    font-size: unit((@btn-font-size / @base-font-size-px), em);
+    line-height: unit((@base-line-height-px / @btn-font-size));
   }
 
   //
   // Header
   //
 
-  &_header {
+  &__header {
     padding: unit((10px / @base-font-size-px), em)
       unit((15px / @base-font-size-px), em);
     display: flex;
     justify-content: space-between;
 
-    // Using the button element with .o-expandable_header requires setting
+    // Using the button element with .o-expandable__header requires setting
     // an explicit width.
     button& {
       width: 100%;
       text-align: left;
     }
 
-    .o-expandable_label {
+    .o-expandable__label {
       // Grow to available width.
       flex-grow: 1;
     }
@@ -150,7 +146,7 @@
   // Expandable with a background color modifier
   //
 
-  &__background {
+  &--background {
     background: @expandable__background;
   }
 
@@ -158,8 +154,8 @@
   // Expandable with a border modifier
   //
 
-  &__border {
-    border: 1px solid @expandable__border;
+  &--border {
+    border: 1px solid var(--gray-40);
   }
 
   //
@@ -168,25 +164,25 @@
 
   &-group {
     .o-expandable {
-      border-bottom: 1px solid @expandable__border;
+      border-bottom: 1px solid var(--gray-40);
 
       &:first-child {
-        border-top: 1px solid @expandable__border;
+        border-top: 1px solid var(--gray-40);
       }
     }
   }
 
   .respond-to-print( {
     // Hide the interactive expandable cues when printing
-    &_target__expanded &_cue-close,
-    &_target__collapsed &_cue-open {
+    &__target--expanded &__cue-close,
+    &__target--collapsed &__cue-open {
       display: none;
     }
 
     // Ensure all expandables are expanded when printing.
     // To accommodate print stylesheets that display the raw URL after links,
     // set an enormous max height to accommodate expandables that have a lot of links.
-    &_content__collapsed {
+    &__content--collapsed {
       display: block;
       max-height: 99999px !important;
     }
@@ -194,7 +190,7 @@
 }
 
 // Used when the set language reads right-to-left
-div[dir='rtl'] .o-expandable_header {
+div[dir='rtl'] .o-expandable__header {
   width: 100%;
   text-align: right;
 }

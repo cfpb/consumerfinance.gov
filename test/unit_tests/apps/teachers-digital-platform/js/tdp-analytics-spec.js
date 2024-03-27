@@ -26,22 +26,22 @@ const HTML_SNIPPET = `
       <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
       <input type="hidden" name="page" inputmode="numeric" value="1">
       <div class="o-expandable o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="o-expandable_label">
+        <button class="o-expandable__header o-expandable__target--expanded" type="button">
+          <span class="o-expandable__label">
             Building block
           </span>
-          <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+          <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
             </span>
           </span>
         </button>
-        <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 119px;">
-          <div class="o-form_group u-mt15">
-            <fieldset class="o-form_fieldset">
+        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 119px;">
+          <div class="o-form__group u-mt15">
+            <fieldset class="o-form__fieldset">
               <ul class="m-list m-list__unstyled">
                 <li>
                   <div class="m-form-field m-form-field__checkbox">
@@ -68,18 +68,18 @@ const HTML_SNIPPET = `
       </div>
 
       <div class="o-expandable o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="o-expandable_label">Topic</span>
-          <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+        <button class="o-expandable__header o-expandable__target--expanded" type="button">
+          <span class="o-expandable__label">Topic</span>
+          <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
             </span>
           </span>
         </button>
-        <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 337px;">
+        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 337px;">
           <ul class="m-list m-list__unstyled u-mt15">
             <li class="o-expandable-facets" data-bound="true">
               <div class="m-form-field m-form-field__checkbox">
@@ -148,27 +148,27 @@ const HTML_SNIPPET = `
     </form>
     <nav class="m-pagination" role="navigation" aria-label="Pagination">
         <a class="a-btn
-                  m-pagination_btn-prev"
+                  m-pagination__btn-prev"
            href="?page=21#pagination_content">
-            <span class="a-btn_icon a-btn_icon__on-left">{% include icons/left.svg %}</span>
+            <span class="a-btn__icon a-btn__icon--on-left">{% include icons/left.svg %}</span>
             Newer
         </a>
         <a class="a-btn
-                  m-pagination_btn-next"
+                  m-pagination__btn-next"
            href="?page=23#pagination_content">
-            <span class="a-btn_icon a-btn_icon__on-right">{% include icons/right.svg %}</span>
+            <span class="a-btn__icon a-btn__icon--on-right">{% include icons/right.svg %}</span>
             Older
         </a>
-        <form class="m-pagination_form"
+        <form class="m-pagination__form"
               action="#pagination_content">
-            <label class="m-pagination_label"
-                   for="m-pagination_current-page">
+            <label class="m-pagination__label"
+                   for="m-pagination__current-page">
                 Page
                 <span class="u-visually-hidden">
                     number 22 out
                 </span>
-                <input class="m-pagination_current-page"
-                       id="m-pagination_current-page"
+                <input class="m-pagination__current-page"
+                       id="m-pagination__current-page"
                        name="page"
                        type="number"
                        min="1"
@@ -176,12 +176,12 @@ const HTML_SNIPPET = `
                        pattern="[0-9]*"
                        inputmode="numeric"
                        value="22">
-                <span class="m-pagination_label"> of 149</span>
+                <span class="m-pagination__label"> of 149</span>
             </label>
             <button class="a-btn
                            a-btn__link
-                           m-pagination_btn-submit"
-                    id="m-pagination_btn-submit"
+                           m-pagination__btn-submit"
+                    id="m-pagination__btn-submit"
                     type="submit">Go</button>
         </form>
     </nav>
@@ -227,7 +227,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when next pagination button is clicked', () => {
-    const paginationButton = document.querySelector('.m-pagination_btn-next');
+    const paginationButton = document.querySelector('.m-pagination__btn-next');
     const spy = jest.fn();
 
     bindAnalytics(spy);
@@ -238,7 +238,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when an expandable is clicked', () => {
-    const expandable = document.querySelector('.o-expandable_header');
+    const expandable = document.querySelector('.o-expandable__header');
     const spy = jest.fn();
 
     bindAnalytics(spy);

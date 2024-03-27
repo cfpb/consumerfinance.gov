@@ -70,7 +70,7 @@
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
-        <div class="h5 m-social-media_heading">
+        <div class="h5 m-social-media__heading">
             {% if is_printable -%}
                 {{ _('Share & print') }}
             {%- else -%}
@@ -81,8 +81,8 @@
 
     <ul class="m-list
                m-list__unstyled
-               m-list__horizontal
-               m-social-media_icons">
+               m-list--horizontal
+               m-social-media__icons">
 
         {% set facebook_homepage = _('https://www.facebook.com/CFPB') %}
         {% set facebook_info = {
@@ -152,8 +152,8 @@
 
         {% for link in links %}
             {% if is_share_view %}
-                <li class="m-list_item">
-                    <a class="m-social-media_icon"
+                <li class="m-list__item">
+                    <a class="m-social-media__icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
                        {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}
                        aria-label="{{ _('Share on') }} {{ link.name }}">
@@ -161,8 +161,8 @@
                     </a>
                 </li>
             {% else %}
-                <li class="m-list_item">
-                    <a class="m-social-media_icon"
+                <li class="m-list__item">
+                    <a class="m-social-media__icon"
                        href="{{ link.homepage | trim }}"
                        aria-label="{{ _('Visit us on') }} {{ link.name }}">
                         {{ svg_icon(link.icon ~ '-square') }}
@@ -172,8 +172,8 @@
         {% endfor %}
 
         {% if is_share_view and is_printable %}
-            <li class="m-list_item m-social-media_print">
-                <button class="a-btn a-btn__link m-social-media_icon"
+            <li class="m-list__item m-social-media__print">
+                <button class="a-btn a-btn__link m-social-media__icon"
                    onclick="{{ print_info.share_url }}"
                    aria-label="{{ print_info.name }}"
                    type="button">

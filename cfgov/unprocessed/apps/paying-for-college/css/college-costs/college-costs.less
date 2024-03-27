@@ -1,6 +1,6 @@
 .college-costs {
   // remove border between sidebar and main content
-  & .content_main {
+  & .content__main {
     position: relative;
 
     &::after {
@@ -32,20 +32,20 @@
   });
 
   .u-border-bottom {
-    border-bottom: 1px solid @block__border-bottom;
+    border-bottom: 1px solid @block--border-bottom;
   }
 
-  .block.block__mid {
+  .block.block--mid {
     margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
   }
 
   // Notification explanation doesn't need top margin unless it follows message
-  .m-notification_explanation {
+  .m-notification__explanation {
     margin-top: 0;
   }
 
-  .m-notification_message + .m-notification_explanation {
+  .m-notification__message + .m-notification__explanation {
     margin-top: unit(5px / @base-font-size-px, em);
   }
 

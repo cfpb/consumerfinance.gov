@@ -7,31 +7,31 @@ const HTML_SNIPPET = `
 <div class="o-expandable
             o-expandable__background
             o-expandable__border">
-    <button class="o-expandable_header" type="button">
-        <span class="o-expandable_label">
+    <button class="o-expandable__header" type="button">
+        <span class="o-expandable__label">
             Filter posts
         </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
                 Show
                 filters
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
                 Hide
                 filters
             </span>
         </span>
     </button>
 
-    <div class="o-expandable_content">
+    <div class="o-expandable__content">
 
     <form method="get" action=".">
 
         <div class="content-l">
 
-        <div class="content-l_col
-                    content-l_col-1">
-            <div class="o-form_group">
+        <div class="content-l__col
+                    content-l__col-1">
+            <div class="o-form__group">
                 <div class="m-form-field">
                     <label class="a-label a-label__heading" for="title">
                         Item name
@@ -46,10 +46,10 @@ const HTML_SNIPPET = `
             </div>
         </div>
 
-        <div class="content-l_col
-                    content-l_col-1-3">
-            <div class="o-form_group">
-                <fieldset class="o-form_fieldset">
+        <div class="content-l__col
+                    content-l__col-1-3">
+            <div class="o-form__group">
+                <fieldset class="o-form__fieldset">
                     <legend class="a-legend">
                         Category
                     </legend>
@@ -95,13 +95,13 @@ const HTML_SNIPPET = `
             </div>
         </div>
 
-        <div class="content-l_col
-                    content-l_col-2-3">
+        <div class="content-l__col
+                    content-l__col-2-3">
             <div class="content-l">
 
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <div class="o-form_group">
+                    <div class="content-l__col
+                                content-l__col-1-2">
+                        <div class="o-form__group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading" for="topics">
                                     Topic
@@ -115,16 +115,16 @@ const HTML_SNIPPET = `
                         </div>
                     </div>
 
-                    <div class="content-l_col
-                                content-l_col-1">
-                        <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
+                    <div class="content-l__col
+                                content-l__col-1">
+                        <div class="o-form__group">
+                            <fieldset class="o-form__fieldset">
                                 <legend class="a-legend">
                                     Date range
                                 </legend>
                                 <div class="content-l">
-                                    <div class="content-l_col
-                                                content-l_col-1-2">
+                                    <div class="content-l__col
+                                                content-l__col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading" for="from_date">
                                                 From:
@@ -132,8 +132,8 @@ const HTML_SNIPPET = `
                                             <input type="text" name="from_date" data-type="date" placeholder="mm/dd/yyyy" class="a-text-input a-text-input__full" id="from_date">
                                         </div>
                                     </div>
-                                    <div class="content-l_col
-                                                content-l_col-1-2">
+                                    <div class="content-l__col
+                                                content-l__col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading" for="to_date">
                                                 To:
@@ -149,8 +149,8 @@ const HTML_SNIPPET = `
             </div>
         </div>
 
-            <div class="content-l_col
-                        content-l_col-1
+            <div class="content-l__col
+                        content-l__col-1
                         m-btn-group">
                 <input class="a-btn" type="submit" value="Apply filters">
                 <a class="a-btn a-btn__link a-btn__warning" href="/about-us/blog/">
@@ -165,8 +165,8 @@ const HTML_SNIPPET = `
 </div>
 
 <div class="m-notification">
-    <div class="m-notification_content">
-        <div class="m-notification_message"></div></div>
+    <div class="m-notification__content">
+        <div class="m-notification__message"></div></div>
     </div>
 
 </div>

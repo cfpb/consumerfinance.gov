@@ -543,8 +543,8 @@ import Notification from '../../../../cfgov/unprocessed/js/molecules/Notificatio
 const HTML_SNIPPET = `
   <div class="m-notification">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
-    <div class="m-notification_content">
-      <div class="m-notification_message">Notification content</div>
+    <div class="m-notification__content">
+      <div class="m-notification__message">Notification content</div>
     </div>
   </div>
 `;

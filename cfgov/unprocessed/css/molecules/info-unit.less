@@ -29,7 +29,7 @@
   &_heading-link {
     display: block;
 
-    .u-link__colors( var(--black), var(--pacific-80) );
+    .u-link--colors( var(--black), var(--pacific-80) );
   }
 }
 
@@ -43,13 +43,13 @@
 .u-info-unit-base__inline( @img_size ) {
   .u-clearfix();
 
-  .m-info-unit_image {
+  .m-info-unit__image {
     float: left;
     margin-bottom: 0;
   }
 
-  .m-info-unit_content,
-  .m-info-unit_heading-text {
+  .m-info-unit__content,
+  .m-info-unit__heading-text {
     margin-left: unit(
       (@img_size + @grid_gutter-width) / @base-font-size-px,
       em

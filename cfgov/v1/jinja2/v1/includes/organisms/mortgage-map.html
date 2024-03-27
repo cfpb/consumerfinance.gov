@@ -20,15 +20,15 @@
 <div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
         <div class="block
-                block__flush-top
-                block__flush-bottom
-                block__padded-bottom">
+                block--flush-top
+                block--flush-bottom
+                block--padded-bottom">
         {{ value.content_block|safe }}
         </div>
         <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
             <div id="mp-map-loading" class="mp-loading"></div>
             <h3 class="u-mb30">Choose location to display on the map</h3>
-            <fieldset class="content-l_col content-l_col-1-2">
+            <fieldset class="content-l__col content-l__col-1-2">
                 <label class="a-label" for="mp-map-geo"><h4>Select map view</h4></label>
                 <div class="m-form-field m-form-field__radio" id="mp-map-geo">
                     <div class="m-form-field m-form-field__radio u-mb10">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="content-l_col content-l_col-1-2">
+            <fieldset class="content-l__col content-l__col-1-2">
                 <div class="m-form-field m-form-field__select mp-map-select-container" id="mp-map-state-container">
                     <label class="a-label" for="mp-map-state"><h4>Select state to zoom</h4></label>
                     <div class="a-select">
@@ -121,7 +121,7 @@
             </fieldset>
             <fieldset class="content-l">
                 <h4 class="u-mt30">Select month and year to display</h4>
-                <div class="content-l_col content-l_col-1-2 u-m0">
+                <div class="content-l__col content-l__col-1-2 u-m0">
                     <div class="m-form-field m-form-field__select" id="mp-map-month-container">
                         <label class="a-label u-mb15" for="mp-map-month">Month</label>
                         <div class="a-select">
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-l_col content-l_col-1-2">
+                <div class="content-l__col content-l__col-1-2">
                     <div class="m-form-field m-form-field__select" id="mp-map-year-container">
                         <label class="a-label u-mb15" for="mp-map-year">Year</label>
                         <div class="a-select">
@@ -158,11 +158,11 @@
                         u-mt30"
                   id="mp-map-notification">
                 {{ svg_icon('warning-round') }}
-                <div class="m-notification_content">
-                    <div class="m-notification_message">
+                <div class="m-notification__content">
+                    <div class="m-notification__message">
                         Invalid date
                     </div>
-                    <p class="m-notification_explanation">
+                    <p class="m-notification__explanation">
                         We only have data available through {{ thru_month_formatted }}.
                         Please select a valid date.
                     </p>
@@ -208,7 +208,7 @@
             </g>
         </svg>
     </div>
-    <p class="m-chart-footnote block__sub block short-desc">
+    <p class="m-chart-footnote block--sub block short-desc">
     <strong>Source:</strong> National Mortgage Database<br>
     <strong>Date published:</strong> {{ pub_date_formatted }}<br>
     <strong>Downloads:</strong> CSV files with data by <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro and non-metro areas</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}).<br>

@@ -66,7 +66,7 @@
 {% if page.results.search_query %}
 <div class="search_results">
     <div class="block block__flush-top content content__1-3">
-        <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+        <aside class="content__sidebar content__flush-top-on-small content__flush-sides-on-small filters">
             <h3>Refine results</h3>
             <form action="." method="get" data-js-hook="behavior_change-filter">
                 {% set expandable_settings = {
@@ -75,8 +75,8 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         {% if page.results.search_query %}
                         <input type="hidden" name="q" value="{{ page.results.search_query }}">
                         {% endif %}
@@ -106,8 +106,8 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         <p> </p>
                         {{ radio.render({
                             'label': '25 per page',
@@ -142,8 +142,8 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         <p> </p>
                         {{ radio.render({
                             'label': 'By relevance',
@@ -171,7 +171,7 @@
                 </div>
             </form>
         </aside>
-        <div id="regs3k-results" class="content_main content__flush-all-on-small content__flush-bottom">
+        <div id="regs3k-results" class="content__main content__flush-all-on-small content__flush-bottom">
             {% include 'search-regulations-results.html' %}
         </div>
     </div>
@@ -184,7 +184,7 @@
 </div>
 {% endif %}
 
-{% endblock content_main %}
+{% endblock content__main %}
 
 
 {% block javascript scoped %}

@@ -10,7 +10,7 @@ const ExpandableFacets = AtomicComponent.extend({
     base: '.o-expandable-facets',
     target: '.o-expandable-facets_target',
     content: '.o-expandable-facets_content',
-    header: '.o-expandable_header',
+    header: '.o-expandable__header',
     facetCheckbox: '.o-expandable-facets_checkbox',
     facetLabel: '.o-expandable-facets_checkbox ~ .a-label',
   },

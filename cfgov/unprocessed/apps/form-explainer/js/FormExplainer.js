@@ -120,7 +120,7 @@ class FormExplainer {
    */
   openAndScrollToExpandable(imageOverlay, targetExpandable) {
     const targetExpandableTarget = targetExpandable.querySelector(
-      '.o-expandable_header',
+      '.o-expandable__header',
     );
 
     window.setTimeout(() => {
@@ -280,7 +280,7 @@ class FormExplainer {
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents('.o-expandable_header', 'focus', (event) => {
+    DT.bindEvents('.o-expandable__header', 'focus', (event) => {
       const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
@@ -302,7 +302,7 @@ class FormExplainer {
      * update the image overlay position and hover styles.
      */
     DT.bindEvents(
-      '.o-expandable__form-explainer .o-expandable_header',
+      '.o-expandable__form-explainer .o-expandable__header',
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {

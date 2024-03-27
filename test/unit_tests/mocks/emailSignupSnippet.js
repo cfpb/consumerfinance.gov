@@ -1,7 +1,7 @@
 export default `
 <div class="o-email-signup">
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
             Stay informed
         </h2>
     </header>
@@ -15,8 +15,8 @@ export default `
           enctype="application/x-www-form-urlencoded">
         <div class="u-mb15">
             <div class="m-notification">
-                <div class="m-notification_content">
-                    <div class="m-notification_message"></div>
+                <div class="m-notification__content">
+                    <div class="m-notification__message"></div>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@ export default `
                    placeholder="mail@example.com"
                    required="">
         </div>
-        <div class="o-email-signup_buttons">
+        <div class="o-email-signup__buttons">
             <button class="a-btn">Sign up</button>
             <a class="a-btn a-btn__link a-btn__secondary"
                href="/owning-a-home/privacy-act-statement/"

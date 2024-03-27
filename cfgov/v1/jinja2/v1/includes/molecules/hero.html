@@ -64,20 +64,20 @@
                 {{- ' m-hero__overlay' if value.is_overlay else '' }}
                 {{- ' m-hero__50-50' if value.is_50_50 else '' }}
                 {{- ' m-hero__jumbo' if value.is_jumbo else '' }}">
-    <div class="m-hero_wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">{{ value.heading }}
+    <div class="m-hero__wrapper">
+        <div class="m-hero__text">
+            <h1 class="m-hero__heading">{{ value.heading }}
                 {% if value.heading_continued %}
                 <br> {{ value.heading_continued }}
                 {% endif %}
             </h1>
-            <div class="m-hero_subhead">
+            <div class="m-hero__subhead">
                 {{ value.body | safe }}
             </div>
         </div>
-        <div class="m-hero_image-wrapper">
+        <div class="m-hero__image-wrapper">
         {% if img %}
-            <div class="m-hero_image"></div>
+            <div class="m-hero__image"></div>
         {% endif %}
         </div>
     </div>
@@ -99,7 +99,7 @@
             {% endif -%}
         }
     {% if img and img.width %}
-        .m-hero_image {
+        .m-hero__image {
             background-image: url('{{ sm_img.url }}');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                 src='{{ sm_img.url }}',
@@ -108,7 +108,7 @@
         }
 
         @media screen and (min-width: 37.5625em) {
-            .m-hero_image {
+            .m-hero__image {
                 background-image: url('{{ img.url }}');
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',
@@ -116,9 +116,9 @@
                 padding-bottom: {{ img.height / img.width * 100 }}%;
             }
 
-            .m-hero__jumbo .m-hero_wrapper,
-            .m-hero__50-50 .m-hero_wrapper,
-            .m-hero__overlay .m-hero_wrapper {
+            .m-hero__jumbo .m-hero__wrapper,
+            .m-hero__50-50 .m-hero__wrapper,
+            .m-hero__overlay .m-hero__wrapper {
                 background-image: url('{{ img.url }}');
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',

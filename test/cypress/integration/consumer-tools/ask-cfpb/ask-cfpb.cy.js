@@ -65,32 +65,37 @@ describe('Ask CFPB', () => {
       });
 
       it('should hide content on mobile', () => {
-        cy.get('.o-summary_content').should(
+        cy.get('.o-summary__content').should(
           'have.class',
           'u-max-height-transition',
         );
-        cy.get('.o-summary_content').should(
+        cy.get('.o-summary__content').should(
           'have.class',
           'u-max-height-summary',
         );
-        cy.get('.o-summary_content').invoke('outerHeight').should('be.lte', 92);
+        cy.get('.o-summary__content')
+          .invoke('outerHeight')
+          .should('be.lte', 92);
         answerPage.getFirstLinkInSummary().should('not.be.visible');
         answerPage.getSummaryBtn().click();
         answerPage.getFirstLinkInSummary().should('be.visible');
-        cy.get('.o-summary_content').should(
+        cy.get('.o-summary__content').should(
           'have.class',
           'u-max-height-transition',
         );
-        cy.get('.o-summary_content').should('not.have.class', 'u-no-animation');
-        cy.get('.o-summary_content').should(
+        cy.get('.o-summary__content').should(
+          'not.have.class',
+          'u-no-animation',
+        );
+        cy.get('.o-summary__content').should(
           'not.have.class',
           'u-max-height-summary',
         );
-        cy.get('.o-summary_content').should(
+        cy.get('.o-summary__content').should(
           'have.class',
           'u-max-height-default',
         );
-        cy.get('.o-summary_content').invoke('outerHeight').should('be.gt', 92);
+        cy.get('.o-summary__content').invoke('outerHeight').should('be.gt', 92);
       });
     });
   });

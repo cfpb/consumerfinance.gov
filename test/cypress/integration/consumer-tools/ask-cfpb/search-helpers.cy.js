@@ -13,7 +13,7 @@ export class AskCfpbSearch {
   }
 
   autocomplete() {
-    return cy.get('.m-autocomplete_results');
+    return cy.get('.m-autocomplete__results');
   }
 
   submitButton() {

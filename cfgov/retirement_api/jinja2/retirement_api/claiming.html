@@ -26,7 +26,7 @@
 <div id="claiming-social-security" class="claiming-social-security">
     <div class="intro block block__flush-top">
         <div class="content-l">
-            <div class="content-l_col content-l_col-2-3">
+            <div class="content-l__col content-l__col-2-3">
                 <h1>{{ _("Planning your Social Security claiming age") }}</h1>
                 <p class="lead-paragraph">
                     {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
@@ -61,7 +61,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="content-l_col content-l_col-1-3">
+            <div class="content-l__col content-l__col-1-3">
                 <div class="img"></div>
             </div>
         </div>
@@ -73,17 +73,17 @@
               block__border-top
               u-js-only">
               <div class="content-l">
-                <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
-                <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
+                <h2 class="content-l__col content-l__col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
+                <form id="step-one-form" name="step-one-form" action="#" class="content-l__col content-l__col-2-3">
                     <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
                     <div class="m-notification m-notification__warning">
                         {{ svg_icon('warning-round') }}
-                        <div class="m-notification_content">
-                            <div class="m-notification_message">Error message.</div>
+                        <div class="m-notification__content">
+                            <div class="m-notification__message">Error message.</div>
                         </div>
                     </div>
                     <div class="content-l">
-                        <div class="content-l_col content-l_col-1-3 birthdate-inputs">
+                        <div class="content-l__col content-l__col-1-3 birthdate-inputs">
                             <p>{{ _("Date of birth") }}</p>
                             <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2"
                                     placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off"
@@ -95,7 +95,7 @@
                                     placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off"
                                     autocorrect="off" spellcheck="false"></label>
                         </div>
-                        <div class="content-l_col content-l_col-1-3">
+                        <div class="content-l__col content-l__col-1-3">
                             <label for="salary-input" class="input-labels">
                                 <span class="input-labels_block">{{ _("Highest annual work income") }} <span
                                         data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
@@ -107,7 +107,7 @@
                                 <small>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</small>
                             </div>
                         </div>
-                        <div class="content-l_col content-l_col-1-3">
+                        <div class="content-l__col content-l__col-1-3">
                             <button
                                 type="submit"
                                 id="get-your-estimates"
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="content-l_col content-l_col-1-3 estimate-info">
+                <div class="content-l__col content-l__col-1-3 estimate-info">
                     <small>
                         {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
                     </small>
@@ -135,7 +135,7 @@
     </div>
 
     <div id="graph-container" class="content-l step-one-hidden">
-        <div class="content-l_col content-l_col-1-3">
+        <div class="content-l__col content-l__col-1-3">
             <div class="selected-retirement-age-container">
                 <p class="h3 selected-retirement-age">
                     <span class="selected-retirement-age__not-fra">
@@ -197,7 +197,7 @@
             </p>
 
         </div>
-        <div class="content-l_col content-l_col-2-3 canvas-container">
+        <div class="content-l__col content-l__col-2-3 canvas-container">
             <div id="estimated-benefits-input" class="estimated-benefits-input h4 step-one-hidden">
                 <span>{{ _("View estimated benefits as:") }}</span><span><label><input type="radio"
                             name="benefits-display" value="monthly" checked> {{ _("monthly income") }}</label>
@@ -237,11 +237,11 @@
     </div>
     <hr class="before-step-two">
     <div class="content-l step-two">
-        <div class="content-l_col content-l_col-1-3">
+        <div class="content-l__col content-l__col-1-3">
             <h2><strong>{{STEP}} 2: </strong>{{ _("Learn tips specific to your situation") }}</h2>
             <p class="question h3">{{ _("Picture your life in retirement to receive claiming tips.") }}</p>
         </div>
-        <div class="content-l_col content-l_col-1-3 question question-married">
+        <div class="content-l__col content-l__col-1-3 question question-married">
             <img src="{{ static("apps/retirement/img/lifestyle-married.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
@@ -311,7 +311,7 @@
                 </p>
             </div>
         </div>
-        <div class="content-l_col content-l_col-1-3 question question-working age-split">
+        <div class="content-l__col content-l__col-1-3 question question-working age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-working.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
@@ -340,7 +340,7 @@
                     for retirement.
                     <a href="https://secure.ssa.gov/RIL/SiView.action"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
+                        <span class="a-link__text">Review your earnings record on <i>my</i> SocialSecurity</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -362,7 +362,7 @@
                     for retirement.
                     <a href="https://secure.ssa.gov/RIL/SiView.action"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
+                        <span class="a-link__text">Review your earnings record on <i>my</i> SocialSecurity</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -390,7 +390,7 @@
                     claiming age.
                     <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about working and collecting Social Security
+                        <span class="a-link__text">Learn more about working and collecting Social Security
                             benefits</span>
                     </a>.
                     {% endblock %}
@@ -418,7 +418,7 @@
                     age.
                     <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">
+                        <span class="a-link__text">
                             Learn more about working and collecting Social Security benefits
                         </span>
                     </a>.
@@ -443,7 +443,7 @@
                     for retirement.
                     <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about working and collecting Social Security
+                        <span class="a-link__text">Learn more about working and collecting Social Security
                             benefits</span>
                     </a>.
                     {% endblock %}
@@ -472,7 +472,7 @@
                     completely.
                     <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about working and collecting Social Security
+                        <span class="a-link__text">Learn more about working and collecting Social Security
                             benefits</span>
                     </a>.
                     {% endblock %}
@@ -493,7 +493,7 @@
         </div>
     </div>
     <div class="content-l step-two">
-        <div class="content-l_col content-l_col-1-3 question question-expenses age-split">
+        <div class="content-l__col content-l__col-1-3 question question-expenses age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-expenses.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
@@ -519,7 +519,7 @@
                     benefit could be reduced by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -538,7 +538,7 @@
                     benefit could be reduced by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -557,7 +557,7 @@
                     by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -576,7 +576,7 @@
                     by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -595,7 +595,7 @@
                     by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -614,13 +614,13 @@
                     by as much as 30 percent.
                     <a href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Create a retirement budget</span>
+                        <span class="a-link__text">Create a retirement budget</span>
                     </a>.
                     {% endblock %}
                 </p>
             </div>
         </div>
-        <div class="content-l_col content-l_col-1-3 question question-income age-split">
+        <div class="content-l__col content-l__col-1-3 question question-income age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-income.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
@@ -654,7 +654,7 @@
                     much as 30 percent.
                     <a href="https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about saving for retirement</span>
+                        <span class="a-link__text">Learn more about saving for retirement</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -682,7 +682,7 @@
                     59½, you will likely face an early withdrawal penalty.
                     <a href="https://tools.finra.org/savings_calculator/"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about how retirement savings grow</span>
+                        <span class="a-link__text">Learn more about how retirement savings grow</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -711,7 +711,7 @@
                     your full benefit age until age 70.
                     <a href="https://tools.finra.org/savings_calculator/"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about how retirement savings grow</span>
+                        <span class="a-link__text">Learn more about how retirement savings grow</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -741,7 +741,7 @@
                     much as 30 percent.
                     <a href="https://americasaves.org/blog/1345-the-faqs-of-iras"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about starting an IRA</span>
+                        <span class="a-link__text">Learn more about starting an IRA</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -767,7 +767,7 @@
                     past your full benefit age until age 70.
                     <a href="https://americasaves.org/blog/1345-the-faqs-of-iras"
                        rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about starting an IRA</span>
+                        <span class="a-link__text">Learn more about starting an IRA</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -795,7 +795,7 @@
                     past your full benefit age until age 70.
                     <a href="https://www.ssa.gov/planners/retire/whileworking.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Learn more about working and collecting Social Security
+                        <span class="a-link__text">Learn more about working and collecting Social Security
                             benefits</span>
                     </a>.
                     {% endblock %}
@@ -817,7 +817,7 @@
                 <small>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</small>
             </div>
         </div>
-        <div class="content-l_col content-l_col-1-3 question question-longevity">
+        <div class="content-l__col content-l__col-1-3 question question-longevity">
             <img src="{{ static("apps/retirement/img/lifestyle-longevity.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
@@ -843,7 +843,7 @@
                     will be lower by thousands of dollars.
                     <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Calculate your expected longevity</span>
+                        <span class="a-link__text">Calculate your expected longevity</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -865,7 +865,7 @@
                     you age.
                     <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Calculate your longevity</span>
+                        <span class="a-link__text">Calculate your longevity</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -887,7 +887,7 @@
                     will be lower by thousands of dollars.
                     <a href="https://www.ssa.gov/oact/population/longevity.html"
                         rel="noopener noreferrer" target="_blank">
-                        <span class="a-link_text">Calculate your longevity</span>
+                        <span class="a-link__text">Calculate your longevity</span>
                     </a>.
                     {% endblock %}
                 </p>
@@ -942,16 +942,16 @@
                     <p>{{ _("If you start collecting at this age you will receive less than your full benefit amount. Here are a few things to keep in mind in the next few years.") }}</p>
                 </div>
                 <ol class="next-steps content-l">
-                    <li class="content-l_col content-l_col-1-3 next-step-one">
+                    <li class="content-l__col content-l__col-1-3 next-step-one">
                         {% block next_step_one %}
                         Create a <a href="https://www.ssa.gov/myaccount/"
-                            rel="noopener noreferrer" target="_blank"><span class="a-link_text"><em>my</em> Social
+                            rel="noopener noreferrer" target="_blank"><span class="a-link__text"><em>my</em> Social
                                 Security account</span></a> to review your expected benefits based on your actual Social
                         Security record. You will also find additional information about your eligibility and other
                         benefits including disability and survivor benefits.
                         {% endblock %}
                     </li>
-                    <li class="content-l_col content-l_col-1-3 next-step-three">
+                    <li class="content-l__col content-l__col-1-3 next-step-three">
                         {{ _("If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!") }}
                     </li>
                 </ol>

@@ -37,7 +37,7 @@ const defaultScrollOffset = (target) => {
  */
 const handleMobileNav = (event) => {
   event.preventDefault();
-  if (event.target.matches('.o-secondary-nav_link')) {
+  if (event.target.matches('.o-secondary-nav__link')) {
     secondaryNav.collapse();
 
     // Scrolling before the expandable closes causes jitters on some devices.
@@ -74,7 +74,7 @@ const init = (secondaryNavArg) => {
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
   if ('IntersectionObserver' in window) {
     appRoot
-      .querySelectorAll('.o-secondary-nav_list__children')
+      .querySelectorAll('.o-secondary-nav__list__children')
       .forEach((ul) => {
         hideElement(ul);
       });
@@ -99,7 +99,7 @@ const init = (secondaryNavArg) => {
 
   // Track clicks on the FIG sidebar nav links
   addEventListenerToSelector(
-    '.o-fig_sidebar .o-secondary-nav_link',
+    '.o-fig_sidebar .o-secondary-nav__link',
     'click',
     (event) => {
       analyticsSendEvent({

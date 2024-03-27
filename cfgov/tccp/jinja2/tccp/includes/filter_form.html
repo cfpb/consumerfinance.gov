@@ -23,20 +23,20 @@
 {%- endmacro -%}
 
 {%- macro render_form_fields(form) -%}
-<div class="content-l_col content-l_col-1">
+<div class="content-l__col content-l__col-1">
     {# This is a hidden field. #}
     {{ form.situations }}
 
-    <div class="o-form_group">
+    <div class="o-form__group">
         {{ render_field(form.credit_tier, "select") }}
     </div>
 
-    <div class="o-form_group">
+    <div class="o-form__group">
         {{ render_field(form.location, "select") }}
     </div>
 
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
+    <div class="o-form__group">
+        <fieldset class="o-form__fieldset">
             <legend class="a-legend">Features</legend>
 
             {{ render_field(form.small_institution, "checkbox") }}
@@ -45,15 +45,15 @@
         </fieldset>
     </div>
 
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
+    <div class="o-form__group">
+        <fieldset class="o-form__fieldset">
             <legend class="a-legend">Rewards</legend>
 
             {{ form.rewards }}
         </fieldset>
     </div>
 
-    <div class="o-form_group" id="tccp-ordering" data-js-hook="behavior_ordering-change">
+    <div class="o-form__group" id="tccp-ordering" data-js-hook="behavior_ordering-change">
         {{ render_field(form.ordering, "select") }}
     </div>
 </div>
@@ -74,7 +74,7 @@
 
         {{ render_form_fields(form) }}
 
-        <div class="content-l_col content-l_col-1 m-btn-group">
+        <div class="content-l__col content-l__col-1 m-btn-group">
             <button type="submit" class="a-btn" title="Apply filters">
                 Apply filters
             </button>

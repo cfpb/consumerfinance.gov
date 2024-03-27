@@ -55,7 +55,7 @@ function GlobalSearch(element) {
     _contentDom.classList.remove('u-hidden');
 
     const inputContainsLabelSel = `.${BASE_CLASS}_content-form .input-contains-label`;
-    const searchBtnSel = `.${BASE_CLASS} .o-form__input-w-btn_btn-container button`;
+    const searchBtnSel = `.${BASE_CLASS} .o-form--input-w-btn__btn-container button`;
 
     const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
     _searchInputDom = inputContainsLabel.querySelector('input');

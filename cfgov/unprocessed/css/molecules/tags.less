@@ -4,13 +4,13 @@
 
 .m-tags {
   // Mobile.
-  &_heading {
+  &__heading {
     .h4();
     display: block;
     color: var(--black);
   }
 
-  &_list {
+  &__list {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -19,7 +19,7 @@
     list-style-type: none;
   }
 
-  &_tag {
+  &__tag {
     .h6();
     // Override h6 margin.
     margin: 0;
@@ -30,11 +30,11 @@
     color: var(--gray);
   }
 
-  &_item {
+  &__item {
     margin: 0;
   }
 
-  &_bullet {
+  &__bullet {
     position: absolute;
     left: -1em;
     color: var(--gold-80);
@@ -43,23 +43,23 @@
     margin-left: @bullet-font-size;
   }
 
-  a.m-tags_tag {
-    .u-link__colors(
+  a.m-tags--tag {
+    .u-link--colors(
       var(--gray), var(--gray), var(--gray), var(--gray), var(--gray),
       var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80)
     );
   }
 
   // Negate the border of the sibling when hovering.
-  &_item:hover + &_item {
-    a.m-tags_tag {
+  &_item:hover + &__item {
+    a.m-tags--tag {
       border-top: none;
     }
   }
 
   // Mobile only.
   .respond-to-max(@bp-xs-max, {
-    &_tag {
+    &__tag {
       height: 100%;
       width: 100%;
       padding-top: unit(10px / @base-font-size-px, rem);
@@ -68,7 +68,7 @@
       border-top: 1px dotted var(--gold-80);
     }
 
-    a.m-tags_tag {
+    a.m-tags__tag {
       border-bottom-width: 0;
 
       &:hover {
@@ -80,7 +80,7 @@
     // Add bottom border to last tag.
     &_item:last-child {
       // This needs to appear after border-bottom-width: 0;
-      .m-tags_tag {
+      .m-tags__tag {
         border-bottom: 1px dotted var(--gold-80);
       }
     }
@@ -92,16 +92,16 @@
     align-items: baseline;
     gap: unit(15px / @base-font-size-px, rem);
 
-    &_list {
+    &__list {
       flex-direction: row;
       gap: unit(15px / @base-font-size-px, rem);
     }
 
-    &_tag {
+    &__tag {
       margin-left: @bullet-font-size;
     }
 
-    &_bullet {
+    &__bullet {
       margin-left: 0;
     }
   });
@@ -114,7 +114,7 @@
 // Right-to-left (RTL) adjustments for arabic pages.
 html[lang='ar'] {
   .m-tags {
-    &_bullet {
+    &__bullet {
       position: absolute;
       right: -1rem;
       left: initial;
@@ -123,23 +123,23 @@ html[lang='ar'] {
 
     // Mobile only.
     .respond-to-max(@bp-xs-max, {
-      &_tag {
+      &__tag {
         padding-right: @bullet-font-size;
       }
 
-      &_bullet {
+      &__bullet {
         right: unit(-7px / @base-font-size-px, rem);
       }
     });
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      &_tag {
+      &__tag {
         margin-left: 0;
         margin-right: @bullet-font-size;
       }
 
-      &_bullet {
+      &__bullet {
         margin-right: 0;
       }
     });

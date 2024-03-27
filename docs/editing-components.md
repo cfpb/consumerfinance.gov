@@ -222,13 +222,13 @@ this is what its Jinja2 template looks like (comments excluded):
 <div class="m-related-content">
   {% if value.heading %}
   <header class="m-slug-header">
-    <h2 class="m-slug-header_heading">{{ value.heading }}</h2>
+    <h2 class="m-slug-header__heading">{{ value.heading }}</h2>
   </header>
   {% endif %} {{ value.paragraph | safe }} {% if value.links %}
-  <ul class="m-list m-list__links">
+  <ul class="m-list m-list--links">
     {% for link in value.links %}
-    <li class="m-list_item">
-      <a href="{{ link.url }}" class="m-list_link">{{ link.text }}</a>
+    <li class="m-list__item">
+      <a href="{{ link.url }}" class="m-list__link">{{ link.text }}</a>
     </li>
     {% endfor %}
   </ul>
