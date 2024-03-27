@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 from wagtail.admin.forms.auth import LoginForm as WagtailLoginForm
 from wagtail.users import forms as wagtailforms
@@ -15,9 +16,11 @@ class LoginForm(WagtailLoginForm):
 
     error_messages = {
         "password_expired": (
-            "Your password has expired. Please "
-            '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
-            "reset your password</a>."
+            mark_safe(
+                "Your password has expired. Please "
+                '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
+                "reset your password</a>."
+            )
         ),
         **WagtailLoginForm.error_messages,
     }
