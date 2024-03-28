@@ -3,7 +3,9 @@
 {%- macro data_published(date) -%}
 
 <p style="font-size: 14px; color: #5a5d61">
-    Data published {{ time.render(date, {"date": true}, text_format=true ) }}
+    Data published {{ time.render(
+        ensure_date(date), {"date": true}, text_format=true
+    ) }}
 </p>
 
 {%- endmacro %}

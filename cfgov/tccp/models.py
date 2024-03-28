@@ -399,14 +399,3 @@ class CardSurveyData(models.Model):
         ]
 
     objects = CardSurveyDataQuerySet.as_manager()
-
-    @property
-    def state_limitations(self):
-        """Get the list of states in which a given card is available.
-
-        Returns None if the card is available everywhere.
-        """
-        if self.availability_of_credit_card_plan == "One State/Territory":
-            return [self.state]
-        elif self.availability_of_credit_card_plan == "Regional":
-            return self.state_multiple

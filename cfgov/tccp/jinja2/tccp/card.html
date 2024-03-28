@@ -30,12 +30,24 @@
     <dl class="m-list m-list__card-details">
         <dt>Location</dt>
         <dd>
-            {% if not card.state_limitations %}
+            {%- if card.availability_of_credit_card_plan == "One State/Territory" %}
+                {% set state_limitations = [card.state] %}
+            {% elif card.availability_of_credit_card_plan == "Regional" %}
+                {% set state_limitations = card.state_multiple %}
+            {% else %}
+                {% set state_limitations = none %}
+            {% endif -%}
+
+            {% if not state_limitations %}
                 Available to anyone in the United States
             {% else %}
                 Available only to people who live in
                 {{ 'specific counties in ' if card.pertains_to_specific_counties }}
-                {{ card.state_limitations | join(", ") }}
+                {% for state in state_limitations %}
+                    {{ state_lookup[state] -}}
+                    {{- ', ' if not loop.last and loop.length > 2 -}}
+                    {{- 'and ' if loop.index == loop.length - 1}}
+                {% endfor %}
             {% endif %}
         </dd>
         {% if card.requirements_for_opening %}
@@ -656,11 +668,7 @@
             {% if card.rewards %}
             <ul>
                 {% for reward in card.rewards %}
-                    <li>
-                        {{ 'Cash back' if reward == 'Cashback rewards' }}
-                        {{ 'Travel-related rewards' if reward == 'Travel-related rewards' }}
-                        {{ card.other_rewards if reward == 'Other rewards' }}
-                    </li>
+                    <li>{{ rewards_lookup[reward] }}</li>
                 {% endfor %}
             </ul>
             {% else %}

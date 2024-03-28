@@ -140,9 +140,11 @@ RequirementsForOpeningChoices = make_choices(
 )
 
 
-RewardsChoices = make_choices(
-    "Cashback rewards", "Travel-related rewards", "Other rewards"
-)
+RewardsChoices = [
+    ("Cashback rewards", "Cash back"),
+    ("Travel-related rewards", "Travel"),
+    ("Other rewards", "Other"),
+]
 
 
 ServicesChoices = make_choices(

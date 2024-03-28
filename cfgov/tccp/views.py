@@ -4,21 +4,21 @@ from urllib.parse import urlencode
 from django.shortcuts import redirect, reverse
 from django.template.defaultfilters import title
 from django.urls import reverse_lazy
-from django.views.generic.detail import DetailView
 
 from flags.views import FlaggedTemplateView, FlaggedViewMixin
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
 from v1.models.home_page import image_passthrough
 
+from .enums import RewardsChoices, StateChoices
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
 from .models import CardSurveyData
-from .serializers import CardSurveyDataSerializer
+from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
 from .situations import Situation
 
 
@@ -62,7 +62,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     flag_name = "TCCP"
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
-    serializer_class = CardSurveyDataSerializer
+    serializer_class = CardSurveyDataListSerializer
     filter_backends = [CardSurveyDataFilterBackend]
     filterset_class = CardSurveyDataFilterSet
     heading = "Customize for your situation"
@@ -125,16 +125,19 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "heading": self.heading,
                     "breadcrumb_items": self.breadcrumb_items,
                     "form": filter_backend.used_filterset.form,
+                    "rewards_lookup": dict(RewardsChoices),
                 }
             )
 
         return response
 
 
-class CardDetailView(FlaggedViewMixin, DetailView):
+class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
     flag_name = "TCCP"
     model = CardSurveyData
-    context_object_name = "card"
+    lookup_field = "slug"
+    renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
+    serializer_class = CardSurveyDataSerializer
     template_name = "tccp/card.html"
     breadcrumb_items = CardListView.breadcrumb_items + [
         {
@@ -143,7 +146,40 @@ class CardDetailView(FlaggedViewMixin, DetailView):
         }
     ]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["breadcrumb_items"] = self.breadcrumb_items
-        return context
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        card = self.get_object()
+        serializer = self.get_serializer(card)
+
+        # If we're rendering HTML, we need to augment the response context.
+        if request.accepted_renderer.format == "html":
+            response = Response(
+                {
+                    "card": serializer.data,
+                    "breadcrumb_items": self.breadcrumb_items,
+                    "state_lookup": dict(StateChoices),
+                    "rewards_lookup": dict(RewardsChoices),
+                }
+            )
+        else:
+            response = Response(serializer.data)
+
+        return response
+
+    def handle_exception(self, exc):
+        """When rendering HTML, don't use DRF exception handling.
+
+        The django-rest-framework package provides its own exception handling
+        that includes HTML error templates, for example for 404 Not Found. We
+        want to use our standard Django error templates even though this view
+        is being served by DRF.
+
+        If we're rendering JSON, we can use DRF's logic because it provides a
+        nicer error message to the user.
+        """
+        if self.request.accepted_renderer.format == "html":
+            raise exc
+
+        return super().handle_exception(exc)
