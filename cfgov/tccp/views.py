@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 from django.shortcuts import redirect, reverse
 from django.template.defaultfilters import title
 from django.urls import reverse_lazy
+from django.utils.functional import cached_property
 
 from flags.views import FlaggedTemplateView, FlaggedViewMixin
 from rest_framework.exceptions import ValidationError
@@ -85,13 +86,16 @@ class CardListView(FlaggedViewMixin, ListAPIView):
 
     def list(self, request, *args, **kwargs):
         render_format = request.accepted_renderer.format
+
         queryset = self.get_queryset()
         summary_stats = queryset.get_summary_statistics()
-        filter_backend = self.filter_backends[0](summary_stats)
+        unfiltered_queryset = queryset.with_ratings(summary_stats)
+
+        filter_backend = self.filter_backends[0]()
 
         try:
             filtered_queryset = filter_backend.filter_queryset(
-                request, queryset, self
+                request, unfiltered_queryset, self
             )
         except ValidationError:
             # A ValidationError may occur if the user input is invalid.
@@ -109,7 +113,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         response = Response(
             {
                 "count": len(serializer.data),
-                "results": serializer.data,
+                "cards": serializer.data,
                 "stats_all": summary_stats,
             }
         )
@@ -148,25 +152,33 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
         }
     ]
 
+    @cached_property
+    def summary_stats(self):
+        return self.model.objects.get_summary_statistics()
+
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.with_ratings(self.summary_stats)
 
     def retrieve(self, request, *args, **kwargs):
         card = self.get_object()
         serializer = self.get_serializer(card)
 
+        response = Response(
+            {
+                "card": serializer.data,
+                "stats_all": self.summary_stats,
+            }
+        )
+
         # If we're rendering HTML, we need to augment the response context.
         if request.accepted_renderer.format == "html":
-            response = Response(
+            response.data.update(
                 {
-                    "card": serializer.data,
                     "breadcrumb_items": self.breadcrumb_items,
                     "state_lookup": dict(StateChoices),
                     "rewards_lookup": dict(RewardsChoices),
                 }
             )
-        else:
-            response = Response(serializer.data)
 
         return response
 
