@@ -11,8 +11,6 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from v1.models.home_page import image_passthrough
-
 from .enums import RewardsChoices, StateChoices
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
@@ -38,7 +36,6 @@ class LandingPageView(FlaggedTemplateView):
                 "heading": self.heading,
                 "form": LandingPageForm(),
                 "stats": CardSurveyData.objects.get_summary_statistics(),
-                "image_passthrough": image_passthrough,
             }
         )
 

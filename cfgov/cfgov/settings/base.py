@@ -152,7 +152,6 @@ ROOT_URLCONF = "cfgov.urls"
 wagtail_extensions = [
     "wagtail.jinja2tags.core",
     "wagtail.admin.jinja2tags.userbar",
-    "wagtail.images.jinja2tags.images",
 ]
 
 TEMPLATES = [
@@ -195,6 +194,7 @@ TEMPLATES = [
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
                 "v1.jinja2tags.fragment_cache_extension",
+                "v1.jinja2tags.images_extension",
                 "v1.jinja2tags.v1_extension",
             ],
         },
