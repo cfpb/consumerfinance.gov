@@ -25,7 +25,7 @@
     });
 
     &:focus {
-      outline: 1px dotted @black;
+      outline: 1px dotted var(--black);
     }
 
     &-open-label {
@@ -38,7 +38,7 @@
 
     // Hover state for desktop.
     &:hover {
-      color: @gray-90;
+      color: var(--gray-90);
     }
   }
 
@@ -73,8 +73,8 @@
       min-width: @mobile_trigger_ht__px;
 
       &[aria-expanded="true"] {
-        background: @gray-10;
-        border-left: 1px solid @gray-40;
+        background: var(--gray-10);
+        border-left: 1px solid var(--gray-40);
 
         .m-global-search_trigger-open-label {
           display: none;
@@ -88,11 +88,11 @@
       // Hover state for (x) close button.
       @media (hover: hover) {
         &:hover {
-          color: @black;
-          border-left: 1px solid @gray-40;
+          color: var(--black);
+          border-left: 1px solid var(--gray-40);
 
           // Important needed to override background color in expanded state.
-          background: @gray-20  !important;
+          background: var(--gray-20)  !important;
         }
       }
     }
@@ -110,9 +110,9 @@
         left: 0;
         z-index: 10;
 
-        background-color: @gray-5;
-        border-top: 1px solid @gray-40;
-        border-bottom: 1px solid @gray-40;
+        background-color: var(--gray-5);
+        border-top: 1px solid var(--gray-40);
+        border-bottom: 1px solid var(--gray-40);
       }
     }
   });

@@ -3,7 +3,7 @@
 @import url('cfpb-chart-builder.less');
 
 .o-mp-map {
-  border: 1px solid @gray-40;
+  border: 1px solid var(--gray-40);
   margin-top: unit(30px / @base-font-size-px, em);
   padding: unit(30px / @base-font-size-px, em)
     unit(30px / @base-font-size-px, em) unit(15px / @base-font-size-px, em);
@@ -16,7 +16,7 @@
   .highcharts-map-series {
     .highcharts-point-select,
     .highcharts-point:hover {
-      stroke: @black !important;
+      stroke: var(--black) !important;
       stroke-width: 3px !important;
       transition:
         fill 500ms,
@@ -24,7 +24,7 @@
         stroke-width 0 !important;
     }
     .highcharts-point {
-      stroke: @black;
+      stroke: var(--black);
       &.highcharts-null-point {
         stroke-width: 0 !important;
       }
@@ -36,7 +36,7 @@
     &state-outline-counties,
     &map-separators {
       .highcharts-point {
-        stroke: @black;
+        stroke: var(--black);
       }
     }
     &data-outline-counties,
@@ -47,9 +47,9 @@
     }
   }
   .highcharts-tooltip-box {
-    fill: @white;
+    fill: var(--white);
     fill-opacity: 1;
-    stroke: @black;
+    stroke: var(--black);
   }
 }
 
@@ -58,7 +58,7 @@
   font-family: 'Avenir Next', Arial, sans-serif;
 
   dt {
-    border-bottom: 1px solid @black;
+    border-bottom: 1px solid var(--black);
     font-size: @size-vi;
     margin-bottom: 5px;
     padding-bottom: 5px;
@@ -79,25 +79,25 @@
   &[data-chart-color='blue'] {
     .a-ramp-value {
       &-0 {
-        fill: @gray-5;
+        fill: var(--gray-5);
       }
       &-1 {
-        fill: @pacific-20;
+        fill: var(--pacific-20);
       }
       &-2 {
-        fill: @pacific-40;
+        fill: var(--pacific-40);
       }
       &-3 {
-        fill: @pacific-60;
+        fill: var(--pacific-60);
       }
       &-4 {
-        fill: @pacific-80;
+        fill: var(--pacific-80);
       }
       &-5 {
-        fill: @pacific;
+        fill: var(--pacific);
       }
       &-6 {
-        fill: @pacific-dark;
+        fill: var(--pacific-dark);
       }
     }
   }
@@ -105,25 +105,25 @@
   &[data-chart-color='navy'] {
     .a-ramp-value {
       &-0 {
-        fill: @gray-5;
+        fill: var(--gray-5);
       }
       &-1 {
-        fill: @navy-20;
+        fill: var(--navy-20);
       }
       &-2 {
-        fill: @navy-40;
+        fill: var(--navy-40);
       }
       &-3 {
-        fill: @navy-60;
+        fill: var(--navy-60);
       }
       &-4 {
-        fill: @navy-80;
+        fill: var(--navy-80);
       }
       &-5 {
-        fill: @navy;
+        fill: var(--navy);
       }
       &-6 {
-        fill: @navy-dark;
+        fill: var(--navy-dark);
       }
     }
   }
@@ -175,7 +175,7 @@
 
   // Helper text under some filter or zoom options
   .m-field-helper-text {
-    color: @gray-80;
+    color: var(--gray-80);
     @font-size: 12px;
     font-size: unit(@font-size / @base-font-size-px, em);
   }

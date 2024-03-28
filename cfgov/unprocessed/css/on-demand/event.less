@@ -57,7 +57,7 @@
    ========================================================================== */
 
 .event-media_container {
-  border: 1px solid @gray-10;
+  border: 1px solid var(--gray-10);
 }
 
 /* Event-Meta
@@ -93,9 +93,9 @@
 
 .event-status {
   margin: 0 0 unit(30px / @base-font-size-px, em);
-  color: @black;
-  border-top: 1px solid @gray-20;
-  border-bottom: 1px solid @gray-20;
+  color: var(--black);
+  border-top: 1px solid var(--gray-20);
+  border-bottom: 1px solid var(--gray-20);
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
@@ -111,7 +111,7 @@
   }
 
   .event-meta {
-    color: @gray-40;
+    color: var(--gray-40);
   }
 }
 
@@ -126,8 +126,8 @@
    ========================================================================== */
 
 .event-venue {
-  background: @gray-10;
-  border-top: 5px solid @green;
+  background: var(--gray-10);
+  border-top: 5px solid var(--green);
 }
 
 .event-venue_details {
@@ -159,8 +159,8 @@
 
 .event-venue_live-btn {
   margin-right: 10px;
-  background-color: @green;
-  color: @black;
+  background-color: var(--green);
+  color: var(--black);
   text-transform: uppercase;
   padding: 6px 15px 4px;
 }
@@ -173,8 +173,8 @@
 
 .modification-date {
   .h6();
-  background: @green-20;
-  color: @black;
+  background: var(--green-20);
+  color: var(--black);
   letter-spacing: 0;
   padding: unit(1px / @base-font-size-px, em)
     unit(10px / @base-font-size-px, em);

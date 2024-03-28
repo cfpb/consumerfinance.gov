@@ -27,12 +27,12 @@
   a,
   a:link,
   a:visited {
-    border-bottom: 1px solid @gray-10;
-    border-top: 4px solid @gray-10;
+    border-bottom: 1px solid var(--gray-10);
+    border-top: 4px solid var(--gray-10);
     border-left: 0;
     border-right: 0;
-    background: @gray-5;
-    color: @gray;
+    background: var(--gray-5);
+    color: var(--gray);
   }
 
   button:hover,
@@ -40,14 +40,14 @@
   a:hover,
   a:active,
   a:focus {
-    color: @black;
+    color: var(--black);
     background: #fff;
     z-index: 2;
   }
 
   button:focus,
   a:focus {
-    outline: 1px dotted @black;
+    outline: 1px dotted var(--black);
     outline-offset: 1px;
   }
 
@@ -62,9 +62,9 @@
     a:active,
     a:focus {
       border-bottom: none;
-      border-top: 4px solid @green-60;
+      border-top: 4px solid var(--green-60);
       background: #fff;
-      color: @black;
+      color: var(--black);
     }
   }
 }
@@ -76,7 +76,7 @@
 .tab-list + .tab-list {
   button,
   a {
-    border-left: 1px solid @gray-10;
+    border-left: 1px solid var(--gray-10);
   }
 }
 

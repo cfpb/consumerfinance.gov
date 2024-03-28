@@ -9,11 +9,11 @@
 
 .o-video-player {
   overflow: hidden;
-  background: @white;
+  background: var(--white);
 
   // When JavaScript is disabled add a border to stand-alone videos.
   .no-js &:not(.o-featured-content-module_visual) {
-    border: 1px solid @gray-40;
+    border: 1px solid var(--gray-40);
   }
 
   &_iframe-container {
@@ -103,7 +103,7 @@
 }
 
 .o-video-player_duration {
-  color: @white;
+  color: var(--white);
   background: rgba(0, 0, 0, 40%);
   z-index: 1;
   padding-left: 6px;
@@ -121,7 +121,7 @@
   width: @play-btn-size__px;
   height: @play-btn-size__px;
   // !important is needed for when this is applied to a link.
-  border: 2px solid @gray-5 !important;
+  border: 2px solid var(--gray-5) !important;
   border-radius: 100%;
   position: absolute;
   z-index: 3;
@@ -132,7 +132,7 @@
     32,
     75%
   ) !important; // CFPB Black (#101820) at 80% opacity
-  color: @white !important;
+  color: var(--white) !important;
   font-size: @play-btn-icon-size;
 
   &:hover {
@@ -175,8 +175,8 @@
         height: 60px;
         left: -2px;
         top: -2px;
-        border: 1px solid @white;
-        outline: 1px solid @white;
+        border: 1px solid var(--white);
+        outline: 1px solid var(--white);
       }
 
       &::after {
@@ -184,7 +184,7 @@
         height: 62px;
         left: -3px;
         top: -3px;
-        border: 1px dotted @pacific;
+        border: 1px dotted var(--pacific);
       }
     }
   }
@@ -211,7 +211,7 @@ button.o-video-player_play-btn,
   opacity: 0;
   height: 0;
   margin: auto;
-  // @black not used because it's not totally black.
+  // var(--black) not used because it's not totally black.
   background-color: #000;
 }
 
@@ -223,7 +223,7 @@ button.o-video-player_play-btn,
 
   padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-  color: @white;
+  color: var(--white);
 
   .m-social-media_heading {
     margin-top: 0;
@@ -287,7 +287,7 @@ button.o-video-player_play-btn,
 
 .o-video-player .m-social-media {
   .cf-icon-svg {
-    fill: @white;
+    fill: var(--white);
   }
 
   .m-social-media_icons {

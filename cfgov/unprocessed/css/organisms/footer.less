@@ -7,15 +7,15 @@
   // There is a 10px margin-bottom on the  last .o-footer_list li's, plus the
   // 50px bottom padding = 60px of total padding at the bottom of the footer.
   padding-bottom: unit(50px / @base-font-size-px, em);
-  border-top: 5px solid @green;
-  background: @gray-5;
+  border-top: 5px solid var(--green);
+  background: var(--gray-5);
 
   &_nav-list {
     .m-list__links();
 
     .m-list_link {
       font-size: unit(18px / @base-font-size-px, em);
-      .u-link__colors( @black );
+      .u-link__colors( var(--black) );
 
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
@@ -45,7 +45,7 @@
     .m-list__links();
 
     .m-list_link {
-      .u-link__colors( @gray-dark );
+      .u-link__colors( var(--gray-dark) );
     }
   }
 
@@ -71,7 +71,7 @@
     .respond-to-min(@bp-sm-min, {
       padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
       margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-      border-bottom: 1px solid @gray-40;
+      border-bottom: 1px solid var(--gray-40);
 
       .o-footer_top-button {
         display: none;
@@ -115,7 +115,7 @@
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       .grid_column(8);
-      border-right: 1px solid @gray-40;
+      border-right: 1px solid var(--gray-40);
       border-left: 0;
 
       .o-footer_col {
@@ -169,7 +169,7 @@
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-      border-top: 1px solid @gray-40;
+      border-top: 1px solid var(--gray-40);
     });
 
     .respond-to-print( {

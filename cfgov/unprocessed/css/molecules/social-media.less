@@ -10,10 +10,10 @@
   }
 
   &_icon {
-    color: @gray-dark;
+    color: var(--gray-dark);
     font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
     line-height: 1;
-    .u-link__colors( @gray-dark, @pacific-80 );
+    .u-link__colors( var(--gray-dark), var(--pacific-80) );
     .u-link__no-border();
   }
 
@@ -26,7 +26,7 @@
 
     .m-social-media_print {
       padding-left: unit(10px / @base-font-size-px, rem);
-      border-left: 1px solid @black;
+      border-left: 1px solid var(--black);
     }
   }
 
@@ -47,7 +47,7 @@ html[lang='ar'] .m-social-media__share {
     padding-left: 0;
     border-left: none;
     padding-right: unit(10px / @base-font-size-px, rem);
-    border-right: 1px solid @black;
+    border-right: 1px solid var(--black);
   }
 
   // TODO: Scrutinize usage of unordered list and see if it can be removed.

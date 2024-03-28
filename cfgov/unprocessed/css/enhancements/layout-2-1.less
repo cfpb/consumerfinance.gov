@@ -20,7 +20,7 @@
     width: calc(100vw + 60px);
     height: 100%;
     content: '';
-    background: @gray-5;
+    background: var(--gray-5);
     // Expand off the screen to cover any margins added by the wrapper.
     left: -30px;
   }
@@ -84,7 +84,7 @@
           margin-left: unit(20px / @base-font-size-px, rem);
 
           &:after {
-            border-left: 1px solid @gray-40;
+            border-left: 1px solid var(--gray-40);
             left: 0;
           }
         }
@@ -106,7 +106,7 @@
           margin-right: unit(20px / @base-font-size-px, rem);
 
           &:after {
-            border-right: 1px solid @gray-40;
+            border-right: 1px solid var(--gray-40);
             right: 0;
           }
         }

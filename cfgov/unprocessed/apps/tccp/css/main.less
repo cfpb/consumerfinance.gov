@@ -1,4 +1,5 @@
-@import (reference) '../../../css/main.less';
+@import (reference) 'cfpb-core.less';
+@import (reference) 'cfpb-buttons.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form_group {
@@ -64,7 +65,7 @@
     .cf-icon-svg {
       display: inline;
       margin-right: 6px;
-      color: @green;
+      color: var(--green);
     }
 
     span {
@@ -75,19 +76,19 @@
 
 .tool-features {
   .cf-icon-svg__credit-card-round {
-    color: @gold;
+    color: var(--gold);
   }
 
   .cf-icon-svg__court-round {
-    color: @gray;
+    color: var(--gray);
   }
 
   .cf-icon-svg__disabled-round {
-    color: @red;
+    color: var(--red);
   }
 
   .cf-icon-svg__dollar-round {
-    color: @green;
+    color: var(--green);
   }
 }
 
@@ -213,8 +214,8 @@ html.js .o-filterable-list-results__partial {
 }
 
 .a-card-institution-name {
-  .heading-5( @text-shadow: @gray );
-  color: @gray;
+  .heading-5();
+  color: var(--gray);
   margin-bottom: 0;
 }
 
@@ -234,15 +235,15 @@ html.js .o-filterable-list-results__partial {
   }
 
   &__less .cf-icon-svg {
-    color: @green;
+    color: var(--green);
   }
 
   &__average .cf-icon-svg {
-    color: @gold;
+    color: var(--gold);
   }
 
   &__more .cf-icon-svg {
-    color: @red;
+    color: var(--red);
   }
 }
 
@@ -287,7 +288,8 @@ html.js .o-filterable-list-results__partial {
   width: 100%;
 
   .htmx-progress-bar {
-    background-color: @pacific;
+    background-color: var(--pacific);
+
     &::before,
     &::after {
       content: '';

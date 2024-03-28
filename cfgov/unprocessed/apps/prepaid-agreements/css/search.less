@@ -14,7 +14,7 @@
 
 .filters_applied {
   padding: 30px 15px;
-  border-bottom: 1px solid @gray-40;
+  border-bottom: 1px solid var(--gray-40);
 
   &-label {
     font-weight: 600;
@@ -24,8 +24,8 @@
 .search_results {
   .content_sidebar {
     padding: 45px 15px 0;
-    border: 1px solid @gray-40;
-    background-color: @gray-5;
+    border: 1px solid var(--gray-40);
+    background-color: var(--gray-5);
 
     .o-expandable-group {
       margin-bottom: 15px;
@@ -59,18 +59,18 @@
       border: 0;
     }
     border: 0;
-    border-top: 1px solid @gray-40;
+    border-top: 1px solid var(--gray-40);
     padding-top: 0;
   }
   .results_count {
     padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
       unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0
       unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    border-right: 1px solid @gray-40;
-    border-bottom: 1px solid @gray-40;
-    background-color: @green-20;
+    border-right: 1px solid var(--gray-40);
+    border-bottom: 1px solid var(--gray-40);
+    background-color: var(--green-20);
     &.no-results {
-      background-color: @red-20;
+      background-color: var(--red-20);
       padding-bottom: 15px;
     }
   }
@@ -87,7 +87,7 @@
       margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
       h4 {
         padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
-        border-top: 1px solid @gray-40;
+        border-top: 1px solid var(--gray-40);
       }
     }
   }
@@ -108,7 +108,7 @@
       margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
     .results_count {
-      border-left: 1px solid @gray-40;
+      border-left: 1px solid var(--gray-40);
     }
   }
 });

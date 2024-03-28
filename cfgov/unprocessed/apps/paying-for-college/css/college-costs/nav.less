@@ -9,12 +9,12 @@
   .o-secondary-nav_list__parents {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      border-top: 1px solid @gray-20;
+      border-top: 1px solid var(--gray-20);
       border-left: 0;
       padding-left: 0;
 
       > .o-secondary-nav_list-item__parent {
-        border-bottom: 1px solid @gray-20;
+        border-bottom: 1px solid var(--gray-20);
 
         & > .o-secondary-nav_link {
           font-size: unit( 18px / @base-font-size-px, em );
@@ -24,7 +24,7 @@
       .o-secondary-nav_link {
         border: none;
         font-weight: normal;
-        color: @black;
+        color: var(--black);
         padding: unit( 5px / @base-font-size-px, em ) 0;
         padding-left: unit( 10px / @base-font-size-px, em );
         text-align: left;
@@ -56,7 +56,7 @@
 
       .o-secondary-nav_list-item__parent li[data-nav-is-active='True'] {
         .active-section {
-          border-left: 3px solid @green;
+          border-left: 3px solid var(--green);
 
           a {
             font-weight: 600;

@@ -72,7 +72,7 @@
 
 .o-fig_heading {
   a {
-    color: @black;
+    color: var(--black);
     word-break: break-word;
   }
 }
@@ -85,7 +85,7 @@
   &::after {
     display: inline-block;
     content: '';
-    border-top: 2px solid @gray-50;
+    border-top: 2px solid var(--gray-50);
     width: calc(100% + 30px);
     margin: unit(45px / @base-font-size-px, em) 0 0
       unit(-30px / @base-font-size-px, em);
@@ -179,9 +179,9 @@
     }
   }
   .ctrl-f-search-result {
-    border-bottom: 1px solid @gray-40;
+    border-bottom: 1px solid var(--gray-40);
     a {
-      color: @black;
+      color: var(--black);
       &:focus {
         .a-text-input.focus();
       }

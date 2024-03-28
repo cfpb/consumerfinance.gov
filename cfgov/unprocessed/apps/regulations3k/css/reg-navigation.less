@@ -13,7 +13,7 @@
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    background-color: @gray-5;
+    background-color: var(--gray-5);
     margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
 
     // Add drop-shadow.
@@ -60,7 +60,7 @@
   &::before {
     // Tablet and below.
     .respond-to-max(@bp-sm-max, {
-      border-bottom: 1px solid @gray-40;
+      border-bottom: 1px solid var(--gray-40);
       content: ' ';
       display: block;
     });
@@ -100,10 +100,10 @@
 
 // TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
 .o-secondary-nav_link {
-  color: @pacific;
+  color: var(--pacific);
 
   &__current {
-    color: @black;
+    color: var(--black);
   }
 
   &__parent {
