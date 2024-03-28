@@ -1,7 +1,7 @@
 # Wagtail pages
 
 [Wagtail pages](https://docs.wagtail.org/en/stable/topics/pages.html) are
-[Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/)
+[Django models](https://docs.djangoproject.com/en/stable/topics/db/models/)
 that are constructed of
 [fields](#fields), [StreamFields](#streamfields), and [panels](#panels)
 that are rendered in a standard way.
@@ -24,8 +24,8 @@ and [editor panels](#panels) that present these fields to content editors.
 ## Fields
 
 Database fields in Wagtail pages work exactly the same as in
-[Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/#fields),
-and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/1.11/ref/models/fields/).
+[Django models](https://docs.djangoproject.com/en/stable/topics/db/models/#fields),
+and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/stable/ref/models/fields/).
 
 For example, our `BrowsePage`
 [includes a standard Django `BooleanField`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py)

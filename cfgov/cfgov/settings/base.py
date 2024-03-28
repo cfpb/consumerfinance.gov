@@ -20,7 +20,27 @@ PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
 # Templates that are not scoped to specific Django apps will live here
 GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
-SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
+# Require the SECRET_KEY as an environment variable
+try:
+    SECRET_KEY = os.environ["SECRET_KEY"]
+except KeyError:
+    raise ImproperlyConfigured(
+        "The SECRET_KEY environment variable must be set"
+    )
+
+# Secret key fallbacks that allow the rotation of the secret key.
+# This environment variable should be a JSON array if fallbacks are available.
+# This list if empty (no old fallback secret keys) if the environment variable
+# SECRET_KEY_FALLBACKS is not set.
+try:
+    SECRET_KEY_FALLBACKS = json.loads(
+        os.environ.get("SECRET_KEY_FALLBACKS", "[]")
+    )
+except (TypeError, ValueError):
+    raise ImproperlyConfigured(
+        "Environment variable SECRET_KEY_FALLBACKS is not valid JSON. "
+        "Expected a JSON array of fallback secret keys."
+    )
 
 # Deploy environment
 DEPLOY_ENVIRONMENT = os.getenv("DEPLOY_ENVIRONMENT")
@@ -146,7 +166,7 @@ if "CSP_ENFORCE" in os.environ:
 ROOT_URLCONF = "cfgov.urls"
 
 # We support two different template engines: Django templates and Jinja2
-# templates. See https://docs.djangoproject.com/en/dev/topics/templates/
+# templates. See https://docs.djangoproject.com/en/stable/topics/templates/
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
@@ -393,6 +413,15 @@ PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
 # Password Policies
 AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {

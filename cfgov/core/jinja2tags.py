@@ -36,7 +36,7 @@ class LanguageExtension(Extension):
 
     Based off of the Django {% language %} tag documented at:
 
-    https://docs.djangoproject.com/en/4.1/topics/i18n/translation/#switching-language-in-templates
+    https://docs.djangoproject.com/en/stable/topics/i18n/translation/#switching-language-in-templates
     """
 
     tags = {"language"}
