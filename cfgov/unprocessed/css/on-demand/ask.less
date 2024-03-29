@@ -104,7 +104,7 @@
         margin-bottom: 0;
 
         a {
-          color: @black;
+          color: var(--black);
 
           &:hover {
             border-style: solid;
@@ -219,15 +219,15 @@
   .answer-edited-date {
     .h5();
     display: block;
-    color: @gray-90;
+    color: var(--gray-90);
   }
 
   .answer-module {
-    border-top: 3px solid @green;
+    border-top: 3px solid var(--green);
     border-bottom: 1px solid @block__border-bottom;
     padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
     margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
-    color: @gray;
+    color: var(--gray);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {

@@ -14,7 +14,6 @@ const postCSSPlugin = ({ plugins = [], lessOptions = {} }) => ({
         filename: args.path,
         rootpath: dirname(args.path),
       });
-
       const result = await postcss(plugins).process(lessResult.css, {
         from: args.path,
       });

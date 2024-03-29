@@ -9,13 +9,13 @@
   margin-right: unit(@grid_gutter-width / -2 / @base-font-size-px, em);
   margin-left: unit(@grid_gutter-width / -2 / @base-font-size-px, em);
 
-  border-top: 1px solid @gray-40;
+  border-top: 1px solid var(--gray-40);
 
   padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
   padding-left: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
   padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
 
-  background: @gray-5;
+  background: var(--gray-5);
   overflow: auto;
 
   .respond-to-min(@bp-sm-min, {
@@ -23,8 +23,8 @@
     margin-left: unit( -@grid_gutter-width / @base-font-size-px, em );
 
     // Border for both LTR and RTL layouts.
-    border-right: 1px solid @gray-40;
-    border-left: 1px solid @gray-40;
+    border-right: 1px solid var(--gray-40);
+    border-left: 1px solid var(--gray-40);
 
     padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
     padding-right: unit( @grid_gutter-width / @base-font-size-px, em);

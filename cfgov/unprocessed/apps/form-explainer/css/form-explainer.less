@@ -2,24 +2,24 @@
    "Form explainer" custom styles
    ========================================================================== */
 
-@gold-dk: #ff9e1b; // gold
-@gold-md: #ffce8d; // gold-60
-@gold-lt: #ffd8a3;
+@gold-dk: #ff9e1b; // var(--gold))
+@gold-md: #ffce8d; // var(--gold-60)
+@gold-lt: #ffd8a3; // var(--gold-50)
 @gold-bg: #fff8f0;
 
-@red-dk: #d486b2;
-@red-md: #dc9cbf;
-@red-lt: #f0d8e2;
+@red-dk: #d486b2; // var(--purple-60)
+@red-md: #dc9cbf; // var(--purple-50)
+@red-lt: #f0d8e2; // var(--purple-20)
 @red-bg: #f9f6f6;
 
-@blue-dk: #6f88b2;
-@blue-md: #9daecc;
-@blue-lt: #d3daeb;
+@blue-dk: #6f88b2; // var(--navy-70)
+@blue-md: #9daecc; // var(--navy-50)
+@blue-lt: #d3daeb; // var(--navy-20)
 @blue-bg: #f4f7fa;
 
-@teal-dk: #579695; // teal-80
-@teal-md: #70a6a5;
-@teal-lt: #d4e7e6; // teal-20
+@teal-dk: #579695; // var(--teal-80)
+@teal-md: #70a6a5; // var(--teal-70)
+@teal-lt: #d4e7e6; // var(--teal-20)
 @teal-bg: #f2f8f8;
 
 @colors: gold, red, blue, teal;
@@ -39,7 +39,7 @@
   .image-map_image {
     display: block;
     box-sizing: border-box;
-    border: 1px solid @black;
+    border: 1px solid var(--black);
   }
 
   .image-map_overlay {
@@ -94,7 +94,7 @@
       });
 
       .o-expandable_cues {
-        color: @black;
+        color: var(--black);
       }
     }
 
@@ -152,7 +152,7 @@
     display: block;
     width: 20%;
     text-align: right;
-    color: @gray-80;
+    color: var(--gray-80);
   }
 
   .explain {
@@ -258,7 +258,7 @@
           &:focus,
           &:hover,
           &:active {
-            color: @black;
+            color: var(--black);
             border-bottom-width: 0;
           }
         }

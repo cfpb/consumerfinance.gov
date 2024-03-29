@@ -12,7 +12,7 @@
   // Restrict height of autocomplete suggestions
   // 'dropdown' box to 200px.
   max-height: 200px;
-  border: 1px solid @pacific;
+  border: 1px solid var(--pacific);
   border-top-width: 0;
   padding-left: 0;
   overflow-y: scroll;
@@ -22,7 +22,7 @@
   list-style-type: none;
 
   li {
-    border-bottom: 1px solid @gray-20;
+    border-bottom: 1px solid var(--gray-20);
     margin-bottom: 0;
 
     &:hover,
@@ -39,6 +39,6 @@
     display: block;
     padding: unit((@grid_gutter-width / 4) / @base-font-size-px, em);
     border-width: 0;
-    color: @black;
+    color: var(--black);
   }
 }
