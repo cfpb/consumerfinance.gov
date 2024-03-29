@@ -30,8 +30,7 @@
                     {% include_block block %}
                 {% endautoescape %}
             </div>
-        {% elif block_type in ['quote', 'related_links']
-           or 'cta' in block_type and block.value.is_inset %}
+        {% elif block_type in ['cta', 'quote', 'related_links'] %}
             <div class="m-inset">
                 {{ block | safe }}
             </div>

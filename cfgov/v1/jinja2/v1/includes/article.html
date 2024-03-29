@@ -28,14 +28,6 @@
 {%- import 'v1/includes/templates/render_block.html' as render_block with context -%}
 {%- import 'v1/includes/tags.html' as tags -%}
 
-{% macro setCTAFlag( blocks ) %}
-  {% for block in blocks.value %}
-      {% if block.block_type == 'cta' %}
-        {% do block.value.update({ 'is_inset': true }) %}
-      {% endif %}
-  {% endfor %}
-{% endmacro %}
-
 <article>
     <header>
         {% set data = {
@@ -57,9 +49,6 @@
 
     <div>
         {% for block in page.content %}
-            {% if block.block_type == 'full_width_text' %}
-                {{ setCTAFlag( block ) }}
-            {% endif %}
             {{ render_block.render(block, loop.index) }}
         {% endfor %}
     </div>
