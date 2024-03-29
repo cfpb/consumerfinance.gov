@@ -27,7 +27,7 @@ const HTML_SNIPPET = `
       <input type="hidden" name="page" inputmode="numeric" value="1">
       <div class="o-expandable o-expandable__background" data-bound="true">
         <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="h4 o-expandable_label">
+          <span class="o-expandable_label">
             Building block
           </span>
           <span class="o-expandable_cues">
@@ -69,7 +69,7 @@ const HTML_SNIPPET = `
 
       <div class="o-expandable o-expandable__background" data-bound="true">
         <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="h4 o-expandable_label">Topic</span>
+          <span class="o-expandable_label">Topic</span>
           <span class="o-expandable_cues">
             <span class="o-expandable_cue-open" role="img" aria-label="Show">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
