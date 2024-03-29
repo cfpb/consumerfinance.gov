@@ -1,3 +1,7 @@
+import html
+import re
+
+from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
@@ -70,6 +74,11 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = "v1/includes/snippets/reusable_text.html"
 
 
+class ReusableNotificationChooserBlock(SnippetChooserBlock):
+    class Meta:
+        template = "v1/includes/snippets/reusable_notification.html"
+
+
 class EmailSignUpChooserBlock(SnippetChooserBlock):
     def __init__(self, **kwargs):
         super().__init__("v1.EmailSignUp", **kwargs)
@@ -80,3 +89,58 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
 
     class Media:
         js = ["email-signup.js"]
+
+
+class EscapedHTMLValidator:
+    """
+    Implicity used on all UnescapedRichTextBlocks to limit "raw" HTML elements
+    """
+
+    def __init__(self, allowed_elements=()):
+        # Regular expression to match a user-entered HTML tag, which shows up
+        # in the rich text value with HTML entities around the tag name and
+        # attributes (i.e. &lt;span id="foo"&gt;).
+        self.escaped_html_re = re.compile(
+            r"&lt;(?P<tag_name>\w+)(?:(?!&gt;).)*?&gt;"
+        )
+        self.allowed_elements = allowed_elements
+
+    def __call__(self, value):
+        element_matches = self.escaped_html_re.findall(str(value))
+        invalid_elements = [
+            tag_name
+            for tag_name in element_matches
+            if tag_name not in self.allowed_elements
+        ]
+        if len(invalid_elements) > 0:
+            raise ValidationError(
+                "Invalid HTML element(s) found: "
+                f"{', '.join(invalid_elements)}. "
+                "The only HTML elements allowed are "
+                f"{', '.join(self.allowed_elements)}. "
+            )
+
+
+class UnescapedRichTextBlock(blocks.RichTextBlock):
+    """
+    Unescape any HTML entities within the rich text block to allow raw HTML.
+
+    THIS BLOCK EXISTS TEMPORARILY UNTIL EXISTING RAW HTML USAGE IS REMOVED.
+    DO NOT ADD THIS BLOCK TO ANY NEW FIELDS.
+    """
+
+    def __init__(self, validators=(), **kwargs):
+        validators = list(validators) + [
+            EscapedHTMLValidator(
+                allowed_elements=(
+                    "svg",
+                    "path",
+                )
+            )
+        ]
+
+        super().__init__(validators=validators, **kwargs)
+
+    def to_python(self, value):
+        value = html.unescape(value)
+        return super().to_python(value)

@@ -39,7 +39,12 @@ from v1.models.portal_topics import (
     PortalTopicTag,
 )
 from v1.models.settings import InternalDocsSettings
-from v1.models.snippets import Contact, EmailSignUp, ReusableText
+from v1.models.snippets import (
+    Contact,
+    EmailSignUp,
+    ReusableNotification,
+    ReusableText,
+)
 from v1.models.story_page import StoryPage
 from v1.models.sublanding_filterable_page import (
     ActivityLogPage,

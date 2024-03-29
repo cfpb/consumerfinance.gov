@@ -82,8 +82,8 @@
   .estimated-benefits-description {
     margin: 1em 0 0;
     padding: 1em 0;
-    border-top: 1px solid @gray-20;
-    border-bottom: 1px solid @gray-20;
+    border-top: 1px solid var(--gray-20);
+    border-bottom: 1px solid var(--gray-20);
 
     p {
       margin-bottom: 0;
@@ -116,7 +116,7 @@
     left: 40px;
 
     #full-age-benefits-text {
-      color: @gray-60;
+      color: var(--gray-60);
     }
 
     .graph__bar {
@@ -128,7 +128,7 @@
     }
 
     .graph__background {
-      background: @gray-10;
+      background: var(--gray-10);
       height: 1px;
       left: 0;
     }
@@ -142,7 +142,7 @@
     }
 
     .age-text {
-      color: @gray-60;
+      color: var(--gray-60);
       cursor: pointer;
       position: absolute;
       top: 292px;
@@ -153,7 +153,7 @@
         height: 25px;
 
         p {
-          color: @black;
+          color: var(--black);
           font-weight: bolder;
         }
       }
@@ -186,8 +186,8 @@
   }
 
   input[type='text'] {
-    border: 1px solid @gray-80;
-    border-color: @gray-40;
+    border: 1px solid var(--gray-80);
+    border-color: var(--gray-40);
   }
 
   .input-labels {
@@ -304,7 +304,7 @@
   }
 
   .step-two .lifestyle-btn__active {
-    background-color: @navy;
+    background-color: var(--navy);
   }
 
   .step-two + hr {
@@ -372,7 +372,7 @@
   }
 
   .step-one .notification-input__warning {
-    border-color: @gold;
+    border-color: var(--gold);
   }
 
   /* ====================================================================
@@ -466,7 +466,7 @@
     }
 
     div.question {
-      border-top: 1px solid @gray-20;
+      border-top: 1px solid var(--gray-20);
       margin-right: 25px;
       margin-left: 15px;
       padding-top: 30px;
@@ -618,7 +618,7 @@
     }
 
     .question {
-      border-bottom: 1px solid @gray-20;
+      border-bottom: 1px solid var(--gray-20);
       padding-top: 30px;
       padding-bottom: 30px;
     }
@@ -681,12 +681,12 @@
   *[data-tooltip-target] {
     cursor: pointer;
     border-bottom: none;
-    color: @pacific;
+    color: var(--pacific);
   }
 
   #tooltip-container {
-    background-color: @gray-10;
-    border: 0 solid @black;
+    background-color: var(--gray-10);
+    border: 0 solid var(--black);
     display: none;
     font-style: normal;
     padding: 15px;
@@ -707,7 +707,7 @@
      styled tip appear along the top of the tooltip. */
     .outertip {
       border: 0 solid transparent;
-      border-bottom-color: @black;
+      border-bottom-color: var(--black);
       content: ' ';
       height: 0;
       position: absolute;
@@ -718,7 +718,7 @@
 
     .innertip {
       border: 7px solid transparent;
-      border-bottom-color: @gray-10;
+      border-bottom-color: var(--gray-10);
       content: ' ';
       height: 0;
       position: absolute;
@@ -731,8 +731,8 @@
   .tooltip-target {
     border-width: 0;
     border-style: dotted;
-    border-color: @pacific;
-    color: @pacific;
+    border-color: var(--pacific);
+    color: var(--pacific);
     cursor: pointer;
     text-decoration: none;
   }

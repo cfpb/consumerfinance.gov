@@ -7,7 +7,7 @@
   &_heading {
     .h4();
     display: block;
-    color: @black;
+    color: var(--black);
   }
 
   &_list {
@@ -27,7 +27,7 @@
     display: inline-block;
     position: relative;
     line-height: @bullet-font-size;
-    color: @gray;
+    color: var(--gray);
   }
 
   &_item {
@@ -37,7 +37,7 @@
   &_bullet {
     position: absolute;
     left: -1em;
-    color: @gold-80;
+    color: var(--gold-80);
     font-size: unit(@bullet-font-size / @base-font-size-px, rem);
     margin-right: unit(5px / @base-font-size-px, rem);
     margin-left: @bullet-font-size;
@@ -45,8 +45,8 @@
 
   a.m-tags_tag {
     .u-link__colors(
-      @gray, @gray, @gray, @gray, @gray,
-      @gold-80, @gold-80, @gold-80, @gold-80, @gold-80
+      var(--gray), var(--gray), var(--gray), var(--gray), var(--gray),
+      var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80)
     );
   }
 
@@ -65,15 +65,15 @@
       padding-top: unit(10px / @base-font-size-px, rem);
       padding-bottom: unit(10px / @base-font-size-px, rem);
       padding-left: @bullet-font-size;
-      border-top: 1px dotted @gold-80;
+      border-top: 1px dotted var(--gold-80);
     }
 
     a.m-tags_tag {
       border-bottom-width: 0;
 
       &:hover {
-        border-top: 1px solid @gold-80;
-        border-bottom: 1px solid @gold-80;
+        border-top: 1px solid var(--gold-80);
+        border-bottom: 1px solid var(--gold-80);
       }
     }
 
@@ -81,7 +81,7 @@
     &_item:last-child {
       // This needs to appear after border-bottom-width: 0;
       .m-tags_tag {
-        border-bottom: 1px dotted @gold-80;
+        border-bottom: 1px dotted var(--gold-80);
       }
     }
   });
@@ -118,7 +118,7 @@ html[lang='ar'] {
       position: absolute;
       right: -1rem;
       left: initial;
-      color: @gold-80;
+      color: var(--gold-80);
     }
 
     // Mobile only.

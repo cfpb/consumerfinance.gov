@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     "wagtail_draftail_anchors",
     "tccp",
     "django_filters",
+    "django_htmx",
 )
 
 MIDDLEWARE = (
@@ -122,6 +123,7 @@ MIDDLEWARE = (
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "core.middleware.PathBasedCsrfViewMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
@@ -150,7 +152,6 @@ ROOT_URLCONF = "cfgov.urls"
 wagtail_extensions = [
     "wagtail.jinja2tags.core",
     "wagtail.admin.jinja2tags.userbar",
-    "wagtail.images.jinja2tags.images",
 ]
 
 TEMPLATES = [
@@ -193,6 +194,7 @@ TEMPLATES = [
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
                 "v1.jinja2tags.fragment_cache_extension",
+                "v1.jinja2tags.images_extension",
                 "v1.jinja2tags.v1_extension",
             ],
         },
@@ -629,9 +631,6 @@ FLAGS = {
         ("environment is", "dev4"),
         ("environment is", "local"),
         ("environment is", "test"),
-    ],
-    "TCCP_DEBUG_DETAILS": [
-        ("environment is", "local"),
     ],
 }
 

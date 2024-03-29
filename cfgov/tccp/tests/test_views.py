@@ -1,12 +1,14 @@
 import json
 from urllib.parse import quote_plus
 
+from django.http import Http404
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
 
-from tccp.enums import CreditTierChoices
+from django_htmx.middleware import HtmxMiddleware
+
 from tccp.models import CardSurveyData
-from tccp.views import CardListView, LandingPageView
+from tccp.views import CardDetailView, CardListView, LandingPageView
 
 from .baker import baker
 
@@ -22,18 +24,28 @@ class LandingPageViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_situation_redirect(self):
-        tier = CreditTierChoices[2][0]
+        tier = "Credit scores from 620 to 719"
 
         response = self.make_request(
-            "?credit_tier=" + quote_plus(tier) + "&situation=Pay+less+interest"
+            "?location=NY"
+            + "&credit_tier="
+            + quote_plus(tier)
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response["Location"],
             reverse("tccp:cards")
-            + "?targeted_credit_tiers="
+            + "?credit_tier="
             + quote_plus(tier)
-            + "&ordering=purchase_apr",
+            + "&location=NY"
+            + "&situations=Avoid+fees"
+            + "&situations=Earn+rewards"
+            + "&no_account_fee=True"
+            + "&rewards=Cashback+rewards"
+            + "&rewards=Travel-related+rewards"
+            + "&rewards=Other+rewards",
         )
 
     def test_invalid_query_still_renders_page(self):
@@ -46,45 +58,93 @@ class CardListViewTests(TestCase):
     def setUpTestData(cls):
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers="Credit score of 720 or greater",
             purchase_apr_great=0.99,
             _quantity=5,
         )
         baker.make(
             CardSurveyData,
-            targeted_credit_tiers="No credit score",
             _quantity=3,
         )
 
-    def make_request(self, querystring=""):
-        view = CardListView.as_view()
-        request = RequestFactory().get(f"/{querystring}")
+    def make_request(self, querystring="", **kwargs):
+        view = HtmxMiddleware(CardListView.as_view())
+        request = RequestFactory().get(f"/{querystring}", **kwargs)
         return view(request)
 
     def test_no_querystring_filters_by_good_tier(self):
         response = self.make_request()
+        self.assertContains(response, "Consumer Financial Protection Bureau")
         self.assertContains(response, "There are no results for your search.")
 
-    def test_filter_by_no_credit_score(self):
+    def test_htmx_includes_only_results(self):
+        response = self.make_request(**{"HTTP_HX-Request": "true"})
+        self.assertNotContains(
+            response, "Consumer Financial Protection Bureau"
+        )
+        self.assertContains(response, "There are no results for your search.")
+
+    def test_filter_by_credit_score(self):
         response = self.make_request(
-            "?targeted_credit_tiers=Credit+score+of+720+or+greater"
+            "?credit_tier=Credit+score+of+720+or+greater"
         )
         self.assertContains(response, "5 results")
 
     def test_invalid_json_query_renders_error(self):
-        response = self.make_request("?format=json&targeted_credit_tiers=foo")
+        response = self.make_request("?format=json&credit_tier=foo")
         self.assertEqual(response.status_code, 400)
 
         response.render()
         self.assertEqual(
             json.loads(response.content),
             {
-                "targeted_credit_tiers": [
+                "credit_tier": [
                     "Select a valid choice. foo is not one of the available choices."
                 ]
             },
         )
 
     def test_invalid_html_query_renders_empty_page(self):
-        response = self.make_request("?targeted_credit_tiers=foo")
+        response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
+
+
+class CardDetailViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        baker.make(
+            CardSurveyData,
+            slug="test-card",
+            product_name="Test Card",
+        )
+
+    def make_request(self, slug, querystring=None):
+        view = CardDetailView.as_view()
+        request = RequestFactory().get(f"/{querystring}")
+        return view(request, **{"slug": slug})
+
+    def test_get(self):
+        response = self.make_request("test-card")
+        self.assertContains(response, "Test Card")
+        self.assertContains(response, "m-breadcrumb")
+
+    def test_get_format_json(self):
+        response = self.make_request("test-card", "?format=json")
+        response.render()
+
+        self.assertEqual(response.status_code, 200)
+        card = json.loads(response.content)
+        self.assertEqual(card["product_name"], "Test Card")
+
+    def test_get_invalid_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("invalid-card")
+
+    def test_get_invalid_json(self):
+        response = self.make_request("invalid-card", "?format=json")
+        response.render()
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            json.loads(response.content),
+            {"detail": "No CardSurveyData matches the given query."},
+        )

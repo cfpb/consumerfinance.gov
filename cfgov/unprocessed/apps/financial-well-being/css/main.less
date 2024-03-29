@@ -2,7 +2,7 @@
 
 .save-links {
   padding-bottom: 15px;
-  border-bottom: 1px solid @gray-40;
+  border-bottom: 1px solid var(--gray-40);
   margin: 30px 0;
   text-align: right;
 }
@@ -16,7 +16,7 @@
 
 .score-box {
   height: 150px;
-  border-color: @black;
+  border-color: var(--black);
   border-style: solid;
   position: absolute;
   top: 0;
@@ -45,7 +45,7 @@
 .spectrum_x-label {
   padding-top: 5px;
   padding-left: 5px;
-  border-left: 1px solid @gray-40;
+  border-left: 1px solid var(--gray-40);
   position: absolute;
   font-size: unit(12px / @base-font-size-px, em);
   list-style: none;
@@ -81,15 +81,15 @@
 
 .comparison-chart_toggle-button {
   margin-bottom: 5px;
-  background-color: @pacific-20;
-  color: @black;
+  background-color: var(--pacific-20);
+  color: var(--black);
   font-size: unit(14px / @base-font-size-px, em);
 }
 
 .comparison-chart_toggle-button:hover,
 .comparison-chart_toggle-button:focus,
 .comparison-chart_toggle-button__selected {
-  background-color: @pacific-60;
+  background-color: var(--pacific-60);
 }
 
 .comparison-chart_title {
@@ -116,7 +116,7 @@
 
 .comparison-chart_list dd {
   width: 65%;
-  border-bottom: 1px solid @gray-40;
+  border-bottom: 1px solid var(--gray-40);
   position: relative;
   bottom: 0.25em;
 }
@@ -138,9 +138,9 @@
 
 .comparison-chart_source {
   padding-top: 15px;
-  border-top: 1px solid @gray-40;
+  border-top: 1px solid var(--gray-40);
   margin-top: 30px;
-  color: @gray-80;
+  color: var(--gray-80);
   font-size: unit(12px / @base-font-size-px, em);
 }
 
@@ -149,7 +149,7 @@
 .o-scale {
   + .o-scale {
     padding-top: unit(30px / @base-font-size-px, em);
-    border-top: 1px solid @gray-40;
+    border-top: 1px solid var(--gray-40);
     margin-top: unit(30px / @base-font-size-px, em);
   }
 
@@ -165,7 +165,7 @@
       position: relative;
 
       &:not(:last-child):before {
-        border-top: 1px solid @gray-80;
+        border-top: 1px solid var(--gray-80);
 
         position: absolute;
         top: 11px;

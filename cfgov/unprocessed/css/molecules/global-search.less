@@ -25,7 +25,7 @@
     });
 
     &:focus {
-      outline: 1px dotted @black;
+      outline: 1px dotted var(--black);
     }
 
     &-open-label {
@@ -38,7 +38,7 @@
 
     // Hover state for desktop.
     &:hover {
-      color: @gray-90;
+      color: var(--gray-90);
     }
   }
 
@@ -73,8 +73,8 @@
       min-width: @mobile_trigger_ht__px;
 
       &[aria-expanded="true"] {
-        background: @gray-10;
-        border-left: 1px solid @gray-40;
+        background: var(--gray-10);
+        border-left: 1px solid var(--gray-40);
 
         .m-global-search_trigger-open-label {
           display: none;
@@ -88,11 +88,11 @@
       // Hover state for (x) close button.
       @media (hover: hover) {
         &:hover {
-          color: @black;
-          border-left: 1px solid @gray-40;
+          color: var(--black);
+          border-left: 1px solid var(--gray-40);
 
           // Important needed to override background color in expanded state.
-          background: @gray-20  !important;
+          background: var(--gray-20)  !important;
         }
       }
     }
@@ -110,9 +110,9 @@
         left: 0;
         z-index: 10;
 
-        background-color: @gray-5;
-        border-top: 1px solid @gray-40;
-        border-bottom: 1px solid @gray-40;
+        background-color: var(--gray-5);
+        border-top: 1px solid var(--gray-40);
+        border-bottom: 1px solid var(--gray-40);
       }
     }
   });
@@ -125,18 +125,6 @@
 
       padding-left: unit(@grid_gutter-width / 2 / 18px, em);
       padding-right: unit(@grid_gutter-width / 2 / 18px, em);
-    }
-
-  });
-
-  // Tablet and above.
-  .respond-to-min(@bp-sm-min, {
-
-    // Override for the .m-btn-inside-input class from the design system.
-    // This is needed because we do not have an icon inside the input
-    // at the desktop size (there is an icon at the mobile size).
-    .m-btn-inside-input .a-text-input {
-      padding-right: unit(14px / @base-font-size-px, em);
     }
 
   });
@@ -154,16 +142,15 @@
     overflow: hidden;
 
     &_trigger {
+      float: right;
+
       // Match height of input with button.
       padding: 8px 0;
+      line-height: unit(19px / @base-font-size-px);
 
       &[aria-expanded="true"] {
         .u-invisible();
       }
-    }
-
-    &_trigger {
-      float: right;
     }
 
     &_content {
@@ -191,16 +178,6 @@
         display: flex;
         width: initial;
         flex: 0 1 75%;
-
-        // Characters in some languages, like Chinese, have a larger x-height,
-        // which will make the button taller than the input. Fix that by making
-        // the input elements flex and stretch to fit the full height of the
-        // container (i.e. match the button height)
-        .m-btn-inside-input {
-          display: flex;
-          align-items: stretch;
-          flex-basis: 100%;
-        }
       }
 
       .o-form__input-w-btn_btn-container {
@@ -213,6 +190,11 @@
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
           white-space: nowrap;
+
+          // Characters in some languages, like Chinese, have a larger x-height,
+          // which will make the button taller than the input. Fix that by
+          // setting the line height on the button.
+          line-height: unit(19px / @base-font-size-px);
         }
       }
     }

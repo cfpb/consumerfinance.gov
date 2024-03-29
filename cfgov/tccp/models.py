@@ -1,15 +1,23 @@
 import re
+from functools import partial
+from itertools import product
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
-from django.db.models import F, Q
+from django.db.models import Case, Count, F, Max, Min, Q, Value, When
 from django.db.models.functions import Coalesce
+
+from tailslide import Percentile
 
 from . import enums
 from .fields import CurrencyField, JSONListField, YesNoBooleanField
 
 
 REPORT_DATE_REGEX = re.compile(r"Data as of (\w+ \d+)")
+
+
+Percentile25 = partial(Percentile, percentile=0.25)
+Percentile50 = partial(Percentile, percentile=0.5)
 
 
 class CardSurveyDataQuerySet(models.QuerySet):
@@ -32,7 +40,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         return self.filter(q)
 
-    def for_credit_tier(self, credit_tier):
+    def for_credit_tier(self, credit_tier, summary_stats=None):
         qs = self
 
         # While filtering by the specified credit tier we can also annotate the
@@ -46,11 +54,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
         # named purchase_apr_for_tier which we can use for this purpose.
         #
         # We similarly define transfer_apr_for_tier.
-        tier_column_suffix = {
-            enums.CreditTierChoices[1][0]: "poor",
-            enums.CreditTierChoices[2][0]: "good",
-            enums.CreditTierChoices[3][0]: "great",
-        }[credit_tier]
+        tier_column_suffix = dict(enums.CreditTierColumns)[credit_tier]
 
         qs = qs.annotate(
             **{
@@ -70,13 +74,75 @@ class CardSurveyDataQuerySet(models.QuerySet):
             )
         )
 
-        # After annotating we do the actual filtering by credit tier.
-        qs = qs.filter(targeted_credit_tiers__contains=credit_tier)
-
-        # We also exclude cards that don't have a purchase APR for this tier.
+        # We exclude cards that don't have a purchase APR for this tier.
         qs = qs.exclude(purchase_apr_for_tier__isnull=True)
 
+        # Finally, we want to annotate each card with a rating based on how
+        # its purchase APR compares with other cards within the same tier.
+        #
+        # We annotate a new column named purchase_apr_for_tier_rating as:
+        #
+        #   purchase APR < 25th percentile: 0
+        #   purchase APR < 50th percentile: 1
+        #   else: 2
+
+        # If we've already computed the stats, we can avoid having to do so
+        # again.
+        summary_stats = summary_stats or qs.get_summary_statistics()
+
+        # The "or 0"s below are necessary because it's possible that the
+        # percentile might have been computed as None, if there are no cards
+        # for this tier. This won't happen with real datasets but could happen
+        # when testing this code with empty or minimal datasets.
+        qs = qs.annotate(
+            purchase_apr_for_tier_rating=Case(
+                When(
+                    purchase_apr_for_tier__lt=summary_stats[
+                        f"purchase_apr_{tier_column_suffix}_pct25"
+                    ]
+                    or 0,
+                    then=Value(0),
+                ),
+                When(
+                    purchase_apr_for_tier__lt=summary_stats[
+                        f"purchase_apr_{tier_column_suffix}_pct50"
+                    ]
+                    or 0,
+                    then=Value(1),
+                ),
+                default=Value(2),
+                output_field=models.IntegerField(),
+            )
+        )
+
         return qs
+
+    def get_summary_statistics(self):
+        stats = [
+            ("min", Min),
+            ("max", Max),
+            ("pct25", Percentile25),
+            ("pct50", Percentile50),
+            ("count", Count),
+        ]
+
+        aggregates = {
+            f"purchase_apr_{tier_name}_{stat_name}": stat_fn(
+                f"purchase_apr_{tier_name}"
+            )
+            for (stat_name, stat_fn), tier_name in product(
+                stats, dict(enums.CreditTierColumns).values()
+            )
+        }
+
+        aggregates.update(
+            {
+                "count": Count("pk"),
+                "first_report_date": Min("report_date"),
+            }
+        )
+
+        return self.aggregate(**dict(aggregates))
 
 
 class CardSurveyData(models.Model):
@@ -333,14 +399,3 @@ class CardSurveyData(models.Model):
         ]
 
     objects = CardSurveyDataQuerySet.as_manager()
-
-    @property
-    def state_limitations(self):
-        """Get the list of states in which a given card is available.
-
-        Returns None if the card is available everywhere.
-        """
-        if self.availability_of_credit_card_plan == "One State/Territory":
-            return [self.state]
-        elif self.availability_of_credit_card_plan == "Regional":
-            return self.state_multiple

@@ -23,7 +23,6 @@ class ContactUsTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/contact-us.html"
         label = "Table (Contact Us)"
-        unescape = False
 
 
 class ConsumerReportingCompanyTable(blocks.StructBlock):
@@ -66,7 +65,6 @@ class CaseDocketTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/case-docket.html"
         label = "Table (Case Docket)"
-        unescape = False
 
 
 class Table(blocks.StructBlock):
@@ -104,7 +102,6 @@ class Table(blocks.StructBlock):
     class Meta:
         icon = "table"
         template = "v1/includes/organisms/tables/base.html"
-        unescape = False
 
 
 class TableAdapter(StructBlockAdapter):

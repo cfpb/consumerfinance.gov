@@ -7,5 +7,5 @@ mkdocs-bootstrap==1.1.1
 mkdocs-bootswatch==1.1
 mkdocs-rtd-dropdown==1.0.2
 pymdown-extensions==10.1
-PyYAML==6.0.livereload1
+PyYAML==6.0.1
 tornado==6.3.3

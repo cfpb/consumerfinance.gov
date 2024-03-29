@@ -83,7 +83,7 @@
     right: @grid_gutter-width / 2;
     left: @grid_gutter-width / 2;
     z-index: 10;
-    background-color: @gray-40;
+    background-color: var(--gray-40);
     content: ' ';
   });
 
@@ -295,7 +295,7 @@
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       padding-bottom: unit(5px / @base-font-size-px, em);
-      border-bottom: 1px solid @gray-40;
+      border-bottom: 1px solid var(--gray-40);
     });
   }
 
@@ -357,15 +357,15 @@
     }
 
     &[disabled] {
-      background-color: @gray-10;
-      color: @black;
-      // Need to set -webkit-text-fill-color to make disabled input text @black in Safari/iOS
-      -webkit-text-fill-color: @black;
+      background-color: var(--gray-10);
+      color: var(--black);
+      // Need to set -webkit-text-fill-color to make disabled input text var(--black) in Safari/iOS
+      -webkit-text-fill-color: var(--black);
       opacity: 1;
     }
 
     &&__error {
-      border-color: @red-80;
+      border-color: var(--red-80);
       border-width: unit(2px / @base-font-size-px, em);
     }
   }
@@ -377,7 +377,7 @@
     display: none;
 
     & > .cf-icon-svg {
-      color: @red-80;
+      color: var(--red-80);
       margin-right: unit(5px / @base-font-size-px, em);
     }
   }
@@ -391,7 +391,7 @@
   &_equals-line {
     margin-top: unit(15px / @base-font-size-px, em);
     margin-bottom: unit(5px / @base-font-size-px, em);
-    background-color: @black;
+    background-color: var(--black);
   }
 
   &_summary,
@@ -403,7 +403,7 @@
     margin-top: unit(30px / @base-font-size-px, em);
     margin-right: -(@grid_gutter-width / 2);
     margin-left: -(@grid_gutter-width / 2);
-    background-color: @gray-5;
+    background-color: var(--gray-5);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
@@ -425,7 +425,7 @@
 
   &_summary-heading {
     padding-bottom: unit(5px / @font-size, em);
-    border-bottom: 1px solid @black;
+    border-bottom: 1px solid var(--black);
     .heading-4();
 
     // Tablet and above.
@@ -488,7 +488,7 @@
     text-transform: uppercase;
     margin-bottom: 0.71428571em;
     padding-bottom: unit(5px / @small-font-size-px, em);
-    border-bottom: 1px solid @gray-40;
+    border-bottom: 1px solid var(--gray-40);
 
     & + .aid-form_definition {
       margin-top: unit(-5px / @small-font-size-px, em);
@@ -744,14 +744,14 @@
   }
 
   .column-well::after {
-    background-color: @gold-20;
+    background-color: var(--gold-20);
   }
 }
 
 .future {
   .aid-form_summary.debt-summary {
     margin-top: 0;
-    background-color: @gold-40;
+    background-color: var(--gold-40);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
@@ -760,17 +760,17 @@
   }
 
   .aid-form_summary.big-picture {
-    background-color: @gold-20;
+    background-color: var(--gold-20);
   }
 
   .column-well::after {
-    background-color: @gold-40;
+    background-color: var(--gold-40);
   }
 }
 
 .loans {
   &_line {
-    border-top: 1px dotted @gray-40;
+    border-top: 1px dotted var(--gray-40);
     margin-top: unit(30px / @base-font-size-px, em);
     margin-bottom: unit(15px / @base-font-size-px, em);
     background-color: transparent;
@@ -783,11 +783,11 @@
 }
 
 .private-loans {
-  border-bottom: 1px dotted @gray-40;
+  border-bottom: 1px dotted var(--gray-40);
   margin-bottom: unit(15px / @base-font-size-px, em);
 
   &_heading {
-    border-bottom: 1px solid @gray-40;
+    border-bottom: 1px solid var(--gray-40);
     margin-bottom: unit(15px / @base-font-size-px, em);
     position: relative;
   }
@@ -911,7 +911,7 @@
 
   & + & {
     padding-top: unit(15px / @base-font-size-px, em);
-    border-top: 1px solid @gray-20;
+    border-top: 1px solid var(--gray-20);
 
     .respond-to-min(@bp-graph-cols-min, {
       padding-top: 0;
@@ -983,7 +983,7 @@
   }
 
   &_link {
-    border-top: 1px solid @gray-40;
+    border-top: 1px solid var(--gray-40);
     margin-top: 30px;
     padding-top: 30px;
   }
@@ -1159,10 +1159,10 @@
   &_value {
     position: absolute;
     top: 0;
-    background-color: @white;
+    background-color: var(--white);
 
     .respond-to-min(@bp-graph-cols-min, {
-      background-color: @gray-5;
+      background-color: var(--gray-5);
     });
   }
 
@@ -1195,25 +1195,25 @@
     position: absolute;
     top: 0;
     left: 50%;
-    background-color: @gray-10;
+    background-color: var(--gray-10);
 
     .respond-to-range(@bp-graph-cols-min, @bp-med-max, {
       width: @bar-graph-width-sm;
-      border-right: (@bar-graph-width - @bar-graph-width-sm) / 2 solid @gray-5;
-      border-left: (@bar-graph-width - @bar-graph-width-sm) / 2 solid @gray-5;
+      border-right: (@bar-graph-width - @bar-graph-width-sm) / 2 solid var(--gray-5);
+      border-left: (@bar-graph-width - @bar-graph-width-sm) / 2 solid var(--gray-5);
     });
 
     // Graph bars need to get really skinny at some screen sizes
     .respond-to-range(@bp-graph-cols-min, 759px, {
       width: @bar-graph-width-xs;
-      border-right: (@bar-graph-width - @bar-graph-width-xs) / 2 solid @gray-5;
-      border-left: (@bar-graph-width - @bar-graph-width-xs) / 2 solid @gray-5;
+      border-right: (@bar-graph-width - @bar-graph-width-xs) / 2 solid var(--gray-5);
+      border-left: (@bar-graph-width - @bar-graph-width-xs) / 2 solid var(--gray-5);
     });
 
     .respond-to-range(901px, 929px, {
       width: @bar-graph-width-xs;
-      border-right: (@bar-graph-width - @bar-graph-width-xs) / 2 solid @gray-5;
-      border-left: (@bar-graph-width - @bar-graph-width-xs) / 2 solid @gray-5;
+      border-right: (@bar-graph-width - @bar-graph-width-xs) / 2 solid var(--gray-5);
+      border-left: (@bar-graph-width - @bar-graph-width-xs) / 2 solid var(--gray-5);
     });
   }
 
@@ -1232,17 +1232,17 @@
     font-size: unit(@bar-graph-you-font-size / @base-font-size-px, em);
 
     .bar-graph_line {
-      border-top-color: @black;
+      border-top-color: var(--black);
       border-top-style: solid;
       top: unit((@bar-graph-you-font-size + @bar-graph-line-top-cheat) / 2, px);
     }
   }
 
   &_point__average {
-    color: @gray-dark;
+    color: var(--gray-dark);
 
     .bar-graph_line {
-      border-top-color: @gray-dark;
+      border-top-color: var(--gray-dark);
       border-top-style: dotted;
       top: unit(
         (@bar-graph-average-font-size + @bar-graph-line-top-cheat) / 2,
@@ -1291,7 +1291,7 @@
 .estimated-expenses {
   padding-top: unit(10px / @base-font-size-px, em);
   padding-bottom: unit(15px / @base-font-size-px, em);
-  border-top: 1px solid @gray-40;
+  border-top: 1px solid var(--gray-40);
   margin-top: unit(30px / @base-font-size-px, em);
   margin-bottom: unit(15px / @base-font-size-px, em);
 
@@ -1299,7 +1299,7 @@
   .respond-to-min(@bp-sm-min, {
     .grid_column(10);
     padding-bottom: 0;
-    border-top: 1px solid @gray-40;
+    border-top: 1px solid var(--gray-40);
   });
 
   .respond-to-min(@bp-graph-cols-min, {
@@ -1434,7 +1434,7 @@
   left: 0;
   width: 100%;
   padding: 15px;
-  background-color: @gold-20;
+  background-color: var(--gold-20);
   font-size: unit(14px / @base-font-size-px, em);
 
   // Desktop and above.
@@ -1452,7 +1452,7 @@
   padding-top: unit(25px / @base-font-size-px, em);
   padding-bottom: unit(5px / @base-font-size-px, em);
   margin-top: unit(30px / @base-font-size-px, em);
-  background-color: @teal-20;
+  background-color: var(--teal-20);
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
@@ -1666,7 +1666,7 @@
 
   // Top borders on all but the first option on small screens and only the second row of options on larger screens
   & + & &_heading {
-    border-top: 1px solid @gray-40;
+    border-top: 1px solid var(--gray-40);
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
@@ -1677,7 +1677,7 @@
   & + & + & &_heading {
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      border-top: 1px solid @gray-40;
+      border-top: 1px solid var(--gray-40);
     });
 
     // Desktop and above.
@@ -1689,7 +1689,7 @@
   & + & + & + & &_heading {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      border-top: 1px solid @gray-40;
+      border-top: 1px solid var(--gray-40);
     });
   }
 
@@ -1702,7 +1702,7 @@
 
     // Top borders on all but the first option on small screens and only the second row of options on larger screens
     & + & .option_heading {
-      border-top: 1px solid @gray-40;
+      border-top: 1px solid var(--gray-40);
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
@@ -1713,14 +1713,14 @@
     & + & + & .option_heading {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
-        border-top: 1px solid @gray-40;
+        border-top: 1px solid var(--gray-40);
       });
     }
 
     & + & + & + & .option_heading {
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        border-top: 1px solid @gray-40;
+        border-top: 1px solid var(--gray-40);
       });
     }
   }

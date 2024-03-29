@@ -15,10 +15,6 @@
 {% endif %}
 {% set banner_modification = ' o-banner__dark' if version_status == 'Archived' else ''  %}
 
-{% if page and not breadcrumb_items %}
-{% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}
-
 {% block banner_top %}
     {% if version_status %}
         {% import 'v1/includes/molecules/notification.html' as notification with context %}
@@ -47,12 +43,7 @@
         <div class="u-layout-grid_wrapper">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
-            {% if breadcrumb_items | length > 0 %}
-                <div class="u-layout-grid_breadcrumbs">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
-                </div>
-            {% endif %}
+            {% include 'v1/layouts/_breadcrumbs.html' %}
         {%- endblock %}
         {% block body_content scoped %}
         <aside class="u-layout-grid_secondary-nav u-layout-grid_secondary-nav__sticky">

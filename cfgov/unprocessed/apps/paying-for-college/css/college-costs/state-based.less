@@ -1,11 +1,7 @@
 main.college-costs {
-  .private-loan-section,
-  .parentPlus-loan-section,
   .undergrad-content,
   .associates-content,
   .graduate-content,
-  .parentplus-loan-section,
-  .gradplus-loan-section,
   .community-college,
   .program-select {
     display: none;
@@ -106,26 +102,6 @@ main.college-costs {
 
   &[data-state_programtype][data-state_schoolhasprograms='yes'] {
     .program-select {
-      display: block;
-    }
-  }
-
-  // Private & Plus loans content control
-
-  &[data-state_private-loan-section='active'] {
-    .private-loan-section {
-      display: block;
-    }
-  }
-
-  &[data-state_parentplus-loan-section='active'] {
-    .parentplus-loan-section {
-      display: block;
-    }
-  }
-
-  &[data-state_gradplus-loan-section='active'] {
-    .gradplus-loan-section {
       display: block;
     }
   }
@@ -372,7 +348,7 @@ main.college-costs {
   }
 
   .school-results_comparison-section__default-rate .big-percentile {
-    border-color: @gray-20;
+    border-color: var(--gray-20);
   }
 
   &[data-state_rategraduationrange='high'] {

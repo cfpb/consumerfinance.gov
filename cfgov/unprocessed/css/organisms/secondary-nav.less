@@ -11,7 +11,7 @@
       unit((15px / @base-font-size-px), em);
 
     &:focus {
-      outline: 1px dotted @black;
+      outline: 1px dotted var(--black);
       outline-offset: 1px;
     }
 
@@ -40,7 +40,7 @@
   &_cues {
     min-width: 60px;
     text-align: right;
-    color: @pacific;
+    color: var(--pacific);
     font-size: unit((@btn-font-size / @base-font-size-px), em);
     line-height: unit((@base-line-height-px / @btn-font-size));
   }
@@ -52,7 +52,7 @@
     font-size: unit(16px / @base-font-size-px, rem);
     font-weight: 600;
     letter-spacing: 1px;
-    color: @pacific;
+    color: var(--pacific);
 
     line-height: unit((22 / @size-v));
     margin-bottom: 0;
@@ -101,8 +101,8 @@
     // Break the menu word when it is too wide to fit in the sidebar area.
     word-break: break-word;
 
-    .u-link__colors( @pacific, @pacific, @black, @black, @black,
-    transparent, transparent, @green, @green, @green );
+    .u-link__colors( var(--pacific), var(--pacific), var(--black), var(--black), var(--black),
+    transparent, transparent, var(--green), var(--green), var(--green) );
 
     border-style: solid;
     border-left-width: 5px;
@@ -122,8 +122,8 @@
     });
 
     &__current {
-      .u-link__colors( @black, @black, @black, @black, @black,
-      @black, @black, @black, @black, @black );
+      .u-link__colors( var(--black), var(--black), var(--black), var(--black), var(--black),
+      var(--black), var(--black), var(--black), var(--black), var(--black) );
     }
 
     &__parent {
@@ -135,8 +135,8 @@
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    background: @gray-5;
-    border-bottom: 1px solid @gray-40;
+    background: var(--gray-5);
+    border-bottom: 1px solid var(--gray-40);
 
     // Add drop-shadow.
     box-shadow: 0 5px 5px rgba(0, 0, 0, .2);

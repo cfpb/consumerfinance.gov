@@ -55,7 +55,7 @@ class AskSearch(blocks.StructBlock):
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=False, label="Well")
+    content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
 
     class Meta:
         icon = "placeholder"
@@ -551,7 +551,7 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = blocks.RichTextBlock(icon="edit")
+    content = v1_blocks.UnescapedRichTextBlock(icon="edit")
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
@@ -560,6 +560,9 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
+    reusable_notification = v1_blocks.ReusableNotificationChooserBlock(
+        "v1.ReusableNotification"
+    )
     email_signup = v1_blocks.EmailSignUpChooserBlock()
     well = Well()
 
@@ -1000,73 +1003,6 @@ class MortgageMapBlock(MortgageChartBlock):
     class Media:
         js = ["mortgage-performance-trends.js"]
         css = ["mortgage-performance-trends.css"]
-
-
-class ResourceList(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    has_top_rule_line = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text="Check this to add a horizontal rule line above this block.",
-    )
-    image = atoms.ImageBasic(required=False)
-    actions_column_width = blocks.ChoiceBlock(
-        label='Width of "Actions" column',
-        required=False,
-        help_text="Choose the width in % that you wish to set "
-        "the Actions column in a resource list.",
-        choices=[
-            ("70", "70%"),
-            ("66", "66%"),
-            ("60", "60%"),
-            ("50", "50%"),
-            ("40", "40%"),
-            ("33", "33%"),
-            ("30", "30%"),
-        ],
-    )
-    show_thumbnails = blocks.BooleanBlock(
-        required=False,
-        help_text="If selected, each resource in the list will include a "
-        "150px-wide image from the resource's thumbnail field.",
-    )
-    actions = blocks.ListBlock(
-        blocks.StructBlock(
-            [
-                (
-                    "link_label",
-                    blocks.CharBlock(
-                        help_text='E.g., "Download" or "Order free prints"'
-                    ),
-                ),
-                (
-                    "snippet_field",
-                    blocks.ChoiceBlock(
-                        choices=[
-                            ("related_file", "Related file"),
-                            ("alternate_file", "Alternate file"),
-                            ("link", "Link"),
-                            ("alternate_link", "Alternate link"),
-                        ],
-                        help_text="The field that the action link should point to",
-                    ),
-                ),
-            ]
-        )
-    )
-    tags = blocks.ListBlock(
-        blocks.CharBlock(label="Tag"),
-        help_text="Enter tag names to filter the snippets. For a snippet to "
-        "match and be output in the list, it must have been tagged "
-        "with all of the tag names listed here. The tag names "
-        "are case-insensitive.",
-    )
-
-    class Meta:
-        label = "Resource List"
-        icon = "table"
-        template = "v1/includes/organisms/resource-list.html"
 
 
 class DataSnapshot(blocks.StructBlock):

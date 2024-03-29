@@ -7,6 +7,7 @@ from v1.models import (
     EmailSignUp,
     PortalCategory,
     PortalTopic,
+    ReusableNotification,
     ReusableText,
 )
 
@@ -58,3 +59,11 @@ class ReusableTextViewSet(SnippetViewSet):
     list_display = ["title", "sidefoot_heading", "text"]
     ordering = ["title"]
     search_fields = ["title", "sidefoot_heading", "text"]
+
+
+class ReusableNotificationViewSet(SnippetViewSet):
+    model = ReusableNotification
+    menu_icon = "warning"
+    list_display = ["title"]
+    ordering = ["title"]
+    search_fields = ["title", "content"]

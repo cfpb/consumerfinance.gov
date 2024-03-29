@@ -46,21 +46,21 @@
   padding-left: 40px;
   margin-bottom: @notification-padding__px + 4px;
 
-  background: @gray-20;
-  border: 1px solid @gray;
+  background: var(--gray-20);
+  border: 1px solid var(--gray);
 
   &__error {
-    background: @red-20;
+    background: var(--red-20);
     border-color: @input-error;
   }
 
   &__success {
-    background: @green-20;
+    background: var(--green-20);
     border-color: @input-success;
   }
 
   &__warning {
-    background: @gold-20;
+    background: var(--gold-20);
     border-color: @input-warning;
   }
 
@@ -69,7 +69,7 @@
     top: @notification-padding__px + 2px;
     left: @notification-padding__px + 4px;
 
-    color: @gray-20;
+    color: var(--gray-20);
     font-size: unit(18px / @base-font-size-px, em);
 
     &__error {
@@ -118,8 +118,8 @@
     position: absolute;
     left: 0;
     top: unit(@base-line-height - @char-icon-size, em);
-    background: @green-20;
-    color: @black;
+    background: var(--green-20);
+    color: var(--black);
     font-size: unit(18px / @base-font-size-px, em);
     line-height: @char-icon-size;
     text-align: center;
@@ -195,7 +195,7 @@
     top: 0;
     left: unit(-(@grid_gutter-width / @base-font-size-px) / 2, em);
     z-index: 0;
-    background-color: @gray-5;
+    background-color: var(--gray-5);
     content: '';
 
     .respond-to-min(@bp-sm-min, {
@@ -267,7 +267,7 @@
     });
 
     &::after {
-      background-color: @gray-5;
+      background-color: var(--gray-5);
     }
   }
 }
@@ -277,5 +277,5 @@
    ========================================================================== */
 
 .content__bleedbar .content_wrapper::after {
-  background-color: @gray-5;
+  background-color: var(--gray-5);
 }

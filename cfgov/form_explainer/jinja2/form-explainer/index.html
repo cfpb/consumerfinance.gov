@@ -8,17 +8,6 @@
     <link rel="stylesheet" href="{{ static('apps/form-explainer/css/main.css') }}">
 {%- endblock css %}
 
-{% if page and not breadcrumb_items %}
-    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}
-
-{% if breadcrumb_items | length > 0 %}
-    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
-    <div class="block block__sub block__flush-top">
-    {{ breadcrumbs.render(breadcrumb_items) }}
-    </div>
-{% endif %}
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}

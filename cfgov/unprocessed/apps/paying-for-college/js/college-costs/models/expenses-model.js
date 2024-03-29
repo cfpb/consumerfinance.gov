@@ -71,6 +71,16 @@ const expensesModel = {
   },
 
   /**
+   * bulkSetValue - Used to set a value
+   * @param {Array} tuples - values to update
+   */
+  bulkSetValue: (tuples) => {
+    tuples.forEach((v) => {
+      expensesModel.values[v[0]] = convertStringToNumber(v[1]);
+    });
+  },
+
+  /**
    * Turns a salary number into a salary range for use in retrieving
    * the correct BLS expense values.
    * @param {number} salary - Number value of salary

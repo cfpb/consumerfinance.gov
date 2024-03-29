@@ -1,12 +1,17 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
-{% from 'tccp/macros/data_published.html' import data_published %}
-{% from 'tccp/macros/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/data_published.html' import data_published %}
+{% from 'tccp/includes/fields.html' import apr, apr_range %}
 
 {% block title -%}
     {{ card.institution_name }} {{ card.product_name }}
     | Consumer Financial Protection Bureau
 {%- endblock title %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script src="{{ static( 'apps/tccp/js/index.js' ) }}"></script>
+{% endblock %}
 
 {% block css %}
     {{ super() }}
@@ -16,20 +21,33 @@
 {% block content_main %}
 <div class="block block__flush-top">
 
-    <h1>{{ card.institution_name }} {{ card.product_name }}</h1>
+    <div class="eyebrow">{{ card.institution_name }}</div>
+    <h1>{{ card.product_name }}</h1>
 
     {{ data_published(card.report_date) }}
 
-    <h2>Availability</h2>
+    <h2>Application requirements</h2>
     <dl class="m-list m-list__card-details">
         <dt>Location</dt>
         <dd>
-            {% if not card.state_limitations %}
+            {%- if card.availability_of_credit_card_plan == "One State/Territory" %}
+                {% set state_limitations = [card.state] %}
+            {% elif card.availability_of_credit_card_plan == "Regional" %}
+                {% set state_limitations = card.state_multiple %}
+            {% else %}
+                {% set state_limitations = none %}
+            {% endif -%}
+
+            {% if not state_limitations %}
                 Available to anyone in the United States
             {% else %}
                 Available only to people who live in
                 {{ 'specific counties in ' if card.pertains_to_specific_counties }}
-                {{ card.state_limitations | join(", ") }}
+                {% for state in state_limitations %}
+                    {{ state_lookup[state] -}}
+                    {{- ', ' if not loop.last and loop.length > 2 -}}
+                    {{- 'and ' if loop.index == loop.length - 1}}
+                {% endfor %}
             {% endif %}
         </dd>
         {% if card.requirements_for_opening %}
@@ -76,7 +94,7 @@
             </table>
         </dd>
         <dt>
-            Secured card
+            Down payment required?
         </dt>
         <dd>
             {{ "Yes" if card.secured_card else "No" }}
@@ -522,27 +540,224 @@
     {% else %}
         <p>This card does not offer cash advances.</p>
     {% endif %}
-
-    {% if flag_enabled("TCCP_DEBUG_DETAILS") %}
-    <h3 class="h5">All fields</h3>
-
-    <table class="o-table o-table__striped">
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for field in card._meta.fields %}
-            <tr>
-                <td>{{ field.name }}</td>
-                <td>{{ card.__getattribute__(field.name) }}</td>
-            </tr>
+    <h2>Fees</h2>
+    <dl class="m-list m-list__card-details">
+        {% if not card.periodic_fee_type %}
+            <dt>Annual fee</dt>
+            <dd>None</dd>
+        {% endif %}
+        {% if card.annual_fee %}
+            <dt>Annual fee</dt>
+            <dd>{{ '$' ~ card.annual_fee }}</dd>
+        {% endif %}
+        {% if card.monthly_fee %}
+            <dt>Monthly fee</dt>
+            <dd>{{ '$' ~ card.monthly_fee }}</dd>
+        {% endif %}
+        {% if card.weekly_fee %}
+            <dt>Weekly fee</dt>
+            <dd>{{ '$' ~ card.weekly_fee }}</dd>
+        {% endif %}
+        {% if card.other_periodic_fee_amount %}
+            <dt>{{ card.other_periodic_fee_name }}</dt>
+            <dd>{{ '$' ~ card.other_periodic_fee_amount ~ ', ' ~ card.other_periodic_fee_frequency | lower }}</dd>
+        {% endif %}
+        {% if card.fee_varies %}
+            <dt>Fee varies?</dt>
+            <dd>
+                {{ '$' ~ card.periodic_min ~ '–'  ~ card.periodic_max ~
+                    ' (' ~ card.fee_explanation ~ ')'
+                }}
+            </dd>
+        {% endif %}
+        <dt>Late fee</dt>
+        <dd>
+            {% if card.late_fees %}
+                {{ '$' ~ card.late_fee_dollars ~ ' for the first late payment' if
+                    card.late_fee_dollars
+                }}
+                {{ 'and' if card.late_fee_dollars
+                    and card.late_fee_six_month_billing_cycle
+                }}
+                {{ '$' ~ card.late_fee_six_month_billing_cycle ~
+                    ' for a late payment within six billing cycles of another
+                    late payment' if card.late_fee_six_month_billing_cycle
+                }}
+                {# A handful of cards specify neither a first nor repeat late
+                    fee and put all late fee info in the late_fee_policy_details
+                    field. For cards like that, we'll show the details here and
+                    not show the "Late fee policy details" item.
+                #}
+                {# TODO: Refactor to not use the exact string #}
+                {{ card.late_fee_policy_details if card.late_fee_types ==
+                    ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                }}
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {# See the comment above: we won't show this if we're already showing
+            late fee details in the "Late fee" item, i.e. if the card has *only*
+            policy details chosen in late_fee_types
+        #}
+        {# TODO: Refactor to not use the exact string #}
+        {% if card.late_fee_policy_details
+            and card.late_fee_types !=
+            ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+        %}
+            <dt>Late fee policy details</dt>
+            <dd>{{ card.late_fee_policy_details }}</dd>
+        {% endif %}
+        <dt>Over-limit fee</dt>
+        <dd>
+            {% if card.over_limit_fees %}
+                {{ '$' ~ card.over_limit_fee_dollars if
+                    card.over_limit_fee_dollars
+                }}
+                {# A handful of cards specify only over-limit fee details and
+                    not a fixed dollar amount. For cards like that, we'll show
+                    the details here and not show the "Over-limit fee details."
+                #}
+                {# TODO: Refactor to not use the exact string #}
+                {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
+                    ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                }}
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {# See the comment above: we won't show this if we're already showing
+            over-limit fee details in the "Over-limit fee" item, i.e. if the
+            card has *only* details chosen in over_limit_fee_types.
+        #}
+        {# TODO: Refactor to not use the exact string #}
+        {% if card.overlimit_fee_detail
+            and card.over_limit_fee_types !=
+            ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+        %}
+            <dt>Over-limit fee details</dt>
+            <dd>{{ card.overlimit_fee_detail }}</dd>
+        {% endif %}
+        {% if card.other_fees %}
+            {% for fee_name in [card.other_fee_name, card.other_fee_name_2,
+                card.other_fee_name_3, card.other_fee_name_4,
+                card.other_fee_name_5
+            ] %}
+                {% if fee_name %}
+                    <dt>{{ fee_name }}</dt>
+                    <dd>
+                        {% if loop.first %}
+                            {{ '$' ~ '%.2f' | format(card.other_fee_amount | float) ~ ' (' ~
+                                card.other_fee_explanation | lower ~ ')'
+                            }}
+                        {% else %}
+                            {{ '$' ~ '%.2f' | format(card['other_fee_amount_' ~ loop.index] | float) ~ ' (' ~
+                                card['other_fee_explanation_' ~ loop.index] | lower ~
+                                ')'
+                            }}
+                        {% endif %}
+                    </dd>
+                {% endif %}
             {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
+        {% endif %}
+    </dl>
+    <h2>Rewards and perks</h2>
+    <dl class="m-list m-list__card-details">
+        <dt>Rewards</dt>
+        <dd>
+            {% if card.rewards %}
+            <ul>
+                {% for reward in card.rewards %}
+                    <li>{{ rewards_lookup[reward] }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                None
+            {% endif %}
+        </dd>
+        {% if card.services %}
+            <dt>Services</dt>
+            <dd>
+                <ul>
+                    {% for service in card.services %}
+                        <li>
+                            {{ service if service != 'Other' else
+                                card.other_services
+                            }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+        {% endif %}
+        {% if card.card_features %}
+            <dt>Card features</dt>
+            <dd>
+                <ul>
+                    {% for feature in card.card_features %}
+                        <li>
+                            {{ feature if feature != 'Other' else
+                                card.other_card_features
+                            }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+        {% endif %}
+    </dl>
+    <h2>Fine print</h2>
+    <dl class="m-list m-list__card-details">
+        <dt>Grace period</dt>
+        <dd>
+            {{ card.grace_period ~ ' days until interest begins to accrue on
+                purchases' if grace_period_offered else 'None, interest begins
+                accruing on purchases immediately'
+            }}
+        </dd>
+        <dt>Minimum finance charge</dt>
+        <dd>
+            {{ '$' ~ '%.2f' | format(card.minimum_finance_charge_dollars | float)
+                if card.minimum_finance_charge else 'None'
+            }}
+        </dd>
+        <dt>Balance computation method</dt>
+        <dd>
+            {{ card.balance_computation_method | join(', ') if 'Other' is not in
+                card.balance_computation_method else
+                card.balance_computation_method_details
+            }}
+        </dd>
+    </dl>
+    <h2>Contact information</h2>
+    <dl class="m-list m-list__card-details">
+        {% if card.website_for_consumer %}
+            <dt>Website</dt>
+            <dd>
+                {# Some issuers submitted more than one URL for a card. In all
+                    of those instances, the URLs are separated with a space, so
+                    we'll only turn the submitted URL into a link if it doesn't
+                    have a space in it for now. TODO: maybe split multiple URLs
+                    up.
+                #}
+                {% if ' ' is not in card.website_for_consumer %}
+                    <a href="{{ card.website_for_consumer }}">
+                        {{- card.website_for_consumer -}}
+                    </a>
+                {% else %}
+                    {{ card.website_for_consumer }}
+                {% endif %}
+            </dd>
+        {% endif %}
+        {% if card.telephone_number_for_consumers %}
+            <dt>Phone</dt>
+            <dd>
+                {{ card.telephone_number_for_consumers }}
+            </dd>
+        {% endif %}
+    </dl>
 </div>
 
 {% endblock content_main %}
+
+{% block content_sidebar %}
+    {%- include "tccp/includes/sidebar.html" -%}
+{% endblock content_sidebar %}

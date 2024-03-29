@@ -68,7 +68,6 @@ class ActivityIndexPageTests(WagtailPageTestCase):
             {
                 "title": "Search for activities",
                 "header-count": "0",
-                "header_sidebar-count": "0",
                 "sidefoot-count": "0",
                 "categories-TOTAL_FORMS": "0",
                 "categories-INITIAL_FORMS": "0",
@@ -240,7 +239,6 @@ class ActivitySetUpTests(TestCase):
             f"{self.search_page.url}?topic=1&topic=2&topic=3"
         )
         self.assertEqual(response.status_code, 200)
-        self.assertIn("topic=1", response.content.decode("utf8"))
 
     def test_taxonomy_model_str(self):
         taxonomy_instance = ActivityBuildingBlock.objects.first()

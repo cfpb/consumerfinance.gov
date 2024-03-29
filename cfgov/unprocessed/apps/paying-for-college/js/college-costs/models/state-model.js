@@ -283,6 +283,30 @@ const stateModel = {
   },
 
   /**
+   * bulkSetValue - Used to set a value
+   * @param {Array} tuples - values to update
+   */
+  bulkSetValue: (tuples) => {
+    tuples.forEach((v) => {
+      const name = v[0];
+      const value = v[1];
+
+      if (name === 'activeSection') {
+        stateModel.setActiveSection(value);
+      }
+
+      stateModel.values[name] = value;
+
+      if ({}.hasOwnProperty.call(stateModel.textVersions, name)) {
+        const key = name + 'Text';
+        stateModel.values[key] = stateModel.textVersions[name][value];
+      }
+
+      updateStateInDom(name, value);
+    });
+  },
+
+  /**
    * setActiveSection - Method to update the app's active section
    * @param {*} value - the value to be assigned
    * @param {boolean} popState - true if the update is the result of a popState event

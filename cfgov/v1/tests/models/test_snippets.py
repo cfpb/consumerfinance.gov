@@ -4,7 +4,13 @@ from django.test import TestCase
 from wagtail.models import Site
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models import Contact, EmailSignUp, ReusableText, SublandingPage
+from v1.models import (
+    Contact,
+    EmailSignUp,
+    ReusableNotification,
+    ReusableText,
+    SublandingPage,
+)
 
 
 class TestUnicodeCompatibility(TestCase):
@@ -52,3 +58,9 @@ class TestReusableTextRendering(TestCase):
         html = '<a linktype="page" id="12345">Link</a>'
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn("<a>", block.render({"text": html}))
+
+
+class ReusableNotificationTestCase(TestCase):
+    def test_title_str(self):
+        notification = ReusableNotification(title="Warning Notification")
+        self.assertEqual(str(notification), "Warning Notification")

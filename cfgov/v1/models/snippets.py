@@ -6,6 +6,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.models import RevisionMixin
 
 from v1.atomic_elements import molecules
+from v1.atomic_elements.molecules import Notification
 
 # We import ReusableTextChooserBlock here because this is where it used to
 # live. That caused circular imports when it was imported into models. It's no
@@ -142,3 +143,19 @@ class EmailSignUp(RevisionMixin, models.Model):
         return (
             f"{self.topic} ({self.url if self.url is not None else self.code})"
         )
+
+
+class ReusableNotification(RevisionMixin, models.Model):
+    title = models.CharField(
+        max_length=255,
+        help_text="For internal reference only; does not appear on the site.",
+    )
+    content = StreamField(
+        [("content", Notification())],
+        min_num=1,
+        max_num=1,
+        use_json_field=True,
+    )
+
+    def __str__(self):
+        return self.title

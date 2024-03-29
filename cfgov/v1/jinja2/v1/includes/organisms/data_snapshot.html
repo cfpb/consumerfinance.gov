@@ -30,19 +30,19 @@
         <h3><b>{{ value.num_originations }}</b>
         <br/>
         {{ value.num_originations_text }}
-        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y')|safe }})</h3>
 
         <br/>
         <h3><b>{{ value.value_originations }}</b>
         <br/>
         {{ value.value_originations_text }}
-        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y')|safe }})</h3>
 
         <br/>
         <h3><b>{{ value.year_over_year_change }}</b>
         <br/>
         {{ value.year_over_year_change_text }}
-        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y')|safe }})</h3>
 
         {% if value.inquiry_year_over_year_change %}
         <br/>
@@ -50,7 +50,7 @@
         <br/>
         {{ value.inquiry_year_over_year_change_text }}
         {% if value.inquiry_month %}
-            ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})
+            ({{ value.inquiry_month.strftime('%B&nbsp;%Y')|safe }})
         {% endif %}
         </h3>
         {% endif %}
@@ -73,7 +73,7 @@
         <br/>
         {{ value.tightness_year_over_year_change_text }}
         {% if value.tightness_month %}
-            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y')|safe }})
         {% endif %}
         </h3>
         {% endif %}
@@ -85,7 +85,7 @@
         <br/>
         {{ value.tightness_year_over_year_change_text }}
         {% if value.tightness_month %}
-            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y')|safe }})
         {% endif %}
         </h3>
         {% endif %}

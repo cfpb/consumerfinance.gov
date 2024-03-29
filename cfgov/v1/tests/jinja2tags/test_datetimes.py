@@ -52,6 +52,14 @@ class DatetimesExtensionTests(TestCase):
         tmpl = self.engine.from_string("{{ date_formatter(d, True) }}")
         self.assertEqual(tmpl.render({"d": date(2018, 2, 1)}), "Feb. 1, 2018")
 
+    def test_ensure_date_string(self):
+        tmpl = self.engine.from_string("{{ ensure_date(d) }}")
+        self.assertEqual(tmpl.render({"d": "2018-02-01"}), "2018-02-01")
+
+    def test_ensure_date_date(self):
+        tmpl = self.engine.from_string("{{ ensure_date(d) }}")
+        self.assertEqual(tmpl.render({"d": date(2018, 2, 1)}), "2018-02-01")
+
     def test_localtime(self):
         tmpl = self.engine.from_string("{{ localtime(d) }}")
         self.assertEqual(

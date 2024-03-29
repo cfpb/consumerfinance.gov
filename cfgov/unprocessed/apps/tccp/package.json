@@ -12,5 +12,8 @@
   },
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "htmx.org": "1.9.10"
+  }
 }

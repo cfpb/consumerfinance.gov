@@ -21,7 +21,7 @@ content_main__flush-inner
     {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
 
     <section class="content_level--1">
-        {% with value = hardcoded.hero, image = image_passthrough %}
+        {% with value = hardcoded.hero %}
             {% include "v1/includes/molecules/hero.html" with context %}
         {% endwith %}
 

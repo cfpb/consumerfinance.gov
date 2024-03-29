@@ -69,10 +69,10 @@
                         {{ block.value | safe }}
                     {% elif block.block_type == 'links' %}
                         <p>
-                            {{ render_stream_child(block) }}
+                            {% include_block block %}
                         </p>
                     {% else %}
-                        {{ render_stream_child(block) }}
+                        {% include_block block %}
                     {% endif %}
                 {% endfor %}
             {% endif %}

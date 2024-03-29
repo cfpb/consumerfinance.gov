@@ -37,10 +37,10 @@ button.a-btn.flex-fixed {
 @select-height: @size-ii;
 
 .a-select {
-  border: 1px solid @gray-40;
+  border: 1px solid var(--gray-40);
   display: flex;
   box-sizing: border-box;
-  background-color: @gray;
+  background-color: var(--gray);
   flex-direction: column;
   justify-content: center;
 
@@ -50,8 +50,8 @@ button.a-btn.flex-fixed {
 
     // Save room for the drop-arrow
     padding-right: unit(@select-height * 1.1 / @base-font-size-px, em);
-    background-color: @gray;
-    color: @white;
+    background-color: var(--gray);
+    color: var(--white);
 
     &:hover,
     &.hover,
@@ -74,8 +74,8 @@ button.a-btn.flex-fixed {
     text-align: center;
     vertical-align: middle;
     background-image: none;
-    background-color: @gray;
-    color: @white;
+    background-color: var(--gray);
+    color: var(--white);
     border-width: 0;
   }
 }
