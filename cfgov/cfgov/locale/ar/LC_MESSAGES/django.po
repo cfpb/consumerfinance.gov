@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 13:28-0500\n"
+"POT-Creation-Date: 2024-03-29 11:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: cfgov/settings/base.py:229
+
+#: cfgov/settings/base.py:233
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:230
+#: cfgov/settings/base.py:234
 msgid "Spanish"
 msgstr ""
 
-#: cfgov/settings/base.py:231
+#: cfgov/settings/base.py:235
 msgid "Chinese"
 msgstr ""
 
-#: cfgov/settings/base.py:232
+#: cfgov/settings/base.py:236
 msgid "Vietnamese"
 msgstr ""
 
-#: cfgov/settings/base.py:233
+#: cfgov/settings/base.py:237
 msgid "Korean"
 msgstr ""
 
-#: cfgov/settings/base.py:234
+#: cfgov/settings/base.py:238
 msgid "Tagalog"
 msgstr ""
 
-#: cfgov/settings/base.py:235
+#: cfgov/settings/base.py:239
 msgid "Russian"
 msgstr ""
 
-#: cfgov/settings/base.py:236
+#: cfgov/settings/base.py:240
 msgid "Arabic"
 msgstr "العربية"
 
-#: cfgov/settings/base.py:237
+#: cfgov/settings/base.py:241
 msgid "Haitian Creole"
+msgstr ""
+
+#: form_explainer/jinja2/form-explainer/blocks/explainer.html:96
+#: jinja2/rural-or-underserved/_templates/expandable.html:26
+#: jinja2/rural-or-underserved/index.html:499
+#: jinja2/rural-or-underserved/index.html:721
+#: jinja2/rural-or-underserved/index.html:797
+#: jinja2/rural-or-underserved/index.html:831
+#: jinja2/rural-or-underserved/index.html:886
+#: regulations3k/jinja2/regulations3k/inline_interps.html:14
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-nav.html:23
+#: teachers_digital_platform/jinja2/teachers_digital_platform/tdp_expandable.html:47
+msgid "Show"
+msgstr ""
+
+#: form_explainer/jinja2/form-explainer/blocks/explainer.html:99
+#: jinja2/rural-or-underserved/_templates/expandable.html:29
+#: jinja2/rural-or-underserved/index.html:502
+#: jinja2/rural-or-underserved/index.html:724
+#: jinja2/rural-or-underserved/index.html:800
+#: jinja2/rural-or-underserved/index.html:834
+#: jinja2/rural-or-underserved/index.html:889
+#: regulations3k/jinja2/regulations3k/inline_interps.html:17
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-nav.html:26
+#: teachers_digital_platform/jinja2/teachers_digital_platform/tdp_expandable.html:50
+msgid "Hide"
+msgstr ""
+
+#: login/models.py:14
+msgid "password"
+msgstr ""
+
+#: paying_for_college/jinja2/paying-for-college/college-cost-blocks/macros/secondary-nav.html:20
+msgid "Navigate this section"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:5
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:15
+msgid "Set your new password"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:7
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:38
+msgid "Invalid password reset link"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:34
+msgid "Reset password"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:44
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used."
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/account/password_reset/confirm.html:51
+msgid "Request a new password reset"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/shared/page_status_tag.html:3
+msgid "Current page status:"
+msgstr ""
+
+#: wagtailadmin_overrides/templates/wagtailadmin/shared/page_status_tag.html:7
+msgid "Visit the live page"
 msgstr ""

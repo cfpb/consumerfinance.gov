@@ -1,7 +1,7 @@
 from django.test import TestCase, override_settings
 
-from ask_cfpb.models.blocks import AskAnswerContent
-from v1.atomic_elements.schema import FAQ, HowTo, Tip
+from ask_cfpb.models.blocks import AskAnswerContent, Tip
+from v1.atomic_elements.schema import FAQ, HowTo
 
 
 @override_settings(LANGUAGE_CODE="en-US", LANGUAGES=(("en", "English"),))
