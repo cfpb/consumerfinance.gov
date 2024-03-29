@@ -14,15 +14,16 @@
         <section class="m-search-hero">
             <div class="m-search-hero_text">
                 {% for block in page.header -%}
-                    {% if block.block_type != 'hero' %}
-                        {{ render_block.render(block, loop.index) }}
-                    {% endif %}
+                    {{ render_block.render(block, loop.index) }}
                 {%- endfor %}
             </div>
             <div class="m-search-hero_image-wrapper">
-                {% for block in page.header_sidebar -%}
-                    {% include_block block %}
-                {%- endfor %}
+                <img class="m-search-hero_image"
+                     srcset="https://files.consumerfinance.gov/f/images/SmallSearchInterfaceImage.original.jpg,
+                             https://files.consumerfinance.gov/f/images/LargeSearchInterfaceImage.original.jpg 2x"
+                     src="https://files.consumerfinance.gov/f/images/LargeSearchInterfaceImage.original.jpg"
+                     width="498"
+                     alt="Illustration of teacher and student activity books">
             </div>
         </section>
         <div class="block block__padded-top block__flush-top u-mb30">

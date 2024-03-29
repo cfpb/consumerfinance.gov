@@ -25,7 +25,6 @@ from teachers_digital_platform.models.django import (
     ActivityType,
 )
 from teachers_digital_platform.models.pages import ActivityPage
-from teachers_digital_platform.molecules import TdpSearchHeroImage
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
 
@@ -79,19 +78,10 @@ class ActivityIndexPage(CFGOVPage):
         use_json_field=True,
     )
 
-    header_sidebar = StreamField(
-        [
-            ("image", TdpSearchHeroImage()),
-        ],
-        blank=True,
-        use_json_field=True,
-    )
-
     results = {}
     activity_setups = None
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("header"),
-        FieldPanel("header_sidebar"),
     ]
 
     edit_handler = TabbedInterface(
