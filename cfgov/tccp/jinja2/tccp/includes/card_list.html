@@ -86,9 +86,8 @@
             default=(
                 'See details'
                 if card.annual_fee_estimated is none and card.periodic_fee_type
-                else 'None'
-            ),
-            boolean=true,
+                else '$0'
+            )
         ),
         apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
         (rewards | join(', ')) if rewards else 'None'
