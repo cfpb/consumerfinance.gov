@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
 from tccp.models import CardSurveyData
@@ -127,3 +127,28 @@ class CardSurveyDataQuerySetTests(TestCase):
                 "purchase_apr_great_pct50": 1,
             },
         )
+
+
+class CardSurveyDataTests(SimpleTestCase):
+    def test_annual_fee_estimated(self):
+        tests = [
+            [["Annual"], 100, 0, 0, 100],
+            [["Monthly"], 0, 10, 0, 120],
+            [["Weekly"], 0, 0, 10, 520],
+            [["Other"], 0, 0, 0, None],
+            [["Annual", "Other"], 100, 0, 0, None],
+            [["Annual", "Monthly", "Weekly"], 100, 10, 10, 740],
+        ]
+
+        for fee_types, annual, monthly, weekly, expected in tests:
+            test = {
+                "periodic_fee_type": fee_types,
+                "annual_fee": annual,
+                "monthly_fee": monthly,
+                "weekly_fee": weekly,
+            }
+
+            with self.subTest(**test):
+                self.assertEqual(
+                    CardSurveyData(**test).annual_fee_estimated, expected
+                )

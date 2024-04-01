@@ -1,5 +1,5 @@
 {% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/fields.html' import apr, apr_range, currency %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
@@ -81,7 +81,15 @@
     {% do card_rows.append( [
         card_name_cell(card) | safe,
         purchase_apr_cell(card) | safe,
-        (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
+        currency(
+            card.annual_fee_estimated,
+            default=(
+                'See details'
+                if card.annual_fee_estimated is none and card.periodic_fee_type
+                else 'None'
+            ),
+            boolean=true,
+        ),
         apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
         (rewards | join(', ')) if rewards else 'None'
     ] ) %}

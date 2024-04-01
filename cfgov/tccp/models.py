@@ -10,7 +10,7 @@ from django.db.models.functions import Coalesce
 from tailslide import Percentile
 
 from . import enums
-from .fields import CurrencyField, JSONListField, YesNoBooleanField
+from .fields import CurrencyDecimalField, JSONListField, YesNoBooleanField
 
 
 REPORT_DATE_REGEX = re.compile(r"Data as of (\w+ \d+)")
@@ -251,7 +251,9 @@ class CardSurveyData(models.Model):
     grace_period_offered = YesNoBooleanField()
     grace_period = models.PositiveIntegerField(null=True, blank=True)
     minimum_finance_charge = YesNoBooleanField()
-    minimum_finance_charge_dollars = CurrencyField(null=True, blank=True)
+    minimum_finance_charge_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     balance_computation_method = JSONListField(
         choices=enums.BalanceComputationChoices
     )
@@ -261,25 +263,27 @@ class CardSurveyData(models.Model):
     periodic_fee_type = JSONListField(
         choices=enums.PeriodicFeeTypeChoices, blank=True
     )
-    annual_fee = CurrencyField(null=True, blank=True)
-    monthly_fee = CurrencyField(null=True, blank=True)
-    weekly_fee = CurrencyField(null=True, blank=True)
+    annual_fee = CurrencyDecimalField(null=True, blank=True)
+    monthly_fee = CurrencyDecimalField(null=True, blank=True)
+    weekly_fee = CurrencyDecimalField(null=True, blank=True)
     other_periodic_fee_name = models.TextField(null=True, blank=True)
-    other_periodic_fee_amount = CurrencyField(null=True, blank=True)
+    other_periodic_fee_amount = CurrencyDecimalField(null=True, blank=True)
     other_periodic_fee_frequency = models.TextField(null=True, blank=True)
     fee_varies = YesNoBooleanField(null=True, blank=True)
-    periodic_min = CurrencyField(null=True, blank=True)
-    periodic_max = CurrencyField(null=True, blank=True)
+    periodic_min = CurrencyDecimalField(null=True, blank=True)
+    periodic_max = CurrencyDecimalField(null=True, blank=True)
     fee_explanation = models.TextField(null=True, blank=True)
     purchase_transaction_fees = YesNoBooleanField()
     purchase_transaction_fee_type = JSONListField(
         choices=enums.PurchaseTransactionFeeTypeChoices, blank=True
     )
-    purchase_transaction_fee_dollars = CurrencyField(null=True, blank=True)
+    purchase_transaction_fee_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     purchase_transaction_fee_percentage = models.FloatField(
         null=True, blank=True
     )
-    minimum_purchase_transaction_fee_amount = CurrencyField(
+    minimum_purchase_transaction_fee_amount = CurrencyDecimalField(
         null=True, blank=True
     )
     purchase_transaction_fee_calculation = models.TextField(
@@ -289,9 +293,11 @@ class CardSurveyData(models.Model):
     balance_transfer_fee_types = JSONListField(
         choices=enums.BalanceTransferFeeTypeChoices, blank=True
     )
-    balance_transfer_fee_dollars = CurrencyField(null=True, blank=True)
+    balance_transfer_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     balance_transfer_fee_percentage = models.FloatField(null=True, blank=True)
-    minimum_balance_transfer_fee_amount = CurrencyField(null=True, blank=True)
+    minimum_balance_transfer_fee_amount = CurrencyDecimalField(
+        null=True, blank=True
+    )
     balance_transfer_fee_calculation = models.TextField(null=True, blank=True)
     cash_advance_fees = YesNoBooleanField()
     cash_advance_fee_for_each_transaction = YesNoBooleanField(
@@ -300,19 +306,23 @@ class CardSurveyData(models.Model):
     cash_advance_fee_types = JSONListField(
         choices=enums.CashAdvanceFeeTypeChoices, blank=True
     )
-    cash_advance_fee_dollars = CurrencyField(null=True, blank=True)
+    cash_advance_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     cash_advance_fee_percentage = models.FloatField(null=True, blank=True)
-    minimum_cash_advance_fee_amount = CurrencyField(null=True, blank=True)
+    minimum_cash_advance_fee_amount = CurrencyDecimalField(
+        null=True, blank=True
+    )
     cash_advance_fee_calculation = models.TextField(null=True, blank=True)
     foreign_transaction_fees = YesNoBooleanField()
     foreign_transaction_fees_types = JSONListField(
         choices=enums.ForeignTransactionFeeTypeChoices, blank=True
     )
-    foreign_transaction_fee_dollars = CurrencyField(null=True, blank=True)
+    foreign_transaction_fee_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     foreign_transaction_fee_percentage = models.FloatField(
         null=True, blank=True
     )
-    minimum_foreign_transaction_fee_amount = CurrencyField(
+    minimum_foreign_transaction_fee_amount = CurrencyDecimalField(
         null=True, blank=True
     )
     foreign_transaction_fee_calculation = models.TextField(
@@ -322,39 +332,41 @@ class CardSurveyData(models.Model):
     late_fee_types = JSONListField(
         choices=enums.LateFeeTypeChoices, blank=True
     )
-    late_fee_dollars = CurrencyField(null=True, blank=True)
-    late_fee_six_month_billing_cycle = CurrencyField(null=True, blank=True)
+    late_fee_dollars = CurrencyDecimalField(null=True, blank=True)
+    late_fee_six_month_billing_cycle = CurrencyDecimalField(
+        null=True, blank=True
+    )
     late_fee_policy_details = models.TextField(null=True, blank=True)
     fee_varies36 = YesNoBooleanField(null=True, blank=True)
-    minimum37 = CurrencyField(null=True, blank=True)
-    maximum38 = CurrencyField(null=True, blank=True)
+    minimum37 = CurrencyDecimalField(null=True, blank=True)
+    maximum38 = CurrencyDecimalField(null=True, blank=True)
     fee_explanation39 = models.TextField(null=True, blank=True)
     over_limit_fees = YesNoBooleanField()
     over_limit_fee_types = JSONListField(
         choices=enums.OverlimitFeeTypeChoices, blank=True
     )
-    over_limit_fee_dollars = CurrencyField(null=True, blank=True)
+    over_limit_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     overlimit_fee_detail = models.TextField(null=True, blank=True)
     other_fees = YesNoBooleanField()
     additional_fees = YesNoBooleanField(null=True, blank=True)
     other_fee_name = models.TextField(null=True, blank=True)
-    other_fee_amount = CurrencyField(null=True, blank=True)
+    other_fee_amount = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation = models.TextField(null=True, blank=True)
     other_fee_name_2 = models.TextField(null=True, blank=True)
-    other_fee_amount_2 = CurrencyField(null=True, blank=True)
+    other_fee_amount_2 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_2 = models.TextField(null=True, blank=True)
     other_fee_name_3 = models.TextField(null=True, blank=True)
-    other_fee_amount_3 = CurrencyField(null=True, blank=True)
+    other_fee_amount_3 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_3 = models.TextField(null=True, blank=True)
     other_fee_name_4 = models.TextField(null=True, blank=True)
-    other_fee_amount_4 = CurrencyField(null=True, blank=True)
+    other_fee_amount_4 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_4 = models.TextField(null=True, blank=True)
     other_fee_name_5 = models.TextField(null=True, blank=True)
-    other_fee_amount_5 = CurrencyField(null=True, blank=True)
+    other_fee_amount_5 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_5 = models.TextField(null=True, blank=True)
     fee_varies56 = YesNoBooleanField(null=True, blank=True)
-    minimum57 = CurrencyField(null=True, blank=True)
-    maximum58 = CurrencyField(null=True, blank=True)
+    minimum57 = CurrencyDecimalField(null=True, blank=True)
+    maximum58 = CurrencyDecimalField(null=True, blank=True)
     fee_explanation59 = models.TextField(null=True, blank=True)
     services = JSONListField(choices=enums.ServicesChoices, blank=True)
     other_services = models.TextField(null=True, blank=True)
@@ -399,3 +411,24 @@ class CardSurveyData(models.Model):
         ]
 
     objects = CardSurveyDataQuerySet.as_manager()
+
+    @property
+    def annual_fee_estimated(self):
+        """Estimate a card's annual fee from its periodic fees.
+
+        If a card has "Other" periodic fees, we can't accurately estimate its
+        annual fee.
+        """
+        if "Other" in self.periodic_fee_type:
+            return None
+
+        fee = 0
+
+        if "Annual" in self.periodic_fee_type and self.annual_fee:
+            fee += self.annual_fee
+        if "Monthly" in self.periodic_fee_type and self.monthly_fee:
+            fee += 12 * self.monthly_fee
+        if "Weekly" in self.periodic_fee_type and self.weekly_fee:
+            fee += 52 * self.weekly_fee
+
+        return fee

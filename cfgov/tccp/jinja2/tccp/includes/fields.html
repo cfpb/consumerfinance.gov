@@ -9,3 +9,11 @@
         {{ apr(min) }} - {{ apr(max) }}
     {%- endif %}
 {%- endmacro -%}
+
+{%- macro currency(value, default=none, boolean=false) -%}
+    {{
+        ('$%.2f' | format(value))
+        if value is not none and (value or not boolean)
+        else (default if default is not none else "None")
+    }}
+{%- endmacro -%}

@@ -29,12 +29,14 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CardSurveyDataListSerializer(CardSurveyDataSerializer):
+    annual_fee_estimated = serializers.FloatField()
     purchase_apr_for_tier = serializers.FloatField()
     purchase_apr_for_tier_rating = serializers.IntegerField()
     transfer_apr_for_tier = serializers.FloatField()
 
     class Meta(CardSurveyDataSerializer.Meta):
         fields = [
+            "annual_fee_estimated",
             "institution_name",
             "periodic_fee_type",
             "product_name",
