@@ -48,7 +48,9 @@ function updateBreadcrumb() {
  */
 function moveOrderingDropdown() {
   const orderingDropdown = document.querySelector('#tccp-ordering');
-  document.querySelector('#tccp-ordering-container').append(orderingDropdown);
+  if (orderingDropdown) {
+    document.querySelector('#tccp-ordering-container').append(orderingDropdown);
+  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
