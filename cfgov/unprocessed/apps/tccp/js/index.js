@@ -10,6 +10,8 @@ function init() {
   attach('show-more', 'click', handleShowMore);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
+  // Move the card ordering dropdown below the expandable
+  moveOrderingDropdown();
 }
 
 /**
@@ -39,6 +41,16 @@ function updateBreadcrumb() {
   }
 }
 
-window.addEventListener('load', () => {
+/**
+ * Moves the card ordering dropdown outside the filters' expandable to
+ * improve its visibility. Doing this via JS instead of at the template
+ * level preserves the HTML form for no-JS users.
+ */
+function moveOrderingDropdown() {
+  const orderingDropdown = document.querySelector('#tccp-ordering');
+  document.querySelector('#tccp-ordering-container').append(orderingDropdown);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
   init();
 });

@@ -25,3 +25,8 @@ class SituationSelectMultiple(CheckboxSelectMultiple):
 
 class Select(forms.Select):
     template_name = "tccp/widgets/select.html"
+
+    def __init__(self, attrs=None, **kwargs):
+        attrs = attrs or {}
+        attrs.setdefault("form", "tccp-filters")
+        super().__init__(attrs=attrs, **kwargs)

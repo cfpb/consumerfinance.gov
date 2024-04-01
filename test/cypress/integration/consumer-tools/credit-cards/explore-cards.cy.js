@@ -45,6 +45,11 @@ describe('Explore credit cards results page', () => {
     cy.get('h1').contains('Customize for your situation').should('not.exist');
     cy.get('h2').contains('Application requirements').should('exist');
   });
+  it('should have the ordering option outside the filters expandable', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('form#tccp-filters select#tccp-ordering').should('not.exist');
+  });
 });
 
 describe('Explore credit card details page', () => {

@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
-from tccp.widgets import RadioSelect
+from tccp.widgets import RadioSelect, Select
 
 
 class RadioSelectTests(SimpleTestCase):
@@ -18,3 +18,8 @@ class RadioSelectTests(SimpleTestCase):
             RadioSelect(attrs={"class": "a-something-else"}).attrs,
             {"class": "a-something-else"},
         )
+
+
+class SelectTests(SimpleTestCase):
+    def test_init_without_attrs_sets_class(self):
+        self.assertEqual(Select().attrs, {"form": "tccp-filters"})
