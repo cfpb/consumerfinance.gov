@@ -51,7 +51,7 @@ export class ExploreCreditCards {
       return cy
         .get('.htmx-container')
         .not('.htmx-request')
-        .get('.o-filterable-list-results table tr')
+        .get('.m-card--tabular')
         .filter(':visible')
         .then((el) => resolve(el.length));
     });
