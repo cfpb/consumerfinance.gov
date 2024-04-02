@@ -69,7 +69,7 @@
         <article class="m-card m-card--tabular">
             <a href="{{ card.url }}">
                 <hgroup class="m-card__heading-group">
-                    <h3 class="m-card__heading">{{ card.institution_name | safe }}</h3>
+                    <h3 class="m-card__heading">{{ card.institution_name }}</h3>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
                 </hgroup>
                 <div class="a-credit-card-apr-rating">{{ card_rating(card) | safe }}</div>
