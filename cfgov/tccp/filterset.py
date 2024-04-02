@@ -10,7 +10,7 @@ from .enums import CreditTierChoices, RewardsChoices, StateChoices
 from .filters import CardOrderingFilter, CheckboxFilter, MultipleCheckboxFilter
 from .models import CardSurveyData
 from .situations import SituationChoices, get_situation_by_title
-from .widgets import Select
+from .widgets import OrderingSelect, Select
 
 
 class CardSurveyDataFilterSet(filters.FilterSet):
@@ -50,7 +50,10 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         method="filter_for_contains",
     )
     ordering = CardOrderingFilter(
-        label="Sort by", null_label=None, empty_label=None, widget=Select
+        label="Sort by",
+        null_label=None,
+        empty_label=None,
+        widget=OrderingSelect,
     )
 
     class Meta:

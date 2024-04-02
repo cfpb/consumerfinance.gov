@@ -50,7 +50,7 @@
         </fieldset>
     </div>
 
-    <div class="o-form_group">
+    <div class="o-form_group" id="tccp-ordering">
         {{ render_field(form.ordering, "select") }}
     </div>
 
@@ -63,8 +63,9 @@
 
 <form action="."
     method="get"
+    id="tccp-filters"
     hx-boost="true"
-    hx-trigger="change"
+    hx-trigger="change from:.htmx-container"
     hx-swap="show:none"
     hx-indicator=".htmx-container"
     hx-target=".htmx-results"
