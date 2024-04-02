@@ -225,6 +225,7 @@
     &::after {
       content: none;
     }
+
     @media only screen and (min-width: @bp-sm-min) {
       font-size: unit((22px / @base-font-size-px), rem);
       strong {
@@ -237,13 +238,13 @@
 // "Show more results" functionality for JS users
 // Only show the first 10 results
 html.js .o-filterable-list-results__partial {
-  table {
-    tr:nth-child(10) {
+  .o-card-group_cards {
+    .m-card:nth-child(10) {
       border-bottom: 1px solid @table-border;
       margin-bottom: unit((10px / @base-font-size-px), em);
     }
 
-    tr:nth-child(n + 11) {
+    .m-card:nth-child(n + 11) {
       display: none;
     }
   }
