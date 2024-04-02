@@ -13,15 +13,8 @@
 
                              {
                                  columns: [
-                                     {
-                                        'heading': 'Column 1',
-                                        'preserve_column_on_mobile': true   # Optional
-                                     },
-                                     {
-                                        'heading': 'Column 2',
-                                        'preserve_column_on_mobile': true,  # Optional
-                                        'right_align': true                 # Optional
-                                     },
+                                     {'heading': 'Column 1'},
+                                     {'heading': 'Column 2'},
                                      ...
                                  ],
                                  rows [
@@ -43,14 +36,11 @@
 
    stack_on_mobile:        Stack the table columns on mobile.
 
-   directory_table:        Uses first column data to stack rows.
-
    ========================================================================== #}
 
 {%- set first_column_header = 'first_column_header' in (value.options or []) -%}
 {%- set is_full_width = 'is_full_width' in (value.options or []) -%}
-{%- set directory_table = 'directory_table' in (value.options or []) -%}
-{%- set stack_on_mobile = directory_table or ('stack_on_mobile' in (value.options or [])) -%}
+{%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
 {% if value.heading -%}
     {% include_block value.heading %}
@@ -60,33 +50,16 @@
     <p class="u-mb30">{{ value.text_introduction }}</p>
 {%- endif %}
 
-{%- set columns_to_preserve_on_mobile = [] %}
-{%- set columns_to_right_align = [] %}
-{% if value.data.columns | selectattr('heading') | list -%}
-    {% for col in value.data.columns %}
-        {%- do columns_to_preserve_on_mobile.append(loop.index0) if col.preserve_column_on_mobile and col.heading %}
-        {%- do columns_to_right_align.append(loop.index0) if col.right_align %}
-    {% endfor %}
-{%- endif %}
-
-{%- set stack_on_mobile_hybrid = true if stack_on_mobile and columns_to_preserve_on_mobile -%}
-
 <table class="o-table
     {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
-    {{- ' o-table__stack-on-small-hybrid' if stack_on_mobile_hybrid else '' -}}
-    {{- ' o-table__entry-header-on-small' if directory_table else '' -}}
     {{- ' u-w100pct' if is_full_width else '' -}}
-" {{- 'style="--columns: ' | safe ~ columns_to_preserve_on_mobile | length ~ '"' | safe if stack_on_mobile_hybrid else '' -}} >
+">
     {% if value.data.columns | selectattr('heading') | list -%}
     <thead>
         <tr>
             {% for col in value.data.columns %}
                 {% if col.heading -%}
-                    <th scope="col"
-                        {{- ' data-column' if col.preserve_column_on_mobile else '' -}}
-                        {{- ' class="o-table_cell__right-align"' | safe if col.right_align else '' -}}>
-                        {{ col.heading }}
-                    </th>
+                    <th scope="col">{{ col.heading }}</th>
                 {%- endif %}
             {% endfor %}
         </tr>
@@ -106,18 +79,12 @@
                     {%- endif -%}
 
                     {%- set col_heading = value.data.columns[loop.index0].heading -%}
-                    {%- if (stack_on_mobile or stack_on_mobile_hybrid) and col_heading -%}
+                    {%- if stack_on_mobile and col_heading -%}
                         {% set attrs = attrs ~
                             (' data-label="' | safe) ~
                             (col_heading | escape) ~
                             ('"' | safe)
                         %}
-                    {%- endif -%}
-                    {%- if stack_on_mobile_hybrid and col_heading and loop.index0 in columns_to_preserve_on_mobile -%}
-                        {% set attrs = attrs ~ ' data-column' %}
-                    {%- endif -%}
-                    {%- if loop.index0 in columns_to_right_align -%}
-                        {% set attrs = attrs ~ ' class="o-table_cell__right-align"' | safe %}
                     {%- endif -%}
 
                     <{{ tag }}{{ attrs }}>
