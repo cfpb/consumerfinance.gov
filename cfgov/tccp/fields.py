@@ -15,6 +15,23 @@ class CurrencyField(models.TextField):
     ]
 
 
+class CurrencyDecimalField(models.DecimalField):
+    default_validators = models.DecimalField.default_validators + [
+        RegexValidator(CURRENCY_REGEX)
+    ]
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("decimal_places", 2)
+        kwargs.setdefault("max_digits", 10)
+        super().__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if isinstance(value, str):
+            value = value.lstrip("$")
+
+        return super().to_python(value)
+
+
 class JSONListField(models.JSONField):
     default_error_messages = {"invalid_value": "%(value)s must be a list."}
     description = "A JSON list"
