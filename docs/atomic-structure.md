@@ -58,7 +58,7 @@ Prefixed with `m-` in class names.
 >
   {{ svg_icon('error') }}
   <div class="m-notification_content" role="alert">
-    <div class="h4 m-notification_message">Page not found.</div>
+    <div class="m-notification_message">Page not found.</div>
   </div>
 </div>
 ```

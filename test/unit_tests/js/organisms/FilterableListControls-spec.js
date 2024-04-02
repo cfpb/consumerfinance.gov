@@ -8,7 +8,7 @@ const HTML_SNIPPET = `
             o-expandable__background
             o-expandable__border">
     <button class="o-expandable_header" type="button">
-        <span class="h4 o-expandable_label">
+        <span class="o-expandable_label">
             Filter posts
         </span>
         <span class="o-expandable_cues">
@@ -166,7 +166,7 @@ const HTML_SNIPPET = `
 
 <div class="m-notification">
     <div class="m-notification_content">
-        <div class="h4 m-notification_message"></div></div>
+        <div class="m-notification_message"></div></div>
     </div>
 
 </div>

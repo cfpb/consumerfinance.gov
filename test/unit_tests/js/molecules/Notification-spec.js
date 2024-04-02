@@ -5,7 +5,7 @@ const HTML_SNIPPET = `
   <svg xmlns="http://www.w3.org/2000/svg"
        viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
   <div class="m-notification_content">
-    <div class="h4 m-notification_message">Notification content</div>
+    <div class="m-notification_message">Notification content</div>
   </div>
 </div>
 `;
