@@ -135,7 +135,7 @@ class CardDetailViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         card = json.loads(response.content)
-        self.assertEqual(card["product_name"], "Test Card")
+        self.assertEqual(card["card"]["product_name"], "Test Card")
 
     def test_get_invalid_uses_standard_404_handling(self):
         with self.assertRaises(Http404):

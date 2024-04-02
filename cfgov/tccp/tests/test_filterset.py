@@ -7,6 +7,9 @@ from .baker import baker
 
 
 class CardSurveyDataFilterSetTests(TestCase):
+    def get_queryset(self):
+        return CardSurveyData.objects.with_ratings()
+
     def test_filter_defaults_used_if_not_provided(self):
         self.assertEqual(
             CardSurveyDataFilterSet().data,
@@ -31,7 +34,7 @@ class CardSurveyDataFilterSetTests(TestCase):
             _quantity=10,
         )
 
-        qs = CardSurveyData.objects.all()
+        qs = self.get_queryset()
         self.assertEqual(qs.count(), 10)
 
         fs = CardSurveyDataFilterSet(
@@ -50,7 +53,7 @@ class CardSurveyDataFilterSetTests(TestCase):
                 _quantity=3,
             )
 
-        qs = CardSurveyData.objects.all()
+        qs = self.get_queryset()
         self.assertEqual(qs.count(), 9)
 
         fs = CardSurveyDataFilterSet({"location": "PA"}, queryset=qs)
@@ -64,7 +67,7 @@ class CardSurveyDataFilterSetTests(TestCase):
             periodic_fee_type=["Annual"],
         )
 
-        qs = CardSurveyData.objects.all()
+        qs = self.get_queryset()
         self.assertEqual(qs.count(), 1)
 
         fs = CardSurveyDataFilterSet({"no_account_fee": False}, queryset=qs)
@@ -81,7 +84,7 @@ class CardSurveyDataFilterSetTests(TestCase):
             rewards=["Cashback rewards"],
         )
 
-        qs = CardSurveyData.objects.all()
+        qs = self.get_queryset()
         self.assertEqual(qs.count(), 1)
 
         fs = CardSurveyDataFilterSet(

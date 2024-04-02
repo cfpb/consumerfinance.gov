@@ -30,7 +30,7 @@ class CardOrderingFilter(filters.OrderingFilter):
             # If we're sorting by transfer APR, we want to exclude cards that
             # don't have either a tier-specific APR or a {minimum, maximum}
             # range, which we previously coalesced into the
-            # transfer_apr_for_ordering field.
+            # transfer_apr_for_tier_max field.
             qs = qs.exclude(transfer_apr_for_tier_max__isnull=True)
 
             # We then order by that column first and purchase APR second.
