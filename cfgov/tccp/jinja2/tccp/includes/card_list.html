@@ -68,10 +68,10 @@
         {%- for card in results %}
         <article class="m-card m-card--tabular">
             <a href="{{ card.url }}">
-                <hgroup class="m-card__heading-group">
+                <div class="m-card__heading-group">
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
-                </hgroup>
+                </div>
                 <div class="a-credit-card-apr-rating">{{ card_rating(card) | safe }}</div>
                 <dl class="m-data-specs">
                     <div class="m-data-spec m-data-spec--apr">
