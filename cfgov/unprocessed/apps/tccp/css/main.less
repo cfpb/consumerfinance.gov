@@ -92,6 +92,147 @@
   }
 }
 
+.m-card.m-card--tabular {
+  padding: 0;
+  border: 0;
+  color: var(--black);
+
+  > a {
+    padding: unit((20px / @base-font-size-px), em);
+    border: 1px solid #d2d3d5;
+    border-bottom-width: 3px;
+    color: var(--black);
+  }
+  &:hover {
+    > a {
+      box-shadow:
+        0 2px 0 0 inset var(--gray-20),
+        2px 0 0 0 inset var(--gray-20),
+        -2px 0 0 0 inset var(--gray-20);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 1px;
+      height: 5px;
+      width: 100%;
+      background: var(--green);
+    }
+  }
+
+  .m-card__heading-group {
+    margin-bottom: unit((20px / @base-font-size-px), em);
+  }
+
+  .m-card__heading {
+    margin-bottom: 0;
+    color: var(--gray);
+    font-size: unit((16px / @base-font-size-px), em);
+    font-weight: 400;
+  }
+
+  .m-card__subtitle {
+    display: inline;
+    border-bottom: 1px dotted @link-underline;
+    color: @link-text;
+
+    a & {
+      &:visited {
+        border-color: @link-underline-visited;
+        color: @link-text-visited;
+      }
+    }
+  }
+}
+
+.m-data-specs {
+  display: grid;
+  grid-template-areas:
+    'apr transfer'
+    'fee rewards'
+    '. requirements';
+  grid-template-columns: 2fr 3fr;
+  column-gap: 20px;
+  row-gap: 15px;
+
+  @media only screen and (min-width: @bp-sm-min) {
+    grid-template-areas: 'apr fee transfer rewards requirements';
+    grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
+  }
+}
+
+.m-data-spec {
+  display: flex;
+  flex-direction: column-reverse;
+
+  &--apr {
+    grid-area: apr;
+  }
+
+  &--fee {
+    grid-area: fee;
+  }
+
+  &--transfer {
+    grid-area: transfer;
+  }
+
+  &--rewards {
+    grid-area: rewards;
+    text-transform: lowercase;
+
+    dd::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &--requirements {
+    grid-area: requirements;
+    justify-self: end;
+    dt {
+      .u-visually-hidden;
+    }
+  }
+
+  dt,
+  &.m-data-spec--requirements dd {
+    text-transform: none;
+    font-size: unit((14px / @base-font-size-px), rem);
+    font-weight: normal;
+    strong {
+      font-weight: 500;
+    }
+
+    @media only screen and (min-width: @bp-sm-min) {
+      font-size: unit((16px / @base-font-size-px), rem);
+      line-height: unit((22px / @base-font-size-px), rem);
+      strong {
+        font-size: unit((18px / @base-font-size-px), rem);
+      }
+    }
+  }
+
+  dd {
+    margin: 0;
+    font-size: unit((16px / @base-font-size-px), rem);
+    strong {
+      font-size: unit((18px / @base-font-size-px), rem);
+      font-weight: 500;
+    }
+    &::after {
+      content: none;
+    }
+    @media only screen and (min-width: @bp-sm-min) {
+      font-size: unit((22px / @base-font-size-px), rem);
+      strong {
+        font-size: unit((26px / @base-font-size-px), rem);
+      }
+    }
+  }
+}
+
 // "Show more results" functionality for JS users
 // Only show the first 10 results
 html.js .o-filterable-list-results__partial {
@@ -107,50 +248,20 @@ html.js .o-filterable-list-results__partial {
   }
 }
 
-// Some cards list a lot of available locations and disrupt the table layout.
-// Cap the width of the availability cell on non-mobile screens to prevent this.
-@media only screen and (min-width: @bp-sm-min) {
-  td[data-label='Availability'] {
-    max-width: unit((350px / @base-font-size-px), em);
-  }
-  td[data-label='Purchase APR'] {
-    min-width: unit((215px / @base-font-size-px), em);
-    .cf-icon-svg:first-of-type {
-      margin-left: 0;
-    }
-  }
-}
+.a-credit-card-apr-rating {
+  margin-bottom: unit((20px / @base-font-size-px), em);
+  font-size: unit((18px / @base-font-size-px), em);
+  font-weight: 500;
 
-.a-card-institution-name {
-  .heading-5();
-  color: var(--gray);
-  margin-bottom: 0;
-}
-
-.a-card-purchase-apr-rating {
-  // Put the APR ratings on their own line on non-mobile devices
-  @media only screen and (min-width: @bp-sm-min) {
-    display: flex;
-    align-items: center;
-  }
-
-  .cf-icon-svg:first-of-type {
-    margin-left: unit((4px / @base-font-size-px), em);
-  }
-
-  .cf-icon-svg:last-of-type {
-    margin-right: unit((2px / @base-font-size-px), em);
-  }
-
-  &__less .cf-icon-svg {
+  &--less .cf-icon-svg {
     color: var(--green);
   }
 
-  &__average .cf-icon-svg {
+  &--average .cf-icon-svg {
     color: var(--gold);
   }
 
-  &__more .cf-icon-svg {
+  &--more .cf-icon-svg {
     color: var(--red);
   }
 }

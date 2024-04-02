@@ -40,7 +40,7 @@ describe('Explore credit cards results page', () => {
   it('should link to card detail pages', () => {
     exploreCards.openResultsPage();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
     cy.get('h1').contains('Customize for your situation').should('not.exist');
     cy.get('h2').contains('Application requirements').should('exist');
@@ -61,7 +61,7 @@ describe('Explore credit card details page', () => {
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
     cy.get('.m-breadcrumbs_crumb:last-child')
       .should('have.attr', 'href')
@@ -72,7 +72,7 @@ describe('Explore credit card details page', () => {
   it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
     cy.get('.m-breadcrumbs_crumb:last-child')
       .should('have.attr', 'href')
