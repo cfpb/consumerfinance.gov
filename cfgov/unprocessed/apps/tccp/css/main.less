@@ -102,6 +102,11 @@
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
+
+    &:visited .m-card__subtitle {
+      border-color: @link-underline-visited;
+      color: @link-text-visited;
+    }
   }
   &:hover {
     > a {
@@ -109,6 +114,11 @@
         0 2px 0 0 inset var(--gray-20),
         2px 0 0 0 inset var(--gray-20),
         -2px 0 0 0 inset var(--gray-20);
+    }
+
+    .m-card__subtitle {
+      border-bottom: 1px solid @link-underline-hover;
+      color: @link-text-hover;
     }
 
     &::after {
@@ -137,13 +147,6 @@
     display: inline;
     border-bottom: 1px dotted @link-underline;
     color: @link-text;
-
-    a & {
-      &:visited {
-        border-color: @link-underline-visited;
-        color: @link-text-visited;
-      }
-    }
   }
 }
 
@@ -166,6 +169,7 @@
 .m-data-spec {
   display: flex;
   flex-direction: column-reverse;
+  align-self: start;
 
   &--apr {
     grid-area: apr;
@@ -190,7 +194,7 @@
 
   &--requirements {
     grid-area: requirements;
-    align-self: center;
+    align-self: start;
     justify-self: end;
     dt {
       .u-visually-hidden;
@@ -228,6 +232,7 @@
 
     @media only screen and (min-width: @bp-sm-min) {
       font-size: unit((22px / @base-font-size-px), rem);
+      line-height: unit((26px / @base-font-size-px), rem);
       strong {
         font-size: unit((26px / @base-font-size-px), rem);
       }
@@ -252,8 +257,13 @@ html.js .o-filterable-list-results__partial {
 
 .a-credit-card-apr-rating {
   margin-bottom: unit((20px / @base-font-size-px), em);
-  font-size: unit((18px / @base-font-size-px), em);
-  font-weight: 500;
+  font-size: unit((16px / @base-font-size-px), em);
+  font-weight: 600;
+
+  @media only screen and (min-width: @bp-sm-min) {
+    font-size: unit((18px / @base-font-size-px), em);
+    font-weight: 500;
+  }
 
   &--less .cf-icon-svg {
     color: var(--green);
