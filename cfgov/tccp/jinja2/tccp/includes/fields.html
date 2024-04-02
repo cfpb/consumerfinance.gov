@@ -12,7 +12,7 @@
 
 {%- macro currency(value, default=none, boolean=false) -%}
     {{
-        ('$%.2f' | format(value))
+        ('$' ~ ('%.0f' if value == (value | int) else '%.2f') | format(value))
         if value is not none and (value or not boolean)
         else (default if default is not none else "None")
     }}
