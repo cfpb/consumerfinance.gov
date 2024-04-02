@@ -42,6 +42,7 @@ class CardSurveyDataListSerializer(CardSurveyDataSerializer):
             "product_name",
             "purchase_apr_for_tier",
             "purchase_apr_for_tier_rating",
+            "requirements_for_opening",
             "rewards",
             "top_25_institution",
             "transfer_apr_for_tier",

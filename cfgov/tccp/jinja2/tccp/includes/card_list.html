@@ -101,7 +101,7 @@
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have special requirements?</dt>
                         <dd>
-                            See card details page for special requirements
+                            {{ 'See card details page for special requirements' if card.requirements_for_opening else '' }}
                         </dd>
                     </div>
                 </dl>
