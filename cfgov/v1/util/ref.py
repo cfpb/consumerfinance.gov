@@ -21,6 +21,7 @@ related_posts_categories = [
             ("Press Release", "Press release"),
             ("Speech", "Speech"),
             ("Testimony", "Testimony"),
+            ("Letter", "Letter"),
         ),
     ),
 ]
@@ -124,6 +125,7 @@ categories = [
             ("press-release", "Press release"),
             ("speech", "Speech"),
             ("testimony", "Testimony"),
+            ("letter", "Letter"),
         ),
     ),
     (
@@ -268,6 +270,7 @@ def page_type_choices():
                 ("press-release", "Press release"),
                 ("speech", "Speech"),
                 ("testimony", "Testimony"),
+                ("letter", "Letter"),
             ),
         ),
     ]
@@ -357,6 +360,7 @@ def get_category_icon(category_name):
         "featured": "favorite",
         "fraud and scams": "money",
         "info for consumers": "information",
+        "letter": "email",
         "mortgages": "mortgage",
         "money basics": "money",
         "money transfers": "money-transfer",

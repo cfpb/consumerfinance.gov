@@ -42,6 +42,7 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
             [
                 "consumer-advisories",
                 "directors-statement",
+                "letter",
                 "op-ed",
                 "press-release",
                 "speech",
