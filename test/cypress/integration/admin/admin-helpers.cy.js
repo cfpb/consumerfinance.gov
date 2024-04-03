@@ -212,11 +212,10 @@ export class AdminPage {
   }
 
   clickBlock(name) {
-    const addBlockButton = cy.get(
-      'div[data-contentpath="content"] .c-sf-add-button',
+    cy.get('div[data-contentpath="content"] .c-sf-add-button').should(
+      'be.visible',
     );
-    addBlockButton.should('be.visible');
-    addBlockButton.click();
+    cy.get('div[data-contentpath="content"] .c-sf-add-button').click();
 
     const addTableOption = cy.contains('div.w-combobox__option', name);
     addTableOption.should('be.visible');
