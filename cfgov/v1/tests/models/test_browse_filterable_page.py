@@ -46,6 +46,7 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
                 "press-release",
                 "speech",
                 "testimony",
+                "letter",
             ],
         )
 
