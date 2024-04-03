@@ -319,6 +319,62 @@ html.js .o-filterable-list-results__partial {
   }
 }
 
+.m-credit-tier-chart {
+  display: flex;
+  align-items: stretch;
+  font-size: unit((15px / @base-font-size-px), em);
+
+  @media only screen and (min-width: @bp-sm-min) {
+    margin-left: unit((-18px / @base-font-size-px), em);
+    font-size: unit((16px / @base-font-size-px), em);
+  }
+
+  &__tier {
+    display: flex;
+    flex-direction: column;
+    padding: unit((5px / @base-font-size-px), em)
+      unit((15px / @base-font-size-px), em);
+    background-color: var(--teal-10);
+
+    @media only screen and (min-width: @bp-sm-min) {
+      display: block;
+      padding: unit((5px / @base-font-size-px), em)
+        unit((20px / @base-font-size-px), em);
+    }
+  }
+  &__tier:first-child {
+    border-radius: 20px 0 0 20px;
+  }
+  &__tier:last-child {
+    border-radius: 0 20px 20px 0;
+  }
+  &__tier--selected {
+    background-color: var(--teal-dark);
+    color: var(--white);
+  }
+  &__tier--unselected + &__tier--unselected {
+    border-left: 1px solid var(--gray-40);
+  }
+  &__tier--selected + &__tier--selected {
+    border-left: 1px solid var(--white);
+  }
+  &__tier--unselected &__icon {
+    @media only screen and (min-width: @bp-sm-min) {
+      display: none;
+    }
+  }
+}
+
+.m-location-requirements {
+  white-space: nowrap;
+}
+
+.o-contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
 // htmx animated progress bar
 // See https://htmx.org/attributes/hx-indicator/
 .htmx-progress {

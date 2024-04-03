@@ -23,83 +23,135 @@
 
     <div class="eyebrow">{{ card.institution_name }}</div>
     <h1>{{ card.product_name }}</h1>
-
-    {{ data_published(card.report_date) }}
-
-    <h2>Application requirements</h2>
-    <dl class="m-list m-list__card-details">
-        <dt>Location</dt>
-        <dd>
-            {%- if card.availability_of_credit_card_plan == "One State/Territory" %}
-                {% set state_limitations = [card.state] %}
-            {% elif card.availability_of_credit_card_plan == "Regional" %}
-                {% set state_limitations = card.state_multiple %}
+    {% set credit_tiers = [
+        ("No credit score", "No score"),
+        ("619 or less", "Below 619"),
+        ("620 to 719", "620–719"),
+        ("720 or greater", "720+")
+    ] %}
+    <div class="m-credit-tier-chart">
+        {% for tier in credit_tiers %}
+            {% if tier[0] in card.targeted_credit_tiers | string %}
+                {% set targeted_tier = true %}
             {% else %}
-                {% set state_limitations = none %}
-            {% endif -%}
-
-            {% if not state_limitations %}
-                Available to anyone in the United States
-            {% else %}
-                Available only to people who live in
-                {{ 'specific counties in ' if card.pertains_to_specific_counties }}
-                {% for state in state_limitations %}
-                    {{ state_lookup[state] -}}
-                    {{- ', ' if not loop.last and loop.length > 2 -}}
-                    {{- 'and ' if loop.index == loop.length - 1}}
-                {% endfor %}
+                {% set targeted_tier = false %}
             {% endif %}
-        </dd>
-        {% if card.requirements_for_opening %}
-            <dt>Other requirements</dt>
-            {% for requirement in [
-                card.geographic_restrictions,
-                card.professional_affiliation,
-                card.other
-            ] %}
-                {% if requirement %}
-                    <dd>{{ requirement }}</dd>
+            <div class="m-credit-tier-chart__tier m-credit-tier-chart__tier{{ '--selected' if targeted_tier else '--unselected' }}">
+                <span class="m-credit-tier-chart__icon">
+                    {% if targeted_tier %}
+                        {{ svg_icon('approved-round') if targeted_tier }}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </span>
+                <span class="m-credit-tier-chart__label">{{ tier[1] }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="h4 u-mt5">
+        Recommended credit scores
+    </div>
+    {% if card.availability_of_credit_card_plan == "One State/Territory" %}
+        {% set availability = "single_state" %}
+        {% set available_states = [card.state] %}
+    {% elif card.availability_of_credit_card_plan == "Regional" %}
+        {% set availability = "multiple_states" %}
+        {% set available_states = card.state_multiple %}
+    {% else %}
+        {% set availability = "nationwide" %}
+        {% set available_states = none %}
+    {% endif %}
+    <div class="{{ 'u-mt45 u-mb45' if availability == 'multiple_states' or card.requirements_for_opening else 'u-mt30 u-mb30' }}">
+        <div class="m-location-requirements">
+            <div class="h2 u-mb0">
+                {% if availability == "nationwide" %}
+                    Nationwide
+                {% elif availability == "single_state" %}
+                    {{ state_lookup[available_states[0]] ~ ' only' }}
+                {% elif availability == "multiple_states" and not card.pertains_to_specific_counties %}
+                    State-by-state
+                {% else %}
+                    County-by-county
                 {% endif %}
+            </div>
+            <div class="h4 u-mt0">
+                Availability
+            </div>
+        </div>
+        {% if availability == "multiple_states" or card.geographic_restrictions is not none %}
+            <ul>
+                {% if availability == "multiple_states" %}
+                    <li>
+                        To apply, you must live in
+                        {{ 'certain counties in ' if card.pertains_to_specific_counties }}
+                        {% for state in available_states %}
+                            {{ state_lookup[state] -}}
+                            {{- ', ' if not loop.last and loop.length > 2 -}}
+                            {{- ' and ' if loop.index == loop.length - 1 -}}
+                        {% endfor %}
+                    </li>
+                {% endif %}
+                {% if card.geographic_restrictions is not none %}
+                    <li>{{ card.geographic_restrictions }}</li>
+                {% endif %}
+            </ul>
+        {% endif %}
+        {% if card.professional_affiliation is not none or card.other is not none %}
+            <div class="h4 u-mt15">Other requirements for applying</div>
+            <ul>
+                <li>
+                    {% for requirement in [
+                        card.professional_affiliation,
+                        card.other
+                    ] %}
+                        {% if requirement %}
+                            <dd>{{ requirement }}</dd>
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+    <div class="o-contact-info">
+        {% if card.website_for_consumer %}
+            {# Some issuers submitted more than one URL for a card, always separated
+                by a space. To catch those, we'll make a list and render a link for
+                each URL. #}
+            {% set urls = card.website_for_consumer.split() %}
+            {% for url in urls %}
+                {# TODO: Make this into a custom filter instead of rpartition #}
+                {% with value = {
+                    "url": url,
+                    "text": url.rpartition("//")[-1].partition("/")[0]
+                        | replace('www.', '')}
+                %}
+                    {% include "v1/includes/molecules/contact-hyperlink.html" %}
+                {% endwith %}
             {% endfor %}
         {% endif %}
-        <dt>Credit score</dt>
-        <dd>
-            This card is targeted to people with these credit scores:
-            {% set scores = [
-                "No credit score",
-                "619 or less",
-                "620 to 719",
-                "720 or greater"
-            ] %}
-            <table class="o-table">
-                <thead>
-                    <tr>
-                        {% for score in scores %}
-                            <th>{{ score }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        {% for score in scores %}
-                            <td>
-                                {{ "Yes" if
-                                    score in card.targeted_credit_tiers | string
-                                    else "No"
-                                }}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-        </dd>
-        <dt>
-            Down payment required?
-        </dt>
-        <dd>
-            {{ "Yes" if card.secured_card else "No" }}
-        </dd>
-    </dl>
+        {% if card.telephone_number_for_consumers %}
+            {# TODO: Make this into a custom filter instead of this terribleness #}
+            {% set phone_number = card.telephone_number_for_consumers | replace('-', '') | replace('(', '') | replace(')', '') | replace(' ', '') %}
+            {% if phone_number.startswith('1') %}
+                {% set phone_number = phone_number[1:] %}
+            {% endif %}
+            {% with value = {"phones": [{"number": phone_number}]} %}
+                {% include "v1/includes/molecules/contact-phone.html" %}
+            {% endwith %}
+        {% endif %}
+    </div>
+    <hr class="u-mt30">
+    {{ data_published(card.report_date) }}
+
+
+
+
+
+
+
+
+
+
     <h2>Purchases</h2>
     <dl class="m-list m-list__card-details">
         {% if card.purchase_apr_offered %}
@@ -307,6 +359,12 @@
             {% else %}
                 None
             {% endif %}
+        </dd>
+        <dt>
+            Down payment required?
+        </dt>
+        <dd>
+            {{ "Yes" if card.secured_card else "No" }}
         </dd>
     </dl>
     <h2>Balance transfers</h2>
@@ -726,33 +784,6 @@
                 card.balance_computation_method_details
             }}
         </dd>
-    </dl>
-    <h2>Contact information</h2>
-    <dl class="m-list m-list__card-details">
-        {% if card.website_for_consumer %}
-            <dt>Website</dt>
-            <dd>
-                {# Some issuers submitted more than one URL for a card. In all
-                    of those instances, the URLs are separated with a space, so
-                    we'll only turn the submitted URL into a link if it doesn't
-                    have a space in it for now. TODO: maybe split multiple URLs
-                    up.
-                #}
-                {% if ' ' is not in card.website_for_consumer %}
-                    <a href="{{ card.website_for_consumer }}">
-                        {{- card.website_for_consumer -}}
-                    </a>
-                {% else %}
-                    {{ card.website_for_consumer }}
-                {% endif %}
-            </dd>
-        {% endif %}
-        {% if card.telephone_number_for_consumers %}
-            <dt>Phone</dt>
-            <dd>
-                {{ card.telephone_number_for_consumers }}
-            </dd>
-        {% endif %}
     </dl>
 </div>
 
