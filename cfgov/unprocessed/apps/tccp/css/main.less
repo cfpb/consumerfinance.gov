@@ -3,7 +3,7 @@
 
 .respond-to-min(@bp-sm-min, {
   .o-form_group {
-    max-width: unit((380px / @base-font-size-px), em);
+    max-width: unit((380px / @base-font-size-px), rem);
   }
 });
 
@@ -24,7 +24,7 @@
 .m-btn-group {
   .u-btn-helper {
     width: 100%;
-    margin-top: unit((15px / @base-font-size-px), em);
+    margin-top: unit((15px / @base-font-size-px), rem);
     text-align: center;
     a {
       border-bottom-width: 1px;
@@ -33,7 +33,7 @@
       display: inline-block;
       width: auto;
       margin-top: 0;
-      margin-left: unit((6px / @btn-font-size), em);
+      margin-left: unit((6px / @btn-font-size), rem);
     });
   }
 }
@@ -55,7 +55,7 @@
   padding-left: 1.125em;
 
   .m-list_item {
-    margin-left: unit((15px / @base-font-size-px), em);
+    margin-left: unit((15px / @base-font-size-px), rem);
   }
 
   .m-list_item__has-icon {
@@ -69,7 +69,7 @@
     }
 
     span {
-      margin-top: unit((-1px / @base-font-size-px), em);
+      margin-top: unit((-1px / @base-font-size-px), rem);
     }
   }
 }
@@ -92,13 +92,20 @@
   }
 }
 
+.o-well.o-well--speed-bump {
+  padding: unit((20px / @base-font-size-px), rem);
+}
+
 .m-card.m-card--tabular {
   padding: 0;
   border: 0;
   color: var(--black);
 
   > a {
-    padding: unit((20px / @base-font-size-px), em);
+    padding: unit((20px / @base-font-size-px), rem);
+    // Decrease the bottom padding on mobile to accommodate
+    // the grid's `row-gap` when a card has no requirements
+    padding-bottom: unit((5px / @base-font-size-px), rem);
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
@@ -106,6 +113,10 @@
     &:visited .m-card__subtitle {
       border-color: @link-underline-visited;
       color: @link-text-visited;
+    }
+
+    @media only screen and (min-width: @bp-sm-min) {
+      padding-bottom: unit((20px / @base-font-size-px), rem);
     }
   }
   &:hover {
@@ -133,13 +144,13 @@
   }
 
   .m-card__heading-group {
-    margin-bottom: unit((20px / @base-font-size-px), em);
+    margin-bottom: unit((20px / @base-font-size-px), rem);
   }
 
   .m-card__heading {
     margin-bottom: 0;
     color: var(--gray);
-    font-size: unit((16px / @base-font-size-px), em);
+    font-size: unit((16px / @base-font-size-px), rem);
     font-weight: 400;
   }
 
@@ -193,11 +204,16 @@
   }
 
   &--requirements {
+    padding-bottom: unit((15px / @base-font-size-px), rem);
     grid-area: requirements;
     align-self: start;
     justify-self: end;
     dt {
       .u-visually-hidden;
+    }
+
+    @media only screen and (min-width: @bp-sm-min) {
+      padding-bottom: 0;
     }
   }
 
@@ -246,7 +262,7 @@ html.js .o-filterable-list-results__partial {
   .o-card-group_cards {
     .m-card:nth-child(10) {
       border-bottom: 1px solid @table-border;
-      margin-bottom: unit((10px / @base-font-size-px), em);
+      margin-bottom: unit((10px / @base-font-size-px), rem);
     }
 
     .m-card:nth-child(n + 11) {
@@ -256,12 +272,12 @@ html.js .o-filterable-list-results__partial {
 }
 
 .a-credit-card-apr-rating {
-  margin-bottom: unit((20px / @base-font-size-px), em);
-  font-size: unit((16px / @base-font-size-px), em);
+  margin-bottom: unit((20px / @base-font-size-px), rem);
+  font-size: unit((16px / @base-font-size-px), rem);
   font-weight: 600;
 
   @media only screen and (min-width: @bp-sm-min) {
-    font-size: unit((18px / @base-font-size-px), em);
+    font-size: unit((18px / @base-font-size-px), rem);
     font-weight: 500;
   }
 
