@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 13:47-0500\n"
+"POT-Creation-Date: 2024-03-29 11:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: v1/jinja2/v1/blog/blog_page.html:23
+#: v1/jinja2/v1/blog/blog_page.html:26
 #: v1/jinja2/v1/includes/molecules/social-media.html:95
 msgid "https://twitter.com/CFPB"
 msgstr "https://twitter.com/CFPBespanol"
 
-#: v1/jinja2/v1/blog/blog_page.html:26
+#: v1/jinja2/v1/blog/blog_page.html:29
 #: v1/jinja2/v1/includes/molecules/social-media.html:87
 msgid "https://www.facebook.com/CFPB"
 msgstr "https://www.facebook.com/CFPBespanol"
 
-#: v1/jinja2/v1/blog/blog_page.html:29
+#: v1/jinja2/v1/blog/blog_page.html:32
 #, python-format
 msgid ""
 "Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
@@ -37,7 +37,7 @@ msgstr ""
 
 #: v1/jinja2/v1/home_page/home_page.html:8
 #: v1/jinja2/v1/home_page/home_page_legacy.html:6
-#: v1/jinja2/v1/layouts/base.html:49
+#: v1/jinja2/v1/layouts/base.html:52
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
@@ -71,13 +71,13 @@ msgstr "Dirección email"
 msgid "See Privacy Act statement"
 msgstr "Lea la declaración de privacidad"
 
-#: v1/jinja2/v1/includes/blocks/schema/tip.html:19
-msgid "Tip"
-msgstr "Consejo"
-
 #: v1/jinja2/v1/includes/molecules/breadcrumbs.html:17
 msgid "Breadcrumbs"
 msgstr "Guía de navegación"
+
+#: v1/jinja2/v1/includes/molecules/feature-card.html:68
+msgid "Read answer"
+msgstr "Leer la respuesta"
 
 #: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
 msgid "Submit a Complaint"
@@ -85,8 +85,8 @@ msgstr "Enviar una queja"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:28
 #: v1/jinja2/v1/includes/molecules/global-search.html:36
-#: v1/jinja2/v1/includes/molecules/global-search.html:70
-#: v1/jinja2/v1/includes/molecules/global-search.html:82
+#: v1/jinja2/v1/includes/molecules/global-search.html:69
+#: v1/jinja2/v1/includes/molecules/global-search.html:81
 #: v1/jinja2/v1/includes/organisms/ask-search.html:94
 msgid "Search"
 msgstr "Buscar"
@@ -100,8 +100,8 @@ msgstr "Busque en el sitio web consumerfinance.gov"
 msgid "Close"
 msgstr "Cerrar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:75
-#: v1/jinja2/v1/includes/molecules/global-search.html:78
+#: v1/jinja2/v1/includes/molecules/global-search.html:74
+#: v1/jinja2/v1/includes/molecules/global-search.html:77
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
@@ -125,11 +125,11 @@ msgstr "Página"
 msgid "Go"
 msgstr "Ir"
 
-#: v1/jinja2/v1/includes/molecules/related-posts.html:104
+#: v1/jinja2/v1/includes/molecules/related-posts.html:99
 msgid "View more related posts"
 msgstr "Ver más publicaciones relacionadas"
 
-#: v1/jinja2/v1/includes/molecules/related-posts.html:106
+#: v1/jinja2/v1/includes/molecules/related-posts.html:101
 msgid "View more"
 msgstr "Ver más"
 
@@ -161,10 +161,6 @@ msgstr "Comparta esta información en"
 msgid "Visit us on"
 msgstr "Visítenos en"
 
-#: /v1/jinja2/v1/includes/molecules/feature-card.html:68
-msgid "Read answer"
-msgstr "Leer la respuesta"
-
 #: v1/jinja2/v1/includes/organisms/ask-search.html:44
 msgid "/ask-cfpb/search/"
 msgstr "/es/obtener-respuestas/buscar/"
@@ -178,23 +174,23 @@ msgstr "Busque su pregunta"
 msgid "Search Ask CFPB for your question"
 msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:47
+#: v1/jinja2/v1/includes/organisms/expandable.html:51
 msgid "Show"
 msgstr "Mostrar"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:50
+#: v1/jinja2/v1/includes/organisms/expandable.html:54
 msgid "Hide"
 msgstr "Ocultar"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:32
+#: v1/jinja2/v1/includes/organisms/footer.html:31
 msgid "Back to top"
 msgstr "Ir arriba"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:185
+#: v1/jinja2/v1/includes/organisms/footer.html:184
 msgid "https://www.usa.gov/"
 msgstr "https://www.usa.gov/es/"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:185
+#: v1/jinja2/v1/includes/organisms/footer.html:184
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
@@ -225,31 +221,31 @@ msgstr "Ver video en YouTube"
 msgid "Play video"
 msgstr "Ver video"
 
-#: v1/jinja2/v1/layouts/base.html:267
+#: v1/jinja2/v1/layouts/base.html:260
 msgid "Skip to main content"
 msgstr "Ir al contenido principal"
 
-#: v1/models/base.py:40
+#: v1/models/base.py:39
 msgid "Author"
 msgstr ""
 
-#: v1/models/base.py:41
+#: v1/models/base.py:40
 msgid "Authors"
 msgstr ""
 
-#: v1/models/base.py:48
+#: v1/models/base.py:47
 msgid "Tag"
 msgstr ""
 
-#: v1/models/base.py:49
+#: v1/models/base.py:48
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:54
+#: v1/models/base.py:53
 msgid "Content Owner"
 msgstr ""
 
-#: v1/models/base.py:55
+#: v1/models/base.py:54
 msgid "Content Owners"
 msgstr ""
 
@@ -278,6 +274,9 @@ msgstr "Descargue CSV file"
 #: v1/templates/v1/translated_pages_report.html:9
 msgid "No pages found."
 msgstr ""
+
+#~ msgid "Tip"
+#~ msgstr "Consejo"
 
 #~ msgid "Clear search"
 #~ msgstr "Borrar búsqueda"

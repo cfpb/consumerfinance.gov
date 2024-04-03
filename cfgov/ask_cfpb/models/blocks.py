@@ -1,7 +1,17 @@
 from wagtail import blocks
 
-from v1.atomic_elements import organisms
-from v1.atomic_elements.schema import FAQ, HowTo, Tip
+from v1.atomic_elements.organisms import Table, VideoPlayer
+from v1.atomic_elements.schema import FAQ, HowTo
+
+
+class Tip(blocks.StructBlock):
+    content = blocks.RichTextBlock(
+        features=["link", "document-link"], label="Tip"
+    )
+
+    class Meta:
+        icon = "title"
+        template = "ask-cfpb/tip.html"
 
 
 class AskAnswerContent(blocks.StreamBlock):
@@ -38,11 +48,11 @@ class AskAnswerContent(blocks.StreamBlock):
             ),
         ]
     )
-    table = organisms.Table()
+    table = Table()
     tip = Tip(label="Tip (floats right)")
-    video_player = organisms.VideoPlayer()
+    video_player = VideoPlayer()
     how_to_schema = HowTo(label="Google Schema - How To")
     faq_schema = FAQ(label="Google Schema - FAQ")
 
     class Meta:
-        template = "v1/includes/blocks/schema/content-block.html"
+        template = "ask-cfpb/ask-answer-content.html"
