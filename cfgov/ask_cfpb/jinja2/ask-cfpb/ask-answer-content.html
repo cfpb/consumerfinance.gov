@@ -15,7 +15,7 @@
 {% for block in value %}
     {% set after_tip = value[loop.index - 2].block_type == 'tip' if loop.index > 1 else False %}
     {% if not after_tip %}
-    <div class="row {{'inset-row' if block.block_type == 'tip' else block.block_type~'-row'}}"
+    <div class="row"
         {% if block.value.anchor_tag %}
         id="{{ block.value.anchor_tag }}"
         {% endif %}>
