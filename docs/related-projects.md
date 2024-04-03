@@ -48,7 +48,7 @@ contains the CFPB development guidelines used on these projects.
 Developers working on changes to satellite apps or other Python packages often
 want or need to test their work as part of the larger consumerfinance.gov project.
 
-The standard [installation](../installation/) process for consumerfinance.gov
+The standard [installation](installation.md) process for consumerfinance.gov
 includes whatever versions of these packages are specified in project
 [requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 Developers may want to temporarily or permanently replace those with a local
@@ -104,13 +104,13 @@ requirements files:
 ```
 
 Re-running the full virtual environment
-[setup script](../installation/#run-the-setup-script)
+[setup script](installation.md#run-the-setup-script)
 will do the same thing.
 
 ### Using Docker
 
 Working on Python packages requires a different approach when running
-consumerfinance.gov locally with [its Docker setup](../running-docker/).
+consumerfinance.gov locally with [its Docker setup](running-docker.md).
 This is because while your local `consumerfinance.gov` directory is exposed to the
 container, sibling directories or other locations where you might clone
 other repositories are not.

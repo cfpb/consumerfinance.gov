@@ -1,7 +1,7 @@
 # Running in a Virtual Environment
 
 First, follow
-[the standalone installation instructions](../installation/#stand-alone-installation)
+[the standalone installation instructions](installation.md#stand-alone-installation)
 to create your virtual environment, install required dependencies, and run
 the setup scripts.
 
@@ -137,7 +137,7 @@ yarn test                # Run both
 ### Reinstalling the virtual environment
 
 To remove an existing virtual environment for
-[a reinstall of consumerfinance.gov](../installation/#stand-alone-installation),
+[a reinstall of consumerfinance.gov](installation.md#stand-alone-installation),
 first deactivate the virtual environment if it is active:
 
 ```bash
@@ -151,5 +151,5 @@ rmvirtualenv consumerfinance.gov
 ```
 
 After this, you may follow
-[the installation instructions](installation/#stand-alone-installation)
+[the installation instructions](installation.md#stand-alone-installation)
 again.

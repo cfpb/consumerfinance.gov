@@ -15,7 +15,7 @@ For page searches on consumerfinance.gov, we use Elasticsearch and the [django-o
 
 ## Indexing
 
-For any of our Django apps that need to implement search for their Django models or [Wagtail page types](../wagtail-pages/), we include a `documents.py` file that defines the Elasticsearch documents that will [map the model or page to the Elasticsearch index](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#create-document-classes).
+For any of our Django apps that need to implement search for their Django models or [Wagtail page types](wagtail-pages.md), we include a `documents.py` file that defines the Elasticsearch documents that will [map the model or page to the Elasticsearch index](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#create-document-classes).
 
 The `Document` class includes three things:
 

@@ -27,7 +27,7 @@ jobs:
           pip install -r requirements/docs.txt
 
       - name: Build docs
-        run: mkdocs build
+        run: mkdocs build --strict
 
       - name: Publish docs
         run: mkdocs gh-deploy
