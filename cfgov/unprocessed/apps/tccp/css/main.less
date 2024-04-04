@@ -258,8 +258,13 @@ html.js .o-filterable-list-results__partial {
 dl {
   .a-credit-card-apr-rating {
     display: grid;
-    grid-template-columns: unit(56px / @base-font-size-px, em) 1fr;
+    grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
     align-items: baseline;
+    gap: unit(8px / @base-font-size-px, em);
+
+    dt {
+      justify-self: right;
+    }
   }
 }
 
