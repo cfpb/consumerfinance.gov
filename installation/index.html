@@ -184,7 +184,7 @@ and
 <p>The Wagtail admin area will be available at <a href="http://localhost:8000/admin/">http://localhost:8000/admin/</a>,
 which you can log into with the credentials <code>admin</code>/<code>admin</code>.</p>
 <p>Please see
-our <a href="/running/">running consumerfinance.gov</a> documentation
+our <a href="../running-virtualenv/">running consumerfinance.gov</a> documentation
 for next steps.</p>
 <p>There are also optional steps described below, as well as
 <a href="#alternative-setups">alternative setup options</a>.</p>
@@ -206,7 +206,7 @@ copy <code>.env_SAMPLE</code> to <code>.env</code>:</p>
 <pre class="highlight"><code class="language-sh">cp -a .env_SAMPLE .env</code></pre>
 <h3 id="set-up-a-local-python-environment-optional">Set up a local Python environment (optional)<a class="headerlink" href="#set-up-a-local-python-environment-optional" title="Permanent link">¶</a></h3>
 <p>For running our
-<a href="/python-unit-tests/">Python unit tests, linting, etc</a>
+<a href="../python-unit-tests/">Python unit tests, linting, etc</a>
 outside of the Docker container, we rely on a local Python environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -273,7 +273,7 @@ nvm can be installed using:</p>
 </div>
 <p>We have a single script that will install our frontend dependencies for both
 building and
-<a href="/javascript-unit-tests/">unit testing/linting/etc</a>:</p>
+<a href="../javascript-unit-tests/">unit testing/linting/etc</a>:</p>
 <pre class="highlight"><code class="language-sh">./frontend.sh</code></pre>
 <p>Yarn can be used to rebuild our assets after the initial setup:</p>
 <pre class="highlight"><code class="language-sh">yarn build</code></pre>
@@ -332,7 +332,7 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh</code></pre>
 <p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
 <pre class="highlight"><code class="language-sh">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
-<p>This automatically <a href="/search/#building-the-index">(re)builds the Elasticsearch index</a>,
+<p>This automatically <a href="../page-search/#building-the-index">(re)builds the Elasticsearch index</a>,
 unless you run the <code>refresh-data.sh</code> script with the <code>--noindex</code> flag.</p>
 <h2 id="alternative-setups">Alternative setups<a class="headerlink" href="#alternative-setups" title="Permanent link">¶</a></h2>
 <p>consumerfinance.gov requires a Python environment, PostgreSQL, and
