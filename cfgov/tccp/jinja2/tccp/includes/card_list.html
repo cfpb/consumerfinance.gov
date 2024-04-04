@@ -1,5 +1,6 @@
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency %}
+{% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
@@ -63,10 +64,20 @@
     {{- (rewards | join(', ')) if rewards else 'None' -}}
 {%- endmacro -%}
 
+{% set speed_bumps = [] %}
+
+{% for situation in form.cleaned_data.situations %}
+    {%- do speed_bumps.append(speed_bump(situation.title, 0)) -%}
+    {#- There are two speed bumps for 'Make a big purchase' -#}
+    {%- if situation.title == 'Make a big purchase' -%}
+        {%- do speed_bumps.append(speed_bump(situation.title, 1)) -%}
+    {%- endif -%}
+{% endfor %}
+
 <div class="o-card-group">
     <div class="o-card-group_cards">
         {%- for card in results %}
-        <article class="m-card m-card--tabular">
+        <article class="m-card m-card--tabular{% if loop.index > 10 %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
@@ -109,6 +120,13 @@
                 </dl>
             </a>
         </article>
+        {%- if speed_bumps -%}
+            {%- if loop.index % 5 == 0 -%}
+                {%- if loop.index > 10 -%}<div class="u-show-more">{%- endif -%}
+                    {{ speed_bumps.pop() }}
+                {%- if loop.index > 10 -%}</div>{%- endif -%}
+            {%- endif -%}
+        {%- endif -%}
         {% endfor %}
     </div>
 </div>

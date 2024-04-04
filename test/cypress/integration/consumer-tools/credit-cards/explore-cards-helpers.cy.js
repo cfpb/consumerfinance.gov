@@ -46,6 +46,17 @@ export class ExploreCreditCards {
     });
   }
 
+  getNumberVisibleSpeedBumps() {
+    return new Promise((resolve) => {
+      return cy
+        .get('.htmx-container')
+        .not('.htmx-request')
+        .get('.o-well--speed-bump')
+        .filter(':visible')
+        .then((el) => resolve(el.length));
+    });
+  }
+
   getNumberVisibleResults() {
     return new Promise((resolve) => {
       return cy
