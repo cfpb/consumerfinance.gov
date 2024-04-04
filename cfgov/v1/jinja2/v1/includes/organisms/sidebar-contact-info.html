@@ -53,6 +53,7 @@
         {{ value.contact.body | safe }}
     </div>
 
+    {# 'm-contact' blocks get added here. #}
     {% if value.contact.contact_info %}
         {% for block in value.contact.contact_info %}
             {% include_block block %}
