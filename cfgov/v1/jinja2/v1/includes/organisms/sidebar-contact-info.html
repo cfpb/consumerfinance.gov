@@ -14,38 +14,19 @@
    contact.heading:          A string containing a sidebar header.
    contact.body:             A string containing sidebar paragraph content.
 
-   contact.emails:           An array containing email addresses.
-
-   contact.phones:           An array containing phone number information.
-   contact.phones.number:    A phone number.
-   contact.phones.extension: A phone extension.
-   contact.phones.vanity:    An associated vanity phone number.
-   contact.phones.tty:       An associated TTY/TDD number.
-   contact.phones.tty_ext:   An associated TTY/TDD extension.
-
-   contact.faxes:            An object containing fax numbers.
-   contact.faxes.number:     A fax number.
-   contact.faxes.vanity:     An associated vanity fax number.
-   contact.faxes.tty:        An associated TTY/TDD number.
-                             This value can be used, but is not applicable.
-
-   contact.address:          An object containing address information.
-   contact.address.title:    A string containing an address name.
-   contact.address.street:   A string containing a street address.
-   contact.address.city:     A string containing a city.
-   contact.address.state:    A string containing a state.
-   contact.address.zip_code: A string containing a zip code.
+   contact.contact_info:     An array of contact blocks. See
+                             contact-address.html, contact-email.html,
+                             contact-hyperlink.html, and contact-phone.html
+                             for actual values.
 
    ========================================================================== #}
 
 <div class="o-sidebar-contact-info">
-    <div class="o-sidebar-contact-info_heading">
-      <header class="m-slug-header">
-          <h2 class="m-slug-header_heading">
-              Contact Information
-          </h2>
-      </header>
-    </div>
+    <header class="m-slug-header">
+        <h2 class="m-slug-header_heading">
+            Contact Information
+        </h2>
+    </header>
 
     <div class="o-sidebar-contact-info_content">
         {% if value.contact.heading %}
@@ -55,11 +36,10 @@
         {{ value.contact.body | safe }}
     </div>
 
-    <div class="o-sidebar-contact-info_contacts">
-        {% if value.contact.contact_info %}
-            {% for block in value.contact.contact_info %}
-                {% include_block block %}
-            {% endfor %}
-        {% endif %}
-    </div>
+    {# 'm-contact' blocks get added here. #}
+    {% if value.contact.contact_info %}
+        {% for block in value.contact.contact_info %}
+            {% include_block block %}
+        {% endfor %}
+    {% endif %}
 </div>
