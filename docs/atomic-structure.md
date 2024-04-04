@@ -11,7 +11,7 @@ If a component doesn’t have user interactions or require styling,
 then it won’t have an associated JS and/or Less file.
 Components that are available for adding to a Wagtail page also
 require some Python programming—see the
-[creating and editing components](../editing-components/) page for details.
+[creating and editing components](editing-components.md) page for details.
 
 We compose our atomic components as follows:
 

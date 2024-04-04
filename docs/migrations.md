@@ -105,7 +105,7 @@ and the time that your PR is ready for merging,
 you will have to update your branch as normal to be current with main
 and then re-create your migration.
 Also note that our
-[back-end tests that run in GitHub Actions](../github-actions/)
+[back-end tests that run in GitHub Actions](github-actions.md)
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.
 

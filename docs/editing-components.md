@@ -46,7 +46,7 @@ Blocks are implemented via several different bits of code:
 1. [(Optionally) adding some JavaScript for adding advanced behavior](#adding-javascript)
 
 Before you dive in further,
-[check out the Notes on Atomic Design page](../atomic-structure/)
+[check out the Notes on Atomic Design page](atomic-structure.md)
 and familiarize yourself with our basic concepts
 of atoms, molecules, and organisms.
 
@@ -179,7 +179,7 @@ but in the footer on others) on the sidebar tab.
 ### The front end
 
 Before diving into the front-end code, a reminder to
-visit the [Notes on Atomic Design](../atomic-structure/) page
+visit the [Notes on Atomic Design](atomic-structure.md) page
 to learn about how we conceive of components in a hierarchy
 of atoms, molecules, and organisms.
 
@@ -268,7 +268,7 @@ you can add it by creating a new
       Also be sure that new component designs have gone through
       our internal approval process before adding them to the project.
 
-If you're working on a general-purpose [atomic component](../atomic-structure/)
+If you're working on a general-purpose [atomic component](atomic-structure.md)
 for site-wide use, this file should live in
 `cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
 (Choose the deepest folder according to the atomic rank of the component.)
@@ -311,7 +311,7 @@ class RelatedContent(blocks.StructBlock):
 
 (The `related-content.js` file would need to be placed in
 `cfgov/unprocessed/js/molecules/`;
-see [Notes on Atomic Design](../atomic-structure/).)
+see [Notes on Atomic Design](atomic-structure.md).)
 
 This will load the `related-content.js` script on any page
 that includes the `RelatedContent` molecule in one of its StreamFields.
@@ -320,7 +320,7 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 
 ### Creating a new component
 
-1. Review the [Notes on Atomic Design](../atomic-structure/) page.
+1. Review the [Notes on Atomic Design](atomic-structure.md) page.
 1. Add each of the parts mentioned above:
    1. [Create the Python class](#the-python-class)
    1. [Add the class to a StreamField](#adding-it-to-a-streamfield)
@@ -457,4 +457,4 @@ experience a gap in the data that is being manually replaced.
 ---
 
 For more details on both kinds of migrations,
-see [the Wagtail Migrations page](../migrations/).
+see [the Wagtail Migrations page](migrations.md).

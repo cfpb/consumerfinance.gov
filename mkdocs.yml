@@ -57,3 +57,8 @@ markdown_extensions:
   - tables
   - toc:
       permalink: '¶'
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn

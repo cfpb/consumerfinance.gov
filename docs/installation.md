@@ -28,7 +28,7 @@ The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
 
 Please see
-our [running consumerfinance.gov](/running/) documentation
+our [running consumerfinance.gov](running-virtualenv.md) documentation
 for next steps.
 
 There are also optional steps described below, as well as
@@ -69,7 +69,7 @@ cp -a .env_SAMPLE .env
 ### Set up a local Python environment (optional)
 
 For running our
-[Python unit tests, linting, etc](/python-unit-tests/)
+[Python unit tests, linting, etc](python-unit-tests.md)
 outside of the Docker container, we rely on a local Python environment.
 
 !!! note
@@ -185,7 +185,7 @@ to assist developers with linting without thinking.
 
 We have a single script that will install our frontend dependencies for both
 building and
-[unit testing/linting/etc](/javascript-unit-tests/):
+[unit testing/linting/etc](javascript-unit-tests.md):
 
 ```sh
 ./frontend.sh
@@ -279,7 +279,7 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh /path/to/dump.sql.gz
 ```
 
-This automatically [(re)builds the Elasticsearch index](/search/#building-the-index),
+This automatically [(re)builds the Elasticsearch index](page-search.md#building-the-index),
 unless you run the `refresh-data.sh` script with the `--noindex` flag.
 
 ## Alternative setups
