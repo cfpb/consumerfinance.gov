@@ -1,0 +1,18 @@
+{%- macro speed_bump(value) -%}
+<article class="o-well o-well--speed-bump">
+    <p>
+        <strong>
+            {{ svg_icon("lightbulb-round") }} Did you know:
+        </strong>
+        {{ value.content }}
+    </p>
+
+    {%- if value.link -%}
+    <ul class="m-list m-list__links">
+        <li class="m-list_item">
+            <a class="m-list_link" href="{{ value.url }}">{{ value.link }}</a>
+        </li>
+    </ul>
+    {%- endif -%}
+</article>
+{%- endmacro -%}

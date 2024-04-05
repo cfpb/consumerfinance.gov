@@ -17,7 +17,7 @@ from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
 from .models import CardSurveyData
 from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
-from .situations import Situation
+from .situations import Situation, SituationSpeedBumps
 
 
 class LandingPageView(FlaggedTemplateView):
@@ -116,12 +116,17 @@ class CardListView(FlaggedViewMixin, ListAPIView):
 
         # If we're rendering HTML, we need to augment the response context.
         if render_format == "html":
+            form = filter_backend.used_filterset.form
+            situations = form.cleaned_data["situations"]
+
             response.data.update(
                 {
                     "title": title(self.heading),
                     "heading": self.heading,
                     "breadcrumb_items": self.breadcrumb_items,
-                    "form": filter_backend.used_filterset.form,
+                    "form": form,
+                    "situations": situations,
+                    "speed_bumps": SituationSpeedBumps(situations),
                     "rewards_lookup": dict(RewardsChoices),
                 }
             )

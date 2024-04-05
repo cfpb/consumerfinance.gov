@@ -42,6 +42,7 @@ class LandingPageViewTests(TestCase):
             + "&location=NY"
             + "&situations=Avoid+fees"
             + "&situations=Earn+rewards"
+            + "&ordering=purchase_apr"
             + "&no_account_fee=True"
             + "&rewards=Cashback+rewards"
             + "&rewards=Travel-related+rewards"

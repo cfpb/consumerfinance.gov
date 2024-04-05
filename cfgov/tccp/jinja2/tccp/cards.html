@@ -32,7 +32,6 @@
 <h1>{{ heading }}</h1>
 
 <div class="block block__sub">
-    {% set situations = form.cleaned_data.situations %}
     {% if not situations %}
         <p>
             Filter and sort the {{ stats_all.count or "" }} cards in our database

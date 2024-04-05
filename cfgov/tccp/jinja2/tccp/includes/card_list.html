@@ -1,5 +1,6 @@
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency %}
+{% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
@@ -66,7 +67,8 @@
 <div class="o-card-group">
     <div class="o-card-group_cards">
         {%- for card in results %}
-        <article class="m-card m-card--tabular">
+        {%- set show_more = loop.index > 10 -%}
+        <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
@@ -98,16 +100,24 @@
                             {{ card_rewards(card) | safe }}
                         </dd>
                     </div>
+                    {%- if card.requirements_for_opening -%}
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have special requirements?</dt>
                         <dd>
-                            {{ 'See card details page for special requirements' if card.requirements_for_opening else '' }}
+                            See card details page for special requirements
                         </dd>
                     </div>
+                    {%- endif -%}
                 </dl>
-                </div>
             </a>
         </article>
+
+        {%- set bump = speed_bumps[loop.index] -%}
+        {%- if bump -%}
+            {%- if show_more -%}<div class="u-show-more">{%- endif -%}
+            {{ speed_bump(bump) }}
+            {%- if show_more -%}</div>{%- endif -%}
+        {%- endif -%}
         {% endfor %}
     </div>
 </div>

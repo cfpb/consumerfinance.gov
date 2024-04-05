@@ -5,7 +5,7 @@ export class ExploreCreditCards {
 
   openResultsPage(filterParams) {
     const url =
-      '/consumer-tools/credit-cards/explore-cards/cards?' +
+      '/consumer-tools/credit-cards/explore-cards/cards/?' +
       new URLSearchParams(filterParams).toString();
     cy.visit(url);
   }
@@ -43,6 +43,17 @@ export class ExploreCreditCards {
         .not('.htmx-request')
         .get('.o-filterable-list-results .m-notification')
         .then((el) => resolve(Number(el.text().replace(/[^0-9]/g, ''))));
+    });
+  }
+
+  getNumberVisibleSpeedBumps() {
+    return new Promise((resolve) => {
+      return cy
+        .get('.htmx-container')
+        .not('.htmx-request')
+        .get('.o-well--speed-bump')
+        .filter(':visible')
+        .then((el) => resolve(el.length));
     });
   }
 

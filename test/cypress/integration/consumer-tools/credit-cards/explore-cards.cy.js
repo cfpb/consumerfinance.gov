@@ -31,9 +31,27 @@ describe('Explore credit cards results page', () => {
     exploreCards.openResultsPage();
 
     exploreCards.getNumberVisibleResults().then((oldNumResults) => {
+      expect(oldNumResults).to.eq(10);
       exploreCards.clickShowMoreButton();
       exploreCards.getNumberVisibleResults().then((newNumResults) => {
         expect(oldNumResults).to.be.lt(newNumResults);
+      });
+    });
+  });
+  it('should show speed bumps when situation(s) are selected', () => {
+    exploreCards.openResultsPage('situations=Build%20credit');
+    exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+      expect(numSpeedBumps).to.eq(1);
+    });
+
+    exploreCards.openResultsPage(
+      'situations=Make%20a%20big%20purchase&situations=Build%20credit',
+    );
+    exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+      expect(numSpeedBumps).to.eq(2);
+      exploreCards.clickShowMoreButton();
+      exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+        expect(numSpeedBumps).to.be.gt(2);
       });
     });
   });
