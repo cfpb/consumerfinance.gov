@@ -27,5 +27,5 @@ class ReadSurveyDataFromStreamTests(SimpleTestCase):
         with open(filename, "rb") as f:
             dataset = read_survey_data_from_stream(f)
 
-        self.assertEqual(len(dataset), 4)
+        self.assertEqual(len(dataset), 5)
         self.assertEqual(dataset[0]["institution_name"], "SAMPLE BANK")
