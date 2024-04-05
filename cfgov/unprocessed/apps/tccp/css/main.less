@@ -294,52 +294,27 @@ html.js .o-filterable-list-results__partial {
   }
 }
 
-.m-list__card-details {
-  dt {
-    margin-top: 15px;
-  }
-  dt:last-of-type {
-    margin-bottom: 0.5em;
-  }
-  dt,
-  dd {
-    display: block;
-  }
-  dd {
-    margin-left: 0;
-  }
-  dd + dd {
-    margin-top: 15px;
-  }
-  dd::after {
-    content: none;
-  }
-  dd .o-table {
-    margin-top: 10px;
-  }
-}
-
 .m-credit-tier-chart {
   display: flex;
   align-items: stretch;
-  font-size: unit((15px / @base-font-size-px), em);
+  font-size: unit((15px / @base-font-size-px), rem);
 
   @media only screen and (min-width: @bp-sm-min) {
-    margin-left: unit((-18px / @base-font-size-px), em);
-    font-size: unit((16px / @base-font-size-px), em);
+    margin-left: unit((-18px / @base-font-size-px), rem);
+    font-size: unit((16px / @base-font-size-px), rem);
   }
 
   &__tier {
     display: flex;
     flex-direction: column;
-    padding: unit((5px / @base-font-size-px), em)
-      unit((15px / @base-font-size-px), em);
+    padding: unit((5px / @base-font-size-px), rem)
+      unit((15px / @base-font-size-px), rem);
     background-color: var(--teal-10);
 
     @media only screen and (min-width: @bp-sm-min) {
       display: block;
-      padding: unit((5px / @base-font-size-px), em)
-        unit((20px / @base-font-size-px), em);
+      padding: unit((5px / @base-font-size-px), rem)
+        unit((20px / @base-font-size-px), rem);
     }
   }
   &__tier:first-child {
@@ -373,6 +348,54 @@ html.js .o-filterable-list-results__partial {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+}
+
+.o-card-details-section {
+  margin-top: unit((45px / @base-font-size-px), rem);
+
+  &--introduction {
+    padding-bottom: unit((30px / @base-font-size-px), rem);
+    margin-top: 0;
+    margin-bottom: unit((10px / @base-font-size-px), rem);
+    border-bottom: 1px solid var(--gray-40);
+  }
+}
+
+.o-table--apr {
+  margin-top: unit((30px / @base-font-size-px), rem);
+  margin-bottom: unit((30px / @base-font-size-px), rem);
+}
+
+.o-additional-details {
+  margin-top: unit((30px / @base-font-size-px), rem);
+}
+
+.m-list__card-details {
+  dt {
+    margin-top: unit((15px / @base-font-size-px), rem);
+  }
+  dt:first-child {
+    margin-top: 0;
+  }
+  dt:last-of-type {
+    margin-bottom: 0.5em;
+  }
+  dt,
+  dd {
+    display: block;
+  }
+  dd {
+    margin-left: 0;
+  }
+  dd + dd {
+    margin-top: unit((15px / @base-font-size-px), rem);
+  }
+  dd::after {
+    content: none;
+  }
+  dd .o-table {
+    margin-top: unit((10px / @base-font-size-px), rem);
+  }
 }
 
 // htmx animated progress bar

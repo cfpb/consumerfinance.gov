@@ -17,3 +17,7 @@
         else (default if default is not none else "None")
     }}
 {%- endmacro -%}
+
+{%- macro lower_first_letter(string) -%}
+    {{ string[0].lower() ~ string[1:] }}
+{%- endmacro -%}
