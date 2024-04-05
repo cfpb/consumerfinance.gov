@@ -1,43 +1,18 @@
-{%- macro speed_bump(item, item_number) -%}
-
-{%- set content = {
-    'Pay less interest': [{
-        'content': 'Many small banks and credit unions offer lower interest rates and could save you hundreds of dollars per year.'
-    }],
-    'Transfer a balance': [{
-        'content': 'When transferring a balance, there\'s usually a transfer fee and you\'re still likely to incur interest charges on new purchases. It might be helpful to use a separate card for new purchases with a lower purchase APR while you pay down a transferred balance.'
-    }],
-    'Make a big purchase': [{
-        'content': 'If you\'ve carried balances in the past, or think you\'re likely to do so, consider credit cards that have the lowest interest rates.'
-    }, {
-        'content': 'If a card has an introductory interest rate offer, ensure you\'re on track to pay off the balance within the promotional period, or you could end up owing more interest than the original purchase amount.'
-    }],
-    'Build credit': [{
-        'content': 'If you\'re trying to build credit, only use a credit card for necessary purchases and pay your credit card balance in full every month.',
-        'link': 'Learn about ways to build credit and your credit score.',
-        'url': 'https://www.consumerfinance.gov/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/'
-    }],
-    'Earn rewards': [{
-        'content': 'If you carry a balance on your credit card, interest and fees typically exceed the value of any rewards earned.',
-        'link': 'Learn why rewards may not be as beneficial as they seem.',
-        'url': 'https://www.consumerfinance.gov/'
-    }],
-} -%}
-
-{%- if content[item] and content[item][item_number] -%}
+{%- macro speed_bump(value) -%}
 <article class="o-well o-well--speed-bump">
     <p>
-        <strong>{{ svg_icon("lightbulb-round") }} Did you know:</strong> {{ content[item][item_number].content }}
+        <strong>
+            {{ svg_icon("lightbulb-round") }} Did you know:
+        </strong>
+        {{ value.content }}
     </p>
 
-    {%- if content[item][item_number].link -%}
+    {%- if value.link -%}
     <ul class="m-list m-list__links">
         <li class="m-list_item">
-            <a class="m-list_link" href="{{ content[item][item_number].url }}">{{ content[item][item_number].link }}</a>
+            <a class="m-list_link" href="{{ value.url }}">{{ value.link }}</a>
         </li>
     </ul>
     {%- endif -%}
 </article>
-{%- endif -%}
-
 {%- endmacro -%}

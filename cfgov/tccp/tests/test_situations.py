@@ -2,7 +2,12 @@ from itertools import product
 
 from django.test import SimpleTestCase
 
-from tccp.situations import SITUATIONS, Situation, get_situation_by_title
+from tccp.situations import (
+    SITUATIONS,
+    Situation,
+    SituationSpeedBumps,
+    get_situation_by_title,
+)
 
 
 class SituationTests(SimpleTestCase):
@@ -46,3 +51,19 @@ class SituationContentTests(SimpleTestCase):
         for situation, content in product(SITUATIONS, ["select", "results"]):
             with self.subTest(title=situation.title, content=content):
                 self.assertTrue(getattr(situation, f"{content}_html"))
+
+
+class SituationSpeedBumpTests(SimpleTestCase):
+    def test_bumps(self):
+        situations = [
+            Situation("one", {"a": 1}),
+            Situation("two", {"a": 2}, [{"content": "first"}]),
+            Situation("three", {"a": 1}, [{"content": "second"}]),
+        ]
+        bumps = SituationSpeedBumps(situations)
+
+        self.assertIsNone(bumps[0])
+        self.assertIsNone(bumps[4])
+        self.assertEqual(bumps[5], {"content": "first"})
+        self.assertIsNone(bumps[9])
+        self.assertEqual(bumps[10], {"content": "second"})
