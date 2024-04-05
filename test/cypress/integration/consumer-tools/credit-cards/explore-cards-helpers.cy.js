@@ -5,7 +5,7 @@ export class ExploreCreditCards {
 
   openResultsPage(filterParams) {
     const url =
-      '/consumer-tools/credit-cards/explore-cards/cards?' +
+      '/consumer-tools/credit-cards/explore-cards/cards/?' +
       new URLSearchParams(filterParams).toString();
     cy.visit(url);
   }
