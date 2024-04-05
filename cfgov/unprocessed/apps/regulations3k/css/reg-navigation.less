@@ -38,10 +38,10 @@
   .o-expandable_header {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      padding-left: 0;
+      padding: 0.9375em 0;
     });
+    gap: 0;
     border: 0;
-    padding-right: 0;
   }
 
   .o-expandable_content {
@@ -69,11 +69,9 @@
 
 // Regs3K secondary nav header
 .o-regs3k-navigation {
-  // TODO:
-  // This is an override for the non-conforming use of o-expandable__padded
-  // in the iRegs secondary nav. Remove this when that component is overhauled.
-  &.o-expandable__padded .o-expandable_label {
+  .o-expandable_label {
     padding: 0 !important;
+    font-size: 1.125em;
   }
 
   // Tablet and below.
