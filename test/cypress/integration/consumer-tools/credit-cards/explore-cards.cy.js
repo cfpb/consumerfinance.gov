@@ -40,6 +40,7 @@ describe('Explore credit cards results page', () => {
   });
   it('should show speed bumps when situation(s) are selected', () => {
     exploreCards.openResultsPage('situations=Build%20credit');
+    cy.screenshot({ capture: 'fullPage' });
     exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
       expect(numSpeedBumps).to.eq(1);
     });
