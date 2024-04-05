@@ -116,7 +116,7 @@ msgstr "Buscar en toda la lista de respuestas"
 
 #: ask_cfpb/jinja2/ask-cfpb/tip.html:18
 msgid "Tip"
-msgstr ""
+msgstr "Consejo"
 
 #: ask_cfpb/models/pages.py:195
 msgid "for"
