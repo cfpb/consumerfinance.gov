@@ -1,5 +1,6 @@
 import htmx from 'htmx.org';
 
+import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 
 /**
@@ -35,6 +36,33 @@ htmx.defineExtension('htmx-url-param', {
 });
 
 /**
+ * htmx extension that saves a snapshot of the TCCP ordering dropdown
+ * immediately before rendering new card results and injects it
+ * into the page immediately after rendering the results.
+ *
+ * We query the DOM every time because A) the container is blown away
+ * after every htmx request and B) we want a copy of the dropdown that
+ * includes the most recently selected value.
+ *
+ * See https://htmx.org/extensions/
+ * See https://htmx.org/events/#htmx:beforeSwap
+ * See https://htmx.org/events/#htmx:afterSwap
+ */
+htmx.defineExtension('move-tccp-ordering', {
+  onEvent: function (name, event) {
+    if (name === 'htmx:beforeSwap') {
+      orderingDropdown.el = document.querySelector('#tccp-ordering');
+    }
+    if (name === 'htmx:afterSwap') {
+      orderingDropdown.container = document.querySelector(
+        '#tccp-ordering-container',
+      );
+      orderingDropdown.move();
+    }
+  },
+});
+
+/**
  * htmx extension that stores the page's path in web
  * storage whenever it's updated
  * See https://htmx.org/extensions/
@@ -63,5 +91,8 @@ webStorageProxy.setItem(
 document.body.setAttribute('hx-history', 'false');
 
 // Add htmx extensions to the dom and initialize them
-document.body.setAttribute('hx-ext', 'htmx-url-param, store-tccp-filter-path');
+document.body.setAttribute(
+  'hx-ext',
+  'htmx-url-param, store-tccp-filter-path, move-tccp-ordering',
+);
 htmx.process(document.body);

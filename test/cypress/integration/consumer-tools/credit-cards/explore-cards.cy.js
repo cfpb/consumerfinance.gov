@@ -67,6 +67,11 @@ describe('Explore credit cards results page', () => {
     exploreCards.openResultsPage();
 
     cy.get('form#tccp-filters select#tccp-ordering').should('not.exist');
+    exploreCards
+      .getOrderingDropdownValue()
+      .should('have.text', 'Lowest purchase APR');
+    exploreCards.selectOrdering('Card name');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Card name');
   });
 });
 
