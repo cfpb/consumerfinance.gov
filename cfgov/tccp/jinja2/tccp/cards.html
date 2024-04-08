@@ -31,32 +31,11 @@
 
 <h1>{{ heading }}</h1>
 
-<div class="block block__sub">
-    {% if not situations %}
-        <p>
-            Filter and sort the {{ stats_all.count or "" }} cards in our database
-            to find cards that have the features that fit your situation.
-        </p>
-    {% else %}
-        <h2>You’re looking to...</h2>
-
-        {% for situation in situations %}
-            <div class="block block__sub">
-                <div class="o-well">
-                    <h3>{{ situation.title }}</h3>
-
-                    {{ situation.results_html }}
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
-
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
-        "label": "Customize results",
+        "label": "Customize card features",
         "is_bordered": true,
-        "is_expanded": not situations,
+        "is_expanded": not situations or not cards,
         "is_midtone": true
     }) %}
         {{ filter_form(form) }}
