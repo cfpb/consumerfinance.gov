@@ -679,118 +679,120 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2>Balance transfers</h2>
+        <h2 class="h3 u-mb15">
+            {{ svg_icon("money-transfer-round") }}
+            Transferring a balance from another card or loan
+        </h2>
+        {# How top-line transfer APR and fees display if the card has:
+            - One APR: "1.99% balance transfer APR"
+            - Range of APRs: "12.99% - 17.90% balance transfer APR"
+            - No transfer fee: "$0 balance transfer fee"
+            - Dollar transfer fee: "$5 balance transfer fee"
+            - Percentage transfer fee: "3.00% balance transfer fee"
+            - Dollar and percentage fee: "$5 or 5.00% balance transfer fee"
+            - Custom transfer fee: "Variable transfer fee"
+            - Minimum transfer fee: "($5 minimum)" added at the end
+        #}
         {% if card.balance_transfer_offered %}
-            <dl class="m-list m-list__card-details">
-                <dt>Balance transfer APR</dt>
-                {# Transfer APRs are displayed the same way as purchase APRs #}
-                <dd>
-                    {% if card.transfer_apr_min is not none
-                        or card.transfer_apr_max is not none
-                        or card.transfer_apr_median is not none
-                    %}
-                        {% set transfer_apr_range =
-                            apr_range(card.transfer_apr_min, card.transfer_apr_max) if
-                            card.transfer_apr_min is not none
+            <div class="m-payment-calculation u-mb15">
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt15">
+                        {% if card.transfer_apr_min is not none
                             and card.transfer_apr_max is not none
                         %}
-                        {% set transfer_apr_median = apr(card.transfer_apr_median) if
-                            card.transfer_apr_median is not none
+                            {{ apr_range(card.transfer_apr_min, card.transfer_apr_max) }}
+                        {% elif card.transfer_apr_median is not none %}
+                            {{ apr(card.transfer_apr_median) }}
+                        {% endif %}
+                    </div>
+                    <div class="h4 u-mt0">
+                        {% if card.transfer_apr_min is not none
+                            and card.transfer_apr_max is not none
                         %}
-                        {{ transfer_apr_range if transfer_apr_range }}
-                        {{ '(' if transfer_apr_median
-                            and transfer_apr_range
-                            and transfer_apr_median != transfer_apr_range
-                        }}
-                        {{- transfer_apr_median ~ ' median balance transfer APR' if
-                            transfer_apr_median
-                            and transfer_apr_median != transfer_apr_range
-                        }}
-                        {{- ')' if transfer_apr_median
-                            and transfer_apr_range
-                            and transfer_apr_median != transfer_apr_range
-                        }}
-                        {{ 'with median balance transfer APRs varying by credit score:' if
-                            card.balance_transfer_apr_vary_by_credit_tier
-                        }}
-                    {% endif %}
-                    {% if card.balance_transfer_apr_vary_by_credit_tier %}
-                        <table class="o-table">
-                            <thead>
-                                <tr>
-                                    <th>619 or less</th>
-                                    <th>620 to 719</th>
-                                    <th>720 or greater</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {{ apr(card.transfer_apr_poor) }}
-                                    </td>
-                                    <td>
-                                        {{ apr(card.transfer_apr_good) }}
-                                    </td>
-                                    <td>
-                                        {{ apr(card.transfer_apr_great) }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    {% endif %}
-                    {{ 'The issuer did not submit balance transfer APR information for this card'
-                        if card.transfer_apr_min is none
-                        and card.transfer_apr_median is none
-                        and card.transfer_apr_max is none
-                        and card.transfer_apr_poor is none
-                        and card.transfer_apr_good is none
-                        and card.transfer_apr_great is none
-                    }}
-                </dd>
-                <dt>Balance transfer fee</dt>
-                <dd>
-                    {# Similar to how foreign transaction fees display #}
-                    {% if card.balance_transfer_fees %}
-                        {{ '$' ~ card.balance_transfer_fee_dollars if
+                            Balance transfer APR
+                        {% elif card.transfer_apr_median is not none %}
+                            Median balance transfer APR
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="m-payment-calculation__operator h2">+</div>
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt15">
+                        {{ currency(card.balance_transfer_fee_dollars) if
                             card.balance_transfer_fee_dollars is not none
                         }}
+                        {# TODO: Is this an "or"? Or can it be an "and"? #}
                         {{ ' or ' if card.balance_transfer_fee_dollars is not none
                             and card.balance_transfer_fee_percentage is not none
                         }}
                         {{ apr(card.balance_transfer_fee_percentage) if
                             card.balance_transfer_fee_percentage is not none
                         }}
-                        {% if card.minimum_balance_transfer_fee_amount is not none %}
-                        {% set balance_transfer_fee_minimum =
-                            card.minimum_balance_transfer_fee_amount | float
-                        %}
-                        {{ '($' ~ '%.2f' | format(balance_transfer_fee_minimum) ~
+                        {{ '(' ~ currency(card.minimum_balance_transfer_fee_amount) ~
                             ' minimum)' if card.minimum_balance_transfer_fee_amount
                             is not none
                         }}
-                        {% endif %}
-                        {% if card.balance_transfer_fee_calculation %}
-                        {{ '(' if card.balance_transfer_fee_dollars is not none
-                            or card.balance_transfer_fee_percentage is not none
-                        -}}
-                        {{- card.balance_transfer_fee_calculation -}}
-                        {{- ')' if card.balance_transfer_fee_dollars is not none
-                            or card.balance_transfer_fee_percentage is not none
-                        -}}
-                        {% endif %}
-                    {% else %}
-                        None
-                    {% endif %}
-                </dd>
-                <dt>Median length promotional period</dt>
-                <dd>
-                    {{ '%g' | format(card.median_length_of_balance_transfer_apr) }} months
-                </dd>
-                <dt>Grace period</dt>
-                <dd>
-                    {{ 'Yes' if card.balance_transfer_grace_period else 'No' }}
-                </dd>
-            </dl>
+                        {{ 'Variable' if card.balance_transfer_fee_calculation
+                            and card.balance_transfer_fee_dollars is none
+                            and card.balance_transfer_fee_percentage is none
+                        }}
+                        {{ currency(0) if not card.balance_transfer_fees }}
+                    </div>
+                    <div class="h4 u-mt0">
+                        Balance transfer fee
+                        {{- ', see details' if card.balance_transfer_fee_calculation }}
+                    </div>
+                </div>
+            </div>
+            {% if card.balance_transfer_fee_calculation %}
+                <p>
+                    Balance transfer fee details:
+                    {{ card.balance_transfer_fee_calculation }}
+                </p>
+            {% endif %}
+            {% if card.balance_transfer_apr_vary_by_credit_tier %}
+                <p>
+                    Your balance transfer APR will be based on your credit score.
+                    You’ll only know your exact APR if you are approved for the
+                    card. Here are average balance transfer APRs for different
+                    credit scores for this card:
+                </p>
+                <table class="o-table o-table--apr">
+                    <thead>
+                        <tr>
+                            <th>Credit score</th>
+                            <th>Median balance transfer APR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transfer_apr in [
+                            card.transfer_apr_poor,
+                            card.transfer_apr_good,
+                            card.transfer_apr_great
+                        ] %}
+                            <tr>
+                                <td>{{ credit_tiers[loop.index][1] }}</td>
+                                <td>{{ apr(transfer_apr) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% elif card.transfer_apr_median is not none
+                and card.transfer_apr_min != card.transfer_apr_max %}
+                <p>
+                    You’ll only know your exact balance transfer APR if you are
+                    approved for the card. The median balance transfer APR for
+                    this card is {{ apr(card.transfer_apr_median) }}.
+                </p>
+            {% endif %}
+            {# TODO: Explain what a grace period is #}
+            <p>
+                The balance transfer APR is available for
+                {{ '%g' | format(card.median_length_of_balance_transfer_apr) }}
+                months after getting this card, on average. There is
+                {{ 'a' if card.balance_transfer_grace_period else 'no' }}
+                balance transfer grace period.
+            </p>
         {% else %}
             <p>This card does not offer balance transfers.</p>
         {% endif %}
