@@ -29,10 +29,11 @@
     {% set credit_tiers = [
         ("No credit score", "No score"),
         ("619 or less", "Below 619"),
-        ("620 to 719", "620–719"),
+        ("620 to 719", "620-719"),
         ("720 or greater", "720+")
     ] %}
-    <div class="o-card-details-section--introduction">
+    <div class="o-card-details-section o-card-details-section--introduction">
+        {# TODO: Need to make this more accessible for screen readers #}
         <div class="m-credit-tier-chart">
             {% for tier in credit_tiers %}
                 {% if tier[0] in card.targeted_credit_tiers | string %}
@@ -165,11 +166,10 @@
             {{ svg_icon("cart-round") }}
             Making purchases
         </h2>
-        {#
-            How top-line APR displays if the card has:
-                - Min and max APRs: "19.49% - 31.99% purchase APR"
-                - No min and max but a median: "29.74% median purchase APR"
-                - Single APR for everyone: "24.90% purchasae APR"
+        {# How top-line APR displays if the card has:
+            - Min and max APRs: "19.49% - 31.99% purchase APR"
+            - No min and max but a median: "29.74% median purchase APR"
+            - Single APR for everyone: "24.90% purchasae APR"
         #}
         {% if card.purchase_apr_offered %}
             <div class="h2 u-mb0 u-mt15">
@@ -251,22 +251,21 @@
         </p>
         <div class="o-additional-details">
             {% call() expandable({
-                "label": "Transaction fees, charges, and other details",
-                "is_bordered": true,
-                "is_expanded": false,
-                "is_midtone": false
+                'label': 'Transaction fees, charges, and other details',
+                'is_bordered': true,
+                'is_expanded': false,
+                'is_midtone': false
             }) %}
                 <dl class="m-list m-list__card-details">
                     <dt>Foreign transaction fee</dt>
                     <dd>
-                        {#
-                            How foreign transaction fees display:
-                                - No fee: "None"
-                                - Dollar amount: "$3"
-                                - Percentage: "3.00%"
-                                - Calculation: "Whatever text was submitted"
-                                - With minimum fee amount: add "($0.50 minimum)" to end
-                                - Dollar or percentage and calculation: "3.00% (text)"
+                        {# How foreign transaction fees display:
+                            - No fee: "None"
+                            - Dollar amount: "$3"
+                            - Percentage: "3.00%"
+                            - Calculation: "Whatever text was submitted"
+                            - With minimum fee amount: add "($0.50 minimum)" to end
+                            - Dollar or percentage and calculation: "3.00% (text)"
                         #}
                         {% if card.foreign_transaction_fees %}
                             {{ currency(card.foreign_transaction_fee_dollars) ~
@@ -337,6 +336,235 @@
                 </dl>
             {% endcall %}
         </div>
+    </div>
+
+    <div class="o-card-details-section">
+        <h2 class="h3">
+            {{ svg_icon("credit-payment-round") }}
+            Fees
+        </h2>
+        {# How top-line fee displays if the card has:
+            - Annual fee: "$95 annual fee"
+            - Monthly fee: "$8.25 monthly fee"
+            - Annual and monthly fee: "$175 annual fee + $12.50 monthly fee"
+            - Other fee: "$50 {fee name, period}"
+            - Annual and other fee: "$495 annual fee + $50 {fee name, period}"
+            - No periodic fee: "$0 annual fee"
+            - Fee that varies: "$25 - $55 annual/monthly fee"
+        #}
+        <div class="m-payment-calculation u-mb15">
+            {% if card.annual_fee or not card.periodic_fee_type %}
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt0">
+                        {# A handful of cards have both an annual and monthly
+                            fee with one of those fees varying. Because of how
+                            the data is (not) structured, we can only tell which
+                            fee varies by looking for either "annual" or
+                            "monthly" in the text of the fee explanation.
+                        #}
+                        {% if card.fee_varies %}
+                            {% if card.periodic_fee_type | join == "Annual" %}
+                                {{ currency(card.periodic_min) ~ ' - '
+                                    ~ currency(card.periodic_max) }}
+                            {% elif card.fee_explanation.lower().count('annual') %}
+                                {{ currency(card.periodic_min) ~ ' - '
+                                    ~ currency(card.periodic_max) }}
+                            {% else %}
+                                {{ currency(card.annual_fee) }}
+                            {% endif %}
+                        {% else %}
+                            {{ currency(card.annual_fee) if card.annual_fee else currency(0) }}
+                        {% endif %}
+                    </div>
+                    <div class="h4 u-mt0 u-mb0">
+                        Annual fee
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.monthly_fee %}
+                {% if card.annual_fee %}
+                    <div class="m-payment-calculation__operator h2">+</div>
+                {% endif %}
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt0">
+                        {# A handful of cards have both an annual and monthly
+                            fee with one of those fees varying. Because of how
+                            the data is (not) structured, we can only tell which
+                            fee varies by looking for either "annual" or
+                            "monthly" in the text of the fee explanation.
+                        #}
+                        {% if card.fee_varies %}
+                            {% if card.periodic_fee_type | join == "Monthly" %}
+                                {{ currency(card.periodic_min) ~ ' - '
+                                    ~ currency(card.periodic_max) }}
+                            {% elif card.fee_explanation.lower().count('monthly') %}
+                                {{ currency(card.periodic_min) ~ ' - '
+                                    ~ currency(card.periodic_max) }}
+                            {% else %}
+                                {{ currency(card.monthly_fee) }}
+                            {% endif %}
+                        {% else %}
+                            {{ currency(card.monthly_fee) }}
+                        {% endif %}
+                    </div>
+                    <div class="h4 u-mt0 u-mb0">
+                        Monthly fee
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.weekly_fee %}
+                {% if card.annual_fee or card.monthly_fee %}
+                    <div class="m-payment-calculation__operator h2">+</div>
+                {% endif %}
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt0">
+                        {{ currency(card.weekly_fee) }}
+                    </div>
+                    <div class="h4 u-mt0 u-mb0">
+                        Weekly fee
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.other_periodic_fee_amount %}
+                {% if card.annual_fee or card.monthly_fee or card.weekly_fee %}
+                    <div class="m-payment-calculation__operator h2">+</div>
+                {% endif %}
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt0">
+                        {{ currency(card.other_periodic_fee_amount) }}
+                    </div>
+                    <div class="h4 u-mt0 u-mb0">
+                        {{ card.other_periodic_fee_name | capitalize }},
+                        {{ card.other_periodic_fee_frequency | lower }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% if card.fee_explanation is not none %}
+            <p>{{ card.fee_explanation }}</p>
+        {% endif %}
+         <div class="o-additional-details">
+            {% set other_fees = [card.other_fee_name, card.other_fee_name_2,
+                card.other_fee_name_3, card.other_fee_name_4, card.other_fee_name_5
+            ] %}
+            {% set other_fees_count = other_fees | length - other_fees.count('') %}
+            {% if other_fees_count == 1 %}
+                {% set other_fees_label = 'Late, over-limit, and 1 other fee' %}
+            {% elif other_fees_count > 1 %}
+                {% set other_fees_label = 'Late, over-limit, and ' ~ other_fees_count ~ ' other fees' %}
+            {% else %}
+                {% set other_fees_label = 'Late and over-limit fees' %}
+            {% endif %}
+            {% call() expandable({
+                'label': other_fees_label,
+                'is_bordered': true,
+                'is_expanded': false,
+                'is_midtone': false
+            }) %}
+                <dl class="m-list m-list__card-details">
+                    <dt>Late fee</dt>
+                    <dd>
+                        {% if card.late_fees %}
+                            {{ currency(card.late_fee_dollars) ~ ' for the first late payment' if
+                                card.late_fee_dollars
+                            }}
+                            {{ 'and' if card.late_fee_dollars
+                                and card.late_fee_six_month_billing_cycle
+                            }}
+                            {{ currency(card.late_fee_six_month_billing_cycle) ~
+                                ' for a late payment within six billing cycles of another
+                                late payment' if card.late_fee_six_month_billing_cycle
+                            }}
+                            {# A handful of cards specify neither a first nor repeat late
+                                fee and put all late fee info in the late_fee_policy_details
+                                field. For cards like that, we'll show the details here and
+                                not show the "Late fee policy details" item.
+                            #}
+                            {# TODO: Refactor to not use the exact string #}
+                            {{ card.late_fee_policy_details if card.late_fee_types ==
+                                ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                            }}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </dd>
+                    {# See the comment above: we won't show this if we're already showing
+                        late fee details in the "Late fee" item, i.e. if the card has *only*
+                        policy details chosen in late_fee_types
+                    #}
+                    {# TODO: Refactor to not use the exact string #}
+                    {% if card.late_fee_policy_details
+                        and card.late_fee_types !=
+                        ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                    %}
+                        <dt>Late fee policy details</dt>
+                        <dd>{{ card.late_fee_policy_details }}</dd>
+                    {% endif %}
+                    <dt>Over-limit fee</dt>
+                    <dd>
+                        {% if card.over_limit_fees %}
+                            {{ currency(card.over_limit_fee_dollars) if
+                                card.over_limit_fee_dollars
+                            }}
+                            {# A handful of cards specify only over-limit fee details and
+                                not a fixed dollar amount. For cards like that, we'll show
+                                the details here and not show the "Over-limit fee details."
+                            #}
+                            {# TODO: Refactor to not use the exact string #}
+                            {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
+                                ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                            }}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </dd>
+                    {# See the comment above: we won't show this if we're already showing
+                        over-limit fee details in the "Over-limit fee" item, i.e. if the
+                        card has *only* details chosen in over_limit_fee_types.
+                    #}
+                    {# TODO: Refactor to not use the exact string #}
+                    {% if card.overlimit_fee_detail
+                        and card.over_limit_fee_types !=
+                        ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                    %}
+                        <dt>Over-limit fee details</dt>
+                        <dd>{{ card.overlimit_fee_detail }}</dd>
+                    {% endif %}
+                    {% if card.other_fees %}
+                        {% for fee_name in other_fees %}
+                            {% if fee_name %}
+                                <dt>{{ fee_name }}</dt>
+                                <dd>
+                                    {% if loop.first %}
+                                        {{ currency(card.other_fee_amount) ~ ' (' ~
+                                            card.other_fee_explanation | lower ~ ')'
+                                        }}
+                                    {% else %}
+                                        {{ currency(card['other_fee_amount_' ~ loop.index]) ~ ' (' ~
+                                            card['other_fee_explanation_' ~ loop.index] | lower ~
+                                            ')'
+                                        }}
+                                    {% endif %}
+                                </dd>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </dl>
+            {% endcall %}
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <div class="o-card-details-section">
@@ -574,130 +802,6 @@
         {% else %}
             <p>This card does not offer cash advances.</p>
         {% endif %}
-    </div>
-
-    <div class="o-card-details-section">
-        <h2>Fees</h2>
-        <dl class="m-list m-list__card-details">
-            {% if not card.periodic_fee_type %}
-                <dt>Annual fee</dt>
-                <dd>None</dd>
-            {% endif %}
-            {% if card.annual_fee %}
-                <dt>Annual fee</dt>
-                <dd>{{ '$' ~ card.annual_fee }}</dd>
-            {% endif %}
-            {% if card.monthly_fee %}
-                <dt>Monthly fee</dt>
-                <dd>{{ '$' ~ card.monthly_fee }}</dd>
-            {% endif %}
-            {% if card.weekly_fee %}
-                <dt>Weekly fee</dt>
-                <dd>{{ '$' ~ card.weekly_fee }}</dd>
-            {% endif %}
-            {% if card.other_periodic_fee_amount %}
-                <dt>{{ card.other_periodic_fee_name }}</dt>
-                <dd>{{ '$' ~ card.other_periodic_fee_amount ~ ', ' ~ card.other_periodic_fee_frequency | lower }}</dd>
-            {% endif %}
-            {% if card.fee_varies %}
-                <dt>Fee varies?</dt>
-                <dd>
-                    {{ '$' ~ card.periodic_min ~ '–'  ~ card.periodic_max ~
-                        ' (' ~ card.fee_explanation ~ ')'
-                    }}
-                </dd>
-            {% endif %}
-            <dt>Late fee</dt>
-            <dd>
-                {% if card.late_fees %}
-                    {{ '$' ~ card.late_fee_dollars ~ ' for the first late payment' if
-                        card.late_fee_dollars
-                    }}
-                    {{ 'and' if card.late_fee_dollars
-                        and card.late_fee_six_month_billing_cycle
-                    }}
-                    {{ '$' ~ card.late_fee_six_month_billing_cycle ~
-                        ' for a late payment within six billing cycles of another
-                        late payment' if card.late_fee_six_month_billing_cycle
-                    }}
-                    {# A handful of cards specify neither a first nor repeat late
-                        fee and put all late fee info in the late_fee_policy_details
-                        field. For cards like that, we'll show the details here and
-                        not show the "Late fee policy details" item.
-                    #}
-                    {# TODO: Refactor to not use the exact string #}
-                    {{ card.late_fee_policy_details if card.late_fee_types ==
-                        ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
-                    }}
-                {% else %}
-                    None
-                {% endif %}
-            </dd>
-            {# See the comment above: we won't show this if we're already showing
-                late fee details in the "Late fee" item, i.e. if the card has *only*
-                policy details chosen in late_fee_types
-            #}
-            {# TODO: Refactor to not use the exact string #}
-            {% if card.late_fee_policy_details
-                and card.late_fee_types !=
-                ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
-            %}
-                <dt>Late fee policy details</dt>
-                <dd>{{ card.late_fee_policy_details }}</dd>
-            {% endif %}
-            <dt>Over-limit fee</dt>
-            <dd>
-                {% if card.over_limit_fees %}
-                    {{ '$' ~ card.over_limit_fee_dollars if
-                        card.over_limit_fee_dollars
-                    }}
-                    {# A handful of cards specify only over-limit fee details and
-                        not a fixed dollar amount. For cards like that, we'll show
-                        the details here and not show the "Over-limit fee details."
-                    #}
-                    {# TODO: Refactor to not use the exact string #}
-                    {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
-                        ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
-                    }}
-                {% else %}
-                    None
-                {% endif %}
-            </dd>
-            {# See the comment above: we won't show this if we're already showing
-                over-limit fee details in the "Over-limit fee" item, i.e. if the
-                card has *only* details chosen in over_limit_fee_types.
-            #}
-            {# TODO: Refactor to not use the exact string #}
-            {% if card.overlimit_fee_detail
-                and card.over_limit_fee_types !=
-                ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
-            %}
-                <dt>Over-limit fee details</dt>
-                <dd>{{ card.overlimit_fee_detail }}</dd>
-            {% endif %}
-            {% if card.other_fees %}
-                {% for fee_name in [card.other_fee_name, card.other_fee_name_2,
-                    card.other_fee_name_3, card.other_fee_name_4,
-                    card.other_fee_name_5
-                ] %}
-                    {% if fee_name %}
-                        <dt>{{ fee_name }}</dt>
-                        <dd>
-                            {% if loop.first %}
-                                {{ '$' ~ '%.2f' | format(card.other_fee_amount | float) ~ ' (' ~
-                                    card.other_fee_explanation | lower ~ ')'
-                                }}
-                            {% else %}
-                                {{ '$' ~ '%.2f' | format(card['other_fee_amount_' ~ loop.index] | float) ~ ' (' ~
-                                    card['other_fee_explanation_' ~ loop.index] | lower ~
-                                    ')'
-                                }}
-                            {% endif %}
-                        </dd>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        </dl>
     </div>
 
     <div class="o-card-details-section">
