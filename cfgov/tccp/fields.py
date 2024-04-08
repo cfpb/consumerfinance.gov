@@ -1,4 +1,5 @@
 import re
+from decimal import Decimal
 
 from django.core import checks
 from django.core.exceptions import ValidationError
@@ -28,6 +29,10 @@ class CurrencyDecimalField(models.DecimalField):
     def to_python(self, value):
         if isinstance(value, str):
             value = value.lstrip("$")
+        elif isinstance(value, float):
+            value = Decimal(value).quantize(
+                Decimal("1." + "0" * self.decimal_places)
+            )
 
         return super().to_python(value)
 
