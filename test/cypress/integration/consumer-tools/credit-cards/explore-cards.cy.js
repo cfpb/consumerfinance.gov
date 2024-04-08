@@ -61,7 +61,7 @@ describe('Explore credit cards results page', () => {
     cy.get('.m-card--tabular > a').first().click();
 
     cy.get('h1').contains('Customize for your situation').should('not.exist');
-    cy.get('h2').contains('Application requirements').should('exist');
+    cy.get('h2').contains('Making purchases').should('exist');
   });
   it('should have the ordering option outside the filters expandable', () => {
     exploreCards.openResultsPage();
