@@ -23,6 +23,15 @@ class CurrencyDecimalFieldTests(SimpleTestCase):
             field.clean(value, None), kwargs.get("expected", value)
         )
 
+    def test_clean_float(self):
+        self.check_clean(0.7, expected=Decimal("0.7"))
+
+    def test_clean_float_rounding(self):
+        self.check_clean(12.714, expected=Decimal("12.71"))
+
+    def test_clean_float_rounding_up(self):
+        self.check_clean(123.715, expected=Decimal("123.72"))
+
     def test_clean_decimal(self):
         self.check_clean(Decimal("100"))
 
