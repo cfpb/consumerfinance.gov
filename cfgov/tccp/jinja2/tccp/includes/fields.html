@@ -21,3 +21,11 @@
 {%- macro lower_first_letter(string) -%}
     {{ string[0].lower() ~ string[1:] }}
 {%- endmacro -%}
+
+{%- macro oxfordize(list) -%}
+    {% for item in list %}
+        {{- item -}}
+        {{- ', ' if not loop.last and loop.length > 2 -}}
+        {{- ' and ' if loop.index == loop.length - 1 -}}
+    {% endfor %}
+{%- endmacro -%}

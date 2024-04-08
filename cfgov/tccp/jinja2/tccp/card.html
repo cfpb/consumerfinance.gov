@@ -1,7 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
 {% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range, currency, lower_first_letter %}
+{% from 'tccp/includes/fields.html' import apr, apr_range, currency, lower_first_letter, oxfordize %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 {% import 'v1/includes/molecules/notification.html' as notification with context %}
 
@@ -89,11 +89,11 @@
                         <li>
                             To apply, you must live in
                             {{ 'certain counties in ' if card.pertains_to_specific_counties }}
-                            {% for state in available_states %}
-                                {{ state_lookup[state] -}}
-                                {{- ', ' if not loop.last and loop.length > 2 -}}
-                                {{- ' and ' if loop.index == loop.length - 1 -}}
-                            {% endfor %}
+                            {%- set states = [] -%}
+                            {%- for state in available_states -%}
+                                {%- do states.append(state_lookup[state]) -%}
+                            {%- endfor -%}
+                            {{ oxfordize(states) }}
                         </li>
                     {% endif %}
                     {% if card.geographic_restrictions is not none %}
@@ -552,19 +552,67 @@
                 </dl>
             {% endcall %}
         </div>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+    <div class="o-card-details-section">
+        <h2 class="h3">
+            {{ svg_icon("gift-round") }}
+            Rewards and perks
+        </h2>
+        {% if card.rewards %}
+            <div class="h2 u-mb0 u-mt15">
+                {%- set rewards = [] -%}
+                {%- for reward in card.rewards -%}
+                    {%- do rewards.append(rewards_lookup[reward]) -%}
+                {%- endfor -%}
+                {{ oxfordize(rewards) | capitalize }}
+            </div>
+            <div class="h4 u-mt0">
+                Rewards
+            </div>
+        {% else %}
+            <p>This card does not offer cash back, travel, or other rewards.</p>
+        {% endif %}
+        {% if card.other_rewards %}
+            <p>Other rewards: {{ card.other_rewards }}</p>
+        {% endif %}
+        {% call() expandable({
+            'label': 'Card services and features',
+            'is_bordered': true,
+            'is_expanded': false,
+            'is_midtone': false
+        }) %}
+            <dl class="m-list m-list__card-details">
+                {% if card.services %}
+                    <dt>Services</dt>
+                    <dd>
+                        <ul>
+                            {% for service in card.services %}
+                                <li>
+                                    {{ service if service != 'Other' else
+                                        card.other_services
+                                    }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                {% endif %}
+                {% if card.card_features %}
+                    <dt>Card features</dt>
+                    <dd>
+                        <ul>
+                            {% for feature in card.card_features %}
+                                <li>
+                                    {{ feature if feature != 'Other' else
+                                        card.other_card_features
+                                    }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                {% endif %}
+            </dl>
+        {% endcall %}
     </div>
 
     <div class="o-card-details-section">
@@ -804,51 +852,6 @@
         {% endif %}
     </div>
 
-    <div class="o-card-details-section">
-        <h2>Rewards and perks</h2>
-        <dl class="m-list m-list__card-details">
-            <dt>Rewards</dt>
-            <dd>
-                {% if card.rewards %}
-                <ul>
-                    {% for reward in card.rewards %}
-                        <li>{{ rewards_lookup[reward] }}</li>
-                    {% endfor %}
-                </ul>
-                {% else %}
-                    None
-                {% endif %}
-            </dd>
-            {% if card.services %}
-                <dt>Services</dt>
-                <dd>
-                    <ul>
-                        {% for service in card.services %}
-                            <li>
-                                {{ service if service != 'Other' else
-                                    card.other_services
-                                }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </dd>
-            {% endif %}
-            {% if card.card_features %}
-                <dt>Card features</dt>
-                <dd>
-                    <ul>
-                        {% for feature in card.card_features %}
-                            <li>
-                                {{ feature if feature != 'Other' else
-                                    card.other_card_features
-                                }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </dd>
-            {% endif %}
-        </dl>
-    </div>
 </div>
 
 {% endblock content_main %}
