@@ -18,8 +18,8 @@
     }}
 {%- endmacro -%}
 
-{%- macro lower_first_letter(string) -%}
-    {{ string[0].lower() ~ string[1:] }}
+{%- macro lower_first_letter(s) -%}
+    {{- (s[0].lower() ~ (s[1:] if s | length > 1)) if s -}}
 {%- endmacro -%}
 
 {%- macro oxfordize(list) -%}
