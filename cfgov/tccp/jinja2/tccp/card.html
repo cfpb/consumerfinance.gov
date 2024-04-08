@@ -249,6 +249,69 @@
                 more about fixed APRs.</a>
             {% endif %}
         </p>
+        {% if card.introductory_apr_offered %}
+            <div class="h3 u-mb0 u-mt30">
+                {% if card.intro_apr_min is not none
+                    and card.intro_apr_max is not none
+                %}
+                    {{ apr_range(card.intro_apr_min, card.intro_apr_max) }}
+                {% elif card.intro_apr_median is not none %}
+                    {{ apr(card.intro_apr_median) }}
+                {% endif %}
+                for
+                {{ '%g' | format(card.median_length_of_introductory_apr) }} months
+            </div>
+            <div class="u-mb15">
+                {% if card.intro_apr_min is not none
+                    and card.intro_apr_max is not none
+                %}
+                    Introductory APR
+                {% elif card.intro_apr_median is not none %}
+                    Median introductory APR
+                {% endif %}
+            </div>
+            {% if card.introductory_apr_vary_by_credit_tier %}
+            <p>
+                Your introductory APR will be based on your credit score.
+                You’ll only know your exact APR if you are approved for the
+                card. Here are average APRs for different credit scores for this
+                card:
+            </p>
+            <table class="o-table o-table--apr">
+                <thead>
+                    <tr>
+                        <th>Credit score</th>
+                        <th>Median intro APR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for intro_apr in [
+                        card.intro_apr_poor,
+                        card.intro_apr_good,
+                        card.intro_apr_great
+                    ] %}
+                        <tr>
+                            <td>{{ credit_tiers[loop.index][1] }}</td>
+                            <td>{{ apr(intro_apr) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% elif card.intro_apr_median is not none
+                and card.intro_apr_min != card.intro_apr_max %}
+                <p>
+                    You’ll only know your exact APR if you are approved for the
+                    card. The median APR for this card is
+                    {{ apr(card.intro_apr_median) }}.
+                </p>
+            {% endif %}
+            <p>
+                With introductory APR offers, you have to keep track of
+                how you are paying off that balance within the promotional
+                period, or you could end up owing more in interest than the
+                original purchase amount.
+            </p>
+        {% endif %}
         <div class="o-additional-details">
             {% call() expandable({
                 'label': 'Transaction fees, charges, and other details',
@@ -443,7 +506,7 @@
         {% if card.fee_explanation is not none %}
             <p>{{ card.fee_explanation }}</p>
         {% endif %}
-         <div class="o-additional-details">
+        <div class="o-additional-details">
             {% set other_fees = [card.other_fee_name, card.other_fee_name_2,
                 card.other_fee_name_3, card.other_fee_name_4, card.other_fee_name_5
             ] %}
@@ -576,43 +639,45 @@
         {% if card.other_rewards %}
             <p>Other rewards: {{ card.other_rewards }}</p>
         {% endif %}
-        {% call() expandable({
-            'label': 'Card services and features',
-            'is_bordered': true,
-            'is_expanded': false,
-            'is_midtone': false
-        }) %}
-            <dl class="m-list m-list__card-details">
-                {% if card.services %}
-                    <dt>Services</dt>
-                    <dd>
-                        <ul>
-                            {% for service in card.services %}
-                                <li>
-                                    {{ service if service != 'Other' else
-                                        card.other_services
-                                    }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-                {% if card.card_features %}
-                    <dt>Card features</dt>
-                    <dd>
-                        <ul>
-                            {% for feature in card.card_features %}
-                                <li>
-                                    {{ feature if feature != 'Other' else
-                                        card.other_card_features
-                                    }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-            </dl>
-        {% endcall %}
+        <div class="o-additional-details">
+            {% call() expandable({
+                'label': 'Card services and features',
+                'is_bordered': true,
+                'is_expanded': false,
+                'is_midtone': false
+            }) %}
+                <dl class="m-list m-list__card-details">
+                    {% if card.services %}
+                        <dt>Services</dt>
+                        <dd>
+                            <ul>
+                                {% for service in card.services %}
+                                    <li>
+                                        {{ service if service != 'Other' else
+                                            card.other_services
+                                        }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+                    {% if card.card_features %}
+                        <dt>Card features</dt>
+                        <dd>
+                            <ul>
+                                {% for feature in card.card_features %}
+                                    <li>
+                                        {{ feature if feature != 'Other' else
+                                            card.other_card_features
+                                        }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+                </dl>
+            {% endcall %}
+        </div>
     </div>
 
     <div class="o-card-details-section">
