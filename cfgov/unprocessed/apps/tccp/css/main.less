@@ -400,11 +400,19 @@ html.js .o-filterable-list-results__partial {
 
 .m-payment-calculation {
   display: flex;
-  flex-wrap: wrap;
-  gap: unit((30px / @base-font-size-px), rem);
+  flex-direction: column;
+
+  @media only screen and (min-width: @bp-sm-min) {
+    flex-direction: row;
+    gap: unit((30px / @base-font-size-px), rem);
+  }
 
   &__operator {
-    align-self: center;
+    margin-bottom: 0;
+
+    @media only screen and (min-width: @bp-sm-min) {
+      align-self: center;
+    }
   }
 }
 

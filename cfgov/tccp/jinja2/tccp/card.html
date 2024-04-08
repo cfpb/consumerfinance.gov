@@ -799,121 +799,116 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2>Cash advances</h2>
+        <h2 class="h3 u-mb15">
+            {{ svg_icon("quick-cash-round") }}
+            Getting a cash advance
+        </h2>
         {% if card.cash_advance_apr_offered %}
-            <dl class="m-list m-list__card-details">
-                <dt>Cash advance APR</dt>
-                {# Cash advance APRs are displayed the same way as purchase APRs #}
-                <dd>
-                    {% if card.advance_apr_min is not none
-                        or card.advance_apr_max is not none
-                        or card.advance_apr_median is not none
-                    %}
-                        {% set advance_apr_range =
-                            apr_range(card.advance_apr_min, card.advance_apr_max) if
-                            card.advance_apr_min is not none
+            <div class="m-payment-calculation u-mb15">
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt15">
+                        {% if card.advance_apr_min is not none
                             and card.advance_apr_max is not none
                         %}
-                        {% set advance_apr_median = apr(card.advance_apr_median) if
-                            card.advance_apr_median is not none
+                            {{ apr_range(card.advance_apr_min, card.advance_apr_max) }}
+                        {% elif card.advance_apr_median is not none %}
+                            {{ apr(card.advance_apr_median) }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </div>
+                    <div class="h4 u-mt0">
+                        {% if card.advance_apr_min is not none
+                            and card.advance_apr_max is not none
                         %}
-                        {{ advance_apr_range if advance_apr_range }}
-                        {{ '(' if advance_apr_median
-                            and advance_apr_range
-                            and advance_apr_median != advance_apr_range
-                        }}
-                        {{- advance_apr_median ~ ' median cash advance APR' if
-                            advance_apr_median
-                            and advance_apr_median != advance_apr_range
-                        }}
-                        {{- ')' if advance_apr_median
-                            and advance_apr_range
-                            and advance_apr_median != advance_apr_range
-                        }}
-                        {{ 'with median cash advance APRs varying by credit score:' if
-                            card.cash_advance_apr_vary_by_credit_tier
-                        }}
-                    {% endif %}
-                    {% if card.cash_advance_apr_vary_by_credit_tier %}
-                        <table class="o-table">
-                            <thead>
-                                <tr>
-                                    <th>619 or less</th>
-                                    <th>620 to 719</th>
-                                    <th>720 or greater</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {{ apr(card.advance_apr_poor) }}
-                                    </td>
-                                    <td>
-                                        {{ apr(card.advance_apr_good) }}
-                                    </td>
-                                    <td>
-                                        {{ apr(card.advance_apr_great) }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    {% endif %}
-                    {{ 'The issuer did not submit cash advance APR information for this card'
-                        if card.advance_apr_min is none
-                        and card.advance_apr_median is none
-                        and card.advance_apr_max is none
-                        and card.advance_apr_poor is none
-                        and card.advance_apr_good is none
-                        and card.advance_apr_great is none
-                    }}
-                </dd>
-                <dt>Cash advance fee</dt>
-                <dd>
-                    {# Similar to how foreign transaction fees display #}
-                    {% if card.cash_advance_fees %}
-                        {{ '$' ~ card.cash_advance_fee_dollars if
+                            Cash advance APR
+                        {% elif card.advance_apr_median is not none %}
+                            Median cash advance APR
+                        {% else %}
+                            Cash advance APR
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="m-payment-calculation__operator h2">+</div>
+                <div class="m-payment-calculation__part">
+                    <div class="h2 u-mb0 u-mt15">
+                        {{ currency(card.cash_advance_fee_dollars) if
                             card.cash_advance_fee_dollars is not none
                         }}
+                        {# TODO: Is this an "or"? Or can it be an "and"? #}
                         {{ ' or ' if card.cash_advance_fee_dollars is not none
                             and card.cash_advance_fee_percentage is not none
                         }}
                         {{ apr(card.cash_advance_fee_percentage) if
                             card.cash_advance_fee_percentage is not none
                         }}
-                        {% if card.minimum_cash_advance_fee_amount is not none %}
-                        {% set cash_advance_fee_minimum =
-                            card.minimum_cash_advance_fee_amount | float
-                        %}
-                        {{ '($' ~ '%.2f' | format(cash_advance_fee_minimum) ~
+                        {{ '(' ~ currency(card.minimum_cash_advance_fee_amount) ~
                             ' minimum)' if card.minimum_cash_advance_fee_amount
                             is not none
                         }}
-                        {% endif %}
-                        {% if card.cash_advance_fee_calculation %}
-                        {{ '(' if card.cash_advance_fee_dollars is not none
-                            or card.cash_advance_fee_percentage is not none
-                        -}}
-                        {{- card.cash_advance_fee_calculation -}}
-                        {{- ')' if card.cash_advance_fee_dollars is not none
-                            or card.cash_advance_fee_percentage is not none
-                        -}}
-                        {% endif %}
-                    {% else %}
-                        None
-                    {% endif %}
-                </dd>
-                {% if card.cash_advance_fees %}
-                    <dt>Cash advance fee frequency</dt>
-                    <dd>
-                    {{ 'The fee is charged for each cash advance transaction' if
-                        card.cash_advance_fee_for_each_transaction else
-                        'The fee is charged once per billing cycle'
-                    }}
-                    </dd>
-                {% endif %}
-            </dl>
+                        {{ 'Variable' if card.cash_advance_fee_calculation
+                            and card.cash_advance_fee_dollars is none
+                            and card.cash_advance_fee_percentage is none
+                        }}
+                        {{ currency(0) if not card.cash_advance_fees }}
+                    </div>
+                    <div class="h4 u-mt0">
+                        Cash advance fee
+                        {{- ', see details' if card.cash_advance_fee_calculation }}
+                    </div>
+                </div>
+            </div>
+            {% if card.cash_advance_fee_calculation %}
+                <p>
+                    Cash advance fee details:
+                    {{ card.cash_advance_fee_calculation }}
+                </p>
+            {% endif %}
+            {% if card.cash_advance_apr_vary_by_credit_tier %}
+                <p>
+                    Your cash advance APR will be based on your credit score.
+                    You’ll only know your exact APR if you are approved for the
+                    card. Here are average cash advance APRs for different
+                    credit scores for this card:
+                </p>
+                <table class="o-table o-table--apr">
+                    <thead>
+                        <tr>
+                            <th>Credit score</th>
+                            <th>Median balance transfer APR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for advance_apr in [
+                            card.advance_apr_poor,
+                            card.advance_apr_good,
+                            card.advance_apr_great
+                        ] %}
+                            <tr>
+                                <td>{{ credit_tiers[loop.index][1] }}</td>
+                                <td>{{ apr(advance_apr) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% elif card.advance_apr_median is not none
+                and card.advance_apr_min != card.advance_apr_max %}
+                <p>
+                    You’ll only know your exact cash advance APR if you are
+                    approved for the card. The median cash advance APR for
+                    this card is {{ apr(card.advance_apr_median) }}.
+                </p>
+            {% endif %}
+            {# TODO: Explain this better #}
+            <p>
+               The cash advance fee is charged
+               {{ ' for each cash advance transaction' if
+                    card.cash_advance_fee_for_each_transaction else
+                    ' once per billing cycle'
+                }}.
+            </p>
         {% else %}
-            <p>This card does not offer cash advances.</p>
+            <p>This card does not offer cash advanaces.</p>
         {% endif %}
     </div>
 
