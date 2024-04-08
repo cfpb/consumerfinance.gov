@@ -10,8 +10,8 @@ class CardOrderingFilter(filters.OrderingFilter):
         kwargs.update(
             {
                 "choices": [
-                    ("purchase_apr", "Lowest purchase APR"),
-                    ("transfer_apr", "Lowest balance transfer APR"),
+                    ("purchase_apr", "Purchase APR"),
+                    ("transfer_apr", "Balance transfer APR"),
                     ("product_name", "Card name"),
                 ],
                 "initial": "purchase_apr",
