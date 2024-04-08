@@ -104,16 +104,14 @@
             {% if card.professional_affiliation is not none or card.other is not none %}
                 <div class="h4 u-mt15">Other requirements for applying</div>
                 <ul>
-                    <li>
-                        {% for requirement in [
-                            card.professional_affiliation,
-                            card.other
-                        ] %}
-                            {% if requirement %}
-                                <dd>{{ requirement }}</dd>
-                            {% endif %}
-                        {% endfor %}
-                    </li>
+                    {% for requirement in [
+                        card.professional_affiliation,
+                        card.other
+                    ] %}
+                        {% if requirement %}
+                            <li>{{ requirement }}</li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
             {% endif %}
         </div>
