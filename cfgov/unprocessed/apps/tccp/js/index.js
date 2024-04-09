@@ -36,7 +36,7 @@ function handleShowMore(event) {
  */
 function updateBreadcrumb() {
   const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
-  if (breadcrumb.innerText === 'Customize for your situation') {
+  if (breadcrumb.innerText === 'Explore credit cards') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
   }

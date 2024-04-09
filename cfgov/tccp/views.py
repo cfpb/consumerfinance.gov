@@ -18,7 +18,7 @@ from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
 from .models import CardSurveyData
 from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
-from .situations import Situation, SituationSpeedBumps
+from .situations import Situation, SituationFeatures, SituationSpeedBumps
 
 
 class LandingPageView(FlaggedTemplateView):
@@ -63,7 +63,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     serializer_class = CardSurveyDataListSerializer
     filter_backends = [CardSurveyDataFilterBackend]
     filterset_class = CardSurveyDataFilterSet
-    heading = "Customize for your situation"
+    heading = "Explore credit cards"
     breadcrumb_items = [
         {
             "title": "Credit cards",
@@ -110,10 +110,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             filtered_queryset = self.model.objects.none()
 
         serializer = self.get_serializer(filtered_queryset, many=True)
+        cards = serializer.data
+
         response = Response(
             {
-                "count": len(serializer.data),
-                "cards": serializer.data,
+                "count": len(cards),
+                "cards": cards,
                 "stats_all": summary_stats,
             }
         )
@@ -123,6 +125,24 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             form = filter_backend.used_filterset.form
             situations = form.cleaned_data["situations"]
 
+            # We want to aggregate the counts of cards in each of the {less
+            # than average, average, more than average} purchase APR ratings.
+            # We do this so we can display a results summary like "50 cards
+            # with less than average interest". We could do this with another
+            # database query but the size of the data is small enough that we
+            # can just as easily do it in Python.
+            purchase_apr_rating_labels = ["less", "average", "more"]
+            purchase_apr_rating_counts = {
+                rating: len(
+                    [
+                        card
+                        for card in cards
+                        if card["purchase_apr_for_tier_rating"] == i
+                    ]
+                )
+                for i, rating in enumerate(purchase_apr_rating_labels)
+            }
+
             response.data.update(
                 {
                     "title": title(self.heading),
@@ -130,7 +150,10 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "breadcrumb_items": self.breadcrumb_items,
                     "form": form,
                     "situations": situations,
+                    "situation_features": SituationFeatures(situations),
                     "speed_bumps": SituationSpeedBumps(situations),
+                    "purchase_apr_rating_labels": purchase_apr_rating_labels,
+                    "purchase_apr_rating_counts": purchase_apr_rating_counts,
                     "rewards_lookup": dict(RewardsChoices),
                 }
             )

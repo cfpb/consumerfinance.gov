@@ -159,6 +159,29 @@
     border-bottom: 1px dotted @link-underline;
     color: @link-text;
   }
+
+  .a-credit-card-apr-rating {
+    font-size: unit((16px / @base-font-size-px), rem);
+    font-weight: 600;
+
+    @media only screen and (min-width: @bp-sm-min) {
+      font-size: unit((18px / @base-font-size-px), rem);
+      font-weight: 500;
+    }
+  }
+}
+
+dl {
+  .a-credit-card-apr-rating {
+    display: grid;
+    grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
+    align-items: baseline;
+    gap: unit(8px / @base-font-size-px, em);
+
+    dt {
+      justify-self: right;
+    }
+  }
 }
 
 .m-data-specs {
@@ -273,13 +296,6 @@ html.js .o-filterable-list-results__partial {
 
 .a-credit-card-apr-rating {
   margin-bottom: unit((20px / @base-font-size-px), rem);
-  font-size: unit((16px / @base-font-size-px), rem);
-  font-weight: 600;
-
-  @media only screen and (min-width: @bp-sm-min) {
-    font-size: unit((18px / @base-font-size-px), rem);
-    font-weight: 500;
-  }
 
   &--less .cf-icon-svg {
     color: var(--green);

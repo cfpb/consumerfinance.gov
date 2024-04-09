@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from itertools import chain
+from operator import attrgetter
 
 from django.template import loader
 from django.utils.safestring import mark_safe
@@ -170,6 +171,31 @@ SituationChoices = [(situation, situation.title) for situation in SITUATIONS]
 
 def get_situation_by_title(title):
     return {v: k for k, v in SituationChoices}[title]
+
+
+class SituationFeatures:
+    def __init__(self, situations):
+        # Each selected situation normally displays one feature to the user,
+        # but if multiple are selected we may want to combine them.
+        combos = [("Pay less interest", "Make a big purchase")]
+
+        for combo in combos:
+            if set(combo).issubset(set(map(attrgetter("title"), situations))):
+                situations = [
+                    # Create a fake situation identified by the concatenation
+                    # of the titles of the situations being combined.
+                    Situation(title=" ".join(combo)),
+                    # Remove the situations that were combined.
+                    *(s for s in situations if s.title not in combo),
+                ]
+
+        self.situations = situations
+
+    def __bool__(self):
+        return bool(self.situations)
+
+    def __iter__(self):
+        return self.situations.__iter__()
 
 
 class SituationSpeedBumps:

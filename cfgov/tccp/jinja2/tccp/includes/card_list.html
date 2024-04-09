@@ -4,6 +4,18 @@
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
+{% if situation_features -%}
+<div class="block block__sub">
+    <h2>Cards you’re looking for have these features:</h2>
+
+    <ul>
+        {% for feature in situation_features -%}
+        <li>{{ feature.results_html }}</li>
+        {%- endfor %}
+    </ul>
+</div>
+{%- endif %}
+
 {% if count -%}
 {{- notification.render(
     'success',
@@ -18,20 +30,22 @@
 ) -}}
 {%- endif %}
 
-{%- set purchase_apr_adjectives = ["less", "average", "more"] %}
-
 <div class="block__sub">
-    <div class="a-label__heading">Key</div>
+    <div class="a-label__heading">
+        Use our ratings to compare your results:
+    </div>
     <dl>
-        {% for adjective in purchase_apr_adjectives %}
-        <div class="u-mb0 a-credit-card-apr-rating a-credit-card-apr-rating--{{ adjective }}">
+        {% for label, label_count in purchase_apr_rating_counts.items() %}
+        <div class="u-mb0 a-credit-card-apr-rating a-credit-card-apr-rating--{{ label }}">
             <dt>
                 {%- for i in range(loop.index) -%}
                     {{ svg_icon("dollar-round") }}
                 {%- endfor -%}
             </dt>
             <dd>
-                Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
+                Pay {{ label }} interest (
+                    {{- label_count ~ ' card' ~ label_count | pluralize() -}}
+                )
             </dd>
         </div>
         {% endfor %}
@@ -45,16 +59,14 @@
 {%- endif %}
 
 {%- macro card_rating(card) -%}
-    {%- set adjective = purchase_apr_adjectives[
-        card.purchase_apr_for_tier_rating
-    ] -%}
+    {%- set label = purchase_apr_rating_labels[card.purchase_apr_for_tier_rating] -%}
 
-    <span class="a-credit-card-apr-rating--{{ adjective }}">
+    <span class="a-credit-card-apr-rating--{{ label }}">
         {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
             {{ svg_icon("dollar-round") }}
         {% endfor -%}
 
-        Pay {{ adjective }} interest
+        Pay {{ label }} interest
     </span>
 {%- endmacro -%}
 

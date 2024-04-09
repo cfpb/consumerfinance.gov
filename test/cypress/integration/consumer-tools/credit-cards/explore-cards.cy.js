@@ -60,16 +60,14 @@ describe('Explore credit cards results page', () => {
 
     cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('h1').contains('Customize for your situation').should('not.exist');
+    cy.get('h1').contains('Explore credit cards').should('not.exist');
     cy.get('h2').contains('Making purchases').should('exist');
   });
   it('should have the ordering option outside the filters expandable', () => {
     exploreCards.openResultsPage();
 
     cy.get('form#tccp-filters select#tccp-ordering').should('not.exist');
-    exploreCards
-      .getOrderingDropdownValue()
-      .should('have.text', 'Lowest purchase APR');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Purchase APR');
     exploreCards.selectOrdering('Card name');
     exploreCards.getOrderingDropdownValue().should('have.text', 'Card name');
   });
