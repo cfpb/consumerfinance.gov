@@ -173,7 +173,10 @@
 {% endmacro %}
 
 {% macro _filters_form(value, form) %}
-    <form method="get" action=".">
+    <form method="get" action="." hx-boost="true" hx-trigger="change">
+        <div class="htmx-progress">
+            <div class="htmx-progress-bar"></div>
+        </div>
         <div class="content-l">
             {{ _render_filter_fields(value, form) }}
             <div class="content-l__col
