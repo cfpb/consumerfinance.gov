@@ -22,6 +22,10 @@ export class ExploreCreditCards {
     cy.get('input[name=situations]').check(situation, { force: true });
   }
 
+  selectOrdering(ordering) {
+    cy.get('#tccp-ordering select').select(ordering);
+  }
+
   clickSubmitButton() {
     cy.get('button').contains('See cards for your situation').click();
   }
@@ -34,6 +38,10 @@ export class ExploreCreditCards {
     cy.get('button')
       .contains('Show more results with higher interest rates')
       .click();
+  }
+
+  getOrderingDropdownValue() {
+    return cy.get('#tccp-ordering select').find('option:selected');
   }
 
   getNumberResults() {

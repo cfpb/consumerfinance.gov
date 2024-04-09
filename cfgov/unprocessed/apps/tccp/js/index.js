@@ -1,5 +1,6 @@
 import { attach } from '@cfpb/cfpb-atomic-component';
 
+import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 
 /**
@@ -11,7 +12,7 @@ function init() {
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
-  moveOrderingDropdown();
+  orderingDropdown.move();
 }
 
 /**
@@ -38,18 +39,6 @@ function updateBreadcrumb() {
   if (breadcrumb.innerText === 'Customize for your situation') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
-  }
-}
-
-/**
- * Moves the card ordering dropdown outside the filters' expandable to
- * improve its visibility. Doing this via JS instead of at the template
- * level preserves the HTML form for no-JS users.
- */
-function moveOrderingDropdown() {
-  const orderingDropdown = document.querySelector('#tccp-ordering');
-  if (orderingDropdown) {
-    document.querySelector('#tccp-ordering-container').append(orderingDropdown);
   }
 }
 
