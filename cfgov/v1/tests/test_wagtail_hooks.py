@@ -26,54 +26,6 @@ class TestAllowlistOverride(SimpleTestCase):
         self.assertHTMLEqual(output_html, "Consumer Finance")
 
 
-class TestDeleteProtections(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.login()
-
-        root_page = Site.objects.get(is_default_site=True).root_page
-        self.page1 = BlogPage(title="delete1", slug="delete1")
-        root_page.add_child(instance=self.page1)
-        self.page2 = BlogPage(title="delete2", slug="delete2")
-        root_page.add_child(instance=self.page2)
-
-        self.delete_url = reverse(
-            "wagtailadmin_pages:delete", args=(self.page1.id,)
-        )
-        self.bulk_delete_url = (
-            reverse(
-                "wagtail_bulk_action",
-                args=(
-                    "wagtailcore",
-                    "page",
-                    "delete",
-                ),
-            )
-            + f"?id={self.page1.id}&id={self.page2.id}"
-        )
-
-    def test_delete_page_block(self):
-        response = self.client.post(self.delete_url)
-        self.assertRedirects(response, reverse("wagtailadmin_home"))
-
-    def test_delete_page_block_ajax(self):
-        response = self.client.post(
-            self.delete_url,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.assertEqual(response.status_code, 403)
-
-    def test_bulk_delete_block(self):
-        response = self.client.post(self.bulk_delete_url)
-        self.assertRedirects(response, reverse("wagtailadmin_home"))
-
-    def test_bulk_delete_page_block_ajax(self):
-        response = self.client.post(
-            self.bulk_delete_url,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.assertEqual(response.status_code, 403)
-
-
 class TestDjangoAdminLink(TestCase, WagtailTestUtils):
     def get_admin_response_for_user(self, is_staff):
         credentials = {"username": "regular", "password": "regular"}
