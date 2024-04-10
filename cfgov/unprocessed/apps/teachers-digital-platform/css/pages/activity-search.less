@@ -224,28 +224,16 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      @supports ( display: flex ) {
-        display: flex;
-      }
+      display: flex;
 
       > div:first-child {
-        float: left;
         margin-bottom: 0;
         padding-right: unit( 30px / @base-font-size-px, em );
         width: 66%;
-
-        @supports ( display: flex ) {
-          float: none;
-        }
       }
 
       > div:last-child {
-        float: right;
         width: 33%;
-
-        @supports ( display: flex ) {
-          float: none;
-        }
       }
     });
   }
