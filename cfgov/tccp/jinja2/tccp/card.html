@@ -177,54 +177,24 @@
             card.purchase_apr_good_rating,
             card.purchase_apr_great_rating
         ] %}
-        {# Cards with a tier-specific median #}
-        {% if card.purchase_apr_vary_by_credit_tier %}
-            {% set purchase_aprs = [
-                card.purchase_apr_poor,
-                card.purchase_apr_good,
-                card.purchase_apr_great
-            ] %}
-        {# Cards with a single median and a range of APRs #}
-        {% elif card.purchase_apr_median is not none
-            and card.purchase_apr_min != card.purchase_apr_max
+        {% set purchase_aprs = [
+            (card.purchase_apr_poor_min, card.purchase_apr_poor_max),
+            (card.purchase_apr_good_min, card.purchase_apr_good_max),
+            (card.purchase_apr_great_min, card.purchase_apr_great_max),
+        ] %}
+        {% if card.purchase_apr_offered
+            and card.purchase_apr_poor_min is none
+            and card.purchase_apr_poor_max is none
+            and card.purchase_apr_good_min is none
+            and card.purchase_apr_good_max is none
+            and card.purchase_apr_great_min is none
+            and card.purchase_apr_great_max is none
         %}
-            {% set purchase_aprs = [
-                card.purchase_apr_median,
-                card.purchase_apr_median,
-                card.purchase_apr_median
-            ] %}
-        {# Cards with a single median only #}
-        {% elif card.purchase_apr_median is not none
-            and card.purchase_apr_min is none
-            and card.purchase_apr_max is none
-        %}
-            {% set purchase_aprs = [
-                card.purchase_apr_median,
-                card.purchase_apr_median,
-                card.purchase_apr_median
-            ] %}
-        {# Cards with a single APR #}
-        {% elif card.purchase_apr_min is not none
-            and card.purchase_apr_max is not none
-            and card.purchase_apr_min == card.purchase_apr_max
-        %}
-            {% set purchase_aprs = [
-                card.purchase_apr_median,
-                card.purchase_apr_median,
-                card.purchase_apr_median
-            ] %}
-        {# Cards that (erroneouly) list only a max APR #}
-        {% elif card.purchase_apr_max is not none %}
-            {% set purchase_aprs = [
-                card.purchase_apr_max,
-                card.purchase_apr_max,
-                card.purchase_apr_max
-            ] %}
-        {# Some cards erroneously provide no APR data, so we'll catch those #}
+            {% set purchase_apr_data_incomplete = true %}
         {% else %}
-            {% set purchase_aprs = 'no data' %}
+            {% set purchase_apr_data_incomplete = false %}
         {% endif %}
-        {% if card.purchase_apr_offered and purchase_aprs != 'no data' %}
+        {% if card.purchase_apr_offered and not purchase_apr_data_incomplete %}
             {# How top-line APR displays if the card has:
                 - Min and max APRs: "19.49% - 31.99% purchase APR"
                 - No min and max but a median: "29.74% median purchase APR"
@@ -266,7 +236,7 @@
                     {% for purchase_apr in purchase_aprs %}
                         <tr>
                             <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr(purchase_apr) }}</td>
+                            <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
                             <td>
                                 {% if purchase_apr_ratings[loop.index0] is not none %}
                                     {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
@@ -301,8 +271,8 @@
                     more about fixed APRs.</a>
                 {% endif %}
             </p>
-        {% elif card.purchase_apr_offered and purchase_aprs == 'no data' %}
-            <p>The issuer did not provide APR information for this card.</p>
+        {% elif card.purchase_apr_offered and purchase_apr_data_incomplete %}
+            <p>The issuer did not submit information about purchase APR.</p>
         {% else %}
             <p>This card does not charge interest on purchases.</p>
         {% endif %}

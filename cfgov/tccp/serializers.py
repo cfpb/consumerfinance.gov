@@ -6,8 +6,14 @@ from .models import CardSurveyData
 
 class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     purchase_apr_good_rating = serializers.IntegerField()
+    purchase_apr_good_min = serializers.FloatField()
+    purchase_apr_good_max = serializers.FloatField()
     purchase_apr_great_rating = serializers.IntegerField()
+    purchase_apr_great_min = serializers.FloatField()
+    purchase_apr_great_max = serializers.FloatField()
     purchase_apr_poor_rating = serializers.IntegerField()
+    purchase_apr_poor_min = serializers.FloatField()
+    purchase_apr_poor_max = serializers.FloatField()
 
     class Meta:
         model = CardSurveyData
