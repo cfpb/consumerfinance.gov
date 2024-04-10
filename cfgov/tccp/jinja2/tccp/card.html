@@ -165,10 +165,6 @@
             Making purchases
         </h2>
         {# TODO: Unify ratings code with results list view #}
-        {# TODO: Maybe we can simplify a lot of this template if we have
-            something like purchase_apr_display that tells us what kind of APR
-            data is there: tier-specific median, single median, min-max,
-            single APR, or an outlier #}
         {% set purchase_apr_rating_labels = [
             'less', 'average', 'more'
         ] %}
@@ -247,8 +243,6 @@
 
                                         Pay {{ label }} interest
                                     </span>
-                                {% elif purchase_aprs == 'no data' %}
-                                    N/A
                                 {% else %}
                                     Not targeted for these credit scores
                                 {% endif %}
