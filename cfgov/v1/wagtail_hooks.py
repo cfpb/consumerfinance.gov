@@ -2,13 +2,10 @@ import logging
 import re
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect
 from django.urls import path, re_path, reverse
 from django.utils.html import format_html_join
 
 from wagtail import hooks
-from wagtail.admin import messages
 from wagtail.admin.menu import MenuItem
 from wagtail.snippets.models import register_snippet
 
@@ -44,32 +41,6 @@ from v1.views.snippets import BannerViewSet
 
 
 logger = logging.getLogger(__name__)
-
-
-# Inspired by https://github.com/wagtail/wagtail/blob/5fa1bd15f3b711f612628576148e904568ed8bca/wagtail/admin/auth.py#L18-L26.
-def _prevent_page_deletion(request):
-    if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        raise PermissionDenied
-
-    messages.error(
-        request,
-        "Page deletion is currently disabled; "
-        "please move your page to the Trash instead.",
-    )
-    return redirect("wagtailadmin_home")
-
-
-@hooks.register("before_delete_page")
-def raise_delete_error(request, page):
-    return _prevent_page_deletion(request)
-
-
-@hooks.register("before_bulk_action")
-def raise_bulk_delete_error(
-    request, action_type, objects, action_class_instance
-):
-    if action_type == "delete":
-        return _prevent_page_deletion(request)
 
 
 @hooks.register("after_delete_page")
