@@ -164,12 +164,38 @@
             {{ svg_icon("cart-round") }}
             Making purchases
         </h2>
-        {# How top-line APR displays if the card has:
-            - Min and max APRs: "19.49% - 31.99% purchase APR"
-            - No min and max but a median: "29.74% median purchase APR"
-            - Single APR for everyone: "24.90% purchasae APR"
-        #}
-        {% if card.purchase_apr_offered %}
+        {# TODO: Unify ratings code with results list view #}
+        {% set purchase_apr_rating_labels = [
+            'less', 'average', 'more'
+        ] %}
+        {% set purchase_apr_ratings = [
+            card.purchase_apr_poor_rating,
+            card.purchase_apr_good_rating,
+            card.purchase_apr_great_rating
+        ] %}
+        {% set purchase_aprs = [
+            (card.purchase_apr_poor_min, card.purchase_apr_poor_max),
+            (card.purchase_apr_good_min, card.purchase_apr_good_max),
+            (card.purchase_apr_great_min, card.purchase_apr_great_max),
+        ] %}
+        {% if card.purchase_apr_offered
+            and card.purchase_apr_poor_min is none
+            and card.purchase_apr_poor_max is none
+            and card.purchase_apr_good_min is none
+            and card.purchase_apr_good_max is none
+            and card.purchase_apr_great_min is none
+            and card.purchase_apr_great_max is none
+        %}
+            {% set purchase_apr_data_incomplete = true %}
+        {% else %}
+            {% set purchase_apr_data_incomplete = false %}
+        {% endif %}
+        {% if card.purchase_apr_offered and not purchase_apr_data_incomplete %}
+            {# How top-line APR displays if the card has:
+                - Min and max APRs: "19.49% - 31.99% purchase APR"
+                - No min and max but a median: "29.74% median purchase APR"
+                - Single APR for everyone: "24.90% purchasae APR"
+            #}
             <div class="h2 u-mb0 u-mt15">
                 {% if card.purchase_apr_min is not none
                     and card.purchase_apr_max is not none
@@ -188,14 +214,11 @@
                     Median purchase APR
                 {% endif %}
             </div>
-        {% else %}
-            <p>This card does not charge interest on purchases.</p>
-        {% endif %}
-        {% if card.purchase_apr_vary_by_credit_tier %}
             <p>
-                Your APR will be based on your credit score. You’ll only know your
-                exact APR if you are approved for the card. Here are average APRs
-                for different credit scores for this card:
+                {{ 'Your APR will be based on your credit score. ' if card.purchase_apr_vary_by_credit_tier }}
+                You’ll only know your exact APR if you are approved for the
+                card. Here are typical APRs for different credit scores for this
+                card:
             </p>
             <table class="o-table o-table--apr">
                 <thead>
@@ -206,47 +229,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for purchase_apr in [
-                        card.purchase_apr_poor,
-                        card.purchase_apr_good,
-                        card.purchase_apr_great
-                    ] %}
+                    {% for purchase_apr in purchase_aprs %}
                         <tr>
                             <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr(purchase_apr) }}</td>
-                            {# TODO: Put in actual ratings #}
+                            <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
                             <td>
-                                <span class="a-credit-card-apr-rating--average">
-                                    {{ svg_icon("dollar-round") }}
-                                    {{ svg_icon("dollar-round") }}
-                                    Average for this range
-                                </span>
+                                {% if purchase_apr_ratings[loop.index0] is not none %}
+                                    {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
+                                    <span class="a-credit-card-apr-rating--{{ label }}">
+                                        {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
+                                            {{ svg_icon("dollar-round") }}
+                                        {% endfor -%}
+
+                                        Pay {{ label }} interest
+                                    </span>
+                                {% else %}
+                                    Not targeted for these credit scores
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        {% elif card.purchase_apr_median is not none
-            and card.purchase_apr_min != card.purchase_apr_max %}
             <p>
-                You’ll only know your exact APR if you are approved for the card.
-                The median APR for this card is {{ apr(card.purchase_apr_median) }}.
+                The purchase APR is
+                {% if 'V' in card.index %}
+                    variable, meaning it can go up or down based on an index. You can
+                    <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
+                    more about variable APRs in general</a> or expand this section to
+                    learn more about the index this APR is based on.
+                {% else %}
+                    fixed, meaning it will not go up or down with changes to an index
+                    but may still change. You can
+                    <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
+                    more about fixed APRs.</a>
+                {% endif %}
             </p>
+        {% elif card.purchase_apr_offered and purchase_apr_data_incomplete %}
+            <p>The issuer did not submit information about purchase APR.</p>
+        {% else %}
+            <p>This card does not charge interest on purchases.</p>
         {% endif %}
-        <p>
-            The purchase APR is
-            {% if 'V' in card.index %}
-                variable, meaning it can go up or down based on an index. You can
-                <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
-                more about variable APRs in general</a> or expand this section to
-                learn more about the index this APR is based on.
-            {% else %}
-                fixed, meaning it will not go up or down with changes to an index
-                but may still change. You can
-                <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
-                more about fixed APRs.</a>
-            {% endif %}
-        </p>
         {% if card.introductory_apr_offered %}
             <div class="h3 u-mb0 u-mt30">
                 {% if card.intro_apr_min is not none
@@ -875,7 +898,7 @@
                     <thead>
                         <tr>
                             <th>Credit score</th>
-                            <th>Median balance transfer APR</th>
+                            <th>Median cash advance APR</th>
                         </tr>
                     </thead>
                     <tbody>
