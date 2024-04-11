@@ -2,6 +2,7 @@
 
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency, lower_first_letter, oxfordize %}
+{% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 {% import 'v1/includes/molecules/notification.html' as notification with context %}
 
@@ -143,6 +144,16 @@
                 {% endwith %}
             {% endif %}
         </div>
+        {% if not card.top_25_institution %}
+            <div class="u-mt30">
+                {# TODO: Maybe unify this content with the card list version? #}
+                {{ speed_bump( {
+                    'content': 'This card is from a small bank or credit union,
+                    which often offer lower interest rates and could save you
+                    hundreds of dollars per year.'
+                } ) }}
+            </div>
+        {% endif %}
     </div>
     {{ data_published(card.report_date) }}
 
@@ -194,7 +205,7 @@
             {# How top-line APR displays if the card has:
                 - Min and max APRs: "19.49% - 31.99% purchase APR"
                 - No min and max but a median: "29.74% median purchase APR"
-                - Single APR for everyone: "24.90% purchasae APR"
+                - Single APR for everyone: "24.90% purchase APR"
             #}
             <div class="h2 u-mb0 u-mt15">
                 {% if card.purchase_apr_min is not none
@@ -254,16 +265,16 @@
             <p>
                 The purchase APR is
                 {% if 'V' in card.index %}
-                    variable, meaning it can go up or down based on an index. You can
-                    <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
-                    more about variable APRs in general</a> or expand this section to
-                    learn more about the index this APR is based on.
+                    variable, meaning it can go up or down based on the index
+                    listed in the details below.
                 {% else %}
-                    fixed, meaning it will not go up or down with changes to an index
-                    but may still change. You can
-                    <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">learn
-                    more about fixed APRs.</a>
+                    fixed, meaning it will not go up or down with changes to
+                    an index, but it may still change.
                 {% endif %}
+                Learn more about
+                <a href="/ask-cfpb/what-is-a-credit-card-interest-rate-what-does-apr-mean-en-44/">APRs in general</a>
+                and about
+                <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">fixed versus variable APRs</a>.
             </p>
         {% elif card.purchase_apr_offered and purchase_apr_data_incomplete %}
             <p>The issuer did not submit information about purchase APR.</p>
@@ -331,6 +342,7 @@
                 how you are paying off that balance within the promotional
                 period, or you could end up owing more in interest than the
                 original purchase amount.
+                <a href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/">Learn more about intro APR offers</a>.
             </p>
         {% endif %}
         <div class="o-additional-details">
@@ -357,7 +369,7 @@
                                 is not none
                             }}
                             {{ apr(card.foreign_transaction_fee_percentage) ~
-                                ' of each purchsae' if
+                                ' of each purchase' if
                                 card.foreign_transaction_fee_percentage is not none
                             -}}
                             {% if card.minimum_foreign_transaction_fee_amount is not none %}
@@ -418,6 +430,9 @@
                         </dd>
                     {% endif %}
                 </dl>
+                <p>
+                    <a href="/ask-cfpb/how-does-my-credit-card-company-calculate-the-amount-of-interest-i-owe-en-51/">Learn more about how credit card interest is calculated</a>.
+                </p>
             {% endcall %}
         </div>
     </div>
@@ -814,7 +829,7 @@
                 {{ '%g' | format(card.median_length_of_balance_transfer_apr) }}
                 months after getting this card, on average. There is
                 {{ 'a' if card.balance_transfer_grace_period else 'no' }}
-                balance transfer grace period.
+                <a href="/ask-cfpb/do-i-pay-interest-on-new-purchases-after-i-get-a-zero-or-low-rate-balance-transfer-en-49/">balance transfer grace period</a>.
             </p>
         {% else %}
             <p>This card does not offer balance transfers.</p>
@@ -931,7 +946,7 @@
                 }}.
             </p>
         {% else %}
-            <p>This card does not offer cash advanaces.</p>
+            <p>This card does not offer cash advances.</p>
         {% endif %}
     </div>
 
