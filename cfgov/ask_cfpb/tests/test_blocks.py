@@ -1,7 +1,7 @@
 from django.test import TestCase, override_settings
 
-from ask_cfpb.models.blocks import AskAnswerContent
-from v1.atomic_elements.schema import FAQ, HowTo, Tip
+from ask_cfpb.models.blocks import AskAnswerContent, Tip
+from v1.atomic_elements.schema import FAQ, HowTo
 
 
 @override_settings(LANGUAGE_CODE="en-US", LANGUAGES=(("en", "English"),))
@@ -27,7 +27,7 @@ class AskBlocksTestCase(TestCase):
         block = AskAnswerContent()
         value = block.to_python([self.tip_data])
         html = block.render(value)
-        expected_html = '<div class="inset-row row">{}</div>'.format(
+        expected_html = '<div class="row">{}</div>'.format(
             self.expected_tip_html
         )
         self.assertHTMLEqual(html, expected_html)
@@ -36,7 +36,7 @@ class AskBlocksTestCase(TestCase):
         block = AskAnswerContent()
         value = block.to_python([self.tip_data, self.text_data])
         html = block.render(value)
-        expected_html = '<div class="inset-row row">{}{}</div>'.format(
+        expected_html = '<div class="row">{}{}</div>'.format(
             self.expected_tip_html, self.expected_text_html
         )
         self.assertHTMLEqual(html, expected_html)
@@ -45,10 +45,10 @@ class AskBlocksTestCase(TestCase):
         block = AskAnswerContent()
         value = block.to_python([self.text_data])
         html = block.render(value)
-        expected_html = '<div class="text-row row">{}</div>'.format(
+        expected_html = '<div class="row">{}</div>'.format(
             self.expected_text_html
         )
-        self.assertNotIn('<div class="inset-row row">', html)
+        self.assertNotIn('<div class="row">', html)
         self.assertHTMLEqual(html, expected_html)
 
 

@@ -1,7 +1,7 @@
 # Running in Docker
 
 First, follow
-[the Docker installation instructions](../installation/#docker-based-installation)
+[the Docker installation instructions](installation.md#docker-based-installation)
 to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
@@ -82,7 +82,7 @@ docker-compose up --build python
 
 ## Work on satellite apps
 
-See [“Using Docker” on the Related Projects page](../related-projects/#using-docker).
+See [“Using Docker” on the Related Projects page](related-projects.md#using-docker).
 
 ## Attach for debugging
 

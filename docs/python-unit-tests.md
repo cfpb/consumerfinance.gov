@@ -35,9 +35,9 @@ for additional details on its functionality.
 ## Prerequisites
 
 If you have set up
-[a standalone installation of consumerfinance.gov](/installation/#install-system-level-requirements),
+[a standalone installation of consumerfinance.gov](installation.md#install-system-level-requirements),
 you'll need to
-[activate your virtual environment](/running-virtualenv/#3-launch-site)
+[activate your virtual environment](running-virtualenv.md#3-launch-site)
 before running the tests:
 
 ```sh
@@ -53,7 +53,7 @@ pip install tox
 ```
 
 If you have set up
-[a Docker-based installation of consumerfinance.gov](/installation/#docker-based-installation),
+[a Docker-based installation of consumerfinance.gov](installation.md#docker-based-installation),
 you can run the tests there by
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
@@ -188,7 +188,7 @@ TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest
 ```
 
 This test runner is enabled when tests are run automatically on
-[GitHub Actions](../github-actions/),
+[GitHub Actions](github-actions.md),
 but is not used by default when running tests locally.
 
 ## GovDelivery

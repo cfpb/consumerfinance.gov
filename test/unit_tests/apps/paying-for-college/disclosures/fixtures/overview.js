@@ -24,7 +24,7 @@ export default `
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noSchool">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
                     <div class="m-notification_content">
-                        <div class="h4 m-notification_message">Error!</div>
+                        <div class="m-notification_message">Error!</div>
                         <p class="m-notification_explanation">
                             The information your school provided is missing the school ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right school ID and it's in the correct format.
                         </p>
@@ -38,7 +38,7 @@ export default `
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noProgram">
                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
                    <div class="m-notification_content">
-                        <div class="h4 m-notification_message">Error!</div>
+                        <div class="m-notification_message">Error!</div>
                         <p class="m-notification_explanation">
                             The information your school provided is missing the program ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right program ID and it's in the correct format.
                         </p>
@@ -51,7 +51,7 @@ export default `
                 <div class="m-notification m-notification__error verify_content" data-missing-data-error="noOffer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg cf-icon-svg__error-round"><path d="M16.417 9.583a7.916 7.916 0 1 1-15.833 0 7.916 7.916 0 0 1 15.833 0Zm-6.804.01 3.032-3.033a.792.792 0 1 0-1.12-1.12L8.494 8.473 5.46 5.44a.792.792 0 0 0-1.12 1.12l3.033 3.033-3.032 3.033a.791.791 0 1 0 1.12 1.119l3.032-3.033 3.033 3.033a.79.79 0 0 0 1.12 0c.309-.31.309-.81 0-1.12L9.612 9.594Z"></path></svg>
                     <div class="m-notification_content">
-                        <div class="h4 m-notification_message">Error!</div>
+                        <div class="m-notification_message">Error!</div>
                         <p class="m-notification_explanation"></p>
                             The information your school provided is missing the offer ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right offer ID and it's in the correct format.
                         <p></p>

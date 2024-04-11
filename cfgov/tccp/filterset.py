@@ -10,7 +10,7 @@ from .enums import CreditTierChoices, RewardsChoices, StateChoices
 from .filters import CardOrderingFilter, CheckboxFilter, MultipleCheckboxFilter
 from .models import CardSurveyData
 from .situations import SituationChoices, get_situation_by_title
-from .widgets import Select
+from .widgets import OrderingSelect, Select
 
 
 class CardSurveyDataFilterSet(filters.FilterSet):
@@ -50,16 +50,17 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         method="filter_for_contains",
     )
     ordering = CardOrderingFilter(
-        label="Sort by", null_label=None, empty_label=None, widget=Select
+        label="Sort by",
+        null_label=None,
+        empty_label=None,
+        widget=OrderingSelect,
     )
 
     class Meta:
         model = CardSurveyData
         fields = []
 
-    def __init__(self, data=None, summary_stats=None, *args, **kwargs):
-        self.summary_stats = summary_stats
-
+    def __init__(self, data=None, *args, **kwargs):
         # Set field defaults to their initial values, if not set.
         #
         # https://django-filter.readthedocs.io/en/stable/guide/tips.html#using-initial-values-as-defaults
@@ -77,7 +78,7 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         super().__init__(data, *args, **kwargs)
 
     def filter_credit_tier(self, queryset, name, value):
-        return queryset.for_credit_tier(value, self.summary_stats)
+        return queryset.for_credit_tier(value)
 
     def filter_location(self, queryset, name, value):
         return queryset.available_in(value)

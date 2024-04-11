@@ -36,8 +36,10 @@
                 {{ block | safe }}
             </div>
         {% elif block_type in ['email_signup'] %}
-            <div class="m-inset__email">
-                {% include_block block %}
+            <div class="block{{ " block__flush-top" if loop.first }} m-inset__email">
+                <div class="o-well">
+                    {% include_block block %}
+                </div>
             </div>
         {% elif block_type in ['table', 'well'] %}
             <div class="block">

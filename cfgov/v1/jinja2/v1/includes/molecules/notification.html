@@ -52,7 +52,7 @@
       <div class="m-notification_content"
           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           {%- if message %}
-          <div class="h4 m-notification_message">{{ message }}</div>
+          <div class="m-notification_message">{{ message }}</div>
           {% endif -%}
           {%- if explanation %}
               <div class="m-notification_explanation">{{ explanation }}</div>

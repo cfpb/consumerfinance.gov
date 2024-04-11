@@ -1,16 +1,48 @@
+from decimal import Decimal
+
 from django.core import serializers
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.test import SimpleTestCase, TestCase
 from django.test.utils import isolate_apps
 
-from tccp.fields import JSONListField, YesNoBooleanField
+from tccp.fields import CurrencyDecimalField, JSONListField, YesNoBooleanField
 
 from .testapp.models import (
     YEAR_IN_SCHOOL_CHOICES,
     NullableYearsInSchool,
     YearsInSchool,
 )
+
+
+@isolate_apps()
+class CurrencyDecimalFieldTests(SimpleTestCase):
+    def check_clean(self, value, **kwargs):
+        field = CurrencyDecimalField(null=True, blank=True)
+        self.assertEqual(
+            field.clean(value, None), kwargs.get("expected", value)
+        )
+
+    def test_clean_float(self):
+        self.check_clean(0.7, expected=Decimal("0.7"))
+
+    def test_clean_float_rounding(self):
+        self.check_clean(12.714, expected=Decimal("12.71"))
+
+    def test_clean_float_rounding_up(self):
+        self.check_clean(123.715, expected=Decimal("123.72"))
+
+    def test_clean_decimal(self):
+        self.check_clean(Decimal("100"))
+
+    def test_clean_decimal_with_decimal_places(self):
+        self.check_clean(Decimal("100.00"))
+
+    def test_clean_string(self):
+        self.check_clean("100.00", expected=Decimal("100.00"))
+
+    def test_clean_string_with_dollar_sign(self):
+        self.check_clean("$100.00", expected=Decimal("100.00"))
 
 
 @isolate_apps()

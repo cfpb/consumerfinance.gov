@@ -1,7 +1,24 @@
 {% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range %}
+{% from 'tccp/includes/fields.html' import apr, apr_range, currency %}
+{% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
+
+{% if situation_features -%}
+<div class="block block__sub">
+    <h2>Cards you're looking for have these features:</h2>
+
+    <ul>
+        {% for feature in situation_features -%}
+        <li>{{ feature.results_html }}</li>
+        {%- endfor %}
+    </ul>
+
+    <p>
+        <a href="{{ url('tccp:landing_page') }}">Change what you're looking for in a card</a>
+    </p>
+</div>
+{%- endif %}
 
 {% if count -%}
 {{- notification.render(
@@ -17,81 +34,114 @@
 ) -}}
 {%- endif %}
 
-{%- set purchase_apr_adjectives = ["less", "average", "more"] %}
-
-<div class="block__sub">
-    <div class="a-label__heading">Key</div>
+<div class="block block__sub o-apr-rating-group">
+    <p class="o-apr-rating-group--heading">
+        Use our ratings to compare your results:
+    </p>
     <dl>
-        {% for adjective in purchase_apr_adjectives %}
-        <div class="u-mb0 a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+        {% for label, label_count in purchase_apr_rating_counts.items() %}
+        <div class="m-apr-rating m-apr-rating--{{ label }}">
             <dt>
                 {%- for i in range(loop.index) -%}
                     {{ svg_icon("dollar-round") }}
                 {%- endfor -%}
             </dt>
             <dd>
-                Pay {{ adjective ~ (" than average" if adjective != "average") }} interest
+                Pay {{ label }} interest (
+                    {{- label_count ~ ' card' ~ label_count | pluralize() -}}
+                )
             </dd>
         </div>
         {% endfor %}
     </dl>
 </div>
 
+<div class="block block__sub u-js-only" id="tccp-ordering-container"></div>
+
 {% if stats_all.first_report_date -%}
 {{ data_published(stats_all.first_report_date) }}
 {%- endif %}
 
-{%- macro card_name_cell(card) -%}
-    <a href="{{ card.url }}">
-        <div class="a-card-institution-name">{{ card.institution_name }}</div>
-        <div>{{ card.product_name }}</div>
-    </a>
-{%- endmacro -%}
+{%- macro card_rating(card) -%}
+    {%- set label = purchase_apr_rating_labels[card.purchase_apr_for_tier_rating] -%}
 
-{%- macro purchase_apr_cell(card) -%}
-    {%- set adjective = purchase_apr_adjectives[
-        card.purchase_apr_for_tier_rating
-    ] -%}
-
-    {{- apr(card.purchase_apr_for_tier) -}}
-
-    <span class="a-card-purchase-apr-rating a-card-purchase-apr-rating__{{ adjective }}">
+    <div class="m-apr-rating m-apr-rating--{{ label }}">
         {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
             {{ svg_icon("dollar-round") }}
         {% endfor -%}
 
-        <strong>Pay {{ adjective }} interest</strong>
-    </span>
+        Pay {{ label }} interest
+    </div>
 {%- endmacro -%}
 
-{%- set card_columns = [
-    {'heading': 'Credit card'},
-    {'heading': 'Purchase APR'},
-    {'heading': 'Account fee'},
-    {'heading': 'Balance transfer APR'},
-    {'heading': 'Offers rewards'},
-] %}
-{%- set card_rows = [] %}
-{%- for card in results %}
-    {% set rewards = [] %}
-    {% for reward in card.rewards %}
-        {% do rewards.append(rewards_lookup[reward]) %}
-    {% endfor %}
+{%- macro card_rewards(card) -%}
+    {%- set rewards = [] -%}
+    {%- for reward in card.rewards -%}
+        {%- do rewards.append(rewards_lookup[reward]) -%}
+    {%- endfor -%}
+    {{- (rewards | join(', ')) if rewards else 'None' -}}
+{%- endmacro -%}
 
-    {% do card_rows.append( [
-        card_name_cell(card) | safe,
-        purchase_apr_cell(card) | safe,
-        (card.periodic_fee_type | join(', ')) if card.periodic_fee_type else 'None',
-        apr(card.transfer_apr_for_tier) if card.transfer_apr_for_tier is not none else apr_range(card.transfer_apr_min, card.transfer_apr_max),
-        (rewards | join(', ')) if rewards else 'None'
-    ] ) %}
-{% endfor %}
-{%- with value = {
-    'data': {
-        'columns': card_columns,
-        'rows': card_rows
-    },
-    'options': ['directory_table']
-} %}
-    {% include 'v1/includes/organisms/tables/base.html' %}
-{% endwith %}
+<div class="o-card-group">
+    <div class="o-card-group_cards">
+        {%- for card in cards %}
+        {%- set show_more = loop.index > 10 -%}
+        <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
+            <a href="{{ card.url }}">
+                <div class="m-card__heading-group">
+                    <h3 class="m-card__heading">{{ card.institution_name }}</h3>
+                    <p class="m-card__subtitle">{{ card.product_name }}</p>
+                </div>
+                {{ card_rating(card) | safe }}
+                <dl class="m-data-specs">
+                    <div class="m-data-spec m-data-spec--apr">
+                        <dt><strong>Purchase APR</strong></dt>
+                        <dd>
+                            <strong>{{ apr_range(
+                                card.purchase_apr_for_tier_min,
+                                card.purchase_apr_for_tier_max
+                            ) }}</strong>
+                        </dd>
+                    </div>
+                    <div class="m-data-spec m-data-spec--fee">
+                        <dt><strong>Account fee</strong></dt>
+                        <dd>
+                            <strong>{{ currency(card.annual_fee_estimated, default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')) }}</strong>
+                        </dd>
+                    </div>
+                    <div class="m-data-spec m-data-spec--transfer">
+                        <dt>Balance transfer APR</dt>
+                        <dd>
+                            {{- apr_range(
+                                card.transfer_apr_for_tier_min,
+                                card.transfer_apr_for_tier_max
+                            ) -}}
+                        </dd>
+                    </div>
+                    <div class="m-data-spec m-data-spec--rewards">
+                        <dt>Rewards</dt>
+                        <dd>
+                            {{ card_rewards(card) | safe }}
+                        </dd>
+                    </div>
+                    {%- if card.requirements_for_opening -%}
+                    <div class="m-data-spec m-data-spec--requirements">
+                        <dt>Does this card have requirements?</dt>
+                        <dd>
+                            {{ svg_icon("flag-round") }} Eligibility requirements
+                        </dd>
+                    </div>
+                    {%- endif -%}
+                </dl>
+            </a>
+        </article>
+
+        {%- set bump = speed_bumps[loop.index] -%}
+        {%- if bump -%}
+            {%- if show_more -%}<div class="u-show-more">{%- endif -%}
+            {{ speed_bump(bump) }}
+            {%- if show_more -%}</div>{%- endif -%}
+        {%- endif -%}
+        {% endfor %}
+    </div>
+</div>

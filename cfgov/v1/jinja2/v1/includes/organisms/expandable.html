@@ -42,9 +42,11 @@
      {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
         if value.is_faq else '' }} >
     <button class="o-expandable_header" type="button">
-        <span class="{{ 'h2' if value.is_larger_heading else 'h4'}} o-expandable_label"
+        {% if value.icon %}
+          <span>{{ svg_icon( value.icon ) }}</span>
+        {% endif %}
+        <span class="o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
-            {% if value.icon %} {{ svg_icon( value.icon ) }} {% endif %} 
             {{ value.label }}
         </span>
         <span class="o-expandable_cues">

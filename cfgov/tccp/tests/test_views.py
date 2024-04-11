@@ -42,6 +42,7 @@ class LandingPageViewTests(TestCase):
             + "&location=NY"
             + "&situations=Avoid+fees"
             + "&situations=Earn+rewards"
+            + "&ordering=purchase_apr"
             + "&no_account_fee=True"
             + "&rewards=Cashback+rewards"
             + "&rewards=Travel-related+rewards"
@@ -58,6 +59,7 @@ class CardListViewTests(TestCase):
     def setUpTestData(cls):
         baker.make(
             CardSurveyData,
+            targeted_credit_tiers=["Credit score of 720 or greater"],
             purchase_apr_great=0.99,
             _quantity=5,
         )
@@ -133,7 +135,7 @@ class CardDetailViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         card = json.loads(response.content)
-        self.assertEqual(card["product_name"], "Test Card")
+        self.assertEqual(card["card"]["product_name"], "Test Card")
 
     def test_get_invalid_uses_standard_404_handling(self):
         with self.assertRaises(Http404):

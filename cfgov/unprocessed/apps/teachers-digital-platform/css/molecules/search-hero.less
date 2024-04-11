@@ -7,9 +7,7 @@
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
-    @supports ( display: flex ) {
-      display: flex;
-    }
+    display: flex;
   });
 }
 
@@ -18,12 +16,7 @@
 
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    float: left;
     width: 60%;
-
-    @supports ( display: flex ) {
-      float: none;
-    }
   });
 }
 
@@ -34,12 +27,7 @@
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
     display: block;
-    float: right;
     width: 40%;
     padding-left: unit( 30px / @base-font-size-px, em );
-
-    @supports ( display: flex ) {
-      float: none;
-    }
   });
 }

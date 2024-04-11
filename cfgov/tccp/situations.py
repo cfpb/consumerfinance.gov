@@ -1,4 +1,6 @@
 from dataclasses import dataclass, field
+from itertools import chain
+from operator import attrgetter
 
 from django.template import loader
 from django.utils.safestring import mark_safe
@@ -11,6 +13,7 @@ from tccp import enums
 class Situation:
     title: str
     params: dict = field(default_factory=dict)
+    speed_bumps: list = field(default_factory=list)
 
     def __str__(self):
         return self.title
@@ -73,12 +76,93 @@ class Situation:
 
 
 SITUATIONS = [
-    Situation("Pay less interest", {"ordering": "purchase_apr"}),
-    Situation("Transfer a balance", {"ordering": "transfer_apr"}),
-    Situation("Make a big purchase"),
-    Situation("Avoid fees", {"no_account_fee": True}),
-    Situation("Build credit"),
-    Situation("Earn rewards", {"rewards": list(dict(enums.RewardsChoices))}),
+    Situation(
+        "Pay less interest",
+        {"ordering": "purchase_apr"},
+        [
+            {
+                "content": (
+                    "Many small banks and credit unions offer lower interest "
+                    "rates and could save you hundreds of dollars per year."
+                ),
+            }
+        ],
+    ),
+    Situation(
+        "Transfer a balance",
+        {"ordering": "transfer_apr"},
+        [
+            {
+                "content": (
+                    "When transferring a balance, there's usually a transfer "
+                    "fee and you're still likely to incur interest charges on "
+                    "new purchases. It might be helpful to use a separate "
+                    "card for new purchases with a lower purchase APR while "
+                    "you pay down a transferred balance."
+                ),
+            }
+        ],
+    ),
+    Situation(
+        "Make a big purchase",
+        {"ordering": "purchase_apr"},
+        [
+            {
+                "content": (
+                    "If you've carried balances in the past, or think you're "
+                    "likely to do so, consider credit cards that have the "
+                    "lowest interest rates."
+                ),
+            },
+            {
+                "content": (
+                    "If a card has an introductory interest rate offer, ensure "
+                    "you're on track to pay off the balance within the "
+                    "promotional period, or you could end up owing more "
+                    "interest than the original purchase amount."
+                ),
+            },
+        ],
+    ),
+    Situation(
+        "Avoid fees",
+        {
+            "ordering": "purchase_apr",
+            "no_account_fee": True,
+        },
+    ),
+    Situation(
+        "Build credit",
+        {"ordering": "purchase_apr"},
+        [
+            {
+                "content": (
+                    "If you're trying to build credit, only use a credit card "
+                    "for necessary purchases and pay your credit card balance "
+                    "in full every month."
+                ),
+                "link": "Learn about ways to build credit and your credit score.",
+                "url": "/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/",
+            }
+        ],
+    ),
+    Situation(
+        "Earn rewards",
+        {
+            "ordering": "purchase_apr",
+            "rewards": list(dict(enums.RewardsChoices)),
+        },
+        [
+            {
+                "content": (
+                    "If you carry a balance on your credit card, interest and "
+                    "fees typically exceed the value of any rewards earned."
+                ),
+                "link": "Learn why rewards may not be as beneficial as they seem.",
+                "url": "/",
+            }
+        ],
+    ),
 ]
 
 
@@ -87,3 +171,41 @@ SituationChoices = [(situation, situation.title) for situation in SITUATIONS]
 
 def get_situation_by_title(title):
     return {v: k for k, v in SituationChoices}[title]
+
+
+class SituationFeatures:
+    def __init__(self, situations):
+        # Each selected situation normally displays one feature to the user,
+        # but if multiple are selected we may want to combine them.
+        combos = [("Pay less interest", "Make a big purchase")]
+
+        for combo in combos:
+            if set(combo).issubset(set(map(attrgetter("title"), situations))):
+                situations = [
+                    # Create a fake situation identified by the concatenation
+                    # of the titles of the situations being combined.
+                    Situation(title=" ".join(combo)),
+                    # Remove the situations that were combined.
+                    *(s for s in situations if s.title not in combo),
+                ]
+
+        self.situations = situations
+
+    def __bool__(self):
+        return bool(self.situations)
+
+    def __iter__(self):
+        return self.situations.__iter__()
+
+
+class SituationSpeedBumps:
+    INTERVAL = 5
+
+    def __init__(self, situations):
+        self.speed_bumps = list(chain(*(s.speed_bumps for s in situations)))
+
+    def __getitem__(self, index):
+        if index and not (index % self.INTERVAL):
+            offset = index // self.INTERVAL - 1
+            if offset <= len(self.speed_bumps):
+                return self.speed_bumps[offset]

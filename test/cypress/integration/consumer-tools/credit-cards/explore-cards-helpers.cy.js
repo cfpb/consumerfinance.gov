@@ -5,7 +5,7 @@ export class ExploreCreditCards {
 
   openResultsPage(filterParams) {
     const url =
-      '/consumer-tools/credit-cards/explore-cards/cards?' +
+      '/consumer-tools/credit-cards/explore-cards/cards/?' +
       new URLSearchParams(filterParams).toString();
     cy.visit(url);
   }
@@ -22,6 +22,10 @@ export class ExploreCreditCards {
     cy.get('input[name=situations]').check(situation, { force: true });
   }
 
+  selectOrdering(ordering) {
+    cy.get('#tccp-ordering select').select(ordering);
+  }
+
   clickSubmitButton() {
     cy.get('button').contains('See cards for your situation').click();
   }
@@ -36,6 +40,10 @@ export class ExploreCreditCards {
       .click();
   }
 
+  getOrderingDropdownValue() {
+    return cy.get('#tccp-ordering select').find('option:selected');
+  }
+
   getNumberResults() {
     return new Promise((resolve) => {
       return cy
@@ -46,12 +54,23 @@ export class ExploreCreditCards {
     });
   }
 
+  getNumberVisibleSpeedBumps() {
+    return new Promise((resolve) => {
+      return cy
+        .get('.htmx-container')
+        .not('.htmx-request')
+        .get('.o-well--speed-bump')
+        .filter(':visible')
+        .then((el) => resolve(el.length));
+    });
+  }
+
   getNumberVisibleResults() {
     return new Promise((resolve) => {
       return cy
         .get('.htmx-container')
         .not('.htmx-request')
-        .get('.o-filterable-list-results table tr')
+        .get('.m-card--tabular')
         .filter(':visible')
         .then((el) => resolve(el.length));
     });

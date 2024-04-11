@@ -6,7 +6,6 @@
 .struct-block.base-expandable div[data-contentpath='is_bordered'],
 .struct-block.base-expandable div[data-contentpath='is_midtone'],
 .struct-block.base-expandable div[data-contentpath='is_expanded'],
-.struct-block.base-expandable div[data-contentpath='is_larger_heading'],
 .struct-block.base-expandable div[data-contentpath='is_expanded_padding'] {
   display: inline-block;
   margin-right: -0.25em;

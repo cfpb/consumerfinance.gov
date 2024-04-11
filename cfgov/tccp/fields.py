@@ -1,4 +1,5 @@
 import re
+from decimal import Decimal
 
 from django.core import checks
 from django.core.exceptions import ValidationError
@@ -13,6 +14,27 @@ class CurrencyField(models.TextField):
     default_validators = models.TextField.default_validators + [
         RegexValidator(CURRENCY_REGEX)
     ]
+
+
+class CurrencyDecimalField(models.DecimalField):
+    default_validators = models.DecimalField.default_validators + [
+        RegexValidator(CURRENCY_REGEX)
+    ]
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("decimal_places", 2)
+        kwargs.setdefault("max_digits", 10)
+        super().__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if isinstance(value, str):
+            value = value.lstrip("$")
+        elif isinstance(value, float):
+            value = Decimal(value).quantize(
+                Decimal("1." + "0" * self.decimal_places)
+            )
+
+        return super().to_python(value)
 
 
 class JSONListField(models.JSONField):

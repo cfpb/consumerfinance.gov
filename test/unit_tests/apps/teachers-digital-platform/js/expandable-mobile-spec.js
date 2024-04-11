@@ -11,7 +11,7 @@ const HTML_SNIPPET = `
             o-expandable__background
             ">
     <button class="o-expandable_header" type="button">
-        <span class="h4 o-expandable_label">
+        <span class="o-expandable_label">
             Building block
         </span>
         <span class="o-expandable_cues">

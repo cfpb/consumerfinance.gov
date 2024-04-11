@@ -31,19 +31,45 @@ describe('Explore credit cards results page', () => {
     exploreCards.openResultsPage();
 
     exploreCards.getNumberVisibleResults().then((oldNumResults) => {
+      expect(oldNumResults).to.eq(10);
       exploreCards.clickShowMoreButton();
       exploreCards.getNumberVisibleResults().then((newNumResults) => {
         expect(oldNumResults).to.be.lt(newNumResults);
       });
     });
   });
+  it('should show speed bumps when situation(s) are selected', () => {
+    exploreCards.openResultsPage('situations=Build%20credit');
+    exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+      expect(numSpeedBumps).to.eq(1);
+    });
+
+    exploreCards.openResultsPage(
+      'situations=Make%20a%20big%20purchase&situations=Build%20credit',
+    );
+    exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+      expect(numSpeedBumps).to.eq(2);
+      exploreCards.clickShowMoreButton();
+      exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
+        expect(numSpeedBumps).to.be.gt(2);
+      });
+    });
+  });
   it('should link to card detail pages', () => {
     exploreCards.openResultsPage();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('h1').contains('Customize for your situation').should('not.exist');
-    cy.get('h2').contains('Application requirements').should('exist');
+    cy.get('h1').contains('Explore credit cards').should('not.exist');
+    cy.get('h2').contains('Making purchases').should('exist');
+  });
+  it('should have the ordering option outside the filters expandable', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('form#tccp-filters select#tccp-ordering').should('not.exist');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Purchase APR');
+    exploreCards.selectOrdering('Card name');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Card name');
   });
 });
 
@@ -56,7 +82,7 @@ describe('Explore credit card details page', () => {
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
     cy.get('.m-breadcrumbs_crumb:last-child')
       .should('have.attr', 'href')
@@ -67,7 +93,7 @@ describe('Explore credit card details page', () => {
   it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();
 
-    cy.get('td[data-label="Credit card"] a').first().click();
+    cy.get('.m-card--tabular > a').first().click();
 
     cy.get('.m-breadcrumbs_crumb:last-child')
       .should('have.attr', 'href')

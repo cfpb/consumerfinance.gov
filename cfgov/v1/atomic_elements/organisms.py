@@ -577,7 +577,6 @@ class BaseExpandable(blocks.StructBlock):
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)
-    is_larger_heading = blocks.BooleanBlock(required=False)
     is_expanded_padding = blocks.BooleanBlock(required=False)
 
     class Meta:

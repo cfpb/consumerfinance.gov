@@ -1,16 +1,11 @@
 from wagtail import blocks
 
-from v1.atomic_elements import organisms
-
-
-class Tip(blocks.StructBlock):
-    content = blocks.RichTextBlock(
-        features=["link", "document-link"], label="Tip"
-    )
-
-    class Meta:
-        icon = "title"
-        template = "v1/includes/blocks/schema/tip.html"
+from v1.atomic_elements.organisms import (
+    FullWidthText,
+    InfoUnitGroup,
+    Table,
+    VideoPlayer,
+)
 
 
 class SchemaContent(blocks.StreamBlock):
@@ -36,9 +31,8 @@ class SchemaContent(blocks.StreamBlock):
             )
         ]
     )
-    table = organisms.Table()
-    tip = Tip()
-    video_player = organisms.VideoPlayer()
+    table = Table()
+    video_player = VideoPlayer()
 
     class Meta:
         template = "v1/includes/blocks/schema/content-block.html"
@@ -221,8 +215,8 @@ class FAQGroup(blocks.StructBlock):
                     "answer",
                     blocks.StreamBlock(
                         [
-                            ("full_width_text", organisms.FullWidthText()),
-                            ("info_unit_group", organisms.InfoUnitGroup()),
+                            ("full_width_text", FullWidthText()),
+                            ("info_unit_group", InfoUnitGroup()),
                         ]
                     ),
                 ),

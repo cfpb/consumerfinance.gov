@@ -1,5 +1,6 @@
 import { attach } from '@cfpb/cfpb-atomic-component';
 
+import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 
 /**
@@ -10,6 +11,8 @@ function init() {
   attach('show-more', 'click', handleShowMore);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
+  // Move the card ordering dropdown below the expandable
+  orderingDropdown.move();
 }
 
 /**
@@ -33,12 +36,12 @@ function handleShowMore(event) {
  */
 function updateBreadcrumb() {
   const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
-  if (breadcrumb.innerText === 'Customize for your situation') {
+  if (breadcrumb.innerText === 'Explore credit cards') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
   }
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   init();
 });

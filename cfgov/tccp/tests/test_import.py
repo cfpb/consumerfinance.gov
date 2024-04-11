@@ -18,7 +18,7 @@ class TestImport(TestCase):
 
     def test_import(self):
         self.call_import("sample.xlsx")
-        self.assertEqual(CardSurveyData.objects.count(), 4)
+        self.assertEqual(CardSurveyData.objects.count(), 5)
         self.assertEqual(
             CardSurveyData.objects.filter(
                 targeted_credit_tiers__contains="Credit score 619 or less"

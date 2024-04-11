@@ -4,13 +4,13 @@ from itertools import product
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
-from django.db.models import Case, Count, F, Max, Min, Q, Value, When
+from django.db.models import Case, Count, F, Min, Q, Value, When
 from django.db.models.functions import Coalesce
 
 from tailslide import Percentile
 
 from . import enums
-from .fields import CurrencyField, JSONListField, YesNoBooleanField
+from .fields import CurrencyDecimalField, JSONListField, YesNoBooleanField
 
 
 REPORT_DATE_REGEX = re.compile(r"Data as of (\w+ \d+)")
@@ -40,99 +40,89 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         return self.filter(q)
 
-    def for_credit_tier(self, credit_tier, summary_stats=None):
-        qs = self
-
-        # While filtering by the specified credit tier we can also annotate the
-        # queryset with some new column aliases that make it easier to sort by,
-        # filter by, and display APRs.
-        #
-        # For example, each card has columns purchase_apr_poor,
-        # purchase_apr_good, and purchase_apr_great. We want to be able to
-        # easily sort by, filter by, and display a card's purchase APR, based
-        # on the tier being filtered. So we define a new alias column simply
-        # named purchase_apr_for_tier which we can use for this purpose.
-        #
-        # We similarly define transfer_apr_for_tier.
-        tier_column_suffix = dict(enums.CreditTierColumns)[credit_tier]
-
-        qs = qs.annotate(
-            **{
-                f"{basename}_apr_for_tier": F(
-                    f"{basename}_apr_{tier_column_suffix}"
-                )
-                for basename in ("purchase", "transfer")
-            }
-        )
-
-        # We also want to define a transfer_apr_for_ordering so that we can
-        # sort either by transfer_apr_for_tier or transfer_apr_min, depending
-        # on whether those columns is defined.
-        qs = qs.annotate(
-            transfer_apr_for_ordering=Coalesce(
-                "transfer_apr_for_tier", "transfer_apr_min"
-            )
-        )
-
-        # We exclude cards that don't have a purchase APR for this tier.
-        qs = qs.exclude(purchase_apr_for_tier__isnull=True)
-
-        # Finally, we want to annotate each card with a rating based on how
-        # its purchase APR compares with other cards within the same tier.
-        #
-        # We annotate a new column named purchase_apr_for_tier_rating as:
-        #
-        #   purchase APR < 25th percentile: 0
-        #   purchase APR < 50th percentile: 1
-        #   else: 2
-
-        # If we've already computed the stats, we can avoid having to do so
-        # again.
-        summary_stats = summary_stats or qs.get_summary_statistics()
-
-        # The "or 0"s below are necessary because it's possible that the
-        # percentile might have been computed as None, if there are no cards
-        # for this tier. This won't happen with real datasets but could happen
-        # when testing this code with empty or minimal datasets.
-        qs = qs.annotate(
-            purchase_apr_for_tier_rating=Case(
-                When(
-                    purchase_apr_for_tier__lt=summary_stats[
-                        f"purchase_apr_{tier_column_suffix}_pct25"
-                    ]
-                    or 0,
-                    then=Value(0),
-                ),
-                When(
-                    purchase_apr_for_tier__lt=summary_stats[
-                        f"purchase_apr_{tier_column_suffix}_pct50"
-                    ]
-                    or 0,
-                    then=Value(1),
-                ),
-                default=Value(2),
-                output_field=models.IntegerField(),
-            )
-        )
-
-        return qs
-
     def get_summary_statistics(self):
+        """Compute aggregate purchase APR statistics for each credit tier."""
         stats = [
-            ("min", Min),
-            ("max", Max),
             ("pct25", Percentile25),
             ("pct50", Percentile50),
             ("count", Count),
         ]
 
+        # Note that we only include a card in a certain tier if it both has a
+        # valid APR for that tier AND if its "targeted_credit_tiers" column
+        # includes the tier in its value. It's not enough that a card offers an
+        # APR to the tier; it also has to be "targeted" to that tier.
+        #
+        # If a card is targeted for a tier, we want to include it in the
+        # aggregate statistics for that tier. To do this we need to identify a
+        # single purchase APR value to use for each card. The logic for
+        # choosing this single purchase APR works as follows, using the good
+        # tier as an example:
+        #
+        # 1. If the column "targeted_credit_tiers" column doesn't include the
+        #    good tier, assign the card a purchase APR of None, which excludes
+        #    it from aggregation calculations.
+        # 2. Otherwise, if the column "purchase_apr_good" is defined, use it
+        #    as the card's purchase APR.
+        # 3. Otherwise, if the column "purchase_apr_median" is defined, use it
+        #    as the card's purchase APR.
+        # 4. Otherwise, if both columns "purchase_apr_min" and
+        #    "purchase_apr_max" are defined, use the the max APR as the card's
+        #    purchase APR.
+        # 5. Otherwise, use an APR of None, which excludes the card from
+        #    aggregation calculations.
+        #
+        # This logic can be represented in SQL roughly as follows to aggregate
+        # the purchase_apr_good_pct25 statistic:
+        #
+        # SELECT
+        #   PERCENTILE_CONT(0.25)
+        #   WITHIN GROUP (
+        #     ORDER BY CASE
+        #       WHEN
+        #         targeted_credit_tiers" @> ["Credit scores from 620 to 719"]
+        #       THEN
+        #         COALESCE(
+        #           purchase_apr_good,
+        #           purchase_apr_median,
+        #           CASE
+        #             WHEN
+        #               purchase_apr_min IS NOT NULL AND
+        #               purchase_apr_max IS NOT NULL
+        #             THEN
+        #               purchase_apr_max
+        #             ELSE NULL
+        #           END
+        #         )
+        #       ELSE NULL
+        #     END
+        #   ) AS purchase_apr_good_pct25
+        # FROM ...
+        #
+        # This logic is expressed in Django code here:
         aggregates = {
-            f"purchase_apr_{tier_name}_{stat_name}": stat_fn(
-                f"purchase_apr_{tier_name}"
+            f"purchase_apr_{tier_suffix}_{stat_name}": stat_fn(
+                Case(
+                    When(
+                        targeted_credit_tiers__contains=tier_value,
+                        then=Coalesce(
+                            F(f"purchase_apr_{tier_suffix}"),
+                            F("purchase_apr_median"),
+                            Case(
+                                When(
+                                    Q(purchase_apr_min__isnull=False)
+                                    & Q(purchase_apr_max__isnull=False),
+                                    then=F("purchase_apr_max"),
+                                ),
+                            ),
+                        ),
+                    ),
+                )
             )
-            for (stat_name, stat_fn), tier_name in product(
-                stats, dict(enums.CreditTierColumns).values()
-            )
+            for (stat_name, stat_fn), (
+                tier_value,
+                tier_suffix,
+            ) in product(stats, enums.CreditTierColumns)
         }
 
         aggregates.update(
@@ -143,6 +133,196 @@ class CardSurveyDataQuerySet(models.QuerySet):
         )
 
         return self.aggregate(**dict(aggregates))
+
+    def with_ratings(self, summary_stats=None):
+        # Assign each card with a numeric rating based on its purchase APR."""
+        qs = self
+
+        # Card ratings are based on how a card's purchase APR relates to the
+        # distribution of purchase APRs across other cards for that credit
+        # tier. This computation relies on summary statistics for the entire
+        # card dataset. If we haven't previously computed those stats, we need
+        # to do so now.
+        summary_stats = summary_stats or qs.get_summary_statistics()
+
+        # For each card, we annotate twelve additional columns:
+        #
+        # {purchase, transfer}_apr_{poor, good, great}_{min, max}
+        #
+        # We want to select the most appropriate min and max APR to use for
+        # both purchase APR and transfer APR for each of the three credit
+        # tiers: poor, good, and great. We need APRs for each of these so that
+        # we can both sort cards by APR (purchase or transfer) and also rate
+        # cards by APR (purchase only, see code further down below). Most of
+        # the time the min and the max APR for each of these combination will
+        # end up being the same.
+        #
+        # See get_summary_statistics for details on how this logic works.
+        #
+        # This logic can be represented in SQL roughly as follows to annotate
+        # the purchase_apr_good_min column:
+        #
+        # SELECT
+        #   CASE
+        #     WHEN
+        #       targeted_credit_tiers @> ["Credit scores from 620 to 719"]
+        #     THEN
+        #       COALESCE(
+        #         purchase_apr_good,
+        #         purchase_apr_median,
+        #         CASE
+        #           WHEN
+        #             purchase_apr_min IS NOT NULL AND
+        #             purchase_apr_max IS NOT NULL
+        #           THEN
+        #             purchase_apr_min
+        #           ELSE NULL
+        #         END
+        #       )
+        #     ELSE NULL
+        #   END AS purchase_apr_good_min
+        # FROM ...
+        #
+        # This logic is expressed in Django code here:
+        qs = qs.annotate(
+            **{
+                f"{apr}_apr_{tier_suffix}_{min_or_max}": Case(
+                    When(
+                        targeted_credit_tiers__contains=tier_value,
+                        then=Coalesce(
+                            F(f"{apr}_apr_{tier_suffix}"),
+                            F(f"{apr}_apr_median"),
+                            Case(
+                                When(
+                                    Q(**{f"{apr}_apr_min__isnull": False})
+                                    & Q(**{f"{apr}_apr_max__isnull": False}),
+                                    then=F(f"{apr}_apr_{min_or_max}"),
+                                ),
+                            ),
+                        ),
+                    ),
+                    output_field=models.FloatField(),
+                )
+                for apr, (
+                    tier_value,
+                    tier_suffix,
+                ), min_or_max in product(
+                    ("purchase", "transfer"),
+                    enums.CreditTierColumns,
+                    ("min", "max"),
+                )
+            }
+        )
+
+        # We additionally annotate these three columns:
+        #
+        # purchase_apr_{poor, good, great}_rating
+        #
+        # These are computed by comparing the three maximum purchase APR
+        # columns added above (purchase_apr_{poor, good, great}_max) with the
+        # tier-specific percentiles passed in (or computed) above. Ratings are
+        # assigned as:
+        #
+        #   purchase APR < 25th percentile: 0
+        #   purchase APR < 50th percentile: 1
+        #   purchase APR >= 50th percentile: 2
+        #   null purchase APR: null
+        #
+        # This logic can be represented in SQL roughly as:
+        #
+        # SELECT
+        #   CASE
+        #     WHEN
+        #       purchase_apr_good_max < purchase_apr_good_pct25
+        #     THEN
+        #       0
+        #     WHEN
+        #       purchase_apr_good_max < purchase_apr_good_pct50
+        #     THEN
+        #       1
+        #     WHEN
+        #       purchase_apr_good_max < purchase_apr_good_max
+        #     THEN
+        #       2
+        #     ELSE NULL
+        #   END AS purchase_apr_good_rating
+        # FROM ...
+        #
+        # This logic is expressed in Django code here:
+        #
+        # (The "or 0"s below are necessary because it's possible that the
+        # percentile might have been computed as None, if there are no cards
+        # for this tier. This won't happen with real datasets but could happen
+        # when testing this code with empty or minimal datasets.)
+        qs = qs.annotate(
+            **{
+                f"purchase_apr_{tier_suffix}_rating": Case(
+                    When(
+                        **{
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                                f"purchase_apr_{tier_suffix}_pct25"
+                            ]
+                            or 0
+                        },
+                        then=Value(0),
+                    ),
+                    When(
+                        **{
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                                f"purchase_apr_{tier_suffix}_pct50"
+                            ]
+                            or 0
+                        },
+                        then=Value(1),
+                    ),
+                    When(
+                        **{f"purchase_apr_{tier_suffix}_max__isnull": False},
+                        then=Value(2),
+                    ),
+                    output_field=models.IntegerField(),
+                )
+                for tier_suffix in dict(enums.CreditTierColumns).values()
+            }
+        )
+
+        return qs
+
+    def for_credit_tier(self, credit_tier):
+        qs = self
+
+        # Use the specified credit tier to annotate 5 new columns which can be
+        # used downstream regardless of which tier we are filtering on:
+        #
+        # purchase_apr_for_tier_rating
+        # {purchase, transfer}_apr_for_tier_{min, max}
+        #
+        # These columns are annotated as aliases of tier-specific columns which
+        # we previously annotated. For example, if filtering for credit tier
+        # "good", we can use columns:
+        #
+        # purchase_apr_good_rating
+        # {purchase, transfer}_apr_good_{min, max}
+        tier_suffix = dict(enums.CreditTierColumns)[credit_tier]
+
+        qs = qs.annotate(
+            purchase_apr_for_tier_rating=F(
+                f"purchase_apr_{tier_suffix}_rating"
+            ),
+            **{
+                f"{basename}_apr_for_tier_{min_or_max}": F(
+                    f"{basename}_apr_{tier_suffix}_{min_or_max}"
+                )
+                for basename, min_or_max in product(
+                    ("purchase", "transfer"), ("min", "max")
+                )
+            },
+        )
+
+        # If filtering by a credit tier, we also exclude cards for which we
+        # weren't able to provide a purchase APR for that tier.
+        qs = qs.exclude(purchase_apr_for_tier_min__isnull=True)
+
+        return qs
 
 
 class CardSurveyData(models.Model):
@@ -251,7 +431,9 @@ class CardSurveyData(models.Model):
     grace_period_offered = YesNoBooleanField()
     grace_period = models.PositiveIntegerField(null=True, blank=True)
     minimum_finance_charge = YesNoBooleanField()
-    minimum_finance_charge_dollars = CurrencyField(null=True, blank=True)
+    minimum_finance_charge_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     balance_computation_method = JSONListField(
         choices=enums.BalanceComputationChoices
     )
@@ -261,25 +443,27 @@ class CardSurveyData(models.Model):
     periodic_fee_type = JSONListField(
         choices=enums.PeriodicFeeTypeChoices, blank=True
     )
-    annual_fee = CurrencyField(null=True, blank=True)
-    monthly_fee = CurrencyField(null=True, blank=True)
-    weekly_fee = CurrencyField(null=True, blank=True)
+    annual_fee = CurrencyDecimalField(null=True, blank=True)
+    monthly_fee = CurrencyDecimalField(null=True, blank=True)
+    weekly_fee = CurrencyDecimalField(null=True, blank=True)
     other_periodic_fee_name = models.TextField(null=True, blank=True)
-    other_periodic_fee_amount = CurrencyField(null=True, blank=True)
+    other_periodic_fee_amount = CurrencyDecimalField(null=True, blank=True)
     other_periodic_fee_frequency = models.TextField(null=True, blank=True)
     fee_varies = YesNoBooleanField(null=True, blank=True)
-    periodic_min = CurrencyField(null=True, blank=True)
-    periodic_max = CurrencyField(null=True, blank=True)
+    periodic_min = CurrencyDecimalField(null=True, blank=True)
+    periodic_max = CurrencyDecimalField(null=True, blank=True)
     fee_explanation = models.TextField(null=True, blank=True)
     purchase_transaction_fees = YesNoBooleanField()
     purchase_transaction_fee_type = JSONListField(
         choices=enums.PurchaseTransactionFeeTypeChoices, blank=True
     )
-    purchase_transaction_fee_dollars = CurrencyField(null=True, blank=True)
+    purchase_transaction_fee_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     purchase_transaction_fee_percentage = models.FloatField(
         null=True, blank=True
     )
-    minimum_purchase_transaction_fee_amount = CurrencyField(
+    minimum_purchase_transaction_fee_amount = CurrencyDecimalField(
         null=True, blank=True
     )
     purchase_transaction_fee_calculation = models.TextField(
@@ -289,9 +473,11 @@ class CardSurveyData(models.Model):
     balance_transfer_fee_types = JSONListField(
         choices=enums.BalanceTransferFeeTypeChoices, blank=True
     )
-    balance_transfer_fee_dollars = CurrencyField(null=True, blank=True)
+    balance_transfer_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     balance_transfer_fee_percentage = models.FloatField(null=True, blank=True)
-    minimum_balance_transfer_fee_amount = CurrencyField(null=True, blank=True)
+    minimum_balance_transfer_fee_amount = CurrencyDecimalField(
+        null=True, blank=True
+    )
     balance_transfer_fee_calculation = models.TextField(null=True, blank=True)
     cash_advance_fees = YesNoBooleanField()
     cash_advance_fee_for_each_transaction = YesNoBooleanField(
@@ -300,19 +486,23 @@ class CardSurveyData(models.Model):
     cash_advance_fee_types = JSONListField(
         choices=enums.CashAdvanceFeeTypeChoices, blank=True
     )
-    cash_advance_fee_dollars = CurrencyField(null=True, blank=True)
+    cash_advance_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     cash_advance_fee_percentage = models.FloatField(null=True, blank=True)
-    minimum_cash_advance_fee_amount = CurrencyField(null=True, blank=True)
+    minimum_cash_advance_fee_amount = CurrencyDecimalField(
+        null=True, blank=True
+    )
     cash_advance_fee_calculation = models.TextField(null=True, blank=True)
     foreign_transaction_fees = YesNoBooleanField()
     foreign_transaction_fees_types = JSONListField(
         choices=enums.ForeignTransactionFeeTypeChoices, blank=True
     )
-    foreign_transaction_fee_dollars = CurrencyField(null=True, blank=True)
+    foreign_transaction_fee_dollars = CurrencyDecimalField(
+        null=True, blank=True
+    )
     foreign_transaction_fee_percentage = models.FloatField(
         null=True, blank=True
     )
-    minimum_foreign_transaction_fee_amount = CurrencyField(
+    minimum_foreign_transaction_fee_amount = CurrencyDecimalField(
         null=True, blank=True
     )
     foreign_transaction_fee_calculation = models.TextField(
@@ -322,39 +512,41 @@ class CardSurveyData(models.Model):
     late_fee_types = JSONListField(
         choices=enums.LateFeeTypeChoices, blank=True
     )
-    late_fee_dollars = CurrencyField(null=True, blank=True)
-    late_fee_six_month_billing_cycle = CurrencyField(null=True, blank=True)
+    late_fee_dollars = CurrencyDecimalField(null=True, blank=True)
+    late_fee_six_month_billing_cycle = CurrencyDecimalField(
+        null=True, blank=True
+    )
     late_fee_policy_details = models.TextField(null=True, blank=True)
     fee_varies36 = YesNoBooleanField(null=True, blank=True)
-    minimum37 = CurrencyField(null=True, blank=True)
-    maximum38 = CurrencyField(null=True, blank=True)
+    minimum37 = CurrencyDecimalField(null=True, blank=True)
+    maximum38 = CurrencyDecimalField(null=True, blank=True)
     fee_explanation39 = models.TextField(null=True, blank=True)
     over_limit_fees = YesNoBooleanField()
     over_limit_fee_types = JSONListField(
         choices=enums.OverlimitFeeTypeChoices, blank=True
     )
-    over_limit_fee_dollars = CurrencyField(null=True, blank=True)
+    over_limit_fee_dollars = CurrencyDecimalField(null=True, blank=True)
     overlimit_fee_detail = models.TextField(null=True, blank=True)
     other_fees = YesNoBooleanField()
     additional_fees = YesNoBooleanField(null=True, blank=True)
     other_fee_name = models.TextField(null=True, blank=True)
-    other_fee_amount = CurrencyField(null=True, blank=True)
+    other_fee_amount = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation = models.TextField(null=True, blank=True)
     other_fee_name_2 = models.TextField(null=True, blank=True)
-    other_fee_amount_2 = CurrencyField(null=True, blank=True)
+    other_fee_amount_2 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_2 = models.TextField(null=True, blank=True)
     other_fee_name_3 = models.TextField(null=True, blank=True)
-    other_fee_amount_3 = CurrencyField(null=True, blank=True)
+    other_fee_amount_3 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_3 = models.TextField(null=True, blank=True)
     other_fee_name_4 = models.TextField(null=True, blank=True)
-    other_fee_amount_4 = CurrencyField(null=True, blank=True)
+    other_fee_amount_4 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_4 = models.TextField(null=True, blank=True)
     other_fee_name_5 = models.TextField(null=True, blank=True)
-    other_fee_amount_5 = CurrencyField(null=True, blank=True)
+    other_fee_amount_5 = CurrencyDecimalField(null=True, blank=True)
     other_fee_explanation_5 = models.TextField(null=True, blank=True)
     fee_varies56 = YesNoBooleanField(null=True, blank=True)
-    minimum57 = CurrencyField(null=True, blank=True)
-    maximum58 = CurrencyField(null=True, blank=True)
+    minimum57 = CurrencyDecimalField(null=True, blank=True)
+    maximum58 = CurrencyDecimalField(null=True, blank=True)
     fee_explanation59 = models.TextField(null=True, blank=True)
     services = JSONListField(choices=enums.ServicesChoices, blank=True)
     other_services = models.TextField(null=True, blank=True)
@@ -399,3 +591,24 @@ class CardSurveyData(models.Model):
         ]
 
     objects = CardSurveyDataQuerySet.as_manager()
+
+    @property
+    def annual_fee_estimated(self):
+        """Estimate a card's annual fee from its periodic fees.
+
+        If a card has "Other" periodic fees, we can't accurately estimate its
+        annual fee.
+        """
+        if "Other" in self.periodic_fee_type:
+            return None
+
+        fee = 0
+
+        if "Annual" in self.periodic_fee_type and self.annual_fee:
+            fee += self.annual_fee
+        if "Monthly" in self.periodic_fee_type and self.monthly_fee:
+            fee += 12 * self.monthly_fee
+        if "Weekly" in self.periodic_fee_type and self.weekly_fee:
+            fee += 52 * self.weekly_fee
+
+        return fee

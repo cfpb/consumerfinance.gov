@@ -44,7 +44,7 @@ nav:
 ## Running the docs locally
 
 With a
-[stand-alone Python virtualenv for consumerfinance.gov](../installation/#set-up-a-local-python-environment-optional):
+[stand-alone Python virtualenv for consumerfinance.gov](installation.md#set-up-a-local-python-environment-optional):
 
 ```bash
 pyenv activate consumerfinance.gov
@@ -59,7 +59,7 @@ Once running, they are accessible at http://localhost:8888.
 Every time a PR is merged to main,
 GitHub Actions will build and deploy the documentation to
 https://cfpb.github.io/consumerfinance.gov/.
-See [How we use GitHub Actions](../github-actions/) for more info.
+See [How we use GitHub Actions](github-actions.md) for more info.
 
 If you would like to deploy to a fork of consumerfinance.gov owned by another user
 you can provide the `-r` argument:

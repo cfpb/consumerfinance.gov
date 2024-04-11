@@ -28,6 +28,6 @@ Our workflows are defined in our [`.github/workflows`](https://github.com/cfpb/c
 
 ## An extra task for satellite repositories
 
-For our [satellite apps](../related-projects/#satellite-apps), we use GitHub Actions (or Travis, if a repo hasn't been migrated to Actions yet) to build and attach a deployment wheel file to every release.
+For our [satellite apps](related-projects.md#satellite-apps), we use GitHub Actions (or Travis, if a repo hasn't been migrated to Actions yet) to build and attach a deployment wheel file to every release.
 
 An example is the `.whl` file on [this release of the retirement app](https://github.com/cfpb/retirement/releases/tag/0.7.6).

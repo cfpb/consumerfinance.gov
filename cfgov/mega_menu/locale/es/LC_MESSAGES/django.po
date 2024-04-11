@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-19 11:38-0500\n"
+"POT-Creation-Date: 2024-03-29 11:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,44 +22,38 @@ msgstr ""
 msgid "continued"
 msgstr "continuación"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:137
+#: mega_menu/jinja2/mega_menu/mega-menu.html:136
 msgid "Back"
 msgstr "Regresar"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:150
+#: mega_menu/jinja2/mega_menu/mega-menu.html:149
 #, python-format
 msgid "%(overview_link_text)s Overview"
 msgstr "Información General %(overview_link_text)s"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:174
-#: mega_menu/jinja2/mega_menu/mega-menu.html:176
+#: mega_menu/jinja2/mega_menu/mega-menu.html:173
+#: mega_menu/jinja2/mega_menu/mega-menu.html:175
 msgid "Featured"
 msgstr "Destacado"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:196
-#: mega_menu/jinja2/mega_menu/mega-menu.html:198
+#: mega_menu/jinja2/mega_menu/mega-menu.html:195
+#: mega_menu/jinja2/mega_menu/mega-menu.html:197
 msgid "Additional Resources"
 msgstr "Recursos adicionales"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:307
+#: mega_menu/jinja2/mega_menu/mega-menu.html:306
 msgid "Main menu"
 msgstr "Menú principal"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:314
+#: mega_menu/jinja2/mega_menu/mega-menu.html:313
 msgid "Open the main menu"
 msgstr "Abre el menú principal"
 
-#: mega_menu/jinja2/mega_menu/mega-menu.html:320
+#: mega_menu/jinja2/mega_menu/mega-menu.html:319
 msgid "Close the main menu"
 msgstr "Cerrar el menú principal"
 
-#: mega_menu/wagtail_hooks.py:21
 #, fuzzy
-#| msgid "Previous"
-msgid "Preview"
-msgstr "Anterior"
-
-#: mega_menu/wagtail_hooks.py:25
-#, python-format
-msgid "Preview this %s"
-msgstr ""
+#~| msgid "Previous"
+#~ msgid "Preview"
+#~ msgstr "Anterior"

@@ -31,44 +31,30 @@
 
 <h1>{{ heading }}</h1>
 
-<div class="block block__sub">
-    {% set situations = form.cleaned_data.situations %}
-    {% if not situations %}
-        <p>
-            Filter and sort the {{ stats_all.count or "" }} cards in our database
-            to find cards that have the features that fit your situation.
-        </p>
-    {% else %}
-        <h2>You’re looking to...</h2>
-
-        {% for situation in situations %}
-            <div class="block block__sub">
-                <div class="o-well">
-                    <h3>{{ situation.title }}</h3>
-
-                    {{ situation.results_html }}
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
-
 <div id="o-filterable-list-controls" class="o-filterable-list-controls">
     {% call() expandable({
-        "label": "Customize results",
+        "label": "Customize card features",
         "is_bordered": true,
-        "is_expanded": not situations,
+        "is_expanded": not situations or not cards,
         "is_midtone": true
     }) %}
         {{ filter_form(form) }}
     {% endcall %}
 </div>
 
+{% if not situations %}
+<div class="block block__sub">
+    <p>
+        <a href="{{ url('tccp:landing_page') }}">Choose what you're looking for in a card</a>
+    </p>
+</div>
+{% endif %}
+
 <div class="block block__sub">
     <div class="o-filterable-list-results o-filterable-list-results__partial htmx-results">
         {% include "tccp/includes/card_list.html" %}
     </div>
-    <button data-js-hook="behavior_show-more" class="a-btn a-btn__link a-btn__warning a-btn__full-on-xs u-mt20 u-js-only">
+    <button data-js-hook="behavior_show-more" class="a-btn a-btn__link a-btn__full-on-xs u-mt20 u-js-only">
         Show more results with higher interest rates
     </button>
 </div>

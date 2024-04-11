@@ -38,12 +38,12 @@
 {%- if value.image_width == 'full' -%}
 
 <figure class="m-full-width-media
-               {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
+               {{- ' m-full-width-media__bottom-rule' if value.is_bottom_rule else '' }}">
     <img class="m-full-width-media_image"
          src="{{ image_inset.url }}"
          alt="{{ image_alt_value(value.image) }}">
 {%- if value.text %}
-    <figcaption class="m-inset_caption">
+    <figcaption class="m-full-width-media_caption">
         {{ value.text | safe }}
     </figcaption>
 {%- endif %}

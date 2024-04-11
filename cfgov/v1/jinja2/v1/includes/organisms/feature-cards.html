@@ -18,32 +18,31 @@
 {%- from 'v1/includes/blocks/heading.html' import heading without context %}
 {%- from 'v1/includes/molecules/feature-card.html' import feature_card with context %}
 
-<section class="ask-categories">
+<section>
     <h2 class="u-show-on-mobile u-mt45">
         Browse questions by category
     </h2>
 
-<ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
-{% for card in value.feature_cards %}
-    <li class="m-list_item">
-        <a class="m-list_link a-link a-link__jump a-link__icon-after-text" href="{{ card.category.url }}">
-            <span class="a-link_text">{{ card.category.text }}</span>
-            {{ svg_icon( card.icon ) }}
-        </a>
-    </li>
-{% endfor %}
-</ul>
+    <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
+    {% for card in value.feature_cards %}
+        <li class="m-list_item">
+            <a class="m-list_link a-link a-link__jump a-link__icon-after-text" href="{{ card.category.url }}">
+                <span class="a-link_text">{{ card.category.text }}</span>
+                {{ svg_icon( card.icon ) }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
 
-<div class="u-hide-on-mobile question-categories u-mb30">
-<div class="o-card-group o-card-group__column-2">
-<div class="o-card-group_cards">
+    <div class="u-hide-on-mobile question-categories u-mb30">
+        <div class="o-card-group o-card-group__column-2">
+            <div class="o-card-group_cards">
 
-{% for card in value.feature_cards %}
-    {{- feature_card(card) }}
-{% endfor %}
+            {% for card in value.feature_cards %}
+                {{- feature_card(card) }}
+            {% endfor %}
 
-</div>
-</div>
-</div>
-
+            </div>
+        </div>
+    </div>
 </section>

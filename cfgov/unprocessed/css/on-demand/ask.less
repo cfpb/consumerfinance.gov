@@ -128,16 +128,6 @@
     max-width: 41.875rem;
   }
 
-  .respond-to-min(@bp-lg-min, {
-    .content_sidebar {
-      padding-top: 0;
-    }
-  });
-
-  .o-expandable_cue-close {
-    display: none;
-  }
-
   .answer-text {
     h2,
     h3,
@@ -148,8 +138,6 @@
       margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     }
 
-    .video_player-row + .row,
-    .table_block-row + .row,
     .row + .row > .o-table:first-child,
     .row + .row > .o-video-player:first-child {
       margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -163,10 +151,11 @@
       margin-top: unit(@grid_gutter-width / @size-iii, em);
     }
 
-    .row + .row:not(.inset-row) h4 {
+    .row + .row h4 {
       margin-top: unit(@grid_gutter-width / @size-iv, em);
     }
 
+    // Large desktop size.
     .respond-to-min(@bp-lg-min, {
       .row + .row h2 {
         margin-top: unit( @grid_gutter-width * 1.5 / @size-ii, em );
@@ -174,16 +163,8 @@
     });
   }
 
+  // Mobile only.
   .respond-to-max(@bp-xs-max, {
-    .inset-row {
-      display: flex;
-      flex-direction: column-reverse;
-
-      .m-inset {
-        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-      }
-    }
-
     .related-questions {
       margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
     }

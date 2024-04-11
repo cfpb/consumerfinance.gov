@@ -76,7 +76,7 @@ function Notification(element) {
    */
   function _setContent(messageText, explanationText) {
     let content = `
-      <div class="h4 m-notification_message">
+      <div class="m-notification_message">
         ${messageText}
       </div>`;
     if (typeof explanationText !== 'undefined') {

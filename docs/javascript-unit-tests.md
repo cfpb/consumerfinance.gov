@@ -143,7 +143,7 @@ the structure of the project JavaScript in
 
 When considering exactly where to place JavaScript in these directories,
 it might be helpful to review the documentation about
-[atomic components in consumerfinance.gov](../atomic-structure).
+[atomic components in consumerfinance.gov](atomic-structure.md).
 JavaScript corresponding to atomic elements should go into
 the appropriate subfolder for the type of element being implemented.
 In our case, `sample.js` and `sample-spec.js` don’t relate to atomic elements,
@@ -544,7 +544,7 @@ const HTML_SNIPPET = `
   <div class="m-notification">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
     <div class="m-notification_content">
-      <div class="h4 m-notification_message">Notification content</div>
+      <div class="m-notification_message">Notification content</div>
     </div>
   </div>
 `;
@@ -586,7 +586,7 @@ and assigns the component node to the `notificationElem` variable, and
     the tests would have to reconcile
     into a complete, finished chunk of markup.
     For now, just be aware of this when
-    [editing a Wagtail component that includes JavaScript](../editing-components/).
+    [editing a Wagtail component that includes JavaScript](editing-components.md).
 
 Further down, here are some of the tests that cover the `_setType` function
 (by way of the `setTypeAndContent` function that
@@ -642,4 +642,4 @@ Testing user interaction with simulated pointer events, keystrokes,
 or form submissions is best handled via browser tests, not unit tests.
 User interaction in a unit test could falsely pass
 if the component wasn’t visible on the page, for instance.
-[Read more about how we run browser tests with Cypress.](../functional-testing/)
+[Read more about how we run browser tests with Cypress.](functional-testing.md)

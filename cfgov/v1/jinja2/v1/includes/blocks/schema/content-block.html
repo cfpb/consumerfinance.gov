@@ -13,23 +13,18 @@
    ========================================================================== #}
 
 {% for block in value %}
-    {% set after_tip = value[loop.index - 2].block_type == 'tip' if loop.index > 1 else False %}
-    {% if not after_tip %}
-    <div class="row {{'inset-row' if block.block_type == 'tip' else block.block_type~'-row'}}"
-        {% if block.value.anchor_tag %} 
+    {% if loop.last %}
+    <div
+        {% if block.value.anchor_tag %}
         id="{{ block.value.anchor_tag }}"
         {% endif %}>
     {% endif %}
     {% if block.block_type == 'text' %}
         {{ block.value.content | richtext | safe }}
-    {% elif block.block_type == 'table_block' %}
-        {% autoescape off %}
-            {% include_block block %}
-        {% endautoescape %}
     {% else %}
         {% include_block block %}
     {% endif %}
-    {% if block.block_type != 'tip' or loop.last %}
+    {% if loop.last %}
     </div>
     {% endif %}
 {% endfor %}

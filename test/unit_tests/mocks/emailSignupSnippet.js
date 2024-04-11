@@ -16,7 +16,7 @@ export default `
         <div class="u-mb15">
             <div class="m-notification">
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message"></div>
+                    <div class="m-notification_message"></div>
                 </div>
             </div>
         </div>

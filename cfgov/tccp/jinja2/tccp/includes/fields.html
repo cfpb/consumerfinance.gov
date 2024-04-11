@@ -9,3 +9,23 @@
         {{ apr(min) }} - {{ apr(max) }}
     {%- endif %}
 {%- endmacro -%}
+
+{%- macro currency(value, default=none, boolean=false) -%}
+    {{
+        ('$' ~ ('%.0f' if value == (value | int) else '%.2f') | format(value))
+        if value is not none and (value or not boolean)
+        else (default if default is not none else "None")
+    }}
+{%- endmacro -%}
+
+{%- macro lower_first_letter(s) -%}
+    {{- (s[0].lower() ~ (s[1:] if s | length > 1)) if s -}}
+{%- endmacro -%}
+
+{%- macro oxfordize(list) -%}
+    {% for item in list %}
+        {{- item -}}
+        {{- ', ' if not loop.last and loop.length > 2 -}}
+        {{- ' and ' if loop.index == loop.length - 1 -}}
+    {% endfor %}
+{%- endmacro -%}

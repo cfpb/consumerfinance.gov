@@ -119,13 +119,10 @@ describe('Dynamic Disclosures', () => {
 
   it('should properly add a private loan on button click', () => {
     page.confirmVerification();
-    const addLoan = cy.get('button.private-loans_add-btn');
     cy.get('.private-loans .private-loans_loan').should('have.length', 1);
-    cy.wait(500);
-    addLoan.click({ force: true });
+    cy.get('button.private-loans_add-btn').click();
     cy.get('.private-loans .private-loans_loan').should('have.length', 2);
-    cy.wait(500);
-    addLoan.click({ force: true });
+    cy.get('button.private-loans_add-btn').click();
     cy.get('.private-loans .private-loans_loan').should('have.length', 3);
   });
 
