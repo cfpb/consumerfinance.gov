@@ -94,6 +94,7 @@
 
 .o-well.o-well--speed-bump {
   padding: unit((20px / @base-font-size-px), rem);
+  background-color: var(--teal-10);
 }
 
 .m-card.m-card--tabular {
@@ -115,9 +116,9 @@
       color: @link-text-visited;
     }
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       padding-bottom: unit((20px / @base-font-size-px), rem);
-    }
+    });
   }
   &:hover {
     > a {
@@ -159,28 +160,46 @@
     border-bottom: 1px dotted @link-underline;
     color: @link-text;
   }
-
-  .a-credit-card-apr-rating {
-    font-size: unit((16px / @base-font-size-px), rem);
-    font-weight: 600;
-
-    @media only screen and (min-width: @bp-sm-min) {
-      font-size: unit((18px / @base-font-size-px), rem);
-      font-weight: 500;
-    }
-  }
 }
 
-dl {
-  .a-credit-card-apr-rating {
+.o-apr-rating-group {
+  &--heading {
+    .h3();
+  }
+
+  .m-apr-rating {
+    margin-bottom: unit((5px / @base-font-size-px), rem);
     display: grid;
     grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
     align-items: baseline;
-    gap: unit(8px / @base-font-size-px, em);
+    gap: unit(5px / @base-font-size-px, em);
+    font-weight: 500;
 
-    dt {
-      justify-self: right;
-    }
+    .respond-to-min(@bp-sm-min, {
+      margin-bottom: 0;
+    });
+  }
+
+  dt {
+    justify-self: right;
+  }
+}
+
+.m-apr-rating {
+  .h4();
+  margin-bottom: unit((20px / @base-font-size-px), rem);
+  font-weight: 600;
+
+  &--less .cf-icon-svg {
+    color: var(--green);
+  }
+
+  &--average .cf-icon-svg {
+    color: var(--gold);
+  }
+
+  &--more .cf-icon-svg {
+    color: var(--red);
   }
 }
 
@@ -194,10 +213,10 @@ dl {
   column-gap: 20px;
   row-gap: 15px;
 
-  @media only screen and (min-width: @bp-sm-min) {
+  .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
-  }
+  });
 }
 
 .m-data-spec {
@@ -230,14 +249,13 @@ dl {
     padding-bottom: unit((15px / @base-font-size-px), rem);
     grid-area: requirements;
     align-self: start;
-    justify-self: end;
     dt {
       .u-visually-hidden;
     }
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       padding-bottom: 0;
-    }
+    });
   }
 
   dt,
@@ -249,13 +267,13 @@ dl {
       font-weight: 500;
     }
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       font-size: unit((16px / @base-font-size-px), rem);
       line-height: unit((22px / @base-font-size-px), rem);
       strong {
         font-size: unit((18px / @base-font-size-px), rem);
       }
-    }
+    });
   }
 
   dd {
@@ -269,13 +287,13 @@ dl {
       content: none;
     }
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       font-size: unit((22px / @base-font-size-px), rem);
       line-height: unit((26px / @base-font-size-px), rem);
       strong {
         font-size: unit((26px / @base-font-size-px), rem);
       }
-    }
+    });
   }
 }
 
@@ -294,31 +312,15 @@ html.js .o-filterable-list-results__partial {
   }
 }
 
-.a-credit-card-apr-rating {
-  margin-bottom: unit((20px / @base-font-size-px), rem);
-
-  &--less .cf-icon-svg {
-    color: var(--green);
-  }
-
-  &--average .cf-icon-svg {
-    color: var(--gold);
-  }
-
-  &--more .cf-icon-svg {
-    color: var(--red);
-  }
-}
-
 .m-credit-tier-chart {
   display: flex;
   align-items: stretch;
   font-size: unit((15px / @base-font-size-px), rem);
 
-  @media only screen and (min-width: @bp-sm-min) {
+  .respond-to-min(@bp-sm-min, {
     margin-left: unit((-18px / @base-font-size-px), rem);
     font-size: unit((16px / @base-font-size-px), rem);
-  }
+  });
 
   &__tier {
     display: flex;
@@ -327,11 +329,11 @@ html.js .o-filterable-list-results__partial {
       unit((15px / @base-font-size-px), rem);
     background-color: var(--teal-10);
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       display: block;
       padding: unit((5px / @base-font-size-px), rem)
         unit((20px / @base-font-size-px), rem);
-    }
+    });
   }
   &__tier:first-child {
     border-radius: 20px 0 0 20px;
@@ -350,9 +352,9 @@ html.js .o-filterable-list-results__partial {
     border-left: 1px solid var(--white);
   }
   &__tier--unselected &__icon {
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       display: none;
-    }
+    });
   }
 }
 
@@ -418,17 +420,17 @@ html.js .o-filterable-list-results__partial {
   display: flex;
   flex-direction: column;
 
-  @media only screen and (min-width: @bp-sm-min) {
+  .respond-to-min(@bp-sm-min, {
     flex-direction: row;
     gap: unit((30px / @base-font-size-px), rem);
-  }
+  });
 
   &__operator {
     margin-bottom: 0;
 
-    @media only screen and (min-width: @bp-sm-min) {
+    .respond-to-min(@bp-sm-min, {
       align-self: center;
-    }
+    });
   }
 }
 

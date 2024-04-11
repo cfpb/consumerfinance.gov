@@ -42,6 +42,14 @@
     {% endcall %}
 </div>
 
+{% if not situations %}
+<div class="block block__sub">
+    <p>
+        <a href="{{ url('tccp:landing_page') }}">Choose what you're looking for in a card</a>
+    </p>
+</div>
+{% endif %}
+
 <div class="block block__sub">
     <div class="o-filterable-list-results o-filterable-list-results__partial htmx-results">
         {% include "tccp/includes/card_list.html" %}

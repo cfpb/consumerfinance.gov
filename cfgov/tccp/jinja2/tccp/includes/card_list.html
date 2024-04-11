@@ -6,13 +6,17 @@
 
 {% if situation_features -%}
 <div class="block block__sub">
-    <h2>Cards you’re looking for have these features:</h2>
+    <h2>Cards you're looking for have these features:</h2>
 
     <ul>
         {% for feature in situation_features -%}
         <li>{{ feature.results_html }}</li>
         {%- endfor %}
     </ul>
+
+    <p>
+        <a href="{{ url('tccp:landing_page') }}">Change what you're looking for in a card</a>
+    </p>
 </div>
 {%- endif %}
 
@@ -30,13 +34,13 @@
 ) -}}
 {%- endif %}
 
-<div class="block__sub">
-    <div class="a-label__heading">
+<div class="block block__sub o-apr-rating-group">
+    <p class="o-apr-rating-group--heading">
         Use our ratings to compare your results:
-    </div>
+    </p>
     <dl>
         {% for label, label_count in purchase_apr_rating_counts.items() %}
-        <div class="u-mb0 a-credit-card-apr-rating a-credit-card-apr-rating--{{ label }}">
+        <div class="m-apr-rating m-apr-rating--{{ label }}">
             <dt>
                 {%- for i in range(loop.index) -%}
                     {{ svg_icon("dollar-round") }}
@@ -61,13 +65,13 @@
 {%- macro card_rating(card) -%}
     {%- set label = purchase_apr_rating_labels[card.purchase_apr_for_tier_rating] -%}
 
-    <span class="a-credit-card-apr-rating--{{ label }}">
+    <div class="m-apr-rating m-apr-rating--{{ label }}">
         {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
             {{ svg_icon("dollar-round") }}
         {% endfor -%}
 
         Pay {{ label }} interest
-    </span>
+    </div>
 {%- endmacro -%}
 
 {%- macro card_rewards(card) -%}
@@ -88,7 +92,7 @@
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
                 </div>
-                <div class="a-credit-card-apr-rating">{{ card_rating(card) | safe }}</div>
+                {{ card_rating(card) | safe }}
                 <dl class="m-data-specs">
                     <div class="m-data-spec m-data-spec--apr">
                         <dt><strong>Purchase APR</strong></dt>
@@ -122,9 +126,9 @@
                     </div>
                     {%- if card.requirements_for_opening -%}
                     <div class="m-data-spec m-data-spec--requirements">
-                        <dt>Does this card have special requirements?</dt>
+                        <dt>Does this card have requirements?</dt>
                         <dd>
-                            See card details page for special requirements
+                            {{ svg_icon("flag-round") }} Eligibility requirements
                         </dd>
                     </div>
                     {%- endif -%}
