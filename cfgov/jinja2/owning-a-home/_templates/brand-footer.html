@@ -23,21 +23,21 @@
 
 {% macro render( links=[] ) %}
 <footer aria-label="Buying a House footer" class="u-layout-grid__breakout brand-footer">
-    <div class="brand-footer_wrapper">
-        <h3 class="brand-footer_heading">
+    <div class="brand-footer__wrapper">
+        <h3 class="brand-footer__heading">
             {{ svg_icon('house') }}
             Check out other tools and resources from
             <a href="/owning-a-home" class="title-link">Buying a House</a>
         </h3>
-        <div class="brand-footer_blocks">
+        <div class="brand-footer__blocks">
             {% for link in links %}
                 {% if loop.index < 4 %}
-                    <div class="brand-footer_block">
+                    <div class="brand-footer__block">
                         {{ render_link( link ) }}
                     </div>
                 {% endif %}
             {% endfor %}
-            <div class="brand-footer_block">
+            <div class="brand-footer__block">
                 {% set value = {
                     'heading': 'Buying a house?',
                     'default_heading': True,
@@ -75,7 +75,7 @@
    ========================================================================== #}
 
 {% macro render_link( link ) %}
-<div class="brand-footer_img">
+<div class="brand-footer__img">
     <a href="{{ link.url }}">
         <img src="{{ link.img }}" alt="{{ link.label }}">
     </a>
