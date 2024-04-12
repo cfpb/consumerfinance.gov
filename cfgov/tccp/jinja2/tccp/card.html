@@ -103,7 +103,7 @@
                 </ul>
             {% endif %}
             {% if card.professional_affiliation is not none or card.other is not none %}
-                <div class="h4 u-mt15">Other requirements for applying</div>
+                <div class="h4 u-mt15">Eligibility requirements</div>
                 <ul>
                     {% for requirement in [
                         card.professional_affiliation,
@@ -247,7 +247,7 @@
                             <td>
                                 {% if purchase_apr_ratings[loop.index0] is not none %}
                                     {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
-                                    <span class="a-credit-card-apr-rating--{{ label }}">
+                                    <span class="m-apr-rating--{{ label }}">
                                         {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
                                             {{ svg_icon("dollar-round") }}
                                         {% endfor -%}
