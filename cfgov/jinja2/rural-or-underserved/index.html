@@ -30,12 +30,12 @@ home price, down payment, and more can affect mortgage interest rates.
 
 
 {% block content_intro -%}
-    <div class="wrapper">
+    <div class="wrapper content">
+        <div class="content__intro u-hide-if-js">
+            {% include "v1/includes/snippets/no_js_notification.html" %}
+        </div>
 
-        {% include "_templates/no_js.html" %}
-
-        <section class="content__intro">
-
+        <section class="content__intro u-js-only">
             <div class="content-l">
                 <div class="content-l__col content-l__col-1">
                     <h5 class="report-date print-only"></h5>
