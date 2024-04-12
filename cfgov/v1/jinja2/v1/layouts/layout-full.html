@@ -10,7 +10,7 @@
           id="main"
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
-        {% if self.content_intro() %}
+        {% if self.content_intro().strip() %}
             <div class="u-layout_content-intro">
                 {% block content_intro scoped -%}{%- endblock %}
             </div>
