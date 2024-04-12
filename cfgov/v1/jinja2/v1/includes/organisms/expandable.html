@@ -43,7 +43,7 @@
         if value.is_faq else '' }} >
     <button class="o-expandable_header" type="button">
         {% if value.icon %}
-          <span>{{ svg_icon( value.icon ) }}</span>
+          <span class="o-expandable_icon">{{ svg_icon( value.icon ) }}</span>
         {% endif %}
         <span class="o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
