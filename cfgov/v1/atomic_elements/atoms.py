@@ -4,34 +4,9 @@ from wagtail import blocks
 from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
-from url_or_relative_url_field.forms import URLOrRelativeURLFormField
-
 
 def is_required(field_name):
     return [str(field_name) + " is required."]
-
-
-class URLOrRelativeURLBlock(blocks.FieldBlock):
-    def __init__(
-        self,
-        required=True,
-        help_text=None,
-        max_length=None,
-        min_length=None,
-        validators=(),
-        **kwargs,
-    ):
-        self.field = URLOrRelativeURLFormField(
-            required=required,
-            help_text=help_text,
-            max_length=max_length,
-            min_length=min_length,
-            validators=validators,
-        )
-        super().__init__(**kwargs)
-
-    class Meta:
-        icon = "site"
 
 
 class Hyperlink(blocks.StructBlock):
