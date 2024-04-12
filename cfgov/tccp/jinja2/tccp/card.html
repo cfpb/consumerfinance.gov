@@ -402,7 +402,7 @@
                     <dt>Grace period</dt>
                     <dd>
                         {{ card.grace_period ~ ' days until interest begins to accrue on
-                            purchases' if grace_period_offered else 'None, interest
+                            purchases' if card.grace_period_offered else 'None, interest
                             begins accruing on purchases immediately'
                         }}
                     </dd>
