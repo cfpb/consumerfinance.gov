@@ -317,10 +317,10 @@
   dependencies:
     "@cfpb/cfpb-atomic-component" "^0.37.0"
 
-"@cfpb/cfpb-atomic-component@0.43.0", "@cfpb/cfpb-atomic-component@^0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.43.0.tgz#9773a22409ee3dee2f707b07c379537409057517"
-  integrity sha512-32hvZmeLIpE+RqMSQUi+xqsBqHwOhuxtgeeiiZwiAsnY93K3eDY+ytDzLfJ3p0IVBgh9cvwskJp88RiAG9eJKw==
+"@cfpb/cfpb-atomic-component@0.43.1", "@cfpb/cfpb-atomic-component@^0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.43.1.tgz#a9772f7200d9d8f85185ac38165a618887463f9e"
+  integrity sha512-RLfaebgew8GeCXQVVdVA3tnPUEIFUSrfrdN6JGACrMMwCIek0IZ7PiiQ6/UFIlBVsD18odRlEQHKE0OIfa0LNQ==
 
 "@cfpb/cfpb-atomic-component@^0.37.0":
   version "0.37.0"
@@ -345,12 +345,12 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.43.0.tgz#fb4944dceaf82ee659fa5b2bcd4d57182d6ee946"
   integrity sha512-yv1CpFM05zISgjUW++lts4DntMKYA4mkORnb1xBU1b4tzVMG4UXHkK5EbgssRxdI5wB66Em6BfOgl5CSIoGyCg==
 
-"@cfpb/cfpb-expandables@0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.43.0.tgz#e2d4df6581237b61f33f080382579d27c0d5a0bd"
-  integrity sha512-PTi8CFdldaYkQ8fA/1prjU+o8T57t7H+UyaXTVxrkXsGIp2t0QgpNHXcGKZTQLFDJiUQ/YCmSH8RYwI/XdsGDQ==
+"@cfpb/cfpb-expandables@0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.43.1.tgz#36f81c9cb498bcdb61462ff5240e7c4d438fc627"
+  integrity sha512-v7LbLsJsuA/aZutJ7Zj0+VdQmdkv4BuLeuooXzHTjaC4B9zcjRk/OVcKho1G80FV+LvlNmVFeYfyMbTSu2LBLg==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.43.0"
+    "@cfpb/cfpb-atomic-component" "^0.43.1"
     "@cfpb/cfpb-core" "^0.43.0"
     "@cfpb/cfpb-icons" "^0.43.0"
 
@@ -392,18 +392,18 @@
     "@cfpb/cfpb-core" "^0.42.0"
     "@cfpb/cfpb-grid" "^0.42.0"
 
-"@cfpb/cfpb-layout@0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.43.0.tgz#4bfbfe68bef07f6a8f223fc10e3d4b325e199544"
-  integrity sha512-UQgqc+5Rp+btPaZq820+pc/dKR8JtiVegWpEQYeMjw4iMDxgIkEWNMg7wsbeBrYPsKE4rdEl9/XcfJ1pnH8Q8g==
+"@cfpb/cfpb-layout@0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.43.1.tgz#3da2189620e1101a5b669011f4c7e55a5b71cfb8"
+  integrity sha512-NsY91Wnc6bgkphQnIvuXjnJ2xs4l5+YPjCaBTKFdROofZP5dvRgZhZA2ZeiGvMjQNw0TydgyNiAGfcQ0SeLVZA==
   dependencies:
     "@cfpb/cfpb-core" "^0.43.0"
     "@cfpb/cfpb-grid" "^0.43.0"
 
-"@cfpb/cfpb-notifications@0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.43.0.tgz#862b62c4d04c52112a827458ec0542e165c4215a"
-  integrity sha512-qmTzSjaZadxAkfCbCqQr03mIV3ZcbfBmKCteXLVkXONlukqEoueXsenFhY8CIAXr51nmXeuMKJVcs+LaCLNHKw==
+"@cfpb/cfpb-notifications@0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.43.1.tgz#bdfd914bbbb45eef82bc406ec4c0c01f0dd7ddb5"
+  integrity sha512-oQEIrfjeIJQOvtKiGJNmk8gBlub7XJlm566cFBtZ1HprTo99Cpl+ZZft7nhpEYjACYFF0ObfczHmQklbtBCqtw==
   dependencies:
     "@cfpb/cfpb-core" "^0.43.0"
     "@cfpb/cfpb-icons" "^0.43.0"
@@ -417,12 +417,12 @@
     "@cfpb/cfpb-core" "^0.43.0"
     "@cfpb/cfpb-icons" "^0.43.0"
 
-"@cfpb/cfpb-tables@0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.43.0.tgz#3f5b5e9c2f5c5877700cb863d733e9ec6e04cc27"
-  integrity sha512-h7d38IgDBTKi8/CUU7iTUKNB89U0FXyP6E2z1toNqOGf+B2kWomvn/O3xDJluJO98QI1Dz1XWnC0/m2oe81F8w==
+"@cfpb/cfpb-tables@0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.43.1.tgz#246a6b81bd3a1d73c93a30059859f500a919ddb6"
+  integrity sha512-3vewQsT8Ftyg7lv2xvcU7Xf55tXnRjlWiIKJLKkKDRq7wWqGNA1gIIfBIYz68aFegMz2rLJ2LebiTIEsBD0AvQ==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.43.0"
+    "@cfpb/cfpb-atomic-component" "^0.43.1"
     "@cfpb/cfpb-core" "^0.43.0"
 
 "@cfpb/cfpb-typography@0.42.0":
@@ -1918,10 +1918,10 @@ cypress-fail-fast@7.1.0:
   dependencies:
     chalk "4.1.2"
 
-cypress@13.7.2:
-  version "13.7.2"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.7.2.tgz#61e841382abb20e0a9a063086ee0d850af3ef6bc"
-  integrity sha512-FF5hFI5wlRIHY8urLZjJjj/YvfCBrRpglbZCLr/cYcL9MdDe0+5usa8kTIrDHthlEc9lwihbkb5dmwqBDNS2yw==
+cypress@13.7.3:
+  version "13.7.3"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.7.3.tgz#3e7dcd32e007676a6c8e972293c50d6ef329d991"
+  integrity sha512-uoecY6FTCAuIEqLUYkTrxamDBjMHTYak/1O7jtgwboHiTnS1NaMOoR08KcTrbRZFCBvYOiS4tEkQRmsV+xcrag==
   dependencies:
     "@cypress/request" "^3.0.0"
     "@cypress/xvfb" "^1.2.4"
@@ -2421,10 +2421,10 @@ eslint-plugin-import@2.29.1:
     semver "^6.3.1"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@48.2.2:
-  version "48.2.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.2.tgz#eefdc5e3bb3cea957b66dd4817e9de30930b5270"
-  integrity sha512-S0Gk+rpT5w/ephKCncUY7kUsix9uE4B9XI8D/fS1/26d8okE+vZsuG1IvIt4B6sJUdQqsnzi+YXfmh+HJG11CA==
+eslint-plugin-jsdoc@48.2.3:
+  version "48.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.3.tgz#0188d17c7a4aa7185416556589e71a954b343ecd"
+  integrity sha512-r9DMAmFs66VNvNqRLLjHejdnJtILrt3xGi+Qx0op0oRfFGVpOR1Hb3BC++MacseHx93d8SKYPhyrC9BS7Os2QA==
   dependencies:
     "@es-joy/jsdoccomment" "~0.42.0"
     are-docs-informative "^0.0.2"
@@ -5101,10 +5101,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1286.3:
-  version "1.1286.3"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1286.3.tgz#8304cfa80995ad3ab6505221964b5a27588ea3c8"
-  integrity sha512-SQ7SnJN+9y4IjdCtSVR5/jWi7UtpNf3PElJa72SHBpCOWntQQkQxzyKoPBBE8+3FAJHy7RBJlYNJulMywNDKpw==
+snyk@1.1288.0:
+  version "1.1288.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1288.0.tgz#0c8ac0db9ef83fc6a8c52ebb2ee9b073e1f863c2"
+  integrity sha512-IsfjXWVffhuB/UIefM7iqCGVBiLnULv08ax4YBTO/SF/RzIlm8Q92+I2sSwEva8f7kHYNE85Cjn9fg+LlmKUCQ==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"
