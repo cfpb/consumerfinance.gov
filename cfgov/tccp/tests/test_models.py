@@ -128,15 +128,18 @@ class CardSurveyDataQuerySetTests(TestCase):
             {
                 "count": 3,
                 "first_report_date": today,
+                # Poor APRs: 3, 9
                 "purchase_apr_poor_count": 2,
                 "purchase_apr_poor_pct25": 4.5,
-                "purchase_apr_poor_pct50": 6,
+                "purchase_apr_poor_pct75": 7.5,
+                # Good APRs: 2, 6
                 "purchase_apr_good_count": 2,
                 "purchase_apr_good_pct25": 3,
-                "purchase_apr_good_pct50": 4,
+                "purchase_apr_good_pct75": 5,
+                # Great APRs: 0, 1, 3
                 "purchase_apr_great_count": 3,
                 "purchase_apr_great_pct25": 0.5,
-                "purchase_apr_great_pct50": 1,
+                "purchase_apr_great_pct75": 2,
             },
         )
 
