@@ -4,7 +4,7 @@ from itertools import product
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
-from django.db.models import Case, Count, F, Min, Q, Value, When
+from django.db.models import Case, Count, F, Max, Min, Q, Value, When
 from django.db.models.functions import Coalesce
 
 from tailslide import Percentile
@@ -50,9 +50,11 @@ class CardSurveyDataQuerySet(models.QuerySet):
         #   whether to include min/max-only cards in the computation (see below)
         # )
         stats = [
+            ("count", Count, True),
+            ("min", Min, True),
+            ("max", Max, True),
             ("pct25", Percentile25, False),
             ("pct75", Percentile75, False),
-            ("count", Count, True),
         ]
 
         # Note that we only include a card in a certain tier if it both has a
@@ -166,7 +168,12 @@ class CardSurveyDataQuerySet(models.QuerySet):
                                                 & Q(
                                                     purchase_apr_max__isnull=False
                                                 ),
-                                                then=F("purchase_apr_max"),
+                                                then=F(
+                                                    "purchase_apr_"
+                                                    + ["max", "min"][
+                                                        stat_name == "min"
+                                                    ]
+                                                ),
                                             ),
                                         )
                                     ]

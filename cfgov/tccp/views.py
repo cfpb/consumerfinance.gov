@@ -125,23 +125,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             form = filter_backend.used_filterset.form
             situations = form.cleaned_data["situations"]
 
-            # We want to aggregate the counts of cards in each of the {less
-            # than average, average, more than average} purchase APR ratings.
-            # We do this so we can display a results summary like "50 cards
-            # with less than average interest". We could do this with another
-            # database query but the size of the data is small enough that we
-            # can just as easily do it in Python.
-            purchase_apr_rating_labels = ["less", "average", "more"]
-            purchase_apr_rating_counts = {
-                rating: len(
-                    [
-                        card
-                        for card in cards
-                        if card["purchase_apr_for_tier_rating"] == i
-                    ]
-                )
-                for i, rating in enumerate(purchase_apr_rating_labels)
-            }
+            purchase_apr_rating_counts = self.get_purchase_apr_rating_counts(
+                cards
+            )
+            purchase_apr_rating_labels = list(
+                purchase_apr_rating_counts.keys()
+            )
 
             response.data.update(
                 {
@@ -159,6 +148,25 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             )
 
         return response
+
+    @classmethod
+    def get_purchase_apr_rating_counts(cls, cards):
+        # We want to aggregate the counts of cards in each of the {less
+        # than average, average, more than average} purchase APR ratings.
+        # We do this so we can display a results summary like "50 cards
+        # with less than average interest". We could do this with another
+        # database query but the size of the data is small enough that we
+        # can just as easily do it in Python.
+        return {
+            rating: len(
+                [
+                    card
+                    for card in cards
+                    if card["purchase_apr_for_tier_rating"] == i
+                ]
+            )
+            for i, rating in enumerate(["less", "average", "more"])
+        }
 
 
 class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
