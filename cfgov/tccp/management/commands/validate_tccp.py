@@ -1,10 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-
-try:
-    import matplotlib.pyplot as plt
-except ImportError:  # pragma: nocover
-    plt = None
+import matplotlib.pyplot as plt
 
 from tccp.enums import CreditTierColumns
 from tccp.filterset import CardSurveyDataFilterSet
@@ -94,8 +90,6 @@ class Command(BaseCommand):
             if not all(situation_counts.values()):
                 raise CommandError("Situation with no results!")
 
-            self.stdout.write()
-
             # Dump out purchase APR charts, if specified.
             if save_charts:
                 self.save_tier_specific_purchase_apr_chart(
@@ -105,14 +99,11 @@ class Command(BaseCommand):
                     summary_stats,
                 )
 
-                self.stdout.write()
+            self.stdout.write()
 
     def save_tier_specific_purchase_apr_chart(
         self, tier_name, tier_column, cards_for_tier, summary_stats
     ):
-        if not plt:
-            raise CommandError("Charting requires matplotlib!")
-
         plt.figure(figsize=(10, 6))
 
         cards = list(
@@ -170,11 +161,16 @@ class Command(BaseCommand):
         for rating, (percentile, color) in enumerate(
             [(25, "darkgreen"), (75, "gold")]
         ):
-            pct_index = max(
+            pct_cards = [
                 i
                 for i, card in enumerate(cards)
                 if card[f"purchase_apr_{tier_column}_rating"] == rating
-            )
+            ]
+
+            if not pct_cards:
+                continue
+
+            pct_index = max(pct_cards)
 
             pct_value = (
                 100
