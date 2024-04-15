@@ -1,6 +1,5 @@
-from operator import itemgetter
-
 from django.core.management.base import BaseCommand, CommandError
+
 
 try:
     import matplotlib.pyplot as plt
@@ -184,7 +183,10 @@ class Command(BaseCommand):
 
             plt.axvline(
                 pct_index,
-                label=f"{percentile}th Percentile (Index: {pct_index}): {pct_value:.2f}%",
+                label=(
+                    f"{percentile}th Percentile (Index: {pct_index}): "
+                    f"{pct_value:.2f}%"
+                ),
                 color=color,
             )
 
