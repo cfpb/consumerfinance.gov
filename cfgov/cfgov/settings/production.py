@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 from os.path import exists
@@ -10,6 +9,7 @@ from django.utils.text import format_lazy
 import saml2
 
 from cfgov.settings.base import *
+from cfgov.util import environment_json
 
 
 default_loggers = []
@@ -95,13 +95,13 @@ STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
-try:
-    ALLOWED_HOSTS = json.loads(os.getenv("ALLOWED_HOSTS"))
-except (TypeError, ValueError):
-    raise ImproperlyConfigured(
+ALLOWED_HOSTS = environment_json(
+    "ALLOWED_HOSTS",
+    (
         "Environment variable ALLOWED_HOSTS is either not defined or is "
         "not valid JSON. Expected a JSON array of allowed hostnames."
-    )
+    ),
+)
 
 # SAML2 Authentication
 #
@@ -203,12 +203,11 @@ if not SECRET_KEY:
 # This environment variable should be a JSON array if fallbacks are available.
 # This list is empty (no old fallback secret keys) if the environment variable
 # SECRET_KEY_FALLBACKS is not set.
-try:
-    SECRET_KEY_FALLBACKS = json.loads(
-        os.environ.get("SECRET_KEY_FALLBACKS", "[]")
-    )
-except (TypeError, ValueError):
-    raise ImproperlyConfigured(
+SECRET_KEY_FALLBACKS = environment_json(
+    "SECRET_KEY_FALLBACKS",
+    (
         "Environment variable SECRET_KEY_FALLBACKS is not valid JSON. "
         "Expected a JSON array of fallback secret keys."
-    )
+    ),
+    default="[]",
+)

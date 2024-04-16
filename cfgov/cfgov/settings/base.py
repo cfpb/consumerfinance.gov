@@ -1,4 +1,3 @@
-import json
 import os
 from pathlib import Path
 
@@ -8,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-from cfgov.util import admin_emails
+from cfgov.util import admin_emails, environment_json
 
 
 # Repository root is 4 levels above this file
@@ -737,15 +736,14 @@ CACHES = {
 
 # Set our CORS allowed origins based on a JSON list in the
 # CORS_ALLOWED_ORIGINS environment variable.
-try:
-    CORS_ALLOWED_ORIGINS = json.loads(
-        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
-    )
-except (TypeError, ValueError):
-    raise ImproperlyConfigured(
+CORS_ALLOWED_ORIGINS = environment_json(
+    "CORS_ALLOWED_ORIGINS",
+    (
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
         "Expected a JSON array of allowed origins."
-    )
+    ),
+    default="[]",
+)
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
