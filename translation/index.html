@@ -166,7 +166,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="translation">Translation<a class="headerlink" href="#translation" title="Permanent link">¶</a></h1>
-<p>As consumerfinance.gov is a Django project, the <a href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/">Django translation documentation is a good place to start</a>. What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.</p>
+<p>As consumerfinance.gov is a Django project, the <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/">Django translation documentation is a good place to start</a>. What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <p>Django translations use <a href="https://en.wikipedia.org/wiki/Gettext">GNU gettext</a> (see
 <a href="../installation/#install-gnu-gettext-for-django-translation-support">the installation instructions</a>).</p>
@@ -232,9 +232,9 @@ django-admin compilemessages</code></pre>
 <h4 id="do-not-use-f-strings-in-python-calls-to-gettext">Do not use f-strings in Python calls to gettext:<a class="headerlink" href="#do-not-use-f-strings-in-python-calls-to-gettext" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-diff">- _(f"Hello {world_name}")
 + _("Hello %(world_name)s" % {'world_name': world_name})</code></pre>
-<p>Django's documentation <a href="https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation">has some additional information on the limitations of translatable strings and gettext</a>.</p>
-<h4 id="do-mark-variable-strings-for-translation-with-gettext_noop">Do mark variable strings for translation with <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a><a class="headerlink" href="#do-mark-variable-strings-for-translation-with-gettext_noop" title="Permanent link">¶</a></h4>
-<p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
+<p>Django's documentation <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#standard-translation">has some additional information on the limitations of translatable strings and gettext</a>.</p>
+<h4 id="do-mark-variable-strings-for-translation-with-gettext_noop">Do mark variable strings for translation with <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a><a class="headerlink" href="#do-mark-variable-strings-for-translation-with-gettext_noop" title="Permanent link">¶</a></h4>
+<p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
 <pre class="highlight"><code class="language-python">from django.utils.translation import gettext_noop
 
 mystring = gettext_noop("Hello World!")</code></pre>

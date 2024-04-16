@@ -312,10 +312,10 @@ but in the footer on others) on the sidebar tab.</p>
 <div class="admonition note">
 <p class="admonition-title">Don't forget the migrations!</p>
 <p>Adding or changing fields on either Python class will always require a new
-  <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django schema migration</a>;
+  <a href="https://docs.djangoproject.com/en/stable/topics/migrations/">Django schema migration</a>;
   additionally, changing field names or types
   on an existing block will require a
-  <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Django data migration</a>.
+  <a href="https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations">Django data migration</a>.
   See the guide on
   <a href="#creating-migrations-for-streamfield-blocks">creating migrations for StreamField blocks</a>
   for more details.</p>
@@ -343,13 +343,13 @@ class PersonBlock(blocks.StructBlock):
 in the same way that Django page templates are.
 The specified template path must be loadable
 by one of the Django template engines configured in
-<a href="https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-TEMPLATES"><code>settings.TEMPLATES</code></a>.
+<a href="https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-TEMPLATES"><code>settings.TEMPLATES</code></a>.
 (This project supports both the standard
-<a href="https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.django.DjangoTemplates">Django templates backend</a>
+<a href="https://docs.djangoproject.com/en/stable/topics/templates/#django.template.backends.django.DjangoTemplates">Django templates backend</a>
 and the
-<a href="https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.jinja2.Jinja2">Jinja2 backend</a>,
+<a href="https://docs.djangoproject.com/en/stable/topics/templates/#django.template.backends.jinja2.Jinja2">Jinja2 backend</a>,
 but Jinja2 is more commonly used.)
-<a href="https://docs.djangoproject.com/en/1.11/topics/templates/#usage">See the Django templates documentation</a>
+<a href="https://docs.djangoproject.com/en/stable/topics/templates/#usage">See the Django templates documentation</a>
 for more details on the search algorithm used to locate a template.</p>
 <p>Returning to the <code>RelatedContent</code> example,
 this is what its Jinja2 template looks like (comments excluded):</p>

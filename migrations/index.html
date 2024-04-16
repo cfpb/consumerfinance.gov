@@ -188,8 +188,8 @@ additionally, changing field names or types on an existing block will require a
 <p>The following links may be useful for setting context or diving deeper
 into the concepts presented throughout this page:</p>
 <ul>
-<li><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django migrations documentation</a></li>
-<li><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Django data migrations documentation</a></li>
+<li><a href="https://docs.djangoproject.com/en/stable/topics/migrations/">Django migrations documentation</a></li>
+<li><a href="https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations">Django data migrations documentation</a></li>
 <li><a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations">Wagtail Streamfield migrations documentation</a></li>
 </ul>
 <h2 id="do-i-need-to-create-a-migration">Do I need to create a migration?<a class="headerlink" href="#do-i-need-to-create-a-migration" title="Permanent link">¶</a></h2>
@@ -208,11 +208,11 @@ a migration.</p>
 <p>Example model changes that do not require a migration:</p>
 <ul>
 <li>Adding, removing, renaming, or modifying a model class method</li>
-<li>Modifying a model class <a href="https://docs.djangoproject.com/en/1.11/topics/db/managers/">manager</a></li>
+<li>Modifying a model class <a href="https://docs.djangoproject.com/en/stable/topics/db/managers/">manager</a></li>
 </ul>
 <p>The best way to tell if your changes require a migration is to ask Django to
 determine that for you. Django's
-<a href="https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemigrations">makemigrations</a>
+<a href="https://docs.djangoproject.com/en/stable/ref/django-admin/#django-admin-makemigrations">makemigrations</a>
 management command can be used for this purpose:</p>
 <pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations --dry-run</code></pre>
 <p>If you haven't made any changes to your local source code that would necessitate the
@@ -228,7 +228,7 @@ migrations a more descriptive name.</p>
 <h2 id="schema-migrations">Schema migrations<a class="headerlink" href="#schema-migrations" title="Permanent link">¶</a></h2>
 <p>Any time you add or change a field on a Django model, Wagtail page model
 (which are a particular kind of Django model), or StreamField block class, a
-<a href="https://docs.djangoproject.com/en/1.11/topics/migrations">Django schema migration</a>
+<a href="https://docs.djangoproject.com/en/stable/topics/migrations">Django schema migration</a>
 will be required. This includes changes as small as modifying the <code>help_text</code> string.</p>
 <p>To automatically generate a schema migration,
 run the following, editing it to give your migration a name
@@ -257,7 +257,7 @@ Also note that our
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.</p>
 <h2 id="data-migrations">Data migrations<a class="headerlink" href="#data-migrations" title="Permanent link">¶</a></h2>
-<p><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Data migrations</a>
+<p><a href="https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations">Data migrations</a>
 are required any time you:</p>
 <ul>
 <li>rename an existing field</li>
@@ -323,7 +323,7 @@ slowing down testing and the <code>migrate</code> command.</p>
 so that instead of a series of files detailing every change over time
 we have a smaller set that just describes the current state of models in the code.</p>
 <p>Django provides an automated
-<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a>
+<a href="https://docs.djangoproject.com/en/stable/topics/migrations/#squashing-migrations">squashing</a>
 process for migrations, but this is often not optimal when migrations contain manual <code>RunPython</code> blocks are present.
 Before running <code>squashmigrations</code>, search existing migrations for <code>RunPython</code> blocks without <code>elidable=True</code>, and
 correct them to have <code>elidable=True</code>. This will tell <code>squashmigrations</code> to drop that <code>RunPython</code> block.
