@@ -4,16 +4,16 @@ export class Filter {
   }
 
   clear() {
-    cy.get('.a-btn__warning').click({ force: true });
+    cy.get('.a-btn--warning').click({ force: true });
   }
 
   typeAheadLanguage(name) {
-    return cy.get('#o-filterable-list-controls_language').type(name);
+    return cy.get('#o-filterable-list-controls-language').type(name);
   }
 
   clickLanguage(name) {
-    cy.get('#o-filterable-list-controls_language').click();
-    return cy.get(`label.o-multiselect_label[for="language-${name}"]`).click();
+    cy.get('#o-filterable-list-controls-language').click();
+    return cy.get(`label.o-multiselect__label[for="language-${name}"]`).click();
   }
 
   formatOptionFromString(str) {
@@ -47,7 +47,7 @@ export class Filter {
   }
 
   typeAheadTopic(name) {
-    return cy.get('#o-filterable-list-controls_topics').type(name);
+    return cy.get('#o-filterable-list-controls-topics').type(name);
   }
 
   getTopic() {
@@ -60,8 +60,8 @@ export class Filter {
 
   clickTopic(name) {
     const topic = name.split(' ').join('-').toLowerCase();
-    cy.get('#o-filterable-list-controls_topics').click();
-    return cy.get(`label.o-multiselect_label[for="topics-${topic}"]`).click();
+    cy.get('#o-filterable-list-controls-topics').click();
+    return cy.get(`label.o-multiselect__label[for="topics-${topic}"]`).click();
   }
 
   expandable() {
@@ -69,7 +69,7 @@ export class Filter {
   }
 
   expandableCue(name) {
-    return cy.get(`.o-expandable_cue .o-expandable_cue-${name}`);
+    return cy.get(`.o-expandable__cue .o-expandable__cue-${name}`);
   }
 
   expandableTarget() {

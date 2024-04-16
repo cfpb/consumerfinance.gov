@@ -10,7 +10,7 @@
 
 {% block content_main scoped %}
 <div class="tdp-activity-search">
-    <div class="content content__1-3">
+    <div class="content content--1-3">
         <section class="m-search-hero">
             <div class="m-search-hero_text">
                 {% for block in page.header -%}
@@ -26,13 +26,13 @@
                      alt="Illustration of teacher and student activity books">
             </div>
         </section>
-        <div class="block block__padded-top block__flush-top u-mb30">
+        <div class="block block--padded-top block--flush-top u-mb30">
             <h2>Search for activities</h2>
             <form class="u-mt30" method="get" action="." data-js-hook="behavior_submit-search">
-                <div class="o-form__input-w-btn">
+                <div class="o-form--input-w-btn">
                     <div class="o-form--input-w-btn__input-container">
                         <div class="m-btn-inside-input input-contains-label">
-                            <label for="search-text" class="input-contains-label__before input-contains-label__before__search">
+                            <label for="search-text" class="input-contains-label__before input-contains-label__before--search">
                                 {{ svg_icon('search') }}
                                 <span class="u-visually-hidden">The term to search for</span>
                             </label>
@@ -41,7 +41,7 @@
                                     value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}">
                             <label for="search-text"
                                   class="input-contains-label__after
-                                         input-contains-label__after__clear
+                                         input-contains-label__after--clear
                                          u-hidden" data-js-hook="behavior_clear-search">
                                 Clear {{ svg_icon('error') }}
                             </label>

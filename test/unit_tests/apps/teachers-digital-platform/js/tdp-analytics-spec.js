@@ -7,7 +7,7 @@ import {
 
 const EMPTY_SEARCH_HTML = `
   <div id="tdp-search-facets-and-results">
-    <div class="results_count" data-results-count="0">
+    <div class="results__count" data-results-count="0">
     </div>
   </div>
 `;
@@ -25,7 +25,7 @@ const HTML_SNIPPET = `
     <form id="filter-form" action="." method="get" data-js-hook="behavior_change-filter">
       <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
       <input type="hidden" name="page" inputmode="numeric" value="1">
-      <div class="o-expandable o-expandable__background" data-bound="true">
+      <div class="o-expandable o-expandable--background" data-bound="true">
         <button class="o-expandable__header o-expandable__target--expanded" type="button">
           <span class="o-expandable__label">
             Building block
@@ -42,21 +42,21 @@ const HTML_SNIPPET = `
         <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 119px;">
           <div class="o-form__group u-mt15">
             <fieldset class="o-form__fieldset">
-              <ul class="m-list m-list__unstyled">
+              <ul class="m-list m-list--unstyled">
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Executive function" id="building-block--executive-function" name="building_block" value="1" checked="checked">
                     <label class="a-label" for="building-block--executive-function">Executive function</label>
                   </div>
                 </li>
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Financial habits and norms" id="building-block--financial-habits-and-norms" name="building_block" value="2">
                     <label class="a-label" for="building-block--financial-habits-and-norms">Financial habits and norms</label>
                   </div>
                 </li>
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Financial knowledge and decision-making skills" id="building-block--financial-knowledge-and-decision-making-skills" name="building_block" value="3">
                     <label class="a-label" for="building-block--financial-knowledge-and-decision-making-skills">Financial knowledge and decision-making skills</label>
                   </div>
@@ -67,7 +67,7 @@ const HTML_SNIPPET = `
         </div>
       </div>
 
-      <div class="o-expandable o-expandable__background" data-bound="true">
+      <div class="o-expandable o-expandable--background" data-bound="true">
         <button class="o-expandable__header o-expandable__target--expanded" type="button">
           <span class="o-expandable__label">Topic</span>
           <span class="o-expandable__cues">
@@ -80,15 +80,15 @@ const HTML_SNIPPET = `
           </span>
         </button>
         <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 337px;">
-          <ul class="m-list m-list__unstyled u-mt15">
+          <ul class="m-list m-list--unstyled u-mt15">
             <li class="o-expandable-facets" data-bound="true">
-              <div class="m-form-field m-form-field__checkbox">
-                <input type="checkbox" class="a-checkbox o-expandable-facets_checkbox" aria-label="Earn" id="topic--earn" name="topic" value="1">
-                <label class="a-label toggle indeterminate" for="topic--earn">
+              <div class="m-form-field m-form-field--checkbox">
+                <input type="checkbox" class="a-checkbox o-expandable-facets__checkbox" aria-label="Earn" id="topic-earn" name="topic" value="1">
+                <label class="a-label toggle indeterminate" for="topic-earn">
                   <span class="u-visually-hidden">Earn</span>
                   <span class="u-hide-on-med u-hide-on-lg u-hide-on-xl" aria-hidden="true">Earn</span>
                 </label>
-                <button class="a-btn a-btn__link u-hide-on-xs u-hide-on-sm o-expandable-facets_target is-open" type="button">
+                <button class="a-btn a-btn--link u-hide-on-xs u-hide-on-sm o-expandable-facets__target is-open" type="button">
                   <span class="u-visually-hidden">Expand children</span>
                   <span aria-hidden="true">Earn</span>
                   <span class="o-expandable-facets_cue o-expandable-facets_cue-open">
@@ -101,17 +101,17 @@ const HTML_SNIPPET = `
                   </span>
                 </button>
               </div>
-              <ul class="m-list m-list__unstyled o-expandable-facets_content o-expandable-facets_content__transition o-expandable-facets_content__expanded" style="max-height: 52px;">
+              <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content__transition o-expandable-facets__content--expanded" style="max-height: 52px;">
                 <li class="u-hide-on-xs u-hide-on-sm">
-                  <div class="m-form-field m-form-field__checkbox">
-                    <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic--getting-paid" name="topic" value="4" checked="checked">
-                    <label class="a-label" for="topic--getting-paid">Getting paid</label>
+                  <div class="m-form-field m-form-field--checkbox">
+                    <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic-getting-paid" name="topic" value="4" checked="checked">
+                    <label class="a-label" for="topic-getting-paid">Getting paid</label>
                   </div>
                 </li>
                 <li class="u-hide-on-xs u-hide-on-sm">
-                  <div class="m-form-field m-form-field__checkbox">
-                    <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic--making-money" name="topic" value="2">
-                    <label class="a-label" for="topic--making-money">Making money</label>
+                  <div class="m-form-field m-form-field--checkbox">
+                    <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic-making-money" name="topic" value="2">
+                    <label class="a-label" for="topic-making-money">Making money</label>
                   </div>
                 </li>
               </ul>
@@ -123,26 +123,26 @@ const HTML_SNIPPET = `
 
 
       <div id="tdp-search-results">
-        <div class="results_header">
-          <div class="results_count" data-results-count="8">
+        <div class="results__header">
+          <div class="results__count" data-results-count="8">
             <h3>Showing 8 matches out of 26 activities</h3>
           </div>
-          <div class="results_filters">
-            <span class="results_filters-label">Filters applied</span>
-            <div class="results_filters-tags">
+          <div class="results__filters">
+            <span class="results__filters-label">Filters applied</span>
+            <div class="results__filters-tags">
               <div class="a-tag" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
                 Executive function
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
               </div>
-              <div class="a-tag" data-value="#topic--getting-paid" data-js-hook="behavior_clear-filter">
+              <div class="a-tag" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
                 Getting paid
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
               </div>
-              <button class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
+              <button class="a-btn a-btn--link a-btn--warning results__filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
             </div>
           </div>
         </div>
-        <div class="results_list"></div>
+        <div class="results__list"></div>
       </div>
 
     </form>
@@ -179,7 +179,7 @@ const HTML_SNIPPET = `
                 <span class="m-pagination__label"> of 149</span>
             </label>
             <button class="a-btn
-                           a-btn__link
+                           a-btn--link
                            m-pagination__btn-submit"
                     id="m-pagination__btn-submit"
                     type="submit">Go</button>
@@ -216,7 +216,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when a filter is clicked', () => {
-    const filterTag = document.querySelector('.results_filters .a-tag');
+    const filterTag = document.querySelector('.results__filters .a-tag');
     const spy = jest.fn();
 
     bindAnalytics(spy);

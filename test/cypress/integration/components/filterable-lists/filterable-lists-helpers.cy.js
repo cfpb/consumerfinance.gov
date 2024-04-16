@@ -16,7 +16,7 @@ export class FilterableList {
   }
 
   clearFilters() {
-    cy.get('.a-btn__warning').click();
+    cy.get('.a-btn--warning').click();
   }
 
   setFromDate(date) {
@@ -28,7 +28,7 @@ export class FilterableList {
   }
 
   openTopics() {
-    cy.get('#o-filterable-list-controls_topics').click();
+    cy.get('#o-filterable-list-controls-topics').click();
   }
 
   selectTopic(topic) {

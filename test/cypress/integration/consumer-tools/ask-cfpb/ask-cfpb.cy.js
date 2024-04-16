@@ -36,7 +36,7 @@ describe('Ask CFPB', () => {
       search.enter(search.longTerm());
       search
         .input()
-        .should('contain.class', 'a-text-input__error')
+        .should('contain.class', 'a-text-input--error')
         .and('have.attr', 'maxlength');
       search.maxLengthErrorMessage().should('be.visible');
       search.submitButton().should('be.disabled');

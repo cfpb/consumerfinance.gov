@@ -53,8 +53,8 @@ home price, down payment, and more can affect mortgage interest rates.
                                 block--padded-bottom
                                 u-hidden">
                         <div class="m-notification
-                                    m-notification__visible
-                                    m-notification__error">
+                                    m-notification--visible
+                                    m-notification--error">
                             {{ svg_icon('error-round') }}
                             <div class="m-notification__content">
                                 <div class="m-notification__message">
@@ -74,8 +74,8 @@ home price, down payment, and more can affect mortgage interest rates.
                                 block--padded-bottom
                                 u-hidden">
                         <div class="m-notification
-                                    m-notification__visible
-                                    m-notification__error">
+                                    m-notification--visible
+                                    m-notification--error">
                             {{ svg_icon('error-round') }}
                             <div class="m-notification__content">
                                 <div class="m-notification__message">
@@ -136,7 +136,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     </label>
                                     <input
                                         class="a-text-input
-                                               a-text-input__full
+                                               a-text-input--full
                                                input-address"
                                         id="address1-input"
                                         name="address1"
@@ -173,7 +173,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     </label>
                                     <!-- Styled faux overlay component. -->
                                     <button class="a-btn
-                                                   a-btn__secondary
+                                                   a-btn--secondary
                                                    a-btn__flush-right">
                                         Select file
                                     </button>
@@ -219,7 +219,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     </h2>
                 </div>
                 <p class="hide-print content-l__col content-l__col-1-4">
-                    <a class="a-btn a-btn__secondary" href="/rural-or-underserved-tool/">
+                    <a class="a-btn a-btn--secondary" href="/rural-or-underserved-tool/">
                         Start a new search
                     </a>
                 </p>
@@ -228,7 +228,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="ruralCnt no-decoration counter no-decoration" href="#rural">
+                                <a class="rural-cnt no-decoration counter no-decoration" href="#rural">
                                     0
                                 </a>
                             </strong>
@@ -240,7 +240,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="notRuralCnt no-decoration counter no-decoration" href="#notRural">
+                                <a class="not-rural-cnt no-decoration counter no-decoration" href="#notRural">
                                     0
                                 </a>
                             </strong>
@@ -252,7 +252,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="notFoundCnt no-decoration counter no-decoration" href="#notFound">
+                                <a class="not-found-cnt no-decoration counter no-decoration" href="#notFound">
                                     0
                                 </a>
                             </strong>
@@ -264,7 +264,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="duplicateCnt no-decoration counter no-decoration" href="#duplicate">
+                                <a class="duplicate-cnt no-decoration counter no-decoration" href="#duplicate">
                                     0
                                 </a>
                             </strong>
@@ -289,14 +289,14 @@ home price, down payment, and more can affect mortgage interest rates.
                 <div class="content-l__col content-l__col-1">
                     <div id="rural" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="ruralCnt counter">0</span></strong> <span class="ruralCase case">addresses are</span> designated as rural or underserved for
+                            <strong><span class="rural-cnt counter">0</span></strong> <span class="ruralCase case">addresses are</span> designated as rural or underserved for
                             <strong class="chosenYear"></strong>
                         </h2>
                         <p>
                             First-lien covered transactions extended in <span class="chosenYear">2015</span> that are secured by these properties can be counted as rural or underserved in your determination of your first-lien covered transactions in <span class="chosenYear">2015</span> that are secured by properties located in rural or underserved areas.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -316,20 +316,20 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="rural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="ruralMore">View 10 more</button>
-                            <button data-table="rural" class="view-all u-hidden a-btn a-btn__link" id="ruralAll">View all</button>
+                            <button data-table="rural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="ruralMore">View 10 more</button>
+                            <button data-table="rural" class="view-all u-hidden a-btn a-btn--link" id="ruralAll">View all</button>
                         </p>
                     </div>
 
                     <div id="notRural" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                        <strong><span class="notRuralCnt counter">0</span></strong> <span class="notRuralCase case">addresses are</span>
+                        <strong><span class="not-rural-cnt counter">0</span></strong> <span class="notRuralCase case">addresses are</span>
                         <strong>not</strong> designated as rural or underserved for
                         <strong class="chosenYear"></strong>
                         </h2>
                         <p class="col-8">These properties <strong>cannot</strong> be counted as rural or underserved.</p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -349,14 +349,14 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notRural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="notRuralMore">View 10 more</button>
-                            <button data-table="notRural" class="view-all u-hidden a-btn a-btn__link" id="notRuralAll">View all</button>
+                            <button data-table="notRural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notRuralMore">View 10 more</button>
+                            <button data-table="notRural" class="view-all u-hidden a-btn a-btn--link" id="notRuralAll">View all</button>
                         </p>
                     </div>
 
                     <div id="notFound" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="notFoundCnt counter">0</span></strong> <span class="notFoundCase case">addresses are</span> not identified
+                            <strong><span class="not-found-cnt counter">0</span></strong> <span class="notFoundCase case">addresses are</span> not identified
                         </h2>
                         <p class="col-8">
                             The locations of these addresses could not be identified because the information provided was not sufficient, the information could not be matched with an address or the information matches with multiple addresses.
@@ -365,7 +365,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             To run your search again once you have updated the information for these addresses, return to the previous page and start a new search.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -385,14 +385,14 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notFound" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="notFoundMore">View 10 more</button>
-                            <button data-table="notFound" class="view-all u-hidden a-btn a-btn__link" id="notFoundAll">View all</button>
+                            <button data-table="notFound" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notFoundMore">View 10 more</button>
+                            <button data-table="notFound" class="view-all u-hidden a-btn a-btn--link" id="notFoundAll">View all</button>
                         </p>
                     </div>
 
                     <div id="duplicate" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="duplicateCnt counter">0</span></strong> <span class="duplicateCase case">addresses are</span> identified as duplicate
+                            <strong><span class="duplicate-cnt counter">0</span></strong> <span class="duplicateCase case">addresses are</span> identified as duplicate
                         </h2>
                         <p class="col-8">
                             These addresses have been identified as duplicate entries, and only the first instance of each address has been counted in the other three categories of results.
@@ -401,7 +401,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             To update or remove the information for these addresses, start a new search.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -421,8 +421,8 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="duplicate" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="duplicateMore">View 10 more</button>
-                            <button data-table="duplicate" class="view-all u-hidden a-btn a-btn__link" id="duplicateAll">View all</button>
+                            <button data-table="duplicate" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="duplicateMore">View 10 more</button>
+                            <button data-table="duplicate" class="view-all u-hidden a-btn a-btn--link" id="duplicateAll">View all</button>
                         </p>
                     </div>
                 </div>

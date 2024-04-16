@@ -57,7 +57,7 @@
     }
   }
 
-  a.a-link__jump,
+  a.a-link--jump,
   a.m-list__link {
     // These pseudo-classes are needed to guarantee specificity
     &:link,
@@ -112,13 +112,13 @@
   .o-featured-content-module {
     display: flex;
 
-    &_text {
+    &__text {
       flex: 1;
       padding-right: @fcm-visual-width + @grid_gutter-width;
       padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 
-    &_visual {
+    &__visual {
       height: 100%;
       overflow: hidden;
       padding-right: 0;
@@ -130,18 +130,18 @@
       width: @fcm-visual-width;
     }
 
-    &_img {
+    &__img {
       max-width: none;
       height: 100%;
       position: absolute;
     }
 
     // Modifiers
-    &__right &_img {
+    &__right &__img {
       right: 0;
     }
 
-    &__center &_img {
+    &__center &__img {
       left: 50%;
       transform: translateX( -50% );
     }
@@ -157,7 +157,7 @@
   .o-video-player {
     // When printing, shrink video preview images to one column with the :after
     // URL in a second column next to it.
-    &_image-container {
+    &__image-container {
       .grid__column( 6 );
     }
     &:after {

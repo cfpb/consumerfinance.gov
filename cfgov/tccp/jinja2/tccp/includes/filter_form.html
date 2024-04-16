@@ -10,7 +10,7 @@
 
     <label
         class="a-label
-        {%- if field_type == "select" %} a-label__heading{% endif -%}"
+        {%- if field_type == "select" %} a-label--heading{% endif -%}"
         for="{{ field.id_for_label }}">
         {{ field.label }}
     </label>
@@ -78,7 +78,7 @@
             <button type="submit" class="a-btn" title="Apply filters">
                 Apply filters
             </button>
-            <a class="a-btn a-btn__link a-btn__warning" href="{{ request.path }}">
+            <a class="a-btn a-btn--link a-btn--warning" href="{{ request.path }}">
                 Clear filters
             </a>
         </div>

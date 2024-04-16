@@ -2,9 +2,9 @@
 {% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 
-<div class="results_header">
+<div class="results__header">
     {% if current_count and current_count > 0 %}
-    <div class="results_count">
+    <div class="results__count">
         <h2 class="h3">
             Showing {{ current_count }}
             match{% if current_count > 1 %}es{% endif %}
@@ -14,17 +14,17 @@
         </h2>
     </div>
     {% else %}
-    <div class="results_count no-results">
+    <div class="results__count no-results">
         <h2 class="h3">No results match your filters.</h2>
         <p>Try adjusting your filters or searching for different terms.</p>
     </div>
     {% endif %}
     {% if show_filters %}
-    <div class="filters_applied">
-        <span class="filters_applied-label">
+    <div class="filters__applied">
+        <span class="filters__applied-label">
             Filters applied:
         </span>
-        <div class="filters_tags">
+        <div class="filters__tags">
             {% for reg in page.results.all_regs %}
                 {% if reg.selected %}
                     {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
@@ -36,7 +36,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <button class="a-btn a-btn__link a-btn__warning filters_clear"
+        <button class="a-btn a-btn--link a-btn--warning filters__clear"
                 data-js-hook="behavior_clear-all">
             Clear all filters
         </button>
@@ -44,12 +44,12 @@
     {% endif %}
 </div>
 {% if current_count %}
-<div class="results_list">
+<div class="results__list">
     {% for result in results %}
         {{ search_item.render( result ) }}
     {% endfor %}
 </div>
-<div class="results_paginator">
+<div class="results__paginator">
     {{ pagination.render( paginator.num_pages, current_page, '', '' ) }}
 </div>
 {% endif %}

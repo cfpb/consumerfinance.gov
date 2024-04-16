@@ -1,11 +1,11 @@
 // Variable used to set the size of the play button.
-@play-btn-size__px: 60px;
+@play-btn-size-px: 60px;
 
 // Variable used to set the size of the play button's SVG icon.
 @play-btn-icon-size: 30px;
 
 // Magic number: height of standard button.
-@standard-btn-height__px: 36px;
+@standard-btn-height-px: 36px;
 
 .o-video-player {
   overflow: hidden;
@@ -16,12 +16,12 @@
     border: 1px solid var(--gray-40);
   }
 
-  &_iframe-container {
+  &__iframe-container {
     height: 100%;
     margin: 0;
   }
 
-  &_iframe {
+  &__iframe {
     border: 0;
   }
 }
@@ -81,7 +81,7 @@
   align-self: center;
 
   // Using the default CFPB cover card image.
-  &[src^='/static/img/cfpb_video_cover_card_954x200'] {
+  &[src^='/static/img/cfpb__video__cover__card__954x200'] {
     padding: unit(60px / @base-font-size-px, em);
     box-sizing: border-box;
 
@@ -97,7 +97,7 @@
 
   .no-js &,
   &-loaded,
-  &__thumbnail {
+  &--thumbnail {
     opacity: 1;
   }
 }
@@ -118,8 +118,8 @@
 
 .o-video-player__play-btn {
   box-sizing: border-box;
-  width: @play-btn-size__px;
-  height: @play-btn-size__px;
+  width: @play-btn-size-px;
+  height: @play-btn-size-px;
   // !important is needed for when this is applied to a link.
   border: 2px solid var(--gray-5) !important;
   border-radius: 100%;
@@ -145,19 +145,19 @@
     ) !important; // Pacific (#0072ce) at 80% opacity
   }
 
-  &__center {
+  &--center {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
   }
 
-  &__bottom-right {
+  &--bottom-right {
     right: unit(@grid_gutter-width / 2 / @play-btn-icon-size, em);
     bottom: unit(@grid_gutter-width / 2 / @play-btn-icon-size, em);
   }
 
-  &__center,
-  &__bottom-right {
+  &--center,
+  &--bottom-right {
     &:focus-visible,
     &:focus {
       outline: none;
@@ -199,11 +199,11 @@
 }
 
 button.o-video-player__play-btn,
-.o-video-player__loaded a.o-video-player__play-btn {
+.o-video-player--loaded a.o-video-player__play-btn {
   display: none;
 }
 
-.o-video-player__loaded button.o-video-player__play-btn {
+.o-video-player--loaded button.o-video-player__play-btn {
   display: block;
 }
 
@@ -250,7 +250,7 @@ button.o-video-player__play-btn,
   height: 100%;
 }
 
-.o-video-player__video-container__flexible {
+.o-video-player__video-container--flexible {
   .o-video-player__iframe-container {
     width: auto;
     .u-flexible-container-mixin();
@@ -322,7 +322,7 @@ button.o-video-player__play-btn,
     margin: 0;
     padding: 0;
     // Magic number: height of standard button and 1px border around FCM.
-    top: (@standard-btn-height__px + 1px) * -1;
+    top: (@standard-btn-height-px + 1px) * -1;
   }
 
   .o-video-player__close-btn {
@@ -330,7 +330,7 @@ button.o-video-player__play-btn,
     border-bottom-left-radius: 0;
     display: block;
     // Pushes button out of masked window when not playing.
-    margin-top: @standard-btn-height__px;
+    margin-top: @standard-btn-height-px;
   }
 }
 

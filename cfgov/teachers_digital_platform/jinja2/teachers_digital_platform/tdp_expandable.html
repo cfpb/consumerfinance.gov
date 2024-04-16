@@ -37,8 +37,8 @@ TODO: Note that this is a copy of our standard expandable for TDP,
 
 {% macro expandable(value) %}
 <div class="o-expandable
-            {{ 'o-expandable__background' if value.is_midtone else '' }}
-            {{ 'o-expandable__border' if value.is_bordered else '' }}">
+            {{ 'o-expandable--background' if value.is_midtone else '' }}
+            {{ 'o-expandable--border' if value.is_bordered else '' }}">
     <button class="o-expandable__header" type="button">
         <span class="o-expandable__label">
             {{ value.label }}
@@ -54,9 +54,9 @@ TODO: Note that this is a copy of our standard expandable for TDP,
     </button>
 
     <div class="o-expandable__content
-                {{ 'o-expandable__content__onload-open'
+                {{ 'o-expandable__content--onload-open'
                     if value.is_expanded else '' }}
-                {{ 'o-expandable__mobile-collapsed'
+                {{ 'o-expandable--mobile-collapsed'
                     if value.is_collapsed_for_mobile else '' }}">
         {% if caller is defined %}
             {{ caller() }}

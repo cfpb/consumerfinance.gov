@@ -21,10 +21,10 @@ export default `
             </div>
         </div>
         <div class="m-form-field">
-            <label class="a-label a-label__heading" for="email_371b6fce64d1b6">
+            <label class="a-label a-label--heading" for="email_371b6fce64d1b6">
                 Email address
             </label>
-            <input class="a-text-input a-text-input__full"
+            <input class="a-text-input a-text-input--full"
                    id="email_371b6fce64d1b6"
                    name="email"
                    type="email"
@@ -33,7 +33,7 @@ export default `
         </div>
         <div class="o-email-signup__buttons">
             <button class="a-btn">Sign up</button>
-            <a class="a-btn a-btn__link a-btn__secondary"
+            <a class="a-btn a-btn--link a-btn--secondary"
                href="/owning-a-home/privacy-act-statement/"
                target="_blank"
                rel="noopener noreferrer">

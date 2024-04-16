@@ -17,7 +17,7 @@
   ========================================================================== #}
 
 {% macro render(version_status=none, effective_start_date=none, effective_end_date=none) %}
-<div class="o-fig_sidebar">
+<div class="o-fig__sidebar">
     <div class="u-hide-on-tablet">
         {% if version_status %}
             <div class="a-tag u-mb20">
@@ -63,7 +63,7 @@
                 {{ _navlink(item.id + ". " + item.header, item.anchor, true) }}
                 {% if item.children %}
                 <ul class="o-secondary-nav__list
-                           o-secondary-nav__list__children">
+                           o-secondary-nav__list--children">
                     {%- for child in item.children %}
                     <li class="m-list__item">
                         {{ _navlink(child.id + ". " + child.header, child.anchor, false) }}
@@ -80,8 +80,8 @@
 
 {% macro _navlink(text, href, parent=true, current=false) %}
 <a class="o-secondary-nav__link
-          {{ 'o-secondary-nav__link__parent' if parent else '' }}
-          {{ 'o-secondary-nav__link__current' if current else '' }}"
+          {{ 'o-secondary-nav__link--parent' if parent else '' }}
+          {{ 'o-secondary-nav__link--current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

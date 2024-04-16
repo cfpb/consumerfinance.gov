@@ -89,12 +89,12 @@ describe('Dynamic Disclosures', () => {
   // xit('should dynamically display the graduation cohort content if it\'s available', () => {
   //   page.confirmVerification();
   //   page.stepTwo();
-  //   cy.get('.content_grad-cohort').should('be.visible');
+  //   cy.get('.content__grad-cohort').should('be.visible');
   // })
 
   it("should dynamically hide the graduation cohort content if it's not available", () => {
     page.confirmVerification();
     page.stepTwo();
-    cy.get('.content_grad-cohort').should('not.be.visible');
+    cy.get('.content__grad-cohort').should('not.be.visible');
   });
 });

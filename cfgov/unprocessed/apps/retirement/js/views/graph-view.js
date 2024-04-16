@@ -182,9 +182,9 @@ function checkEstimateReady() {
   const s = $('#salary-input').val() !== '';
 
   if (m && d && y && s) {
-    $button.attr('disabled', false).removeClass('a-btn__disabled');
+    $button.attr('disabled', false).removeClass('a-btn--disabled');
   } else {
-    $button.attr('disabled', true).addClass('a-btn__disabled');
+    $button.attr('disabled', true).addClass('a-btn--disabled');
   }
 }
 
@@ -192,7 +192,7 @@ function checkEstimateReady() {
  * Initializes the listener on the slider indicator
  */
 function initIndicator() {
-  const $indicator = $('#graph_slider-input');
+  const $indicator = $('#graph__slider-input');
 
   /* Need both onchange and oninput to work in all browsers
       https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ */
@@ -449,7 +449,7 @@ function setTextByAge() {
  * @param {number} indicatorValue - Value of the range slider.
  */
 function setAgeWithIndicator(indicatorValue) {
-  const $indicator = $('#graph_slider-input');
+  const $indicator = $('#graph__slider-input');
   selectedAge = indicatorValue;
   textlets.selectedAge = gettext(selectedAge);
   // Don't let the user select an age younger than they are now
@@ -468,7 +468,7 @@ function setAgeWithIndicator(indicatorValue) {
  * @param {number} age - The age for the indicator to be set to.
  */
 function moveIndicatorToAge(age) {
-  const indicatorDom = document.querySelector('#graph_slider-input');
+  const indicatorDom = document.querySelector('#graph__slider-input');
   if (age < benefits.currentAge) {
     age = benefits.currentAge;
   }
@@ -522,7 +522,7 @@ function setGraphDimensions() {
 
   $('#claim-canvas, .x-axis-label').width(graphWidth);
   $('#claim-canvas').height(graphHeight);
-  $('#graph_slider-input').width(barWidth * 9 + gutterWidth * 8 + 8);
+  $('#graph__slider-input').width(barWidth * 9 + gutterWidth * 8 + 8);
 }
 
 /**

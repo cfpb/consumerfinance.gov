@@ -110,7 +110,7 @@ const appView = {
    */
   init: () => {
     appView._actionPlanChoices = document.querySelectorAll(
-      '.action-plan_choices .m-form-field input.a-radio',
+      '.action-plan__choices .m-form-field input.a-radio',
     );
     appView._didThisHelpChoices = document.querySelectorAll(
       '[data-impact] .m-form-field input.a-radio',

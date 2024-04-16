@@ -121,11 +121,11 @@ main.college-costs {
   }
 
   &[data-state_gotstarted='true'] {
-    .college-costs_intro-segment {
+    .college-costs__intro-segment {
       display: none;
     }
 
-    .college-costs_tool-section.active {
+    .college-costs__tool-section.active {
       display: block;
     }
   }
@@ -163,7 +163,7 @@ main.college-costs {
   &:not([data-state_costsquestion]) {
     // Don't show the Next button on Costs page until a costs choice is made
     &[data-state_activesection='costs'] {
-      .college-costs_tool-section_buttons {
+      .college-costs__tool-section-buttons {
         display: none;
       }
     }
@@ -218,7 +218,7 @@ main.college-costs {
       display: inline;
     }
 
-    .college-costs_tool-section.college-costs_tool-section__affording
+    .college-costs__tool-section.college-costs__tool-section--affording
       .affording-loans-choices {
       display: none;
     }
@@ -226,13 +226,13 @@ main.college-costs {
     [data-state-based-visibility='expenses-hourly-wages'] {
       display: block;
     }
-    .debt-guideline_salary-info {
+    .debt-guideline__salary-info {
       display: none;
     }
   }
 
   &[data-state_costsquestion] {
-    #costs_inputs-section {
+    #costs__inputs-section {
       display: block;
     }
     [data-state-based-visibility='costs-question-hide'] {
@@ -342,83 +342,83 @@ main.college-costs {
 
   // Don't show the next button on the save & finish page
   &[data-state_activesection='save-and-finish'] {
-    .college-costs_tool-section_buttons {
+    .college-costs__tool-section-buttons {
       display: none;
     }
   }
 
-  .school-results_comparison-section__default-rate .big-percentile {
+  .school-results__comparison-section--default-rate .big-percentile {
     border-color: var(--gray-20);
   }
 
   &[data-state_rategraduationrange='high'] {
-    .school-results_comparison-section__grad-rate .big-percentile {
+    .school-results__comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_rategraduationrange='medium'] {
-    .school-results_comparison-section__grad-rate .big-percentile {
+    .school-results__comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_rategraduationrange='low'] {
-    .school-results_comparison-section__grad-rate .big-percentile {
+    .school-results__comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_raterepay3yrrange='high'] {
-    .school-results_comparison-section__repayment-rate .big-percentile {
+    .school-results__comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_raterepay3yrrange='medium'] {
-    .school-results_comparison-section__repayment-rate .big-percentile {
+    .school-results__comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_raterepay3yrrange='low'] {
-    .school-results_comparison-section__repayment-rate .big-percentile {
+    .school-results__comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_defaultraterange='high'] {
-    .school-results_comparison-section__default-rate .big-percentile {
+    .school-results__comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_defaultraterange='medium'] {
-    .school-results_comparison-section__default-rate .big-percentile {
+    .school-results__comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_defaultraterange='low'] {
-    .school-results_comparison-section__default-rate .big-percentile {
+    .school-results__comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_repay3yrmissing='true'] {
-    .school-results_comparison-section__repayment-rate {
+    .school-results__comparison-section--repayment-rate {
       display: none;
     }
   }
 
   &[data-state_gradratemissing='true'] {
-    .school-results_comparison-section__grad-rate {
+    .school-results__comparison-section--grad-rate {
       display: none;
     }
   }
 
   &[data-state_defaultratemissing='true'] {
-    .school-results_comparison-section__default-rate {
+    .school-results__comparison-section--default-rate {
       display: none;
     }
   }

@@ -47,7 +47,7 @@ const expensesView = {
    * @param {object} values - expenses model values
    */
   updateExpenses: function (values) {
-    const expensesHigherThanSalary = $('.aid-form_higher-expenses');
+    const expensesHigherThanSalary = $('.aid-form__higher-expenses');
     this.$elements.each((elem) => {
       const $ele = $(elem);
       const name = $ele.attr('data-expenses');

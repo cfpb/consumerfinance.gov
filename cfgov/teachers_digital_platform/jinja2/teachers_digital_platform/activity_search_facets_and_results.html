@@ -21,10 +21,10 @@
 {% macro build_form_group(name, items) %}
     <div class="o-form__group">
         <fieldset class="o-form__fieldset">
-            <ul class="m-list m-list__unstyled">
+            <ul class="m-list m-list--unstyled">
                 {% for facet in items %}
                 <li>
-                    <div class="m-form-field m-form-field__checkbox">
+                    <div class="m-form-field m-form-field--checkbox">
                       <input type="checkbox" class="a-checkbox" aria-label="{{ facet.title }}" id="{{name}}--{{ facet.title | trim | slugify }}" name="{{name}}" value="{{ facet.id }}"{% if facet.selected %} checked="checked"{% endif %}>
                       <label class="a-label" for="{{name}}--{{ facet.title | trim | slugify }}">{{ facet.title }}</label>
                     </div>
@@ -53,7 +53,7 @@
 
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
 
-<div class="results_count block--padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
+<div class="results__count block--padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
     {% if page.results.total_results %}
     <h3>
         {% if page.results.total_activities > page.results.total_results %}
@@ -69,7 +69,7 @@
     {% endif %}
 </div>
 
-<aside class="content__sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+<aside class="content__sidebar content--flush-top-on-small content--flush-sides-on-small filters">
     <h3 class="h2">Filter results by</h3>
     <form action="." method="get" data-js-hook="behavior_change-filter">
         <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
@@ -103,9 +103,9 @@
 
 </aside>
 <section id="tdp-search-results" class="content__main results" tabindex="-1">
-    <div class="results_header">
+    <div class="results__header">
         {% if page.results.total_results and page.results.total_results > 0 %}
-            <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
+            <div class="results__count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
                 <h3>
                     {% if page.results.total_activities > page.results.total_results %}
                         Showing {{ page.results.total_results }}
@@ -116,17 +116,17 @@
                 </h3>
             </div>
         {% else %}
-            <div class="results_count results_count__empty u-hide-on-sm u-hide-on-xs" data-results-count="0">
+            <div class="results__count results__count--empty u-hide-on-sm u-hide-on-xs" data-results-count="0">
                 <h3>No results match your search.</h3>
                 <p class="u-mb15">Try a new search with different terms or filters.</p>
             </div>
         {% endif %}
         {% if show_filters %}
-            <div class="results_filters">
-                <span class="results_filters-label">
+            <div class="results__filters">
+                <span class="results__filters-label">
                     Filters applied
                 </span>
-                <div class="results_filters-tags">
+                <div class="results__filters-tags">
                     {% for facet_name, facet_items in facets | items %}
                         {% if facet_name == 'topic'%}
                             {{ build_nested_filter_tags(facet_items, facet_name) }}
@@ -144,7 +144,7 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <button class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10"
+                <button class="a-btn a-btn--link a-btn--warning results__filters-clear u-mb10"
                         data-js-hook="behavior_clear-all">
                     Clear all filters
                 </button>
@@ -152,8 +152,8 @@
         {% endif %}
     </div>
     {% if activities %}
-        <div class="results_list">
-            <ul class="m-list m-list__unstyled">
+        <div class="results__list">
+            <ul class="m-list m-list--unstyled">
                 {% for result in activities %}
                     {% if result %}
                     <li class="u-mb30">{% include "activity_search_result.html" %}</li>
@@ -161,7 +161,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="results_footer">
+        <div class="results__footer">
             {{ pagination.render( paginator.num_pages, current_page, 'tdp-search-facets-and-results', '' ) }}
             <div class="o-well">
                 Activities align with the My Money Five principles introduced by the statutorily created federal Financial Literacy and Education Commission.

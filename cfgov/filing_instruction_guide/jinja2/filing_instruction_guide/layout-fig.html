@@ -13,14 +13,14 @@
 {% if effective_start_date and effective_end_date %}
     {% set date_message = 'You are viewing a previous version of the FIG, effective ' + effective_start_date + ' to ' + effective_end_date + '.' %}
 {% endif %}
-{% set banner_modification = ' o-banner__dark' if version_status == 'Archived' else ''  %}
+{% set banner_modification = ' o-banner--dark' if version_status == 'Archived' else ''  %}
 
 {% block banner_top %}
     {% if version_status %}
         {% import 'v1/includes/molecules/notification.html' as notification with context %}
         <div class="o-banner{{ banner_modification }}">
             <div class="wrapper
-                        wrapper__match-content">
+                        wrapper--match-content">
                 {{ notification.render(
                     'warning',
                     true,
@@ -37,7 +37,7 @@
 {% endblock %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__1-3
+    <main class="u-layout-grid u-layout-grid--1-3
                  {% block content_modifiers -%}{%- endblock %}"
           id="main">
         <div class="u-layout-grid__wrapper">
@@ -46,7 +46,7 @@
             {% include 'v1/layouts/_breadcrumbs.html' %}
         {%- endblock %}
         {% block body_content scoped %}
-        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav__sticky">
+        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav--sticky">
             {% import 'v1/includes/organisms/secondary-nav-fig.html' as secondary_nav with context %}
             {{ secondary_nav.render(version_status, effective_start_date, effective_end_date) }}
         </aside>

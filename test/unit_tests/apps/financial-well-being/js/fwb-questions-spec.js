@@ -32,7 +32,7 @@ const HTML_SNIPPET = `
           I could handle a major unexpected expense
         </h3>
         <div class="answer-prefix">This statement describes me</div>
-        <div class="m-form-field m-form-field__radio">
+        <div class="m-form-field m-form-field--radio">
           <input class="a-radio"
                  type="radio"
                  id="question_1-completely"
@@ -45,7 +45,7 @@ const HTML_SNIPPET = `
             Completely
           </label>
         </div>
-        <div class="m-form-field m-form-field__radio">
+        <div class="m-form-field m-form-field--radio">
           <input class="a-radio"
                  type="radio"
                  id="question_1-very-well"
@@ -69,11 +69,11 @@ const HTML_SNIPPET = `
             Select how you completed the questionnaire.
             This changes the scoring calculation.
         </h3>
-        <ul class="m-list m-list__unstyled content-l">
+        <ul class="m-list m-list--unstyled content-l">
           <li class="content-l__col content-l__col-1-2">
             <div class="m-form-field
-                        m-form-field__radio
-                        m-form-field__lg-target">
+                        m-form-field--radio
+                        m-form-field--lg-target">
               <input class="a-radio"
                      type="radio"
                      name="method"
@@ -92,8 +92,8 @@ const HTML_SNIPPET = `
           </li>
           <li class="content-l__col content-l__col-1-2">
             <div class="m-form-field
-                        m-form-field__radio
-                        m-form-field__lg-target">
+                        m-form-field--radio
+                        m-form-field--lg-target">
               <input class="a-radio"
                      type="radio"
                      name="method"

@@ -5,7 +5,7 @@
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
 {% if situation_features -%}
-<div class="block block__sub">
+<div class="block block--sub">
     <h2>Cards you're looking for have these features:</h2>
 
     <ul>
@@ -36,7 +36,7 @@
 {%- endif %}
 </div>
 
-<div class="block block__sub o-apr-rating-group">
+<div class="block block--sub o-apr-rating-group">
     <p class="o-apr-rating-group--heading">
         Use our ratings to compare your results:
     </p>
@@ -58,7 +58,7 @@
     </dl>
 </div>
 
-<div class="block block__sub u-js-only" id="tccp-ordering-container"></div>
+<div class="block block--sub u-js-only" id="tccp-ordering-container"></div>
 
 {% if stats_all.first_report_date -%}
 {{ data_published(stats_all.first_report_date) }}
@@ -87,7 +87,7 @@
 {%- set ordering_by = form.ordering.data[0] -%}
 
 <div class="o-card-group">
-    <div class="o-card-group_cards">
+    <div class="o-card-group__cards">
         {%- for card in cards %}
         {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">

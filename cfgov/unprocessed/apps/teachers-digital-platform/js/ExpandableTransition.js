@@ -5,10 +5,10 @@ import { EventObserver } from '@cfpb/cfpb-atomic-component';
 // Exported constants.
 const CLASSES = {
   CSS_PROPERTY: 'max-height',
-  BASE_CLASS: 'o-expandable__content__transition',
-  EXPANDED: 'o-expandable__content__expanded',
-  COLLAPSED: 'o-expandable__content__collapsed',
-  OPEN_DEFAULT: 'o-expandable__content__onload-open',
+  BASE_CLASS: 'o-expandable__content--transition',
+  EXPANDED: 'o-expandable__content--expanded',
+  COLLAPSED: 'o-expandable__content--collapsed',
+  OPEN_DEFAULT: 'o-expandable__content--onload-open',
 };
 
 /* eslint-disable max-lines-per-function */

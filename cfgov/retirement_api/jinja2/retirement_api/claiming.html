@@ -24,7 +24,7 @@
 {% set STEP = _("Step") %}
 
 <div id="claiming-social-security" class="claiming-social-security">
-    <div class="intro block block__flush-top">
+    <div class="intro block block--flush-top">
         <div class="content-l">
             <div class="content-l__col content-l__col-2-3">
                 <h1>{{ _("Planning your Social Security claiming age") }}</h1>
@@ -69,14 +69,14 @@
     {% include "_templates/no_js.html" %}
     <div class="step-one
               block
-              block__padded-top
-              block__border-top
+              block--padded-top
+              block--border-top
               u-js-only">
               <div class="content-l">
                 <h2 class="content-l__col content-l__col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
                 <form id="step-one-form" name="step-one-form" action="#" class="content-l__col content-l__col-2-3">
                     <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
-                    <div class="m-notification m-notification__warning">
+                    <div class="m-notification m-notification--warning">
                         {{ svg_icon('warning-round') }}
                         <div class="m-notification__content">
                             <div class="m-notification__message">Error message.</div>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="content-l__col content-l__col-1-3">
                             <label for="salary-input" class="input-labels">
-                                <span class="input-labels_block">{{ _("Highest annual work income") }} <span
+                                <span class="input-labels__block">{{ _("Highest annual work income") }} <span
                                         data-tooltip-target="salary" aria-describedby="salary-tooltip">{{
                                         svg_icon('help-round') }}</span></span>
                                 <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none"
@@ -111,7 +111,7 @@
                             <button
                                 type="submit"
                                 id="get-your-estimates"
-                                class="get-your-estimates a-btn a-btn__disabled"
+                                class="get-your-estimates a-btn a-btn--disabled"
                                 disabled>
                                 {{ _("Get your estimates") }}
                                 <span id="api-data-loading-indicator">
@@ -226,9 +226,9 @@
                 </div>
                 <div id="full-age-benefits-text" class="h3">
                 </div>
-                <div class="graph_slider">
-                    <label for="graph_slider-input" class="u-visually-hidden">Select a claiming age</label>
-                    <input id="graph_slider-input" class="a-range" type="range" min="62" max="70" step="1">
+                <div class="graph__slider">
+                    <label for="graph__slider-input" class="u-visually-hidden">Select a claiming age</label>
+                    <input id="graph__slider-input" class="a-range" type="range" min="62" max="70" step="1">
                 </div>
             </div>
             <p class="y-axis-label">{{ _("Estimated benefits") }}</p>
@@ -243,7 +243,7 @@
         </div>
         <div class="content-l__col content-l__col-1-3 question question-married">
             <img src="{{ static("apps/retirement/img/lifestyle-married.png") }}" class="lifestyle-img" alt="">
-            <div class="lifestyle-question_container">
+            <div class="lifestyle-question__container">
                 <hr>
                 <h3 class="lifestyle-question">{{ _("Are you married?") }}</h3>
                 <div class="m-btn-group">
@@ -313,7 +313,7 @@
         </div>
         <div class="content-l__col content-l__col-1-3 question question-working age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-working.png") }}" class="lifestyle-img" alt="">
-            <div class="lifestyle-question_container">
+            <div class="lifestyle-question__container">
                 <hr>
                 <h3 class="lifestyle-question">{{ _("Do you plan to continue working in your 60s?") }}</h3>
                 <div class="m-btn-group">
@@ -495,7 +495,7 @@
     <div class="content-l step-two">
         <div class="content-l__col content-l__col-1-3 question question-expenses age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-expenses.png") }}" class="lifestyle-img" alt="">
-            <div class="lifestyle-question_container">
+            <div class="lifestyle-question__container">
                 <hr>
                 <h3 class="lifestyle-question">{{ _("Will your expenses decrease after you retire?") }}</h3>
                 <div class="m-btn-group">
@@ -622,7 +622,7 @@
         </div>
         <div class="content-l__col content-l__col-1-3 question question-income age-split">
             <img src="{{ static("apps/retirement/img/lifestyle-income.png") }}" class="lifestyle-img" alt="">
-            <div class="lifestyle-question_container">
+            <div class="lifestyle-question__container">
                 <hr>
                 <h3 class="lifestyle-question">{{ _("Do you expect to have additional sources of retirement income beyond Social Security?") }}</h3>
                 <div class="m-btn-group">
@@ -819,7 +819,7 @@
         </div>
         <div class="content-l__col content-l__col-1-3 question question-longevity">
             <img src="{{ static("apps/retirement/img/lifestyle-longevity.png") }}" class="lifestyle-img" alt="">
-            <div class="lifestyle-question_container">
+            <div class="lifestyle-question__container">
                 <hr>
                 <h3 class="lifestyle-question">{{ _("Do you expect to live a long life?") }}</h3>
                 <div class="m-btn-group">

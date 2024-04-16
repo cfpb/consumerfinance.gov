@@ -3,8 +3,8 @@
     {% for point in page.data_points.order_by('number') %}
         {%- set data_fields = point.data_fields_json.order_by("pk") -%}
 
-        <div class="o-fig_section__sub" data-search-section data-scrollspy="{{ point.anchor }}">
-            <h3 class="report-header o-fig_heading">
+        <div class="o-fig__section--sub" data-search-section data-scrollspy="{{ point.anchor }}">
+            <h3 class="report-header o-fig__heading">
                 <a id="{{ point.anchor }}"
                    href="#{{ point.anchor }}">
                     {{parent_section_id}}.{{point.number}} {{ point.title }}
@@ -41,8 +41,8 @@
 {% endmacro %}
 
 {% macro individual_data_field(field, nav_section) %}
-    <div class="o-fig_section__sub-sub" data-search-section data-scrollspy="{{ nav_section }}">
-        <h4 class="report-header o-fig_heading">
+    <div class="o-fig__section--sub-sub" data-search-section data-scrollspy="{{ nav_section }}">
+        <h4 class="report-header o-fig__heading">
             <a id="{{field.info.get('short_name', '')}}"
                     href="#{{field.info.get('short_name', '')}}">
                         Field {{ field.info.get('field_number', '') }}: {{ field.info.get('title', '') }}
@@ -76,7 +76,7 @@
     {% if valid_values %}
         {%- set header_row = valid_values[0] -%}
         {%- set body_rows = valid_values[1:] -%}
-        <table class="o-table o-table__stack-on-small">
+        <table class="o-table o-table--stack-on-small">
             <thead>
                 <tr>
                     {% for column in header_row %}

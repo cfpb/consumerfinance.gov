@@ -86,7 +86,7 @@
         {% endif -%}
 
         <img class="m-info-unit__image
-                    {{- ' m-info-unit__image__square' if img.is_square }}
+                    {{- ' m-info-unit__image--square' if img.is_square }}
                     {{- ' u-image__border-circle' if border_radius_image == 'circle' }}
                     {{- ' u-image__border-rounded' if border_radius_image == 'rounded' }}"
             src="{{ img.url }}"

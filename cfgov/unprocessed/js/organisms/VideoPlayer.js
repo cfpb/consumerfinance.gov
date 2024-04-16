@@ -26,12 +26,12 @@ function VideoPlayer(element) {
   const _videoId = _dom.getAttribute('data-id');
   const _showCustomThumbnail = _dom.hasAttribute('data-custom-thumbnail');
 
-  const _iframeDom = _dom.querySelector(`.${BASE_CLASS}_iframe`);
-  const _imageDom = _dom.querySelector(`.${BASE_CLASS}_image`);
-  const _closeBtnDom = _dom.querySelector(`button.${BASE_CLASS}_close-btn`);
-  const _playBtnDom = _dom.querySelector(`button.${BASE_CLASS}_play-btn`);
-  const _playLinkDom = _dom.querySelector(`a.${BASE_CLASS}_play-btn`);
-  const _durationDom = _dom.querySelector(`.${BASE_CLASS}_duration`);
+  const _iframeDom = _dom.querySelector(`.${BASE_CLASS}__iframe`);
+  const _imageDom = _dom.querySelector(`.${BASE_CLASS}__image`);
+  const _closeBtnDom = _dom.querySelector(`button.${BASE_CLASS}__close-btn`);
+  const _playBtnDom = _dom.querySelector(`button.${BASE_CLASS}__play-btn`);
+  const _playLinkDom = _dom.querySelector(`a.${BASE_CLASS}__play-btn`);
+  const _durationDom = _dom.querySelector(`.${BASE_CLASS}__duration`);
 
   const _defaultThumbnailURL = _imageDom.src;
 
@@ -96,7 +96,7 @@ function VideoPlayer(element) {
     _closeBtnDom.addEventListener('click', _closeBtnClickedHandler.bind(this));
 
     // The video has loaded.
-    _dom.classList.add(`${BASE_CLASS}__loaded`);
+    _dom.classList.add(`${BASE_CLASS}--loaded`);
   }
 
   /**
@@ -166,7 +166,7 @@ function VideoPlayer(element) {
    * Show the image by adding a class that changes its opacity.
    */
   function _imageShow() {
-    _imageDom.classList.add(`${BASE_CLASS}_image-loaded`);
+    _imageDom.classList.add(`${BASE_CLASS}__image-loaded`);
   }
 
   /**

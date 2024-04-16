@@ -11,21 +11,21 @@ const HTML_SNIPPET = `
     <button id="submit">Submit</button>
   </form>
   <div>
-    <div class="m-form-field m-form-field__checkbox reg-checkbox">
+    <div class="m-form-field m-form-field--checkbox reg-checkbox">
       <input class="a-checkbox" type="checkbox" value="1002" id="regulation-1002" name="regs" checked>
       <label class="a-label" for="regulation-1002">
           1002 (Regulation B)
       </label>
     </div>
   </div>
-  <div class="filters_tags">
+  <div class="filters__tags">
     <div class="a-tag" data-value="1002" data-js-hook="behavior_clear-filter">
     1002 (Regulation B)
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg">
       </svg>
     </div>
   </div>
-  <button class="a-btn a-btn__link a-btn__warning filters_clear"
+  <button class="a-btn a-btn--link a-btn--warning filters_clear"
           data-js-hook="behavior_clear-all">
       Clear all filters
   </button>

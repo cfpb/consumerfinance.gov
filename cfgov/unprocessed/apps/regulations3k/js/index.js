@@ -1,7 +1,7 @@
 import { handleContentClick, handleNavClick } from './analytics.js';
 import { Expandable } from '@cfpb/cfpb-expandables';
 
-const navHeader = document.querySelector('.o-regs3k-navigation_header');
+const navHeader = document.querySelector('.o-regs3k-navigation__header');
 const navItems = document.querySelector('.o-regs3k-sections');
 const regContent = document.querySelector('.regulations3k #content__main');
 
@@ -9,8 +9,8 @@ const regContent = document.querySelector('.regulations3k #content__main');
  * toggleSecondaryNav - Show/hide the secondary nav on smaller screens
  */
 const toggleSecondaryNav = () => {
-  navHeader.classList.toggle('o-expandable_target__collapsed');
-  navHeader.classList.toggle('o-expandable_target__expanded');
+  navHeader.classList.toggle('o-expandable__target--collapsed');
+  navHeader.classList.toggle('o-expandable__target--expanded');
   navItems.classList.toggle('u-hide-on-stacked');
 };
 
@@ -41,7 +41,7 @@ const init = () => {
       });
   }
   if (navHeader) {
-    navHeader.classList.add('o-expandable_target__collapsed');
+    navHeader.classList.add('o-expandable__target--collapsed');
     navItems.classList.add('u-hide-on-stacked');
     bindSecondaryNav();
     bindAnalytics();

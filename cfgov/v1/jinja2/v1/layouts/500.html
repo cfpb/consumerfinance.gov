@@ -22,7 +22,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <header>
             <h1>500: Server error</h1>
             <p class="lead-paragraph">
@@ -32,13 +32,13 @@
             </p>
         </header>
 
-        <aside class="block block__sub">
+        <aside class="block block--sub">
             <ul class="m-list m-list--horizontal m-list__divider">
                 <li class="m-list__item">
-                    <a href="/" class="a-btn a-btn__full-on-xs">Visit homepage</a>
+                    <a href="/" class="a-btn a-btn--full-on-xs">Visit homepage</a>
                 </li>
                 <li class="m-list__item">
-                    <a class="a-btn a-btn__full-on-xs" href="/about-us/contact-us/">
+                    <a class="a-btn a-btn--full-on-xs" href="/about-us/contact-us/">
                         Contact us
                     </a>
                 </li>
@@ -46,7 +46,7 @@
         </aside>
 
         <p>Are you sure this is the right web address?
-            <a class="a-link a-link__jump"
+            <a class="a-link a-link--jump"
                href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}} >
                 <span class="a-link__text">Let us know</span>
             </a>

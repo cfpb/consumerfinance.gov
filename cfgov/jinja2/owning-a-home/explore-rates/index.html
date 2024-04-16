@@ -70,18 +70,18 @@ home price, down payment, and more can affect mortgage interest rates.
                 <section id="credit-score-container">
                     <div class="a-range recalc" id="credit-score-range">
                         <label for="credit-score">Credit score range</label>
-                        <div class="a-range_labels">
-                            <span class="a-range_labels-min">600</span>
-                            <span class="a-range_labels-max">850</span>
+                        <div class="a-range__labels">
+                            <span class="a-range__labels-min">600</span>
+                            <span class="a-range__labels-max">850</span>
                         </div>
                         <input id="credit-score"
-                                class="a-range_input"
+                                class="a-range__input"
                                 type="range"
                                 min="600"
                                 max="840"
                                 step="20"
                                 value="700">
-                        <div id="slider-range" class="a-range_text"></div>
+                        <div id="slider-range" class="a-range__text"></div>
 
                         {#
                             Credit alert for when low credit score is chosen.
@@ -92,7 +92,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     u-hidden"
                                 id="credit-score-alert"
                                 role="alert">
-                            <div class="a-form-alert a-form-alert__error">
+                            <div class="a-form-alert a-form-alert--error">
                                 {{ svg_icon('warning-round') }}
                                 <span class="a-form-alert__text">
                                     Many lenders do not accept
@@ -225,7 +225,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                 u-hidden"
                             id="dp-alert"
                             role="alert">
-                        <div class="a-form-alert a-form-alert__warning">
+                        <div class="a-form-alert a-form-alert--warning">
                             {{ svg_icon('warning-round') }}
                             <span class="a-form-alert__text">
                                 Your down payment cannot be more than your
@@ -236,7 +236,7 @@ home price, down payment, and more can affect mortgage interest rates.
                 </section>
                 <section class="form-sub warning u-hidden"
                             id="county-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
                         <span class="a-form-alert__text"></span>
                     </div>
@@ -291,7 +291,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </section>
                 <section class="form-sub warning u-hidden" id="arm-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
                         <span class="a-form-alert__text">
                             While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.
@@ -299,7 +299,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </section>
                 <section class="form-sub warning u-hidden" id="hb-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
                         <span class="a-form-alert__text"></span>
                     </div>
@@ -328,11 +328,11 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
                 <section id="chart-section" class="chart">
                     <div class="chart-menu">
-                        <button class="chart-menu_btn">
+                        <button class="chart-menu__btn">
                             Download chart
                             {{ svg_icon('download') }}
                         </button>
-                        <ul class="chart-menu_options">
+                        <ul class="chart-menu__options">
                             <li>PNG</li>
                             <li>SVG</li>
                             <li>JPEG</li>
@@ -356,7 +356,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div id="chart-result-alert"
                             class="result-alert
                                 m-notification
-                                m-notification__error"
+                                m-notification--error"
                             role="alert">
                         {{ svg_icon('error-round') }}
                         <div class="m-notification__content">
@@ -375,7 +375,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div id="chart-fail-alert"
                             class="result-alert
                                 m-notification
-                                m-notification__error"
+                                m-notification--error"
                             role="alert">
                         {{ svg_icon('error-round') }}
                         <div class="m-notification__content">
@@ -505,7 +505,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-credit-score"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/what-is-a-credit-score-en-315/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -520,7 +520,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-good-credit"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -535,7 +535,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-down-payment-affect"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/what-kind-of-down-payment-do-i-need-how-does-the-amount-of-down-payment-i-make-affect-the-terms-of-my-mortgage-loan-en-120/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -556,8 +556,8 @@ home price, down payment, and more can affect mortgage interest rates.
                 {# TODO: Look into using the default notification macro #}
                 <div class="m-notification__borderless
                             m-notification
-                            m-notification__warning
-                            m-notification__visible"
+                            m-notification--warning
+                            m-notification--visible"
                         role="alert">
                     {{ svg_icon('warning-round') }}
                     <div class="m-notification__content">

@@ -10,10 +10,10 @@ const HTML_SNIPPET = `
      <div class="m-btn-inside-input
                  input-contains-label">
          <label for="query" class="input-contains-label__before
-                                   input-contains-label__before__search">
+                                   input-contains-label__before--search">
          </label>
          <label for="query" class="input-contains-label__after
-                                   input-contains-label__after__clear">
+                                   input-contains-label__after--clear">
          </label>
          <input type="text"
                 title="Search the CFPB"
@@ -29,7 +29,7 @@ describe('ClearableInput', () => {
     document.body.innerHTML = HTML_SNIPPET;
     baseDom = document.querySelector('.o-form--input-w-btn__input-container');
     inputDom = baseDom.querySelector('input');
-    clearBtnDom = baseDom.querySelector('.input-contains-label__after__clear');
+    clearBtnDom = baseDom.querySelector('.input-contains-label__after--clear');
   });
 
   describe('init function', () => {

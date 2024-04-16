@@ -1,8 +1,8 @@
 // TODO: Move the theme variables to /enhancements/ for CF.
 
-@margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
-@margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-@mobile_trigger_ht__px: 54px;
+@margin-em: unit(@grid_gutter-width / @base-font-size-px, em);
+@margin-half-em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+@mobile-trigger-ht-px: 54px;
 
 .m-global-search {
   &__trigger {
@@ -64,13 +64,13 @@
   .respond-to-max(@bp-sm-max, {
 
     &__fallback {
-      margin: @margin_half__em;
+      margin: @margin-half-em;
     }
 
     &__trigger {
       padding-top: 5px;
-      height: @mobile_trigger_ht__px;
-      min-width: @mobile_trigger_ht__px;
+      height: @mobile-trigger-ht-px;
+      min-width: @mobile-trigger-ht-px;
 
       &[aria-expanded="true"] {
         background: var(--gray-10);
@@ -105,7 +105,7 @@
 
         box-sizing: border-box;
         width: 100%;
-        padding: @margin__em @margin_half__em @margin_half__em;
+        padding: @margin-em @margin-half-em @margin-half-em;
 
         left: 0;
         z-index: 10;
@@ -136,7 +136,7 @@
     padding-top: 6px;
     padding-bottom: 5px;
     // Match CTA offset from divider.
-    padding-right: @margin_half__em;
+    padding-right: @margin-half-em;
     position: relative;
 
     overflow: hidden;
@@ -154,7 +154,7 @@
     }
 
     &__content {
-      right: @margin_half__em;
+      right: @margin-half-em;
       width: auto;
       // Add margin so that the focus rectangle is not cropped by
       // the hidden overflow of the search container element.

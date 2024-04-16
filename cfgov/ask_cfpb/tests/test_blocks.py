@@ -10,7 +10,7 @@ class AskBlocksTestCase(TestCase):
         self.tip_content = {"content": "Tip content"}
         self.tip_data = {"type": "tip", "value": self.tip_content}
         self.expected_tip_html = (
-            '<aside class="m-inset m-inset__bordered">'
+            '<aside class="m-inset m-inset--bordered">'
             "<h4>Tip</h4>"
             "Tip content"
             "</aside>"

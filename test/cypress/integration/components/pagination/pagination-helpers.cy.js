@@ -1,6 +1,6 @@
 export class Pagination {
   clickButton(name) {
-    return cy.get(`.m-pagination_btn-${name}`).click({ force: true });
+    return cy.get(`.m-pagination__btn-${name}`).click({ force: true });
   }
 
   enter(name) {

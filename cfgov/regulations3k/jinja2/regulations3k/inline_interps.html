@@ -2,8 +2,8 @@
 {%- set interp_location = 'Appendix A' if regulation and regulation.part_number == '1004' else 'Supplement I' -%}
 
 <div class="o-expandable
-            o-expandable__background
-            o-expandable__border
+            o-expandable--background
+            o-expandable--border
             inline-interpretation">
 
     <button class="o-expandable__header"{% if section_title %} data-section="{{ section_title }}"{% endif %}>

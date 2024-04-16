@@ -49,22 +49,22 @@
     margin-top: unit(5px / @base-font-size-px, em);
   }
 
-  &_tool-section {
+  &__tool-section {
     display: none;
 
     max-width: unit(570px / @base-font-size-px, rem);
 
     .equation-row {
       .financial-item {
-        &_label div {
+        &__label div {
           .h3();
         }
-        &_value span {
+        &__value span {
           .h3();
         }
       }
 
-      &__bottom-line {
+      &--bottom-line {
         border-bottom: 2px solid black;
         padding-bottom: 30px;
       }
@@ -81,14 +81,14 @@
     }
 
     .o-costs-group {
-      &_header,
-      &_content {
+      &__header,
+      &__content {
         padding-left: 0;
         padding-right: 0;
       }
     }
 
-    &__school-search {
+    &--school-search {
       .m-notification {
         margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
         margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
@@ -99,22 +99,22 @@
       }
     }
 
-    &__costs {
+    &--costs {
       .a-btn.active {
         background-color: var(--white);
         color: var(--pacific);
         border-color: var(--pacific);
       }
 
-      .costs_button-section {
+      .costs__button-section {
         .m-form-field {
           margin-bottom: unit(15px / @base-font-size-px, em);
         }
       }
     }
 
-    &__debt-guideline {
-      .h3 .financial-item__subtotal {
+    &--debt-guideline {
+      .h3 .financial-item--subtotal {
         margin-top: unit(15px / @base-font-size-px, em);
       }
 
@@ -123,8 +123,8 @@
       }
     }
 
-    &__affording {
-      .total-hours .financial-item_value span {
+    &--affording {
+      .total-hours .financial-item__value span {
         font-weight: 600;
       }
 
@@ -132,13 +132,13 @@
         margin-top: unit(30px / @base-font-size-px, em);
       }
 
-      .o-costs-group_header {
+      .o-costs-group__header {
         border-top: 1px solid var(--black);
         border-bottom: 1px solid var(--black);
       }
     }
 
-    &__summary {
+    &--summary {
       .financial-item {
         margin-top: 0;
       }
@@ -160,7 +160,7 @@
       }
     }
 
-    .action-plan_choices,
+    .action-plan__choices,
     .affording-loans-choices {
       // equal height radio inputs
       display: flex;
@@ -178,14 +178,14 @@
           height: 100%;
         }
       }
+    }
 
-      &_about {
-        margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-      }
+    .affording-loans-choices__about {
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
   }
 
-  .school-results_comparison-section {
+  .school-results__comparison-section {
     border: 2px solid var(--gray-20);
     padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 
@@ -193,7 +193,7 @@
       margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
-    .school-results_rank-display {
+    .school-results__rank-display {
       display: flex;
       align-items: center;
       margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
@@ -216,7 +216,7 @@
       flex-shrink: 0;
     }
 
-    .m-form-field__radio {
+    .m-form-field--radio {
       display: inline-block;
     }
   }
@@ -226,7 +226,7 @@
     list-style: none;
   }
 
-  .o-table__financial {
+  .o-table--financial {
     .indented-row td:first-child {
       padding-left: unit(@grid_gutter-width * 2/3 / @base-font-size-px, em);
     }

@@ -54,7 +54,7 @@
             {{ _('You’ve taken a good step in understanding your financial picture.') }}
         </p>
     {% elif (current_language == 'en') %}
-        <div class="block block__sub">
+        <div class="block block--sub">
             {{ notification.render(
                 'warning',
                 true,
@@ -64,7 +64,7 @@
             ) }}
         </div>
     {% else %}
-        <div class="block block__sub">
+        <div class="block block--sub">
             {{ notification.render(
                 'warning',
                 true,
@@ -90,7 +90,7 @@
         <li class="m-list__item u-js-only">
             <a class="m-list__link
                       a-link
-                      a-link__icon"
+                      a-link--icon"
                href="javascript:window.print()">
                 {{ svg_icon('print') }}
                 <span class="a-link__text">{{ _('Print') }}</span>
@@ -99,7 +99,7 @@
         <li class="m-list__item">
             <a class="m-list__link
                       a-link
-                      a-link__icon"
+                      a-link--icon"
                href="../../save-as-pdf-instructions/"
                target="_blank"
                rel="noopener noreferrer">
@@ -151,7 +151,7 @@
         </p>
     {% if user_score %}
         <div class="o-expandable
-                    o-expandable__border">
+                    o-expandable--border">
             <button class="o-expandable__header">
                 <span class="o-expandable__label">
                     {{ _('Review your answers') }}
@@ -201,14 +201,14 @@
                         <b>{{ _('Track where your money goes.') }}</b>
                         {{ _('Fill out the') }}
                         <a class="a-link
-                                  a-link__icon"
+                                  a-link--icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_bill-calendar.pdf">
                             <span class="a-link__text">{{ _('bill calendar') }}</span>
                             {{ svg_icon('download') }}
                         </a>
                         {{ _('and') }}
                         <a class="a-link
-                                  a-link__icon"
+                                  a-link--icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf">
                             <span class="a-link__text">{{ _('spending tracker') }}</span>
                             {{ svg_icon('download') }}
@@ -220,7 +220,7 @@
                         <b>Get a grip on debt.</b>
                         Stay on top of what you owe with our
                         <a class="a-link
-                                  a-link__icon"
+                                  a-link--icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_debt-worksheet.pdf">
                             <span class="a-link__text">debt log</span>
                             {{ svg_icon('download') }}
@@ -259,14 +259,14 @@
                         <b>Create an action plan to meet your goals.</b>
                         Use our
                         <a class="a-link
-                                  a-link__icon"
+                                  a-link--icon"
                            href="https://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
                             <span class="a-link__text">worksheet</span>
                             {{ svg_icon('download') }}
                         </a>
                         or
                         <a class="a-link
-                                  a-link__icon"
+                                  a-link--icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_monthly-budget.pdf">
                             <span class="a-link__text">budgeting tool</span>
                             {{ svg_icon('download') }}
@@ -473,7 +473,7 @@
 
 {% block content_sidebar %}
     {% if (current_language == 'en') %}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <header class="m-slug-header">
             <h2 class="m-slug-header__heading">Looking for more help?</h2>
         </header>
@@ -510,7 +510,7 @@
         </ul>
     </div>
     {% endif %}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <header class="m-slug-header">
             <h2 class="m-slug-header__heading">{{ _('About this questionnaire') }}</h2>
         </header>
@@ -518,7 +518,7 @@
             {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
             {{ _('that is, how well your current money situation is providing you with financial security and freedom of choice, today and for the future.') }}
         </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
+        <a class="a-link a-link--jump" href="{{ url('fwb_about_' + current_language) }}">
             <span class="a-link__text">{{ _('See more background') }}</span>
         </a>
     </div>

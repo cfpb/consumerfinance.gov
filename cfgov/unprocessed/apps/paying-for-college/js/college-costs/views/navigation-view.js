@@ -52,7 +52,7 @@ const navigationView = {
     );
     const activeElem = navItem.closest('li');
     const activeParent = activeElem.closest(
-      '.o-secondary-nav__list-item__parent',
+      '.o-secondary-nav__list-item--parent',
     );
 
     this._navListItems.forEach((elem) => {
@@ -66,7 +66,7 @@ const navigationView = {
     activeParent.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
     activeParent
-      .querySelectorAll('.o-secondary-nav__list__children li')
+      .querySelectorAll('.o-secondary-nav__list--children li')
       .forEach((elem) => {
         elem.setAttribute('data-nav-is-active', 'True');
       });
@@ -80,7 +80,7 @@ const navigationView = {
    */
   _showAndHideSections: function (activeName) {
     const query =
-      '.college-costs_tool-section[data-tool-section="' + activeName + '"]';
+      '.college-costs__tool-section[data-tool-section="' + activeName + '"]';
     const activeSection = document.querySelector(query);
 
     this._sections.forEach((elem) => {
@@ -131,15 +131,15 @@ const navigationView = {
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
     this._nextButton = body.querySelector(
-      '.college-costs_tool-section_buttons .btn__next-step',
+      '.college-costs__tool-section-buttons .btn__next-step',
     );
     this._contentSidebar = body.querySelector('.content__sidebar');
-    this._introduction = body.querySelector('.college-costs_intro-segment');
+    this._introduction = body.querySelector('.college-costs__intro-segment');
     this._getStartedBtn = body.querySelector(
-      '.college-costs_intro-segment .btn__get-started',
+      '.college-costs__intro-segment .btn__get-started',
     );
-    this._appSegment = body.querySelector('.college-costs_app-segment');
-    this._sections = body.querySelectorAll('.college-costs_tool-section');
+    this._appSegment = body.querySelector('.college-costs__app-segment');
+    this._sections = body.querySelectorAll('.college-costs__tool-section');
     this._stateDomElem = document.querySelector('main.college-costs');
     this._affordingChoices = document.querySelectorAll(
       '.affording-loans-choices .m-form-field',
@@ -235,7 +235,7 @@ function _handleNextButtonClick() {
     );
     updateState.nextSection();
     window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
-    document.querySelector('.college-costs_tool-section.active h2').focus();
+    document.querySelector('.college-costs__tool-section.active h2').focus();
   }
 }
 

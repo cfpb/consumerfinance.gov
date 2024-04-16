@@ -82,7 +82,7 @@
 
 {% macro _list(list, is_related_topics=false) %}
 <ul class="m-list
-           m-list__unstyled
+           m-list--unstyled
            m-list--links
            {{ 'm-related-metadata__topics' if is_related_topics else '' }} ">
     {% for link in list.links %}

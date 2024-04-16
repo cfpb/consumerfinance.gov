@@ -41,11 +41,11 @@
     {% include "v1/includes/molecules/hero.html" with context %}
 {% endwith %}
 
-{% endblock content__intro %}
+{% endblock content_intro %}
 
 {% block content_main %}
 
-    <div class="block block__sub block__flush-top">
+    <div class="block block--sub block--flush-top">
         <h2>
             How is this comparison tool different than others you may have used?
         </h2>
@@ -69,13 +69,13 @@
         </p>
     </div>
 
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <form action="." method="get">
 
             <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
-                        class="a-label a-label__heading"
+                        class="a-label a-label--heading"
                         for="{{ form.credit_tier.id_for_label}}"
                     >
                         {{ form.credit_tier.label }}
@@ -94,7 +94,7 @@
             <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
-                        class="a-label a-label__heading"
+                        class="a-label a-label--heading"
                         for="{{ form.location.id_for_label}}"
                     >
                         {{ form.location.label }} <small class="a-label_helper">(required)</small>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="m-btn-group">
-                <button class="a-btn a-btn__full-on-xs" title="See cards for your situation" data-js-hook="behavior_submit-situations">See cards for your situation</button>
+                <button class="a-btn a-btn--full-on-xs" title="See cards for your situation" data-js-hook="behavior_submit-situations">See cards for your situation</button>
                 <div class="u-btn-helper">
                     Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
                 </div>
@@ -131,8 +131,8 @@
         </form>
     </div>
 
-{% endblock content__main %}
+{% endblock content_main %}
 
 {% block content_sidebar %}
     {%- include "tccp/includes/sidebar.html" -%}
-{% endblock content__sidebar %}
+{% endblock content_sidebar %}

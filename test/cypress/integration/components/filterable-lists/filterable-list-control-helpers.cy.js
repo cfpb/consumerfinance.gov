@@ -118,7 +118,7 @@ export class FilterableListControl {
   }
 
   clearFilters() {
-    cy.get('.a-btn__warning').click({ force: true });
+    cy.get('.a-btn--warning').click({ force: true });
   }
 
   showFilters() {

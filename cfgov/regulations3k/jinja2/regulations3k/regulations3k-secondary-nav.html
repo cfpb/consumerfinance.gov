@@ -46,8 +46,8 @@
 
 {% macro _navlink(text, href, current=false) %}
 <a class="o-secondary-nav__link
-          o-secondary-nav__link__parent
-          {{ 'o-secondary-nav__link__current' if current else '' }}"
+          o-secondary-nav__link--parent
+          {{ 'o-secondary-nav__link--current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

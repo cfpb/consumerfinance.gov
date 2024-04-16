@@ -10,7 +10,7 @@
   border-top: 5px solid var(--green);
   background: var(--gray-5);
 
-  &_nav-list {
+  &__nav-list {
     .m-list--links();
 
     .m-list__link {
@@ -31,7 +31,7 @@
       });
     }
 
-    .m-list__link.m-list__link__disabled {
+    .m-list__link.m-list__link--disabled {
       border-bottom: 1px dotted;
 
       // Desktop and above.
@@ -41,7 +41,7 @@
     }
   }
 
-  &_list {
+  &__list {
     .m-list--links();
 
     .m-list__link {
@@ -49,7 +49,7 @@
     }
   }
 
-  &_pre {
+  &__pre {
     position: relative;
     margin-bottom: unit(45px / @base-font-size-px, em);
 

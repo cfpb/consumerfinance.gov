@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block content_main %}
-<div class="block block__flush-top">
+<div class="block block--flush-top">
 
     <div class="eyebrow">{{ card.institution_name }}</div>
     <h1>{{ card.product_name }}</h1>
@@ -965,8 +965,8 @@
 
 </div>
 
-{% endblock content__main %}
+{% endblock content_main %}
 
 {% block content_sidebar %}
     {%- include "tccp/includes/sidebar.html" -%}
-{% endblock content__sidebar %}
+{% endblock content_sidebar %}

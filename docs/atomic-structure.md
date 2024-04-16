@@ -53,8 +53,8 @@ Prefixed with `m-` in class names.
 ```html
 <div
   class="m-notification
-         m-notification__visible
-         m-notification__error"
+         m-notification--visible
+         m-notification--error"
 >
   {{ svg_icon('error') }}
   <div class="m-notification__content" role="alert">
@@ -69,7 +69,7 @@ Prefixed with `m-` in class names.
 .m-notification {
     display: none;
     position: relative;
-    padding: @notification-padding__px;
+    padding: @notification-padding-px;
     …
 }
 ```

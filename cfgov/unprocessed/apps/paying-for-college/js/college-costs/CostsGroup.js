@@ -20,8 +20,8 @@ const BASE_CLASS = 'o-costs-group';
  */
 function CostsGroup(element) {
   const _dom = checkDom(element, BASE_CLASS);
-  const _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
-  const _targetDom = _dom.querySelector(`.${BASE_CLASS}_header`);
+  const _contentDom = _dom.querySelector(`.${BASE_CLASS}__content`);
+  const _targetDom = _dom.querySelector(`.${BASE_CLASS}__header`);
   let _transition;
   let _flyout;
 

@@ -34,7 +34,7 @@ const getExpandable = (event) => {
  */
 const getExpandableState = (expandable) => {
   let state = 'close';
-  if (expandable.classList.contains('o-expandable_target__expanded')) {
+  if (expandable.classList.contains('o-expandable__target--expanded')) {
     state = 'open';
   }
   return state;

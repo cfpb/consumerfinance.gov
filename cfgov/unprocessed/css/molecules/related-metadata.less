@@ -1,4 +1,4 @@
-@margin_half__em: unit(15px / @base-font-size-px, em);
+@margin-half-em: unit(15px / @base-font-size-px, em);
 
 @bullet-font-size__em: unit(15px / @base-font-size-px, em);
 
@@ -9,14 +9,14 @@
 
   // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    border-left: @margin_half__em solid transparent;
-    border-right: @margin_half__em solid transparent;
+    border-left: @margin-half-em solid transparent;
+    border-right: @margin-half-em solid transparent;
   });
 }
 
 .m-related-metadata__item-container {
   &:not(:last-child) {
-    margin-bottom: @margin_half__em * 2;
+    margin-bottom: @margin-half-em * 2;
   }
 
   .status-definitions {

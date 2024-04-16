@@ -18,12 +18,12 @@
 {% import 'v1/includes/molecules/social-media.html' as social_media with context %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
 <footer class="o-footer">
-    <div class="wrapper wrapper__match-content">
+    <div class="wrapper wrapper--match-content">
 
         <div class="o-footer__pre">
 
             <a class="a-btn
-                      a-btn__secondary
+                      a-btn--secondary
                       o-footer__top-button"
                 data-gtm_ignore="true"
                 data-js-hook="behavior_return-to-top"
@@ -201,6 +201,6 @@
             {{ tagline.render( is_large=true ) }}
         </div>{# END .o-footer-post #}
 
-    </div>{# END .wrapper.wrapper__match-content #}
+    </div>{# END .wrapper.wrapper--match-content #}
 </footer>{# END .o-footer #}
 {% endmacro %}

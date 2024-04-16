@@ -16,7 +16,7 @@ export class DynamicDisclosures {
   }
 
   stepTwo(forceParam) {
-    cy.get('.continue.step .continue_controls button').click({
+    cy.get('.continue.step .continue__controls button').click({
       force: forceParam,
     });
   }

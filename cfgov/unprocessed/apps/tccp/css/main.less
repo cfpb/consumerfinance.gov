@@ -2,14 +2,14 @@
 @import (reference) 'cfpb-buttons.less';
 
 .respond-to-min(@bp-sm-min, {
-  .o-form_group {
+  .o-form__group {
     max-width: unit((380px / @base-font-size-px), rem);
   }
 });
 
 // @TODO refactor and remove this override
 // See https://github.com/cfpb/consumerfinance.gov/pull/8247
-.o-form_fieldset {
+.o-form__fieldset {
   ul {
     list-style: none;
     padding-left: 0;
@@ -38,11 +38,11 @@
   }
 }
 
-.a-checkbox + .a-label > .a-label_helper {
+.a-checkbox + .a-label > .a-label__helper {
   display: none;
 }
 
-.a-checkbox:checked + .a-label > .a-label_helper {
+.a-checkbox:checked + .a-label > .a-label__helper {
   display: grid;
   grid-column-start: 1;
   grid-column-end: 3;
@@ -50,15 +50,15 @@
   margin-bottom: 1em;
 }
 
-.a-label_helper .m-list {
+.a-label__helper .m-list {
   list-style: square;
   padding-left: 1.125em;
 
-  .m-list_item {
+  .m-list__item {
     margin-left: unit((15px / @base-font-size-px), rem);
   }
 
-  .m-list_item__has-icon {
+  .m-list__item--has-icon {
     display: flex;
     margin-left: 0;
 
@@ -75,7 +75,7 @@
 }
 
 .tool-features {
-  .cf-icon-svg__credit-card-round {
+  .cf-icon-svg--credit-card-round {
     color: var(--gold);
   }
 
@@ -336,7 +336,7 @@
 // "Show more results" functionality for JS users
 // Only show the first 10 results
 html.js .o-filterable-list-results__partial {
-  .o-card-group_cards {
+  .o-card-group__cards {
     .m-card:nth-child(10) {
       border-bottom: 1px solid @table-border;
       margin-bottom: unit((10px / @base-font-size-px), rem);
@@ -538,7 +538,7 @@ html.js .o-filterable-list-results__partial {
 
 // Hide form submit button for htmx users
 html.js form[hx-boost] {
-  .o-form_group:last-child {
+  .o-form__group:last-child {
     margin-bottom: 0;
   }
 

@@ -23,7 +23,7 @@ describe('MegaMenuDesktop', () => {
     */
     it('should expand on the first level sub-menu button click', (done) => {
       const menuTrigger = navElem.querySelector(
-        '.o-mega-menu__content-1-link__has-children',
+        '.o-mega-menu__content-1-link--has-children',
       );
       const subContent = navElem.querySelector('.o-mega-menu__content-2');
       const subContentWrapper = navElem.querySelector(

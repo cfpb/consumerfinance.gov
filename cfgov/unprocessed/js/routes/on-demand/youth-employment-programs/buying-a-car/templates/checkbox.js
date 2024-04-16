@@ -4,7 +4,7 @@
  */
 function checkbox(id) {
   return `
-    <div class="m-form-field m-form-field__checkbox">
+    <div class="m-form-field m-form-field--checkbox">
       <input class="a-checkbox" type="checkbox" id="${id}" name="${id}">
       <label class="a-label" for="${id}">
         <span>${id}</span>

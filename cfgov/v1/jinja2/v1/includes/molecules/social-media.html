@@ -80,7 +80,7 @@
     {% endif %}
 
     <ul class="m-list
-               m-list__unstyled
+               m-list--unstyled
                m-list--horizontal
                m-social-media__icons">
 
@@ -173,7 +173,7 @@
 
         {% if is_share_view and is_printable %}
             <li class="m-list__item m-social-media__print">
-                <button class="a-btn a-btn__link m-social-media__icon"
+                <button class="a-btn a-btn--link m-social-media__icon"
                    onclick="{{ print_info.share_url }}"
                    aria-label="{{ print_info.name }}"
                    type="button">

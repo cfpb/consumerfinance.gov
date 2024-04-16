@@ -18,7 +18,7 @@
     {% if limit %}{% set posts = posts[ :limit | int ] %}{% endif %}
     <ul class="m-related-posts__list
                m-list
-               m-list__unstyled">
+               m-list--unstyled">
         {% for post in posts %}
             {% set post_url = post.url or '' %}
             <li class="m-list__item">
@@ -94,7 +94,7 @@
         </div>
     {% endfor %}
 
-    <a class="a-link a-link__jump"
+    <a class="a-link a-link--jump"
        href="{{ value.view_more_url }}"
        aria-label="{{ _('View more related posts') }}">
         <span class="a-link__text">

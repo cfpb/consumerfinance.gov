@@ -66,7 +66,7 @@ class FormExplainer {
    * Update the pagination UI.
    */
   updatePaginationUI() {
-    const BTN_DISABLED = 'a-btn__disabled';
+    const BTN_DISABLED = 'a-btn--disabled';
     const PAGE_BTN_CTR = '.form-explainer_page-buttons';
 
     if (this.pageCount > 1) {
@@ -92,7 +92,7 @@ class FormExplainer {
     const targetId = target.getAttribute('id');
 
     DT.removeClass(
-      '.o-expandable__form-explainer, .image-map_overlay',
+      '.o-expandable__form-explainer, .image-map__overlay',
       className,
     );
 
@@ -269,7 +269,7 @@ class FormExplainer {
      * update the hover styles.
      */
     DT.bindEvents(
-      '.image-map_overlay, .o-expandable__form-explainer',
+      '.image-map__overlay, .o-expandable__form-explainer',
       ['mouseenter', 'mouseleave'],
       (event) => {
         event.preventDefault();
@@ -288,7 +288,7 @@ class FormExplainer {
     /* When an overlay is clicked, toggle the corresponding expandable
      * and scroll the page until it is in view.
      */
-    DT.bindEvents('.image-map_overlay', 'click', (event) => {
+    DT.bindEvents('.image-map__overlay', 'click', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const imageOverlay = event.target;

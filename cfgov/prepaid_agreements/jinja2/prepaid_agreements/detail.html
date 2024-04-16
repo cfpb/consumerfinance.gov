@@ -80,7 +80,7 @@
         <div class="block">
             <h2 class="h3">Download most recent agreement files</h2>
             {% set agreement = agreements | first  %}
-            <div class="block block__sub block__flush-bottom block__flush-top">
+            <div class="block block--sub block--flush-bottom block--flush-top">
                 <p>Agreement effective date: {{ agreement.effective_date }}</p>
                 <p class="u-break-word">
                     <a href="{{ agreement.compressed_files_url }}">
@@ -94,7 +94,7 @@
         <div class="block">
             <h2 class="h3">Download older agreements</h2>
             {% for agreement in agreements[1:] %}
-                <div class="block block__sub block__flush-bottom {{ 'block__flush-top' if loop.index == 1 else '' }}">
+                <div class="block block--sub block--flush-bottom {{ 'block--flush-top' if loop.index == 1 else '' }}">
                     <p>Agreement effective date: {{ agreement.effective_date }}</p>
                     <p class="u-break-word">
                         <a href="{{ agreement.compressed_files_url }}">
@@ -113,7 +113,7 @@
 
 {% block content_sidebar scoped -%}
     {% if support_text %}
-        <div class="block block__flush-top">
+        <div class="block block--flush-top">
             <header class="m-slug-header">
             <h2 class="m-slug-header__heading">
                 {{ support_text.sidefoot_heading | safe }}

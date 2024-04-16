@@ -4,7 +4,7 @@
     <h2 class="h4">
         Search term
     </h2>
-    <div class="o-form__input-w-btn">
+    <div class="o-form--input-w-btn">
         {% if hidden_fields | length > 0 %}
             <div id="regs3k-hidden-filters">
             {% for field in hidden_fields %}
@@ -16,7 +16,7 @@
         {% endif %}
         <div class="o-form--input-w-btn__input-container">
             <div class="m-btn-inside-input input-contains-label">
-                <label for="query" class="input-contains-label__before input-contains-label__before__search">
+                <label for="query" class="input-contains-label__before input-contains-label__before--search">
                     {{ svg_icon('search') }}
                     <span class="u-visually-hidden">Search</span>
                 </label>

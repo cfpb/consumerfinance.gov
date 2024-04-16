@@ -10,7 +10,7 @@ const HTML_SNIPPET = `
         Skip to main content
     </a>
 </div>
-<a class="a-btn a-btn__secondary o-footer__top-button"
+<a class="a-btn a-btn--secondary o-footer__top-button"
    data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
    href="#">
     Back to top

@@ -22,6 +22,6 @@ export class Header {
   }
 
   globalEyebrowHorizontal() {
-    return cy.get('.m-global-eyebrow__horizontal');
+    return cy.get('.m-global-eyebrow--horizontal');
   }
 }

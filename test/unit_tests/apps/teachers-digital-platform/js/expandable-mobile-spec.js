@@ -8,7 +8,7 @@ import beforeExpandableTransitionInit, {
 const HTML_SNIPPET = `
   <div id="test-div"
      class="o-expandable
-            o-expandable__background
+            o-expandable--background
             ">
     <button class="o-expandable__header" type="button">
         <span class="o-expandable__label">
@@ -25,13 +25,13 @@ const HTML_SNIPPET = `
     </button>
 
     <div class="o-expandable__content
-                o-expandable__content__onload-open
-                o-expandable__mobile-collapsed">
+                o-expandable__content--onload-open
+                o-expandable--mobile-collapsed">
             <div class="o-form__group u-mt15">
                 <fieldset class="o-form__fieldset">
-                    <ul class="m-list m-list__unstyled">
+                    <ul class="m-list m-list--unstyled">
                         <li>
-                            <div class="m-form-field m-form-field__checkbox">
+                            <div class="m-form-field m-form-field--checkbox">
                                 <input type="checkbox" class="a-checkbox" aria-label="Executive function" id="building-block--executive-function" name="building_block" value="1">
                                 <label class="a-label" for="building-block--executive-function">Executive function</label>
                             </div>
@@ -46,7 +46,7 @@ const HTML_SNIPPET = `
 global.console = { error: jest.fn(), log: jest.fn() };
 
 let expandableDiv;
-const OPEN_DEFAULT_CLASS = 'o-expandable__content__onload-open';
+const OPEN_DEFAULT_CLASS = 'o-expandable__content--onload-open';
 
 describe('expandable-mobile', () => {
   beforeEach(() => {

@@ -40,7 +40,7 @@
             {% endfor %}
         </div>
     {% endif %}
-    <div class="block block__flush-top block__flush-bottom">
+    <div class="block block--flush-top block--flush-bottom">
         <h1>Request for individual access to records protected under the Privacy Act</h1>
         <div class="lead-paragraph">
             <p>This form may be used to seek access to your records pursuant to the Privacy Act. Please provide the information requested below and submit.</p>
@@ -69,9 +69,9 @@
         <p>The term guardian means the legal guardian of any individual who has been declared to be incompetent due to physical or mental incapacity or age by a court of competent jurisdiction.</p>
         <h2>Additional information required to locate the records</h2>
         <p>This information is required for the CFPB to be able to match the individual's information provided in this request with the records that pertain to that individual.</p>
-        <p><a class="a-btn a-btn__link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
+        <p><a class="a-btn a-btn--link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
     </div>
-    <div class="block block__flush-top block__padded-top">
+    <div class="block block--flush-top block--padded-top">
         <form id="privacy-form"
               action="{{ url('privacy:records_access') }}"
               enctype="multipart/form-data"
@@ -79,7 +79,7 @@
             <div class="o-well">
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.description.id_for_label }}">
                             {{ form.description.label }}
                         </label>
@@ -90,7 +90,7 @@
                 <p>This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.</p>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.system_of_record.id_for_label }}">
                             {{ form.system_of_record.label }} <small class="a-label__helper">(optional)</small>
                         </label>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.date_of_records.id_for_label }}">
                             {{ form.date_of_records.label }} <small class="a-label__helper">(optional)</small>
                         </label>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.other_info.id_for_label }}">
                             {{ form.other_info.label }} <small class="a-label__helper">(optional)</small>
                         </label>
@@ -125,7 +125,7 @@
                 <h3>Requestor contact information</h3>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.requestor_name.id_for_label }}">
                             {{ form.requestor_name.label }}
                         </label>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.requestor_email.id_for_label }}">
                             {{ form.requestor_email.label }}
                         </label>
@@ -154,7 +154,7 @@
                   {% endif %}
                   {% for choice in form.contact_channel %}
                     {% set value = choice.data['value'] %}
-                    <div class="m-form-field m-form-field__radio">
+                    <div class="m-form-field m-form-field--radio">
                       <input class="a-radio" {%if choice.data['value'] == selected %}checked {% endif %} value={{ value }} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
                         <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
                      </div>
@@ -164,7 +164,7 @@
                   <p>If you would prefer to receive your records by mail, please provide your mailing address.</p>
                   <div class="o-form__group">
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.street_address.id_for_label }}">
                               {{ form.street_address.label }}
                           </label>
@@ -173,21 +173,21 @@
                   </div>
                   <div class="o-form__group m-form-grid">
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.city.id_for_label }}">
                               {{ form.city.label }}
                           </label>
                           {{ form.city }}
                       </div>
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.state.id_for_label }}">
                               {{ form.state.label }}
                           </label>
                           {{ form.state }}
                       </div>
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.zip_code.id_for_label }}">
                               {{ form.zip_code.label }}
                           </label>
@@ -232,7 +232,7 @@
             <h2>Consent for release of records</h2>
             <div class="o-well">
                 <div class="o-form__group">
-                    <div class="m-form-field m-form-field__checkbox">
+                    <div class="m-form-field m-form-field--checkbox">
                         {{ form.consent }}
                         <label class="a-label"
                                for="{{ form.consent.id_for_label }}">
@@ -242,7 +242,7 @@
                 </div>
                 <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.full_name.id_for_label }}">
                             {{ form.full_name.label }}
                         </label>
@@ -260,7 +260,7 @@
                             {{ svg_icon('updating') }}
                         </span>
                     </button>
-                    <a class="a-btn a-btn__link"
+                    <a class="a-btn a-btn--link"
                        href="/privacy/records-disclosure-privacy-act-statement/"
                        rel="noopener noreferrer"
                        target="_blank">

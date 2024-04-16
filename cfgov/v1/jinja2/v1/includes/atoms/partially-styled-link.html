@@ -20,9 +20,9 @@
 
 {% macro render(value) -%}
 
-<a href="{{ value.url }}" class="a_link a-link__partially-styled"> 
-	<span class="a-link__partially-styled_plain">{{ value.plain_text|safe }} </span>
-	<span class="a-link__partially-styled_underlined">{{ value.underlined_text }}</span>
+<a href="{{ value.url }}" class="a_link a-link--partially-styled">
+	<span class="a-link__plain">{{ value.plain_text|safe }} </span>
+	<span class="a-link__underlined">{{ value.underlined_text }}</span>
 </a>
 
 {%- endmacro %}

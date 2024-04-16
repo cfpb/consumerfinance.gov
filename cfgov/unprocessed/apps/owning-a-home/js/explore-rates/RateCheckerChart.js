@@ -114,11 +114,11 @@ function RateCheckerChart() {
   function setStatus(state) {
     if (state === RateCheckerChart.STATUS_OKAY) {
       _chartDom.classList.remove('warning');
-      _resultAlertDom.classList.remove('m-notification__visible');
+      _resultAlertDom.classList.remove('m-notification--visible');
       _failAlertDom.classList.add('u-hidden');
     } else if (state === RateCheckerChart.STATUS_WARNING) {
       _chartDom.classList.add('warning');
-      _resultAlertDom.classList.add('m-notification__visible');
+      _resultAlertDom.classList.add('m-notification--visible');
     } else if (state === RateCheckerChart.STATUS_ERROR) {
       _failAlertDom.classList.remove('u-hidden');
     } else {

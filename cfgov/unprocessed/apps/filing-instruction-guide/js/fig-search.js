@@ -59,7 +59,7 @@ function init(secondaryNavArg) {
 const getSearchData = (sections) => {
   if (!sections) return [];
   return sections.map((section, i) => {
-    const heading = section.querySelector('.o-fig_heading');
+    const heading = section.querySelector('.o-fig__heading');
     const link = heading.querySelector('[id]').getAttribute('id');
     const text = section.innerText || section.textContent;
     return {

@@ -19,12 +19,12 @@ let sendEvent = (payload) => {
  */
 const getExpandable = (event) => {
   let el = event.target.closest('.o-expandable__header');
-  el = el ? el : event.target.closest('.o-expandable-facets_target');
+  el = el ? el : event.target.closest('.o-expandable-facets__target');
   el = el ? el : event.target;
 
   if (
     el.classList.contains('o-expandable__header') ||
-    el.classList.contains('o-expandable-facets_target')
+    el.classList.contains('o-expandable-facets__target')
   ) {
     return el;
   }
@@ -39,7 +39,7 @@ const getExpandable = (event) => {
 const getExpandableState = (expandable) => {
   let state = 'collapse';
   if (
-    expandable.classList.contains('o-expandable_target__expanded') ||
+    expandable.classList.contains('o-expandable__target--expanded') ||
     expandable.classList.contains('is-open')
   ) {
     state = 'expand';
@@ -111,7 +111,7 @@ const handleFilterClick = (event) => {
  * @returns {object|undefined} Event data.
  */
 const handleClearFilterClick = (event) => {
-  const tags = event.currentTarget.querySelector('.results_filters-tags');
+  const tags = event.currentTarget.querySelector('.results__filters-tags');
   if (!tags) return;
   const tag = tags.closest('.a-tag') || event.target;
   if (!tag.classList.contains('a-tag')) {
@@ -150,7 +150,7 @@ const handlePaginationClick = (event) => {
   const isNextButton = paginator.classList.contains('m-pagination__btn-next');
   const isPrevButton = paginator.classList.contains('m-pagination__btn-prev');
   const isGoButton = paginator.classList.contains('m-pagination__btn-submit');
-  const isDisabled = paginator.classList.contains('a-btn__disabled');
+  const isDisabled = paginator.classList.contains('a-btn--disabled');
 
   if (isDisabled || (!isNextButton && !isPrevButton && !isGoButton)) {
     return;
@@ -244,7 +244,7 @@ const handleFetchSearchResults = (searchTerm) => {
   }
 
   // Send the keywords that return 0 results to Analytics.
-  const resultsCountBlock = searchContent.querySelector('.results_count');
+  const resultsCountBlock = searchContent.querySelector('.results__count');
   if (resultsCountBlock) {
     const resultsCount = resultsCountBlock.getAttribute('data-results-count');
 

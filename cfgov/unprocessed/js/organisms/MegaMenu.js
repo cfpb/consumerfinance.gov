@@ -52,7 +52,7 @@ function MegaMenu(element) {
 
     // DOM selectors.
     const rootMenuDom = _dom;
-    const rootContentDom = rootMenuDom.querySelector(`.${BASE_CLASS}_content`);
+    const rootContentDom = rootMenuDom.querySelector(`.${BASE_CLASS}__content`);
 
     // Create model.
     _menus = new Tree();

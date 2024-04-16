@@ -20,13 +20,13 @@
 
 {% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
 
-<header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
+<header class="o-header{% if mega_menu_content %} o-header--mega-menu{% endif %}">
 
     {% if flag_enabled('BETA_NOTICE') %}
     {% import 'v1/includes/molecules/notification.html' as notification with context %}
     <div class="o-banner">
       <div class="wrapper
-                  wrapper__match-content">
+                  wrapper--match-content">
             {{ notification.render(
                 'warning',
                 true,
@@ -41,7 +41,7 @@
         {% for banner in banners %}
             <div class="o-banner">
                 <div class="wrapper
-                            wrapper__match-content">
+                            wrapper--match-content">
                     {% include_block banner.content %}
                 </div>
             </div>
@@ -69,7 +69,7 @@
 
     <div class="o-header__content">
 
-        <div class="wrapper wrapper__match-content">
+        <div class="wrapper wrapper--match-content">
             {% if language == 'es' %}
             <a class="o-header__logo" href="/es/">
                 <img class="o-header__logo-img"

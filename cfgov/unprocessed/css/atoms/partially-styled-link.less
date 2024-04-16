@@ -1,16 +1,16 @@
-.a-link__partially-styled {
+.a-link--partially-styled {
   border-bottom-width: 0;
 
-  &_plain {
+  .a-link__plain {
     color: var(--black);
     border-bottom: 1px dotted transparent;
   }
 
-  &_underlined {
+  .a-link__underlined {
     border-bottom: 1px dotted @link-underline;
   }
 
-  &:visited &_underlined {
+  &:visited .a-link__underlined {
     border-bottom: 1px dotted @link-underline-visited;
   }
 

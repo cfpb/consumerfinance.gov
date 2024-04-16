@@ -34,10 +34,10 @@
 {% macro expandable(value) %}
 
 <div class="o-expandable
-            {{ 'o-expandable__padded' if value.is_expanded_padding else '' }}
-            {{ 'o-expandable__background' if value.is_midtone else '' }}
-            {{ 'o-expandable__border' if value.is_bordered else '' }}
-            {{ 'o-expandable__onload-open' if value.is_expanded else '' }}"
+            {{ 'o-expandable--padded' if value.is_expanded_padding else '' }}
+            {{ 'o-expandable--background' if value.is_midtone else '' }}
+            {{ 'o-expandable--border' if value.is_bordered else '' }}
+            {{ 'o-expandable--onload-open' if value.is_expanded else '' }}"
      id="{{ value.group_index_slug if value.group_index_slug else value.label | slugify_unique }}"
      {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
         if value.is_faq else '' }} >

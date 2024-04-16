@@ -16,7 +16,7 @@ export class Multiselect {
     return cy
       .contains('label[for^=o-filterable-list-controls]', this.label)
       .next('.o-multiselect')
-      .find(`.o-multiselect_${name}`);
+      .find(`.o-multiselect__${name}`);
   }
 
   choices() {
@@ -83,7 +83,7 @@ export class Multiselect {
   }
 
   dropDownLabel() {
-    return this.multiSelect('options').find('li .o-multiselect_label');
+    return this.multiSelect('options').find('li .o-multiselect__label');
   }
 
   firstChoicesElement() {

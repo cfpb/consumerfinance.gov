@@ -1,7 +1,7 @@
 @import (reference) '../../../css/main.less';
 @import url('../node_modules/ctrl-f/dist/css/index.css');
 
-.o-fig_main {
+.o-fig__main {
   // Bump up all heading sizes to improve readability
   h1 {
     .superheading();
@@ -64,20 +64,20 @@
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
     .content-l,
-    .a-link__jump {
+    .a-link--jump {
       z-index: -1;
     }
   });
 }
 
-.o-fig_heading {
+.o-fig__heading {
   a {
     color: var(--black);
     word-break: break-word;
   }
 }
 
-.o-fig_section__sub-sub {
+.o-fig__section--sub-sub {
   margin-top: unit(45px / @base-font-size-px, em);
   margin-bottom: unit(45px / @base-font-size-px, em);
 
@@ -93,7 +93,7 @@
 }
 
 // TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
-.o-fig_sidebar {
+.o-fig__sidebar {
   .o-secondary-nav__label {
     width: 95%;
   }

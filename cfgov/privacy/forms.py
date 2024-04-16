@@ -13,7 +13,7 @@ from django.utils.html import escape
 # See https://cfpb.github.io/design-system/components/text-inputs
 # for documentation on the styles that are being duplicated here.
 text_input_attrs = {
-    "class": "a-text-input a-text-input__full",
+    "class": "a-text-input a-text-input--full",
 }
 address_attrs = {"class": "a-text-input"}
 

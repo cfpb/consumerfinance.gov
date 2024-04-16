@@ -1,15 +1,15 @@
-<section class="college-costs_tool-section college-costs_tool-section__costs" data-tool-section="costs">
+<section class="college-costs__tool-section college-costs__tool-section--costs" data-tool-section="costs">
     <h2 tabindex="-1">This year's costs</h2>
     <div data-state-based-visibility="costs-question-hide">
         <p>Does your financial aid offer have information about costs?</p>
-        <div class="costs_button-section">
+        <div class="costs__button-section">
             {{
                 radio.render({
                   'name':  "costs-offer-radio",
                   'label': 'Yes. I will enter the costs listed in my offer.',
                   'value': 'y',
                   'id': 'costs-offer-radio_yes',
-                  'class': 'm-form-field__lg-target'
+                  'class': 'm-form-field--lg-target'
                 })
             }}
 
@@ -19,7 +19,7 @@
                   'label': 'No. Please show me cost data from the U.S. Department of Education (which is at least one year old).',
                   'value': 'n',
                   'id': 'costs-offer-radio_no',
-                  'class': 'm-form-field__lg-target'
+                  'class': 'm-form-field--lg-target'
                 })
             }}
 
@@ -31,18 +31,18 @@
         </div>
     </div>
 
-    <div class="costs_content-section costs_content-section_content block block--sub" data-state-based-visibility="costs-question-yes">
+    <div class="costs__content-section costs__content-section--content block block--sub" data-state-based-visibility="costs-question-yes">
         <p> Type in the costs listed in your offer, adding additional costs as needed. </p>
         <p>These are estimates based on students’ reported spending. Your actual expenses will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p>
         <p>The school uses these estimates to calculate how much aid you can receive. If you think you will spend more, contact the school’s financial aid office—you may be eligible for more aid.</p>
     </div>
 
-    <div class="costs_content-section costs_content-section_content block block--sub" data-state-based-visibility="costs-question-no">
+    <div class="costs__content-section costs__content-section--content block block--sub" data-state-based-visibility="costs-question-no">
         <p> This is the most recent data from the U.S. Department of Education, but it is at least one year old. Ask the financial aid office for up-to-date estimates. Your actual spending will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p>
         <p> The school uses these estimates to calculate how much aid you can receive. If you will spend more, contact the school’s financial aid office—you may be eligible for more aid.</p>
     </div>
 
-    <div class="costs_content-section financial-items" id="costs_inputs-section">
+    <div class="costs__content-section financial-items" id="costs_inputs-section">
         <div class="block block--mid">
             <h3 class="u-border-bottom">Direct costs</h3>
             <p> Direct costs are what you will owe the school at the beginning of each term. Your actual bill will vary from the numbers here. </p>

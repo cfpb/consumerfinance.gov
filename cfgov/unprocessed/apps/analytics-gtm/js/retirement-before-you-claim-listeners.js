@@ -80,7 +80,7 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
       });
 
     document
-      .querySelector('#graph_slider-input')
+      .querySelector('#graph__slider-input')
       .addEventListener('mousedown', function () {
         sliderIsActive = true;
         sliderClicks++;
@@ -121,7 +121,7 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
     for (let i = 0, len = lifestyleBtns.length; i < len; i++) {
       lifestyleBtns[i].addEventListener('click', function (event) {
         const target = event.currentTarget;
-        const $container = target.closest('.lifestyle-question_container');
+        const $container = target.closest('.lifestyle-question__container');
         const question = $container.querySelector('h3').innerText.trim();
         const value = target.value;
         if (questionsAnswered.indexOf(question) === -1) {

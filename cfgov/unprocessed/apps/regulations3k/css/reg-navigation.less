@@ -21,12 +21,12 @@
   });
 
   // TODO - this will be updated to data-open='true' in newer expandables.
-  .o-expandable_target__expanded {
+  .o-expandable__target--expanded {
     .o-expandable__cue-close {
       display: block;
     }
   }
-  .o-expandable_target__collapsed {
+  .o-expandable__target--collapsed {
     .o-expandable__cue-open {
       display: block;
     }
@@ -79,7 +79,7 @@
     unit( 15px / @base-font-size-px, em );
   });
 
-  .o-regs3k-navigation_header {
+  .o-regs3k-navigation__header {
     display: none;
 
     // Tablet and below.
@@ -99,11 +99,11 @@
 .o-secondary-nav__link {
   color: var(--pacific);
 
-  &__current {
+  &--current {
     color: var(--black);
   }
 
-  &__parent {
+  &--parent {
     .heading-4();
     font-size: 1em;
     font-weight: 300;

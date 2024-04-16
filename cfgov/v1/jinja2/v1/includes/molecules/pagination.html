@@ -39,7 +39,7 @@
                           fragment_id }}">
         {%- else %}
         <a class="a-btn
-                  a-btn__disabled
+                  a-btn--disabled
                   m-pagination__btn-prev">
         {% endif %}
             <span class="a-btn__icon a-btn__icon--on-left">
@@ -55,7 +55,7 @@
                           fragment_id }}">
         {%- else %}
         <a class="a-btn
-                  a-btn__disabled
+                  a-btn--disabled
                   m-pagination__btn-next">
         {% endif -%}
             {{ _('Next') }}
@@ -94,7 +94,7 @@
                 {{- ' ' ~ _('of') ~ ' ' -}} {{- total_pages -}}
             </span>
             <button class="a-btn
-                           a-btn__link
+                           a-btn--link
                            m-pagination__btn-submit"
                     type="submit">
                 {{ _('Go') }}

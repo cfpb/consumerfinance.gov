@@ -41,8 +41,8 @@ function SecondaryNav(element) {
       return this;
     }
 
-    _targetDom = _dom.querySelector(`.${BASE_CLASS}_header`);
-    _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
+    _targetDom = _dom.querySelector(`.${BASE_CLASS}__header`);
+    _contentDom = _dom.querySelector(`.${BASE_CLASS}__content`);
 
     // Add behavior hooks.
     addDataHook(_dom, 'behavior_flyout-menu');

@@ -14,13 +14,13 @@
 {% endblock %}
 
 {% block content_main_modifiers -%}
-content__main__flush-inner
+content__main--flush-inner
 {%- endblock %}
 
 {% block content_intro %}
     {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
 
-    <section class="content_level--1">
+    <section class="content__level--1">
         {% with value = hardcoded.hero %}
             {% include "v1/includes/molecules/hero.html" with context %}
         {% endwith %}
@@ -65,11 +65,11 @@ content__main__flush-inner
 
     <section class="block">
         <div class="o-well u-text-centered">
-            <div class="o-card-group o-card-group__flow">
+            <div class="o-card-group o-card-group--flow">
                 <div class="o-card-group__cards">
                     {% for card in hardcoded.topics.cards %}
-                    <article class="m-card m-card__topic
-                        {%- if loop.last %}  m-card__topic-action{% endif -%}
+                    <article class="m-card m-card--topic
+                        {%- if loop.last %}  m-card--topic-action{% endif -%}
                     ">
                       <a href="{{ card.url }}">
                           <div class="m-card__icon">
@@ -86,7 +86,7 @@ content__main__flush-inner
         </div>
     </section>
 
-    <section class="content_level-1">
+    <section class="content__level-1">
         <section class="block">
             <div class="o-info-unit-group">
                 <div class="content-l">
@@ -129,7 +129,7 @@ content__main__flush-inner
 
         <hr>
 
-        <section class="block content_level-2">
+        <section class="block content__level-2">
             {{ card_group.render( {
                 'heading': hardcoded.breakout_cards_heading,
                 'type_group': 'column-3',
@@ -139,4 +139,4 @@ content__main__flush-inner
         </section>
 
     </section>
-{% endblock content__main %}
+{% endblock content_main %}

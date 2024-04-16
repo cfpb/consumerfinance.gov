@@ -118,12 +118,12 @@ export default function (label) {
   }
 
   addEventListenerToSelector(
-    '.form-explainer_page-link',
+    '.form-explainer__page-link',
     'click',
     trackFormExplainerPageLinkClick,
   );
   addEventListenerToSelector(
-    '.form-explainer_page-buttons button',
+    '.form-explainer__page-buttons button',
     'click',
     trackFormExplainerPageButtonClick,
   );
@@ -133,7 +133,7 @@ export default function (label) {
     trackExpandableTargetsClick,
   );
   addEventListenerToSelector(
-    '.image-map_overlay',
+    '.image-map__overlay',
     'click',
     trackImageMapOverlayClick,
   );

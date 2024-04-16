@@ -33,7 +33,7 @@
     width: initial;
   }
 
-  .skip-filters__hidden {
+  .skip-filters--hidden {
     display: none;
   }
 
@@ -71,7 +71,7 @@
       margin-bottom: 2px;
     }
 
-    .m-list__unstyled .m-list__unstyled {
+    .m-list--unstyled .m-list--unstyled {
       margin-left: unit(27px / @base-font-size-px, em);
     }
 
@@ -90,7 +90,7 @@
       margin-bottom: 0;
     }
 
-    .m-form-field__checkbox .a-btn__link {
+    .m-form-field--checkbox .a-btn--link {
       border: 0;
     }
   }
@@ -104,7 +104,7 @@
   }
 
   .input-contains-label {
-    &_after:not(.u-hidden) {
+    &__after:not(.u-hidden) {
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
         display: initial;
@@ -116,7 +116,7 @@
     padding-top: 0;
   }
 
-  .results_count {
+  .results__count {
     padding: unit(15px / @base-font-size-px, em)
       unit(15px / @base-font-size-px, em) 0 unit(15px / @base-font-size-px, em);
     border: 1px solid var(--gray-40);
@@ -130,20 +130,20 @@
     });
   }
 
-  .results_count__empty {
+  .results__count--empty {
     background-color: var(--red-20);
     border-left: 1px solid var(--gray-40);
   }
 
-  .results_filters,
-  .results_filters-tags {
+  .results__filters,
+  .results__filters-tags {
     display: flex;
     gap: 15px;
     align-items: baseline;
     flex-wrap: wrap;
   }
 
-  .results_filters {
+  .results__filters {
     padding-top: unit(15px / @base-font-size-px, em);
 
     // Desktop and above.
@@ -154,13 +154,13 @@
     });
   }
 
-  .results_filters-label {
+  .results__filters-label {
     flex-shrink: 0;
     line-height: 2.25;
     font-weight: 600;
   }
 
-  .results_list {
+  .results__list {
     padding: unit(15px / @base-font-size-px, em) 0;
 
     // Desktop and above.
@@ -173,7 +173,7 @@
     }
   }
 
-  .results_footer {
+  .results__footer {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       padding-left: unit( 30px / @base-font-size-px, em );
@@ -206,11 +206,11 @@
     }
   }
 
-  .activity_for {
+  .activity__for {
     font-weight: 500;
   }
 
-  .activity_meta-wrapper {
+  .activity__meta-wrapper {
     justify-content: space-between;
     overflow: auto;
 
@@ -238,7 +238,7 @@
     });
   }
 
-  .activity_meta-key {
+  .activity__meta-key {
     font-size: unit(@base-font-size-px / 16 * 100, %);
     margin: 0;
     text-transform: none;

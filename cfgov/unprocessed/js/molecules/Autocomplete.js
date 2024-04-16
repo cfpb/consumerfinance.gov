@@ -10,7 +10,7 @@ const BASE_CLASS = 'm-autocomplete';
 const HIDDEN_CLASS = 'u-hidden';
 const AUTOCOMPLETE_CLASS = 'm-autocomplete__results';
 const SELECTED_CLASS = 'm-autocomplete__selected';
-const ERROR_CLASS = 'a-text-input__error';
+const ERROR_CLASS = 'a-text-input--error';
 
 // Key constants
 // See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values

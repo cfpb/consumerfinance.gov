@@ -51,7 +51,7 @@
 
         <div class="block block--sub">
 
-            <div class="o-summary o-summary__mobile">
+            <div class="o-summary o-summary--mobile">
                 <div class="o-summary__content answer-text">
                     {% include_block page.answer_content %}
                 </div>
@@ -67,7 +67,7 @@
                 {% if related_questions %}
                 <div class="block block--sub">
                     <h3>{{ _('Browse related questions') }} </h3>
-                    <ul class="m-list m-list__unstyled m-list--links">
+                    <ul class="m-list m-list--unstyled m-list--links">
                         {% for question in related_questions %}
                         <li class="m-list__item">
                             <a href="{{ question.url }}" class="m-list__link">

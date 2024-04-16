@@ -30,7 +30,7 @@ export class PrepaidAgreementsSearch {
   }
 
   filters() {
-    return cy.get('.filters_tags');
+    return cy.get('.filters__tags');
   }
 
   expandProductFilters() {

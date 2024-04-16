@@ -37,7 +37,7 @@ describe('Planning your Social Security', () => {
       'not.be.visible',
     );
     cy.get(
-      '#claiming-social-security #step-one-form .cf-icon-svg__help-round',
+      '#claiming-social-security #step-one-form .cf-icon-svg--help-round',
     ).click();
     cy.get('#claiming-social-security #tooltip-container').should('be.visible');
   });
@@ -45,7 +45,7 @@ describe('Planning your Social Security', () => {
   it('should show error if user is over the age of 70', () => {
     claim.enterAgeOver70();
     cy.get(
-      '#claiming-social-security #step-one-form .m-notification__warning',
+      '#claiming-social-security #step-one-form .m-notification--warning',
     ).should('be.visible');
   });
 

@@ -16,7 +16,7 @@
 {%- set any_children = nav_items | map( attribute="children" ) | reject( "undefined" ) | list -%}
 
 <nav class="o-secondary-nav
-            {{ '' if any_children else 'o-secondary-nav__no-children' }}"
+            {{ '' if any_children else 'o-secondary-nav--no-children' }}"
      aria-label="{{ _('Section navigation') }}">
 
     <button class="o-secondary-nav__header" type="button" aria-expanded="false">
@@ -41,7 +41,7 @@
                 {{ _navlink(item.title, item.url, true, item.active) }}
             {%- if item.children -%}
                 <ul class="o-secondary-nav__list
-                           o-secondary-nav__list__children">
+                           o-secondary-nav__list--children">
                 {%- for child in item.children -%}
                     <li>
                         {{ _navlink(child.title, child.url, false, child.active) }}
@@ -58,8 +58,8 @@
 
 {% macro _navlink(text, href, parent=true, current=false) %}
 <a class="o-secondary-nav__link
-          {{ 'o-secondary-nav__link__parent' if parent else '' }}
-          {{ 'o-secondary-nav__link__current' if current else '' }}"
+          {{ 'o-secondary-nav__link--parent' if parent else '' }}
+          {{ 'o-secondary-nav__link--current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

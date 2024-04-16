@@ -29,21 +29,21 @@ describe('Notification', () => {
     });
 
     it('should return the Notification instance if it has a success class', () => {
-      notificationElem.classList.add('m-notification__success');
+      notificationElem.classList.add('m-notification--success');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
     });
 
     it('should return the Notification instance if it has a warning class', () => {
-      notificationElem.classList.add('m-notification__warning');
+      notificationElem.classList.add('m-notification--warning');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
     });
 
     it('should return the Notification instance if it has a error class', () => {
-      notificationElem.classList.add('m-notification__error');
+      notificationElem.classList.add('m-notification--error');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
@@ -68,17 +68,17 @@ describe('Notification', () => {
 
     it('should update the notification type for the success state', () => {
       notification.update(Notification.SUCCESS, '');
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
     });
 
     it('should update the notification type for the warning state', () => {
       notification.update(Notification.WARNING, '');
-      expect(notificationElem.className).toContain('m-notification__warning');
+      expect(notificationElem.className).toContain('m-notification--warning');
     });
 
     it('should update the notification type for the error state', () => {
       notification.update(Notification.ERROR, '');
-      expect(notificationElem.className).toContain('m-notification__error');
+      expect(notificationElem.className).toContain('m-notification--error');
     });
 
     it('should update the the notification message', () => {
@@ -92,7 +92,7 @@ describe('Notification', () => {
         '.m-notification__explanation',
       );
 
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
       expect(message.textContent).toContain(testMsg);
       expect(explanation).toBeUndefined;
     });
@@ -109,7 +109,7 @@ describe('Notification', () => {
         '.m-notification__explanation',
       );
 
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
       expect(message.textContent).toContain(testMsg);
       expect(explanation.textContent).toContain(testExplanation);
     });

@@ -4,7 +4,7 @@
         <div class="o-form__group">
             <fieldset class="o-form__fieldset">
                 <div class="m-form-field m-form-field__select">
-                    <label class="a-label a-label__heading" for="id_geo">
+                    <label class="a-label a-label--heading" for="id_geo">
                         Geographic area
                     </label>
                     <div class="a-select">
@@ -29,7 +29,7 @@
                     Records included
                 </legend>
                {% for radio in form.records %}
-                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                     <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
                     <label class="a-label" for="{{ radio.id_for_label }}">
                         {{ radio.choice_label}}
@@ -53,7 +53,7 @@
                     Variable descriptions
                 </legend>
                {% for radio in form.field_descriptions %}
-                  <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                  <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                       <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
                       <label class="a-label" for="{{ radio.id_for_label }}">
                           {{ radio.choice_label }}

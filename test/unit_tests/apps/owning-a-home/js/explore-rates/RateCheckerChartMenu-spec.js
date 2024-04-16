@@ -14,13 +14,13 @@ let chartMenuBtnDOM;
 const HTML_SNIPPET = `
 <section id="chart-section" class="chart">
   <div class="chart-menu">
-    <button class="chart-menu_btn
-                    cf-icon
-                    cf-icon__after
-                    cf-icon-download">
+    <button class="chart-menu__btn
+                   cf-icon
+                   cf-icon--after
+                   cf-icon-download">
       Download chart
     </button>
-    <ul class="chart-menu_options">
+    <ul class="chart-menu__options">
       <li>PNG</li>
       <li>SVG</li>
       <li>JPEG</li>
@@ -56,7 +56,7 @@ describe('explore-rates/RateCheckerChartMenu', () => {
 
     chartMenu = new RateCheckerChartMenu(highCharts);
     chartMenuDOM = document.querySelector('.chart-menu');
-    chartMenuBtnDOM = document.querySelector('.chart-menu_btn');
+    chartMenuBtnDOM = document.querySelector('.chart-menu__btn');
   });
 
   describe('new RateCheckerChartMenu()', () => {

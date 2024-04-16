@@ -45,16 +45,16 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.goToSection(4);
             fig
               .getNavItem(1)
-              .should('not.have.class', 'o-secondary-nav__link__current');
+              .should('not.have.class', 'o-secondary-nav__link--current');
             fig
               .getNavItem(2)
-              .should('not.have.class', 'o-secondary-nav__link__current');
+              .should('not.have.class', 'o-secondary-nav__link--current');
             fig
               .getNavItem(3)
-              .should('not.have.class', 'o-secondary-nav__link__current');
+              .should('not.have.class', 'o-secondary-nav__link--current');
             fig
               .getNavItem(4)
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
           });
 
           it('should auto-expand subsections', () => {
@@ -87,37 +87,37 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.clickSectionHeading(1);
             fig
               .getNavItem(1)
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('not.be.visible');
 
             fig.clickSectionHeading(3);
             fig
               .getNavItem(3)
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('be.visible');
 
             fig.clickSectionHeading('application-method');
             fig
               .getNavItem('application-method')
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('be.visible');
 
             fig.clickSectionHeading(5);
             fig
               .getNavItem(5)
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('not.be.visible');
 
             fig.clickSectionHeading(3);
             fig
               .getNavItem(3)
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('be.visible');
 
             fig.clickSectionHeading('action-taken');
             fig
               .getNavItem('action-taken')
-              .should('have.class', 'o-secondary-nav__link__current');
+              .should('have.class', 'o-secondary-nav__link--current');
             fig.getNavItem('credit-type').should('be.visible');
           });
 

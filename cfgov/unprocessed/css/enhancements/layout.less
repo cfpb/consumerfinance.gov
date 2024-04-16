@@ -2,14 +2,14 @@
 @import (less) './layout-2-1.less';
 @import (less) './layout-1-3.less';
 
-.wrapper__match-content {
+.wrapper--match-content {
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
   });
 }
 
-.content__half-top-on-desk {
+.content--half-top-on-desk {
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
     padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
@@ -20,7 +20,7 @@
   });
 }
 
-.content__flush-sides-on-small {
+.content--flush-sides-on-small {
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
     padding-left: 0;

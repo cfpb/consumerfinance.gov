@@ -8,11 +8,11 @@ import ExpandableFacetTransition from './ExpandableFacetTransition.js';
 const ExpandableFacets = AtomicComponent.extend({
   ui: {
     base: '.o-expandable-facets',
-    target: '.o-expandable-facets_target',
-    content: '.o-expandable-facets_content',
+    target: '.o-expandable-facets__target',
+    content: '.o-expandable-facets__content',
     header: '.o-expandable__header',
-    facetCheckbox: '.o-expandable-facets_checkbox',
-    facetLabel: '.o-expandable-facets_checkbox ~ .a-label',
+    facetCheckbox: '.o-expandable-facets__checkbox',
+    facetLabel: '.o-expandable-facets__checkbox ~ .a-label',
   },
 
   classes: {
@@ -22,7 +22,7 @@ const ExpandableFacets = AtomicComponent.extend({
   },
 
   events: {
-    'click .o-expandable-facets_target': 'expandableClickHandler',
+    'click .o-expandable-facets__target': 'expandableClickHandler',
   },
 
   transition: null,
@@ -37,10 +37,10 @@ const ExpandableFacets = AtomicComponent.extend({
  */
 function initialize() {
   const customClasses = {
-    BASE_CLASS: 'o-expandable-facets_content__transition',
-    EXPANDED: 'o-expandable-facets_content__expanded',
-    COLLAPSED: 'o-expandable-facets_content__collapsed',
-    OPEN_DEFAULT: 'o-expandable-facets_content__onload-open',
+    BASE_CLASS: 'o-expandable-facets__content--transition',
+    EXPANDED: 'o-expandable-facets__content--expanded',
+    COLLAPSED: 'o-expandable-facets__content--collapsed',
+    OPEN_DEFAULT: 'o-expandable-facets__content--onload-open',
   };
 
   const transition = new ExpandableFacetTransition(
@@ -92,5 +92,5 @@ export default ExpandableFacets;
 
 /**
  * Find .o-expandable-facets, add `is-open` class.
- * Find .o-expandable-facets_target and add a click handler to toggle classes on .o-expandable-facets between `is-open` and `is-closed`.
+ * Find .o-expandable-facets__target and add a click handler to toggle classes on .o-expandable-facets between `is-open` and `is-closed`.
  */

@@ -5,14 +5,14 @@ import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
 
 const questionView = {
-  $settlementBigQuestion: $('.step_settlement'),
-  $nonsettlementBigQuestion: $('.step_nonsettlement'),
+  $settlementBigQuestion: $('.step__settlement'),
+  $nonsettlementBigQuestion: $('.step__nonsettlement'),
   $getOptions: $('.get-options'),
   $followupNoNotSure: $('.followup__no-not-sure'),
   $followupYes: $('.followup__yes'),
   $optionsWrapper: $('.get-options__dynamic'),
   $options: $('.option'),
-  $optionsSidebar: $('.get-options_sidebar'),
+  $optionsSidebar: $('.get-options__sidebar'),
   $transferCredits: $('.option__transfer-credits'),
   $exploreSchools: $('.option__explore-schools'),
   $workWhileStudying: $('.option__work-while-studying'),
@@ -37,7 +37,7 @@ const questionView = {
     if (isSettlementStatus === true) {
       questionView.$settlementBigQuestion.show();
       questionView.$nonsettlementBigQuestion.hide();
-      $('#question_answer-no').hide();
+      $('#question__answer-no').hide();
       questionView.$optionsWrapper.addClass(
         'get-options__settlement content__main',
       );
@@ -60,7 +60,7 @@ const questionView = {
    * @param {boolean} isSettlementStatus - Flag if this is a settlement school.
    */
   bigQuestionListener: function (isSettlementStatus) {
-    const $answerButtons = $('.question_answers > button');
+    const $answerButtons = $('.question__answers > button');
     $answerButtons.listen('click', function () {
       const values = getFinancial.values();
       if (isSettlementStatus === true) {
@@ -72,7 +72,7 @@ const questionView = {
       if (isSettlementStatus === true) {
         questionView.$followupYes.hide();
         questionView.$followupNoNotSure.hide();
-      } else if ($(this).attr('id') === 'question_answer-yes') {
+      } else if ($(this).attr('id') === 'question__answer-yes') {
         questionView.$followupYes.show();
         questionView.$followupNoNotSure.hide();
       } else {

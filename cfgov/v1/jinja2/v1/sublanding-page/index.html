@@ -21,25 +21,25 @@
 {% block content_main %}
     {% if page.has_hero -%}
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-        {{ translation_links.render(modifier_classes='block__flush-top') }}
+        {{ translation_links.render(modifier_classes='block--flush-top') }}
     {%- endif %}
 
     {% for block in page.content -%}
         {% if block.block_type == 'notification' %}
             <div class="block
-                        block__flush-top
-                        block__flush-bottom
-                        block__padded-bottom">
+                        block--flush-top
+                        block--flush-bottom
+                        block--padded-bottom">
                 {% include_block block %}
             </div>
         {% elif 'featured_content' in block.block_type %}
-            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+            <div class="block{{ ' block--flush-top' if loop.first else '' }}">
                 {% include_block block %}
             </div>
         {% elif 'post_preview_snapshot' in block.block_type %}
             {% include_block block %}
         {% elif 'filter_controls' in block.block_type %}
-            <div class="block block__flush-top">
+            <div class="block block--flush-top">
                 {% include_block block %}
             </div>
         {% elif 'text_introduction' not in block.block_type %}

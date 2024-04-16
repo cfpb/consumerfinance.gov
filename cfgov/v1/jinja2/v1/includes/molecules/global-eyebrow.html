@@ -19,10 +19,10 @@
 {% macro render( is_horizontal=false, language='en' ) %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
-                m-global-eyebrow__{{ 'horizontal' if is_horizontal
+                m-global-eyebrow--{{ 'horizontal' if is_horizontal
                                       else 'list' }}">
         <div class="wrapper
-                    {{ 'wrapper__match-content' if is_horizontal else '' }}">
+                    {{ 'wrapper--match-content' if is_horizontal else '' }}">
             {% if is_horizontal -%}
                 {{ tagline.render() }}
             {%- endif %}

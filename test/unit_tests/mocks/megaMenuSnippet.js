@@ -67,7 +67,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="#">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="#">
 <div aria-level="2" role="heading">
 
 
@@ -528,7 +528,7 @@ export default `
 
                         <li class="o-mega-menu__content-item o-mega-menu__content-2-item
                                     o-mega-menu__content-item--has-icon o-mega-menu__content-2-item__has-icon ">
-                            <a class="a-link o-mega-menu__content-link o-mega-menu__content-2-link a-link__icon" href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">
+                            <a class="a-link o-mega-menu__content-link o-mega-menu__content-2-link a-link--icon" href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">
 <svg class="cf-icon-svg" viewBox="0 0 12 19" xmlns="http://www.w3.org/2000/svg"><path d="M11.16 16.153a.477.477 0 0 1-.476.475H1.316a.477.477 0 0 1-.475-.475V3.046a.477.477 0 0 1 .475-.475h6.95l2.893 2.893zm-1.11-9.924H8.059a.575.575 0 0 1-.574-.574V3.679H1.95v11.84h8.102zM3.907 4.92a1.03 1.03 0 1 0 1.029 1.03 1.03 1.03 0 0 0-1.03-1.03zm4.958 3.253h-5.87v1.108h5.87zm0 2.354h-5.87v1.109h5.87zm0 2.354h-5.87v1.109h5.87z"></path></svg>
 <span class="a-link__text">Order free brochures</span>
  <svg class="cf-icon-svg" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
@@ -565,7 +565,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="/rules-policy/">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="/rules-policy/">
 <div aria-level="2" role="heading">
 
 
@@ -823,7 +823,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="/enforcement/">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="/enforcement/">
 <div aria-level="2" role="heading">
 
 
@@ -1030,7 +1030,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="/compliance/">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="/compliance/">
 <div aria-level="2" role="heading">
 
 
@@ -1288,7 +1288,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="/data-research/">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="/data-research/">
 <div aria-level="2" role="heading">
 
 
@@ -1613,7 +1613,7 @@ export default `
 
 <li class="o-mega-menu__content-item o-mega-menu__content-1-item " data-js-hook="behavior_flyout-menu">
 
-    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link__has-children o-mega-menu__content-1-link__has-children" data-js-hook="behavior_flyout-menu_trigger" href="#">
+    <a aria-haspopup="menu" class="o-mega-menu__content-link o-mega-menu__content-1-link o-mega-menu__content-link--has-children o-mega-menu__content-1-link--has-children" data-js-hook="behavior_flyout-menu_trigger" href="#">
 <div aria-level="2" role="heading">
 
 
@@ -1865,7 +1865,7 @@ export default `
 
 
     <div class="m-global-eyebrow
-                m-global-eyebrow__list">
+                m-global-eyebrow--list">
         <div class="wrapper
                     ">
 

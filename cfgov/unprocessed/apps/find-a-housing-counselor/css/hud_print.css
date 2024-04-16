@@ -99,7 +99,7 @@
   /* Hide unneeded content */
   .o-header,
   .o-footer,
-  .hud_hca_api_results_actions,
+  .hud-hca-api-results-actions,
   svg {
     display: none !important;
   }

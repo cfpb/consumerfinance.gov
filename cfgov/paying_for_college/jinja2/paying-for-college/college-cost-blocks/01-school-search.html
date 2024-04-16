@@ -1,8 +1,8 @@
-<section class="college-costs_tool-section college-costs_tool-section__school-search" id="college-costs_school-search" data-tool-section="school-info">
-    <div class="school-search_start" id="school-search_what-school">
+<section class="college-costs__tool-section college-costs__tool-section--school-search" id="college-costs_school-search" data-tool-section="school-info">
+    <div class="school-search__start" id="school-search_what-school">
         <h2 tabindex="-1">School & living situation</h2>
         <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
-        <label class="a-label a-label__heading u-mb15" for="search__school-input">
+        <label class="a-label a-label--heading u-mb15" for="search__school-input">
             Enter the name of the school. (You can also search by mascot.)
         </label>
         <p>
@@ -12,7 +12,7 @@
                    class="a-text-input"
                    autocomplete="off">
         </p>
-        <div class="a-form-alert a-form-alert__error" data-state-based-visibility="school-required" role="alert">
+        <div class="a-form-alert a-form-alert--error" data-state-based-visibility="school-required" role="alert">
           {{ svg_icon('warning-round') }}
           <span class="a-form-alert__text">
               Please enter the school you are considering.
@@ -24,7 +24,7 @@
         <ul></ul>
     </div>
 
-    <div class="school-search_additional-info">
+    <div class="school-search__additional-info">
         <div class="block block--sub program-question" id="school-search_program-type">
             <h3 class="h4">Select your program type</h3>
             {{ notification.render(
@@ -33,7 +33,7 @@
                 '',
                 'If you are entering or continuing an accelerated degree program (a bachelor’s followed by a master’s in the same subject), choose the program type covered by this financial aid offer.'
             ) }}
-            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="type-required" role="alert">
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="type-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select your program type.
@@ -93,7 +93,7 @@
 
         <div class="block block--sub program-question" id="school-search_program-progress">
           <h3 class="h4">How much progress have you made towards this degree, excluding credits from AP/IB exams?</h3>
-          <div class="a-form-alert a-form-alert__error" data-state-based-visibility="progress-required" role="alert">
+          <div class="a-form-alert a-form-alert--error" data-state-based-visibility="progress-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select how much progress you have made towards this degree.
@@ -153,7 +153,7 @@
                   'Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.' | safe
               ) }}
             </div>
-            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="length-required" role="alert">
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="length-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select your program length.
@@ -211,7 +211,7 @@
 
         <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
-            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="rate-required" role="alert">
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="rate-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select which tuition rate will apply to you.
@@ -238,7 +238,7 @@
 
         <div class="block block--sub program-question undergrad-content" id="school-search_program-housing">
             <h3 class="h4">Where do you plan to live while in school?</h3>
-            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="housing-required" role="alert">
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="housing-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select where you plan to live while in school.
@@ -273,7 +273,7 @@
         <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
             <h3 class="h4">Are you considered a dependent or independent student?</h3>
             <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
-            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="dependency-required" role="alert">
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
                   Please select whether you are considered a dependent or independent student.
