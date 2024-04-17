@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
+from core import checks  # noqa F401
+
 
 class CoreAppConfig(AppConfig):
     name = "core"
