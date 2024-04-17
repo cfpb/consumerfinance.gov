@@ -1,7 +1,7 @@
 import copy
 from collections import OrderedDict
 
-from django.core.paginator import InvalidPage, Paginator
+from django.core.paginator import Paginator
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
@@ -10,6 +10,7 @@ from wagtail.fields import StreamField
 from opensearchpy import Q
 
 from teachers_digital_platform.documents import ActivityPageDocument
+from teachers_digital_platform.forms import SearchForm
 from teachers_digital_platform.models.django import (
     ActivityAgeRange,
     ActivityBloomsTaxonomyLevel,
@@ -97,22 +98,32 @@ class ActivityIndexPage(CFGOVPage):
         # You can only create one of these!
         return super().can_create_at(parent) and not cls.objects.exists()
 
+    def serve(self, request, *args, **kwargs):
+        self.search_form = SearchForm(request.GET)
+        return super().serve(request, *args, **kwargs)
+
     def get_template(self, request):
         template = "teachers_digital_platform/activity_index_page.html"
-        if "partial" in request.GET:
+        if (
+            self.search_form.is_valid()
+            and self.search_form.cleaned_data["partial"]
+        ):
             template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: E501
         return template
 
     def dsl_search(self, request, *args, **kwargs):
         """Search using Elasticsearch 7 and django-elasticsearch-dsl."""
+
+        if not self.search_form.is_valid():
+            return {"facets": []}
+
+        data = self.search_form.cleaned_data
         all_facets = copy.copy(self.activity_setups.facet_setup)
         selected_facets = {}
         card_setup = self.activity_setups.ordered_cards
         total_activities = len(card_setup)
-        search_query = request.GET.get("q", "")
-        facet_called = any(
-            [request.GET.get(facet, "") for facet in FACET_LIST]
-        )
+        search_query = data.get("q", "")
+        facet_called = any([data.get(facet, "") for facet in FACET_LIST])
         # If there's no query or facet request, we can return cached setups:
         if not search_query and not facet_called:
             payload = {
@@ -125,9 +136,9 @@ class ActivityIndexPage(CFGOVPage):
                 "expanded_facets": ALWAYS_EXPANDED,
             }
             self.results = payload
-            results_per_page = validate_results_per_page(request)
+            results_per_page = 10
             paginator = Paginator(payload["results"], results_per_page)
-            current_page = validate_page_number(request, paginator)
+            current_page = self.search_form.cleaned_data["page"]
             paginated_page = paginator.page(current_page)
             context_update = {
                 "facets": all_facets,
@@ -151,13 +162,8 @@ class ActivityIndexPage(CFGOVPage):
         else:
             dsl_search = dsl_search.sort("-date")
         for facet, _ in FACET_MAP:
-            if facet in request.GET and request.GET.get(facet):
-                facet_ids = [
-                    value
-                    for value in request.GET.getlist(facet)
-                    if value.isdigit()
-                ]
-                selected_facets[facet] = facet_ids
+            if facet in data and data.get(facet):
+                selected_facets[facet] = data.get(facet)
         for facet, pks in selected_facets.items():
             dsl_search = dsl_search.query(
                 "bool", should=[Q("match", **{facet: pk}) for pk in pks]
@@ -198,9 +204,9 @@ class ActivityIndexPage(CFGOVPage):
             }
         )
         self.results = payload
-        results_per_page = validate_results_per_page(request)
+        results_per_page = 10
         paginator = Paginator(payload["results"], results_per_page)
-        current_page = validate_page_number(request, paginator)
+        current_page = self.search_form.cleaned_data["page"]
         paginated_page = paginator.page(current_page)
         context_update = {
             "facets": all_facets,
@@ -389,36 +395,3 @@ def get_activity_setup(refresh=False):
         map_obj.update_setups()
         map_obj.refresh_from_db()
     return map_obj
-
-
-def validate_results_per_page(request):
-    """
-    A utility for parsing the requested number of results per page.
-
-    This should catch an invalid number of results and always return
-    a valid number of results, defaulting to 10.
-    """
-    raw_results = request.GET.get("results")
-    if raw_results in ["10", "25", "50"]:
-        return int(raw_results)
-    else:
-        return 10
-
-
-def validate_page_number(request, paginator):
-    """
-    A utility for parsing a pagination request.
-
-    This should catch invalid page numbers and always return
-    a valid page number, defaulting to 1.
-    """
-    raw_page = request.GET.get("page", 1)
-    try:
-        page_number = int(raw_page)
-    except ValueError:
-        page_number = 1
-    try:
-        paginator.page(page_number)
-    except InvalidPage:
-        page_number = 1
-    return page_number
