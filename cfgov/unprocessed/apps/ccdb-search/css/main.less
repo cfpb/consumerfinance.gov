@@ -23,11 +23,13 @@
   left: 50%;
   right: 50%;
   position: relative;
-  padding: 0 unit(30px / 16px, em) !important;
+  padding: unit(30px / @base-font-size-px, rem);
+  padding-bottom: 0;
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    padding: 0 unit( 15px / 16px, em ) !important;
+    padding: unit(15px / @base-font-size-px, rem);
+    padding-bottom: 0;
   });
 
   // Overrides for design system.
