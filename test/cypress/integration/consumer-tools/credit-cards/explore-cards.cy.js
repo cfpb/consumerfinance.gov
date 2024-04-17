@@ -14,6 +14,21 @@ describe('Explore credit cards landing page', () => {
 
     cy.get('#id_rewards input').should('be.checked');
   });
+
+  it("should show an error message if a location isn't selected", () => {
+    exploreCards.openLandingPage();
+
+    cy.get('.a-form-alert__text').should('not.be.visible');
+
+    exploreCards.selectSituation('Earn rewards');
+    exploreCards.clickSubmitButton();
+
+    cy.get('.a-form-alert__text').should('be.visible');
+
+    exploreCards.selectLocation('NY');
+
+    cy.get('.a-form-alert__text').should('not.be.visible');
+  });
 });
 
 describe('Explore credit cards results page', () => {

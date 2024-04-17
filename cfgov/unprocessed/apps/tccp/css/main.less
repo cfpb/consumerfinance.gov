@@ -527,3 +527,18 @@ html.js form[hx-boost] {
     right: -8%;
   }
 }
+
+.a-select {
+  & &--error {
+    outline: 2px solid var(--red);
+    &:focus {
+      box-shadow: 0 0 0 2px var(--red);
+      outline: 1px dotted var(--red);
+    }
+  }
+}
+
+.a-form-alert__text {
+  display: block;
+  margin-left: unit((20px / @base-font-size-px), em);
+}

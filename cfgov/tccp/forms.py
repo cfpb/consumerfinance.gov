@@ -15,7 +15,12 @@ class LandingPageForm(forms.Form):
     location = forms.ChoiceField(
         choices=[("", "Select your location")] + StateChoices,
         label="Your location",
-        widget=Select(),
+        widget=Select(
+            attrs={
+                "aria-describedby": "location-required",
+                "data-js-hook": "behavior_select-location",
+            }
+        ),
     )
     situations = forms.TypedMultipleChoiceField(
         choices=SituationChoices,

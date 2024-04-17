@@ -6,6 +6,11 @@
     {{ title }} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block javascript scoped %}
+{{ super() }}
+<script src="{{ static( 'apps/tccp/js/index.js' ) }}"></script>
+{% endblock %}
+
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
@@ -96,6 +101,13 @@
                     </label>
 
                     {{ form.location }}
+
+                    <div class="a-form-alert a-form-alert__error u-visually-hidden" id="location-required" role="alert">
+                        {{ svg_icon("error-round") }}
+                        <span class="a-form-alert__text">
+                            Required field, select a location.
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -110,7 +122,7 @@
             </div>
 
             <div class="m-btn-group">
-                <button class="a-btn a-btn__full-on-xs" title="See cards for your situation">See cards for your situation</button>
+                <button class="a-btn a-btn__full-on-xs" title="See cards for your situation" data-js-hook="behavior_submit-situations">See cards for your situation</button>
                 <div class="u-btn-helper">
                     Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
                 </div>
