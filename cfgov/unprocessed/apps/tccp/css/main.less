@@ -97,8 +97,21 @@
 }
 
 .o-well.o-well--speed-bump {
-  padding: unit((20px / @base-font-size-px), rem);
+  padding: unit((75px / @base-font-size-px), rem)
+    unit((35px / @base-font-size-px), rem);
   background-color: var(--teal-10);
+
+  .cf-icon-svg {
+    color: var(--green);
+  }
+
+  // Make everything bigger on desktop
+  .respond-to-min(@bp-sm-min, {
+    p {
+      .h3();
+      max-width: 100%;
+    }
+  });
 }
 
 .m-card.m-card--tabular {
@@ -320,7 +333,7 @@ html.js .o-filterable-list-results__partial {
 // card result to emphasize that there are more cards to see
 #u-show-more-fade {
   position: relative;
-  margin-top: unit((1200px / @base-font-size-px), rem);
+  margin-top: unit((-200px / @base-font-size-px), rem);
   padding-top: unit((180px / @base-font-size-px), rem);
   z-index: 1;
   cursor: pointer;
