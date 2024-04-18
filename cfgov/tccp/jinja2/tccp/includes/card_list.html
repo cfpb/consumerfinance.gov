@@ -82,10 +82,12 @@
     {{- (rewards | join(', ')) if rewards else 'None' -}}
 {%- endmacro -%}
 
+{%- set ordering_by = form.ordering.data[0] -%}
+
 <div class="o-card-group">
     <div class="o-card-group_cards">
         {%- for card in cards %}
-        {%- set show_more = loop.index > 11 and form.ordering.data[0] != 'product_name' -%}
+        {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
@@ -110,12 +112,18 @@
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--transfer">
-                        <dt>Balance transfer APR</dt>
+                        <dt>
+                            {%- if ordering_by == 'transfer_apr' -%}<strong>{%- endif -%}
+                            Balance transfer APR
+                            {%- if ordering_by == 'transfer_apr' -%}</strong>{%- endif -%}
+                        </dt>
                         <dd>
+                            {%- if ordering_by == 'transfer_apr' -%}<strong>{%- endif -%}
                             {{- apr_range(
                                 card.transfer_apr_for_tier_min,
                                 card.transfer_apr_for_tier_max
                             ) -}}
+                            {%- if ordering_by == 'transfer_apr' -%}</strong>{%- endif -%}
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--rewards">
@@ -133,6 +141,9 @@
                     </div>
                     {%- endif -%}
                 </dl>
+                <div>
+                    <p class="m-card__subtitle">See card details</p>
+                </div>
             </a>
         </article>
 

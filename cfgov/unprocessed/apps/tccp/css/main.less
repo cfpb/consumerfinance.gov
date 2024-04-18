@@ -121,9 +121,6 @@
 
   > a {
     padding: unit((20px / @base-font-size-px), rem);
-    // Decrease the bottom padding on mobile to accommodate
-    // the grid's `row-gap` when a card has no requirements
-    padding-bottom: unit((5px / @base-font-size-px), rem);
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
@@ -229,10 +226,12 @@
   grid-template-columns: 2fr 3fr;
   column-gap: 20px;
   row-gap: 15px;
+  margin-bottom: 0;
 
   .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
+    margin-bottom: unit((15px / @base-font-size-px), rem);
   });
 }
 
@@ -265,9 +264,12 @@
   &--requirements {
     padding-bottom: unit((15px / @base-font-size-px), rem);
     grid-area: requirements;
-    align-self: start;
     dt {
       .u-visually-hidden;
+    }
+
+    dd {
+      padding-top: unit((4px / @base-font-size-px), rem);
     }
 
     .respond-to-min(@bp-sm-min, {
@@ -278,6 +280,7 @@
   dt,
   &.m-data-spec--requirements dd {
     text-transform: none;
+    letter-spacing: inherit;
     font-size: unit((14px / @base-font-size-px), rem);
     font-weight: normal;
     strong {
