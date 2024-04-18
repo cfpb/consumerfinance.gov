@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     "tccp",
     "django_filters",
     "django_htmx",
+    "wagtail_content_audit",
 )
 
 MIDDLEWARE = (
