@@ -55,6 +55,27 @@ class LandingPageView(FlaggedTemplateView):
         )
 
 
+class AboutView(FlaggedTemplateView):
+    flag_name = "TCCP"
+    template_name = "tccp/about.html"
+    breadcrumb_items = [
+        {
+            "title": "Credit cards",
+            "href": "/consumer-tools/credit-cards/",
+        },
+        {
+            "title": LandingPageView.heading,
+            "href": reverse_lazy("tccp:landing_page"),
+        },
+    ]
+
+    def get_context_data(self, **kwargs):
+        return {
+            **super().get_context_data(**kwargs),
+            "breadcrumb_items": self.breadcrumb_items,
+        }
+
+
 class CardListView(FlaggedViewMixin, ListAPIView):
     flag_name = "TCCP"
     model = CardSurveyData
