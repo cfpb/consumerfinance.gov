@@ -53,6 +53,20 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
+  it('should only show the "Show more" button when not ordering by product name', () => {
+    exploreCards.openResultsPage('ordering=product_name');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Card name');
+    cy.get('#u-show-more-fade').should('not.be.visible');
+
+    exploreCards.selectOrdering('Purchase APR');
+    cy.get('#u-show-more-fade').should('be.visible');
+
+    exploreCards.selectOrdering('Card name');
+    cy.get('#u-show-more-fade').should('not.be.visible');
+
+    exploreCards.selectOrdering('Purchase APR');
+    cy.get('#u-show-more-fade').should('be.visible');
+  });
   it('should show speed bumps when situation(s) are selected', () => {
     exploreCards.openResultsPage('situations=Build%20credit');
     exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {

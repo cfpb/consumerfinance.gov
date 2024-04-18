@@ -85,7 +85,7 @@
 <div class="o-card-group">
     <div class="o-card-group_cards">
         {%- for card in cards %}
-        {%- set show_more = loop.index > 11 -%}
+        {%- set show_more = loop.index > 11 and form.ordering.data[0] != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
