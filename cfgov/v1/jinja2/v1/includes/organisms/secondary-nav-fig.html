@@ -18,10 +18,9 @@
 
 {% macro render(version_status=none, effective_start_date=none, effective_end_date=none) %}
 <div class="o-fig_sidebar">
-    {% set tag_modification = 'dark' if version_status == 'Archived' else 'info'  %}
     <div class="u-hide-on-tablet">
         {% if version_status %}
-            <div class="a-tag a-tag__{{ tag_modification }} u-mb20">
+            <div class="a-tag u-mb20">
                 {{ version_status }}
             </div>
             <p>
