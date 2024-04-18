@@ -16,6 +16,14 @@
     {%- endif %} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{%- block canonical -%}
+  {%- if section -%}
+    {% set canonical = canonical + section.label %}
+  {%- endif -%}
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:url" content="{{ canonical }}">
+{%- endblock -%}
+
 {% block desc -%}
     {#- 'section' pages are ones that show the actual text of the regulation -#}
     {% if section -%}

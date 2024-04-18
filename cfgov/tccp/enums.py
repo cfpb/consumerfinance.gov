@@ -38,9 +38,9 @@ ContactTypeChoices = make_choices("Phone", "Website")
 
 CreditTierChoices = [
     ("No credit score", "I don’t have a credit score"),
-    ("Credit score 619 or less", "Less than 619"),
+    ("Credit score 619 or less", "619 or less"),
     ("Credit scores from 620 to 719", "620-719"),
-    ("Credit score of 720 or greater", "Greater than 720"),
+    ("Credit score of 720 or greater", "720 and greater"),
 ]
 
 

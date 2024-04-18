@@ -5,7 +5,7 @@
 We have multiple resources for writing new unit tests for Django, Wagtail, and Python code:
 
 - [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/main/guides/unittesting-django-wagtail.md)
-- [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
+- [The Django testing documentation](https://docs.djangoproject.com/en/stable/topics/testing/overview/)
 - [The Wagtail testing documentation](https://docs.wagtail.org/en/stable/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
 
@@ -130,7 +130,7 @@ tox -e lint
 
 We use the `ruff` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
-[Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
+[Django coding style guidelines](https://docs.djangoproject.com/en/stable/internals/contributing/writing-code/coding-style/),
 and the
 [CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
@@ -199,6 +199,6 @@ This object behaves similarly to the real `govdelivery.api.GovDelivery` class in
 
 Conveniently for unit testing, all calls are stored in a class-level list that can be retrieved at `MockGovDelivery.calls`. This allows for testing of code that interacts with GovDelivery by checking the contents of this list to ensure that the right methods were called.
 
-This pattern is modeled after Django's [`django.core.mail.outbox`](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#email-services) which provides similar functionality for testing sending of emails.
+This pattern is modeled after Django's [`django.core.mail.outbox`](https://docs.djangoproject.com/en/stable/topics/testing/tools/#email-services) which provides similar functionality for testing sending of emails.
 
 The related classes `ExceptionMockGovDelivery` and `ServerErrorMockGovDelivery` can similarly be used in unit tests to test for cases where a call to the GovDelivery API raises an exception and returns an HTTP status code of 500, respectively.

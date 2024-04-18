@@ -36,7 +36,6 @@ class LandingPageView(FlaggedTemplateView):
                 "title": title(self.heading),
                 "heading": self.heading,
                 "form": LandingPageForm(),
-                "stats": CardSurveyData.objects.get_summary_statistics(),
             }
         )
 
@@ -54,6 +53,27 @@ class LandingPageView(FlaggedTemplateView):
                 doseq=True,
             )
         )
+
+
+class AboutView(FlaggedTemplateView):
+    flag_name = "TCCP"
+    template_name = "tccp/about.html"
+    breadcrumb_items = [
+        {
+            "title": "Credit cards",
+            "href": "/consumer-tools/credit-cards/",
+        },
+        {
+            "title": LandingPageView.heading,
+            "href": reverse_lazy("tccp:landing_page"),
+        },
+    ]
+
+    def get_context_data(self, **kwargs):
+        return {
+            **super().get_context_data(**kwargs),
+            "breadcrumb_items": self.breadcrumb_items,
+        }
 
 
 class CardListView(FlaggedViewMixin, ListAPIView):

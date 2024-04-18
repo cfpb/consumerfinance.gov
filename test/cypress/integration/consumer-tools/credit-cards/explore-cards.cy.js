@@ -77,7 +77,7 @@ describe('Explore credit card details page', () => {
   it('should have a breadcrumb to the filtered list the user came from', () => {
     exploreCards.openLandingPage();
 
-    exploreCards.selectCreditTier('Greater than 720');
+    exploreCards.selectCreditTier('720 and greater');
     exploreCards.selectLocation('NY');
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();

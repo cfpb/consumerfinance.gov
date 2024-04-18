@@ -54,6 +54,12 @@ class LandingPageViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class AboutViewTests(TestCase):
+    def test_get(self):
+        response = self.client.get(reverse("tccp:about"))
+        self.assertContains(response, "About this tool")
+
+
 class CardListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):

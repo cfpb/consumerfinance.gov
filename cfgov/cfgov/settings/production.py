@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 from os.path import exists
@@ -10,6 +9,7 @@ from django.utils.text import format_lazy
 import saml2
 
 from cfgov.settings.base import *
+from cfgov.util import environment_json
 
 
 default_loggers = []
@@ -95,13 +95,13 @@ STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
-try:
-    ALLOWED_HOSTS = json.loads(os.getenv("ALLOWED_HOSTS"))
-except (TypeError, ValueError):
-    raise ImproperlyConfigured(
+ALLOWED_HOSTS = environment_json(
+    "ALLOWED_HOSTS",
+    (
         "Environment variable ALLOWED_HOSTS is either not defined or is "
         "not valid JSON. Expected a JSON array of allowed hostnames."
-    )
+    ),
+)
 
 # SAML2 Authentication
 #
@@ -185,8 +185,29 @@ SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_HSTS_SECONDS = 600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+
+# Require the SECRET_KEY as an environment variable
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ImproperlyConfigured(
+        "The SECRET_KEY environment variable must be set"
+    )
+
+# Secret key fallbacks that allow the rotation of the secret key.
+# This environment variable should be a JSON array if fallbacks are available.
+# This list is empty (no old fallback secret keys) if the environment variable
+# SECRET_KEY_FALLBACKS is not set.
+SECRET_KEY_FALLBACKS = environment_json(
+    "SECRET_KEY_FALLBACKS",
+    (
+        "Environment variable SECRET_KEY_FALLBACKS is not valid JSON. "
+        "Expected a JSON array of fallback secret keys."
+    ),
+    default="[]",
+)
