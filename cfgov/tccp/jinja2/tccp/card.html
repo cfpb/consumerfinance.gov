@@ -243,24 +243,27 @@
                 </thead>
                 <tbody>
                     {% for purchase_apr in purchase_aprs %}
-                        <tr>
-                            <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
-                            <td>
-                                {% if purchase_apr_ratings[loop.index0] is not none %}
-                                    {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
-                                    <span class="m-apr-rating--{{ label }}">
-                                        {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
-                                            {{ svg_icon("dollar-round") }}
-                                        {% endfor -%}
+                        {% if apr_range(purchase_apr[0], purchase_apr[1]) != 'N/A' %}
+                            <tr>
+                                <td>{{ credit_tiers[loop.index][1] }}</td>
+                                <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
+                                <td>
+                                    {% if purchase_apr_ratings[loop.index0] is not none %}
+                                        {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
+                                        <span class="m-apr-rating--{{ label }}">
+                                            {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
+                                                {{ svg_icon("dollar-round") }}
+                                            {% endfor -%}
 
-                                        Pay {{ label }} interest
-                                    </span>
-                                {% else %}
-                                    Not targeted for these credit scores
-                                {% endif %}
-                            </td>
-                        </tr>
+                                            Pay {{ label }} interest
+                                        </span>
+                                    {% else %}
+                                        Not targeted for these credit scores
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+
                     {% endfor %}
                 </tbody>
             </table>
@@ -324,10 +327,12 @@
                         card.intro_apr_good,
                         card.intro_apr_great
                     ] %}
-                        <tr>
-                            <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr(intro_apr) }}</td>
-                        </tr>
+                        {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
+                            <tr>
+                                <td>{{ credit_tiers[loop.index][1] }}</td>
+                                <td>{{ apr(intro_apr) }}</td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -810,10 +815,12 @@
                             card.transfer_apr_good,
                             card.transfer_apr_great
                         ] %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr(transfer_apr) }}</td>
-                            </tr>
+                            {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
+                                <tr>
+                                    <td>{{ credit_tiers[loop.index][1] }}</td>
+                                    <td>{{ apr(transfer_apr) }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -920,10 +927,12 @@
                             card.advance_apr_good,
                             card.advance_apr_great
                         ] %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr(advance_apr) }}</td>
-                            </tr>
+                            {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
+                                <tr>
+                                    <td>{{ credit_tiers[loop.index][1] }}</td>
+                                    <td>{{ apr(advance_apr) }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
