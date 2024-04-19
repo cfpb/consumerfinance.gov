@@ -29,7 +29,7 @@
     <h1>{{ card.product_name }}</h1>
     {% set credit_tiers = [
         ("No credit score", "No score"),
-        ("619 or less", "Below 619"),
+        ("619 or less", "619 or less"),
         ("620 to 719", "620-719"),
         ("720 or greater", "720+")
     ] %}
@@ -163,9 +163,9 @@
                 "warning",
                 true,
                 "This is a secured card",
-                "You will have to pay a security deposit before using this card
-                and will only be able to make purchases or get cash advances up
-                to the amount of that deposit."
+                "You may have to pay a security deposit to open and use this
+                card and will only be able to make purchases or get cash
+                advances up to the amount of that deposit."
             ) }}
         </div>
     {% endif %}
@@ -173,7 +173,7 @@
     <div class="o-card-details-section">
         <h2 class="h3 u-mb15">
             {{ svg_icon("cart-round") }}
-            Making purchases
+            Purchase interest rate and fees
         </h2>
         {# TODO: Unify ratings code with results list view #}
         {% set purchase_apr_rating_labels = [
@@ -226,10 +226,12 @@
                 {% endif %}
             </div>
             <p>
-                {{ 'Your APR will be based on your credit score. ' if card.purchase_apr_vary_by_credit_tier }}
-                You’ll only know your exact APR if you are approved for the
-                card. Here are typical APRs for different credit scores for this
-                card:
+                An APR, or annual percentage rate, is the interest you‘ll pay
+                on purchases.
+                {{ 'Your APR will vary based on your credit score. '
+                    if card.purchase_apr_vary_by_credit_tier
+                }}
+                Here are typical APRs for different credit scores for this card:
             </p>
             <table class="o-table o-table--apr">
                 <thead>
@@ -291,7 +293,8 @@
                     {{ apr(card.intro_apr_median) }}
                 {% endif %}
                 for
-                {{ '%g' | format(card.median_length_of_introductory_apr) }} months
+                {{ '%.0f' | format(card.median_length_of_introductory_apr ) }}
+                months
             </div>
             <div class="u-mb15">
                 {% if card.intro_apr_min is not none
@@ -304,10 +307,9 @@
             </div>
             {% if card.introductory_apr_vary_by_credit_tier %}
             <p>
-                Your introductory APR will be based on your credit score.
-                You’ll only know your exact APR if you are approved for the
-                card. Here are average APRs for different credit scores for this
-                card:
+                Your introductory APR will vary based on your credit score.
+                Here are typical introductory APRs for different credit scores
+                for this card:
             </p>
             <table class="o-table o-table--apr">
                 <thead>
@@ -332,22 +334,20 @@
             {% elif card.intro_apr_median is not none
                 and card.intro_apr_min != card.intro_apr_max %}
                 <p>
-                    You’ll only know your exact APR if you are approved for the
-                    card. The median APR for this card is
+                    The median introductory APR for this card is
                     {{ apr(card.intro_apr_median) }}.
                 </p>
             {% endif %}
             <p>
-                With introductory APR offers, you have to keep track of
-                how you are paying off that balance within the promotional
-                period, or you could end up owing more in interest than the
-                original purchase amount.
-                <a href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/">Learn more about intro APR offers</a>.
+                If a card has promotional interest, ensure you’re on track to
+                pay off the balance within the promotional period, or you could
+                end up owing more in interest than the original purchase amount.
+                <a href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/">Learn more about introductory APR offers</a>.
             </p>
         {% endif %}
         <div class="o-additional-details">
             {% call() expandable({
-                'label': 'Transaction fees, charges, and other details',
+                'label': 'Foreign transaction fee, grace period, and other details',
                 'is_bordered': true,
                 'is_expanded': false,
                 'is_midtone': false
@@ -636,11 +636,11 @@
                                 <dd>
                                     {% if loop.first %}
                                         {{ currency(card.other_fee_amount) ~ ' (' ~
-                                            card.other_fee_explanation | lower ~ ')'
+                                            card.other_fee_explanation ~ ')'
                                         }}
                                     {% else %}
                                         {{ currency(card['other_fee_amount_' ~ loop.index]) ~ ' (' ~
-                                            card['other_fee_explanation_' ~ loop.index] | lower ~
+                                            card['other_fee_explanation_' ~ loop.index] ~
                                             ')'
                                         }}
                                     {% endif %}
@@ -719,7 +719,7 @@
     <div class="o-card-details-section">
         <h2 class="h3 u-mb15">
             {{ svg_icon("money-transfer-round") }}
-            Transferring a balance from another card or loan
+            Balance transfer interest rate and fees
         </h2>
         {# How top-line transfer APR and fees display if the card has:
             - One APR: "1.99% balance transfer APR"
@@ -751,6 +751,9 @@
                         {% elif card.transfer_apr_median is not none %}
                             Median balance transfer APR
                         {% endif %}
+                        for
+                        {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                        months
                     </div>
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
@@ -790,9 +793,8 @@
             {% endif %}
             {% if card.balance_transfer_apr_vary_by_credit_tier %}
                 <p>
-                    Your balance transfer APR will be based on your credit score.
-                    You’ll only know your exact APR if you are approved for the
-                    card. Here are average balance transfer APRs for different
+                    Your balance transfer APR will vary based on your credit
+                    score. Here are typical balance transfer APRs for different
                     credit scores for this card:
                 </p>
                 <table class="o-table o-table--apr">
@@ -818,18 +820,15 @@
             {% elif card.transfer_apr_median is not none
                 and card.transfer_apr_min != card.transfer_apr_max %}
                 <p>
-                    You’ll only know your exact balance transfer APR if you are
-                    approved for the card. The median balance transfer APR for
-                    this card is {{ apr(card.transfer_apr_median) }}.
+                    The median balance transfer APR for this card is
+                    {{ apr(card.transfer_apr_median) }}.
                 </p>
             {% endif %}
-            {# TODO: Explain what a grace period is #}
             <p>
-                The balance transfer APR is available for
-                {{ '%g' | format(card.median_length_of_balance_transfer_apr) }}
-                months after getting this card, on average. There is
-                {{ 'a' if card.balance_transfer_grace_period else 'no' }}
-                <a href="/ask-cfpb/do-i-pay-interest-on-new-purchases-after-i-get-a-zero-or-low-rate-balance-transfer-en-49/">balance transfer grace period</a>.
+                After
+                {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                months, any remaining unpaid balance on your account will be
+                subject to interest charges based on your purchase APR.
             </p>
         {% else %}
             <p>This card does not offer balance transfers.</p>
@@ -839,7 +838,7 @@
     <div class="o-card-details-section">
         <h2 class="h3 u-mb15">
             {{ svg_icon("quick-cash-round") }}
-            Getting a cash advance
+            Cash advance interest rate and fees
         </h2>
         {% if card.cash_advance_apr_offered %}
             <div class="m-payment-calculation u-mb15">
@@ -904,10 +903,9 @@
             {% endif %}
             {% if card.cash_advance_apr_vary_by_credit_tier %}
                 <p>
-                    Your cash advance APR will be based on your credit score.
-                    You’ll only know your exact APR if you are approved for the
-                    card. Here are average cash advance APRs for different
-                    credit scores for this card:
+                    Your cash advance APR will vary based on your credit score.
+                    Here are typical cash advance APRs for different credit
+                    scores for this card:
                 </p>
                 <table class="o-table o-table--apr">
                     <thead>
@@ -932,23 +930,29 @@
             {% elif card.advance_apr_median is not none
                 and card.advance_apr_min != card.advance_apr_max %}
                 <p>
-                    You’ll only know your exact cash advance APR if you are
-                    approved for the card. The median cash advance APR for
-                    this card is {{ apr(card.advance_apr_median) }}.
+                    The median cash advance APR for this card is
+                    {{ apr(card.advance_apr_median) }}.
                 </p>
             {% endif %}
-            {# TODO: Explain this better #}
-            <p>
-               The cash advance fee is charged
-               {{ ' for each cash advance transaction' if
-                    card.cash_advance_fee_for_each_transaction else
-                    ' once per billing cycle'
-                }}.
-            </p>
+            {% if card.cash_advance_fee_for_each_transaction %}
+                <p>
+                    The cash advance fee is charged for each cash advance.
+                </p>
+            {% endif %}
         {% else %}
             <p>This card does not offer cash advances.</p>
         {% endif %}
     </div>
+    {% if card.balance_transfer_offered or card.cash_advance_apr_offered %}
+        <div class="o-card-details-section">
+            {{ speed_bump( {
+                'content': 'If you use your card to transfer a balance or get a
+                    cash advance, you may have to start paying interest on some
+                    or all of your total balance, including new purchases,
+                    as of the date of the transaction.'
+            } ) }}
+        </div>
+    {% endif %}
 
 </div>
 
