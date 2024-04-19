@@ -11,6 +11,7 @@ class RadioSelect(forms.RadioSelect):
 
 
 class CheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    template_name = "tccp/widgets/checkbox_select.html"
     option_template_name = "tccp/widgets/checkbox_option.html"
 
     def __init__(self, attrs=None, **kwargs):
