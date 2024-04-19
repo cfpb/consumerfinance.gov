@@ -293,7 +293,7 @@
                     {{ apr(card.intro_apr_median) }}
                 {% endif %}
                 for
-                {{ '%g' | format(card.median_length_of_introductory_apr | round) }}
+                {{ '%.0f' | format(card.median_length_of_introductory_apr ) }}
                 months
             </div>
             <div class="u-mb15">
@@ -752,7 +752,7 @@
                             Median balance transfer APR
                         {% endif %}
                         for
-                        {{ '%g' | format(card.median_length_of_balance_transfer_apr | round) }}
+                        {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
                         months
                     </div>
                 </div>
@@ -826,7 +826,7 @@
             {% endif %}
             <p>
                 After
-                {{ '%g' | format(card.median_length_of_balance_transfer_apr | round) }}
+                {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
                 months, any remaining unpaid balance on your account will be
                 subject to interest charges based on your purchase APR.
             </p>
