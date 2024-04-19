@@ -171,7 +171,7 @@
     {% endif %}
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("cart-round") }}
             Purchase interest rate and fees
         </h2>
@@ -207,7 +207,7 @@
                 - No min and max but a median: "29.74% median purchase APR"
                 - Single APR for everyone: "24.90% purchase APR"
             #}
-            <div class="h2 u-mb0 u-mt15">
+            <div class="h2 u-mb0">
                 {% if card.purchase_apr_min is not none
                     and card.purchase_apr_max is not none
                 %}
@@ -350,7 +350,7 @@
                 'label': 'Foreign transaction fee, grace period, and other details',
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     <dt>Foreign transaction fee</dt>
@@ -438,7 +438,7 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3">
+        <h2>
             {{ svg_icon("credit-payment-round") }}
             Fees
         </h2>
@@ -558,7 +558,7 @@
                 'label': other_fees_label,
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     <dt>Late fee</dt>
@@ -654,12 +654,12 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3">
+        <h2>
             {{ svg_icon("gift-round") }}
             Rewards and perks
         </h2>
         {% if card.rewards %}
-            <div class="h2 u-mb0 u-mt15">
+            <div class="h2 u-mb0">
                 {%- set rewards = [] -%}
                 {%- for reward in card.rewards -%}
                     {%- do rewards.append(rewards_lookup[reward]) -%}
@@ -680,7 +680,7 @@
                 'label': 'Card services and features',
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     {% if card.services %}
@@ -717,7 +717,7 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("money-transfer-round") }}
             Balance transfer interest rate and fees
         </h2>
@@ -734,7 +734,7 @@
         {% if card.balance_transfer_offered %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {% if card.transfer_apr_min is not none
                             and card.transfer_apr_max is not none
                         %}
@@ -758,7 +758,7 @@
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {{ currency(card.balance_transfer_fee_dollars) if
                             card.balance_transfer_fee_dollars is not none
                         }}
@@ -836,14 +836,14 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("quick-cash-round") }}
             Cash advance interest rate and fees
         </h2>
         {% if card.cash_advance_apr_offered %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {% if card.advance_apr_min is not none
                             and card.advance_apr_max is not none
                         %}
@@ -868,7 +868,7 @@
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {{ currency(card.cash_advance_fee_dollars) if
                             card.cash_advance_fee_dollars is not none
                         }}

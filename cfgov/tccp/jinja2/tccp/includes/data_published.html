@@ -10,7 +10,7 @@
     ) }}
     ({{- 'credit card terms may have changed since then, check with the issuer
           for the most current terms or ' if verbose -}}
-    <a href="{{ url('tccp:about') }}">learn about the data</a>)
+    <a href="{{ url('tccp:about') }}">{{ 'l' if verbose else 'L' }}earn about the data</a>)
 </p>
 
 {%- endmacro %}
