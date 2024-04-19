@@ -1,11 +1,16 @@
 {%- import 'v1/includes/macros/time.html' as time -%}
 
-{%- macro data_published(date) -%}
+{%- macro data_published(date, verbose=false) -%}
 
-<p style="font-size: 14px; color: #5a5d61">
-    Data published {{ time.render(
+<p class="u-small-text u-small-text--gray">
+    Data reported
+    {{' directly by the issuer ' if verbose }}
+    on {{ time.render(
         ensure_date(date), {"date": true}, text_format=true
     ) }}
+    ({{- 'credit card terms may have changed since then, check with the issuer
+          for the most current terms or ' if verbose -}}
+    <a href="{{ url('tccp:about') }}">learn about the data</a>)
 </p>
 
 {%- endmacro %}
