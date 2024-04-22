@@ -4,7 +4,7 @@
 
 <p class="u-small-text u-small-text--subtle">
     Data reported
-    {{' directly by the issuer ' if verbose }}
+    {{- ' directly by the issuer ' if verbose -}}
     on {{ time.render(
         ensure_date(date), {"date": true}, text_format=true
     ) }}
