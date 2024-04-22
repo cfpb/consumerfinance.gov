@@ -20,6 +20,7 @@
 </div>
 {%- endif %}
 
+<div class="u-cap-width">
 {% if count -%}
 {{- notification.render(
     'success',
@@ -33,6 +34,7 @@
     'There are no results for your search.'
 ) -}}
 {%- endif %}
+</div>
 
 <div class="block block__sub o-apr-rating-group">
     <p class="o-apr-rating-group--heading">
@@ -82,10 +84,12 @@
     {{- (rewards | join(', ')) if rewards else 'None' -}}
 {%- endmacro -%}
 
+{%- set ordering_by = form.ordering.data[0] -%}
+
 <div class="o-card-group">
     <div class="o-card-group_cards">
         {%- for card in cards %}
-        {%- set show_more = loop.index > 10 -%}
+        {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
@@ -110,12 +114,18 @@
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--transfer">
-                        <dt>Balance transfer APR</dt>
+                        <dt>
+                            {%- if ordering_by == 'transfer_apr' -%}<strong>{%- endif -%}
+                            Balance transfer APR
+                            {%- if ordering_by == 'transfer_apr' -%}</strong>{%- endif -%}
+                        </dt>
                         <dd>
+                            {%- if ordering_by == 'transfer_apr' -%}<strong>{%- endif -%}
                             {{- apr_range(
                                 card.transfer_apr_for_tier_min,
                                 card.transfer_apr_for_tier_max
                             ) -}}
+                            {%- if ordering_by == 'transfer_apr' -%}</strong>{%- endif -%}
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--rewards">
@@ -133,13 +143,16 @@
                     </div>
                     {%- endif -%}
                 </dl>
+                <div class="m-card__footer">
+                    <p class="m-card__subtitle">See card details</p>
+                </div>
             </a>
         </article>
 
         {%- set bump = speed_bumps[loop.index] -%}
         {%- if bump -%}
             {%- if show_more -%}<div class="u-show-more">{%- endif -%}
-            {{ speed_bump(bump) }}
+            {{ speed_bump(bump, true) }}
             {%- if show_more -%}</div>{%- endif -%}
         {%- endif -%}
         {% endfor %}

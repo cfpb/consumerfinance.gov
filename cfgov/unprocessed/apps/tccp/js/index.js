@@ -9,6 +9,12 @@ import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 function init() {
   // Attach "show more" click handler
   attach('show-more', 'click', handleShowMore);
+  // Attach change handler to the "sort by" field
+  attach('ordering-change', 'change', handleOrderingChange);
+  // Attach landing page location field handler
+  attach('select-location', 'change', handleFormValidation);
+  // Attach landing page form validation handler
+  attach('submit-situations', 'click', handleFormValidation);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
@@ -24,9 +30,44 @@ function handleShowMore(event) {
     event.preventDefault();
   }
   const results = document.querySelector('.o-filterable-list-results');
+  const showMoreFade = document.querySelector('#u-show-more-fade');
   results.classList.remove('o-filterable-list-results__partial');
+  showMoreFade.classList.add('u-hidden');
+}
 
-  event.target.classList.add('u-hidden');
+/**
+ * Handle display of "show more" link when ordering is changed.
+ * It shouldn't be shown when ordering by product name.
+ * @param {Event} event - Click event.
+ */
+function handleOrderingChange(event) {
+  const results = document.querySelector('.o-filterable-list-results');
+  const showMoreFade = document.querySelector('#u-show-more-fade');
+  if (event.target && event.target.value === 'product_name') {
+    results.classList.remove('o-filterable-list-results__partial');
+    showMoreFade.classList.add('u-hidden');
+  } else {
+    results.classList.add('o-filterable-list-results__partial');
+    showMoreFade.classList.remove('u-hidden');
+  }
+}
+
+/**
+ * Prevent form submission if location field isn't completed
+ * @param {Event} event - Change/click event.
+ */
+function handleFormValidation(event) {
+  const location = document.querySelector('#id_location');
+  const locationError = document.querySelector('#location-required');
+  if (location.value) {
+    location.classList.remove('a-select--error');
+    locationError.classList.add('u-visually-hidden');
+  } else {
+    event.preventDefault();
+    location.closest('.m-form-field').scrollIntoView({ behavior: 'smooth' });
+    location.classList.add('a-select--error');
+    locationError.classList.remove('u-visually-hidden');
+  }
 }
 
 /**
@@ -36,7 +77,7 @@ function handleShowMore(event) {
  */
 function updateBreadcrumb() {
   const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
-  if (breadcrumb.innerText === 'Explore credit cards') {
+  if (breadcrumb && breadcrumb.innerText === 'Explore credit cards') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
   }

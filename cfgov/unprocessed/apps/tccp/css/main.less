@@ -99,6 +99,31 @@
 .o-well.o-well--speed-bump {
   padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
+
+  p {
+    max-width: 100%;
+  }
+
+  &-large {
+    padding: unit((75px / @base-font-size-px), rem)
+      unit((45px / @base-font-size-px), rem);
+
+    p:first-child {
+      .h3();
+    }
+    // Make everything bigger on desktop
+    .respond-to-min(@bp-sm-min, {
+      padding-right: unit((60px / @base-font-size-px), rem);
+
+      p:last-child {
+        .heading-3();
+      }
+    });
+  }
+
+  .cf-icon-svg {
+    color: var(--green);
+  }
 }
 
 .m-card.m-card--tabular {
@@ -108,9 +133,6 @@
 
   > a {
     padding: unit((20px / @base-font-size-px), rem);
-    // Decrease the bottom padding on mobile to accommodate
-    // the grid's `row-gap` when a card has no requirements
-    padding-bottom: unit((5px / @base-font-size-px), rem);
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
@@ -164,6 +186,10 @@
     border-bottom: 1px dotted @link-underline;
     color: @link-text;
   }
+
+  .m-card__footer {
+    margin-top: unit((5px / @base-font-size-px), rem);
+  }
 }
 
 .o-apr-rating-group {
@@ -216,10 +242,12 @@
   grid-template-columns: 2fr 3fr;
   column-gap: 20px;
   row-gap: 15px;
+  margin-bottom: 0;
 
   .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
+    margin-bottom: unit((15px / @base-font-size-px), rem);
   });
 }
 
@@ -252,9 +280,12 @@
   &--requirements {
     padding-bottom: unit((15px / @base-font-size-px), rem);
     grid-area: requirements;
-    align-self: start;
     dt {
       .u-visually-hidden;
+    }
+
+    dd {
+      padding-top: unit((4px / @base-font-size-px), rem);
     }
 
     .respond-to-min(@bp-sm-min, {
@@ -265,6 +296,7 @@
   dt,
   &.m-data-spec--requirements dd {
     text-transform: none;
+    letter-spacing: inherit;
     font-size: unit((14px / @base-font-size-px), rem);
     font-weight: normal;
     strong {
@@ -314,6 +346,23 @@ html.js .o-filterable-list-results__partial {
       display: none;
     }
   }
+}
+
+// A vertical white linear gradient that overlaps the last
+// card result to emphasize that there are more cards to see
+#u-show-more-fade {
+  position: relative;
+  margin-top: unit((-200px / @base-font-size-px), rem);
+  padding-top: unit((180px / @base-font-size-px), rem);
+  z-index: 1;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.97),
+    rgba(255, 255, 255, 1)
+  );
 }
 
 .m-credit-tier-chart {
@@ -526,4 +575,26 @@ html.js form[hx-boost] {
     left: 107%;
     right: -8%;
   }
+}
+
+.a-select {
+  & &--error {
+    outline: 2px solid var(--red);
+    &:focus {
+      box-shadow: 0 0 0 2px var(--red);
+      outline: 1px dotted var(--red);
+    }
+  }
+}
+
+.a-form-alert__text {
+  display: block;
+  margin-left: unit((20px / @base-font-size-px), em);
+}
+
+// Our page has no sidebar but there are a handful of
+// elements that we want to cap at a width slightly longer
+// than our standard cf.gov line length.
+.u-cap-width {
+  max-width: unit((700px / @base-font-size-px), em);
 }
