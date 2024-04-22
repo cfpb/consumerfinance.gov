@@ -20,6 +20,7 @@
 </div>
 {%- endif %}
 
+<div class="u-cap-width">
 {% if count -%}
 {{- notification.render(
     'success',
@@ -33,6 +34,7 @@
     'There are no results for your search.'
 ) -}}
 {%- endif %}
+</div>
 
 <div class="block block__sub o-apr-rating-group">
     <p class="o-apr-rating-group--heading">
@@ -141,7 +143,7 @@
                     </div>
                     {%- endif -%}
                 </dl>
-                <div>
+                <div class="m-card__footer">
                     <p class="m-card__subtitle">See card details</p>
                 </div>
             </a>

@@ -100,15 +100,23 @@
   padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
 
+  p {
+    max-width: 100%;
+  }
+
   &-large {
     padding: unit((75px / @base-font-size-px), rem)
-      unit((35px / @base-font-size-px), rem);
+      unit((45px / @base-font-size-px), rem);
 
+    p:first-child {
+      .h3();
+    }
     // Make everything bigger on desktop
     .respond-to-min(@bp-sm-min, {
-      p {
+      padding-right: unit((60px / @base-font-size-px), rem);
+
+      p:last-child {
         .heading-3();
-        max-width: 100%;
       }
     });
   }
@@ -177,6 +185,10 @@
     display: inline;
     border-bottom: 1px dotted @link-underline;
     color: @link-text;
+  }
+
+  .m-card__footer {
+    margin-top: unit((5px / @base-font-size-px), rem);
   }
 }
 
@@ -578,4 +590,11 @@ html.js form[hx-boost] {
 .a-form-alert__text {
   display: block;
   margin-left: unit((20px / @base-font-size-px), em);
+}
+
+// Our page has no sidebar but there are a handful of
+// elements that we want to cap at a width slightly longer
+// than our standard cf.gov line length.
+.u-cap-width {
+  max-width: unit((700px / @base-font-size-px), em);
 }
