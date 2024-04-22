@@ -92,6 +92,10 @@
   }
 }
 
+.u-small-text--subtle {
+  color: var(--gray);
+}
+
 .o-well.o-well--speed-bump {
   padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
@@ -373,9 +377,18 @@ html.js .o-filterable-list-results__partial {
 
   &--introduction {
     padding-bottom: unit((30px / @base-font-size-px), rem);
-    margin-top: 0;
     margin-bottom: unit((10px / @base-font-size-px), rem);
     border-bottom: 1px solid var(--gray-40);
+
+    .respond-to-max(@bp-sm-min, {
+      margin-top: unit((30px / @base-font-size-px), rem);
+    });
+  }
+
+  h2 {
+    .respond-to-max(@bp-sm-min, {
+      font-weight: 600;
+    });
   }
 }
 
@@ -426,10 +439,9 @@ html.js .o-filterable-list-results__partial {
   });
 
   &__operator {
-    margin-bottom: 0;
-
     .respond-to-min(@bp-sm-min, {
       align-self: center;
+      margin-bottom: 0;
     });
   }
 }
