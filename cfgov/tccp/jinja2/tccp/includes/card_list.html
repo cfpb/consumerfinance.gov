@@ -150,7 +150,7 @@
         {%- set bump = speed_bumps[loop.index] -%}
         {%- if bump -%}
             {%- if show_more -%}<div class="u-show-more">{%- endif -%}
-            {{ speed_bump(bump) }}
+            {{ speed_bump(bump, true) }}
             {%- if show_more -%}</div>{%- endif -%}
         {%- endif -%}
         {% endfor %}

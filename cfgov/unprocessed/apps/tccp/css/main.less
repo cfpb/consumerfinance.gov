@@ -97,21 +97,25 @@
 }
 
 .o-well.o-well--speed-bump {
-  padding: unit((75px / @base-font-size-px), rem)
-    unit((35px / @base-font-size-px), rem);
+  padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
+
+  &-large {
+    padding: unit((75px / @base-font-size-px), rem)
+      unit((35px / @base-font-size-px), rem);
+
+    // Make everything bigger on desktop
+    .respond-to-min(@bp-sm-min, {
+      p {
+        .heading-3();
+        max-width: 100%;
+      }
+    });
+  }
 
   .cf-icon-svg {
     color: var(--green);
   }
-
-  // Make everything bigger on desktop
-  .respond-to-min(@bp-sm-min, {
-    p {
-      .h3();
-      max-width: 100%;
-    }
-  });
 }
 
 .m-card.m-card--tabular {
