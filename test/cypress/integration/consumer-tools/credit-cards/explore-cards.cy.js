@@ -59,12 +59,15 @@ describe('Explore credit cards results page', () => {
     cy.get('#u-show-more-fade').should('not.be.visible');
 
     exploreCards.selectOrdering('Purchase APR');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('be.visible');
 
     exploreCards.selectOrdering('Card name');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('not.be.visible');
 
     exploreCards.selectOrdering('Purchase APR');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('be.visible');
   });
   it('should show speed bumps when situation(s) are selected', () => {
