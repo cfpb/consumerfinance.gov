@@ -129,7 +129,7 @@
     </style>
 </section>
 
-{% set t_links = translation_links.render(None, 'block__flush-bottom') %}
+{% set t_links = translation_links.render(modifier_classes='block__flush-bottom') %}
 {% if t_links and t_links | trim | length > 1 %}
   <div class="u-layout-grid_wrapper">
     {{ t_links }}
