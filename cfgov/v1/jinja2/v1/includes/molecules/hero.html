@@ -45,7 +45,7 @@
                                     extra large (jumbo).
 
    ========================================================================== #}
-{% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+
 
 {# TODO: This is simple now, but in the future we'll hopefully be able to
    provide 1x and 2x values as well. We should update this to be an image
@@ -128,10 +128,3 @@
     {% endif %}
     </style>
 </section>
-
-{% set t_links = translation_links.render(modifier_classes='block__flush-bottom') %}
-{% if t_links and t_links | trim | length > 1 %}
-  <div class="u-layout-grid_wrapper">
-    {{ t_links }}
-  </div>
-{% endif %}
