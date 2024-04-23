@@ -149,6 +149,29 @@ class CardSurveyDataQuerySetTests(TestCase):
             },
         )
 
+    def test_exclude_invalid_aprs(self):
+        baker.make(
+            CardSurveyData,
+            purchase_apr_great=0.5,
+            purchase_apr_good=0.25,
+        )
+        baker.make(
+            CardSurveyData,
+            purchase_apr_great=0.25,
+            purchase_apr_good=0.5,
+        )
+
+        qs = CardSurveyData.objects.all()
+        self.assertEqual(qs.count(), 2)
+
+        invalid_aprs = qs.only_invalid_aprs()
+        self.assertEqual(invalid_aprs.count(), 1)
+        self.assertEqual(invalid_aprs[0].purchase_apr_great, 0.5)
+
+        valid_aprs = qs.exclude_invalid_aprs()
+        self.assertEqual(valid_aprs.count(), 1)
+        self.assertEqual(valid_aprs[0].purchase_apr_great, 0.25)
+
 
 class CardSurveyDataTests(SimpleTestCase):
     def test_annual_fee_estimated(self):

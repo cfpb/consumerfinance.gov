@@ -13,8 +13,6 @@ from .baker import baker
 
 
 class TestValidation(TestCase):
-    maxDiff = None
-
     def setUp(self):
         self.dir = os.getcwd()
         self.tempdir = tempfile.mkdtemp()
@@ -56,12 +54,24 @@ class TestValidation(TestCase):
                     },
                 )
 
+        # Also create an invalid card to be filtered out.
+        baker.make(
+            CardSurveyData,
+            slug="invalid-card",
+            purchase_apr_great=0.5,
+            purchase_apr_poor=0.25,
+        )
+
     def test_stats(self):
         self.make_test_data()
 
         self.assertEqual(
             self.call_validate(),
             """
+8 cards in database
+1 cards with invalid APRs
+1: invalid-card
+
 CREDIT SCORE 619 OR LESS
 ------------------------
 Count: 1
