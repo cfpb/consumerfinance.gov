@@ -40,6 +40,39 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         return self.filter(q)
 
+    def invalid_aprs_q(self):
+        """Selector to identify cards with invalid APR relationships.
+
+        This selector includes cards that meet any of these criteria:
+
+        1. {purchase, transfer}_apr_great > {purchase, transfer}_apr_good
+        2. {purchase, transfer}_apr_good > {purchase, transfer}_apr_poor
+        3. {purchase, transfer}_apr_great > {purchase, transfer}_apr_poor
+        4. {purchase, transfer}_median > {purchase, transfer}_max
+        5. {purchase, transfer}_min > {purchase, transfer}_max
+        6. {purchase, transfer}_min > {purchase, transfer}_median
+        """
+        q = Q()
+
+        for apr in ("purchase_apr", "transfer_apr"):
+            for left, right in [
+                ("great", "good"),
+                ("good", "poor"),
+                ("great", "poor"),
+                ("median", "max"),
+                ("min", "max"),
+                ("min", "median"),
+            ]:
+                q |= Q(**{f"{apr}_{left}__gt": F(f"{apr}_{right}")})
+
+        return q
+
+    def exclude_invalid_aprs(self):
+        return self.exclude(self.invalid_aprs_q())
+
+    def only_invalid_aprs(self):
+        return self.filter(self.invalid_aprs_q())
+
     def get_summary_statistics(self):
         """Compute aggregate purchase APR statistics for each credit tier."""
 

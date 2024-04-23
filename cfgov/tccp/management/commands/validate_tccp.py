@@ -33,7 +33,18 @@ class Command(BaseCommand):
         if not summary_stats["count"]:
             raise CommandError("No cards in dataset!")
 
-        cards = CardSurveyData.objects.with_ratings(
+        all_cards = CardSurveyData.objects.all()
+        self.stdout.write(f"{all_cards.count()} cards in database")
+
+        invalid_cards = all_cards.only_invalid_aprs()
+        self.stdout.write(f"{invalid_cards.count()} cards with invalid APRs")
+
+        for i, invalid_card in enumerate(invalid_cards):
+            self.stdout.write(f"{i+1}: {invalid_card.slug}")
+
+        self.stdout.write()
+
+        cards = CardSurveyData.objects.exclude_invalid_aprs().with_ratings(
             summary_stats=summary_stats
         )
 

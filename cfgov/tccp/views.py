@@ -96,7 +96,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     ]
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.exclude_invalid_aprs()
 
     def get_template_names(self):
         if self.request.htmx:
@@ -205,7 +205,9 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
 
     @cached_property
     def summary_stats(self):
-        return self.model.objects.get_summary_statistics()
+        return (
+            self.model.objects.exclude_invalid_aprs().get_summary_statistics()
+        )
 
     def get_queryset(self):
         return self.model.objects.with_ratings(self.summary_stats)
