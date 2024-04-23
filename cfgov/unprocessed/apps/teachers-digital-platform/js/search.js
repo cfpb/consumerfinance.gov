@@ -150,9 +150,7 @@ function fetchSearchResults(filters = []) {
   const searchTerms = getSearchValues(searchField, filters);
   const searchParams = serializeFormFields(searchTerms);
 
-  const searchUrl = buildSearchResultsURL(baseUrl, searchParams, {
-    partial: true,
-  });
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams);
 
   updateUrl(baseUrl, searchParams);
   showLoading(searchContainer);

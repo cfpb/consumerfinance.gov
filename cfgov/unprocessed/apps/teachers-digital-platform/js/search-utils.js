@@ -38,13 +38,10 @@ function serializeFormFields(fields) {
  * Creates search results URL to be fetched.
  * @param {string} base - URL's base.
  * @param {string} params - URL's GET parameters.
- * @param {object} opts - Object of additional options for the URL.
  * @returns {string} Encoded URL.
  */
-function buildSearchResultsURL(base, params, opts) {
-  // Currently the only option is for a partial search results template
-  opts = opts && opts.partial ? '&partial' : '';
-  return `${base}?${params}${opts}`;
+function buildSearchResultsURL(base, params) {
+  return `${base}?${params}${params ? '&' : ''}partial=True`;
 }
 
 /**
