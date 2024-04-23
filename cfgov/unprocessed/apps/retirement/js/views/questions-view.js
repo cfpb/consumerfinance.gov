@@ -1,5 +1,4 @@
-// TODO: remove jquery.
-import $ from 'jquery';
+import $ from '../utils/dollar-sign.js';
 
 /**
  * Initialize the questions view.
