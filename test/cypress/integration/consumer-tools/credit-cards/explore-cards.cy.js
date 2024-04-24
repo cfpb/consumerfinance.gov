@@ -89,10 +89,10 @@ describe('Explore credit cards results page', () => {
   });
   it('should have an aria-busy=true attribute when an AJAX request is in-flight', () => {
     exploreCards.openResultsPage('situations=Build%20credit');
-    cy.get('.htmx-results[aria-busy=true]').should('not.exist');
+    cy.get('#htmx-results[aria-busy=true]').should('not.exist');
 
     exploreCards.selectCheckboxFilter('rewards', 'Cashback rewards');
-    cy.get('.htmx-results[aria-busy=true]').should('exist');
+    cy.get('#htmx-results[aria-busy=true]').should('exist');
   });
   it('should link to card detail pages', () => {
     exploreCards.openResultsPage();
