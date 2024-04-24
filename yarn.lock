@@ -354,10 +354,10 @@
     "@cfpb/cfpb-core" "^1.0.1"
     "@cfpb/cfpb-icons" "^1.0.1"
 
-"@cfpb/cfpb-forms@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-1.0.1.tgz#2449a807b402259e48031abb778e0ecfb227874f"
-  integrity sha512-wsF/aR5ojkLGLIJ9vWPNw1TtQ1EotF4FaVfdEznUBEvt5BUOykNHn9klualM6NE2ZgxVWkc+0i/XLTTSojyMfA==
+"@cfpb/cfpb-forms@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-1.0.2.tgz#c76fa5781f451884ab903fc0b623cd720f447a4e"
+  integrity sha512-bUBq3QRxjPuJ5C/mnP8G5kPr2Ild2jIjb5QoltlWB8/HhSMgwYzeOG26A+Ij6ptNKwRbr3H3WeZsxEkIBBGOIg==
   dependencies:
     "@cfpb/cfpb-buttons" "^1.0.1"
     "@cfpb/cfpb-core" "^1.0.1"
@@ -392,10 +392,10 @@
     "@cfpb/cfpb-core" "^0.42.0"
     "@cfpb/cfpb-grid" "^0.42.0"
 
-"@cfpb/cfpb-layout@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-1.0.1.tgz#ef18427e6191463235822778f4d060b0f717e4c4"
-  integrity sha512-PWQ1vNgUsA5RjurrIJa+HWfGrinH8ZU41X/iV+YgRzX1IDi0keepONKnCKbsj5iOQKgVpyI6iq7We2zzXfkQeA==
+"@cfpb/cfpb-layout@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-1.0.2.tgz#446ded32022889a29d9b3a5d2fad53d6519a756c"
+  integrity sha512-ombdq5D3oDXK74L+3/3i9z2sKLuJ3q69vhuoZZByAYdRYNGahyel2yQKEqUttYFQLepQOzyC9y7SbNthaf9h+A==
   dependencies:
     "@cfpb/cfpb-core" "^1.0.1"
     "@cfpb/cfpb-grid" "^1.0.1"
@@ -433,10 +433,10 @@
     "@cfpb/cfpb-core" "^0.42.0"
     "@cfpb/cfpb-icons" "^0.42.0"
 
-"@cfpb/cfpb-typography@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-1.0.1.tgz#bf9fd9afe564aa55a3dc36bcbcf7c904dede529a"
-  integrity sha512-oYRaVPp2UuHw3Cj9Vis4AMuFaTbaxu03emUANIw11JCkqav2+l9Rqm9X8sqsNkRl8SK5W+DXobeZ+VAlYM2kPA==
+"@cfpb/cfpb-typography@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-1.0.2.tgz#74f0ca4e9fea75d38df0d5dfd0e56dcffc900005"
+  integrity sha512-I5tT7ECYWcLyjefE78gd3MksJby3+MK/MewH/GSEr+VgLSrQKzSTB99GSrsfjPggAKo0T3wLvbRZdoGzgjkqnQ==
   dependencies:
     "@cfpb/cfpb-core" "^1.0.1"
     "@cfpb/cfpb-icons" "^1.0.1"
@@ -689,8 +689,11 @@
   integrity sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==
   dependencies:
     string-width "^5.1.2"
+    string-width-cjs "npm:string-width@^4.2.0"
     strip-ansi "^7.0.1"
+    strip-ansi-cjs "npm:strip-ansi@^6.0.1"
     wrap-ansi "^8.1.0"
+    wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -5269,7 +5272,7 @@ string-length@^4.0.1:
     char-regex "^1.0.2"
     strip-ansi "^6.0.0"
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -5333,7 +5336,7 @@ string.prototype.trimstart@^1.0.8:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -5859,19 +5862,19 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
+wrap-ansi@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
+  integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
 
-wrap-ansi@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
-  integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
