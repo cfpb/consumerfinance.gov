@@ -63,7 +63,7 @@
 {% endif %}
 
 <div class="block block--flush-top">
-    <div class="o-filterable-list-results o-filterable-list-results--partial htmx-results">
+    <div class="o-filterable-list-results o-filterable-list-results--partial htmx-results" aria-live="polite" aria-busy="false">
         {% include "tccp/includes/card_list.html" %}
     </div>
     <div id="u-show-more-fade" class="u-js-only{% if form.ordering.data[0] == 'product_name' %} u-hidden{% endif %}" data-js-hook="behavior_show-more">
