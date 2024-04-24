@@ -7,10 +7,10 @@
     It shouldn't be used on it's own.
  */
 .u-info-unit-base() {
-  &_image {
+  &__image {
     display: block;
     margin-right: auto;
-    margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     margin-left: auto;
     background-size: cover;
 
@@ -20,13 +20,13 @@
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
-        height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
+        width: unit(@m-info-unit_img__lg / @base-font-size-px, em);
+        height: unit(@m-info-unit_img__lg / @base-font-size-px, em);
       });
     }
   }
 
-  &_heading-link {
+  &__heading-link {
     display: block;
 
     .u-link--colors( var(--black), var(--pacific-80) );
@@ -73,7 +73,7 @@
 
   // Hide image on print.
   .respond-to-print( {
-    &_image {
+    &__image {
       display: none;
     }
   });

@@ -123,7 +123,7 @@ Prefixed with `o-` in class names.
 .o-expandable {
     position: relative;
 
-    &_header {
+    &__header {
         padding: 0;
         border: 0;
         …

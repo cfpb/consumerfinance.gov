@@ -68,7 +68,7 @@
 {% set twitter_text = ( value.twitter_text or blurb ) | urlencode %}
 
 <div class="m-social-media
-            m-social-media__{{ 'share' if is_share_view else 'follow' }}">
+            m-social-media--{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
         <div class="h5 m-social-media__heading">
             {% if is_printable -%}
