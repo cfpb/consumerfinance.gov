@@ -1,6 +1,9 @@
+from itertools import product
+
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
+from tccp.enums import CreditTierColumns
 from tccp.models import CardSurveyData
 
 from .baker import baker
@@ -196,3 +199,18 @@ class CardSurveyDataTests(SimpleTestCase):
                 self.assertEqual(
                     CardSurveyData(**test).annual_fee_estimated, expected
                 )
+
+    def test_purchase_apr_data_incomplete(self):
+        card = CardSurveyData(purchase_apr_offered=True)
+        for annotated_column in [
+            f"purchase_apr_{tier_column}_{suffix}"
+            for (_, tier_column), suffix in product(
+                CreditTierColumns, ("min", "max")
+            )
+        ]:
+            setattr(card, annotated_column, None)
+
+        self.assertTrue(card.purchase_apr_data_incomplete)
+
+        card.purchase_apr_good_min = 0.99
+        self.assertFalse(card.purchase_apr_data_incomplete)

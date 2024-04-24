@@ -1,6 +1,6 @@
 import re
 from functools import partial
-from itertools import product
+from itertools import chain, product
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
@@ -724,3 +724,17 @@ class CardSurveyData(models.Model):
             fee += 52 * self.weekly_fee
 
         return fee
+
+    @property
+    def purchase_apr_data_incomplete(self):
+        return self.purchase_apr_offered and not any(
+            chain(
+                *[
+                    [
+                        getattr(self, f"purchase_apr_{tier_column}_min"),
+                        getattr(self, f"purchase_apr_{tier_column}_max"),
+                    ]
+                    for _, tier_column in enums.CreditTierColumns
+                ]
+            )
+        )
