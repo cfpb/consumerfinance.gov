@@ -24,8 +24,11 @@ RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
 # Intermediate layer to build only prod deps
 FROM base as cfgov-python-builder
 
-# .build-deps are required to build and test the application (pip, tox, etc.)
-RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
+# .build-deps are required to build and test the application (pip, tox,
+# matplotlib, numpy, etc.)
+# TODO: When we update from the python:3.8 image, see which of these we can
+# remove because binary packages might be available to us again.
+RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev musl-dev linux-headers g++ make freetype
 
 # Install python requirements
 COPY requirements requirements
