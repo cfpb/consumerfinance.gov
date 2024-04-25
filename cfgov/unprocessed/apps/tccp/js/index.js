@@ -76,7 +76,7 @@ function handleFormValidation(event) {
  * Akamai from caching the page with a breadcrumb to a filtered list.
  */
 function updateBreadcrumb() {
-  const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
+  const breadcrumb = document.querySelector('.m-breadcrumbs__crumb:last-child');
   if (breadcrumb && breadcrumb.innerText === 'Explore credit cards') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;
