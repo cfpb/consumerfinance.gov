@@ -1,5 +1,6 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
+{% from 'tccp/includes/apr_table.html' import apr_table with context %}
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency, lower_first_letter, oxfordize %}
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
@@ -26,31 +27,27 @@
 <div class="block block__flush-top">
 
     <div class="eyebrow">{{ card.institution_name }}</div>
+
     <h1>{{ card.product_name }}</h1>
-    {% set credit_tiers = [
-        ("No credit score", "No score"),
-        ("619 or less", "619 or less"),
-        ("620 to 719", "620-719"),
-        ("720 or greater", "720+")
-    ] %}
+
     <div class="o-card-details-section o-card-details-section--introduction">
         {# TODO: Need to make this more accessible for screen readers #}
         <div class="m-credit-tier-chart">
-            {% for tier in credit_tiers %}
-                {% if tier[0] in card.targeted_credit_tiers | string %}
+            {% for tier_value, tier_name, _ in credit_tier_lookup %}
+                {% if tier_value in card.targeted_credit_tiers %}
                     {% set targeted_tier = true %}
                 {% else %}
                     {% set targeted_tier = false %}
                 {% endif %}
                 <div class="m-credit-tier-chart__tier m-credit-tier-chart__tier{{ '--selected' if targeted_tier else '--unselected' }}">
                     <span class="m-credit-tier-chart__icon">
-                        {% if targeted_tier %}
-                            {{ svg_icon('approved-round') if targeted_tier }}
-                        {% else %}
+                        {%- if targeted_tier -%}
+                            {{ svg_icon('approved-round') }}
+                        {%- else -%}
                             &nbsp;
-                        {% endif %}
+                        {%- endif -%}
                     </span>
-                    <span class="m-credit-tier-chart__label">{{ tier[1] }}</span>
+                    <span class="m-credit-tier-chart__label">{{ tier_name }}</span>
                 </div>
             {% endfor %}
         </div>
@@ -175,33 +172,7 @@
             {{ svg_icon("cart-round") }}
             Purchase interest rate and fees
         </h2>
-        {# TODO: Unify ratings code with results list view #}
-        {% set purchase_apr_rating_labels = [
-            'less', 'average', 'more'
-        ] %}
-        {% set purchase_apr_ratings = [
-            card.purchase_apr_poor_rating,
-            card.purchase_apr_good_rating,
-            card.purchase_apr_great_rating
-        ] %}
-        {% set purchase_aprs = [
-            (card.purchase_apr_poor_min, card.purchase_apr_poor_max),
-            (card.purchase_apr_good_min, card.purchase_apr_good_max),
-            (card.purchase_apr_great_min, card.purchase_apr_great_max),
-        ] %}
-        {% if card.purchase_apr_offered
-            and card.purchase_apr_poor_min is none
-            and card.purchase_apr_poor_max is none
-            and card.purchase_apr_good_min is none
-            and card.purchase_apr_good_max is none
-            and card.purchase_apr_great_min is none
-            and card.purchase_apr_great_max is none
-        %}
-            {% set purchase_apr_data_incomplete = true %}
-        {% else %}
-            {% set purchase_apr_data_incomplete = false %}
-        {% endif %}
-        {% if card.purchase_apr_offered and not purchase_apr_data_incomplete %}
+        {% if card.purchase_apr_offered and not card.purchase_apr_data_incomplete %}
             {# How top-line APR displays if the card has:
                 - Min and max APRs: "19.49% - 31.99% purchase APR"
                 - No min and max but a median: "29.74% median purchase APR"
@@ -233,40 +204,9 @@
                 }}
                 Here are typical APRs for different credit scores for this card:
             </p>
-            <table class="o-table o-table--apr">
-                <thead>
-                    <tr>
-                        <th>Credit score</th>
-                        <th>Median purchase APR</th>
-                        <th>Comparison to other cards</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for purchase_apr in purchase_aprs %}
-                        {% if apr_range(purchase_apr[0], purchase_apr[1]) != 'N/A' %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
-                                <td>
-                                    {% if purchase_apr_ratings[loop.index0] is not none %}
-                                        {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
-                                        <span class="m-apr-rating--{{ label }}">
-                                            {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
-                                                {{ svg_icon("dollar-round") }}
-                                            {% endfor -%}
 
-                                            Pay {{ label }} interest
-                                        </span>
-                                    {% else %}
-                                        Not targeted for these credit scores
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endif %}
+            {{ apr_table(card, "purchase", show_comparison=true) }}
 
-                    {% endfor %}
-                </tbody>
-            </table>
             <p>
                 The purchase APR is
                 {% if 'V' in card.index %}
@@ -281,7 +221,7 @@
                 and about
                 <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">fixed versus variable APRs</a>.
             </p>
-        {% elif card.purchase_apr_offered and purchase_apr_data_incomplete %}
+        {% elif card.purchase_apr_offered and card.purchase_apr_data_incomplete %}
             <p>The issuer did not submit information about purchase APR.</p>
         {% else %}
             <p>This card does not charge interest on purchases.</p>
@@ -309,33 +249,13 @@
                 {% endif %}
             </div>
             {% if card.introductory_apr_vary_by_credit_tier %}
-            <p>
-                Your introductory APR will vary based on your credit score.
-                Here are typical introductory APRs for different credit scores
-                for this card:
-            </p>
-            <table class="o-table o-table--apr">
-                <thead>
-                    <tr>
-                        <th>Credit score</th>
-                        <th>Median intro APR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for intro_apr in [
-                        card.intro_apr_poor,
-                        card.intro_apr_good,
-                        card.intro_apr_great
-                    ] %}
-                        {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr(intro_apr) }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                <p>
+                    Your introductory APR will vary based on your credit score.
+                    Here are typical introductory APRs for different credit scores
+                    for this card:
+                </p>
+
+                {{ apr_table(card, "intro") }}
             {% elif card.intro_apr_median is not none
                 and card.intro_apr_min != card.intro_apr_max %}
                 <p>
@@ -802,28 +722,8 @@
                     score. Here are typical balance transfer APRs for different
                     credit scores for this card:
                 </p>
-                <table class="o-table o-table--apr">
-                    <thead>
-                        <tr>
-                            <th>Credit score</th>
-                            <th>Median balance transfer APR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for transfer_apr in [
-                            card.transfer_apr_poor,
-                            card.transfer_apr_good,
-                            card.transfer_apr_great
-                        ] %}
-                            {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
-                                <tr>
-                                    <td>{{ credit_tiers[loop.index][1] }}</td>
-                                    <td>{{ apr(transfer_apr) }}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+                {{ apr_table(card, "transfer", apr_label="balance transfer") }}
             {% elif card.transfer_apr_median is not none
                 and card.transfer_apr_min != card.transfer_apr_max %}
                 <p>
@@ -914,28 +814,8 @@
                     Here are typical cash advance APRs for different credit
                     scores for this card:
                 </p>
-                <table class="o-table o-table--apr">
-                    <thead>
-                        <tr>
-                            <th>Credit score</th>
-                            <th>Median cash advance APR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for advance_apr in [
-                            card.advance_apr_poor,
-                            card.advance_apr_good,
-                            card.advance_apr_great
-                        ] %}
-                            {% if credit_tiers[loop.index][0] in card.targeted_credit_tiers | string %}
-                                <tr>
-                                    <td>{{ credit_tiers[loop.index][1] }}</td>
-                                    <td>{{ apr(advance_apr) }}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+                {{ apr_table(card, "advance", apr_label="cash advance") }}
             {% elif card.advance_apr_median is not none
                 and card.advance_apr_min != card.advance_apr_max %}
                 <p>

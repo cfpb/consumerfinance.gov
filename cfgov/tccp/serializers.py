@@ -14,6 +14,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     purchase_apr_poor_max = serializers.FloatField()
     purchase_apr_poor_min = serializers.FloatField()
     purchase_apr_poor_rating = serializers.IntegerField()
+    purchase_apr_data_incomplete = serializers.BooleanField()
 
     class Meta:
         model = CardSurveyData

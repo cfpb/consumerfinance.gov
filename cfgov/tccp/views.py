@@ -12,7 +12,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .enums import RewardsChoices, StateChoices
+from . import enums
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
@@ -163,7 +163,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "speed_bumps": SituationSpeedBumps(situations),
                     "purchase_apr_rating_labels": purchase_apr_rating_labels,
                     "purchase_apr_rating_counts": purchase_apr_rating_counts,
-                    "rewards_lookup": dict(RewardsChoices),
+                    "rewards_lookup": dict(enums.RewardsChoices),
                 }
             )
 
@@ -178,14 +178,14 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         # database query but the size of the data is small enough that we
         # can just as easily do it in Python.
         return {
-            rating: len(
+            rating_label: len(
                 [
                     card
                     for card in cards
-                    if card["purchase_apr_for_tier_rating"] == i
+                    if card["purchase_apr_for_tier_rating"] == rating_score
                 ]
             )
-            for i, rating in enumerate(["less", "average", "more"])
+            for rating_score, rating_label in enums.PurchaseAPRRatings
         }
 
 
@@ -228,8 +228,10 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
             response.data.update(
                 {
                     "breadcrumb_items": self.breadcrumb_items,
-                    "state_lookup": dict(StateChoices),
-                    "rewards_lookup": dict(RewardsChoices),
+                    "credit_tier_lookup": enums.CreditTierConciseColumnChoices,
+                    "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
+                    "state_lookup": dict(enums.StateChoices),
+                    "rewards_lookup": dict(enums.RewardsChoices),
                 }
             )
 
