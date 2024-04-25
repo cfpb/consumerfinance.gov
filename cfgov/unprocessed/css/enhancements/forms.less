@@ -6,27 +6,27 @@
     width: 100%;
   }
 
-  &_before ~ .a-text-input {
+  &__before ~ .a-text-input {
     padding-left: unit(30px / @btn-font-size, em);
   }
 
-  &_after ~ .a-text-input {
+  &__after ~ .a-text-input {
     padding-right: unit(30px / @btn-font-size, em);
   }
 
-  &_before,
-  &_after {
+  &__before,
+  &__after {
     position: absolute;
     top: unit(8px / @btn-font-size, em);
     cursor: pointer;
     font-size: unit(@btn-font-size / @base-font-size-px, em);
   }
 
-  &_before {
+  &__before {
     left: unit(12px / @btn-font-size, em);
   }
 
-  &_after {
+  &__after {
     right: unit(14px / @btn-font-size, em);
 
     // Tablet and above.
@@ -36,7 +36,7 @@
   }
 }
 
-// TODO: Move to the DM and update existing o-form__input-w-btn in CF
+// TODO: Move to the DM and update existing o-form--input-w-btn in CF
 
 input {
   .input-with-btn & {
@@ -55,12 +55,12 @@ input {
 
 /*
  * Removes top margin from text input when it follows
- * .a-label__heading, which applies a 10px bottom margin.
+ * .a-label--heading, which applies a 10px bottom margin.
  *
  * TODO: standardize form input spacing so margin is
  * consistently applied to either the label or the input
  */
-.m-form-field .a-label__heading + .a-text-input {
+.m-form-field .a-label--heading + .a-text-input {
   margin-top: 0;
 }
 

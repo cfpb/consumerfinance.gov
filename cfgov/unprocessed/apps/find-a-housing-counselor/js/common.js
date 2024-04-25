@@ -59,14 +59,14 @@ function scriptLoaded(evt) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  const showMap = Boolean(document.getElementById('hud_hca_api_map_container'));
+  const showMap = Boolean(document.getElementById('hud-hca-api-map-container'));
 
   if (showMap) {
     const fcm = document.getElementById('hud_search_container');
     fcm.classList.remove('no-js');
     window.L.mapbox.accessToken = mapboxAccessToken;
     map = window.L.mapbox
-      .map('hud_hca_api_map_container')
+      .map('hud-hca-api-map-container')
       .setView([40, -80], 2)
       .addLayer(
         window.L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'),

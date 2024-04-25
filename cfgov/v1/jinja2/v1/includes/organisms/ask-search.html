@@ -49,15 +49,15 @@
         {% endif %}
 
         <div class="o-search-bar_input">
-            <div class="o-form__input-w-btn">
-                <div class="o-form__input-w-btn_input-container">
+            <div class="o-form--input-w-btn">
+                <div class="o-form--input-w-btn__input-container">
                     <div class="m-btn-inside-input
                                 input-contains-label
                                 {% if autocomplete %}m-autocomplete{% endif %}"
                          data-language="{{ language }}">
                         <label for="o-search-bar_query"
-                               class="input-contains-label_before
-                                      input-contains-label_before__search">
+                               class="input-contains-label__before
+                                      input-contains-label__before--search">
                             {{ svg_icon('search') }}
                             <span class="u-visually-hidden">
                                 {{ _('Search for your question') }}
@@ -72,11 +72,11 @@
                                maxlength="{{ max_length }}"
                                aria-describedby="o-search-bar_error-message">
                     </div>
-                    <div class="a-form-alert a-form-alert__error u-hidden"
+                    <div class="a-form-alert a-form-alert--error u-hidden"
                          id="o-search-bar_error-message"
                          role="alert">
                         {{ svg_icon('error-round') }}
-                        <p class="a-form-alert_text">
+                        <p class="a-form-alert__text">
                             Searches are limited to {{ autocomplete_max_chars }}
                             characters.
                             {% if complaint_link %}
@@ -87,7 +87,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="o-form__input-w-btn_btn-container">
+                <div class="o-form--input-w-btn__btn-container">
                     <button class="a-btn"
                             type="submit"
                             aria-label="{{ _('Search Ask CFPB for your question') }}">

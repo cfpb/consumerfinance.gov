@@ -29,13 +29,13 @@ function numToWord(num) {
 const financialView = {
   $elements: $('[data-financial]'),
   $reviewAndEvaluate: $('[data-section="review"], [data-section="evaluate"]'),
-  $verifyControls: $('.verify_controls'),
+  $verifyControls: $('.verify__controls'),
   $infoVerified: $('.information-right'),
   $infoIncorrect: $('.information-wrong'),
   $programLength: $('#estimated-years-attending'),
-  $aboutThisTool: $('.instructions_about a'),
-  $addPrivateButton: $('.private-loans_add-btn'),
-  $totalDirectCostSection: $('.verify_direct-cost'),
+  $aboutThisTool: $('.instructions__about a'),
+  $addPrivateButton: $('.private-loans__add-btn'),
+  $totalDirectCostSection: $('.verify__direct-cost'),
   $pellGrantSection: $('[data-section="pellgrant"]'),
   $gradPlusSection: $('[data-section="gradPlus"]'),
   $perkinsSection: $('[data-section="perkins"]'),
@@ -45,8 +45,8 @@ const financialView = {
   $privateLoanClone: $('[data-private-loan]:first-of-type').cloner(),
   privateLoanKeys: ['amount', 'fees', 'rate', 'deferPeriod'],
   $evaluateSection: $('.evaluate'),
-  $jobPlacementContent: $('.content_job-placement'),
-  $graduationCohortContent: $('.content_grad-cohort'),
+  $jobPlacementContent: $('.content__job-placement'),
+  $graduationCohortContent: $('.content__grad-cohort'),
   $salaryContent: $('#content_salary'),
   $medianSalaryContent: $('#content_median-salary'),
   $salaryMetric: $('#salary-and-debt-metric'),
@@ -875,7 +875,7 @@ const financialView = {
   },
 
   continueStep2Listener: function () {
-    const $continueButton = $('.continue_controls > button');
+    const $continueButton = $('.continue__controls > button');
     $continueButton.listen('click', function () {
       // Remove continue button
       $continueButton.hide();
@@ -964,7 +964,7 @@ const financialView = {
    * @param {string} dataType - type of missing data, 'school' or 'program'
    */
   missingData: function (dataType) {
-    $('.verify_wrapper').hide();
+    $('.verify__wrapper').hide();
     $('[data-missing-data-error="' + dataType + '"]').show();
   },
 

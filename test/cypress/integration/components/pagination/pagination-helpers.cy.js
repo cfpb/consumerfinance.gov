@@ -1,18 +1,18 @@
 export class Pagination {
   clickButton(name) {
-    return cy.get(`.m-pagination_btn-${name}`).click({ force: true });
+    return cy.get(`.m-pagination__btn-${name}`).click({ force: true });
   }
 
   enter(name) {
-    cy.get('#m-pagination_current-page-0').clear({ force: true });
-    cy.get('#m-pagination_current-page-0').type(name);
+    cy.get('#m-pagination__current-page-0').clear({ force: true });
+    cy.get('#m-pagination__current-page-0').type(name);
     cy.get('.m-pagination').within(() => {
-      cy.get('.m-pagination_form').submit();
+      cy.get('.m-pagination__form').submit();
     });
   }
 
   lastResults() {
-    cy.get('.m-pagination_form .u-visually-hidden')
+    cy.get('.m-pagination__form .u-visually-hidden')
       .invoke('text')
       .then(($el) => {
         const lastPage = $el.toString().trim().split(' ')[3];
@@ -21,7 +21,7 @@ export class Pagination {
   }
 
   currentPageLabel() {
-    cy.get('label[for="m-pagination_current-page-0"]');
+    cy.get('label[for="m-pagination__current-page-0"]');
   }
 
   paginationLabel() {

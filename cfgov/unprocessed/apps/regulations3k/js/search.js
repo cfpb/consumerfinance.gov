@@ -65,7 +65,7 @@ function removeTag(tag) {
  * @param {Event} event - Click event.
  */
 function clearFilters(event) {
-  const filterTags = document.querySelectorAll('.filters_tags .a-tag');
+  const filterTags = document.querySelectorAll('.filters__tags .a-tag');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,

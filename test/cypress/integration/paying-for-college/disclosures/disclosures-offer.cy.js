@@ -29,7 +29,7 @@ describe('Dynamic Disclosures offer page', () => {
   });
 
   it('should display the verify offer area and no other sections', () => {
-    cy.get('.verify_wrapper').should('be.visible');
+    cy.get('.verify__wrapper').should('be.visible');
     cy.get('.review').should('not.be.visible');
     cy.get('.evaluate').should('not.be.visible');
     cy.get('.get-options').should('not.be.visible');
@@ -66,7 +66,7 @@ describe('Dynamic Disclosures offer page', () => {
     cy.get('section[data-section="review"]').should('not.be.visible');
     cy.get('section[data-section="evaluate"]').should('not.be.visible');
     cy.get('.get-options').should('not.be.visible');
-    cy.get('.instructions_content__wrong').should('be.visible');
+    cy.get('.instructions__content--wrong').should('be.visible');
   });
 
   it('should let a student edit the tuition and fees', () => {

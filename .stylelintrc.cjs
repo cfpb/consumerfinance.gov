@@ -26,9 +26,6 @@ rule-empty-line-before -
 selector-id-pattern -
   Turned off.
   TODO: Turn on this rule and work out regex for BEM syntax.
-selector-class-pattern -
-  Turned off.
-  TODO: Turn on this rule and work out regex for BEM syntax.
 less/color-no-invalid-hex
 less/no-duplicate-variables
   Both of the above settings are turned off till
@@ -58,7 +55,10 @@ module.exports = {
       },
     ],
     'selector-id-pattern': null,
-    'selector-class-pattern': null,
+    'selector-class-pattern': [
+      '^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(--([a-z0-9]+-?)+){0,2}$',
+      { resolveNestedSelectors: true },
+    ],
     'less/color-no-invalid-hex': null,
     'less/no-duplicate-variables': null,
   },

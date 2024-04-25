@@ -229,7 +229,7 @@ class TestParseLinks(TestCase):
     def test_multiline_external_gov_link(self):
         s = """
         <body>
-            <a class="m-list_link a-link"
+            <a class="m-list__link a-link"
                href="https://usa.gov/">
                 <span>USA
                 .gov</span>

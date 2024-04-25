@@ -35,11 +35,11 @@
   {# Lookup table for the CSS class and icon for each notification type. #}
   {% set type_lookup = {
         'information': ['', 'information-round'],
-        'success':     [' m-notification__success', 'approved-round'],
-        'warning':     [' m-notification__warning', 'warning-round'],
-        'error':       [' m-notification__error', 'error-round'],
-        'money-tips':  [' m-notification__success', 'dollar-round'],
-        'caution':     [' m-notification__error', 'information-round']
+        'success':     [' m-notification--success', 'approved-round'],
+        'warning':     [' m-notification--warning', 'warning-round'],
+        'error':       [' m-notification--error', 'error-round'],
+        'money-tips':  [' m-notification--success', 'dollar-round'],
+        'caution':     [' m-notification--error', 'information-round']
       }
   %}
   {% set icon = type_lookup[type | default( 'information' )][1] %}
@@ -47,21 +47,21 @@
 
   <div class="m-notification
               {{- type -}}
-              {{- ' m-notification__visible' if is_visible else '' -}}">
+              {{- ' m-notification--visible' if is_visible else '' -}}">
       {{ svg_icon(icon) }}
-      <div class="m-notification_content"
+      <div class="m-notification__content"
           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           {%- if message %}
-          <div class="m-notification_message">{{ message }}</div>
+          <div class="m-notification__message">{{ message }}</div>
           {% endif -%}
           {%- if explanation %}
-              <div class="m-notification_explanation">{{ explanation }}</div>
+              <div class="m-notification__explanation">{{ explanation }}</div>
           {% endif -%}
           {% for link in links %}
               {% if link.text %}
-                  {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
-                      <li class="m-list_item">
-                          <a class="m-list_link" href="{{ link.url }}">
+                  {% if loop.first %}<ul class="m-list m-list--links">{% endif %}
+                      <li class="m-list__item">
+                          <a class="m-list__link" href="{{ link.url }}">
                             {% if link.is_link_boldface %}<strong>{% endif %}
                             {{ link.text }}
                             {% if link.is_link_boldface %}</strong>{% endif %}

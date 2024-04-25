@@ -1,10 +1,10 @@
-<div class="m-form-field m-form-field__checkbox m-form-field__lg-target">
+<div class="m-form-field m-form-field--checkbox m-form-field--lg-target">
     {% include "django/forms/widgets/input.html" %}
 
     <label class="a-label" for="{{ widget.attrs.id }}">
         {{ widget.label }}
 
-        <div class="a-label_helper">
+        <div class="a-label__helper">
             {{ widget.value.select_html }}
 
             <p>

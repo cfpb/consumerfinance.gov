@@ -85,7 +85,7 @@ describe('explore-rates/RateCheckerChart', () => {
       const chartDom = document.querySelector('#chart');
       const resultAlertDom = document.querySelector('#chart-result-alert');
       expect(chartDom.classList.contains('warning')).toBe(true);
-      expect(resultAlertDom.classList.contains('m-notification__visible')).toBe(
+      expect(resultAlertDom.classList.contains('m-notification--visible')).toBe(
         true,
       );
     });

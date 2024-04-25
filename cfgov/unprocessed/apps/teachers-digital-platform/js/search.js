@@ -57,7 +57,7 @@ function attachHandlers() {
  * Ignore analytics for previous and next pagination buttons
  */
 function addDataGtmIgnore() {
-  const ignoreBtns = ['a.m-pagination_btn-next', 'a.m-pagination_btn-prev'];
+  const ignoreBtns = ['a.m-pagination__btn-next', 'a.m-pagination__btn-prev'];
 
   for (let i = 0; i < ignoreBtns.length; i++) {
     const btn = document.querySelector(ignoreBtns[i]);

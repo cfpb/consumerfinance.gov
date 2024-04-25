@@ -37,32 +37,32 @@
 }
 
 .prepaid-agreements-search {
-  .o-multiselect_label {
+  .o-multiselect__label {
     word-break: break-word;
   }
 
   padding-top: 0 !important;
 
   .filters {
-    &_applied {
+    &__applied {
       padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     }
-    .o-multiselect_choices {
+    .o-multiselect__choices {
       display: none;
     }
   }
 
   .respond-to-min(@bp-lg-min, {
-    .content_sidebar {
+    .content__sidebar {
       width: 33% !important;
     }
 
-    .content_main {
+    .content__main {
       width: 67% !important;
     }
   });
 
-  .search_wrapper {
+  .search__wrapper {
     label.h2 {
       display: block;
       max-width: none;
@@ -70,14 +70,14 @@
     }
   }
 
-  .search_results {
-    .content_sidebar {
+  .search__results {
+    .content__sidebar {
       .o-expandable:nth-child(4n) {
         border-bottom: none;
       }
     }
 
-    .results_item {
+    .results__item {
       h4 {
         max-width: none;
       }

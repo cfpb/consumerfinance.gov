@@ -40,46 +40,46 @@
 	    {% endfor %}
 	</div>
     {% endif %}
-    <div class="block block__flush-top block__flush-bottom">
+    <div class="block block--flush-top block--flush-bottom">
         <h1>Consent for disclosure of records protected under the Privacy Act</h1>
         <div class="lead-paragraph">
             <p>This form may be used to provide consent and authorize the CFPB to disclose your records to another person or entity. Please provide the information requested below and submit.</p>
         </div>
         <h2 class="h4">This form may be used if you are:</h2>
         <ul class="m-list">
-            <li class="m-list_item">Providing consent and authorizing the CFPB to disclose your records to another person or entity</li>
-            <li class="m-list_item">A parent consenting to and authorizing the disclosure of the records of a minor</li>
-            <li class="m-list_item">A legal guardian consenting to and authorizing disclosure of the records of an incompetent</li>
+            <li class="m-list__item">Providing consent and authorizing the CFPB to disclose your records to another person or entity</li>
+            <li class="m-list__item">A parent consenting to and authorizing the disclosure of the records of a minor</li>
+            <li class="m-list__item">A legal guardian consenting to and authorizing disclosure of the records of an incompetent</li>
         </ul>
         <p>If you have any questions, please contact the CFPB’s FOIA Office at <a href="mailto:FOIA@cfpb.gov">FOIA@cfpb.gov</a> or at (855) 444-3642.</p>
         <h2>Information used for identity-proofing and authentication</h2>
         <p>Please provide the following information to assist the CFPB in verifying your identity:</p>
         <h2 class="h4">Required</h2>
         <ul class="m-list">
-            <li class="m-list_item">Full name</li>
-            <li class="m-list_item">Electronically signed statement (at the bottom of this form) that affirms your identity and the fact that you understand penalties associated with requesting information under false pretenses</li>
+            <li class="m-list__item">Full name</li>
+            <li class="m-list__item">Electronically signed statement (at the bottom of this form) that affirms your identity and the fact that you understand penalties associated with requesting information under false pretenses</li>
         </ul>
         <h2 class="h4">Optional</h2>
         <ul class="m-list">
-            <li class="m-list_item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
-            <li class="m-list_item">A photocopy of a single form of identification that bears both your photograph and signature</li>
+            <li class="m-list__item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
+            <li class="m-list__item">A photocopy of a single form of identification that bears both your photograph and signature</li>
         </ul>
         <h3>For requests by parent or legal guardian</h3>
         <p>If you are the parent consenting to and authorizing disclosure of the records of a minor or the legal guardian consenting to and authorizing disclosure of the records of an incompetent, you will be required to provide adequate proof of your legal relationship before action will be taken on any request. If you have any questions, please contact the CFPB’s FOIA Office at <a href="mailto:FOIA@cfpb.gov">FOIA@cfpb.gov</a> or at (855) 444-3642.</p>
         <p>The term guardian means the legal guardian of any individual who has been declared to be incompetent due to physical or mental incapacity or age by a court of competent jurisdiction.</p>
         <h2>Information required to locate the records</h2>
         <p>This information is required for the CFPB to be able to match the individual's information provided in this request with the record that pertains to that individual.</p>
-        <p><a class="a-btn a-btn__link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
+        <p><a class="a-btn a-btn--link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
     </div>
-    <div class="block block__flush-top block__padded-top">
+    <div class="block block--flush-top block--padded-top">
         <form id="privacy-form"
               action="{{ url('privacy:disclosure_consent') }}"
               enctype="multipart/form-data"
               method="POST">
             <div class="o-well">
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.description.id_for_label }}">
                             {{ form.description.label }}
                         </label>
@@ -88,32 +88,32 @@
                 </div>
                 <h3>Additional information that might assist in locating the records</h3>
                 <p>This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.</p>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.system_of_record.id_for_label }}">
-                            {{ form.system_of_record.label }} <small class="a-label_helper">(optional)</small>
+                            {{ form.system_of_record.label }} <small class="a-label__helper">(optional)</small>
                         </label>
                         {{ form.system_of_record }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.date_of_records.id_for_label }}">
-                            {{ form.date_of_records.label }} <small class="a-label_helper">(optional)</small>
+                            {{ form.date_of_records.label }} <small class="a-label__helper">(optional)</small>
                         </label>
-		        <p class="a-label_helper">{{ form.date_of_records.help_text }}</p>
+		        <p class="a-label__helper">{{ form.date_of_records.help_text }}</p>
                         {{ form.date_of_records }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.other_info.id_for_label }}">
-                            {{ form.other_info.label }} <small class="a-label_helper">(optional)</small>
+                            {{ form.other_info.label }} <small class="a-label__helper">(optional)</small>
                         </label>
-                        <p class="a-label_helper">{{ form.other_info.help_text }}</p>
+                        <p class="a-label__helper">{{ form.other_info.help_text }}</p>
                         {{ form.other_info }}
                     </div>
                 </div>
@@ -123,18 +123,18 @@
             <p>Please provide your contact information so that we can correspond with you regarding the request.</p>
             <div class="o-well">
                 <h3>Requestor contact information</h3>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.requestor_name.id_for_label }}">
                             {{ form.requestor_name.label }}
                         </label>
                         {{ form.requestor_name }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.requestor_email.id_for_label }}">
                             {{ form.requestor_email.label }}
                         </label>
@@ -145,18 +145,18 @@
                     </div>
                 </div>
                 <h3 class="u-mt45">Recepient contact information</h3>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.recipient_name.id_for_label }}">
                             {{ form.recipient_name.label }}
                         </label>
                         {{ form.recipient_name }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.recipient_email.id_for_label }}">
                             {{ form.recipient_email.label }}
                         </label>
@@ -168,11 +168,11 @@
                 </div>
 
                   {% for error in form.street_address.errors %}
-		    <div class="o-form_group">
+		    <div class="o-form__group">
                       {{- notification.render( 'error', true, error ) }}
 		    </div>
                   {% endfor %}
-                <div id="mail-radio" class="o-form_group">
+                <div id="mail-radio" class="o-form__group">
                   {% if form.is_bound %}
                     {% set selected = form.contact_channel.value() %}
                   {% else %}
@@ -180,7 +180,7 @@
                   {% endif %}
                   {% for choice in form.contact_channel %}
                     {% set value = choice.data['value'] %}
-                    <div class="m-form-field m-form-field__radio">
+                    <div class="m-form-field m-form-field--radio">
                       <input class="a-radio" {%if choice.data['value'] == selected %}checked {% endif %} value={{ value }} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
                         <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
                     </div>
@@ -188,32 +188,32 @@
                 </div>
                 <div id="mail-target">
                   <p>If you would like to receive your records by mail, please provide your mailing address.</p>
-                  <div class="o-form_group">
+                  <div class="o-form__group">
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.street_address.id_for_label }}">
                               {{ form.street_address.label }}
                           </label>
                           {{ form.street_address }}
                       </div>
                   </div>
-                  <div class="o-form_group m-form-grid">
+                  <div class="o-form__group m-form-grid">
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.city.id_for_label }}">
                               {{ form.city.label }}
                           </label>
                           {{ form.city }}
                       </div>
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.state.id_for_label }}">
                               {{ form.state.label }}
                           </label>
                           {{ form.state }}
                       </div>
                       <div class="m-form-field">
-                          <label class="a-label a-label__heading"
+                          <label class="a-label a-label--heading"
                                  for="{{ form.zip_code.id_for_label }}">
                               {{ form.zip_code.label }}
                           </label>
@@ -226,12 +226,12 @@
             <h2>Supporting documentation (optional)</h2>
             <p class="u-mb15">Identity verification documents:</p>
             <ul class="m-list">
-                <li class="m-list_item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
-                <li class="m-list_item">A photocopy of a single form of identification that bears both your photograph and signature</li>
+                <li class="m-list__item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
+                <li class="m-list__item">A photocopy of a single form of identification that bears both your photograph and signature</li>
             </ul>
             <p>If you are the parent consenting to and authorizing disclosure of the records of a minor or the legal guardian consenting to and authorizing disclosure of the records of an incompetent, you will be required to provide adequate proof of your legal relationship before action will be taken on any request.</p>
             <div class="o-well">
-                <div class="o-form_group">
+                <div class="o-form__group">
                   {% for error in form.supporting_documentation.errors %}
                       {{- notification.render( 'error', true, error ) }}
                   {% endfor %}
@@ -258,8 +258,8 @@
 
             <h2>Consent for disclosure of records</h2>
             <div class="o-well">
-                <div class="o-form_group">
-                    <div class="m-form-field m-form-field__checkbox">
+                <div class="o-form__group">
+                    <div class="m-form-field m-form-field--checkbox">
                         {{ form.consent }}
                         <label class="a-label"
                                for="{{ form.consent.id_for_label }}">
@@ -267,9 +267,9 @@
                         </label>
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.full_name.id_for_label }}">
                             {{ form.full_name.label }}
                         </label>
@@ -279,15 +279,15 @@
             </div>
 
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-btn-group">
                     <button id="submit-button" class="a-btn">
                         Submit
-                        <span id="submit-icon" class="a-btn_icon a-btn_icon__on-right">
+                        <span id="submit-icon" class="a-btn__icon a-btn__icon--on-right">
                             {{ svg_icon('updating') }}
                         </span>
                     </button>
-                    <a class="a-btn a-btn__link"
+                    <a class="a-btn a-btn--link"
                        href="/privacy/records-disclosure-privacy-act-statement/"
                        rel="noopener noreferrer"
                        target="_blank">

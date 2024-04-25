@@ -26,11 +26,11 @@
   }
 
   // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.
-  .u-layout-grid__2-1 {
+  .u-layout-grid--2-1 {
     // Mobile and above
     // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
     .m-hero,
-    .u-layout-grid_hero {
+    .u-layout-grid__hero {
       position: relative;
 
       // Create the hero background bleed.
@@ -40,7 +40,7 @@
     }
 
     .u-layout-grid {
-      &_sidebar {
+      &__sidebar {
         position: relative;
         padding-left: unit(30px / @base-font-size-px, rem);
         margin-left: unit(-30px / @base-font-size-px, rem);
@@ -55,7 +55,7 @@
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       .u-layout-grid {
-        &_wrapper {
+        &__wrapper {
           // Numbers below are 870 split into three parts
           // 870 is the 900px breakpoint - 30px of gutters
           grid-auto-columns: minmax(580px, 2fr) minmax(290px, 1fr);
@@ -68,18 +68,18 @@
   }
 
   // 2-1 Left-to-right (LTR) layout.
-  .u-layout-grid__2-1:not(&[dir='rtl']) {
+  .u-layout-grid--2-1:not(&[dir='rtl']) {
     // This is for the sidebar bleed.
     overflow-x: hidden;
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       .u-layout-grid {
-        &_main {
+        &__main {
           padding-right: unit(10px / @base-font-size-px, rem);
         }
 
-        &_sidebar {
+        &__sidebar {
           padding-left: unit(30px / @base-font-size-px, rem);
           margin-left: unit(20px / @base-font-size-px, rem);
 
@@ -93,15 +93,15 @@
   }
 
   // 2-1 Right-to-left (RTL) layout.
-  .u-layout-grid__2-1[dir='rtl'] {
+  .u-layout-grid--2-1[dir='rtl'] {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       .u-layout-grid {
-        &_main {
+        &__main {
           padding-left: unit(10px / @base-font-size-px, rem);
         }
 
-        &_sidebar {
+        &__sidebar {
           padding-right: unit(30px / @base-font-size-px, rem);
           margin-right: unit(20px / @base-font-size-px, rem);
 

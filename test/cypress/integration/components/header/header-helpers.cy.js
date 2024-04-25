@@ -1,10 +1,10 @@
 export class Header {
   headerContent() {
-    return cy.get('.o-header_content');
+    return cy.get('.o-header__content');
   }
 
   headerLogo() {
-    return cy.get('.o-header_logo-img');
+    return cy.get('.o-header__logo-img');
   }
 
   /* Overlay is technically outside of the header,
@@ -22,6 +22,6 @@ export class Header {
   }
 
   globalEyebrowHorizontal() {
-    return cy.get('.m-global-eyebrow__horizontal');
+    return cy.get('.m-global-eyebrow--horizontal');
   }
 }

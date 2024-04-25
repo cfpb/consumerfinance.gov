@@ -4,11 +4,11 @@ export class Footer {
   }
 
   topButton() {
-    return this.footer().get('.o-footer_top-button');
+    return this.footer().get('.o-footer__top-button');
   }
 
   navList() {
-    return this.footer().get('.o-footer_nav-list');
+    return this.footer().get('.o-footer__nav-list');
   }
 
   middle(position) {
@@ -17,13 +17,13 @@ export class Footer {
 
   links() {
     return cy.get(
-      '.o-footer_nav-list a, .o-footer-middle-left a,' +
-        ' .o-footer-middle-right a, .m-social-media_icons a',
+      '.o-footer__nav-list a, .o-footer-middle-left a,' +
+        ' .o-footer-middle-right a, .m-social-media__icons a',
     );
   }
 
   socialMediaIcons() {
-    return this.footer().get('.m-social-media_icons');
+    return this.footer().get('.m-social-media__icons');
   }
 
   officialWebsite() {

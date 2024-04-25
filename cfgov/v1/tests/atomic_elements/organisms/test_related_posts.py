@@ -443,7 +443,7 @@ class RelatedPostsTestCase(TestCase):
 
         # Rendered HTML should contain 5 results, because the limit only
         # applies to each type of post, not the total number.
-        self.assertEqual(len(re.findall("m-list_item", html)), 5)
+        self.assertEqual(len(re.findall("m-list__item", html)), 5)
 
 
 class TestGenerateViewMoreUrl(TestCase):

@@ -16,14 +16,14 @@
             </div>
         {% endif %}
 
-        <div class="u-layout-grid_wrapper">
+        <div class="u-layout-grid__wrapper">
             {% block pre_content scoped -%}
                 {% include 'v1/layouts/_breadcrumbs.html' %}
             {%- endblock %}
 
             {% block body_content scoped %}
-                {# content_main_modifiers block is only used by the homepage #}
-                <div class="u-layout-grid_main {% block content_main_modifiers -%}{%- endblock %}">
+                {# content__main_modifiers block is only used by the homepage #}
+                <div class="u-layout-grid__main {% block content_main_modifiers -%}{%- endblock %}">
                     {% block content_main scoped -%}{%- endblock %}
                 </div>
             {% endblock %}

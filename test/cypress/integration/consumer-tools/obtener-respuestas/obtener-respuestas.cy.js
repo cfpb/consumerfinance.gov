@@ -33,7 +33,7 @@ describe('Obtener Respuestas', () => {
       buscar.enter(buscar.longTerm());
       buscar
         .input()
-        .should('contain.class', 'a-text-input__error')
+        .should('contain.class', 'a-text-input--error')
         .and('have.attr', 'maxlength');
       buscar.maxLengthErrorMessage().should('be.visible');
       buscar.submitButton().should('be.disabled');

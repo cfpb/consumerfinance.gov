@@ -7,7 +7,7 @@ import {
 
 const EMPTY_SEARCH_HTML = `
   <div id="tdp-search-facets-and-results">
-    <div class="results_count" data-results-count="0">
+    <div class="results__count" data-results-count="0">
     </div>
   </div>
 `;
@@ -25,38 +25,38 @@ const HTML_SNIPPET = `
     <form id="filter-form" action="." method="get" data-js-hook="behavior_change-filter">
       <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
       <input type="hidden" name="page" inputmode="numeric" value="1">
-      <div class="o-expandable o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="o-expandable_label">
+      <div class="o-expandable o-expandable--background" data-bound="true">
+        <button class="o-expandable__header o-expandable__target--expanded" type="button">
+          <span class="o-expandable__label">
             Building block
           </span>
-          <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+          <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
             </span>
           </span>
         </button>
-        <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 119px;">
-          <div class="o-form_group u-mt15">
-            <fieldset class="o-form_fieldset">
-              <ul class="m-list m-list__unstyled">
+        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 119px;">
+          <div class="o-form__group u-mt15">
+            <fieldset class="o-form__fieldset">
+              <ul class="m-list m-list--unstyled">
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Executive function" id="building-block--executive-function" name="building_block" value="1" checked="checked">
                     <label class="a-label" for="building-block--executive-function">Executive function</label>
                   </div>
                 </li>
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Financial habits and norms" id="building-block--financial-habits-and-norms" name="building_block" value="2">
                     <label class="a-label" for="building-block--financial-habits-and-norms">Financial habits and norms</label>
                   </div>
                 </li>
                 <li>
-                  <div class="m-form-field m-form-field__checkbox">
+                  <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Financial knowledge and decision-making skills" id="building-block--financial-knowledge-and-decision-making-skills" name="building_block" value="3">
                     <label class="a-label" for="building-block--financial-knowledge-and-decision-making-skills">Financial knowledge and decision-making skills</label>
                   </div>
@@ -67,28 +67,28 @@ const HTML_SNIPPET = `
         </div>
       </div>
 
-      <div class="o-expandable o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target__expanded" type="button">
-          <span class="o-expandable_label">Topic</span>
-          <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+      <div class="o-expandable o-expandable--background" data-bound="true">
+        <button class="o-expandable__header o-expandable__target--expanded" type="button">
+          <span class="o-expandable__label">Topic</span>
+          <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"></path></svg>
             </span>
           </span>
         </button>
-        <div class="o-expandable_content o-expandable_content__transition o-expandable_content__expanded" style="max-height: 337px;">
-          <ul class="m-list m-list__unstyled u-mt15">
+        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 337px;">
+          <ul class="m-list m-list--unstyled u-mt15">
             <li class="o-expandable-facets" data-bound="true">
-              <div class="m-form-field m-form-field__checkbox">
-                <input type="checkbox" class="a-checkbox o-expandable-facets_checkbox" aria-label="Earn" id="topic--earn" name="topic" value="1">
-                <label class="a-label toggle indeterminate" for="topic--earn">
+              <div class="m-form-field m-form-field--checkbox">
+                <input type="checkbox" class="a-checkbox o-expandable-facets__checkbox" aria-label="Earn" id="topic-earn" name="topic" value="1">
+                <label class="a-label toggle indeterminate" for="topic-earn">
                   <span class="u-visually-hidden">Earn</span>
                   <span class="u-hide-on-med u-hide-on-lg u-hide-on-xl" aria-hidden="true">Earn</span>
                 </label>
-                <button class="a-btn a-btn__link u-hide-on-xs u-hide-on-sm o-expandable-facets_target is-open" type="button">
+                <button class="a-btn a-btn--link u-hide-on-xs u-hide-on-sm o-expandable-facets__target is-open" type="button">
                   <span class="u-visually-hidden">Expand children</span>
                   <span aria-hidden="true">Earn</span>
                   <span class="o-expandable-facets_cue o-expandable-facets_cue-open">
@@ -101,17 +101,17 @@ const HTML_SNIPPET = `
                   </span>
                 </button>
               </div>
-              <ul class="m-list m-list__unstyled o-expandable-facets_content o-expandable-facets_content__transition o-expandable-facets_content__expanded" style="max-height: 52px;">
+              <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content__transition o-expandable-facets__content--expanded" style="max-height: 52px;">
                 <li class="u-hide-on-xs u-hide-on-sm">
-                  <div class="m-form-field m-form-field__checkbox">
-                    <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic--getting-paid" name="topic" value="4" checked="checked">
-                    <label class="a-label" for="topic--getting-paid">Getting paid</label>
+                  <div class="m-form-field m-form-field--checkbox">
+                    <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic-getting-paid" name="topic" value="4" checked="checked">
+                    <label class="a-label" for="topic-getting-paid">Getting paid</label>
                   </div>
                 </li>
                 <li class="u-hide-on-xs u-hide-on-sm">
-                  <div class="m-form-field m-form-field__checkbox">
-                    <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic--making-money" name="topic" value="2">
-                    <label class="a-label" for="topic--making-money">Making money</label>
+                  <div class="m-form-field m-form-field--checkbox">
+                    <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic-making-money" name="topic" value="2">
+                    <label class="a-label" for="topic-making-money">Making money</label>
                   </div>
                 </li>
               </ul>
@@ -123,52 +123,52 @@ const HTML_SNIPPET = `
 
 
       <div id="tdp-search-results">
-        <div class="results_header">
-          <div class="results_count" data-results-count="8">
+        <div class="results__header">
+          <div class="results__count" data-results-count="8">
             <h3>Showing 8 matches out of 26 activities</h3>
           </div>
-          <div class="results_filters">
-            <span class="results_filters-label">Filters applied</span>
-            <div class="results_filters-tags">
+          <div class="results__filters">
+            <span class="results__filters-label">Filters applied</span>
+            <div class="results__filters-tags">
               <div class="a-tag" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
                 Executive function
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
               </div>
-              <div class="a-tag" data-value="#topic--getting-paid" data-js-hook="behavior_clear-filter">
+              <div class="a-tag" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
                 Getting paid
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
               </div>
-              <button class="a-btn a-btn__link a-btn__warning results_filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
+              <button class="a-btn a-btn--link a-btn--warning results__filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
             </div>
           </div>
         </div>
-        <div class="results_list"></div>
+        <div class="results__list"></div>
       </div>
 
     </form>
     <nav class="m-pagination" role="navigation" aria-label="Pagination">
         <a class="a-btn
-                  m-pagination_btn-prev"
+                  m-pagination__btn-prev"
            href="?page=21#pagination_content">
-            <span class="a-btn_icon a-btn_icon__on-left">{% include icons/left.svg %}</span>
+            <span class="a-btn__icon a-btn__icon--on-left">{% include icons/left.svg %}</span>
             Newer
         </a>
         <a class="a-btn
-                  m-pagination_btn-next"
+                  m-pagination__btn-next"
            href="?page=23#pagination_content">
-            <span class="a-btn_icon a-btn_icon__on-right">{% include icons/right.svg %}</span>
+            <span class="a-btn__icon a-btn__icon--on-right">{% include icons/right.svg %}</span>
             Older
         </a>
-        <form class="m-pagination_form"
+        <form class="m-pagination__form"
               action="#pagination_content">
-            <label class="m-pagination_label"
-                   for="m-pagination_current-page">
+            <label class="m-pagination__label"
+                   for="m-pagination__current-page">
                 Page
                 <span class="u-visually-hidden">
                     number 22 out
                 </span>
-                <input class="m-pagination_current-page"
-                       id="m-pagination_current-page"
+                <input class="m-pagination__current-page"
+                       id="m-pagination__current-page"
                        name="page"
                        type="number"
                        min="1"
@@ -176,12 +176,12 @@ const HTML_SNIPPET = `
                        pattern="[0-9]*"
                        inputmode="numeric"
                        value="22">
-                <span class="m-pagination_label"> of 149</span>
+                <span class="m-pagination__label"> of 149</span>
             </label>
             <button class="a-btn
-                           a-btn__link
-                           m-pagination_btn-submit"
-                    id="m-pagination_btn-submit"
+                           a-btn--link
+                           m-pagination__btn-submit"
+                    id="m-pagination__btn-submit"
                     type="submit">Go</button>
         </form>
     </nav>
@@ -216,7 +216,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when a filter is clicked', () => {
-    const filterTag = document.querySelector('.results_filters .a-tag');
+    const filterTag = document.querySelector('.results__filters .a-tag');
     const spy = jest.fn();
 
     bindAnalytics(spy);
@@ -227,7 +227,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when next pagination button is clicked', () => {
-    const paginationButton = document.querySelector('.m-pagination_btn-next');
+    const paginationButton = document.querySelector('.m-pagination__btn-next');
     const spy = jest.fn();
 
     bindAnalytics(spy);
@@ -238,7 +238,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when an expandable is clicked', () => {
-    const expandable = document.querySelector('.o-expandable_header');
+    const expandable = document.querySelector('.o-expandable__header');
     const spy = jest.fn();
 
     bindAnalytics(spy);

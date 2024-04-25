@@ -20,7 +20,7 @@
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
-  &_content {
+  &__content {
     grid-area: content;
     padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
 
@@ -31,11 +31,11 @@
     }
   }
 
-  &_description {
+  &__description {
     margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   }
 
-  &_image-container {
+  &__image-container {
     position: relative;
     grid-area: image;
 
@@ -50,23 +50,23 @@
     });
   }
 
-  &_image {
+  &__image {
     display: block;
     width: 100%;
   }
 
-  &_title a {
-    .u-link__colors( var(--black), var(--pacific-80) );
+  &__title a {
+    .u-link--colors( var(--black), var(--pacific-80) );
   }
 
-  &_subtitle {
+  &__subtitle {
     .heading-6();
 
     // margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
     clear: both;
   }
 
-  &_byline-group,
+  &__byline-group,
   .m-tags {
     display: block;
     margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);

@@ -31,7 +31,7 @@
    value.links[i].text:          A string for the text of the link.
 
    value.links[i].aria_label:    (Optional) An aria-label for the link.
-   
+
    value.links[i].is_link_boldface: (Optional) Sets bold formatting for the link.
 
    format:                       Code for the layout of the parent Info Unit
@@ -64,7 +64,7 @@
             {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
 
     {% if link_image_and_heading %}
-        <a class="m-info-unit_heading-link"
+        <a class="m-info-unit__heading-link"
            href="{{ value.links[0].url | safe }}">
     {% endif %}
 
@@ -85,16 +85,16 @@
             {% set img_alt_text = value.links[0].text %}
         {% endif -%}
 
-        <img class="m-info-unit_image
-                    {{- ' m-info-unit_image__square' if img.is_square }}
-                    {{- ' u-image_border-circle' if border_radius_image == 'circle' }}
-                    {{- ' u-image_border-rounded' if border_radius_image == 'rounded' }}"
+        <img class="m-info-unit__image
+                    {{- ' m-info-unit__image--square' if img.is_square }}
+                    {{- ' u-image__border-circle' if border_radius_image == 'circle' }}
+                    {{- ' u-image__border-rounded' if border_radius_image == 'rounded' }}"
             src="{{ img.url }}"
             alt="{{ img_alt_text }}">
     {%- endif %}
 
     {%- if has_heading %}
-        <div class="m-info-unit_heading-text">
+        <div class="m-info-unit__heading-text">
             {{ heading( value.heading ) }}
         </div>
     {%- endif %}
@@ -103,13 +103,13 @@
         </a>
     {%- endif -%}
 
-    <div class="m-info-unit_content">
+    <div class="m-info-unit__content">
         {{ value.body | safe }}
 
         {% if value.links %}
-            <ul class="m-list m-list__links u-mt15">
+            <ul class="m-list m-list--links u-mt15">
             {%- for link in value.links %}
-                <li class="m-list_item">
+                <li class="m-list__item">
                 {%- if link.text is not none and link.text.find('@') > -1 -%}
                     {%- if not value.emails is defined -%}
                         {%- do value.update({'emails':[{'url':link.text}]}) -%}
@@ -120,7 +120,7 @@
                         else 'Learn More' -%}
 
                     {%- set link -%}
-                        <a class="m-list_link"
+                        <a class="m-list__link"
                             href="{{ link.url }}"
                             {%- if link.aria_label -%}
                                 aria-label="{{ link.aria_label }}"

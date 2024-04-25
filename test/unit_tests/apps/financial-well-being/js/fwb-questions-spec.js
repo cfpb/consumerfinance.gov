@@ -32,7 +32,7 @@ const HTML_SNIPPET = `
           I could handle a major unexpected expense
         </h3>
         <div class="answer-prefix">This statement describes me</div>
-        <div class="m-form-field m-form-field__radio">
+        <div class="m-form-field m-form-field--radio">
           <input class="a-radio"
                  type="radio"
                  id="question_1-completely"
@@ -45,7 +45,7 @@ const HTML_SNIPPET = `
             Completely
           </label>
         </div>
-        <div class="m-form-field m-form-field__radio">
+        <div class="m-form-field m-form-field--radio">
           <input class="a-radio"
                  type="radio"
                  id="question_1-very-well"
@@ -64,16 +64,16 @@ const HTML_SNIPPET = `
   <div class="block u-mb30">
     <h2>About you</h2>
     <div class="question-group">
-      <fieldset class="o-form_fieldset" id="method">
+      <fieldset class="o-form__fieldset" id="method">
         <h3 class="o-scale_header">
             Select how you completed the questionnaire.
             This changes the scoring calculation.
         </h3>
-        <ul class="m-list m-list__unstyled content-l">
-          <li class="content-l_col content-l_col-1-2">
+        <ul class="m-list m-list--unstyled content-l">
+          <li class="content-l__col content-l__col-1-2">
             <div class="m-form-field
-                        m-form-field__radio
-                        m-form-field__lg-target">
+                        m-form-field--radio
+                        m-form-field--lg-target">
               <input class="a-radio"
                      type="radio"
                      name="method"
@@ -90,10 +90,10 @@ const HTML_SNIPPET = `
               </label>
             </div>
           </li>
-          <li class="content-l_col content-l_col-1-2">
+          <li class="content-l__col content-l__col-1-2">
             <div class="m-form-field
-                        m-form-field__radio
-                        m-form-field__lg-target">
+                        m-form-field--radio
+                        m-form-field--lg-target">
               <input class="a-radio"
                      type="radio"
                      name="method"
@@ -115,7 +115,7 @@ const HTML_SNIPPET = `
       </fieldset>
     </div>
   </div>
-  <div class="o-form_group">
+  <div class="o-form__group">
     <input class="submit-quiz a-btn"
            id="submit-quiz"
            type="submit"

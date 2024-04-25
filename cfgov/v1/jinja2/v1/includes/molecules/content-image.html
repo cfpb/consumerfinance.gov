@@ -38,12 +38,12 @@
 {%- if value.image_width == 'full' -%}
 
 <figure class="m-full-width-media
-               {{- ' m-full-width-media__bottom-rule' if value.is_bottom_rule else '' }}">
-    <img class="m-full-width-media_image"
+               {{- ' m-full-width-media--bottom-rule' if value.is_bottom_rule else '' }}">
+    <img class="m-full-width-media__image"
          src="{{ image_inset.url }}"
          alt="{{ image_alt_value(value.image) }}">
 {%- if value.text %}
-    <figcaption class="m-full-width-media_caption">
+    <figcaption class="m-full-width-media__caption">
         {{ value.text | safe }}
     </figcaption>
 {%- endif %}
@@ -52,13 +52,13 @@
 {%- else -%}
 
 <figure class="m-inset
-               m-inset__image
-               m-inset__{{ value.image_width }}
-               m-inset__{{ value.image_position }}
-               m-inset__{{ image_inset.orientation }}
-               {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
-    <div class="m-inset_image-container">
-        <img class="m-inset_image"
+               m-inset--image
+               m-inset--{{ value.image_width }}
+               m-inset--{{ value.image_position }}
+               m-inset--{{ image_inset.orientation }}
+               {{- ' m-inset--bottom-rule' if value.is_bottom_rule else '' }}">
+    <div class="m-inset__image-container">
+        <img class="m-inset__image"
              src="{{ image_inset.url }}"
              srcset="{{ image_inset.url }} {{ image_inset.width }}w,
                      {{ image_mobile.url }} {{ image_mobile.width }}w"
@@ -66,7 +66,7 @@
              alt="{{ image_alt_value(value.image) }}">
     </div>
 {% if value.text %}
-    <figcaption class="m-inset_caption">
+    <figcaption class="m-inset__caption">
         {{ value.text | safe }}
     </figcaption>
 {% endif %}

@@ -57,13 +57,13 @@ const HTML_SNIPPET = `
 
       <section id="credit-score-container">
         <div class="a-range" id="credit-score-range">
-          <div class="a-range_labels">
-            <span class="a-range_labels-min"></span>
-            <span class="a-range_labels-max"></span>
+          <div class="a-range__labels">
+            <span class="a-range__labels-min"></span>
+            <span class="a-range__labels-max"></span>
           </div>
           <input type="range"
-                 class="a-range_input">
-          <div class="a-range_text"></div>
+                 class="a-range__input">
+          <div class="a-range__text"></div>
         </div>
 
         <div id="credit-score-alert"

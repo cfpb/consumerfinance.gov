@@ -43,7 +43,7 @@
 } %}
 <div class="m-related-metadata">
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
             {{ value.slug }}
         </h2>
     </header>
@@ -53,7 +53,7 @@
         {% if 'topics' in block.block_type and not block.value.show_topics %}
             {% continue %}
         {% endif %}
-        <div class="m-related-metadata_item-container">
+        <div class="m-related-metadata__item-container">
             <h3 class="h4">
                 {{ block.value.heading }}
             </h3>
@@ -82,17 +82,17 @@
 
 {% macro _list(list, is_related_topics=false) %}
 <ul class="m-list
-           m-list__unstyled
-           m-list__links
-           {{ 'm-related-metadata_topics' if is_related_topics else '' }} ">
+           m-list--unstyled
+           m-list--links
+           {{ 'm-related-metadata__topics' if is_related_topics else '' }} ">
     {% for link in list.links %}
-    <li class="m-list_item">
+    <li class="m-list__item">
         {% if link.url %}
-            <a href="{{ link.url }}" class="m-list_link">
+            <a href="{{ link.url }}" class="m-list__link">
                 {{ link.text }}
             </a>
         {% else %}
-            <span class="m-list_link">{{ link.text }}</span>
+            <span class="m-list__link">{{ link.text }}</span>
         {% endif %}
     </li>
     {% endfor %}

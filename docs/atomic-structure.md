@@ -53,12 +53,12 @@ Prefixed with `m-` in class names.
 ```html
 <div
   class="m-notification
-         m-notification__visible
-         m-notification__error"
+         m-notification--visible
+         m-notification--error"
 >
   {{ svg_icon('error') }}
-  <div class="m-notification_content" role="alert">
-    <div class="m-notification_message">Page not found.</div>
+  <div class="m-notification__content" role="alert">
+    <div class="m-notification__message">Page not found.</div>
   </div>
 </div>
 ```
@@ -69,7 +69,7 @@ Prefixed with `m-` in class names.
 .m-notification {
     display: none;
     position: relative;
-    padding: @notification-padding__px;
+    padding: @notification-padding-px;
     …
 }
 ```
@@ -111,8 +111,8 @@ Prefixed with `o-` in class names.
 
 ```html
 <div class="o-expandable">
-  <button class="o-expandable_header">
-    <div class="o-expandable_label">…</div>
+  <button class="o-expandable__header">
+    <div class="o-expandable__label">…</div>
   </button>
 </div>
 ```
@@ -123,7 +123,7 @@ Prefixed with `o-` in class names.
 .o-expandable {
     position: relative;
 
-    &_header {
+    &__header {
         padding: 0;
         border: 0;
         …

@@ -9,15 +9,15 @@ let efBody;
 let expandableFacet;
 
 const HTML_SNIPPET = `
-  <ul class="m-list m-list__unstyled u-mt15">
+  <ul class="m-list m-list--unstyled u-mt15">
     <li class="o-expandable-facets" data-bound="true">
-      <div class="m-form-field m-form-field__checkbox">
-        <input type="checkbox" class="a-checkbox o-expandable-facets_checkbox" aria-label="Earn" id="topic--earn" name="topic" value="1">
-        <label class="a-label toggle" for="topic--earn">
+      <div class="m-form-field m-form-field--checkbox">
+        <input type="checkbox" class="a-checkbox o-expandable-facets__checkbox" aria-label="Earn" id="topic-earn" name="topic" value="1">
+        <label class="a-label toggle" for="topic-earn">
           <span class="u-visually-hidden">Earn</span>
           <span class="u-hide-on-med u-hide-on-lg u-hide-on-xl" aria-hidden="true">Earn</span>
         </label>
-        <button class="a-btn a-btn__link u-hide-on-xs u-hide-on-sm o-expandable-facets_target" type="button">
+        <button class="a-btn a-btn--link u-hide-on-xs u-hide-on-sm o-expandable-facets__target" type="button">
           <span class="u-visually-hidden">Expand children</span>
           <span aria-hidden="true">Earn</span>
           <span class="o-expandable-facets_cue o-expandable-facets_cue-open" role="img" aria-label="Show">
@@ -28,17 +28,17 @@ const HTML_SNIPPET = `
           </span>
         </button>
       </div>
-      <ul class="m-list m-list__unstyled o-expandable-facets_content o-expandable-facets_content__transition" style="max-height: 52px;">
+      <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content__transition" style="max-height: 52px;">
         <li class="u-hide-on-xs u-hide-on-sm">
-          <div class="m-form-field m-form-field__checkbox">
-            <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic--getting-paid" name="topic" value="4">
-            <label class="a-label" for="topic--getting-paid">Getting paid</label>
+          <div class="m-form-field m-form-field--checkbox">
+            <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic-getting-paid" name="topic" value="4">
+            <label class="a-label" for="topic-getting-paid">Getting paid</label>
           </div>
         </li>
         <li class="u-hide-on-xs u-hide-on-sm">
-          <div class="m-form-field m-form-field__checkbox">
-            <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic--making-money" name="topic" value="2">
-            <label class="a-label" for="topic--making-money">Making money</label>
+          <div class="m-form-field m-form-field--checkbox">
+            <input type="checkbox" class="a-checkbox" aria-label="Making money" id="topic-making-money" name="topic" value="2">
+            <label class="a-label" for="topic-making-money">Making money</label>
           </div>
         </li>
       </ul>
@@ -63,10 +63,10 @@ describe('Expandable facets', () => {
     expandableFacet = new ExpandableFacets(ef);
     expandableFacet.init();
     efLabel = document.querySelector(
-      '.o-expandable-facets_checkbox ~ .a-label',
+      '.o-expandable-facets__checkbox ~ .a-label',
     );
-    efTarget = document.querySelector('.o-expandable-facets_target');
-    efBody = document.querySelector('.o-expandable-facets_content');
+    efTarget = document.querySelector('.o-expandable-facets__target');
+    efBody = document.querySelector('.o-expandable-facets__content');
 
     const mockXHR = {
       open: jest.fn(),
@@ -88,10 +88,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded'),
+      efBody.classList.contains('o-expandable-facets__content--expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed'),
+      efBody.classList.contains('o-expandable-facets__content--collapsed'),
     ).toEqual(true);
 
     simulateEvent('click', efTarget);
@@ -99,10 +99,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(false);
     expect(efTarget.classList.contains('is-open')).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded'),
+      efBody.classList.contains('o-expandable-facets__content--expanded'),
     ).toEqual(true);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed'),
+      efBody.classList.contains('o-expandable-facets__content--collapsed'),
     ).toEqual(false);
   });
 
@@ -120,10 +120,10 @@ describe('Expandable facets', () => {
     expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__expanded'),
+      efBody.classList.contains('o-expandable-facets__content--expanded'),
     ).toEqual(false);
     expect(
-      efBody.classList.contains('o-expandable-facets_content__collapsed'),
+      efBody.classList.contains('o-expandable-facets__content--collapsed'),
     ).toEqual(true);
   });
 });

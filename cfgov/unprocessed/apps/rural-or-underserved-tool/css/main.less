@@ -29,7 +29,7 @@
 }
 
 // Position search result totals.
-#results-total .content-l_col {
+#results-total .content-l__col {
   display: inline-flex;
   min-width: 12em;
 
@@ -44,10 +44,10 @@
 }
 
 // Result counts.
-#results-total .ruralCnt,
-#results-total .notRuralCnt,
-#results-total .notFoundCnt,
-#results-total .duplicateCnt {
+#results-total .rural-cnt,
+#results-total .not-rural-cnt,
+#results-total .not-found-cnt,
+#results-total .duplicate-cnt {
   font-size: 3rem;
 }
 
@@ -59,13 +59,13 @@
 // TODO: Overrides to cf-tables should be incorporated into the available
 //       cf-tables styles.
 
-// Override .o-table-wrapper__scrolling table added border.
+// Override .o-table-wrapper--scrolling table added border.
 .o-table table {
   border: none;
   width: 100%;
 }
 // Override zebra-striping of table rows.
-.o-table-wrapper__scrolling table > tbody > tr:nth-child(even) > td {
+.o-table-wrapper--scrolling table > tbody > tr:nth-child(even) > td {
   background: #fff;
 }
 
@@ -80,7 +80,7 @@ tr.data + tr[class=''] {
 }
 
 // Prevent clicking of the SVG in "Show map" from blocking clicks of the toggle.
-.jsLoadMap svg {
+.js-load-map svg {
   pointer-events: none;
 }
 

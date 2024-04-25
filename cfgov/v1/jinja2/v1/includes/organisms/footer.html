@@ -18,157 +18,157 @@
 {% import 'v1/includes/molecules/social-media.html' as social_media with context %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
 <footer class="o-footer">
-    <div class="wrapper wrapper__match-content">
+    <div class="wrapper wrapper--match-content">
 
-        <div class="o-footer_pre">
+        <div class="o-footer__pre">
 
             <a class="a-btn
-                      a-btn__secondary
-                      o-footer_top-button"
+                      a-btn--secondary
+                      o-footer__top-button"
                 data-gtm_ignore="true"
                 data-js-hook="behavior_return-to-top"
                 href="#">
                 {{ _('Back to top') }} {{ svg_icon('arrow-up') }}
             </a>
 
-            <ul class="o-footer_nav-list m-list">
+            <ul class="o-footer__nav-list m-list">
                 {% if language == 'es' %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/herramientas-del-consumidor/">Para consumidores</a>
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/es/herramientas-del-consumidor/">Para consumidores</a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/obtener-respuestas/">Obtener respuestas</a>
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/es/obtener-respuestas/">Obtener respuestas</a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/enviar-una-queja/">Enviar una queja</a>
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/es/enviar-una-queja/">Enviar una queja</a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/quienes-somos/">Quiénes somos</a>
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/es/quienes-somos/">Quiénes somos</a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/comprar-casa/">Comprar casa</a>
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/es/comprar-casa/">Comprar casa</a>
                     </li>
                 {% else %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/about-us/">
                             About Us
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/contact-us/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/about-us/contact-us/">
                             Contact Us
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/careers/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/about-us/careers/">
                             Careers
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/events/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/about-us/events/">
                             Events
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/enforcement/information-industry-whistleblowers/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/enforcement/information-industry-whistleblowers/">
                             Industry Whistleblowers
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/cfpb-ombudsman/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/cfpb-ombudsman/">
                             CFPB Ombudsman
                         </a>
                     </li>
                 {% endif %}
             </ul>
             <div class="block
-                        block__flush-top
-                        block__flush-bottom
-                        block__padded-top">
+                        block--flush-top
+                        block--flush-bottom
+                        block--padded-top">
                 {{ social_media.render( { 'is_share_view': false } ) }}
             </div>
-        </div>{# END .o-footer_pre #}
+        </div>{# END .o-footer__pre #}
 
         {% if language == 'es' %}
-        <div class="block block__flush-bottom block__flush-top block__padded-bottom">
+        <div class="block block--flush-bottom block--flush-top block--padded-bottom">
             En este momento, la política de información sólo está disponible en inglés.
         </div>
         {% endif %}
 
         <div class="o-footer-middle-left">
 
-            <div class="o-footer_col">
-                <ul class="o-footer_list m-list">
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/foia-requests/">
+            <div class="o-footer__col">
+                <ul class="o-footer__list m-list">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/foia-requests/">
                             FOIA
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/privacy/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/privacy/">
                             Privacy
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link"
+                    <li class="m-list__item">
+                        <a class="m-list__link"
                            href="/privacy/website-privacy-policy/">
                             Website Privacy Policy & Legal Notices
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/data/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/data/">
                             Data
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/open-government/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/open-government/">
                             Open Government
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/open-government/information-quality-guidelines/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/open-government/information-quality-guidelines/">
                             Information Quality Guidelines
                         </a>
                     </li>
                 </ul>
             </div>
-            <div class="o-footer_col">
-                <ul class="o-footer_list m-list">
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/diversity-and-inclusion/">
+            <div class="o-footer__col">
+                <ul class="o-footer__list m-list">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/about-us/diversity-and-inclusion/">
                             Diversity & Inclusion
                         </a>
                     </li>
                     {% if language != 'es' %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/administrative-adjudication-proceedings/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/administrative-adjudication-proceedings/">
                             Administrative Adjudication
                         </a>
                     </li>
                     {% endif %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/plain-writing/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/plain-writing/">
                             Plain Writing
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/accessibility/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/accessibility/">
                             Accessibility
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/office-civil-rights/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/office-civil-rights/">
                             Office of Civil Rights
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/office-civil-rights/no-fear-act-cummings-act/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/office-civil-rights/no-fear-act-cummings-act/">
                             No FEAR Act &amp; Cummings Act
                         </a>
                     </li>
                     {% if language != 'es'%}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/tribal/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/tribal/">
                             Tribal
                         </a>
                     </li>
@@ -178,18 +178,18 @@
         </div>{# END .o-footer-middle-left #}
 
         <div class="o-footer-middle-right">
-                <ul class="o-footer_list m-list">
-                    <li class="m-list_item">
-                        <a class="m-list_link a-link"
+                <ul class="o-footer__list m-list">
+                    <li class="m-list__item">
+                        <a class="m-list__link a-link"
                            href="{{ _('https://www.usa.gov/') }}">{{ _('USA.gov') }}</a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link a-link"
+                    <li class="m-list__item">
+                        <a class="m-list__link a-link"
                            href="https://oig.federalreserve.gov/">Office of Inspector General</a>
                     </li>
                     {% if language == 'es'%}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/cfpb-ombudsman/">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="/cfpb-ombudsman/">
                             CFPB Ombudsman
                         </a>
                      </li>
@@ -201,6 +201,6 @@
             {{ tagline.render( is_large=true ) }}
         </div>{# END .o-footer-post #}
 
-    </div>{# END .wrapper.wrapper__match-content #}
+    </div>{# END .wrapper.wrapper--match-content #}
 </footer>{# END .o-footer #}
 {% endmacro %}

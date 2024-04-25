@@ -31,7 +31,7 @@ const financialView = {
   _handleSeeStepsClick: function () {
     // TODO - This could all be written better.
     const selected = document.querySelector(
-      '.action-plan_choices .highlighted input[checked="true"]',
+      '.action-plan__choices .highlighted input[checked="true"]',
     );
     document.querySelectorAll('[data-action-plan]').forEach((elem) => {
       elem.classList.remove('active');
@@ -40,7 +40,7 @@ const financialView = {
       .querySelector('[data-action-plan="' + selected.value + '"]')
       .classList.add('active');
     document
-      .querySelector('.action-plan .action-plan_feeling-gauge')
+      .querySelector('.action-plan .action-plan__feeling-gauge')
       .classList.add('active');
   },
 
@@ -87,7 +87,7 @@ const financialView = {
       'span[data-financial-item]',
     );
     this._costsOfferButton = document.querySelector(
-      '.costs_button-section button',
+      '.costs__button-section button',
     );
     _addInputListeners();
     _addButtonListeners();

@@ -17,13 +17,13 @@
 {%- endblock css %}
 
 {% block content_modifiers -%}
-    {{ super() }} ask-cfpb-page ask-cfpb-page__answer
+    {{ super() }} ask-cfpb-page ask-cfpb-page--answer
 {%- endblock %}
 
 {% block content_main %}
     <div class="block
-                block__flush-top
-                block__sub">
+                block--flush-top
+                block--sub">
         {% if last_edited %}
             <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('last reviewed') }}: {{ dt.format_date(last_edited) }}</time>
         {% endif %}
@@ -35,7 +35,7 @@
         {{ translation_links.render() }}
     </div>
     <div class="block
-                block__flush-top">
+                block--flush-top">
 
         {% if page.short_answer %}
             <div class="lead-paragraph">
@@ -44,19 +44,19 @@
         {% endif %}
 
         {% if page.notification %}
-            <div class="block block__sub">
+            <div class="block block--sub">
                 {{ page.notification }}
             </div>
         {% endif %}
 
-        <div class="block block__sub">
+        <div class="block block--sub">
 
-            <div class="o-summary o-summary__mobile">
-                <div class="o-summary_content answer-text">
+            <div class="o-summary o-summary--mobile">
+                <div class="o-summary__content answer-text">
                     {% include_block page.answer_content %}
                 </div>
 
-                <button class="o-summary_btn u-hidden">
+                <button class="o-summary__btn u-hidden">
                     {{ _('Read full answer') }}
                     {{ svg_icon('plus-round') }}
                 </button>
@@ -65,19 +65,19 @@
             <div class="block related-questions">
                 <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
                 {% if related_questions %}
-                <div class="block block__sub">
+                <div class="block block--sub">
                     <h3>{{ _('Browse related questions') }} </h3>
-                    <ul class="m-list m-list__unstyled m-list__links">
+                    <ul class="m-list m-list--unstyled m-list--links">
                         {% for question in related_questions %}
-                        <li class="m-list_item">
-                            <a href="{{ question.url }}" class="m-list_link">
+                        <li class="m-list__item">
+                            <a href="{{ question.url }}" class="m-list__link">
                                 {{ question.question | safe }}
                             </a>
                         </li>
                         {% endfor %}
                         {% if portal_page %}
-                        <li class="m-list_item m-list_item__last">
-                            <a href="{{ portal_page.url }}" class="m-list_link">
+                        <li class="m-list__item m-list__item__last">
+                            <a href="{{ portal_page.url }}" class="m-list__link">
                                 <b>
                                     {{ _('Learn more about') }}
                                     {{ portal_page.portal_topic.title(page.language) | lower }}
@@ -88,7 +88,7 @@
                     </ul>
                 </div>
                 {% endif %}
-                <div class="block block__sub">
+                <div class="block block--sub">
                     {{ ask_search.render( language=page.language ) }}
                 </div>
             </div>
@@ -100,7 +100,7 @@
 {% block content_sidebar scoped  %}
     {% if about_us %}
         <div class="block
-                    block__flush-top
+                    block--flush-top
                     about-us-text">
             {{ about_us.text | richtext }}
         </div>

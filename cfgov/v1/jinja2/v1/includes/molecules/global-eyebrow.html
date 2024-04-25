@@ -19,18 +19,18 @@
 {% macro render( is_horizontal=false, language='en' ) %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
-                m-global-eyebrow__{{ 'horizontal' if is_horizontal
+                m-global-eyebrow--{{ 'horizontal' if is_horizontal
                                       else 'list' }}">
         <div class="wrapper
-                    {{ 'wrapper__match-content' if is_horizontal else '' }}">
+                    {{ 'wrapper--match-content' if is_horizontal else '' }}">
             {% if is_horizontal -%}
                 {{ tagline.render() }}
             {%- endif %}
-            <div class="m-global-eyebrow_actions">
+            <div class="m-global-eyebrow__actions">
                 <ul class="m-list
-                           m-list__horizontal
-                           m-global-eyebrow_languages">
-                    <li class="m-list_item">
+                           m-list--horizontal
+                           m-global-eyebrow__languages">
+                    <li class="m-list__item">
                         {% if language == 'es' %}
                         <a href="/" hreflang="en" lang="en">
                             English
@@ -41,43 +41,43 @@
                         </a>
                         {% endif %}
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/zh/" hreflang="zh" lang="zh">
                             中文
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/vi/" hreflang="vi" lang="vi">
                             Tiếng Việt
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/ko/" hreflang="ko" lang="ko">
                             한국어
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/tl/" hreflang="tl" lang="tl">
                             Tagalog
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/ru/" hreflang="ru" lang="ru">
                             Pусский
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/ar/" hreflang="ar" lang="ar">
                             العربية
                         </a>
                     </li>
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         <a href="/language/ht/" hreflang="ht" lang="ht">
                             Kreyòl Ayisyen
                         </a>
                     </li>
                 </ul>
-                <span class="m-global-eyebrow_phone">
+                <span class="m-global-eyebrow__phone">
                     <a href="tel:+1-855-411-2372">(855) 411-2372</a>
                 </span>
             </div>

@@ -1,5 +1,5 @@
-const OPEN_DEFAULT = 'o-expandable_content__onload-open';
-const MOBILE_COLLAPSED_CLASS = 'o-expandable__mobile-collapsed';
+const OPEN_DEFAULT = 'o-expandable__content--onload-open';
+const MOBILE_COLLAPSED_CLASS = 'o-expandable--mobile-collapsed';
 const MOBILE_WIDTH = 900;
 
 let innerWidth;

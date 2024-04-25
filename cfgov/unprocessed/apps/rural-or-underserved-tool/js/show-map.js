@@ -53,16 +53,16 @@ function initializeMap() {
   window.L.mapbox.accessToken = window.cfpbMapboxAccessToken;
 }
 
-// when a.jsLoadMap is clicked
+// when a.js-load-map is clicked
 const resultsMapDom = document.querySelector('#results');
 resultsMapDom.addEventListener('click', function (evt) {
   const target = evt.target;
   let toggleMapLink = target;
-  if (hasClass(target.parentNode, 'jsLoadMap')) {
+  if (hasClass(target.parentNode, 'js-load-map')) {
     toggleMapLink = target.parentNode;
   }
 
-  if (hasClass(toggleMapLink, 'jsLoadMap')) {
+  if (hasClass(toggleMapLink, 'js-load-map')) {
     evt.preventDefault();
 
     // setup vars (data attributes)

@@ -44,7 +44,7 @@ class FilterableDateField(forms.DateField):
     )
 
     default_widget_attrs = {
-        "class": "a-text-input a-text-input__full",
+        "class": "a-text-input a-text-input--full",
         "type": "date",
         "placeholder": "mm/dd/yyyy",
         "data-type": "date",
@@ -72,7 +72,7 @@ class FilterableListForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "id": "o-filterable-list-controls_title",
-                "class": "a-text-input a-text-input__full",
+                "class": "a-text-input a-text-input--full",
             }
         ),
     )
@@ -102,7 +102,7 @@ class FilterableListForm(forms.Form):
         choices=[],
         widget=widgets.SelectMultiple(
             attrs={
-                "id": "o-filterable-list-controls_topics",
+                "id": "o-filterable-list-controls-topics",
                 "class": "o-multiselect",
                 "data-placeholder": "Search for topics",
                 "multiple": "multiple",
@@ -115,7 +115,7 @@ class FilterableListForm(forms.Form):
         choices=[],
         widget=widgets.SelectMultiple(
             attrs={
-                "id": "o-filterable-list-controls_language",
+                "id": "o-filterable-list-controls-language",
                 "class": "o-multiselect",
                 "data-placeholder": "Search for language",
                 "multiple": "multiple",

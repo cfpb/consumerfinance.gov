@@ -141,14 +141,14 @@ const schoolView = {
     schoolView._searchBox = body.querySelector('#search__school-input');
     schoolView._searchResults = body.querySelector('#search-results');
     schoolView._programRadioLabels = body.querySelectorAll(
-      '.school-search_additional-info label',
+      '.school-search__additional-info label',
     );
     schoolView._programRadioInputs = body.querySelectorAll(
-      '.school-search_additional-info input[type="radio"]',
+      '.school-search__additional-info input[type="radio"]',
     );
     schoolView._programSelect = body.querySelector('#program-select');
     schoolView._schoolInfo = body.querySelector(
-      '.school-search_additional-info',
+      '.school-search__additional-info',
     );
     schoolView._schoolItems = document.querySelectorAll('[data-school-item]');
     schoolView._stateItems = document.querySelectorAll('[data-state-item]');

@@ -4,27 +4,27 @@
   row-gap: unit(10px / @base-font-size-px, rem);
   column-gap: unit(30px / @base-font-size-px, rem);
 
-  &_icons {
+  &__icons {
     display: flex;
     gap: unit(10px / @base-font-size-px, rem);
   }
 
-  &_icon {
+  &__icon {
     color: var(--gray-dark);
     font-size: unit(@grid_gutter-width / @base-font-size-px, rem);
     line-height: 1;
-    .u-link__colors( var(--gray-dark), var(--pacific-80) );
-    .u-link__no-border();
+    .u-link--colors( var(--gray-dark), var(--pacific-80) );
+    .u-link--no-border();
   }
 
-  // Only for elements in "share" (m-social-media__share) section.
-  &__share {
-    .m-social-media_heading {
+  // Only for elements in "share" (m-social-media--share) section.
+  &--share {
+    .m-social-media__heading {
       .heading-5();
       margin: auto 0;
     }
 
-    .m-social-media_print {
+    .m-social-media__print {
       padding-left: unit(10px / @base-font-size-px, rem);
       border-left: 1px solid var(--black);
     }
@@ -36,14 +36,14 @@
   });
 
   // Hide print when JS is off.
-  .no-js &_print {
+  .no-js &__print {
     display: none;
   }
 }
 
 // Right-to-left (RTL) layout.
-html[lang='ar'] .m-social-media__share {
-  .m-social-media_print {
+html[lang='ar'] .m-social-media--share {
+  .m-social-media__print {
     padding-left: 0;
     border-left: none;
     padding-right: unit(10px / @base-font-size-px, rem);
@@ -51,7 +51,7 @@ html[lang='ar'] .m-social-media__share {
   }
 
   // TODO: Scrutinize usage of unordered list and see if it can be removed.
-  .m-list_item:first-child {
+  .m-list__item:first-child {
     margin-right: 0;
   }
 }

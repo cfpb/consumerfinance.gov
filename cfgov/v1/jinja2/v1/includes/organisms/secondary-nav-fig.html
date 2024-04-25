@@ -17,7 +17,7 @@
   ========================================================================== #}
 
 {% macro render(version_status=none, effective_start_date=none, effective_end_date=none) %}
-<div class="o-fig_sidebar">
+<div class="o-fig__sidebar">
     <div class="u-hide-on-tablet">
         {% if version_status %}
             <div class="a-tag u-mb20">
@@ -34,21 +34,21 @@
     {% set version_label = " (" + _(version_status) + ")" if version_status else '' %}
     {% set sec_nav_settings_label = sec_nav_settings_label + version_label %}
     <nav class="o-secondary-nav" aria-label="{{ _('Table of contents') }}">
-        <button class="o-secondary-nav_header" type="button" aria-expanded="false">
-            <span class="o-secondary-nav_label">
+        <button class="o-secondary-nav__header" type="button" aria-expanded="false">
+            <span class="o-secondary-nav__label">
                 {{ sec_nav_settings_label }}
             </span>
-            <span class="o-secondary-nav_cues">
-                <span class="o-secondary-nav_cue-open" aria-label="Show">
+            <span class="o-secondary-nav__cues">
+                <span class="o-secondary-nav__cue-open" aria-label="Show">
                     {{ svg_icon('down') }}
                 </span>
-                <span class="o-secondary-nav_cue-close" aria-label="Hide">
+                <span class="o-secondary-nav__cue-close" aria-label="Hide">
                     {{ svg_icon('up') }}
                 </span>
             </span>
         </button>
 
-        <div class="o-secondary-nav_content">
+        <div class="o-secondary-nav__content">
 
         {% if version_status %}
             <p class="u-hide-on-desktop">
@@ -56,16 +56,16 @@
             </p>
         {% endif %}
         <div id="ctrl-f"></div>
-        <ul class="o-secondary-nav_list
-                   o-secondary-nav_list__parents">
+        <ul class="o-secondary-nav__list
+                   o-secondary-nav__list--parents">
             {%- for item in toc_headers %}
             <li>
                 {{ _navlink(item.id + ". " + item.header, item.anchor, true) }}
                 {% if item.children %}
-                <ul class="o-secondary-nav_list
-                           o-secondary-nav_list__children">
+                <ul class="o-secondary-nav__list
+                           o-secondary-nav__list--children">
                     {%- for child in item.children %}
-                    <li class="m-list_item">
+                    <li class="m-list__item">
                         {{ _navlink(child.id + ". " + child.header, child.anchor, false) }}
                     </li>
                 {%- endfor %}
@@ -79,9 +79,9 @@
 {% endmacro %}
 
 {% macro _navlink(text, href, parent=true, current=false) %}
-<a class="o-secondary-nav_link
-          {{ 'o-secondary-nav_link__parent' if parent else '' }}
-          {{ 'o-secondary-nav_link__current' if current else '' }}"
+<a class="o-secondary-nav__link
+          {{ 'o-secondary-nav__link--parent' if parent else '' }}
+          {{ 'o-secondary-nav__link--current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

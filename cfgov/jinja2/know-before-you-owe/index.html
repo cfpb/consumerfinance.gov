@@ -13,7 +13,7 @@
         background-color: #d6e5e4 !important;
     }
 
-    .m-hero_image {
+    .m-hero__image {
         background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
         filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                 src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
@@ -22,7 +22,7 @@
     }
 
     @media screen and (min-width: 37.5625em) {
-        .m-hero_image {
+        .m-hero__image {
             background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
@@ -32,7 +32,7 @@
     }
 
     @media screen and (max-width: 56.250em) {
-        .kbyo-tools .content-l_col-1-2 {
+        .kbyo-tools .content-l__col-1-2 {
             width: 100%;
             margin-bottom: 30px;
         }
@@ -49,27 +49,27 @@
 
 {% block content_intro %}
 <section class="m-hero">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Know Before You Owe | Mortgages</h1>
-            <div class="m-hero_subhead">
+    <div class="m-hero__wrapper wrapper">
+        <div class="m-hero__text">
+            <h1 class="m-hero__heading">Know Before You Owe | Mortgages</h1>
+            <div class="m-hero__subhead">
                 <p>The CFPB’s mortgage initiative is designed to help consumers understand their loan options, shop for the mortgage that’s best for them, and avoid costly surprises at the closing table.
                 </p>
             </div>
         </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"></div>
+        <div class="m-hero__image-wrapper">
+            <div class="m-hero__image"></div>
         </div>
     </div>
 </section>
 {% endblock %}
 
 {% block content_main %}
-    <div class="content-l block block__flush-top">
-        <div class="content-l_col
-                    content-l_col-1-2">
+    <div class="content-l block block--flush-top">
+        <div class="content-l__col
+                    content-l__col-1-2">
             <div class="m-info-unit">
-                <div class="m-info-unit_content">
+                <div class="m-info-unit__content">
                     {{- video_player.render(
                         "AwZERLDHJf0",
                         "center",
@@ -79,10 +79,10 @@
                 </div>
             </div>
         </div>
-        <div class="content-l_col
-                    content-l_col-1-2">
+        <div class="content-l__col
+                    content-l__col-1-2">
             <div class="m-info-unit">
-                <div class="m-info-unit_content">
+                <div class="m-info-unit__content">
                     <h2>Making the mortgage process easier</h2>
                     <p>
                         The Know Before You Owe mortgage disclosure rule replaces four disclosure forms with two new ones, the Loan Estimate and the Closing Disclosure. The new forms are easier to understand and easier to use. The rule also requires that you get three business days to review your Closing Disclosure and ask questions before you close on a mortgage.
@@ -91,12 +91,12 @@
             </div>
         </div>
     </div>
-    <div class="o-info-unit-group block block__border-top block__padded-top">
+    <div class="o-info-unit-group block block--border-top block--padded-top">
         <div class="content-l">
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                 <div class="m-info-unit">
-                    <div class="m-info-unit_content">
+                    <div class="m-info-unit__content">
                         <div class="kbyo-tools__intro">
                             <h2>Tools and resources</h2>
                             <p>Mortgages can be complex and confusing. To supplement the rule, we’ve created several resources to help you as you navigate the mortgage process. </p>
@@ -106,21 +106,21 @@
             </div>
         </div>
         <div class="content-l">
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                <div class="m-info-unit">
-                    <div class="m-info-unit_content">
+                    <div class="m-info-unit__content">
                         <div class="m-info-unit m-info-unit__inline">
-                            <div class="m-info-unit_image
-                                m-info-unit_image__square"
+                            <div class="m-info-unit__image
+                                m-info-unit__image--square"
                                 style="background-image: url( {{ static('apps/know-before-you-owe/img/loan-estimate_324.png') }} );">
                             </div>
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <h3>Sample Loan Estimate</h3>
                                 <p>The Loan Estimate makes it easier to shop around and compare loan offers from multiple lenders. Our interactive sample form will help you double check the details and get definitions for terms used on the Loan Estimate.</p>
-                                <ul class="m-list m-list__links">
-                                    <li class="m-list_item">
-                                        <a class="m-list_link" href="/owning-a-home/loan-estimate/">
+                                <ul class="m-list m-list--links">
+                                    <li class="m-list__item">
+                                        <a class="m-list__link" href="/owning-a-home/loan-estimate/">
                                         Explore a sample Loan Estimate
                                         </a>
                                     </li>
@@ -130,21 +130,21 @@
                     </div>
                 </div>
             </div>
-             <div class="content-l_col
-                        content-l_col-1-2">
+             <div class="content-l__col
+                        content-l__col-1-2">
                <div class="m-info-unit">
-                    <div class="m-info-unit_content">
+                    <div class="m-info-unit__content">
                         <div class="m-info-unit m-info-unit__inline">
-                            <div class="m-info-unit_image
-                                m-info-unit_image__square"
+                            <div class="m-info-unit__image
+                                m-info-unit__image--square"
                                 style="background-image: url( {{ static('apps/know-before-you-owe/img/closing-disclosure_324.png') }} );">
                             </div>
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <h3>Sample Closing Disclosure</h3>
                                 <p>The Closing Disclosure helps you avoid costly surprises at the closing table. Use our interactive sample form to help you compare your Loan Estimate to the Closing Disclosure and make sure that you understand the reason for any differences.</p>
-                                <ul class="m-list m-list__links">
-                                    <li class="m-list_item">
-                                        <a class="m-list_link" href="/owning-a-home/closing-disclosure/">
+                                <ul class="m-list m-list--links">
+                                    <li class="m-list__item">
+                                        <a class="m-list__link" href="/owning-a-home/closing-disclosure/">
                                         Explore a sample Closing Disclosure
                                         </a>
                                     </li>
@@ -156,21 +156,21 @@
             </div>
         </div>
         <div class="content-l">
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                <div class="m-info-unit">
-                    <div class="m-info-unit_content">
+                    <div class="m-info-unit__content">
                         <div class="m-info-unit m-info-unit__inline">
-                            <div class="m-info-unit_image
-                                m-info-unit_image__square"
+                            <div class="m-info-unit__image
+                                m-info-unit__image--square"
                                 style="background-image: url( {{ static('apps/know-before-you-owe/img/owning-a-home_324.png') }} );">
                             </div>
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <h3>Buying a House</h3>
                                 <p>This suite of tools and resources guides you through the process of getting a mortgage. It will help you explore interest rates in your area, understand loan options, and prepare you for closing.</p>
-                                <ul class="m-list m-list__links">
-                                    <li class="m-list_item">
-                                        <a class="m-list_link" href="/owning-a-home/">
+                                <ul class="m-list m-list--links">
+                                    <li class="m-list__item">
+                                        <a class="m-list__link" href="/owning-a-home/">
                                         Visit Buying a House
                                         </a>
                                     </li>
@@ -180,25 +180,25 @@
                     </div>
                 </div>
             </div>
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                <div class="m-info-unit">
-                    <div class="m-info-unit_content">
+                    <div class="m-info-unit__content">
                         <div class="m-info-unit m-info-unit__inline">
-                            <div class="m-info-unit_image
-                                m-info-unit_image__square"
+                            <div class="m-info-unit__image
+                                m-info-unit__image--square"
                                 style="background-image: url( {{ static('apps/know-before-you-owe/img/home-loan-toolkit_324.png') }} );">
                             </div>
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <h3>Your Home Loan Toolkit</h3>
                                 <p>This booklet takes you from budgeting to closing with worksheets, checklists, and conversation starters. You’ll get a copy when you apply for a home purchase mortgage, but you can also download a copy now.</p>
-                                <ul class="m-list m-list__links">
-                                    <li class="m-list_item">
+                                <ul class="m-list m-list--links">
+                                    <li class="m-list__item">
                                         <a class="a-link
-                                                  a-link__icon
-                                                  m-list_link"
+                                                  a-link--icon
+                                                  m-list__link"
                                            href="https://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf">
-                                            <span class="a-link_text">Download the toolkit</span>
+                                            <span class="a-link__text">Download the toolkit</span>
                                             {{ svg_icon('download') }}
                                         </a>
                                     </li>
@@ -210,14 +210,14 @@
             </div>
         </div>
     </div>
-    <div class="u-layout-grid_breakout kbyo-professional-resources">
-        <div class="wrapper wrapper__match-content">
+    <div class="u-layout-grid__breakout kbyo-professional-resources">
+        <div class="wrapper wrapper--match-content">
             <div class="o-info-unit-group">
                 <div class="content-l">
-                    <div class="content-l_col
-                                content-l_col-1-2">
+                    <div class="content-l__col
+                                content-l__col-1-2">
                         <div class="m-info-unit">
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <div class="kbyo-tools__intro">
                                     <h2>Resources for professionals</h2>
                                     <p>Mortgages can be complex and confusing. To supplement the rule, we’ve created several resources to help you as you navigate the mortgage process.</p>
@@ -227,17 +227,17 @@
                     </div>
                 </div>
                 <div class="content-l">
-                    <div class="content-l_col
-                                content-l_col-1-2">
+                    <div class="content-l__col
+                                content-l__col-1-2">
                     <div class="m-info-unit">
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <div class="m-info-unit">
-                                    <div class="m-info-unit_content">
+                                    <div class="m-info-unit__content">
                                         <h3>Mortgage professionals</h3>
                                         <p>Since 2013, we have been working with lenders, creditors, compliance officers, software companies, and other groups to prepare for implementation of the rule.</p>
-                                        <ul class="m-list m-list__links">
-                                            <li class="m-list_item">
-                                                <a class="m-list_link"
+                                        <ul class="m-list m-list--links">
+                                            <li class="m-list__item">
+                                                <a class="m-list__link"
                                                 href="/regulatory-implementation/tila-respa/">
                                                     Visit the Regulatory Implementation page
                                                 </a>
@@ -248,17 +248,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-l_col
-                                content-l_col-1-2">
+                    <div class="content-l__col
+                                content-l__col-1-2">
                     <div class="m-info-unit">
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <div class="m-info-unit">
-                                    <div class="m-info-unit_content">
+                                    <div class="m-info-unit__content">
                                         <h3>Housing counselors</h3>
                                         <p>Assist consumers as they navigate through the new mortgage process. Educate your clients on the new disclosures and timing requirements with our tools and resources.</p>
-                                        <ul class="m-list m-list__links">
-                                            <li class="m-list_item">
-                                                <a class="m-list_link" href="https://www.youtube.com/watch?v=ZS49Mmym6Ko">
+                                        <ul class="m-list m-list--links">
+                                            <li class="m-list__item">
+                                                <a class="m-list__link" href="https://www.youtube.com/watch?v=ZS49Mmym6Ko">
                                                 View a webinar on the rule
                                                 </a>
                                             </li>
@@ -270,17 +270,17 @@
                     </div>
                 </div>
                 <div class="content-l">
-                    <div class="content-l_col
-                                content-l_col-1-2">
+                    <div class="content-l__col
+                                content-l__col-1-2">
                     <div class="m-info-unit">
-                            <div class="m-info-unit_content">
+                            <div class="m-info-unit__content">
                                 <div class="m-info-unit">
-                                    <div class="m-info-unit_content">
+                                    <div class="m-info-unit__content">
                                         <h3>Media</h3>
                                         <p>We have created resources to help you understand and tell the story of the CFPB’s Know Before You Owe mortgage initiative, which has been a focal point of the Bureau since its start.</p>
-                                        <ul class="m-list m-list__links">
-                                            <li class="m-list_item">
-                                                <a class="m-list_link"
+                                        <ul class="m-list m-list--links">
+                                            <li class="m-list__item">
+                                                <a class="m-list__link"
                                                 href="/about-us/newsroom/cfpb-releases-new-owning-a-home-tools-to-help-consumers-shop-for-a-mortgage/">
                                                 Read the press release and download a press kit
                                                 </a>
@@ -298,10 +298,10 @@
     <div class="block">
         <div class="o-info-unit-group">
             <div class="content-l">
-                <div class="content-l_col
-                            content-l_col-1-2">
+                <div class="content-l__col
+                            content-l__col-1-2">
                     <div class="m-info-unit">
-                        <div class="m-info-unit_content">
+                        <div class="m-info-unit__content">
                             <div class="kbyo-tools__intro">
                                 <h2>Creating new mortgage disclosures</h2>
                             </div>
@@ -310,18 +310,18 @@
                 </div>
             </div>
             <div class="content-l">
-                <div class="content-l_col
-                            content-l_col-1-2">
+                <div class="content-l__col
+                            content-l__col-1-2">
                 <div class="m-info-unit">
-                        <div class="m-info-unit_content">
+                        <div class="m-info-unit__content">
                             <div class="m-info-unit">
-                                <div class="m-info-unit_content">
+                                <div class="m-info-unit__content">
                                     <h3>Why we created new disclosures</h3>
                                     <p>The Consumer Financial Protection Bureau (CFPB) is a government agency built to protect consumers. We help keep banks and other financial service providers consumers depend on every day operating fairly.</p>
                                     <p>After the housing crisis, Congress directed us to combine existing federal mortgage disclosures: the initial Truth–in-Lending disclosure with the Good Faith Estimate and the final Truth-in-Lending disclosure with the HUD-1 Settlement Statement. These disclosures had overlapping information and complicated terms, which made them hard for borrowers to understand and for lenders to explain.</p>
-                                    <ul class="m-list m-list__links">
-                                        <li class="m-list_item">
-                                            <a class="m-list_link"
+                                    <ul class="m-list m-list--links">
+                                        <li class="m-list__item">
+                                            <a class="m-list__link"
                                             href="/know-before-you-owe/compare/">
                                                 Compare the new disclosures to the old ones
                                             </a>
@@ -332,19 +332,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-l_col
-                            content-l_col-1-2">
+                <div class="content-l__col
+                            content-l__col-1-2">
                 <div class="m-info-unit">
-                        <div class="m-info-unit_content">
+                        <div class="m-info-unit__content">
                             <div class="m-info-unit">
-                                <div class="m-info-unit_content">
+                                <div class="m-info-unit__content">
                                     <h3>How we created new disclosures</h3>
                                     <p>We involved the people who will actually use the new forms—consumers, lenders, mortgage brokers, settlement agents—in helping to combine and improve them. After several rounds of qualitative testing, we found that users were able to see the difference between prices on their Loan Estimate to those quoted on the Closing Disclosure and they were able to identify costs they could shop for, among other findings.
                                     </p>
                                     <p>To be sure that the Loan Estimate and the Closing Disclosure are easier to use and understand than the existing forms, we tested them in a quantitative validation study. Participants provided more correct answers about a sample mortgage using the new forms than they did using the previous forms.</p>
-                                    <ul class="m-list m-list__links">
-                                        <li class="m-list_item">
-                                            <a class="m-list_link" href="/know-before-you-owe/compare/">
+                                    <ul class="m-list m-list--links">
+                                        <li class="m-list__item">
+                                            <a class="m-list__link" href="/know-before-you-owe/compare/">
                                             Review testing results
                                             </a>
                                         </li>
@@ -357,10 +357,10 @@
             </div>
         </div>
     </div>
-    <div class="block block__border-top block__padded-top">
+    <div class="block block--border-top block--padded-top">
         <div class="content-l">
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                 <h2>Timeline</h2>
                 <p>
                     <a class="styled-link" href="/know-before-you-owe/timeline/">
@@ -371,77 +371,77 @@
             </div>
         </div>
     </div>
-    <section class="u-layout-grid_breakout kbyo-footer">
-        <div class="wrapper wrapper__match-content">
+    <section class="u-layout-grid__breakout kbyo-footer">
+        <div class="wrapper wrapper--match-content">
             <div class="content-l">
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                 <header class="m-slug-header">
-                    <h2 class="m-slug-header_heading">
+                    <h2 class="m-slug-header__heading">
                         Reports
                     </h2>
                 </header>
-                <ul class="m-list m-list__links">
-                <li class="m-list_item">
-                    <a class="a-m-list_link" href="/reports/leveraging-technology-to-empower-mortgage-consumers-at-closing/">
-                    <span class="a-link_text">Leveraging technology to empower mortgage consumers at closing</span>
+                <ul class="m-list m-list--links">
+                <li class="m-list__item">
+                    <a class="a-m-list__link" href="/reports/leveraging-technology-to-empower-mortgage-consumers-at-closing/">
+                    <span class="a-link__text">Leveraging technology to empower mortgage consumers at closing</span>
                     </a>
                 </li>
-                <li class="m-list_item">
-                    <a class="m-list_link" href="/reports/consumers-mortgage-shopping-experience/">
-                    <span class="a-link_text">Consumers’ mortgage shopping experience</span>
+                <li class="m-list__item">
+                    <a class="m-list__link" href="/reports/consumers-mortgage-shopping-experience/">
+                    <span class="a-link__text">Consumers’ mortgage shopping experience</span>
                     </a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a class="a-link
-                            a-link__icon
-                            m-list_link"
+                            a-link--icon
+                            m-list__link"
                     href="https://files.consumerfinance.gov/f/201207_cfpb_report_tila-respa-sbrefa-feedback.pdf">
-                        <span class="a-link_text">A report on our discussions with small businesses</span>
+                        <span class="a-link__text">A report on our discussions with small businesses</span>
                         {{ svg_icon('download') }}
                     </a>
                 </li>
-                <li class="m-list_item">
-                    <a class="m-list_link" href="/know-before-you-owe/compare/">
-                    <span class="a-link_text">Learn more about the research we did to develop the new forms</span>
+                <li class="m-list__item">
+                    <a class="m-list__link" href="/know-before-you-owe/compare/">
+                    <span class="a-link__text">Learn more about the research we did to develop the new forms</span>
                     </a>
                 </li>
                 </ul>
             </div><!-- /.kbyo-footer__col -->
 
-            <div class="content-l_col
-                        content-l_col-1-2">
+            <div class="content-l__col
+                        content-l__col-1-2">
                 <header class="m-slug-header">
-                    <h2 class="m-slug-header_heading">
+                    <h2 class="m-slug-header__heading">
                         Related links
                     </h2>
                 </header>
-                <ul class="m-list m-list__links">
-                <li class="m-list_item">
+                <ul class="m-list m-list--links">
+                <li class="m-list__item">
                     <a class="a-link
-                            a-link__icon
-                            m-list_link"
+                            a-link--icon
+                            m-list__link"
                     href="https://files.consumerfinance.gov/f/201311_cfpb_kbyo_loan-estimate_blank.pdf">
-                        <span class="a-link_text">Download a blank Loan Estimate form</span>
+                        <span class="a-link__text">Download a blank Loan Estimate form</span>
                         {{ svg_icon('download') }}
                     </a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a class="a-link
-                            a-link__icon
-                            m-list_link"
+                            a-link--icon
+                            m-list__link"
                         href="https://files.consumerfinance.gov/f/201311_cfpb_kbyo_closing-disclosure_blank.pdf">
-                        <span class="a-link_text">Download a blank Closing Disclosure form</span>
+                        <span class="a-link__text">Download a blank Closing Disclosure form</span>
                         {{ svg_icon('download') }}
                     </a>
                 </li>
                 </ul>
             </div><!-- /.kbyo-footer__col -->
-            <div class="content-l_col
-                        content-l_col-1-2
+            <div class="content-l__col
+                        content-l__col-1-2
                         u-mt45">
                 <header class="m-slug-header">
-                    <h2 class="m-slug-header_heading">
+                    <h2 class="m-slug-header__heading">
                         Legal disclaimer
                     </h2>
                 </header>

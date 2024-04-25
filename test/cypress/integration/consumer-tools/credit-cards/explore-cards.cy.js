@@ -116,7 +116,7 @@ describe('Explore credit card details page', () => {
 
     cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('.m-breadcrumbs_crumb:last-child')
+    cy.get('.m-breadcrumbs__crumb:last-child')
       .should('have.attr', 'href')
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
       .and('contain', 'location=NY')
@@ -127,7 +127,7 @@ describe('Explore credit card details page', () => {
 
     cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('.m-breadcrumbs_crumb:last-child')
+    cy.get('.m-breadcrumbs__crumb:last-child')
       .should('have.attr', 'href')
       .and('eq', '/consumer-tools/credit-cards/explore-cards/cards/');
   });

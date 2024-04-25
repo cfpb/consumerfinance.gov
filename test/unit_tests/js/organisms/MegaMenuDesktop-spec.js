@@ -23,11 +23,11 @@ describe('MegaMenuDesktop', () => {
     */
     it('should expand on the first level sub-menu button click', (done) => {
       const menuTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children',
+        '.o-mega-menu__content-1-link--has-children',
       );
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
+      const subContent = navElem.querySelector('.o-mega-menu__content-2');
       const subContentWrapper = navElem.querySelector(
-        '.o-mega-menu_content-2-wrapper',
+        '.o-mega-menu__content-2-wrapper',
       );
       let isExpanded;
 
@@ -55,15 +55,15 @@ describe('MegaMenuDesktop', () => {
     });
 
     it('should not be expanded by default', () => {
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
+      const subContent = navElem.querySelector('.o-mega-menu__content-2');
       const isExpanded = subContent.getAttribute('aria-expanded');
 
       expect(isExpanded).toEqual('false');
     });
 
     it('should not be expanded on the main trigger click', (done) => {
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
+      const subContent = navElem.querySelector('.o-mega-menu__content-2');
       let isExpanded;
 
       /**

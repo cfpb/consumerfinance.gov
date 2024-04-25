@@ -49,7 +49,7 @@ function makeSelectFilterDOM(options, chartNode, filter) {
   wrapper.className = 'filter-wrapper m-form-field m-form-field__select';
 
   const label = document.createElement('label');
-  label.className = 'a-label a-label__heading';
+  label.className = 'a-label a-label--heading';
   label.innerText = filter.label ? filter.label : 'Select ' + filter.key;
   label.htmlFor = id;
 
@@ -125,7 +125,7 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
   function makeRadioGroup(bucket, i) {
     const id = Math.random() + bucket;
     const radioWrapper = document.createElement('div');
-    radioWrapper.className = 'm-form-field m-form-field__radio u-mb5';
+    radioWrapper.className = 'm-form-field m-form-field--radio u-mb5';
     let radioGroupName = document.querySelectorAll('.filter-wrapper').length;
     radioGroupName = 'radio-group_' + radioGroupName;
 

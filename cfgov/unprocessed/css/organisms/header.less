@@ -1,5 +1,5 @@
-@margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-@mobile_trigger_ht__px: 54px;
+@margin-half-em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+@mobile-trigger-ht-px: 54px;
 @min_app_width__px: 320px;
 
 .o-header {
@@ -12,7 +12,8 @@
   .respond-to-min(@bp-lg-min, {
     min-width: @bp-lg-min;
   });
-  &_content {
+
+  &__content {
     position: relative;
 
     > .wrapper {
@@ -73,10 +74,10 @@
     });
   }
 
-  &_logo {
+  &__logo {
     &-img {
       // Size is to fit 320px minimum width for older iPhones, etc.
-      height: @mobile_trigger_ht__px - 20px;
+      height: @mobile-trigger-ht-px - 20px;
       width: auto;
       // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
       margin-top: 10px;
@@ -92,7 +93,7 @@
     }
   }
 
-  &__mega-menu {
+  &--mega-menu {
     // Setting the minimum height allocates room for the mega menu
     // so the header height doesn't change when it loads in.
     // Desktop and above.
@@ -101,7 +102,7 @@
     });
   }
 
-  &__mega-menu &_logo {
+  &--mega-menu &__logo {
     // Tablet and below.
     .respond-to-max(@bp-sm-max, {
       .js & {
@@ -109,7 +110,7 @@
         // The margin-left starts inside the 15px padding of the page
         // page already, so a value that matches the width of the trigger
         // will give it the desired spacing to the right of the trigger.
-        margin-left: @mobile_trigger_ht__px;
+        margin-left: @mobile-trigger-ht-px;
       }
     });
   }
@@ -117,7 +118,7 @@
 
 // Move logo on print.
 .respond-to-print( {
-  .o-header_logo {
+  .o-header__logo {
     // Mega menu is hidden, so we need to remove logo offset.
     margin-left: 15px !important;
   }

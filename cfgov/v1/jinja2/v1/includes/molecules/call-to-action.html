@@ -26,20 +26,20 @@
 <div class="m-call-to-action">
     {% if value.slug_text %}
     <header class="m-slug-header">
-        <h2 class="m-slug-header_heading">
+        <h2 class="m-slug-header__heading">
             {{ value.slug_text }}
         </h2>
     </header>
     {% endif %}
 
     {% if value.paragraph_text %}
-    <div class="m-call-to-action_text">
+    <div class="m-call-to-action__text">
         {{ value.paragraph_text | safe }}
     </div>
     {% endif %}
 
     {% if value.button.url and value.button.text %}
-    <a class="a-btn a-btn__full-on-xs"
+    <a class="a-btn a-btn--full-on-xs"
        href="{{ value.button.url }}"
        {% if value.button.aria_label %}
        aria-label="{{ value.button.aria_label }}"

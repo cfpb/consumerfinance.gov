@@ -4,10 +4,10 @@ import { EventObserver } from '@cfpb/cfpb-atomic-component';
 // Exported constants.
 const CLASSES = {
   CSS_PROPERTY: 'max-height',
-  BASE_CLASS: 'o-expandable-facets_content__transition',
-  EXPANDED: 'o-expandable-facets_content__expanded',
-  COLLAPSED: 'o-expandable-facets_content__collapsed',
-  OPEN_DEFAULT: 'o-expandable-facets_content__onload-open',
+  BASE_CLASS: 'o-expandable-facets__content--transition',
+  EXPANDED: 'o-expandable-facets__content--expanded',
+  COLLAPSED: 'o-expandable-facets__content--collapsed',
+  OPEN_DEFAULT: 'o-expandable-facets__content--onload-open',
 };
 
 /**

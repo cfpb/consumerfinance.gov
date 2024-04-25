@@ -62,8 +62,8 @@
         {% endif %}
 
         <div class="block
-                    block__padded
-                    block__sub
+                    block--padded
+                    block--sub
                     {%- if not has_active_filters %}
                     u-hidden
                     {%- endif %}"
@@ -80,9 +80,9 @@
 
         {% if results_page.paginator.count %}
             <section class="block
-                            block__sub
+                            block--sub
                             {%- if has_active_filters %}
-                            block__flush-top
+                            block--flush-top
                             {%- endif %}"
                      data-cy="filterable-list-results">
                 {% if page.filterable_results_compact %}
@@ -104,7 +104,7 @@
                 {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
 
                 {% if results_page.paginator.num_pages > 1 %}
-                    <div class="block block__flush-top block__flush-bottom block__padded-top">
+                    <div class="block block--flush-top block--flush-bottom block--padded-top">
                         {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
                         {{ pagination.render(
                             results_page.paginator.num_pages,

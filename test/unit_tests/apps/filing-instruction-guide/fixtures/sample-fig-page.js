@@ -1,33 +1,33 @@
 export default `
-<main class="u-layout-grid u-layout-grid__1-3 o-fig" id="main">
-    <div class="u-layout-grid_wrapper">
-        <div class="u-layout-grid_breadcrumbs">
+<main class="u-layout-grid u-layout-grid--1-3 o-fig" id="main">
+    <div class="u-layout-grid__wrapper">
+        <div class="u-layout-grid__breadcrumbs">
             <nav class="breadcrumbs" aria-label="Breadcrumbs">
-                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__left" viewBox="0 0 10 19">
+                <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg--left" viewBox="0 0 10 19">
                     <path d="M8.4 17.269a1.026 1.026 0 0 1-.727-.302l-6.801-6.8a1.03 1.03 0 0 1 0-1.456l6.8-6.8a1.03 1.03 0 0 1 1.456 1.455L3.055 9.439l6.073 6.073A1.03 1.03 0 0 1 8.4 17.27z"></path>
                 </svg>
                 <a href="/data-research/"> Data &amp; Research </a> / <a href="/data-research/small-business-lending/"> Small Business Lending Database </a> /
                 <a href="/data-research/small-business-lending/filing-instructions-guide/"> Small Business Lending Rule Filing Instructions Guides </a>
             </nav>
         </div>
-        <aside class="u-layout-grid_secondary-nav u-layout-grid_secondary-nav__sticky">
-            <div class="o-fig_sidebar">
+        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav__sticky">
+            <div class="o-fig__sidebar">
                 <div class="u-hide-on-tablet">
                     <h3>Table of contents</h3>
                 </div>
                 <nav class="o-secondary-nav" aria-label="Table of contents" data-js-hook="state_atomic_init behavior_flyout-menu">
-                    <button class="o-secondary-nav_header" type="button" aria-expanded="false" data-js-hook="behavior_flyout-menu_trigger">
-                        <span class="o-secondary-nav_label"> Table of contents </span>
-                        <span class="o-secondary-nav_cues">
-                            <span class="o-secondary-nav_cue-open" aria-label="Show">
+                    <button class="o-secondary-nav__header" type="button" aria-expanded="false" data-js-hook="behavior_flyout-menu_trigger">
+                        <span class="o-secondary-nav__label"> Table of contents </span>
+                        <span class="o-secondary-nav__cues">
+                            <span class="o-secondary-nav__cue-open" aria-label="Show">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__down" viewBox="0 0 17 19"><path d="M8.5 15.313a1.026 1.026 0 0 1-.728-.302l-6.8-6.8a1.03 1.03 0 0 1 1.455-1.456L8.5 12.828l6.073-6.073a1.03 1.03 0 0 1 1.455 1.456l-6.8 6.8a1.026 1.026 0 0 1-.728.302z"></path></svg>
                             </span>
-                            <span class="o-secondary-nav_cue-close" aria-label="Hide">
+                            <span class="o-secondary-nav__cue-close" aria-label="Hide">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg__up" viewBox="0 0 17 19"><path d="M15.3 15.32a1.026 1.026 0 0 1-.727-.302L8.5 8.946l-6.073 6.072a1.03 1.03 0 0 1-1.456-1.455l6.801-6.8a1.03 1.03 0 0 1 1.456 0l6.8 6.8a1.03 1.03 0 0 1-.727 1.757z"></path></svg>
                             </span>
                         </span>
                     </button>
-                    <div class="o-secondary-nav_content u-max-height-transition u-max-height-zero" data-js-hook="behavior_flyout-menu_content" data-open="false" style="max-height: 1693px;" hidden="">
+                    <div class="o-secondary-nav__content u-max-height-transition u-max-height-zero" data-js-hook="behavior_flyout-menu_content" data-open="false" style="max-height: 1693px;" hidden="">
                         <div id="ctrl-f">
                             <div class="tw-relative tw-pointer-events-auto">
                                 <button type="button" class="tw-border tw-border-slate-600 tw-border-solid tw-w-full md:tw-bg-white tw-flex tw-bg-white tw-mt-2.5 tw-mb-4 tw-items-center tw-text-slate-600 tw-py-1.5 tw-pl-2">
@@ -39,133 +39,133 @@ export default `
                                 </button>
                             </div>
                         </div>
-                        <ul class="o-secondary-nav_list o-secondary-nav_list__parents">
+                        <ul class="o-secondary-nav__list o-secondary-nav__list--parents">
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#1"> 1. What is the filing instructions guide? </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#1"> 1. What is the filing instructions guide? </a>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#2"> 2. Filing process overview </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#2.1"> 2.1. About the small business lending platform </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#2"> 2. Filing process overview </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list--children u-hide-on-desktop">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#2.1"> 2.1. About the small business lending platform </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#2.2"> 2.2. File format </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#2.2"> 2.2. File format </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#3"> 3. Data points </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#uid"> 3.1. Unique identifier </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#3"> 3. Data points </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list--children">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#uid"> 3.1. Unique identifier </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#application-date"> 3.2. Application date </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#application-date"> 3.2. Application date </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link o-secondary-nav_link__current" href="#application-method"> 3.3. Application method </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link o-secondary-nav__link--current" href="#application-method"> 3.3. Application method </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#application-recipient"> 3.4. Application recipient </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#application-recipient"> 3.4. Application recipient </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#credit-type"> 3.5. Credit type </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#credit-type"> 3.5. Credit type </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#credit-purpose"> 3.6. Credit purpose </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#credit-purpose"> 3.6. Credit purpose </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#amount-applied-for"> 3.7. Amount applied for </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#amount-applied-for"> 3.7. Amount applied for </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#amount-approved-or-originated"> 3.8. Amount approved or originated </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#amount-approved-or-originated"> 3.8. Amount approved or originated </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#action-taken"> 3.9. Action taken </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#action-taken"> 3.9. Action taken </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#action-taken-date"> 3.10. Action taken date </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#action-taken-date"> 3.10. Action taken date </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#denial-reasons"> 3.11. Denial reasons </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#denial-reasons"> 3.11. Denial reasons </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#pricing-information"> 3.12. Pricing information </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#pricing-information"> 3.12. Pricing information </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#census-tract"> 3.13. Census tract </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#census-tract"> 3.13. Census tract </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#gross-annual-revenue"> 3.14. Gross annual revenue </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#gross-annual-revenue"> 3.14. Gross annual revenue </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#naics-code"> 3.15. North American Industry Classification System (NAICS) code </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#naics-code"> 3.15. North American Industry Classification System (NAICS) code </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#number-of-workers"> 3.16. Number of workers </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#number-of-workers"> 3.16. Number of workers </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#time-in-business"> 3.17. Time in business </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#time-in-business"> 3.17. Time in business </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#minority-women-lgbtqi-owned-business-status"> 3.18. Minority-owned, women-owned, and LGBTQI+-owned business statuses </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#minority-women-lgbtqi-owned-business-status"> 3.18. Minority-owned, women-owned, and LGBTQI+-owned business statuses </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#number-of-principal-owners"> 3.19. Number of principal owners </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#number-of-principal-owners"> 3.19. Number of principal owners </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-1"> 3.20. Demographic information of principal owner 1 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-1"> 3.20. Demographic information of principal owner 1 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-2"> 3.21. Demographic information of principal owner 2 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-2"> 3.21. Demographic information of principal owner 2 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-3"> 3.22. Demographic information of principal owner 3 </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-3"> 3.22. Demographic information of principal owner 3 </a>
                                     </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#rse-of-principal-owner-4"> 3.23. Demographic information of principal owner 4 </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#4"> 4. Data validation </a>
-                                <ul class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop">
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.1"> 4.1. Single-field errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.2"> 4.2. Multi-field errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.3"> 4.3. Register-level errors </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.4"> 4.4. Single-field warnings </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="o-secondary-nav_link" href="#4.5"> 4.5. Multi-field warnings </a>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#rse-of-principal-owner-4"> 3.23. Demographic information of principal owner 4 </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#5"> 5. Where to get help </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#4"> 4. Data validation </a>
+                                <ul class="o-secondary-nav__list o-secondary-nav__list--children u-hide-on-desktop">
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.1"> 4.1. Single-field errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.2"> 4.2. Multi-field errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.3"> 4.3. Register-level errors </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.4"> 4.4. Single-field warnings </a>
+                                    </li>
+                                    <li class="m-list__item">
+                                        <a class="o-secondary-nav__link" href="#4.5"> 4.5. Multi-field warnings </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#6"> 6. Paperwork Reduction Act </a>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#5"> 5. Where to get help </a>
+                            </li>
+                            <li>
+                                <a class="o-secondary-nav__link o-secondary-nav__link--parent" href="#6"> 6. Paperwork Reduction Act </a>
                             </li>
                         </ul>
                     </div>
                 </nav>
             </div>
         </aside>
-        <div class="u-layout-grid_main content__flush-bottom research-report o-fig_main" id="content_main">
+        <div class="u-layout-grid__main content--flush-bottom research-report o-fig__main" id="content__main">
             <div class="eyebrow"></div>
             <h1>Filing instructions guide for small business lending data collected in 2024</h1>
             <div class="lead-paragraph"></div>
-            <div class="block block__border-top u-fig-print-link">
-                <a class="a-link a-link__icon" href="javascript:window.print()">
-                    <span class="a-link_text">Print this guide</span>
+            <div class="block block--border-top u-fig-print-link">
+                <a class="a-link a-link--icon" href="javascript:window.print()">
+                    <span class="a-link__text">Print this guide</span>
                     <svg class="cf-icon-svg cf-icon-svg__print" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="m8.698 2.358 3.065 3.066v1.95h.16a1.112 1.112 0 0 1 1.109 1.108v4.837a1.112 1.112 0 0 1-1.109 1.108h-.16v1.726a.477.477 0 0 1-.475.475H2.712a.477.477 0 0 1-.475-.475v-1.726h-.16A1.112 1.112 0 0 1 .968 13.32V8.482a1.112 1.112 0 0 1 1.109-1.108h.16v-4.54a.476.476 0 0 1 .475-.476zm-.22 3.876a.61.61 0 0 1-.608-.608v-2.16H3.345v3.908h7.31v-1.14zm2.177 4.512h-7.31v4.773h7.31zm-1.054.874h-5.26v1.109h5.26zm0 1.962h-5.26v1.108h5.26zm2.437-4.485a.554.554 0 1 0-.554.554.554.554 0 0 0 .554-.554z"
@@ -173,8 +173,8 @@ export default `
                     </svg>
                 </a>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="1">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="1">
+                <h2 class="o-fig__heading">
                     <a id="1" href="#1"> 1. What is the filing instructions guide? </a>
                 </h2>
                 <p data-block-key="nwusr">
@@ -205,8 +205,8 @@ export default `
                 <h5 data-block-key="3tdu1">Where to get help</h5>
                 <p data-block-key="ef50k">Section 5 provides a summary of resources available from the CFPB to assist with small business lending rule-related inquiries.</p>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="2">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="2">
+                <h2 class="o-fig__heading">
                     <a id="2" href="#2"> 2. Filing process overview </a>
                 </h2>
                 <p data-block-key="nwusr">
@@ -214,8 +214,8 @@ export default `
                     the rule for guidance and clarification regarding the reporting requirements for each data field.
                 </p>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="2.1">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="2.1">
+                <h3 class="o-fig__heading">
                     <a id="2.1" href="#2.1"> 2.1. About the small business lending platform </a>
                 </h3>
                 <p data-block-key="anq0g">
@@ -227,8 +227,8 @@ export default `
                     the data submitted.
                 </p>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="2.2">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="2.2">
+                <h3 class="o-fig__heading">
                     <a id="2.2" href="#2.2"> 2.2. File format </a>
                 </h3>
                 <p data-block-key="anq0g">Your register must be submitted in a comma-separated values (CSV) file format.</p>
@@ -260,8 +260,8 @@ export default `
                 </ol>
                 <p data-block-key="1vl8o">Any file not conforming to these specifications cannot be submitted as a register.</p>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="3">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="3">
+                <h2 class="o-fig__heading">
                     <a id="3" href="#3"> 3. Data points </a>
                 </h2>
                 <p data-block-key="nwusr">
@@ -270,25 +270,25 @@ export default `
                 </p>
                 <p data-block-key="cqkhf">Data fields are presented below in the order they are recorded in the register. For a machine-readable view of the data specification, see the following link:</p>
                 <p data-block-key="cvu2g">
-                    <a class="a-link a-link__icon"
+                    <a class="a-link a-link--icon"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/file-spec/2024-data-points.csv">
-                        <span class="a-link_text">Data spec (CSV)</span>
-                        <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
+                        <span class="a-link__text">Data spec (CSV)</span>
+                        <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"
                             ></path>
                         </svg>
                     </a>
                 </p>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="uid">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="uid">
+                    <h3 class="report-header o-fig__heading">
                         <a id="uid" href="#uid"> 3.1 Unique identifier </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(1)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="uid">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="uid">
+                    <h4 class="report-header o-fig__heading">
                         <a id="uid" href="#uid"> Field 1: Unique identifier </a>
                     </h4>
                     <h5>Column name</h5>
@@ -323,15 +323,15 @@ export default `
                         <li>The first 20 characters should match the Legal Entity Identifier (LEI) for the financial institution</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="application-date">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="application-date">
+                    <h3 class="report-header o-fig__heading">
                         <a id="application-date" href="#application-date"> 3.2 Application date </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(2)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="application-date">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="application-date">
+                    <h4 class="report-header o-fig__heading">
                         <a id="app_date" href="#app_date"> Field 2: Application date </a>
                     </h4>
                     <h5>Column name</h5>
@@ -352,15 +352,15 @@ export default `
                         <li>Must be a real calendar date using YYYYMMDD format</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="application-method">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="application-method">
+                    <h3 class="report-header o-fig__heading">
                         <a id="application-method" href="#application-method"> 3.3 Application method </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(3)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="application-method">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="application-method">
+                    <h4 class="report-header o-fig__heading">
                         <a id="app_method" href="#app_method"> Field 3: Application method </a>
                     </h4>
                     <h5>Column name</h5>
@@ -372,7 +372,7 @@ export default `
                     </ul>
                     <p>Indicate the means by which the applicant submitted the application by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -403,15 +403,15 @@ export default `
                         <li>Must equal 1, 2, 3 or 4</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="application-recipient">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="application-recipient">
+                    <h3 class="report-header o-fig__heading">
                         <a id="application-recipient" href="#application-recipient"> 3.4 Application recipient </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(4)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="application-recipient">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="application-recipient">
+                    <h4 class="report-header o-fig__heading">
                         <a id="app_recipient" href="#app_recipient"> Field 4: Application recipient </a>
                     </h4>
                     <h5>Column name</h5>
@@ -423,7 +423,7 @@ export default `
                     </ul>
                     <p>Indicate the application recipient by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -446,35 +446,35 @@ export default `
                         <li>Must equal 1 or 2</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="credit-type">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="credit-type">
+                    <h3 class="report-header o-fig__heading">
                         <a id="credit-type" href="#credit-type"> 3.5 Credit type </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(5)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_credit_product"> Field 5: Credit product </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_credit_product"> Field 5: Credit product </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_guarantee"> Field 7: Type of guarantee </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_guarantee"> Field 7: Type of guarantee </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#ct_loan_term"> Field 10: Loan term </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#ct_loan_term"> Field 10: Loan term </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_credit_product" href="#ct_credit_product"> Field 5: Credit product </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(i)</p>
@@ -487,7 +487,7 @@ export default `
                     </ul>
                     <p>Indicate the credit product by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -553,8 +553,8 @@ export default `
                         <li>Must equal 1, 2, 3, 4, 5, 6, 7, 8, 977, or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_credit_product_ff" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(i)</p>
@@ -572,8 +572,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_guarantee" href="#ct_guarantee"> Field 7: Type of guarantee </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(ii)</p>
@@ -589,7 +589,7 @@ export default `
                         guarantees, including any 'other' guarantee(s) specified in the free-form text field, may be entered.
                     </p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -673,8 +673,8 @@ export default `
                         <li>Should not contain duplicated values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_guarantee_ff" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(ii)</p>
@@ -692,8 +692,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_loan_term_flag" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(iii)</p>
@@ -706,7 +706,7 @@ export default `
                     </ul>
                     <p>Indicate whether 'loan term' is applicable for this application for credit by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -743,8 +743,8 @@ export default `
                         <li>Must equal 900, 988, or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-type">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-type">
+                    <h4 class="report-header o-fig__heading">
                         <a id="ct_loan_term" href="#ct_loan_term"> Field 10: Loan term </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(5)(iii)</p>
@@ -769,15 +769,15 @@ export default `
                         <li>When present, should be less than 1200 (100 years)</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="credit-purpose">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="credit-purpose">
+                    <h3 class="report-header o-fig__heading">
                         <a id="credit-purpose" href="#credit-purpose"> 3.6 Credit purpose </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(6)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-purpose">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-purpose">
+                    <h4 class="report-header o-fig__heading">
                         <a id="credit_purpose" href="#credit_purpose"> Field 11: Credit purpose </a>
                     </h4>
                     <h5>Column name</h5>
@@ -789,7 +789,7 @@ export default `
                     </ul>
                     <p>Indicate the credit purpose(s) by entering up to three of the specified codes. If there is more than one credit purpose, enter each, in any order, separated by a semicolon.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -878,8 +878,8 @@ export default `
                         <li>Should not contain duplicated values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="credit-purpose">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="credit-purpose">
+                    <h4 class="report-header o-fig__heading">
                         <a id="credit_purpose_ff" href="#credit_purpose_ff"> Field 12: Free-form text field for other credit purpose </a>
                     </h4>
                     <h5>Column name</h5>
@@ -896,15 +896,15 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="amount-applied-for">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="amount-applied-for">
+                    <h3 class="report-header o-fig__heading">
                         <a id="amount-applied-for" href="#amount-applied-for"> 3.7 Amount applied for </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(7)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="amount-applied-for">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="amount-applied-for">
+                    <h4 class="report-header o-fig__heading">
                         <a id="amount_applied_for_flag" href="#amount_applied_for_flag"> Field 13: Amount applied for: NA/NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -916,7 +916,7 @@ export default `
                     </ul>
                     <p>Indicate whether 'amount applied for' is provided by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -949,8 +949,8 @@ export default `
                         <li>Must equal 900, 988 or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="amount-applied-for">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="amount-applied-for">
+                    <h4 class="report-header o-fig__heading">
                         <a id="amount_applied_for" href="#amount_applied_for"> Field 14: Amount applied for </a>
                     </h4>
                     <h5>Column name</h5>
@@ -981,15 +981,15 @@ export default `
                         <li>When present, must be greater than 0</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="amount-approved-or-originated">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="amount-approved-or-originated">
+                    <h3 class="report-header o-fig__heading">
                         <a id="amount-approved-or-originated" href="#amount-approved-or-originated"> 3.8 Amount approved or originated </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(8)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="amount-approved-or-originated">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="amount-approved-or-originated">
+                    <h4 class="report-header o-fig__heading">
                         <a id="amount_approved" href="#amount_approved"> Field 15: Amount approved or originated </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1019,15 +1019,15 @@ export default `
                         <li>When present, must be greater than 0</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="action-taken">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="action-taken">
+                    <h3 class="report-header o-fig__heading">
                         <a id="action-taken" href="#action-taken"> 3.9 Action taken </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(9)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="action-taken">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="action-taken">
+                    <h4 class="report-header o-fig__heading">
                         <a id="action_taken" href="#action_taken"> Field 16: Action taken </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1039,7 +1039,7 @@ export default `
                     </ul>
                     <p>Indicate what action is taken by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1074,15 +1074,15 @@ export default `
                         <li>Must equal 1, 2, 3, 4, or 5</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="action-taken-date">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="action-taken-date">
+                    <h3 class="report-header o-fig__heading">
                         <a id="action-taken-date" href="#action-taken-date"> 3.10 Action taken date </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(10)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="action-taken-date">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="action-taken-date">
+                    <h4 class="report-header o-fig__heading">
                         <a id="action_taken_date" href="#action_taken_date"> Field 17: Action taken date </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1104,15 +1104,15 @@ export default `
                         <li>The date indicated must occur within the current reporting period: October 1, 2024 to December 31, 2024</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="denial-reasons">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="denial-reasons">
+                    <h3 class="report-header o-fig__heading">
                         <a id="denial-reasons" href="#denial-reasons"> 3.11 Denial reasons </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(11)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="denial-reasons">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="denial-reasons">
+                    <h4 class="report-header o-fig__heading">
                         <a id="denial_reasons" href="#denial_reasons"> Field 18: Denial reason(s) </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1132,7 +1132,7 @@ export default `
                         <li>If Cashflow, enter 4</li>
                         <li>If Cashflow, Collateral, Time in business, and Government loan program criteria, enter 4;5;6;7 or 7;5;6;4 etc.</li>
                     </ul>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1208,8 +1208,8 @@ export default `
                         <li>Should not contain duplicated values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="denial-reasons">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="denial-reasons">
+                    <h4 class="report-header o-fig__heading">
                         <a id="denial_reasons_ff" href="#denial_reasons_ff"> Field 19: Free-form text field for other denial reason(s) </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1226,59 +1226,59 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h3 class="report-header o-fig__heading">
                         <a id="pricing-information" href="#pricing-information"> 3.12 Pricing information </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(12)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_interest_rate_type" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)</p>
@@ -1294,7 +1294,7 @@ export default `
                         transaction information, and variable rate transaction information, as applicable.
                     </p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1351,8 +1351,8 @@ export default `
                         <li>Must equal 1, 2, 3, 4, 5, 6, or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_init_rate_period" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(B)</p>
@@ -1375,8 +1375,8 @@ export default `
                         <li>When present, must be greater than 0</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_fixed_rate" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(A)</p>
@@ -1403,8 +1403,8 @@ export default `
                         <li>When present, should generally be greater than 0.1</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_var_margin" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(B)</p>
@@ -1431,8 +1431,8 @@ export default `
                         <li>When present, should generally be greater than 0.1</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_var_index_name" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(B)</p>
@@ -1445,7 +1445,7 @@ export default `
                     </ul>
                     <p>For originated credit and credit that is approved but not accepted, that has a covered variable rate component, indicate the index name by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1521,8 +1521,8 @@ export default `
                         <li>Must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 977 or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_var_index_name_ff" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(B)</p>
@@ -1540,8 +1540,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_var_index_value" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(i)(B)</p>
@@ -1568,8 +1568,8 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_origination_charges" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(ii)</p>
@@ -1597,8 +1597,8 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_broker_fees" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(iii)</p>
@@ -1625,8 +1625,8 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_initial_charges" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(iv)</p>
@@ -1653,8 +1653,8 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_mca_addcost_flag" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(v)</p>
@@ -1667,7 +1667,7 @@ export default `
                     </ul>
                     <p>Indicate whether 'MCA/sales-based: additional cost for merchant cash advances or other sales-based financing' is applicable by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1699,8 +1699,8 @@ export default `
                         <li>Must equal 900 or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_mca_addcost" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(v)</p>
@@ -1727,8 +1727,8 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_prepenalty_allowed" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(vi)(A)</p>
@@ -1741,7 +1741,7 @@ export default `
                     </ul>
                     <p>For originated credit and credit that is approved but not accepted, indicate whether a prepayment penalty could be included under current policies and procedures by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1772,8 +1772,8 @@ export default `
                         <li>Must equal 1, 2 or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="pricing-information">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="pricing-information">
+                    <h4 class="report-header o-fig__heading">
                         <a id="pricing_prepenalty_exists" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
                     </h4>
                     <p>Rule section: 12 CFR 1002.107(a)(12)(vi)(B)</p>
@@ -1786,7 +1786,7 @@ export default `
                     </ul>
                     <p>For originated credit and credit that is approved but not accepted, indicate whether the terms of the transaction include a prepayment penalty by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1817,15 +1817,15 @@ export default `
                         <li>Must equal 1, 2 or 999</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="census-tract">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="census-tract">
+                    <h3 class="report-header o-fig__heading">
                         <a id="census-tract" href="#census-tract"> 3.13 Census tract </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(13)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="census-tract">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="census-tract">
+                    <h4 class="report-header o-fig__heading">
                         <a id="census_tract_adr_type" href="#census_tract_adr_type"> Field 34: Type of address </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1837,7 +1837,7 @@ export default `
                     </ul>
                     <p>Indicate the type of address or location used to determine the census tract by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1868,8 +1868,8 @@ export default `
                         <li>Must equal 1, 2, 3 or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="census-tract">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="census-tract">
+                    <h4 class="report-header o-fig__heading">
                         <a id="census_tract_number" href="#census_tract_number"> Field 35: Tract number </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1897,15 +1897,15 @@ export default `
                         <li>When present, should be a valid census tract GEOID as defined by the U.S. Census Bureau</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="gross-annual-revenue">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="gross-annual-revenue">
+                    <h3 class="report-header o-fig__heading">
                         <a id="gross-annual-revenue" href="#gross-annual-revenue"> 3.14 Gross annual revenue </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(14)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="gross-annual-revenue">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="gross-annual-revenue">
+                    <h4 class="report-header o-fig__heading">
                         <a id="gross_annual_revenue_flag" href="#gross_annual_revenue_flag"> Field 36: Gross annual revenue: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1917,7 +1917,7 @@ export default `
                     </ul>
                     <p>Indicate whether 'gross annual revenue' is reported by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -1943,8 +1943,8 @@ export default `
                         <li>Must equal 900 or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="gross-annual-revenue">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="gross-annual-revenue">
+                    <h4 class="report-header o-fig__heading">
                         <a id="gross_annual_revenue" href="#gross_annual_revenue"> Field 37: Gross annual revenue </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1971,15 +1971,15 @@ export default `
                         <li>When present, must be a numeric value</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="naics-code">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="naics-code">
+                    <h3 class="report-header o-fig__heading">
                         <a id="naics-code" href="#naics-code"> 3.15 North American Industry Classification System (NAICS) code </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(15)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="naics-code">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="naics-code">
+                    <h4 class="report-header o-fig__heading">
                         <a id="naics_code_flag" href="#naics_code_flag"> Field 38: North American Industry Classification System (NAICS) code: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -1991,7 +1991,7 @@ export default `
                     </ul>
                     <p>Indicate whether NAICS code is provided by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2017,8 +2017,8 @@ export default `
                         <li>Must equal 900 or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="naics-code">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="naics-code">
+                    <h4 class="report-header o-fig__heading">
                         <a id="naics_code" href="#naics_code"> Field 39: North American Industry Classification System (NAICS) code </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2040,15 +2040,15 @@ export default `
                         <li>When present, should be a valid NAICS code</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="number-of-workers">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="number-of-workers">
+                    <h3 class="report-header o-fig__heading">
                         <a id="number-of-workers" href="#number-of-workers"> 3.16 Number of workers </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(16)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="number-of-workers">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="number-of-workers">
+                    <h4 class="report-header o-fig__heading">
                         <a id="number_of_workers" href="#number_of_workers"> Field 40: Number of workers </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2063,7 +2063,7 @@ export default `
                         principal owners.
                     </p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2118,15 +2118,15 @@ export default `
                         <li>Must equal 1, 2, 3, 4, 5, 6, 7, 8, 9 or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="time-in-business">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="time-in-business">
+                    <h3 class="report-header o-fig__heading">
                         <a id="time-in-business" href="#time-in-business"> 3.17 Time in business </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(17)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="time-in-business">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="time-in-business">
+                    <h4 class="report-header o-fig__heading">
                         <a id="time_in_business_type" href="#time_in_business_type"> Field 41: Type of response </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2138,7 +2138,7 @@ export default `
                     </ul>
                     <p>Indicate whether the applicant provided information on 'time in business' by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2181,8 +2181,8 @@ export default `
                         <li>Must equal 1, 2, 3, or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="time-in-business">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="time-in-business">
+                    <h4 class="report-header o-fig__heading">
                         <a id="time_in_business" href="#time_in_business"> Field 42: Time in business </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2204,15 +2204,15 @@ export default `
                         <li>When present, must be greater than or equal to 0</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="minority-women-lgbtqi-owned-business-status">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="minority-women-lgbtqi-owned-business-status">
+                    <h3 class="report-header o-fig__heading">
                         <a id="minority-women-lgbtqi-owned-business-status" href="#minority-women-lgbtqi-owned-business-status"> 3.18 Minority-owned, women-owned, and LGBTQI+-owned business statuses </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(18)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="minority-women-lgbtqi-owned-business-status">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="minority-women-lgbtqi-owned-business-status">
+                    <h4 class="report-header o-fig__heading">
                         <a id="business_ownership_status" href="#business_ownership_status"> Field 43: Business ownership status </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2235,7 +2235,7 @@ export default `
                         <li>If women-owned and LGBTQI+-owned, enter 2;3 or 3;2</li>
                         <li>If LGBTQI+-owned and the applicant responded that they did not wish to provide this information, enter 3</li>
                     </ul>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2284,15 +2284,15 @@ export default `
                         <li>When code 966 or 988 is reported, should not contain any other values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="number-of-principal-owners">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="number-of-principal-owners">
+                    <h3 class="report-header o-fig__heading">
                         <a id="number-of-principal-owners" href="#number-of-principal-owners"> 3.19 Number of principal owners </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(20)</p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="number-of-principal-owners">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="number-of-principal-owners">
+                    <h4 class="report-header o-fig__heading">
                         <a id="num_principal_owners_flag" href="#num_principal_owners_flag"> Field 44: Number of principal owners: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2304,7 +2304,7 @@ export default `
                     </ul>
                     <p>Indicate whether number of principal owners is provided by entering one of the specified codes.</p>
                     <p></p>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2330,8 +2330,8 @@ export default `
                         <li>Must equal 900 or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="number-of-principal-owners">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="number-of-principal-owners">
+                    <h4 class="report-header o-fig__heading">
                         <a id="num_principal_owners" href="#num_principal_owners"> Field 45: Number of principal owners </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2348,44 +2348,44 @@ export default `
                         <li>When present, must equal 0, 1, 2, 3, or 4</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h3 class="report-header o-fig__heading">
                         <a id="rse-of-principal-owner-1" href="#rse-of-principal-owner-1"> 3.20 Demographic information of principal owner 1 </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_ethnicity" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2410,7 +2410,7 @@ export default `
                         <li>If Mexican and the applicant responded that they did not wish to provide this information, enter 12</li>
                         <li>If responded Argentinean in the free form-text field but the applicant did not select Other Hispanic or Latino ethnicity, enter 977. May also enter 14.</li>
                     </ul>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2473,8 +2473,8 @@ export default `
                         <li>When code 966 or 988 is reported, should not contain any other values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_ethnicity_ff" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2495,8 +2495,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_race" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2519,7 +2519,7 @@ export default `
                         <li>If Asian and the applicant responded that they did not wish to provide this information, enter 2.</li>
                         <li>If responded Thai in the free form-text field for other Asian race but the applicant did not select Other Asian race, enter 972. May also enter 27.</li>
                     </ul>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2682,8 +2682,8 @@ export default `
                         <li>When code 966 or 988 is reported, should not contain any other values</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_race_anai_ff" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2704,8 +2704,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_race_asian_ff" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2726,8 +2726,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_race_baa_ff" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2748,8 +2748,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_race_pi_ff" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2770,8 +2770,8 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_gender_flag" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2790,7 +2790,7 @@ export default `
                     <ul>
                         <li>If the applicant responded in free-form text field and also responded that they did not wish to provide this information, enter 1.</li>
                     </ul>
-                    <table class="o-table o-table__stack-on-small">
+                    <table class="o-table o-table--stack-on-small">
                         <thead>
                             <tr>
                                 <th>Valid values</th>
@@ -2821,8 +2821,8 @@ export default `
                         <li>When present, must equal 1, 966, or 988</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-1">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_1_gender_ff" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2839,44 +2839,44 @@ export default `
                         <li>Must not exceed 300 characters in length</li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h3 class="report-header o-fig__heading">
                         <a id="rse-of-principal-owner-2" href="#rse-of-principal-owner-2"> 3.21 Demographic information of principal owner 2 </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_ethnicity" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2891,8 +2891,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_ethnicity_ff" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2907,8 +2907,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_race" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2923,8 +2923,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_race_anai_ff" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2939,8 +2939,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_race_asian_ff" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2955,8 +2955,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_race_baa_ff" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2971,8 +2971,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_race_pi_ff" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -2987,8 +2987,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_gender_flag" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3003,8 +3003,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-2">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_2_gender_ff" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3019,44 +3019,44 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h3 class="report-header o-fig__heading">
                         <a id="rse-of-principal-owner-3" href="#rse-of-principal-owner-3"> 3.22 Demographic information of principal owner 3 </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_ethnicity" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3071,8 +3071,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_ethnicity_ff" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3087,8 +3087,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_race" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3103,8 +3103,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_race_anai_ff" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3119,8 +3119,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_race_asian_ff" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3135,8 +3135,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_race_baa_ff" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3151,8 +3151,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_race_pi_ff" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3167,8 +3167,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_gender_flag" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3183,8 +3183,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-3">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_3_gender_ff" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3199,44 +3199,44 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h3 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h3 class="report-header o-fig__heading">
                         <a id="rse-of-principal-owner-4" href="#rse-of-principal-owner-4"> 3.23 Demographic information of principal owner 4 </a>
                     </h3>
                     <p>Rule section: 12 CFR 1002.107(a)(19)</p>
                     <p></p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
                         </li>
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
+                        <li class="m-list__item">
+                            <a class="m-list__link" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_ethnicity" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3251,8 +3251,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_ethnicity_ff" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3267,8 +3267,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_race" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3283,8 +3283,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_race_anai_ff" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3299,8 +3299,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_race_asian_ff" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3315,8 +3315,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_race_baa_ff" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3331,8 +3331,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_race_pi_ff" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3347,8 +3347,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_gender_flag" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3363,8 +3363,8 @@ export default `
                     </p>
                     <p></p>
                 </div>
-                <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
-                    <h4 class="report-header o-fig_heading">
+                <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="rse-of-principal-owner-4">
+                    <h4 class="report-header o-fig__heading">
                         <a id="po_4_gender_ff" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
                     </h4>
                     <h5>Column name</h5>
@@ -3380,8 +3380,8 @@ export default `
                     <p></p>
                 </div>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="4">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="4">
+                <h2 class="o-fig__heading">
                     <a id="4" href="#4"> 4. Data validation </a>
                 </h2>
                 <p data-block-key="nwusr">
@@ -3424,10 +3424,10 @@ export default `
                     specification in CSV file format, see the following link:
                 </p>
                 <p data-block-key="abnhl">
-                    <a class="a-link a-link__icon"
+                    <a class="a-link a-link--icon"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/validation-spec/2024-validations.csv">
-                        <span class="a-link_text">Validation spec (CSV)</span>
-                        <svg class="cf-icon-svg cf-icon-svg__external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
+                        <span class="a-link__text">Validation spec (CSV)</span>
+                        <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"
                             ></path>
@@ -3435,13 +3435,13 @@ export default `
                     </a>
                 </p>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="4.1">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="4.1">
+                <h3 class="o-fig__heading">
                     <a id="4.1" href="#4.1"> 4.1. Single-field errors </a>
                 </h3>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.1" href="#4.1.1"> Validation ID: uid.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3453,8 +3453,8 @@ export default `
                     <li data-block-key="ffasd">‘Unique identifier’ must be at least 21 characters in length and at most 45 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.2" href="#4.1.2"> Validation ID: uid.invalid_text_pattern </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3466,8 +3466,8 @@ export default `
                     <li data-block-key="ffasd">‘Unique identifier’ may contain any combination of numbers and/or uppercase letters (i.e., 0-9 and A-Z), and must <b>not</b> contain any other characters.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.3" href="#4.1.3"> Validation ID: app_date.invalid_date_format </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3479,8 +3479,8 @@ export default `
                     <li data-block-key="ffasd">‘Application date’ must be a real calendar date using YYYYMMDD format.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.4" href="#4.1.4"> Validation ID: app_method.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3492,8 +3492,8 @@ export default `
                     <li data-block-key="ffasd">‘Application method’ must equal 1, 2, 3, or 4.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.5" href="#4.1.5"> Validation ID: app_recipient.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3505,8 +3505,8 @@ export default `
                     <li data-block-key="ffasd">‘Application recipient’ must equal 1 or 2.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.6" href="#4.1.6"> Validation ID: ct_credit_product.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3518,8 +3518,8 @@ export default `
                     <li data-block-key="ffasd">‘Credit product’ must equal 1, 2, 3, 4, 5, 6, 7, 8, 977, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.7" href="#4.1.7"> Validation ID: ct_credit_product_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3531,8 +3531,8 @@ export default `
                     <li data-block-key="ffasd">‘Free-form text field for other credit products’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.8" href="#4.1.8"> Validation ID: ct_guarantee.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3544,8 +3544,8 @@ export default `
                     <li data-block-key="ffasd">Each value in ‘type of guarantee’ (separated by semicolons) must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 977, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.9" href="#4.1.9"> Validation ID: ct_guarantee.invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3557,8 +3557,8 @@ export default `
                     <li data-block-key="ffasd">‘Type of guarantee’ must contain at least one and at most five values, separated by semicolons.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.10" href="#4.1.10"> Validation ID: ct_guarantee_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3570,8 +3570,8 @@ export default `
                     <li data-block-key="ffasd">‘Free-form text field for other guarantee’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.11" href="#4.1.11"> Validation ID: ct_loan_term_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3583,8 +3583,8 @@ export default `
                     <li data-block-key="ffasd">‘Loan term: NA/NP flag’ must equal 900, 988, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.12" href="#4.1.12"> Validation ID: ct_loan_term.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3596,8 +3596,8 @@ export default `
                     <li data-block-key="ffasd">When present, ‘loan term’ must be a whole number.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.13" href="#4.1.13"> Validation ID: ct_loan_term.invalid_numeric_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3609,8 +3609,8 @@ export default `
                     <li data-block-key="ffasd">When present, ‘loan term’ must be greater than or equal to 1.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.14" href="#4.1.14"> Validation ID: credit_purpose.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3622,8 +3622,8 @@ export default `
                     <li data-block-key="ffasd">Each value in ‘credit purpose’ (separated by semicolons) must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 977, 988, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.15" href="#4.1.15"> Validation ID: credit_purpose.invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3635,8 +3635,8 @@ export default `
                     <li data-block-key="ffasd">‘Credit purpose’ must contain at least one and at most three values, separated by semicolons.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.16" href="#4.1.16"> Validation ID: credit_purpose_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3648,8 +3648,8 @@ export default `
                     <li data-block-key="ffasd">‘Free-form text field for other credit purpose’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.17" href="#4.1.17"> Validation ID: amount_applied_for_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3661,8 +3661,8 @@ export default `
                     <li data-block-key="ffasd">‘Amount applied For: NA/NP flag’ must equal 900, 988, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.18" href="#4.1.18"> Validation ID: amount_applied_for.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3674,8 +3674,8 @@ export default `
                     <li data-block-key="ffasd">When present, ‘amount applied for’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.19" href="#4.1.19"> Validation ID: amount_applied_for.invalid_numeric_value </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3687,8 +3687,8 @@ export default `
                     <li data-block-key="ffasd">When present, ‘amount applied for’ must be greater than 0.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.20" href="#4.1.20"> Validation ID: amount_approved.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="1y2r1">Affected data field</h5>
@@ -3700,8 +3700,8 @@ export default `
                     <li data-block-key="ffasd">When present, ‘amount approved or originated’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.21" href="#4.1.21"> Validation ID: amount_approved.invalid_numeric_value </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3713,8 +3713,8 @@ export default `
                     <li data-block-key="kk0f">When present, ‘amount approved or originated’ must be greater than 0.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.22" href="#4.1.22"> Validation ID: action_taken.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3726,8 +3726,8 @@ export default `
                     <li data-block-key="1ua5e">‘Action taken’ must equal 1, 2, 3, 4, or 5.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.23" href="#4.1.23"> Validation ID: action_taken_date.invalid_date_format </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3739,8 +3739,8 @@ export default `
                     <li data-block-key="ep396">‘Action taken date’ must be a real calendar date using YYYYMMDD format.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.24" href="#4.1.24"> Validation ID: action_taken_date.invalid_date_value </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3752,8 +3752,8 @@ export default `
                     <li data-block-key="72pnm">The date indicated by 'action taken date' must occur within the current reporting period: October 1, 2024 to December 31, 2024.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.25" href="#4.1.25"> Validation ID: denial_reasons.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3765,8 +3765,8 @@ export default `
                     <li data-block-key="28ou6">Each value in ‘denial reason(s)’ (separated by semicolons) must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, 977, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.26" href="#4.1.26"> Validation ID: denial_reasons.invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3778,8 +3778,8 @@ export default `
                     <li data-block-key="2c950">‘Denial reason(s)’ must contain at least one and at most four values, separated by semicolons.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.27" href="#4.1.27"> Validation ID: denial_reasons_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3791,8 +3791,8 @@ export default `
                     <li data-block-key="4vmq3">‘Free-form text field for other denial reason(s)’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.28" href="#4.1.28"> Validation ID: pricing_interest_rate_type.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="akymd">Affected data field</h5>
@@ -3804,8 +3804,8 @@ export default `
                     <li data-block-key="3vhr0">'Interest rate type' must equal 1, 2, 3, 4, 5, 6, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.29" href="#4.1.29"> Validation ID: pricing_init_rate_period.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3817,8 +3817,8 @@ export default `
                     <li data-block-key="da099">When present, 'variable rate transaction: initial rate period' must be a whole number.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.30" href="#4.1.30"> Validation ID: pricing_init_rate_period.invalid_numeric_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3830,8 +3830,8 @@ export default `
                     <li data-block-key="8lnig">When present, ‘variable rate transaction: initial rate period’ must be greater than 0.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.31" href="#4.1.31"> Validation ID: pricing_fixed_rate.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3843,8 +3843,8 @@ export default `
                     <li data-block-key="952q7">When present, ‘fixed rate: interest rate’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.32" href="#4.1.32"> Validation ID: pricing_var_margin.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="pi3yh">Affected data field</h5>
@@ -3856,8 +3856,8 @@ export default `
                     <li data-block-key="f2tad">When present, ‘variable rate transaction: margin’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.33" href="#4.1.33"> Validation ID: pricing_var_index_name.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3869,8 +3869,8 @@ export default `
                     <li data-block-key="2ev9n">‘Variable rate transaction: index name’ must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 977, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.34" href="#4.1.34"> Validation ID: pricing_var_index_name_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3882,8 +3882,8 @@ export default `
                     <li data-block-key="e7f70">‘Variable rate transaction: index name: other’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.35" href="#4.1.35"> Validation ID: pricing_var_index_value.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3895,8 +3895,8 @@ export default `
                     <li data-block-key="bkios">When present, ‘variable rate transaction: index value’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.36" href="#4.1.36"> Validation ID: pricing_origination_charges.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3908,8 +3908,8 @@ export default `
                     <li data-block-key="4i8mp">When present, ‘total origination charges’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.37" href="#4.1.37"> Validation ID: pricing_broker_fees.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3921,8 +3921,8 @@ export default `
                     <li data-block-key="fc9ch">When present, ‘amount of total broker fees’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.38" href="#4.1.38"> Validation ID: pricing_initial_charges.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3934,8 +3934,8 @@ export default `
                     <li data-block-key="edg5s">When present, ‘initial annual charges’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.39" href="#4.1.39"> Validation ID: pricing_mca_addcost_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3947,8 +3947,8 @@ export default `
                     <li data-block-key="dv38k">‘MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag’ must equal 900 or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.40" href="#4.1.40"> Validation ID: pricing_mca_addcost.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3960,8 +3960,8 @@ export default `
                     <li data-block-key="eb2k2">When present, ‘MCA/sales-based: additional cost for merchant cash advances or other sales-based financing’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.41" href="#4.1.41"> Validation ID: pricing_prepenalty_allowed.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3973,8 +3973,8 @@ export default `
                     <li data-block-key="6i31e">‘Prepayment penalty could be imposed’ must equal 1, 2, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.42" href="#4.1.42"> Validation ID: pricing_prepenalty_exists.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3986,8 +3986,8 @@ export default `
                     <li data-block-key="7j6e1">‘Prepayment penalty exists’ must equal 1, 2, or 999.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.43" href="#4.1.43"> Validation ID: census_tract_adr_type.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -3999,8 +3999,8 @@ export default `
                     <li data-block-key="619lp">‘Census tract: type of address’ must equal 1, 2, 3, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.44" href="#4.1.44"> Validation ID: census_tract_number.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4012,8 +4012,8 @@ export default `
                     <li data-block-key="170v0">When present, ‘census tract: tract number’ must be a GEOID with exactly 11 digits.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.45" href="#4.1.45"> Validation ID: gross_annual_revenue_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4025,8 +4025,8 @@ export default `
                     <li data-block-key="1t1gg">‘Gross annual revenue: NP flag’ must equal 900 or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.46" href="#4.1.46"> Validation ID: gross_annual_revenue.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4038,8 +4038,8 @@ export default `
                     <li data-block-key="2omd7">When present, ‘gross annual revenue’ must be a numeric value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.47" href="#4.1.47"> Validation ID: naics_code_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4051,8 +4051,8 @@ export default `
                     <li data-block-key="far4">‘North American Industry Classification System (NAICS) code: NP flag’ must equal 900 or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.48" href="#4.1.48"> Validation ID: naics_code.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4064,8 +4064,8 @@ export default `
                     <li data-block-key="far4">When present, ‘North American Industry Classification System (NAICS) code’ must be three digits in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.49" href="#4.1.49"> Validation ID: naics_code.invalid_naics_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4077,8 +4077,8 @@ export default `
                     <li data-block-key="2dskn">'North American Industry Classification System (NAICS) code' may only contain numeric characters.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.50" href="#4.1.50"> Validation ID: number_of_workers.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4090,8 +4090,8 @@ export default `
                     <li data-block-key="b8vba">‘Number of workers’ must equal 1, 2, 3, 4, 5, 6, 7, 8, 9, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.51" href="#4.1.51"> Validation ID: time_in_business_type.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4103,8 +4103,8 @@ export default `
                     <li data-block-key="5ppe0">‘Time in business: type of response’ must equal 1, 2, 3, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.52" href="#4.1.52"> Validation ID: time_in_business.invalid_numeric_format </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4116,8 +4116,8 @@ export default `
                     <li data-block-key="3si04">When present, ‘time in business’ must be a whole number.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.53" href="#4.1.53"> Validation ID: time_in_business.invalid_numeric_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4129,8 +4129,8 @@ export default `
                     <li data-block-key="f2obd">When present, ‘time in business’ must be greater than or equal to 0.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.54" href="#4.1.54"> Validation ID: business_ownership_status.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4142,8 +4142,8 @@ export default `
                     <li data-block-key="5pgj">Each value in 'business ownership status' (separated by semicolons) must equal 1, 2, 3, 955, 966, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.55" href="#4.1.55"> Validation ID: business_ownership_status.invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4155,8 +4155,8 @@ export default `
                     <li data-block-key="4ciov">'Business ownership status' must contain at least one value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.56" href="#4.1.56"> Validation ID: num_principal_owners_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4168,8 +4168,8 @@ export default `
                     <li data-block-key="42r2a">‘Number of principal owners: NP flag’ must equal 900 or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.57" href="#4.1.57"> Validation ID: num_principal_owners.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4181,8 +4181,8 @@ export default `
                     <li data-block-key="b3eqa">When present, ‘number of principal owners’ must equal 0, 1, 2, 3, or 4.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.58" href="#4.1.58"> Validation ID: po_X_ethnicity.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4194,8 +4194,8 @@ export default `
                     <li data-block-key="cuv5t">When present, each value in ‘ethnicity of principal owner X’ (separated by semicolons) must equal 1, 11, 12, 13, 14, 2, 966, 977, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.59" href="#4.1.59"> Validation ID: po_X_ethnicity_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4207,8 +4207,8 @@ export default `
                     <li data-block-key="36osn">‘Ethnicity of principal owner X: free-form text field for other Hispanic or Latino’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.60" href="#4.1.60"> Validation ID: po_X_race.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4222,8 +4222,8 @@ export default `
                     </li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.61" href="#4.1.61"> Validation ID: po_X_race_anai_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4235,8 +4235,8 @@ export default `
                     <li data-block-key="3uue9">‘Race of principal owner X: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.62" href="#4.1.62"> Validation ID: po_X_race_asian_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="bdfqs">Affected data field</h5>
@@ -4248,8 +4248,8 @@ export default `
                     <li data-block-key="9o2sc">‘Race of principal owner X: free-form text field for other Asian’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.63" href="#4.1.63"> Validation ID: po_X_race_baa_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="sahsd">Affected data field</h5>
@@ -4261,8 +4261,8 @@ export default `
                     <li data-block-key="66q58">‘Race of principal owner X: free-form text field for other Black or African American’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.64" href="#4.1.64"> Validation ID: po_X_race_pi_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="sahsd">Affected data field</h5>
@@ -4274,8 +4274,8 @@ export default `
                     <li data-block-key="ctgoj">‘Race of principal owner X: free-form text field for other Pacific Islander race’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.65" href="#4.1.65"> Validation ID: po_X_gender_flag.invalid_enum_value </a>
                 </h4>
                 <h5 data-block-key="sahsd">Affected data field</h5>
@@ -4287,8 +4287,8 @@ export default `
                     <li data-block-key="6cg7f">When present, ‘sex/gender of principal owner X: NP flag’ must equal 1, 966, or 988.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.1">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.1">
+                <h4 class="o-fig__heading">
                     <a id="4.1.66" href="#4.1.66"> Validation ID: po_X_gender_ff.invalid_text_length </a>
                 </h4>
                 <h5 data-block-key="sahsd">Affected data field</h5>
@@ -4300,13 +4300,13 @@ export default `
                     <li data-block-key="2nihr">‘Sex/gender of principal owner X: free-form text field for self-identified sex/gender’ must <b>not</b> exceed 300 characters in length.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="4.2">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="4.2">
+                <h3 class="o-fig__heading">
                     <a id="4.2" href="#4.2"> 4.2. Multi-field errors </a>
                 </h3>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.1" href="#4.2.1"> Validation ID: ct_credit_product_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4332,8 +4332,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.2" href="#4.2.2"> Validation ID: ct_guarantee_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4359,8 +4359,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.3" href="#4.2.3"> Validation ID: ct_loan_term_flag.enum_value_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4386,8 +4386,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.4" href="#4.2.4"> Validation ID: ct_loan_term.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4413,8 +4413,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.5" href="#4.2.5"> Validation ID: credit_purpose_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4440,8 +4440,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.6" href="#4.2.6"> Validation ID: amount_applied_for.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4467,8 +4467,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.7" href="#4.2.7"> Validation ID: amount_approved.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4494,8 +4494,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.8" href="#4.2.8"> Validation ID: action_taken_date.date_value_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4514,8 +4514,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.9" href="#4.2.9"> Validation ID: denial_reasons.enum_value_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4541,8 +4541,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.10" href="#4.2.10"> Validation ID: denial_reasons_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4568,8 +4568,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.11" href="#4.2.11"> Validation ID: pricing_all.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="ede7q">Affected data fields</h5>
@@ -4612,8 +4612,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.12" href="#4.2.12"> Validation ID: pricing_charges.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="nsktb">Affected data fields</h5>
@@ -4650,8 +4650,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.13" href="#4.2.13"> Validation ID: pricing_init_rate_period.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4680,8 +4680,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.14" href="#4.2.14"> Validation ID: pricing_fixed_rate.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4710,8 +4710,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.15" href="#4.2.15"> Validation ID: pricing_var_margin.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4740,8 +4740,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.16" href="#4.2.16"> Validation ID: pricing_var_index_name.enum_value_conflict </a>
                 </h4>
                 <h5 data-block-key="5tbwp">Affected data fields</h5>
@@ -4770,8 +4770,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.17" href="#4.2.17"> Validation ID: pricing_var_index_name_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="5tbwp">Affected data fields</h5>
@@ -4797,8 +4797,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.18" href="#4.2.18"> Validation ID: pricing_var_index_value.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4827,8 +4827,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.19" href="#4.2.19"> Validation ID: pricing_mca_addcost_flag.enum_value_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4852,8 +4852,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.20" href="#4.2.20"> Validation ID: pricing_mca_addcost.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="txmgs">Affected data fields</h5>
@@ -4885,8 +4885,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.21" href="#4.2.21"> Validation ID: census_tract_number.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -4915,8 +4915,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.22" href="#4.2.22"> Validation ID: gross_annual_revenue.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -4942,8 +4942,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.23" href="#4.2.23"> Validation ID: naics_code.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -4969,8 +4969,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.24" href="#4.2.24"> Validation ID: time_in_business.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -4998,8 +4998,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.25" href="#4.2.25"> Validation ID: num_principal_owners.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5025,8 +5025,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.26" href="#4.2.26"> Validation ID: po_X_ethnicity_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5055,8 +5055,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.27" href="#4.2.27"> Validation ID: po_X_race_anai_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5085,8 +5085,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.28" href="#4.2.28"> Validation ID: po_X_race_asian_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5115,8 +5115,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.29" href="#4.2.29"> Validation ID: po_X_race_baa_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5145,8 +5145,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.30" href="#4.2.30"> Validation ID: po_X_race_pi_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5175,8 +5175,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.2">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.2">
+                <h4 class="o-fig__heading">
                     <a id="4.2.31" href="#4.2.31"> Validation ID: po_X_gender_ff.conditional_field_conflict </a>
                 </h4>
                 <h5 data-block-key="2r7yt">Affected data fields</h5>
@@ -5205,13 +5205,13 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="4.3">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="4.3">
+                <h3 class="o-fig__heading">
                     <a id="4.3" href="#4.3"> 4.3. Register-level errors </a>
                 </h3>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.3">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.3">
+                <h4 class="o-fig__heading">
                     <a id="4.3.1" href="#4.3.1"> Validation ID: uid.duplicates_in_dataset </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data fields</h5>
@@ -5229,13 +5229,13 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="4.4">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="4.4">
+                <h3 class="o-fig__heading">
                     <a id="4.4" href="#4.4"> 4.4. Single-field warnings </a>
                 </h3>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.1" href="#4.4.1"> Validation ID: uid.invalid_uid_lei </a>
                 </h4>
                 <h5 data-block-key="cqb8n">Affected data field</h5>
@@ -5247,8 +5247,8 @@ ENDIF
                     <li data-block-key="d8fnd">The first 20 characters of the ‘unique identifier’ should match the Legal Entity Identifier (LEI) for the financial institution.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.2" href="#4.4.2"> Validation ID: ct_guarantee.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5260,8 +5260,8 @@ ENDIF
                     <li data-block-key="2ek0k">When ‘type of guarantee’ contains 999 (no guarantee), ‘type of guarantee’ should <b>not</b> contain more than one value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.3" href="#4.4.3"> Validation ID: ct_guarantee.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5273,8 +5273,8 @@ ENDIF
                     <li data-block-key="2ek0k">‘Type of guarantee’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.4" href="#4.4.4"> Validation ID: ct_loan_term.unreasonable_numeric_value </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5286,8 +5286,8 @@ ENDIF
                     <li data-block-key="2ek0k">When present, ‘loan term’ should be less than 1200 (100 years).</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.5" href="#4.4.5"> Validation ID: credit_purpose.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5299,8 +5299,8 @@ ENDIF
                     <li data-block-key="2ek0k">When ‘credit purpose’ contains 988 (not provided by applicant and otherwise undetermined) or 999 (not applicable), ‘credit purpose’ should <b>not</b> contain more than one value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.6" href="#4.4.6"> Validation ID: credit_purpose.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5312,8 +5312,8 @@ ENDIF
                     <li data-block-key="2ek0k">‘Credit purpose’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.7" href="#4.4.7"> Validation ID: denial_reasons.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5325,8 +5325,8 @@ ENDIF
                     <li data-block-key="2ek0k">When ‘denial reason(s)’ contains 999 (not applicable), ‘denial reason(s)’ should <b>not</b> contain more than one value.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.8" href="#4.4.8"> Validation ID: denial_reasons.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5338,8 +5338,8 @@ ENDIF
                     <li data-block-key="2ek0k">‘Denial reason(s)’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.9" href="#4.4.9"> Validation ID: pricing_fixed_rate.unreasonable_numeric_value </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5351,8 +5351,8 @@ ENDIF
                     <li data-block-key="248b8">When present, ‘fixed rate: interest rate’ should generally be greater than 0.1.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.10" href="#4.4.10"> Validation ID: pricing_var_margin.unreasonable_numeric_value </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5364,8 +5364,8 @@ ENDIF
                     <li data-block-key="8jhbc">When present, ‘variable rate transaction: margin’ should generally be greater than 0.1.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.11" href="#4.4.11"> Validation ID: census_tract_number.invalid_geoid </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5377,8 +5377,8 @@ ENDIF
                     <li data-block-key="2ek0k">When present, ‘census tract: tract number’ should be a valid census tract GEOID as defined by the U.S. Census Bureau.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.12" href="#4.4.12"> Validation ID: naics_code.invalid_naics_value </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5390,8 +5390,8 @@ ENDIF
                     <li data-block-key="2ek0k">When present, ‘North American Industry Classification System (NAICS) code’ should be a valid NAICS code.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.13" href="#4.4.13"> Validation ID: business_ownership_status.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="nsktb">Affected data field</h5>
@@ -5403,8 +5403,8 @@ ENDIF
                     <li data-block-key="39c2m">‘Business ownership status’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.14" href="#4.4.14"> Validation ID: business_ownership_status.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="wuz9u">Affected data field</h5>
@@ -5419,8 +5419,8 @@ ENDIF
                     </li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.15" href="#4.4.15"> Validation ID: po_X_ethnicity.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data field</h5>
@@ -5432,8 +5432,8 @@ ENDIF
                     <li data-block-key="6v8ve">‘Ethnicity of principal owner X’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.16" href="#4.4.16"> Validation ID: po_X_ethnicity.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data field</h5>
@@ -5448,8 +5448,8 @@ ENDIF
                     </li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.17" href="#4.4.17"> Validation ID: po_X_race.duplicates_in_field </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data field</h5>
@@ -5461,8 +5461,8 @@ ENDIF
                     <li data-block-key="2rec5">‘Race of principal owner X’ should <b>not</b> contain duplicated values.</li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.4">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.4">
+                <h4 class="o-fig__heading">
                     <a id="4.4.18" href="#4.4.18"> Validation ID: po_X_race.multi_value_field_restriction </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data field</h5>
@@ -5477,13 +5477,13 @@ ENDIF
                     </li>
                 </ul>
             </div>
-            <div class="o-fig_section__sub" data-search-section="" data-scrollspy="4.5">
-                <h3 class="o-fig_heading">
+            <div class="o-fig__section--sub" data-search-section="" data-scrollspy="4.5">
+                <h3 class="o-fig__heading">
                     <a id="4.5" href="#4.5"> 4.5. Multi-field warnings </a>
                 </h3>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.1" href="#4.5.1"> Validation ID: ct_guarantee_ff.multi_invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="4ygwa">Affected data fields</h5>
@@ -5508,8 +5508,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.2" href="#4.5.2"> Validation ID: credit_purpose_ff.multi_invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="4ygwa">Affected data fields</h5>
@@ -5534,8 +5534,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.3" href="#4.5.3"> Validation ID: action_taken_date.unreasonable_date_value </a>
                 </h4>
                 <h5 data-block-key="rauke">Affected data fields</h5>
@@ -5554,8 +5554,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.4" href="#4.5.4"> Validation ID: denial_reasons_ff.multi_invalid_number_of_values </a>
                 </h4>
                 <h5 data-block-key="4ygwa">Affected data fields</h5>
@@ -5580,8 +5580,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.5" href="#4.5.5"> Validation ID: po_demographics_0.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="rauke">Affected data fields</h5>
@@ -5616,8 +5616,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.6" href="#4.5.6"> Validation ID: po_demographics_1.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="rauke">Affected data fields</h5>
@@ -5655,8 +5655,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.7" href="#4.5.7"> Validation ID: po_demographics_2.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="rauke">Affected data fields</h5>
@@ -5696,8 +5696,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.8" href="#4.5.8"> Validation ID: po_demographics_3.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data fields</h5>
@@ -5737,8 +5737,8 @@ ENDIF
 
                 </pre>
             </div>
-            <div class="o-fig_section__sub-sub" data-search-section="" data-scrollspy="4.5">
-                <h4 class="o-fig_heading">
+            <div class="o-fig__section--sub-sub" data-search-section="" data-scrollspy="4.5">
+                <h4 class="o-fig__heading">
                     <a id="4.5.9" href="#4.5.9"> Validation ID: po_demographics_4.conditional_fieldset_conflict </a>
                 </h4>
                 <h5 data-block-key="47oha">Affected data fields</h5>
@@ -5775,8 +5775,8 @@ ENDIF
                     ENDIF
                 </pre>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="5">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="5">
+                <h2 class="o-fig__heading">
                     <a id="5" href="#5"> 5. Where to get help </a>
                 </h2>
                 <p data-block-key="nwusr">
@@ -5789,8 +5789,8 @@ ENDIF
                     <a href="https://reginquiries.consumerfinance.gov">submit the question to the CFPB</a> on its website.
                 </p>
             </div>
-            <div class="o-fig_section" data-search-section="" data-scrollspy="6">
-                <h2 class="o-fig_heading">
+            <div class="o-fig__section" data-search-section="" data-scrollspy="6">
+                <h2 class="o-fig__heading">
                     <a id="6" href="#6"> 6. Paperwork Reduction Act </a>
                 </h2>
                 <p data-block-key="nwusr">

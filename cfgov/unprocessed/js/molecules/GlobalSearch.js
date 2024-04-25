@@ -20,10 +20,10 @@ const BASE_CLASS = 'm-global-search';
  */
 function GlobalSearch(element) {
   const _dom = checkDom(element, BASE_CLASS);
-  const _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
-  const _triggerDom = _dom.querySelector(`.${BASE_CLASS}_trigger`);
+  const _contentDom = _dom.querySelector(`.${BASE_CLASS}__content`);
+  const _triggerDom = _dom.querySelector(`.${BASE_CLASS}__trigger`);
   const _triggerOpenLabelText = _triggerDom
-    .querySelector(`.${BASE_CLASS}_trigger-open-label`)
+    .querySelector(`.${BASE_CLASS}__trigger-open-label`)
     .innerText.trim();
   const _flyout = new FlyoutMenu(_dom, false);
   let _searchInputDom;
@@ -54,8 +54,8 @@ function GlobalSearch(element) {
 
     _contentDom.classList.remove('u-hidden');
 
-    const inputContainsLabelSel = `.${BASE_CLASS}_content-form .input-contains-label`;
-    const searchBtnSel = `.${BASE_CLASS} .o-form__input-w-btn_btn-container button`;
+    const inputContainsLabelSel = `.${BASE_CLASS}__content-form .input-contains-label`;
+    const searchBtnSel = `.${BASE_CLASS} .o-form--input-w-btn__btn-container button`;
 
     const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
     _searchInputDom = inputContainsLabel.querySelector('input');

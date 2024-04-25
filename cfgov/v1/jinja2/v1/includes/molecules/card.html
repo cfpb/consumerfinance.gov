@@ -29,16 +29,16 @@
 {% macro render( value ) %}
 {# We want to make the whole card clickable. #}
 <article class="m-card
-                {% if value.card_type == 'topic' %} m-card__topic {% endif %}
-                {% if value.card_type == 'topic-action' %} m-card__topic m-card__topic-action {% endif %}
+                {% if value.card_type == 'topic' %} m-card--topic {% endif %}
+                {% if value.card_type == 'topic-action' %} m-card--topic m-card--topic-action {% endif %}
                 {% if value.card_type  == 'highlight' %} m-card__highlight {% endif %}
-                {% if value.card_type  == 'breakout' %} m-card__breakout {% endif %}
+                {% if value.card_type  == 'breakout' %} m-card--breakout {% endif %}
                 {% if value.card_type  == 'featured' %} m-card__featured {% endif %}">
     <a href="{{ value.link_url }}">
         {% if value.heading or value.icon %}
-        <h3 class="{% if value.card_type != 'highlight' %}m-card_heading{% endif %}{% if value.card_type == 'featured' %} h2{% endif %}">
+        <h3 class="{% if value.card_type != 'highlight' %}m-card__heading{% endif %}{% if value.card_type == 'featured' %} h2{% endif %}">
             {% if value.icon -%}
-                <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
+                <span class="m-card__icon">{{ svg_icon( value.icon ) }}</span>
             {%- endif %}
             {% if value.heading -%}
                 {{ value.heading }}
@@ -53,16 +53,16 @@
         {% endif %}
 
         {% if value.card_type  == 'breakout' %}
-        <img class="m-card_img"
+        <img class="m-card__img"
              loading="lazy"
              src="{{ value.img_src }}"
              alt="">
         {% endif %}
 
         {% if value.card_type  == 'breakout' %}
-        <div class="m-card_inner-wrapper">
+        <div class="m-card__inner-wrapper">
         {% endif %}
-            <div class="m-card_footer">
+            <div class="m-card__footer">
                 <span>{{ value.link_text }}</span>
             </div>
         {% if value.card_type  == 'breakout' %}

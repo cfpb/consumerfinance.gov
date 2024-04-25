@@ -19,8 +19,8 @@
 
 {# TODO: Move to external macro so it can be shared with secondary nav. #}
 {%- macro _content_classes( nav_depth, suffix='' ) -%}
-    {%- set general_class = base_class ~ '_content' ~ suffix -%}
-    {%- set depth_class = base_class ~ '_content' ~ '-' ~ nav_depth ~ suffix -%}
+    {%- set general_class = base_class ~ '__content' ~ suffix -%}
+    {%- set depth_class = base_class ~ '__content' ~ '-' ~ nav_depth ~ suffix -%}
 
     {{ general_class ~ ' ' ~ depth_class }}
 {%- endmacro -%}
@@ -57,8 +57,8 @@
                  aria-level="3"
                  aria-label="{{ aria_group_title }}"
                  class="h5
-                        {{- ' ' ~ base_class ~ '_group-heading' -}}
-                        {{- ' ' ~ base_class ~ '_group-heading__hidden' if group.title_hidden else '' -}}"
+                        {{- ' ' ~ base_class ~ '__group-heading' -}}
+                        {{- ' ' ~ base_class ~ '__group-heading--hidden' if group.title_hidden else '' -}}"
                  id="{{ aria_group_title | slugify ~ '-menu' }}">
                  {{ group.title }}
             </div>
@@ -143,7 +143,7 @@
         <div class="{{- _content_classes( nav_depth, '-overview' ) -}}
                     {{- ' ' ~ _content_classes( nav_depth, '-overview-heading' ) -}}">
             <a class="{{- _content_classes( nav_depth, '-overview-link' ) -}}
-                      {{- ' ' ~ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' -}}"
+                      {{- ' ' ~ _content_classes( nav_depth, '-overview-link--current' ) if overview_link.selected else '' -}}"
                href="{{ overview_link.url }}">
                 {% set overview_link_text = overview_link.text -%}
                 {% trans %}{{ overview_link_text }} Overview{% endtrans %}
@@ -166,20 +166,20 @@
 
                 {% if nav_item.featured_items %}
                 <div class="{{- _content_classes( nav_depth, '-list' ) -}}
-                            {{- ' ' ~ _content_classes( nav_depth, '-list__featured' ) -}}">
+                            {{- ' ' ~ _content_classes( nav_depth, '-list--featured' ) -}}">
                     <div role="heading"
                          aria-level="3"
-                         class="h5 {{ base_class ~ '_group-heading' }}">
+                         class="h5 {{ base_class ~ '__group-heading' }}">
                         {{ _('Featured') }}
                     </div>
                     <ul aria-label="{{ _('Featured') }}">
                         {% for link in nav_item.featured_items | default( [], true ) %}
                         <li class="{{- _content_classes( nav_depth, '-item' ) -}}
-                                   {{- ' ' ~ _content_classes( nav_depth, '-item__has-icon' ) -}}">
+                                   {{- ' ' ~ _content_classes( nav_depth, '-item--has-icon' ) -}}">
                             <a class="{{ _content_classes( nav_depth, '-link' ) }}"
                                 href="{{ link.url }}">
                                 {{ svg_icon('favorite') }}
-                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                                <span><span class="a-link__text">{{ link.text }}</span></span>
                             </a>
                         </li>
                         {% endfor %}
@@ -191,19 +191,19 @@
                 <div class="{{- _content_classes( nav_depth, '-list' ) -}}">
                     <div role="heading"
                          aria-level="3"
-                         class="h5 {{ base_class ~ '_group-heading' }}">
+                         class="h5 {{ base_class ~ '__group-heading' }}">
                         {{ _('Additional Resources') }}
                     </div>
                     <ul aria-label="{{ _('Additional Resources') }}">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{- _content_classes( nav_depth, '-item' ) -}}
-                                   {{- ' ' ~ _content_classes( nav_depth, '-item__has-icon' ) -}}">
+                                   {{- ' ' ~ _content_classes( nav_depth, '-item--has-icon' ) -}}">
                             <a class="a-link
                                       {{- ' ' ~ _content_classes( nav_depth, '-link' ) -}}
-                                      {{- ' ' ~ _content_classes( nav_depth, '-link__current' ) if link.selected else '' -}}"
+                                      {{- ' ' ~ _content_classes( nav_depth, '-link--current' ) if link.selected else '' -}}"
                             href="{{ link.url }}">
                                 {{ svg_icon( link.icon ) }}
-                                <span class="a-link_text">{{ link.text }}</span>
+                                <span class="a-link__text">{{ link.text }}</span>
                             </a>
                         </li>
                         {% endfor %}
@@ -246,12 +246,12 @@
 {% set has_children = nav_item.nav_groups or nav_item.nav_items %}
 {% set link = nav_item.overview if nav_item.overview else nav_item %}
 <li class="{{- _content_classes( nav_depth, '-item' ) -}}
-           {{- ' ' ~ _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
+           {{- ' ' ~ _content_classes( nav_depth, '-item--has-icon' ) if link.icon_pre else '' -}}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
 
     <a class="{{- _content_classes( nav_depth, '-link' ) -}}
-              {{- ' ' ~ _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
-              {{- ' ' ~ _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
+              {{- ' ' ~ _content_classes( nav_depth, '-link--has-children' ) if has_children else '' -}}
+              {{- ' ' ~ _content_classes( nav_depth, '-link--current' ) if nav_item.selected else '' -}}"
        href="{{ link.url | default( '#' ) }}"
        {{
          'data-js-hook=behavior_flyout-menu_trigger
@@ -304,16 +304,16 @@
             u-hidden"
      data-js-hook="behavior_flyout-menu"
      aria-label="{{ _('Main menu') }}">
-    <button class="{{ base_class ~ '_trigger' }}"
+    <button class="{{ base_class ~ '__trigger' }}"
             data-js-hook="behavior_flyout-menu_trigger"
             aria-haspopup="menu">
-        <span class="{{ base_class ~ '_trigger-open' }}">
+        <span class="{{ base_class ~ '__trigger-open' }}">
             {{ svg_icon('menu') }}
             <span class="u-visually-hidden">
                 {{ _('Open the main menu') }}
             </span>
         </span>
-        <span class="{{ base_class ~ '_trigger-close' }}">
+        <span class="{{ base_class ~ '__trigger-close' }}">
             {{ svg_icon('error') }}
             <span class="u-visually-hidden">
                 {{ _('Close the main menu') }}

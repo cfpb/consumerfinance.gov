@@ -2,9 +2,9 @@
 @import (less)
   '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
-// Each content level adds a depth-specific class, such as o-mega-menu_content-1, o-mega-menu_content-2, etc.
+// Each content level adds a depth-specific class, such as o-mega-menu__content-1, o-mega-menu__content-2, etc.
 
-@mobile_trigger_ht__px: 54px;
+@mobile-trigger-ht-px: 54px;
 
 // TODO: Reduce global scope and reign it in to the menu only if possible.
 body {
@@ -14,8 +14,8 @@ body {
   });
 }
 
-@menu_max_width_px: 1200px;
-@menu_link_hover_bar_px: 5px;
+@menu-max-width-px: 1200px;
+@menu-link-hover-bar-px: 5px;
 
 //
 // ELEMENT STATES
@@ -26,7 +26,10 @@ body {
 //
 
 // Create a bar for hover purposes to the left of an item.
-.u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
+// Ignore style linting on the name, because it's not smart enough for mixins.
+/* stylelint-disable selector-class-pattern */
+.u-bar-left( @color, @position: -@menu-link-hover-bar-px - 10px ) {
+  /* stylelint-enable */
   position: relative;
 
   &::before {
@@ -35,7 +38,7 @@ body {
     top: 0;
     content: '';
     background: @color;
-    width: @menu_link_hover_bar_px;
+    width: @menu-link-hover-bar-px;
     height: 100%;
   }
 }
@@ -86,7 +89,7 @@ body {
 // Adjustments for links with icons, desktop.
 .u-hover-link-icon-desktop() {
   &:hover {
-    .u-bar-left( var(--green), -@menu_link_hover_bar_px - 8px );
+    .u-bar-left( var(--green), -@menu-link-hover-bar-px - 8px );
 
     .cf-icon-svg {
       fill: var(--black);
@@ -131,8 +134,8 @@ body {
   .u-focus-rectangle();
 
   &::after {
-    left: -@menu_link_hover_bar_px - 9px;
-    width: calc(100% + @menu_link_hover_bar_px + 6px);
+    left: -@menu-link-hover-bar-px - 9px;
+    width: calc(100% + @menu-link-hover-bar-px + 6px);
   }
 }
 
@@ -141,8 +144,8 @@ body {
   .u-focus-rectangle();
 
   &::after {
-    left: -@menu_link_hover_bar_px - 9px;
-    width: calc(100% + @menu_link_hover_bar_px + 9px);
+    left: -@menu-link-hover-bar-px - 9px;
+    width: calc(100% + @menu-link-hover-bar-px + 9px);
   }
 }
 
@@ -151,8 +154,8 @@ body {
   .u-focus-rectangle();
 
   &::after {
-    left: -@menu_link_hover_bar_px - 7px;
-    width: calc(100% + @menu_link_hover_bar_px + 6px);
+    left: -@menu-link-hover-bar-px - 7px;
+    width: calc(100% + @menu-link-hover-bar-px + 6px);
   }
 }
 
@@ -161,8 +164,8 @@ body {
   .u-focus-rectangle();
 
   &::after {
-    left: -@menu_link_hover_bar_px;
-    width: calc(100% + @menu_link_hover_bar_px + 5px);
+    left: -@menu-link-hover-bar-px;
+    width: calc(100% + @menu-link-hover-bar-px + 5px);
   }
 }
 
@@ -171,8 +174,8 @@ body {
   .u-focus-rectangle();
 
   &::after {
-    left: -@menu_link_hover_bar_px - 9px;
-    width: calc(100% + @menu_link_hover_bar_px + 14px);
+    left: -@menu-link-hover-bar-px - 9px;
+    width: calc(100% + @menu-link-hover-bar-px + 14px);
   }
 }
 
@@ -196,7 +199,7 @@ body {
 .u-current-link-icon-desktop() {
   &,
   &:hover {
-    .u-bar-left( var(--black), -@menu_link_hover_bar_px - 8px );
+    .u-bar-left( var(--black), -@menu-link-hover-bar-px - 8px );
   }
 }
 
@@ -222,7 +225,7 @@ body {
     margin-bottom: 0;
   }
 
-  &_content {
+  &__content {
     &-overview-heading {
       margin-bottom: 0;
       font-size: unit(18px / @base-font-size-px, rem);
@@ -230,7 +233,7 @@ body {
     }
 
     // …however, show the icons in featured links.
-    &-item__has-icon {
+    &-item--has-icon {
       .cf-icon-svg {
         display: inline-block;
       }
@@ -246,13 +249,13 @@ body {
     }
 
     // Featured menu content is link items with icons.
-    &-item__has-icon {
+    &-item--has-icon {
       // Align the icon and text.
       display: flex;
       align-items: baseline;
 
       // Hide link bottom line from Design System link styles.
-      & .a-link_text {
+      & .a-link__text {
         border-bottom-width: 0;
       }
 
@@ -265,18 +268,18 @@ body {
   }
 
   // 1st-level menu.
-  &_content-1 {
+  &__content-1 {
     &-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( var(--black) );
+      .u-link--colors( var(--black) );
 
       display: block;
     }
   }
 
   // 2nd and 3rd-level menus.
-  &_content-2,
-  &_content-3 {
+  &__content-2,
+  &__content-3 {
     &-overview {
       display: block;
       border-bottom: 1px solid var(--gray-40);
@@ -285,7 +288,7 @@ body {
     &-link,
     &-overview-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link__colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
+      .u-link--colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
       &:hover:focus {
         color: var(--black);
       }
@@ -296,24 +299,24 @@ body {
 
   // Mobile only.
   .respond-to-max(@bp-xs-max, {
-    &_trigger {
+    &__trigger {
       margin-left: -15px;
     }
   });
 
   // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    &_trigger {
+    &__trigger {
       margin-left: -30px;
     }
   });
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    &_trigger {
+    &__trigger {
       display: none;
-      height: @mobile_trigger_ht__px;
-      min-width: @mobile_trigger_ht__px;
+      height: @mobile-trigger-ht-px;
+      min-width: @mobile-trigger-ht-px;
       padding-top: 14px;
       padding-bottom: 14px;
 
@@ -335,11 +338,11 @@ body {
         outline: 1px dotted var(--black);
       }
 
-      .o-mega-menu_trigger-close {
+      .o-mega-menu__trigger-close {
         display: none;
       }
 
-      .o-mega-menu_trigger-open {
+      .o-mega-menu__trigger-open {
         display: block;
       }
 
@@ -349,11 +352,11 @@ body {
         border-right: 1px solid var(--gray-40);
         color: var(--black);
 
-        .o-mega-menu_trigger-close {
+        .o-mega-menu__trigger-close {
           display: block;
         }
 
-        .o-mega-menu_trigger-open {
+        .o-mega-menu__trigger-open {
           display: none;
         }
       }
@@ -368,7 +371,7 @@ body {
 
     // Menu flyout.
     // All menus - Tablet/Mobile.
-    &_content {
+    &__content {
       .u-drop-shadow-after();
 
       display: none;
@@ -447,7 +450,7 @@ body {
       &-overview-link {
         position: relative;
         // Colors for :link, :visited, :hover, :focus, :active.
-        .u-link__colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
+        .u-link--colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
 
         padding-top: unit( 15px / 18px, em );
         padding-bottom: unit( 15px / 18px, em );
@@ -457,7 +460,7 @@ body {
           display: none;
         }
 
-        &__has-children &-icon-post {
+        &--has-children &-icon-post {
           display: block;
 
           position: absolute;
@@ -473,19 +476,19 @@ body {
         .u-hover-link-mobile();
         .u-focus-link-mobile();
 
-        &__current {
+        &--current {
           .u-current-link-mobile();
         }
       }
     }
 
     // 1st-level menu - Tablet/Mobile.
-    &_content-1 {
+    &__content-1 {
       display: block;
 
       .js & {
         // Offset for height of trigger button.
-        top: @mobile_trigger_ht__px;
+        top: @mobile-trigger-ht-px;
       }
 
       &-list-group {
@@ -495,7 +498,7 @@ body {
     }
 
     // 2nd-level menu - Tablet/Mobile.
-    &_content-2 {
+    &__content-2 {
 
       // Remove final border line of last list item.
       &-lists &-list-group:last-child &-list:last-child &-item:last-child {
@@ -504,20 +507,20 @@ body {
     }
 
     // 3rd-level menu - Tablet/Mobile.
-    &_content-3 {
+    &__content-3 {
       // TODO: There is similar code set on all three menus.
       //       Investigate if it can be combined.
       // Remove final border line of last list item.
       &-list-group:last-child {
-        .o-mega-menu_content-3-item:last-child {
+        .o-mega-menu__content-3-item:last-child {
           border-bottom: none;
         }
       }
     }
 
     // Submenus - Tablet/Mobile.
-    &_content-2,
-    &_content-3 {
+    &__content-2,
+    &__content-3 {
       .u-move-right();
       position: absolute;
       left: 0;
@@ -531,16 +534,16 @@ body {
     }
 
     // Group heading - Tablet/Mobile
-    &_group-heading {
+    &__group-heading {
       // !important is used to override a highly specific ul+.h5 rule in base.less
       margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem ) !important;
 
-      &__hidden {
+      &--hidden {
         .u-visually-hidden();
       }
 
       // add border between title and following list
-      &:not(&__hidden) + ul {
+      &:not(&--hidden) + ul {
         border-top: 1px solid var(--gray-40);
       }
     }
@@ -567,19 +570,19 @@ body {
       box-shadow: 0px 1px 0px 0px var(--gray-40);
     }
 
-    &_trigger {
+    &__trigger {
       display: none;
     }
 
     // Hide the  >  icon next to menu items on desktop…
-    &_content-link-icon-post {
+    &__content-link-icon-post {
       display: none;
     }
 
     // 1st-level menu - Desktop.
-    &_content-1 {
+    &__content-1 {
       &[data-open="true"] {
-        .o-mega-menu_content-1-wrapper {
+        .o-mega-menu__content-1-wrapper {
           display: block;
           transform: translateY( 0 );
         }
@@ -603,7 +606,7 @@ body {
         display: table-cell;
 
         .no-js &:hover {
-          .o-mega-menu_content-2 {
+          .o-mega-menu__content-2 {
             display: block;
           }
         }
@@ -729,32 +732,32 @@ body {
         }
 
         // Add padding to accommodate caret.
-        &__has-children {
+        &--has-children {
           // Remove 4px to accommodate longer titles.
           padding-right: unit( ( @grid_gutter-width - 4px ) / @base-font-size-px, em );
         }
 
-        &__current {
+        &--current {
           // Change the selection bar to black.
           &:after {
             background-color: var(--black);
           }
         }
 
-        &__current[aria-expanded="true"]:after,
-        &__current:active:after {
+        &--current[aria-expanded="true"]:after,
+        &--current:active:after {
           background-color: transparent;
         }
       }
     }
 
     // Hide last columns headings at desktop sizes.
-    &_content-2-lists &_content-2-list-group:last-child &_group-heading {
+    &__content-2-lists &__content-2-list-group:last-child &__group-heading {
       display: none;
     }
 
     // 2nd-level menu - Desktop.
-    &_content-2 {
+    &__content-2 {
       overflow: hidden;
       position: absolute;
       left: 0;
@@ -767,7 +770,7 @@ body {
       &[data-open="true"] {
         overflow: visible;
 
-        .o-mega-menu_content-2-wrapper {
+        .o-mega-menu__content-2-wrapper {
           display: block;
         }
       }
@@ -815,7 +818,7 @@ body {
       // Move the first link in each mega menu list group up a bit so that
       // it aligns with the featured links box. We do this instead of
       // removing the top padding to preserve the link hover state.
-      &-list:not( &-list__featured ) &-item:first-child &-link {
+      &-list:not( &-list--featured ) &-item:first-child &-link {
         margin-top: unit( -12px / @base-font-size-px, em );
       }
 
@@ -827,7 +830,7 @@ body {
 
         .u-hover-link-desktop();
 
-        &__current {
+        &--current {
           .u-current-link-desktop();
         }
       }
@@ -844,7 +847,7 @@ body {
       }
 
       // Featured item has a highlight box around it.
-      &-list__featured ul {
+      &-list--featured ul {
         // Style the featured item box.
         padding-right: unit( 13px / @base-font-size-px, em );
         padding-top: unit( 30px / @base-font-size-px, em );
@@ -855,7 +858,7 @@ body {
         box-sizing: border-box;
       }
 
-      &-list__featured &-link {
+      &-list--featured &-link {
         display: flex;
         padding: 0;
         left: 0;
@@ -868,7 +871,7 @@ body {
         }
       }
 
-      &-list__featured &-item {
+      &-list--featured &-item {
         margin-bottom: unit( 15px / @base-font-size-px, em );
 
         &:last-child {
@@ -876,43 +879,43 @@ body {
         }
       }
 
-      &-item__has-icon {
+      &-item--has-icon {
         // Pad in featured items from their icons.
         padding-left: unit( 13px / @base-font-size-px, em );
       }
 
       // Set up hover state for link with an icon.
-      &-item__has-icon &-link {
+      &-item--has-icon &-link {
         .u-hover-link-icon-desktop();
         .u-focus-link-icon-desktop();
 
-        &__current {
+        &--current {
           .u-current-link-icon-desktop();
         }
       }
 
       // Remove hover bar for featured item link.
-      &-list__featured &-link {
+      &-list--featured &-link {
         .u-hover-link-featured-desktop();
         .u-focus-link-featured-desktop();
       }
     }
 
     // 3rd-level menu - Desktop.
-    &_content-3 {
+    &__content-3 {
       display: none;
     }
 
-    &_group-heading {
+    &__group-heading {
       margin-bottom: unit( 30px / @base-font-size-px, em );
 
-      &__hidden {
+      &--hidden {
         visibility: hidden;
       }
     }
 
     // Hide global header CTA container and eyebrow at desktop size.
-    &_content-1-item:first-child,
+    &__content-1-item:first-child,
     .m-global-eyebrow {
       display: none;
     }
@@ -924,18 +927,18 @@ body {
 
   // Xtra-Large desktop size. 1261px.
   .respond-to-min(@bp-xl-min + @grid_gutter-width, {
-    width: @menu_max_width_px;
+    width: @menu-max-width-px;
 
     // Horizontal rule to overlay on top of header rule so that
     // rule is not hidden when menu opens.
     &:after {
       left: -@grid_gutter-width;
-      width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+      width: @menu-max-width-px + ( @grid_gutter-width * 2 );
     }
 
-    &_content-2 {
+    &__content-2 {
       left: -@grid_gutter-width;
-      width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+      width: @menu-max-width-px + ( @grid_gutter-width * 2 );
     }
 
   });
@@ -943,7 +946,7 @@ body {
   // Normalize second level width between 901px and 1260px
   .respond-to-range(@bp-med-min, @bp-lg-max + @grid_gutter-width, {
 
-    &_content-2 {
+    &__content-2 {
       width: 100%;
     }
 
@@ -957,7 +960,7 @@ body {
   }
 
   // Hide the ">" arrow icon (used on mobile view).
-  .o-mega-menu_content-link-icon-post {
+  .o-mega-menu__content-link-icon-post {
     display: none !important;
   }
 }
@@ -970,16 +973,16 @@ body {
 });
 
 // The following three rules prevent mega-menu linebreak shenanigans
-.o-mega-menu_content-2-item__has-icon .o-mega-menu_content-2-link {
+.o-mega-menu__content-2-item--has-icon .o-mega-menu__content-2-link {
   padding-right: 0;
 }
 
-.o-mega-menu_content-2-item__has-icon {
+.o-mega-menu__content-2-item--has-icon {
   .cf-icon-svg:nth-child(3) {
     margin-left: -20px;
     transform: translateX(25px);
   }
-  .a-link_text:nth-last-child(2) {
+  .a-link__text:nth-last-child(2) {
     display: inline-block;
     margin-left: -5px;
     transform: translateX(5px);

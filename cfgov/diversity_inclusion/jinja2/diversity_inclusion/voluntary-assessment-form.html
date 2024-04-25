@@ -18,7 +18,7 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <h1>Voluntary diversity assessment onboarding form</h1>
         <div class="lead-paragraph">
             <p>
@@ -57,47 +57,47 @@
                 Please provide your institution’s name, headquarters location, and tax identification number.
             </p>
             <div class="o-well u-mb30">
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.institution_name.id_for_label }}">
                             {{ form.institution_name.label }}
                         </label>
                         {{ form.institution_name }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.institution_address.id_for_label }}">
                             {{ form.institution_address.label }}
                         </label>
                         {{ form.institution_address }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="content-l">
-                        <div class="content-l_col content-l_col-1-2">
+                        <div class="content-l__col content-l__col-1-2">
                             <div class="m-form-field">
-                                <label class="a-label a-label__heading"
+                                <label class="a-label a-label--heading"
                                        for="{{ form.institution_city.id_for_label }}">
                                     {{ form.institution_city.label }}
                                 </label>
                                 {{ form.institution_city }}
                             </div>
                         </div>
-                        <div class="content-l_col content-l_col-1-4">
+                        <div class="content-l__col content-l__col-1-4">
                             <div class="m-form-field">
-                                <label class="a-label a-label__heading"
+                                <label class="a-label a-label--heading"
                                        for="{{ form.institution_state.id_for_label }}">
                                     {{ form.institution_state.label }}
                                 </label>
                                 {{ form.institution_state }}
                             </div>
                         </div>
-                        <div class="content-l_col content-l_col-1-4">
+                        <div class="content-l__col content-l__col-1-4">
                             <div class="m-form-field">
-                                <label class="a-label a-label__heading"
+                                <label class="a-label a-label--heading"
                                        for="{{ form.institution_zip.id_for_label }}">
                                     {{ form.institution_zip.label }}
                                 </label>
@@ -106,9 +106,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.tax_id.id_for_label }}">
                             {{ form.tax_id.label }}
                         </label>
@@ -121,59 +121,59 @@
                 Please provide the name and contact information for the individual who will be your institution’s diversity and inclusion point of contact.
             </p>
             <div class="o-well u-mb30">
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.contact_name.id_for_label }}">
                             {{ form.contact_name.label }}
                         </label>
                         {{ form.contact_name }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.contact_title.id_for_label }}">
                             {{ form.contact_title.label }}
                         </label>
                         {{ form.contact_title }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.contact_email.id_for_label }}">
                             {{ form.contact_email.label }}
                         </label>
                         {{ form.contact_email }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.contact_phone.id_for_label }}">
                             {{ form.contact_phone.label }}
                         </label>
                         {{ form.contact_phone }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form__group">
                     <div class="m-form-field">
-                        <label class="a-label a-label__heading"
+                        <label class="a-label a-label--heading"
                                for="{{ form.contact_phone_alt.id_for_label }}">
                             {{ form.contact_phone_alt.label }}
-                            <small class="a-label_helper">(optional)</small>
+                            <small class="a-label__helper">(optional)</small>
                         </label>
                         {{ form.contact_phone_alt }}
                     </div>
                 </div>
             </div>
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-btn-group">
                     <input class="a-btn"
                            type="submit"
                            value="Submit">
-                    <a class="a-btn a-btn__link a-btn__secondary"
+                    <a class="a-btn a-btn--link a-btn--secondary"
                        href="{{ url('diversity_inclusion:privacy') }}"
                        rel="noopener noreferrer"
                        target="_blank">

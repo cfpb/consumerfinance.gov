@@ -14,8 +14,8 @@ const BASE_CLASS = 'a-range';
  */
 function Slider(element) {
   const _dom = checkDom(element, BASE_CLASS);
-  const _inputDom = _dom.querySelector(`.${BASE_CLASS}_input`);
-  const _labelDom = _dom.querySelector(`.${BASE_CLASS}_text`);
+  const _inputDom = _dom.querySelector(`.${BASE_CLASS}__input`);
+  const _labelDom = _dom.querySelector(`.${BASE_CLASS}__text`);
 
   let _rangeSliderHandleDom;
 

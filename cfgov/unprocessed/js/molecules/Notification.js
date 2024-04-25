@@ -17,7 +17,7 @@ ICON[ERROR] = ERROR_ICON;
 
 const BASE_CLASS = 'm-notification';
 // Constants for the Notification modifiers.
-const MODIFIER_VISIBLE = `${BASE_CLASS}__visible`;
+const MODIFIER_VISIBLE = `${BASE_CLASS}--visible`;
 
 /**
  * Notification
@@ -29,7 +29,7 @@ const MODIFIER_VISIBLE = `${BASE_CLASS}__visible`;
  */
 function Notification(element) {
   const _dom = checkDom(element, BASE_CLASS);
-  const _contentDom = _dom.querySelector('.' + BASE_CLASS + '_content');
+  const _contentDom = _dom.querySelector(`.${BASE_CLASS}__content`);
 
   let _currentType;
 
@@ -43,11 +43,11 @@ function Notification(element) {
 
     // Check and set default type of notification.
     const classList = _dom.classList;
-    if (classList.contains(`${BASE_CLASS}__${SUCCESS}`)) {
+    if (classList.contains(`${BASE_CLASS}--${SUCCESS}`)) {
       _currentType = SUCCESS;
-    } else if (classList.contains(`${BASE_CLASS}__${WARNING}`)) {
+    } else if (classList.contains(`${BASE_CLASS}--${WARNING}`)) {
       _currentType = WARNING;
-    } else if (classList.contains(`${BASE_CLASS}__${ERROR}`)) {
+    } else if (classList.contains(`${BASE_CLASS}--${ERROR}`)) {
       _currentType = ERROR;
     }
 
@@ -76,12 +76,12 @@ function Notification(element) {
    */
   function _setContent(messageText, explanationText) {
     let content = `
-      <div class="m-notification_message">
+      <div class="m-notification__message">
         ${messageText}
       </div>`;
     if (typeof explanationText !== 'undefined') {
       content += `
-        <p class="m-notification_explanation">
+        <p class="m-notification__explanation">
           ${explanationText}
         </p>`;
     }
@@ -106,8 +106,8 @@ function Notification(element) {
     }
 
     const classList = _dom.classList;
-    classList.remove(BASE_CLASS + '__' + _currentType);
-    classList.add(`${BASE_CLASS}__${type}`);
+    classList.remove(BASE_CLASS + '--' + _currentType);
+    classList.add(`${BASE_CLASS}--${type}`);
     _currentType = type;
 
     // Replace <svg> element with contents of type_ICON.

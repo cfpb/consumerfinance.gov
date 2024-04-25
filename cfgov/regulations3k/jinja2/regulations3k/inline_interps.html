@@ -2,25 +2,25 @@
 {%- set interp_location = 'Appendix A' if regulation and regulation.part_number == '1004' else 'Supplement I' -%}
 
 <div class="o-expandable
-            o-expandable__background
-            o-expandable__border
+            o-expandable--background
+            o-expandable--border
             inline-interpretation">
 
-    <button class="o-expandable_header"{% if section_title %} data-section="{{ section_title }}"{% endif %}>
-        <span class="o-expandable_label">
+    <button class="o-expandable__header"{% if section_title %} data-section="{{ section_title }}"{% endif %}>
+        <span class="o-expandable__label">
             Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
         </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+            <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>
     </button>
 
-    <div class="o-expandable_content">
+    <div class="o-expandable__content">
         {{ contents | safe }}
 
         <p><a href="{{ url }}">See interpretation of {% if section_title %}{{ section_title }}{% else %}this section{% endif %} in {{ interp_location }}</a></p>

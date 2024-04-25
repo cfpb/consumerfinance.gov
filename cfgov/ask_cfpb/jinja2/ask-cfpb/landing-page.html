@@ -11,7 +11,7 @@
 {%- endblock css %}
 
 {% block content_modifiers -%}
-    {{ super() }} ask-cfpb-page ask-cfpb-page__landing
+    {{ super() }} ask-cfpb-page ask-cfpb-page--landing
 {%- endblock %}
 
 {% block content_intro -%}
@@ -21,12 +21,12 @@
 {% endblock %}
 
 {% block content_main %}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
 
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-        {{ translation_links.render(modifier_classes='block__flush-top') }}
+        {{ translation_links.render(modifier_classes='block--flush-top') }}
 
-        <section class="ask-search block__sub block__flush-top">
+        <section class="ask-search block--sub block--flush-top">
             {{ ask_search.render( language=page.language, is_subsection=False ) }}
         </section>
 
@@ -37,7 +37,7 @@
 
 {% block content_sidebar scoped -%}
     {% if about_us %}
-        <div class="block block__flush-top about-us-text">
+        <div class="block block--flush-top about-us-text">
             {{ about_us.text | richtext }}
         </div>
     {% endif %}

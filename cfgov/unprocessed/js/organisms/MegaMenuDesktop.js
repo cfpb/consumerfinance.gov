@@ -186,7 +186,7 @@ function MegaMenuDesktop(baseClass, menus) {
     const menu = node.data;
 
     if (nLevel === 1) {
-      const wrapperSel = `.${baseClass}_content-2-wrapper`;
+      const wrapperSel = `.${baseClass}__content-2-wrapper`;
       const contentDom = menu.getDom().content;
       const wrapperDom = contentDom.querySelector(wrapperSel);
 

@@ -88,7 +88,7 @@ export default function (label) {
     recordExpandableState(expandableID);
 
     let action = 'Expandable collapsed';
-    const label = elem.querySelector('.o-expandable_label');
+    const label = elem.querySelector('.o-expandable__label');
     const text = label.textContent.trim();
     if (expandableStates[expandableID] === true) {
       action = 'Expandable expanded';
@@ -118,22 +118,22 @@ export default function (label) {
   }
 
   addEventListenerToSelector(
-    '.form-explainer_page-link',
+    '.form-explainer__page-link',
     'click',
     trackFormExplainerPageLinkClick,
   );
   addEventListenerToSelector(
-    '.form-explainer_page-buttons button',
+    '.form-explainer__page-buttons button',
     'click',
     trackFormExplainerPageButtonClick,
   );
   addEventListenerToSelector(
-    '.o-expandable_header',
+    '.o-expandable__header',
     'mouseup',
     trackExpandableTargetsClick,
   );
   addEventListenerToSelector(
-    '.image-map_overlay',
+    '.image-map__overlay',
     'click',
     trackImageMapOverlayClick,
   );

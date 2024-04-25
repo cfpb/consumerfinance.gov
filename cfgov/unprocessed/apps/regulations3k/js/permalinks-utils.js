@@ -1,7 +1,7 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
 const regs3kMainContent = document.querySelector(
-  '.regulations3k #content_main',
+  '.regulations3k #content__main',
 );
 const regs3kWayfinder = document.querySelector('.o-regulations-wayfinder');
 let wayfinderOffset = 0;
@@ -197,7 +197,7 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     let sectionFormattedTitle;
     let wayfinderInfo;
     const wayfinderLink = wayfinder.querySelector(
-      '.o-regulations-wayfinder_link',
+      '.o-regulations-wayfinder__link',
     );
     const currentParagraph = getCurrentParagraph(
       scrollY() + wayfinderOffset,
@@ -224,9 +224,9 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
     }
 
     wayfinder.querySelector(
-      '.o-regulations-wayfinder_section-title',
+      '.o-regulations-wayfinder__section-title',
     ).textContent = sectionFormattedTitle;
-    wayfinder.querySelector('.o-regulations-wayfinder_marker').textContent =
+    wayfinder.querySelector('.o-regulations-wayfinder__marker').textContent =
       paragraphMarker;
 
     if (scroll === true && window.location.hash.slice(1) !== '') {

@@ -22,7 +22,7 @@ export class PrepaidAgreementsSearch {
   }
 
   filtersForm() {
-    return cy.get('.content_sidebar').find('form');
+    return cy.get('.content__sidebar').find('form');
   }
 
   applyFilters() {
@@ -30,7 +30,7 @@ export class PrepaidAgreementsSearch {
   }
 
   filters() {
-    return cy.get('.filters_tags');
+    return cy.get('.filters__tags');
   }
 
   expandProductFilters() {

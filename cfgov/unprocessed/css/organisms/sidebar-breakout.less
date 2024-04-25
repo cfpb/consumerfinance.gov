@@ -1,9 +1,9 @@
-@margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
-@o-sidebar-breakout_img-width: 300px;
-@o-sidebar-breakout_img-height: 170px;
+@margin-em: unit(@grid_gutter-width / @base-font-size-px, em);
+@o-sidebar-breakout__img-width: 300px;
+@o-sidebar-breakout__img-height: 170px;
 
 .o-sidebar-breakout {
-  &_img {
+  &__img {
     background-repeat: no-repeat;
     background-size: contain;
 
@@ -11,44 +11,44 @@
     padding-top: 56.25%;
   }
 
-  &_img-container {
-    max-width: @o-sidebar-breakout_img-width;
-    max-height: @o-sidebar-breakout_img-height;
+  &__img-container {
+    max-width: @o-sidebar-breakout__img-width;
+    max-height: @o-sidebar-breakout__img-height;
   }
 
-  &_img-container__round {
+  &__img-container--round {
     width: auto;
 
-    .o-sidebar-breakout_img {
+    .o-sidebar-breakout__img {
       padding: 0;
-      height: @o-sidebar-breakout_img-height;
-      width: @o-sidebar-breakout_img-height;
+      height: @o-sidebar-breakout__img-height;
+      width: @o-sidebar-breakout__img-height;
     }
   }
 
-  &_text-body {
-    margin-bottom: @margin__em;
+  &__text-body {
+    margin-bottom: @margin-em;
   }
 
-  &_text-heading {
-    margin-top: @margin__em;
-    margin-bottom: @margin__em / 2;
+  &__text-heading {
+    margin-top: @margin-em;
+    margin-bottom: @margin-em / 2;
   }
 }
 
 .respond-to-max(@bp-xs-max, {
   .o-sidebar-breakout {
 
-    margin-bottom: @margin__em;
+    margin-bottom: @margin-em;
 
-    &_col {
+    &__col {
       width: 100%;
       &:last-child {
         margin-top: unit( (@grid_gutter-width * 2) / @base-font-size-px, em );
       }
     }
 
-    &_img-container {
+    &__img-container {
       margin-left: auto;
       margin-right: auto;
       text-align: center;
@@ -58,25 +58,25 @@
 
 // Desktop and above.
 .respond-to-min(@bp-med-min, {
-  .o-sidebar-breakout_col:last-child {
-    padding-left: @margin__em;
+  .o-sidebar-breakout__col:last-child {
+    padding-left: @margin-em;
   }
 });
 
 // Tablet only.
 .respond-to-range( @bp-sm-min, @bp-sm-max, {
   .o-sidebar-breakout {
-    &_img-container {
+    &__img-container {
       float: left;
-      width: @o-sidebar-breakout_img-width / @bp-sm-max * 100%;
-      margin-right: @margin__em;
+      width: @o-sidebar-breakout__img-width / @bp-sm-max * 100%;
+      margin-right: @margin-em;
     }
 
-    &_text-container {
+    &__text-container {
       overflow: auto;
     }
 
-    &_text-heading {
+    &__text-heading {
       margin-top: 0;
     }
   }

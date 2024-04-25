@@ -31,7 +31,7 @@ function handleShowMore(event) {
   }
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
-  results.classList.remove('o-filterable-list-results__partial');
+  results.classList.remove('o-filterable-list-results--partial');
   showMoreFade.classList.add('u-hidden');
 }
 
@@ -44,10 +44,10 @@ function handleOrderingChange(event) {
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
   if (event.target && event.target.value === 'product_name') {
-    results.classList.remove('o-filterable-list-results__partial');
+    results.classList.remove('o-filterable-list-results--partial');
     showMoreFade.classList.add('u-hidden');
   } else {
-    results.classList.add('o-filterable-list-results__partial');
+    results.classList.add('o-filterable-list-results--partial');
     showMoreFade.classList.remove('u-hidden');
   }
 }
@@ -76,7 +76,7 @@ function handleFormValidation(event) {
  * Akamai from caching the page with a breadcrumb to a filtered list.
  */
 function updateBreadcrumb() {
-  const breadcrumb = document.querySelector('.m-breadcrumbs_crumb:last-child');
+  const breadcrumb = document.querySelector('.m-breadcrumbs__crumb:last-child');
   if (breadcrumb && breadcrumb.innerText === 'Explore credit cards') {
     breadcrumb.href =
       webStorageProxy.getItem('tccp-filter-path') || breadcrumb.href;

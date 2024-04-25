@@ -16,32 +16,32 @@
 {%- set any_children = nav_items | map( attribute="children" ) | reject( "undefined" ) | list -%}
 
 <nav class="o-secondary-nav
-            {{ '' if any_children else 'o-secondary-nav__no-children' }}"
+            {{ '' if any_children else 'o-secondary-nav--no-children' }}"
      aria-label="{{ _('Section navigation') }}">
 
-    <button class="o-secondary-nav_header" type="button" aria-expanded="false">
-        <span class="o-secondary-nav_label">
+    <button class="o-secondary-nav__header" type="button" aria-expanded="false">
+        <span class="o-secondary-nav__label">
             {{ _('Navigate this section') }}
         </span>
-        <span class="o-secondary-nav_cues">
-            <span class="o-secondary-nav_cue-open" aria-label="Show">
+        <span class="o-secondary-nav__cues">
+            <span class="o-secondary-nav__cue-open" aria-label="Show">
                 {{ svg_icon('down') }}
             </span>
-            <span class="o-secondary-nav_cue-close" aria-label="Hide">
+            <span class="o-secondary-nav__cue-close" aria-label="Hide">
                 {{ svg_icon('up') }}
             </span>
         </span>
     </button>
 
-    <div class="o-secondary-nav_content">
-        <ul class="o-secondary-nav_list
-                   o-secondary-nav_list__parents">
+    <div class="o-secondary-nav__content">
+        <ul class="o-secondary-nav__list
+                   o-secondary-nav__list--parents">
         {%- for item in nav_items %}
             <li data-nav-is-active="{{ item.expanded }}">
                 {{ _navlink(item.title, item.url, true, item.active) }}
             {%- if item.children -%}
-                <ul class="o-secondary-nav_list
-                           o-secondary-nav_list__children">
+                <ul class="o-secondary-nav__list
+                           o-secondary-nav__list--children">
                 {%- for child in item.children -%}
                     <li>
                         {{ _navlink(child.title, child.url, false, child.active) }}
@@ -57,9 +57,9 @@
 {% endmacro %}
 
 {% macro _navlink(text, href, parent=true, current=false) %}
-<a class="o-secondary-nav_link
-          {{ 'o-secondary-nav_link__parent' if parent else '' }}
-          {{ 'o-secondary-nav_link__current' if current else '' }}"
+<a class="o-secondary-nav__link
+          {{ 'o-secondary-nav__link--parent' if parent else '' }}
+          {{ 'o-secondary-nav__link--current' if current else '' }}"
    {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>

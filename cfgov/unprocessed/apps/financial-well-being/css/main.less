@@ -22,18 +22,18 @@
   top: 0;
 }
 
-.score-box__left {
+.score-box--left {
   padding-left: 10px;
   border-width: 0 0 0 1px;
 }
 
-.score-box__right {
+.score-box--right {
   padding-right: 10px;
   border-width: 0 1px 0 0;
   text-align: right;
 }
 
-.score-box__avg {
+.score-box--avg {
   height: 70px;
   top: 80px;
 }
@@ -42,7 +42,7 @@
   border-bottom-width: 1px;
 }
 
-.spectrum_x-label {
+.spectrum__x-label {
   padding-top: 5px;
   padding-left: 5px;
   border-left: 1px solid var(--gray-40);
@@ -51,81 +51,81 @@
   list-style: none;
 }
 
-.spectrum_x-label__40 {
+.spectrum__x-label--40 {
   left: 32.0987654321%;
 }
 
-.spectrum_x-label__50 {
+.spectrum__x-label--50 {
   left: 44.4444444444%;
 }
 
-.spectrum_x-label__60 {
+.spectrum__x-label--60 {
   left: 56.7901234568%;
 }
 
-.spectrum_x-label__70 {
+.spectrum__x-label--70 {
   left: 69.1358024691%;
 }
 
-.spectrum_x-label__overall {
+.spectrum__x-label--overall {
   width: 100%;
   margin-top: 30px;
   text-align: center;
 }
 
-.comparison-chart_toggle {
+.comparison-chart__toggle {
   padding: 0;
   border: none;
   margin: 0;
 }
 
-.comparison-chart_toggle-button {
+.comparison-chart__toggle-button {
   margin-bottom: 5px;
   background-color: var(--pacific-20);
   color: var(--black);
   font-size: unit(14px / @base-font-size-px, em);
 }
 
-.comparison-chart_toggle-button:hover,
-.comparison-chart_toggle-button:focus,
-.comparison-chart_toggle-button__selected {
+.comparison-chart__toggle-button:hover,
+.comparison-chart__toggle-button:focus,
+.comparison-chart__toggle-button--selected {
   background-color: var(--pacific-60);
 }
 
-.comparison-chart_title {
+.comparison-chart__title {
   margin-top: 30px;
 }
 
-.comparison-chart_list {
+.comparison-chart__list {
   margin-top: 30px;
   position: relative;
 }
 
-.comparison-chart_list dt,
-.comparison-chart_source dt {
+.comparison-chart__list dt,
+.comparison-chart__source dt {
   font-size: inherit;
   letter-spacing: normal;
   text-transform: none;
 }
 
-.comparison-chart_list dt {
+.comparison-chart__list dt {
   width: 30%;
   margin-bottom: 20px;
   text-align: right;
 }
 
-.comparison-chart_list dd {
+.comparison-chart__list dd {
   width: 65%;
   border-bottom: 1px solid var(--gray-40);
   position: relative;
   bottom: 0.25em;
 }
 
-.comparison-chart_list dd:not(.u-hidden) {
+.comparison-chart__list dd:not(.u-hidden) {
   display: inline-block;
 }
 
-.comparison-chart_list dd span {
+.comparison-chart__list dd span {
   height: 30px;
   padding-left: 5px;
   border-left-width: 4px;
@@ -136,7 +136,7 @@
   line-height: 1;
 }
 
-.comparison-chart_source {
+.comparison-chart__source {
   padding-top: 15px;
   border-top: 1px solid var(--gray-40);
   margin-top: 30px;
@@ -158,7 +158,7 @@
   }
 
   .respond-to-min( @bp-sm-min, {
-    .m-form-field__radio {
+    .m-form-field--radio {
       width: percentage( 1 / @scale-point-count );
 
       float: left;
@@ -190,13 +190,13 @@
   } );
 
   .respond-to-max( @bp-lg-max, {
-    .o-scale_answer-prefix {
+    .o-scale__answer-prefix {
       margin-bottom: unit( 15px / @base-font-size-px, em );
     }
   } );
 
   .respond-to-min( @bp-xl-min, {
-    .o-scale_answer-prefix {
+    .o-scale__answer-prefix {
       box-sizing: border-box;
       padding-right: unit( 15px / @base-font-size-px, em );
       width: 20%;
@@ -204,7 +204,7 @@
       float: left;
     }
 
-    .o-scale_answer-options {
+    .o-scale__answer-options {
       width: 80%;
 
       float: left;
@@ -214,7 +214,7 @@
 
 /* CF Enhancements */
 @media all and (max-width: 37.5em) {
-  .comparison-chart_toggle-button {
+  .comparison-chart__toggle-button {
     display: block;
   }
 }
@@ -222,45 +222,45 @@
 @media print {
   /* Force all these things back on when printing, regardless
      of how the user has interacted with the page */
-  .js .comparison_data-point {
+  .js .comparison__data-point {
     display: inline-block !important;
   }
 
-  .o-expandable_content {
+  .o-expandable__content {
     /* Using !important to work around IE not handling the
          :not([aria-expanded="true"]) selector */
     height: auto !important;
   }
 
-  .o-expandable_content table {
+  .o-expandable__content table {
     height: 510px;
   }
 
-  .o-expandable_content thead {
+  .o-expandable__content thead {
     border-bottom: none;
   }
 
-  .o-expandable_content th:last-child {
+  .o-expandable__content th:last-child {
     width: 25% !important;
   }
 
-  .o-expandable_content tbody tr {
+  .o-expandable__content tbody tr {
     border-bottom: none;
   }
 
-  .content_main {
+  .content__main {
     display: block !important;
   }
 
-  .content_main * {
+  .content__main * {
     overflow: visible !important;
   }
 
   /* Hide various things when printing */
   .save-links,
-  .o-expandable_cues,
-  .comparison-chart_toggle,
-  .content_sidebar,
+  .o-expandable__cues,
+  .comparison-chart__toggle,
+  .content__sidebar,
   .o-footer {
     display: none !important;
   }

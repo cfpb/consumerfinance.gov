@@ -10,7 +10,7 @@ export class ActivitySearch {
   }
 
   clearFilters() {
-    return cy.get('.results_filters-clear');
+    return cy.get('.results__filters-clear');
   }
 
   resultsFilterTag() {
@@ -18,7 +18,7 @@ export class ActivitySearch {
   }
 
   resultsCountEmpty() {
-    return cy.get('.results_count__empty');
+    return cy.get('.results__count--empty');
   }
 
   search(term) {

@@ -4,8 +4,8 @@ const HTML_SNIPPET = `
 <div class="m-notification">
   <svg xmlns="http://www.w3.org/2000/svg"
        viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
-  <div class="m-notification_content">
-    <div class="m-notification_message">Notification content</div>
+  <div class="m-notification__content">
+    <div class="m-notification__message">Notification content</div>
   </div>
 </div>
 `;
@@ -29,21 +29,21 @@ describe('Notification', () => {
     });
 
     it('should return the Notification instance if it has a success class', () => {
-      notificationElem.classList.add('m-notification__success');
+      notificationElem.classList.add('m-notification--success');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
     });
 
     it('should return the Notification instance if it has a warning class', () => {
-      notificationElem.classList.add('m-notification__warning');
+      notificationElem.classList.add('m-notification--warning');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
     });
 
     it('should return the Notification instance if it has a error class', () => {
-      notificationElem.classList.add('m-notification__error');
+      notificationElem.classList.add('m-notification--error');
 
       expect(notification.init().constructor).toBe(Notification);
       expect(notificationElem.dataset.jsHook).toBe('state_atomic_init');
@@ -68,29 +68,31 @@ describe('Notification', () => {
 
     it('should update the notification type for the success state', () => {
       notification.update(Notification.SUCCESS, '');
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
     });
 
     it('should update the notification type for the warning state', () => {
       notification.update(Notification.WARNING, '');
-      expect(notificationElem.className).toContain('m-notification__warning');
+      expect(notificationElem.className).toContain('m-notification--warning');
     });
 
     it('should update the notification type for the error state', () => {
       notification.update(Notification.ERROR, '');
-      expect(notificationElem.className).toContain('m-notification__error');
+      expect(notificationElem.className).toContain('m-notification--error');
     });
 
     it('should update the the notification message', () => {
       const testMsg = 'Notification message content';
       notification.update(Notification.SUCCESS, testMsg);
 
-      const message = notificationElem.querySelector('.m-notification_message');
+      const message = notificationElem.querySelector(
+        '.m-notification__message',
+      );
       const explanation = notificationElem.querySelector(
-        '.m-notification_explanation',
+        '.m-notification__explanation',
       );
 
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
       expect(message.textContent).toContain(testMsg);
       expect(explanation).toBeUndefined;
     });
@@ -100,12 +102,14 @@ describe('Notification', () => {
       const testExplanation = 'Notification explanation content';
       notification.update(Notification.SUCCESS, testMsg, testExplanation);
 
-      const message = notificationElem.querySelector('.m-notification_message');
+      const message = notificationElem.querySelector(
+        '.m-notification__message',
+      );
       const explanation = notificationElem.querySelector(
-        '.m-notification_explanation',
+        '.m-notification__explanation',
       );
 
-      expect(notificationElem.className).toContain('m-notification__success');
+      expect(notificationElem.className).toContain('m-notification--success');
       expect(message.textContent).toContain(testMsg);
       expect(explanation.textContent).toContain(testExplanation);
     });
