@@ -207,7 +207,10 @@ class ActivityIndexPage(CFGOVPage):
         results_per_page = 10
         paginator = Paginator(payload["results"], results_per_page)
         current_page = self.search_form.cleaned_data["page"]
+        if current_page > paginator.num_pages:
+            current_page = paginator.num_pages
         paginated_page = paginator.page(current_page)
+
         context_update = {
             "facets": all_facets,
             "activities": paginated_page,
