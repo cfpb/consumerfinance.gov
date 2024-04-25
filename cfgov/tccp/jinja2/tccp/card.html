@@ -41,17 +41,30 @@
     <div class="eyebrow">{{ card.institution_name }}</div>
 
     <h1>{{ card.product_name }}</h1>
-
+    {% set credit_tiers = [
+        ("No credit score", "No score"),
+        ("619 or less", "619 or less"),
+        ("620 to 719", "620-719"),
+        ("720 or greater", "720+")
+    ] %}
+    {% set tiers_description = 'This credit card is recommended for people with the following credit scores: ' %}
+    {% set targeted_tiers = [] %}
+    {% for tier_value, tier_name, _ in credit_tier_lookup %}
+        {% if tier_value in card.targeted_credit_tiers %}
+            {% do targeted_tiers.append(tier_value) %}
+        {% endif %}
+    {% endfor %}
+    {% set tiers_description = tiers_description + (targeted_tiers | join(', ')) %}
     <div class="o-card-details-section o-card-details-section--introduction">
-        {# TODO: Need to make this more accessible for screen readers #}
-        <div class="m-credit-tier-chart">
+        <div class="m-credit-tier-chart" role="figure">
+            <p class="u-visually-hidden">{{ tiers_description }}</p>
             {% for tier_value, tier_name, _ in credit_tier_lookup %}
                 {% if tier_value in card.targeted_credit_tiers %}
                     {% set targeted_tier = true %}
                 {% else %}
                     {% set targeted_tier = false %}
                 {% endif %}
-                <div class="m-credit-tier-chart__tier m-credit-tier-chart__tier{{ '--selected' if targeted_tier else '--unselected' }}">
+                <div class="m-credit-tier-chart__tier m-credit-tier-chart__tier{{ '--selected' if targeted_tier else '--unselected' }}" aria-hidden="true">
                     <span class="m-credit-tier-chart__icon">
                         {%- if targeted_tier -%}
                             {{ svg_icon('approved-round') }}
@@ -63,7 +76,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="h4 u-mt5">
+        <div class="h4 u-mt5" aria-hidden="true">
             Recommended credit scores
         </div>
         {% if card.availability_of_credit_card_plan == "One State/Territory" %}
