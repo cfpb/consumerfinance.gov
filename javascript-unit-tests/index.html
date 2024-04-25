@@ -558,11 +558,11 @@ we have this function that sets the type of a notification before displaying it:
 
   // Remove existing type class
   const classList = _dom.classList;
-  classList.remove(`${BASE_CLASS}__${_currentType}`);
+  classList.remove(`${BASE_CLASS}___${_currentType}`);
 
   if (type === SUCCESS || type === WARNING || type === ERROR) {
     // Add new type class and update the value of _currentType
-    classList.add(`${BASE_CLASS}__${type}`);
+    classList.add(`${BASE_CLASS}___${type}`);
     _currentType = type;
 
     // Replace &lt;svg&gt; element with contents of type_ICON
@@ -589,8 +589,8 @@ import Notification from '../../../../cfgov/unprocessed/js/molecules/Notificatio
 const HTML_SNIPPET = `
   &lt;div class="m-notification"&gt;
     &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"&gt;&lt;/svg&gt;
-    &lt;div class="m-notification_content"&gt;
-      &lt;div class="m-notification_message"&gt;Notification content&lt;/div&gt;
+    &lt;div class="m-notification__content"&gt;
+      &lt;div class="m-notification__message"&gt;Notification content&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 `;
@@ -643,7 +643,7 @@ wraps both <code>_setType</code> and <code>_setContent</code>):</p>
       ''
     );
 
-    expect( notificationElem.classList ).toContain( 'm-notification__success' );
+    expect( notificationElem.classList ).toContain( 'm-notification--success' );
   });
 
   it( 'should update the notification type for the warning state', () =&gt; {
@@ -654,7 +654,7 @@ wraps both <code>_setType</code> and <code>_setContent</code>):</p>
       ''
     );
 
-    expect( notificationElem.classList ).toContain( 'm-notification__warning' );
+    expect( notificationElem.classList ).toContain( 'm-notification--warning' );
   });
 
   …

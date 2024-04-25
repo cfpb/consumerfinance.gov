@@ -356,13 +356,13 @@ this is what its Jinja2 template looks like (comments excluded):</p>
 <pre class="highlight"><code class="language-html">&lt;div class="m-related-content"&gt;
   {% if value.heading %}
   &lt;header class="m-slug-header"&gt;
-    &lt;h2 class="m-slug-header_heading"&gt;{{ value.heading }}&lt;/h2&gt;
+    &lt;h2 class="m-slug-header__heading"&gt;{{ value.heading }}&lt;/h2&gt;
   &lt;/header&gt;
   {% endif %} {{ value.paragraph | safe }} {% if value.links %}
-  &lt;ul class="m-list m-list__links"&gt;
+  &lt;ul class="m-list m-list--links"&gt;
     {% for link in value.links %}
-    &lt;li class="m-list_item"&gt;
-      &lt;a href="{{ link.url }}" class="m-list_link"&gt;{{ link.text }}&lt;/a&gt;
+    &lt;li class="m-list__item"&gt;
+      &lt;a href="{{ link.url }}" class="m-list__link"&gt;{{ link.text }}&lt;/a&gt;
     &lt;/li&gt;
     {% endfor %}
   &lt;/ul&gt;

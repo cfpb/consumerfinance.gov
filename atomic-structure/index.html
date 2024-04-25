@@ -204,19 +204,19 @@ Prefixed with <code>m-</code> in class names.</p>
 <h3 id="html_1">HTML<a class="headerlink" href="#html_1" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-html">&lt;div
   class="m-notification
-         m-notification__visible
-         m-notification__error"
+         m-notification--visible
+         m-notification--error"
 &gt;
   {{ svg_icon('error') }}
-  &lt;div class="m-notification_content" role="alert"&gt;
-    &lt;div class="m-notification_message"&gt;Page not found.&lt;/div&gt;
+  &lt;div class="m-notification__content" role="alert"&gt;
+    &lt;div class="m-notification__message"&gt;Page not found.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 <h3 id="less_1">Less<a class="headerlink" href="#less_1" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.m-notification {
     display: none;
     position: relative;
-    padding: @notification-padding__px;
+    padding: @notification-padding-px;
     …
 }</code></pre>
 <h3 id="javascript_1">JavaScript<a class="headerlink" href="#javascript_1" title="Permanent link">¶</a></h3>
@@ -244,15 +244,15 @@ May contain atoms, molecules, or
 Prefixed with <code>o-</code> in class names.</p>
 <h3 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-html">&lt;div class="o-expandable"&gt;
-  &lt;button class="o-expandable_header"&gt;
-    &lt;div class="o-expandable_label"&gt;…&lt;/div&gt;
+  &lt;button class="o-expandable__header"&gt;
+    &lt;div class="o-expandable__label"&gt;…&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;</code></pre>
 <h3 id="less_2">Less<a class="headerlink" href="#less_2" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.o-expandable {
     position: relative;
 
-    &amp;_header {
+    &amp;__header {
         padding: 0;
         border: 0;
         …
