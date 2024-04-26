@@ -1,7 +1,7 @@
 export class AskCfpbAnswerPage {
   open() {
     cy.visit(
-      '/ask-cfpb/if-i-pay-off-my-credit-card-balance-when-it-is-due-is-the-company-allowed-to-charge-me-interest-for-that-month-en-48/',
+      '/ask-cfpb/what-effect-will-shopping-for-an-auto-loan-have-on-my-credit-en-15/',
     );
   }
 
