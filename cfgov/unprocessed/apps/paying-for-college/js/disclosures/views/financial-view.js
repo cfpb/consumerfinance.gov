@@ -255,8 +255,8 @@ const financialView = {
     const model = getFinancial.values();
     const gap = Math.round(model.gap);
     const overborrowing = Math.round(model.overborrowing);
-    const positiveRemainingCost = $('.offer-part_content-positive-cost');
-    const negativeRemainingCost = $('.offer-part_content-negative-cost');
+    const positiveRemainingCost = $('.offer-part__content-positive-cost');
+    const negativeRemainingCost = $('.offer-part__content-negative-cost');
     positiveRemainingCost.hide();
     negativeRemainingCost.hide();
 
@@ -291,11 +291,11 @@ const financialView = {
     linksView.updateLinks(values);
     // Update availability of Pell grants, subsidized loans, and gradPLUS loans
     if (values.undergrad === false) {
-      $('.content_graduate-program').show();
+      $('.content__graduate-program').show();
       financialView.pellGrantsVisible(false);
       financialView.subsidizedVisible(false);
     } else {
-      $('.content_graduate-program').hide();
+      $('.content__graduate-program').hide();
       financialView.gradPlusVisible(false);
     }
     this.setGraduationCohortVisibility(
@@ -439,7 +439,7 @@ const financialView = {
         }
         financialView.enumeratePrivateLoanIDs();
         $container
-          .find('[data-private-loan]:last-of-type .aid-form_input')
+          .find('[data-private-loan]:last-of-type .aid-form__input')
           .val('0');
         publish.addPrivateLoan();
         financialView.updateView(getFinancial.values());
@@ -454,7 +454,7 @@ const financialView = {
   removePrivateListener: function () {
     const privLoanContainer = document.querySelector('.private-loans');
     privLoanContainer.addEventListener('click', (event) => {
-      if (event.target.matches('.private-loans_remove-btn')) {
+      if (event.target.matches('.private-loans__remove-btn')) {
         const elem = event.target;
         const $ele = elem.closest('[data-private-loan]');
 
@@ -497,8 +497,8 @@ const financialView = {
         $(elem).attr('id', newID);
       });
       $(elem)
-        .find('.private-loans_remove-btn')
-        .attr('id', 'private-loans_remove-btn_' + index);
+        .find('.private-loans__remove-btn')
+        .attr('id', 'private-loans__remove-btn_' + index);
     });
   },
 
@@ -918,10 +918,10 @@ const financialView = {
   //     $stickyOffers
   //       .stick_in_parent()
   //       .on('sticky_kit:bottom', function (evt) {
-  //         $(evt.target).addClass('is_bottomed');
+  //         $(evt.target).addClass('is__bottomed');
   //       })
   //       .on('sticky_kit:unbottom', function (evt) {
-  //         $(evt.target).removeClass('is_bottomed');
+  //         $(evt.target).removeClass('is__bottomed');
   //       });
   //   } else if ($win.width() < 600) {
   //     $stickyOffers.trigger('sticky_kit:detach');

@@ -11,7 +11,7 @@
         </span>
     </p>
     <p>
-        <span class="a-icon a-icon__large a-icon__gold a-icon__space-after">
+        <span class="a-icon a-icon--large a-icon--gold a-icon--space-after">
             {{ svg_icon('favorite-round') }}
         </span>
         <span class="activity_for">Ideal for: {{ result.grade_level | join(', ') }}</span>
@@ -39,7 +39,7 @@
             <ul class="m-list m-list--unstyled">
                 {% for block in result.building_block %}
                     <li class="m-list__item">
-                        <span class="a-icon a-icon__large a-icon__space-after">
+                        <span class="a-icon a-icon--large a-icon--space-after">
                             {{ svg_icon(block.svg_icon ~ '-round') }}
                         </span>
                         {{ block.title }}

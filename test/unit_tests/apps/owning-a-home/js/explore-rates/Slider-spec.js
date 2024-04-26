@@ -93,7 +93,7 @@ describe('explore-rates/Slider', () => {
   describe('setState()', () => {
     it('should set the warning state of the range slider label', () => {
       slider.setState(Slider.STATUS_WARNING);
-      const handleDom = sliderDom.querySelector('.rangeslider__handle');
+      const handleDom = sliderDom.querySelector('.rangeslider--handle');
       expect(handleDom.classList.contains('warning')).toBe(true);
       slider.setState(Slider.STATUS_OKAY);
       expect(handleDom.classList.contains('warning')).toBe(false);

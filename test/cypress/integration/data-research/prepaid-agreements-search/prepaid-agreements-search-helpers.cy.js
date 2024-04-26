@@ -9,7 +9,7 @@ export class PrepaidAgreementsSearch {
   }
 
   searchForm() {
-    return cy.get('.search_wrapper').find('form');
+    return cy.get('.search__wrapper').find('form');
   }
 
   selectField(field) {

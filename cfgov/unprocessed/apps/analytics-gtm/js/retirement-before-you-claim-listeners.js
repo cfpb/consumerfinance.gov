@@ -69,7 +69,7 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
     document
       .querySelector('#claim-canvas')
       .addEventListener('mousedown', function (event) {
-        if (event.target.classList.contains('graph__bar')) {
+        if (event.target.classList.contains('graph--bar')) {
           const age = event.target.getAttribute('data-bar_age');
           analyticsSendEvent({
             event: 'Before You Claim Interaction',

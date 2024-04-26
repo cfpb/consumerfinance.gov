@@ -1495,7 +1495,7 @@ export default `
                                             program at</span> this school
                                     </p>
                                     <div class="bar-graph" data-metric="gradRate" data-national-metric="completionRateMedian" data-incoming-format="decimal-percent" data-graph-min="0" data-graph-max="1">
-                                        <div class="bar-graph__bar"></div>
+                                        <div class="bar-graph--bar"></div>
                                         <div class="bar-graph__point
                                         bar-graph__point--you u-clearfix" style="bottom: 48.16px;">
                                             <div class="bar-graph--label" data-graph_label="completionRate">This school</div>
@@ -2153,7 +2153,7 @@ export default `
                                         <div class="bar-graph__top-label">
                                             40%
                                         </div>
-                                        <div class="bar-graph__bar"></div>
+                                        <div class="bar-graph--bar"></div>
                                         <div class="bar-graph__point
                                         bar-graph__point--you u-clearfix" style="bottom: 20px;">
                                             <div class="bar-graph--label" data-graph_label="defaultRate">This program</div>

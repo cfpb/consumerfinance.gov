@@ -28,7 +28,7 @@ const HTML_SNIPPET = `
           </span>
         </button>
       </div>
-      <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content__transition" style="max-height: 52px;">
+      <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content--transition" style="max-height: 52px;">
         <li class="u-hide-on-xs u-hide-on-sm">
           <div class="m-form-field m-form-field--checkbox">
             <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic-getting-paid" name="topic" value="4">

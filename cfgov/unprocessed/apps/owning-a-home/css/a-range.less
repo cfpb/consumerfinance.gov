@@ -26,6 +26,7 @@
   }
 }
 
+// .rangeslider comes from rangeslider-js and is not getBEM.com style BEM.
 .rangeslider {
   position: relative;
   display: block;
@@ -36,13 +37,13 @@
   background-size: 100%;
 }
 
-.rangeslider__fill {
+.rangeslider--fill {
   position: absolute;
   top: 0;
   background: #0f0;
 }
 
-.rangeslider__handle {
+.rangeslider--handle {
   position: absolute;
   top: 12px;
   display: inline-block;
@@ -61,7 +62,7 @@
   }
 }
 
-.a-range__input:focus + .rangeslider .rangeslider__handle {
+.a-range__input:focus + .rangeslider .rangeslider--handle {
   border: 1px solid #0072ce;
   box-shadow: none;
   outline: 1px solid #0072ce;
@@ -69,7 +70,7 @@
 }
 
 @media (min-resolution: 192dpi) {
-  .rangeslider__handle {
+  .rangeslider--handle {
     width: 22px;
     height: 21px;
     border: 0;

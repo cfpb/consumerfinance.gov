@@ -64,7 +64,7 @@ function Slider(element) {
     options.onSlide = (/* position, value */) => _update();
 
     rangesliderJs.create(_inputDom, options);
-    _rangeSliderHandleDom = _dom.querySelector('.rangeslider__handle');
+    _rangeSliderHandleDom = _dom.querySelector('.rangeslider--handle');
   }
 
   /**
@@ -86,7 +86,7 @@ function Slider(element) {
    * Moves the range slider handle to the proper position.
    */
   function _update() {
-    const handle = _dom.querySelector('.rangeslider__handle');
+    const handle = _dom.querySelector('.rangeslider--handle');
     const matchPx = /translate\((\d*.*\d*)px,.+\)$/;
     const leftVal = Number(handle.style.transform.match(matchPx)[1]);
 

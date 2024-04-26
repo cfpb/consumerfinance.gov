@@ -31,12 +31,12 @@ const HTML_SNIPPET3 = `
   <div class="regulations3k">
     <div id="content__main">
       <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
-          <div class="o-regulations-wayfinder_sidebar">
+          <div class="o-regulations-wayfinder__sidebar">
               <span class="h4">
                   Regulation FOO
               </span>
           </div>
-          <div class="o-regulations-wayfinder_main">
+          <div class="o-regulations-wayfinder__main">
               <div class="o-regulations-wayfinder__content">
                   <a href="#NOPE" class="h4 o-regulations-wayfinder__link">
                       <span class="o-regulations-wayfinder__section-title"></span><span class="o-regulations-wayfinder__marker"></span>

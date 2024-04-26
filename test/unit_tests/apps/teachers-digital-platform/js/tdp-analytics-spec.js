@@ -39,7 +39,7 @@ const HTML_SNIPPET = `
             </span>
           </span>
         </button>
-        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 119px;">
+        <div class="o-expandable__content o-expandable__content--transition o-expandable__content--expanded" style="max-height: 119px;">
           <div class="o-form__group u-mt15">
             <fieldset class="o-form__fieldset">
               <ul class="m-list m-list--unstyled">
@@ -79,7 +79,7 @@ const HTML_SNIPPET = `
             </span>
           </span>
         </button>
-        <div class="o-expandable__content o-expandable__content__transition o-expandable__content__expanded" style="max-height: 337px;">
+        <div class="o-expandable__content o-expandable__content--transition o-expandable__content--expanded" style="max-height: 337px;">
           <ul class="m-list m-list--unstyled u-mt15">
             <li class="o-expandable-facets" data-bound="true">
               <div class="m-form-field m-form-field--checkbox">
@@ -101,7 +101,7 @@ const HTML_SNIPPET = `
                   </span>
                 </button>
               </div>
-              <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content__transition o-expandable-facets__content--expanded" style="max-height: 52px;">
+              <ul class="m-list m-list--unstyled o-expandable-facets__content o-expandable-facets__content--transition o-expandable-facets__content--expanded" style="max-height: 52px;">
                 <li class="u-hide-on-xs u-hide-on-sm">
                   <div class="m-form-field m-form-field--checkbox">
                     <input type="checkbox" class="a-checkbox" aria-label="Getting paid" id="topic-getting-paid" name="topic" value="4" checked="checked">

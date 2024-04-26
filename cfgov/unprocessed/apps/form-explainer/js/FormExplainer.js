@@ -138,11 +138,11 @@ class FormExplainer {
    */
   setUIElements() {
     const explain = DT.getEl('.explain');
-    const explainPagination = explain.querySelector('.explain_pagination');
+    const explainPagination = explain.querySelector('.explain__pagination');
     const explainPageBtns = explain.querySelectorAll(
       '.form-explainer__page-buttons button',
     );
-    const pages = explain.querySelectorAll('.explain_page');
+    const pages = explain.querySelectorAll('.explain__page');
     const formExplainerLinks = explain.querySelectorAll(
       '.form-explainer__page-link',
     );
@@ -192,7 +192,7 @@ class FormExplainer {
   setCurrentPage(pageNum, callback, shouldScrollIntoView = true) {
     const CURRENT_PAGE = 'current-page';
     const PAGE_LINK = '.form-explainer__page-link';
-    const PAGINATION = '.explain_pagination';
+    const PAGINATION = '.explain__pagination';
     const CURRENT_PAGE_LINK =
       '.form-explainer__page-link[data-page="' + pageNum + '"]';
 
@@ -215,7 +215,7 @@ class FormExplainer {
    * @param {number} pageCount - Number of pages.
    */
   setPageCount(pageCount) {
-    const pages = DT.getEls('.explain_page');
+    const pages = DT.getEls('.explain__page');
     this.pageCount = pageCount || pages.length;
   }
 

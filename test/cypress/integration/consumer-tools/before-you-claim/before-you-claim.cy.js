@@ -63,7 +63,7 @@ describe('Planning your Social Security', () => {
   //*** Check to see if each bar is showing on the graph ****/
   it('should display all bars in the graph', () => {
     claim.enterAgeUnder50();
-    cy.get('#claiming-social-security #claim-canvas .graph__bar').each(
+    cy.get('#claiming-social-security #claim-canvas .graph--bar').each(
       (elem) => {
         cy.wrap(elem).should('not.have.css', 'height', '0px');
       },
@@ -72,7 +72,7 @@ describe('Planning your Social Security', () => {
 
   it('should only display bars >= age 65 in the graph', () => {
     claim.enterAgeOver50();
-    cy.get('#claiming-social-security #claim-canvas .graph__bar').each(
+    cy.get('#claiming-social-security #claim-canvas .graph--bar').each(
       (elem, index) => {
         switch (index) {
           case 0:

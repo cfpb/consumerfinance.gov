@@ -10,7 +10,7 @@ export default `
                 <a href="/data-research/small-business-lending/filing-instructions-guide/"> Small Business Lending Rule Filing Instructions Guides </a>
             </nav>
         </div>
-        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav__sticky">
+        <aside class="u-layout-grid__secondary-nav u-layout-grid__secondary-nav--sticky">
             <div class="o-fig__sidebar">
                 <div class="u-hide-on-tablet">
                     <h3>Table of contents</h3>
