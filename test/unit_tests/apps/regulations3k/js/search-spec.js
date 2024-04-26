@@ -25,7 +25,7 @@ const HTML_SNIPPET = `
       </svg>
     </div>
   </div>
-  <button class="a-btn a-btn--link a-btn--warning filters_clear"
+  <button class="a-btn a-btn--link a-btn--warning filters__clear"
           data-js-hook="behavior_clear-all">
       Clear all filters
   </button>
@@ -92,7 +92,7 @@ describe('The Regs3K search page', () => {
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {
-    const clearAllLink = document.querySelector('.filters_clear');
+    const clearAllLink = document.querySelector('.filters__clear');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
     expect(numFilters).toEqual(1);

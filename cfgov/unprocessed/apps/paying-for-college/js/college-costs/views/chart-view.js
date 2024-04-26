@@ -510,7 +510,7 @@ const chartView = {
 
   init: (body) => {
     chartView._meterChartBtns = body.querySelectorAll(
-      '.school-results_cohort-buttons input.a-radio',
+      '.school-results__cohort-buttons input.a-radio',
     );
     chartView.costOfBorrowingElem = body.querySelector(
       '#cost-of-borrowing_chart',

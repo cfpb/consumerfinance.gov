@@ -133,7 +133,7 @@ describe('Dynamic Disclosures', () => {
     cy.get('button.private-loans__add-btn').click({ force: true });
     cy.get('.private-loans .private-loans__loan').should('have.length', 2);
     cy.wait(500);
-    // cy.get('.private-loans__loan:nth-child(2) button.private-loans_remove-btn').click({force: true});
+    // cy.get('.private-loans__loan:nth-child(2) button.private-loans__remove-btn').click({force: true});
     // cy.get('.private-loans .private-loans__loan')
     //   .should('have.length', 1 );
   });

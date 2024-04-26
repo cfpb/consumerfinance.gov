@@ -137,8 +137,8 @@
 
         <section class="block block--flush-top">
             <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section.title}}">
-                <div class="o-regulations-wayfinder_wrapper">
-                    <div class="o-regulations-wayfinder_sidebar">
+                <div class="o-regulations-wayfinder__wrapper">
+                    <div class="o-regulations-wayfinder__sidebar">
                         <span class="h4">
                             {{ regulation.short_name }}
                         </span>
@@ -147,7 +147,7 @@
                         <a href="#" class="h4 o-regulations-wayfinder__link">
                             <span class="o-regulations-wayfinder__section-title"></span><span class="o-regulations-wayfinder__marker"></span>
                         </a>
-                        <div class="o-regulations-wayfinder_version">
+                        <div class="o-regulations-wayfinder__version">
                             {% if requested_version.effective_date < current_version.effective_date %}
                                 Previous version (effective
                                 {{ ap_date(requested_version.effective_date) }} to

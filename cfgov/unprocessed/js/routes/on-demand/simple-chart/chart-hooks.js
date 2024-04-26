@@ -18,7 +18,7 @@ const hooks = {
   },
 
   cct_age(d, age) {
-    return d.filter((v) => v.age_group === age);
+    return d.filter((v) => v.age__group === age);
   },
 
   cct_age_yoy(d, age) {

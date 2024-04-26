@@ -46,7 +46,7 @@ export default ($) => {
       inner_scrolling = true;
     }
     if (sticky_class == null) {
-      sticky_class = 'is_stuck';
+      sticky_class = 'is__stuck';
     }
     doc = $(document);
     if (enable_bottoming == null) {

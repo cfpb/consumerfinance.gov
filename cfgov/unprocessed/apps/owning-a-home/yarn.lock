@@ -44,7 +44,7 @@ median@0.0.2:
   resolved "https://registry.yarnpkg.com/median/-/median-0.0.2.tgz#1b7172bc221eb3e9bf4f479fadaadefc50c44787"
   integrity sha512-yrVT3CsP0Lqm1xuKjGHdRVt4va3rQu3UCidWboXlwnsflxRUHTKQIatvSQML8n32jH6XzY2jrdClYMUOkdrBHQ==
 
-rangeslider-js@^3.0.2:
+rangeslider-js@3.2.5:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/rangeslider-js/-/rangeslider-js-3.2.5.tgz#945b557ba7494053cd7f848840e19112dffb0b1a"
   integrity sha512-aGNQPNpM4Qd8w3UpAZGY2ax8naLiiSPDAT+jKi/cz9Gigg9ON1ODc9xpWS8Kjsf1eIBHAEXcYcQtRU7NqabM/Q==

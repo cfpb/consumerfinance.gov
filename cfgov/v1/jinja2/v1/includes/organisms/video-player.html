@@ -88,7 +88,7 @@
 
             {# This link is for the default, no-JavaScript, state of the video player. #}
             <a class="o-video-player__play-btn
-                      o-video-player__play-btn__{{ button_pos }}"
+                      o-video-player__play-btn--{{ button_pos }}"
                href="{{ video_url }}"
                target="_blank"
                rel="noopener noreferrer"
@@ -102,7 +102,7 @@
                 in aria-label below for screen readers.
             #}
             <button class="o-video-player__play-btn
-                           o-video-player__play-btn__{{ button_pos }}
+                           o-video-player__play-btn--{{ button_pos }}
                            u-hidden"
                     aria-label="{{ _('Play video') }}">
                 {{ svg_icon('play') }}
