@@ -5,7 +5,7 @@ from django.test import TestCase
 from wagtail.models import Page, Site
 
 from ask_cfpb.models import Answer, AnswerLandingPage, AnswerPage
-from ask_cfpb.wagtail_hooks import create_answer_id, editor_css
+from ask_cfpb.wagtail_hooks import create_answer_id
 
 
 class TestAskHooks(TestCase):
@@ -29,9 +29,6 @@ class TestAskHooks(TestCase):
         self.site_root.add_child(instance=self.english_landing_page)
         self.english_landing_page.save()
         self.english_landing_page.save_revision(user=self.user).publish()
-
-    def test_js_functions(self):
-        self.assertIn("css/question-tips.css", editor_css())
 
     def test_create_answer_id_english(self):
         """Test that English page creation generates an Ask ID and pages."""

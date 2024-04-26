@@ -1,19 +1,7 @@
-from django.conf import settings
-from django.utils.html import format_html
-
 from wagtail import hooks
 from wagtail.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
-
-
-@hooks.register("insert_global_admin_css")
-def editor_css():
-    return format_html(
-        '<link rel="stylesheet" href="'
-        + settings.STATIC_URL
-        + 'css/question-tips.css">\n'
-    )
 
 
 @hooks.register("after_create_page")
