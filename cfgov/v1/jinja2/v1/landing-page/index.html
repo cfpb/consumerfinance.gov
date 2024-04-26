@@ -12,11 +12,21 @@
 {% endblock %}
 
 {% block content_main %}
+    {% set has_hero = namespace(found=false) %}
     {% for block in page.header -%}
-        {% if block.block_type != 'hero' %}
+        {% if block.block_type == 'hero' %}
+            {% set has_hero.found = true %}
+        {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
+    {% if has_hero.found %}
+      {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+      {% set t_links = translation_links.render(modifier_classes='block--flush-top') %}
+      {% if t_links and t_links | trim | length > 1 %}
+        {{ t_links }}
+      {% endif %}
+    {% endif %}
     {% for block in page.content -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
