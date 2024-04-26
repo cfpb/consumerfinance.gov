@@ -16,6 +16,13 @@
 {% block content scoped %}
     <main class="content college-costs" data-state_gotstarted="false"
           id="main"> <!-- content__hide-horizontal-overflow removed for position sticky to work-->
+
+        <div class="wrapper wrapper--match-content">
+            <div class="block u-hide-if-js">
+                {% include "v1/includes/snippets/no_js_notification.html" %}
+            </div>
+        </div>
+
         {%- include 'college-cost-blocks/0-intro.html' -%}
         <div class="college-costs__app-segment content content--1-3 block block--flush-top">
             <div class="content__wrapper">

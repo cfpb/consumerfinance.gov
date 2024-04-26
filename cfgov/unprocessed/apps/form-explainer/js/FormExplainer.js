@@ -47,7 +47,7 @@ class FormExplainer {
    */
   initializeUI(elements) {
     if (this.pageCount === 1) {
-      DT.hide('.form-explainer_page-buttons');
+      DT.hide('.form-explainer__page-buttons');
     }
 
     DT.applyAll(elements.pages, (value, index) => {
@@ -67,7 +67,7 @@ class FormExplainer {
    */
   updatePaginationUI() {
     const BTN_DISABLED = 'a-btn--disabled';
-    const PAGE_BTN_CTR = '.form-explainer_page-buttons';
+    const PAGE_BTN_CTR = '.form-explainer__page-buttons';
 
     if (this.pageCount > 1) {
       DT.removeClass(PAGE_BTN_CTR + ' button', BTN_DISABLED);
@@ -140,11 +140,11 @@ class FormExplainer {
     const explain = DT.getEl('.explain');
     const explainPagination = explain.querySelector('.explain_pagination');
     const explainPageBtns = explain.querySelectorAll(
-      '.form-explainer_page-buttons button',
+      '.form-explainer__page-buttons button',
     );
     const pages = explain.querySelectorAll('.explain_page');
     const formExplainerLinks = explain.querySelectorAll(
-      '.form-explainer_page-link',
+      '.form-explainer__page-link',
     );
 
     return Object.assign(this.elements, {
@@ -191,10 +191,10 @@ class FormExplainer {
    */
   setCurrentPage(pageNum, callback, shouldScrollIntoView = true) {
     const CURRENT_PAGE = 'current-page';
-    const PAGE_LINK = '.form-explainer_page-link';
+    const PAGE_LINK = '.form-explainer__page-link';
     const PAGINATION = '.explain_pagination';
     const CURRENT_PAGE_LINK =
-      '.form-explainer_page-link[data-page="' + pageNum + '"]';
+      '.form-explainer__page-link[data-page="' + pageNum + '"]';
 
     this.currentPage = parseInt(pageNum, 10);
 

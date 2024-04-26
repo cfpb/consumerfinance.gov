@@ -65,7 +65,7 @@ export default function (label) {
   function trackFormExplainerPageButtonClick(event) {
     const target = event.currentTarget;
     const currentPageDom = document.querySelector(
-      '.form-explainer_page-link.current-page',
+      '.form-explainer__page-link.current-page',
     );
     const currentPage = 'Page ' + currentPageDom.getAttribute('data-page');
     let action = 'Next Page button clicked';

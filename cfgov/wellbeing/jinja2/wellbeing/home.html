@@ -56,7 +56,10 @@
 
 {% block content_main -%}
 
-    {% include "_templates/no_js.html" %}
+    <div class="block block--flush-top u-hide-if-js">
+        {% include "v1/includes/snippets/no_js_notification.html" %}
+    </div>
+
     <div class="u-js-only">
 
         <h2>{{ _('Here’s how it works:') }}</h2>

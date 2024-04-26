@@ -128,12 +128,12 @@
    ========================================================================== #}
 
 {% macro render_pagination( pages ) %}
-<nav class="explain_pagination">
-    <span class="form-explainer_nav-label">Viewing page:</span>
-    <ul class="form-explainer_page-links">
+<nav class="explain__pagination">
+    <span class="form-explainer__nav-label">Viewing page:</span>
+    <ul class="form-explainer__page-links">
         {% for page in pages %}
         <li>
-            <a class="form-explainer_page-link {{ 'current-page' if loop.index == 1 else '' }}"
+            <a class="form-explainer__page-link {{ 'current-page' if loop.index == 1 else '' }}"
                data-page="{{ loop.index }}">
                {{ loop.index }}
             </a>
@@ -143,9 +143,11 @@
 </nav>
 {% endmacro %}
 
+<div class="block block--flush-top u-hide-if-js">
+    {% include "v1/includes/snippets/no_js_notification.html" %}
+</div>
 
-
-<div id="form-explainer" class="form-explainer">
+<div id="form-explainer" class="form-explainer u-js-only">
     {{ value.heading | safe if value.heading else '' }}
     <div class="explain" aria-controls="form-explainer">
 
