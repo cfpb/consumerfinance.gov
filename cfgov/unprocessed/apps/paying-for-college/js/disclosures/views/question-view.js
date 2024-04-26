@@ -8,15 +8,15 @@ const questionView = {
   $settlementBigQuestion: $('.step__settlement'),
   $nonsettlementBigQuestion: $('.step__nonsettlement'),
   $getOptions: $('.get-options'),
-  $followupNoNotSure: $('.followup__no-not-sure'),
-  $followupYes: $('.followup__yes'),
-  $optionsWrapper: $('.get-options__dynamic'),
+  $followupNoNotSure: $('.followup--no-not-sure'),
+  $followupYes: $('.followup--yes'),
+  $optionsWrapper: $('.get-options--dynamic'),
   $options: $('.option'),
   $optionsSidebar: $('.get-options__sidebar'),
-  $transferCredits: $('.option__transfer-credits'),
-  $exploreSchools: $('.option__explore-schools'),
-  $workWhileStudying: $('.option__work-while-studying'),
-  $takeAction: $('.option__take-action'),
+  $transferCredits: $('.option--transfer-credits'),
+  $exploreSchools: $('.option--explore-schools'),
+  $workWhileStudying: $('.option--work-while-studying'),
+  $takeAction: $('.option--take-action'),
   $nextSteps: $('.next-steps'),
 
   /**
@@ -39,14 +39,14 @@ const questionView = {
       questionView.$nonsettlementBigQuestion.hide();
       $('#question__answer-no').hide();
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content__main',
+        'get-options--settlement content__main',
       );
       questionView.$transferCredits.remove();
       questionView.$exploreSchools.remove();
       questionView.$takeAction.remove();
-      questionView.$options.addClass('option__settlement');
+      questionView.$options.addClass('option--settlement');
       questionView.$optionsSidebar.show();
-      questionView.$optionsWrapper.removeClass('get-options__dynamic');
+      questionView.$optionsWrapper.removeClass('get-options--dynamic');
     } else {
       questionView.$settlementBigQuestion.hide();
       questionView.$nonsettlementBigQuestion.show();
