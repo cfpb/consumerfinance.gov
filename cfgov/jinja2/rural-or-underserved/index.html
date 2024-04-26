@@ -30,37 +30,37 @@ home price, down payment, and more can affect mortgage interest rates.
 
 
 {% block content_intro -%}
-    <div class="wrapper">
+    <div class="wrapper content">
+        <div class="content__intro u-hide-if-js">
+            {% include "v1/includes/snippets/no_js_notification.html" %}
+        </div>
 
-        {% include "_templates/no_js.html" %}
-
-        <section class="content_intro">
-
+        <section class="content__intro u-js-only">
             <div class="content-l">
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
                     <h5 class="report-date print-only"></h5>
                     <h1>Rural and underserved areas tool</h1>
                 </div>
             </div>
 
             <div class="content-l">
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
                     {# Display errors here. #}
                     <div id="file-error"
                          class="block
-                                block__flush-top
-                                block__flush-bottom
-                                block__padded-bottom
+                                block--flush-top
+                                block--flush-bottom
+                                block--padded-bottom
                                 u-hidden">
                         <div class="m-notification
-                                    m-notification__visible
-                                    m-notification__error">
+                                    m-notification--visible
+                                    m-notification--error">
                             {{ svg_icon('error-round') }}
-                            <div class="m-notification_content">
-                                <div class="m-notification_message">
+                            <div class="m-notification__content">
+                                <div class="m-notification__message">
                                     Formatting error
                                 </div>
-                                <div class="m-notification_explanation">
+                                <div class="m-notification__explanation">
                                     <strong>We've noticed the following errors:</strong>
                                     <div id="file-error-desc"></div>
                                 </div>
@@ -69,19 +69,19 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                     <div id="process-error"
                          class="block
-                                block__flush-top
-                                block__flush-bottom
-                                block__padded-bottom
+                                block--flush-top
+                                block--flush-bottom
+                                block--padded-bottom
                                 u-hidden">
                         <div class="m-notification
-                                    m-notification__visible
-                                    m-notification__error">
+                                    m-notification--visible
+                                    m-notification--error">
                             {{ svg_icon('error-round') }}
-                            <div class="m-notification_content">
-                                <div class="m-notification_message">
+                            <div class="m-notification__content">
+                                <div class="m-notification__message">
                                     Processing error
                                 </div>
-                                <div class="m-notification_explanation">
+                                <div class="m-notification__explanation">
                                     <p>
                                         <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
                                     </p>
@@ -94,7 +94,7 @@ home price, down payment, and more can affect mortgage interest rates.
             </div>
 
             <div id="search-tool" class="content-l">
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
 
                     <h2>
                         Check status of properties for loans extended in
@@ -116,8 +116,8 @@ home price, down payment, and more can affect mortgage interest rates.
                     </h2>
                 </div>
 
-                <div class="content-l_col content-l_col-1-2">
-                    <div class="block block__border block__bg block__sub">
+                <div class="content-l__col content-l__col-1-2">
+                    <div class="block block--border block--bg block--sub">
                         <h4>Enter addresses manually</h4>
                         <form id="geocode">
                             <p>
@@ -136,7 +136,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     </label>
                                     <input
                                         class="a-text-input
-                                               a-text-input__full
+                                               a-text-input--full
                                                input-address"
                                         id="address1-input"
                                         name="address1"
@@ -154,8 +154,8 @@ home price, down payment, and more can affect mortgage interest rates.
                         </form>
                     </div>
                 </div>
-                <div class="content-l_col content-l_col-1-2">
-                    <div class="block block__border block__bg block__sub">
+                <div class="content-l__col content-l__col-1-2">
+                    <div class="block block--border block--bg block--sub">
                         <h4>Upload a CSV file</h4>
                         <form id="geocode-csv">
                             <p>
@@ -173,7 +173,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     </label>
                                     <!-- Styled faux overlay component. -->
                                     <button class="a-btn
-                                                   a-btn__secondary
+                                                   a-btn--secondary
                                                    a-btn__flush-right">
                                         Select file
                                     </button>
@@ -197,7 +197,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </div>
 
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
                     <p>
                         Do not include personal information, such as names, phone numbers, and Social Security numbers.
                         The CFPB will not retain any information submitted through this tool.
@@ -208,7 +208,7 @@ home price, down payment, and more can affect mortgage interest rates.
 
             <!-- results -->
             <section id="results" class="content-l u-hidden">
-                <div class="full-print content-l_col content-l_col-3-4">
+                <div class="full-print content-l__col content-l__col-3-4">
                     <h2 id="countMessage">
                         <span id="spinner">
                             {{ svg_icon('updating') }}
@@ -218,17 +218,17 @@ home price, down payment, and more can affect mortgage interest rates.
                         <strong class="chosenYear"></strong> rural or underserved area safe harbor designation.
                     </h2>
                 </div>
-                <p class="hide-print content-l_col content-l_col-1-4">
-                    <a class="a-btn a-btn__secondary" href="/rural-or-underserved-tool/">
+                <p class="hide-print content-l__col content-l__col-1-4">
+                    <a class="a-btn a-btn--secondary" href="/rural-or-underserved-tool/">
                         Start a new search
                     </a>
                 </p>
 
-                <div id="results-total" class="u-hidden block block__sub">
-                    <div class="content-l_col content-l_col-1-4">
+                <div id="results-total" class="u-hidden block block--sub">
+                    <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="ruralCnt no-decoration counter no-decoration" href="#rural">
+                                <a class="rural-cnt no-decoration counter no-decoration" href="#rural">
                                     0
                                 </a>
                             </strong>
@@ -237,10 +237,10 @@ home price, down payment, and more can affect mortgage interest rates.
                             <span class="ruralVerb verb">are</span> designated as rural or underserved
                         </h4>
                     </div>
-                    <div class="content-l_col content-l_col-1-4">
+                    <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="notRuralCnt no-decoration counter no-decoration" href="#notRural">
+                                <a class="not-rural-cnt no-decoration counter no-decoration" href="#notRural">
                                     0
                                 </a>
                             </strong>
@@ -249,10 +249,10 @@ home price, down payment, and more can affect mortgage interest rates.
                             <span class="notRuralVerb verb">are</span> <strong>not</strong> designated as rural or underserved
                         </h4>
                     </div>
-                    <div class="content-l_col content-l_col-1-4">
+                    <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="notFoundCnt no-decoration counter no-decoration" href="#notFound">
+                                <a class="not-found-cnt no-decoration counter no-decoration" href="#notFound">
                                     0
                                 </a>
                             </strong>
@@ -261,10 +261,10 @@ home price, down payment, and more can affect mortgage interest rates.
                             could not be identified
                         </h4>
                     </div>
-                    <div class="content-l_col content-l_col-1-4">
+                    <div class="content-l__col content-l__col-1-4">
                         <h1>
                             <strong>
-                                <a class="duplicateCnt no-decoration counter no-decoration" href="#duplicate">
+                                <a class="duplicate-cnt no-decoration counter no-decoration" href="#duplicate">
                                     0
                                 </a>
                             </strong>
@@ -275,28 +275,28 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </div>
 
-                <p class="content-l_col content-l_col-1">
+                <p class="content-l__col content-l__col-1">
                     <a class="margin-right-quarter" href="#" id="print" title="Print results">Print results</a>
                     |
                     <a class="download-link margin-left-quarter" href="#" id="download" title="Download results"><span>Download results</span></a>
                 </p>
 
                 {# Not a paragraph so that it is full-width. #}
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
                     <em>If you are having problems with the download, please review the <a href="#faq-general-questions">“General questions” in the FAQ</a>.</em>
                 </div>
 
-                <div class="content-l_col content-l_col-1">
-                    <div id="rural" class="js-table u-hidden block block__flush-bottom">
+                <div class="content-l__col content-l__col-1">
+                    <div id="rural" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="ruralCnt counter">0</span></strong> <span class="ruralCase case">addresses are</span> designated as rural or underserved for
+                            <strong><span class="rural-cnt counter">0</span></strong> <span class="ruralCase case">addresses are</span> designated as rural or underserved for
                             <strong class="chosenYear"></strong>
                         </h2>
                         <p>
                             First-lien covered transactions extended in <span class="chosenYear">2015</span> that are secured by these properties can be counted as rural or underserved in your determination of your first-lien covered transactions in <span class="chosenYear">2015</span> that are secured by properties located in rural or underserved areas.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -311,25 +311,25 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
 
                         <p class="block
-                                  block__flush-top
-                                  block__flush-bottom
-                                  block__padded-top
-                                  block__padded-bottom
+                                  block--flush-top
+                                  block--flush-bottom
+                                  block--padded-top
+                                  block--padded-bottom
                                   m-btn-group">
-                            <button data-table="rural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="ruralMore">View 10 more</button>
-                            <button data-table="rural" class="view-all u-hidden a-btn a-btn__link" id="ruralAll">View all</button>
+                            <button data-table="rural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="ruralMore">View 10 more</button>
+                            <button data-table="rural" class="view-all u-hidden a-btn a-btn--link" id="ruralAll">View all</button>
                         </p>
                     </div>
 
-                    <div id="notRural" class="js-table u-hidden block block__flush-bottom">
+                    <div id="notRural" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                        <strong><span class="notRuralCnt counter">0</span></strong> <span class="notRuralCase case">addresses are</span>
+                        <strong><span class="not-rural-cnt counter">0</span></strong> <span class="notRuralCase case">addresses are</span>
                         <strong>not</strong> designated as rural or underserved for
                         <strong class="chosenYear"></strong>
                         </h2>
                         <p class="col-8">These properties <strong>cannot</strong> be counted as rural or underserved.</p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -344,19 +344,19 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
 
                         <p class="block
-                                  block__flush-top
-                                  block__flush-bottom
-                                  block__padded-top
-                                  block__padded-bottom
+                                  block--flush-top
+                                  block--flush-bottom
+                                  block--padded-top
+                                  block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notRural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="notRuralMore">View 10 more</button>
-                            <button data-table="notRural" class="view-all u-hidden a-btn a-btn__link" id="notRuralAll">View all</button>
+                            <button data-table="notRural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notRuralMore">View 10 more</button>
+                            <button data-table="notRural" class="view-all u-hidden a-btn a-btn--link" id="notRuralAll">View all</button>
                         </p>
                     </div>
 
-                    <div id="notFound" class="js-table u-hidden block block__flush-bottom">
+                    <div id="notFound" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="notFoundCnt counter">0</span></strong> <span class="notFoundCase case">addresses are</span> not identified
+                            <strong><span class="not-found-cnt counter">0</span></strong> <span class="notFoundCase case">addresses are</span> not identified
                         </h2>
                         <p class="col-8">
                             The locations of these addresses could not be identified because the information provided was not sufficient, the information could not be matched with an address or the information matches with multiple addresses.
@@ -365,7 +365,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             To run your search again once you have updated the information for these addresses, return to the previous page and start a new search.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -380,19 +380,19 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
 
                         <p class="block
-                                  block__flush-top
-                                  block__flush-bottom
-                                  block__padded-top
-                                  block__padded-bottom
+                                  block--flush-top
+                                  block--flush-bottom
+                                  block--padded-top
+                                  block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notFound" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="notFoundMore">View 10 more</button>
-                            <button data-table="notFound" class="view-all u-hidden a-btn a-btn__link" id="notFoundAll">View all</button>
+                            <button data-table="notFound" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notFoundMore">View 10 more</button>
+                            <button data-table="notFound" class="view-all u-hidden a-btn a-btn--link" id="notFoundAll">View all</button>
                         </p>
                     </div>
 
-                    <div id="duplicate" class="js-table u-hidden block block__flush-bottom">
+                    <div id="duplicate" class="js-table u-hidden block block--flush-bottom">
                         <h2 class="js-table-title">
-                            <strong><span class="duplicateCnt counter">0</span></strong> <span class="duplicateCase case">addresses are</span> identified as duplicate
+                            <strong><span class="duplicate-cnt counter">0</span></strong> <span class="duplicateCase case">addresses are</span> identified as duplicate
                         </h2>
                         <p class="col-8">
                             These addresses have been identified as duplicate entries, and only the first instance of each address has been counted in the other three categories of results.
@@ -401,7 +401,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             To update or remove the information for these addresses, start a new search.
                         </p>
 
-                        <div class="o-table o-table-wrapper__scrolling">
+                        <div class="o-table o-table-wrapper--scrolling">
                             <table class="rout-results-table">
                                 <thead>
                                     <tr>
@@ -416,13 +416,13 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
 
                         <p class="block
-                                  block__flush-top
-                                  block__flush-bottom
-                                  block__padded-top
-                                  block__padded-bottom
+                                  block--flush-top
+                                  block--flush-bottom
+                                  block--padded-top
+                                  block--padded-bottom
                                   m-btn-group">
-                            <button data-table="duplicate" class="button-more u-hidden a-btn a-btn__secondary no-decoration" id="duplicateMore">View 10 more</button>
-                            <button data-table="duplicate" class="view-all u-hidden a-btn a-btn__link" id="duplicateAll">View all</button>
+                            <button data-table="duplicate" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="duplicateMore">View 10 more</button>
+                            <button data-table="duplicate" class="view-all u-hidden a-btn a-btn--link" id="duplicateAll">View all</button>
                         </p>
                     </div>
                 </div>
@@ -433,7 +433,7 @@ home price, down payment, and more can affect mortgage interest rates.
 
     </div>
 
-    <div class="content_line"></div>
+    <div class="content__line"></div>
 
 {% endblock %}
 
@@ -452,7 +452,7 @@ home price, down payment, and more can affect mortgage interest rates.
 
             <!-- faq -->
             <h2>Frequently asked questions</h2>
-            <div class="block block__sub">
+            <div class="block block--sub">
                 <h3>Questions on the tool</h3>
                 <div class="o-expandable-group">
                     {{ expandable.render(
@@ -490,21 +490,21 @@ home price, down payment, and more can affect mortgage interest rates.
                         template due to the markup in the content area.
                     #}
                     <div class="o-expandable">
-                        <button class="o-expandable_header"
+                        <button class="o-expandable__header"
                                 title="Expand content">
-                            <h3 class="o-expandable_label">
+                            <h3 class="o-expandable__label">
                                 How should I format the addresses that I upload to the tool?
                             </h3>
-                            <span class="o-expandable_cues">
-                                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                            <span class="o-expandable__cues">
+                                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                                     {{ svg_icon('minus-round') }}
                                 </span>
                             </span>
                         </button>
-                        <div class="o-expandable_content">
+                        <div class="o-expandable__content">
                             <p>
                                 The tool provides a sample comma separated values (CSV) file to help you determine how to format the addresses for upload in the multiple address search tool.  For best results, the street address, city, state and ZIP Code should be included in the batch upload file or address entry.  The addresses within this CSV file should follow the rules set forth in Section 2, “Postal Addressing Standards” of the United States Postal Service Publication 28 - Postal Addressing Standards (<a href="https://pe.usps.com/text/pub28/welcome.htm" title="Publication 28,">https://pe.usps.com/text/pub28/welcome.htm</a>).  Per <a href="https://pe.usps.com/text/pub28/28c2_001.htm" title="Publication 28, Sub-Section 21">Publication 28, Sub-Section 21</a>, a complete property address consists of the “Delivery Address Line” and the “Last Line.”  “Delivery Address Line,” in the example below and in the tool CSV file format, consists of the “Street address” while the “Last Line,” in the example below and in the tool CSV file format, consists of three fields, “City”, “State” and “ZIP”.
                             </p>
@@ -712,21 +712,21 @@ home price, down payment, and more can affect mortgage interest rates.
                         template due to the markup in the content area.
                     #}
                     <div class="o-expandable">
-                        <button class="o-expandable_header"
+                        <button class="o-expandable__header"
                                 title="Expand content">
-                            <h3 class="o-expandable_label">
+                            <h3 class="o-expandable__label">
                                 How do I resolve the addresses that could not be identified?
                             </h3>
-                            <span class="o-expandable_cues">
-                                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                            <span class="o-expandable__cues">
+                                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                                     {{ svg_icon('minus-round') }}
                                 </span>
                             </span>
                         </button>
-                        <div class="o-expandable_content">
+                        <div class="o-expandable__content">
                             <p>
                                 You should check to see if the address was mistyped, some information was missing in the address entered, or the address is too new for the tool to return a definite result.  First, verify the address is correct.  If it is correct, try the Census Bureau’s automated address search tool, use the rural or underserved counties lists, or check the form of the address on the United States Postal Service site (<a href="https://tools.usps.com/go/ZipLookupAction_input" title="United States Postal Service site">https://tools.usps.com/go/ZipLookupAction_input</a>).  For instance, the address 6009 JFK Blvd East, West New York, NJ 07093 cannot be located by the tool.  When the address is entered into the usps.com site, the proper address is given, 6009 Kennedy Blvd E, West New York, NJ 07093-3740, and the address can now be identified in the tool.
                             </p>
@@ -788,21 +788,21 @@ home price, down payment, and more can affect mortgage interest rates.
                         template due to the markup in the content area.
                     #}
                     <div class="o-expandable">
-                        <button class="o-expandable_header"
+                        <button class="o-expandable__header"
                                 title="Expand content">
-                            <h3 class="o-expandable_label">
+                            <h3 class="o-expandable__label">
                                 What is CSV?
                             </h3>
-                            <span class="o-expandable_cues">
-                                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                            <span class="o-expandable__cues">
+                                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                                     {{ svg_icon('minus-round') }}
                                 </span>
                             </span>
                         </button>
-                        <div class="o-expandable_content">
+                        <div class="o-expandable__content">
                             <p>
                                 A comma-separated values (CSV) file derives its name from a file containing multiple data fields separated by commas to distinguish where each field starts and ends.  Files are stored in plain text as numbers and letters with one record per line.
                             </p>
@@ -820,23 +820,23 @@ home price, down payment, and more can affect mortgage interest rates.
                         template due to the markup in the content area.
                     #}
                     <div class="o-expandable">
-                        <button class="o-expandable_header"
+                        <button class="o-expandable__header"
                                 title="Expand content">
-                            <h3 class="o-expandable_label">
+                            <h3 class="o-expandable__label">
                                 My downloaded file is not opening in the
                                 correct format in Excel.
                                 How do I fix the format?
                             </h3>
-                            <span class="o-expandable_cues">
-                                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                            <span class="o-expandable__cues">
+                                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                                     {{ svg_icon('minus-round') }}
                                 </span>
                             </span>
                         </button>
-                        <div class="o-expandable_content">
+                        <div class="o-expandable__content">
                             <p>
                                 If you used the ‘Download results’ link in Windows in either Chrome or Firefox and the file extension is not recognized on your computer, you will need to add a CSV extension to the end of the file in Windows Explorer before the file will launch in the correct format.
                             </p>
@@ -876,22 +876,22 @@ home price, down payment, and more can affect mortgage interest rates.
                         template due to the markup in the content area.
                     #}
                     <div class="o-expandable">
-                        <button class="o-expandable_header"
+                        <button class="o-expandable__header"
                                 title="Expand content">
-                            <h3 class="o-expandable_label">
+                            <h3 class="o-expandable__label">
                                 My question is not answered here.
                                 Where can I find more information?
                             </h3>
-                            <span class="o-expandable_cues">
-                                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+                            <span class="o-expandable__cues">
+                                <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                                     {{ svg_icon('plus-round') }}
                                 </span>
-                                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+                                <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                                     {{ svg_icon('minus-round') }}
                                 </span>
                             </span>
                         </button>
-                        <div class="o-expandable_content">
+                        <div class="o-expandable__content">
                             <p>
                                 Information about this automated tool and other safe
                                 harbor tools is provided by the Bureau’s regulation
@@ -910,10 +910,10 @@ home price, down payment, and more can affect mortgage interest rates.
 {% endblock %}
 
 {% block content_sidebar scoped -%}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <div class="m-reusable-text-snippet">
             <header class="m-slug-header">
-                <h2 class="m-slug-header_heading">
+                <h2 class="m-slug-header__heading">
                     Related information
                 </h2>
             </header>
@@ -932,24 +932,24 @@ home price, down payment, and more can affect mortgage interest rates.
     <div class="block">
         <div class="m-related-links">
             <header class="m-slug-header">
-                <h2 class="m-slug-header_heading">
+                <h2 class="m-slug-header__heading">
                     Related links
                 </h2>
             </header>
-            <ul class="m-list m-list__links">
-                <li class="m-list_item">
+            <ul class="m-list m-list--links">
+                <li class="m-list__item">
                     <a href="/rules-policy/regulations/1026/" title="Truth in Lending Act (Regulation Z)">Truth in Lending Act (Regulation Z)</a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a href="/compliance/compliance-resources/mortgage-resources/ability-repay-qualified-mortgage-rule/" title="Ability to repay and qualified mortgages (ATR/QM)">Ability to repay and qualified mortgages (ATR/QM)</a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a href="/compliance/compliance-resources/mortgage-resources/high-cost-mortgages/" title="High cost mortgages (HOEPA)">High cost mortgages (HOEPA)</a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a href="/compliance/compliance-resources/mortgage-resources/higher-priced-mortgage-loan-escrow-rule/" title="Rules governing escrows for higher priced mortgages">Rules governing escrows for higher priced mortgages</a>
                 </li>
-                <li class="m-list_item">
+                <li class="m-list__item">
                     <a href="/compliance/compliance-resources/mortgage-resources/rural-and-underserved-counties-list/" title="Rural or Underserved Counties List">Rural or Underserved Counties List</a>
                 </li>
             </ul>

@@ -1,5 +1,6 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
+{% from 'tccp/includes/apr_table.html' import apr_table with context %}
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency, lower_first_letter, oxfordize %}
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
@@ -23,34 +24,30 @@
 {% endblock %}
 
 {% block content_main %}
-<div class="block block__flush-top">
+<div class="block block--flush-top">
 
     <div class="eyebrow">{{ card.institution_name }}</div>
+
     <h1>{{ card.product_name }}</h1>
-    {% set credit_tiers = [
-        ("No credit score", "No score"),
-        ("619 or less", "Below 619"),
-        ("620 to 719", "620-719"),
-        ("720 or greater", "720+")
-    ] %}
+
     <div class="o-card-details-section o-card-details-section--introduction">
         {# TODO: Need to make this more accessible for screen readers #}
         <div class="m-credit-tier-chart">
-            {% for tier in credit_tiers %}
-                {% if tier[0] in card.targeted_credit_tiers | string %}
+            {% for tier_value, tier_name, _ in credit_tier_lookup %}
+                {% if tier_value in card.targeted_credit_tiers %}
                     {% set targeted_tier = true %}
                 {% else %}
                     {% set targeted_tier = false %}
                 {% endif %}
                 <div class="m-credit-tier-chart__tier m-credit-tier-chart__tier{{ '--selected' if targeted_tier else '--unselected' }}">
                     <span class="m-credit-tier-chart__icon">
-                        {% if targeted_tier %}
-                            {{ svg_icon('approved-round') if targeted_tier }}
-                        {% else %}
+                        {%- if targeted_tier -%}
+                            {{ svg_icon('approved-round') }}
+                        {%- else -%}
                             &nbsp;
-                        {% endif %}
+                        {%- endif -%}
                     </span>
-                    <span class="m-credit-tier-chart__label">{{ tier[1] }}</span>
+                    <span class="m-credit-tier-chart__label">{{ tier_name }}</span>
                 </div>
             {% endfor %}
         </div>
@@ -103,7 +100,7 @@
                 </ul>
             {% endif %}
             {% if card.professional_affiliation is not none or card.other is not none %}
-                <div class="h4 u-mt15">Other requirements for applying</div>
+                <div class="h4 u-mt15">Eligibility requirements</div>
                 <ul>
                     {% for requirement in [
                         card.professional_affiliation,
@@ -155,7 +152,7 @@
             </div>
         {% endif %}
     </div>
-    {{ data_published(card.report_date) }}
+    {{ data_published(card.report_date, verbose=true) }}
 
     {% if card.secured_card %}
         <div class="u-mt30 u-mb30">
@@ -163,51 +160,25 @@
                 "warning",
                 true,
                 "This is a secured card",
-                "You will have to pay a security deposit before using this card
-                and will only be able to make purchases or get cash advances up
-                to the amount of that deposit."
+                "You may have to pay a security deposit to open and use this
+                card and will only be able to make purchases or get cash
+                advances up to the amount of that deposit."
             ) }}
         </div>
     {% endif %}
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("cart-round") }}
-            Making purchases
+            Purchase interest rate and fees
         </h2>
-        {# TODO: Unify ratings code with results list view #}
-        {% set purchase_apr_rating_labels = [
-            'less', 'average', 'more'
-        ] %}
-        {% set purchase_apr_ratings = [
-            card.purchase_apr_poor_rating,
-            card.purchase_apr_good_rating,
-            card.purchase_apr_great_rating
-        ] %}
-        {% set purchase_aprs = [
-            (card.purchase_apr_poor_min, card.purchase_apr_poor_max),
-            (card.purchase_apr_good_min, card.purchase_apr_good_max),
-            (card.purchase_apr_great_min, card.purchase_apr_great_max),
-        ] %}
-        {% if card.purchase_apr_offered
-            and card.purchase_apr_poor_min is none
-            and card.purchase_apr_poor_max is none
-            and card.purchase_apr_good_min is none
-            and card.purchase_apr_good_max is none
-            and card.purchase_apr_great_min is none
-            and card.purchase_apr_great_max is none
-        %}
-            {% set purchase_apr_data_incomplete = true %}
-        {% else %}
-            {% set purchase_apr_data_incomplete = false %}
-        {% endif %}
-        {% if card.purchase_apr_offered and not purchase_apr_data_incomplete %}
+        {% if card.purchase_apr_offered and not card.purchase_apr_data_incomplete %}
             {# How top-line APR displays if the card has:
                 - Min and max APRs: "19.49% - 31.99% purchase APR"
                 - No min and max but a median: "29.74% median purchase APR"
                 - Single APR for everyone: "24.90% purchase APR"
             #}
-            <div class="h2 u-mb0 u-mt15">
+            <div class="h2 u-mb0">
                 {% if card.purchase_apr_min is not none
                     and card.purchase_apr_max is not none
                 %}
@@ -226,42 +197,16 @@
                 {% endif %}
             </div>
             <p>
-                {{ 'Your APR will be based on your credit score. ' if card.purchase_apr_vary_by_credit_tier }}
-                You’ll only know your exact APR if you are approved for the
-                card. Here are typical APRs for different credit scores for this
-                card:
+                An APR, or annual percentage rate, is the interest you‘ll pay
+                on purchases.
+                {{ 'Your APR will vary based on your credit score. '
+                    if card.purchase_apr_vary_by_credit_tier
+                }}
+                Here are typical APRs for different credit scores for this card:
             </p>
-            <table class="o-table o-table--apr">
-                <thead>
-                    <tr>
-                        <th>Credit score</th>
-                        <th>Median purchase APR</th>
-                        <th>Comparison to other cards</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for purchase_apr in purchase_aprs %}
-                        <tr>
-                            <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr_range(purchase_apr[0], purchase_apr[1]) }}</td>
-                            <td>
-                                {% if purchase_apr_ratings[loop.index0] is not none %}
-                                    {% set label = purchase_apr_rating_labels[purchase_apr_ratings[loop.index0]] %}
-                                    <span class="a-credit-card-apr-rating--{{ label }}">
-                                        {%- for i in range(purchase_apr_ratings[loop.index0] + 1) %}
-                                            {{ svg_icon("dollar-round") }}
-                                        {% endfor -%}
 
-                                        Pay {{ label }} interest
-                                    </span>
-                                {% else %}
-                                    Not targeted for these credit scores
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {{ apr_table(card, "purchase", show_comparison=true) }}
+
             <p>
                 The purchase APR is
                 {% if 'V' in card.index %}
@@ -276,7 +221,7 @@
                 and about
                 <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">fixed versus variable APRs</a>.
             </p>
-        {% elif card.purchase_apr_offered and purchase_apr_data_incomplete %}
+        {% elif card.purchase_apr_offered and card.purchase_apr_data_incomplete %}
             <p>The issuer did not submit information about purchase APR.</p>
         {% else %}
             <p>This card does not charge interest on purchases.</p>
@@ -291,7 +236,8 @@
                     {{ apr(card.intro_apr_median) }}
                 {% endif %}
                 for
-                {{ '%g' | format(card.median_length_of_introductory_apr) }} months
+                {{ '%.0f' | format(card.median_length_of_introductory_apr ) }}
+                months
             </div>
             <div class="u-mb15">
                 {% if card.intro_apr_min is not none
@@ -303,54 +249,33 @@
                 {% endif %}
             </div>
             {% if card.introductory_apr_vary_by_credit_tier %}
-            <p>
-                Your introductory APR will be based on your credit score.
-                You’ll only know your exact APR if you are approved for the
-                card. Here are average APRs for different credit scores for this
-                card:
-            </p>
-            <table class="o-table o-table--apr">
-                <thead>
-                    <tr>
-                        <th>Credit score</th>
-                        <th>Median intro APR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for intro_apr in [
-                        card.intro_apr_poor,
-                        card.intro_apr_good,
-                        card.intro_apr_great
-                    ] %}
-                        <tr>
-                            <td>{{ credit_tiers[loop.index][1] }}</td>
-                            <td>{{ apr(intro_apr) }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <p>
+                    Your introductory APR will vary based on your credit score.
+                    Here are typical introductory APRs for different credit scores
+                    for this card:
+                </p>
+
+                {{ apr_table(card, "intro") }}
             {% elif card.intro_apr_median is not none
                 and card.intro_apr_min != card.intro_apr_max %}
                 <p>
-                    You’ll only know your exact APR if you are approved for the
-                    card. The median APR for this card is
+                    The median introductory APR for this card is
                     {{ apr(card.intro_apr_median) }}.
                 </p>
             {% endif %}
             <p>
-                With introductory APR offers, you have to keep track of
-                how you are paying off that balance within the promotional
-                period, or you could end up owing more in interest than the
-                original purchase amount.
-                <a href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/">Learn more about intro APR offers</a>.
+                If a card has promotional interest, ensure you’re on track to
+                pay off the balance within the promotional period, or you could
+                end up owing more in interest than the original purchase amount.
+                <a href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/">Learn more about introductory APR offers</a>.
             </p>
         {% endif %}
         <div class="o-additional-details">
             {% call() expandable({
-                'label': 'Transaction fees, charges, and other details',
+                'label': 'Foreign transaction fee, grace period, and other details',
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     <dt>Foreign transaction fee</dt>
@@ -402,7 +327,7 @@
                     <dt>Grace period</dt>
                     <dd>
                         {{ card.grace_period ~ ' days until interest begins to accrue on
-                            purchases' if grace_period_offered else 'None, interest
+                            purchases' if card.grace_period_offered else 'None, interest
                             begins accruing on purchases immediately'
                         }}
                     </dd>
@@ -438,7 +363,7 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3">
+        <h2>
             {{ svg_icon("credit-payment-round") }}
             Fees
         </h2>
@@ -558,7 +483,7 @@
                 'label': other_fees_label,
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     <dt>Late fee</dt>
@@ -636,11 +561,11 @@
                                 <dd>
                                     {% if loop.first %}
                                         {{ currency(card.other_fee_amount) ~ ' (' ~
-                                            card.other_fee_explanation | lower ~ ')'
+                                            card.other_fee_explanation ~ ')'
                                         }}
                                     {% else %}
                                         {{ currency(card['other_fee_amount_' ~ loop.index]) ~ ' (' ~
-                                            card['other_fee_explanation_' ~ loop.index] | lower ~
+                                            card['other_fee_explanation_' ~ loop.index] ~
                                             ')'
                                         }}
                                     {% endif %}
@@ -654,12 +579,12 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3">
+        <h2>
             {{ svg_icon("gift-round") }}
             Rewards and perks
         </h2>
         {% if card.rewards %}
-            <div class="h2 u-mb0 u-mt15">
+            <div class="h2 u-mb0">
                 {%- set rewards = [] -%}
                 {%- for reward in card.rewards -%}
                     {%- do rewards.append(rewards_lookup[reward]) -%}
@@ -680,7 +605,7 @@
                 'label': 'Card services and features',
                 'is_bordered': true,
                 'is_expanded': false,
-                'is_midtone': false
+                'is_midtone': true
             }) %}
                 <dl class="m-list m-list__card-details">
                     {% if card.services %}
@@ -717,9 +642,9 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("money-transfer-round") }}
-            Transferring a balance from another card or loan
+            Balance transfer interest rate and fees
         </h2>
         {# How top-line transfer APR and fees display if the card has:
             - One APR: "1.99% balance transfer APR"
@@ -734,7 +659,7 @@
         {% if card.balance_transfer_offered %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {% if card.transfer_apr_min is not none
                             and card.transfer_apr_max is not none
                         %}
@@ -751,11 +676,14 @@
                         {% elif card.transfer_apr_median is not none %}
                             Median balance transfer APR
                         {% endif %}
+                        for
+                        {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                        months
                     </div>
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {{ currency(card.balance_transfer_fee_dollars) if
                             card.balance_transfer_fee_dollars is not none
                         }}
@@ -790,46 +718,24 @@
             {% endif %}
             {% if card.balance_transfer_apr_vary_by_credit_tier %}
                 <p>
-                    Your balance transfer APR will be based on your credit score.
-                    You’ll only know your exact APR if you are approved for the
-                    card. Here are average balance transfer APRs for different
+                    Your balance transfer APR will vary based on your credit
+                    score. Here are typical balance transfer APRs for different
                     credit scores for this card:
                 </p>
-                <table class="o-table o-table--apr">
-                    <thead>
-                        <tr>
-                            <th>Credit score</th>
-                            <th>Median balance transfer APR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for transfer_apr in [
-                            card.transfer_apr_poor,
-                            card.transfer_apr_good,
-                            card.transfer_apr_great
-                        ] %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr(transfer_apr) }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+                {{ apr_table(card, "transfer", apr_label="balance transfer") }}
             {% elif card.transfer_apr_median is not none
                 and card.transfer_apr_min != card.transfer_apr_max %}
                 <p>
-                    You’ll only know your exact balance transfer APR if you are
-                    approved for the card. The median balance transfer APR for
-                    this card is {{ apr(card.transfer_apr_median) }}.
+                    The median balance transfer APR for this card is
+                    {{ apr(card.transfer_apr_median) }}.
                 </p>
             {% endif %}
-            {# TODO: Explain what a grace period is #}
             <p>
-                The balance transfer APR is available for
-                {{ '%g' | format(card.median_length_of_balance_transfer_apr) }}
-                months after getting this card, on average. There is
-                {{ 'a' if card.balance_transfer_grace_period else 'no' }}
-                <a href="/ask-cfpb/do-i-pay-interest-on-new-purchases-after-i-get-a-zero-or-low-rate-balance-transfer-en-49/">balance transfer grace period</a>.
+                After
+                {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                months, any remaining unpaid balance on your account will be
+                subject to interest charges based on your purchase APR.
             </p>
         {% else %}
             <p>This card does not offer balance transfers.</p>
@@ -837,14 +743,14 @@
     </div>
 
     <div class="o-card-details-section">
-        <h2 class="h3 u-mb15">
+        <h2>
             {{ svg_icon("quick-cash-round") }}
-            Getting a cash advance
+            Cash advance interest rate and fees
         </h2>
         {% if card.cash_advance_apr_offered %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {% if card.advance_apr_min is not none
                             and card.advance_apr_max is not none
                         %}
@@ -869,7 +775,7 @@
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt15">
+                    <div class="h2 u-mb0">
                         {{ currency(card.cash_advance_fee_dollars) if
                             card.cash_advance_fee_dollars is not none
                         }}
@@ -904,51 +810,38 @@
             {% endif %}
             {% if card.cash_advance_apr_vary_by_credit_tier %}
                 <p>
-                    Your cash advance APR will be based on your credit score.
-                    You’ll only know your exact APR if you are approved for the
-                    card. Here are average cash advance APRs for different
-                    credit scores for this card:
+                    Your cash advance APR will vary based on your credit score.
+                    Here are typical cash advance APRs for different credit
+                    scores for this card:
                 </p>
-                <table class="o-table o-table--apr">
-                    <thead>
-                        <tr>
-                            <th>Credit score</th>
-                            <th>Median cash advance APR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for advance_apr in [
-                            card.advance_apr_poor,
-                            card.advance_apr_good,
-                            card.advance_apr_great
-                        ] %}
-                            <tr>
-                                <td>{{ credit_tiers[loop.index][1] }}</td>
-                                <td>{{ apr(advance_apr) }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+                {{ apr_table(card, "advance", apr_label="cash advance") }}
             {% elif card.advance_apr_median is not none
                 and card.advance_apr_min != card.advance_apr_max %}
                 <p>
-                    You’ll only know your exact cash advance APR if you are
-                    approved for the card. The median cash advance APR for
-                    this card is {{ apr(card.advance_apr_median) }}.
+                    The median cash advance APR for this card is
+                    {{ apr(card.advance_apr_median) }}.
                 </p>
             {% endif %}
-            {# TODO: Explain this better #}
-            <p>
-               The cash advance fee is charged
-               {{ ' for each cash advance transaction' if
-                    card.cash_advance_fee_for_each_transaction else
-                    ' once per billing cycle'
-                }}.
-            </p>
+            {% if card.cash_advance_fee_for_each_transaction %}
+                <p>
+                    The cash advance fee is charged for each cash advance.
+                </p>
+            {% endif %}
         {% else %}
             <p>This card does not offer cash advances.</p>
         {% endif %}
     </div>
+    {% if card.balance_transfer_offered or card.cash_advance_apr_offered %}
+        <div class="o-card-details-section">
+            {{ speed_bump( {
+                'content': 'If you use your card to transfer a balance or get a
+                    cash advance, you may have to start paying interest on some
+                    or all of your total balance, including new purchases,
+                    as of the date of the transaction.'
+            } ) }}
+        </div>
+    {% endif %}
 
 </div>
 

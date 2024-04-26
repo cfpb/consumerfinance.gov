@@ -1,11 +1,11 @@
 // TODO: Move the theme variables to /enhancements/ for CF.
 
-@margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
-@margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-@mobile_trigger_ht__px: 54px;
+@margin-em: unit(@grid_gutter-width / @base-font-size-px, em);
+@margin-half-em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+@mobile-trigger-ht-px: 54px;
 
 .m-global-search {
-  &_trigger {
+  &__trigger {
     // Hide search unless we have JavaScript (JS).
     html.no-js & {
       display: none;
@@ -42,7 +42,7 @@
     }
   }
 
-  &_content {
+  &__content {
     position: absolute;
     left: 0;
 
@@ -63,24 +63,24 @@
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
 
-    &_fallback {
-      margin: @margin_half__em;
+    &__fallback {
+      margin: @margin-half-em;
     }
 
-    &_trigger {
+    &__trigger {
       padding-top: 5px;
-      height: @mobile_trigger_ht__px;
-      min-width: @mobile_trigger_ht__px;
+      height: @mobile-trigger-ht-px;
+      min-width: @mobile-trigger-ht-px;
 
       &[aria-expanded="true"] {
         background: var(--gray-10);
         border-left: 1px solid var(--gray-40);
 
-        .m-global-search_trigger-open-label {
+        .m-global-search__trigger-open-label {
           display: none;
         }
 
-        .m-global-search_trigger-close-label {
+        .m-global-search__trigger-close-label {
           display: block;
         }
       }
@@ -97,7 +97,7 @@
       }
     }
 
-    &_content {
+    &__content {
       width: 100%;
 
       &-form {
@@ -105,7 +105,7 @@
 
         box-sizing: border-box;
         width: 100%;
-        padding: @margin__em @margin_half__em @margin_half__em;
+        padding: @margin-em @margin-half-em @margin-half-em;
 
         left: 0;
         z-index: 10;
@@ -119,7 +119,7 @@
 
   // Tablet only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    &_trigger {
+    &__trigger {
       // Min-width sets open/close states to same size.
       min-width: 110px;
 
@@ -136,12 +136,12 @@
     padding-top: 6px;
     padding-bottom: 5px;
     // Match CTA offset from divider.
-    padding-right: @margin_half__em;
+    padding-right: @margin-half-em;
     position: relative;
 
     overflow: hidden;
 
-    &_trigger {
+    &__trigger {
       float: right;
 
       // Match height of input with button.
@@ -153,8 +153,8 @@
       }
     }
 
-    &_content {
-      right: @margin_half__em;
+    &__content {
+      right: @margin-half-em;
       width: auto;
       // Add margin so that the focus rectangle is not cropped by
       // the hidden overflow of the search container element.
@@ -164,23 +164,23 @@
 
   // Mobile size.
   .respond-to-min(480px, {
-    &_content-form {
+    &__content-form {
 
       // The  search  button needs to be more flexible than in our usual
       // input-w-btn element to accommodate longer translations of  search ,
       // so we will make it flexbox
-      .o-form__input-w-btn {
+      .o-form--input-w-btn {
         display: flex;
         padding-right: 0.25em;
       }
 
-      .o-form__input-w-btn_input-container {
+      .o-form--input-w-btn__input-container {
         display: flex;
         width: initial;
         flex: 0 1 75%;
       }
 
-      .o-form__input-w-btn_btn-container {
+      .o-form--input-w-btn__btn-container {
         width: initial;
         border-left: 0;
         flex: 1 1 25%;
@@ -209,7 +209,7 @@
   });
 
   // Hide fallback by default.
-  &_fallback {
+  &__fallback {
     display: none;
     padding: 8px;
     padding-right: 0;

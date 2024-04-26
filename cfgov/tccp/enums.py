@@ -38,9 +38,17 @@ ContactTypeChoices = make_choices("Phone", "Website")
 
 CreditTierChoices = [
     ("No credit score", "I don’t have a credit score"),
-    ("Credit score 619 or less", "Less than 619"),
+    ("Credit score 619 or less", "619 or less"),
     ("Credit scores from 620 to 719", "620-719"),
-    ("Credit score of 720 or greater", "Greater than 720"),
+    ("Credit score of 720 or greater", "720 and greater"),
+]
+
+
+CreditTierConciseChoices = [
+    ("No credit score", "No score"),
+    ("Credit score 619 or less", "619 or less"),
+    ("Credit scores from 620 to 719", "620-719"),
+    ("Credit score of 720 or greater", "720+"),
 ]
 
 
@@ -48,6 +56,12 @@ CreditTierColumns = [
     ("Credit score 619 or less", "poor"),
     ("Credit scores from 620 to 719", "good"),
     ("Credit score of 720 or greater", "great"),
+]
+
+
+CreditTierConciseColumnChoices = [
+    (value, concise_label, dict(CreditTierColumns).get(value))
+    for value, concise_label in CreditTierConciseChoices
 ]
 
 
@@ -117,6 +131,13 @@ OverlimitFeeTypeChoices = make_choices(
 
 
 PeriodicFeeTypeChoices = make_choices("Annual", "Monthly", "Weekly", "Other")
+
+
+PurchaseAPRRatings = [
+    (0, "less"),
+    (1, "average"),
+    (2, "more"),
+]
 
 
 PurchaseTransactionFeeTypeChoices = make_choices(

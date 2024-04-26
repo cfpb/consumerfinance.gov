@@ -1,0 +1,13 @@
+{% comment %}
+  This template overrides the default Django template from:
+
+  https://github.com/django/django/blob/4.2.11/django/forms/jinja2/django/forms/widgets/multiple_input.html
+
+  It removes a wrapping <div></div> around each option template which is
+  unnecessary since our checkbox widget is already contained within a div.
+{% endcomment %}
+{% with id=widget.attrs.id %}<div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>{% for group, options, index in widget.optgroups %}{% if group %}
+  <div><label>{{ group }}</label>{% endif %}{% for option in options %}
+    {% include option.template_name with widget=option %}{% endfor %}{% if group %}
+  </div>{% endif %}{% endfor %}
+</div>{% endwith %}

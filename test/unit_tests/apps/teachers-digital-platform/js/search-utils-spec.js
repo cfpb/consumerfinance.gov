@@ -32,9 +32,10 @@ describe('The TDP search utils', () => {
 
   it('should build a search results URL', () => {
     let url = buildSearchResultsURL('foo', 'bar');
-    expect(url).toEqual('foo?bar');
-    url = buildSearchResultsURL('foo', 'bar', { partial: true });
-    expect(url).toEqual('foo?bar&partial');
+    expect(url).toEqual('foo?bar&partial=True');
+
+    url = buildSearchResultsURL('foo', '');
+    expect(url).toEqual('foo?partial=True');
   });
 
   it('should show an element loading', () => {

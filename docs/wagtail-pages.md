@@ -1,7 +1,7 @@
 # Wagtail pages
 
 [Wagtail pages](https://docs.wagtail.org/en/stable/topics/pages.html) are
-[Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/)
+[Django models](https://docs.djangoproject.com/en/stable/topics/db/models/)
 that are constructed of
 [fields](#fields), [StreamFields](#streamfields), and [panels](#panels)
 that are rendered in a standard way.
@@ -24,8 +24,8 @@ and [editor panels](#panels) that present these fields to content editors.
 ## Fields
 
 Database fields in Wagtail pages work exactly the same as in
-[Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/#fields),
-and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/1.11/ref/models/fields/).
+[Django models](https://docs.djangoproject.com/en/stable/topics/db/models/#fields),
+and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/stable/ref/models/fields/).
 
 For example, our `BrowsePage`
 [includes a standard Django `BooleanField`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py)
@@ -194,7 +194,7 @@ This is done by overriding the `template` attribute on the page model.
 For example, the [interactive regulations landing page](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/models/pages.py)
 includes a customized list of recently issued notices that gets loaded dynamically from the Federal Register.
 To do this it provides its own template that inherits from our base templates
-and overrides the `content_sidebar` block to include a separate `recent_notices` template:
+and overrides the `content__sidebar` block to include a separate `recent_notices` template:
 
 ```python
 from v1.models import CFGOVPage

@@ -47,7 +47,7 @@
 
 {% block content_main scoped %}
 
-<div class="block block__flush-top block__flush-bottom search_form">
+<div class="block block--flush-top block--flush-bottom search__form">
     <h1>
         Search regulations
     </h1>
@@ -56,7 +56,7 @@
             Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
         </p>
     </div>
-    <div class="search_wrapper u-mt30">
+    <div class="search__wrapper u-mt30">
         {{ search_bar.render(
             [{ 'name': 'regs', 'value': page.results.regs | join(',') }],
             page.results.search_query
@@ -64,9 +64,9 @@
     </div>
 </div>
 {% if page.results.search_query %}
-<div class="search_results">
-    <div class="block block__flush-top content content__1-3">
-        <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+<div class="search__results">
+    <div class="block block--flush-top content content--1-3">
+        <aside class="content__sidebar content--flush-top-on-small content--flush-sides-on-small filters">
             <h3>Refine results</h3>
             <form action="." method="get" data-js-hook="behavior_change-filter">
                 {% set expandable_settings = {
@@ -75,13 +75,13 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         {% if page.results.search_query %}
                         <input type="hidden" name="q" value="{{ page.results.search_query }}">
                         {% endif %}
                         <p> </p>
-                        <ul class="m-list m-list__unstyled">
+                        <ul class="m-list m-list--unstyled">
                         {% for reg in page.results.all_regs %}
                             {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
                             <li>
@@ -106,13 +106,13 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         <p> </p>
                         {{ radio.render({
                             'label': '25 per page',
                             'value': '25',
-                            'id': 'results_25',
+                            'id': 'results-25',
                             'class': 'reg-radio',
                             'name': 'results',
                             'selected': true if (num_results == 25)
@@ -120,7 +120,7 @@
                         {{ radio.render({
                             'label': '50 per page',
                             'value': '50',
-                            'id': 'results_50',
+                            'id': 'results-50',
                             'class': 'reg-radio',
                             'name': 'results',
                             'selected': true if (num_results == 50)
@@ -128,7 +128,7 @@
                         {{ radio.render({
                             'label': '100 per page',
                             'value': '100',
-                            'id': 'results_100',
+                            'id': 'results-100',
                             'class': 'reg-radio',
                             'name': 'results',
                             'selected': true if (num_results == 100)
@@ -142,13 +142,13 @@
                     'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset">
+                <div class="o-form__group">
+                    <fieldset class="o-form__fieldset">
                         <p> </p>
                         {{ radio.render({
                             'label': 'By relevance',
                             'value': 'relevance',
-                            'id': 'sort_rel',
+                            'id': 'sort-rel',
                             'class': 'reg-radio',
                             'name': 'order',
                             'selected': true if (order == 'relevance')
@@ -156,7 +156,7 @@
                         {{ radio.render({
                             'label': 'By regulation',
                             'value': 'regulation',
-                            'id': 'sort_reg',
+                            'id': 'sort-reg',
                             'class': 'reg-radio',
                             'name': 'order',
                             'selected': true if (order == 'regulation')
@@ -171,14 +171,14 @@
                 </div>
             </form>
         </aside>
-        <div id="regs3k-results" class="content_main content__flush-all-on-small content__flush-bottom">
+        <div id="regs3k-results" class="content__main content--flush-all-on-smallentm">
             {% include 'search-regulations-results.html' %}
         </div>
     </div>
 </div>
 {% else %}
-<div class="block block__flush-top search_results_empty">
-    <p class="results_initial__all">
+<div class="block block--flush-top">
+    <p>
         Search for a term above, then filter the results to find what you’re looking for.
     </p>
 </div>

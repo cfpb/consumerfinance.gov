@@ -1,10 +1,10 @@
 import re
 from functools import partial
-from itertools import product
+from itertools import chain, product
 
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
-from django.db.models import Case, Count, F, Min, Q, Value, When
+from django.db.models import Case, Count, F, Max, Min, Q, Value, When
 from django.db.models.functions import Coalesce
 
 from tailslide import Percentile
@@ -17,7 +17,7 @@ REPORT_DATE_REGEX = re.compile(r"Data as of (\w+ \d+)")
 
 
 Percentile25 = partial(Percentile, percentile=0.25)
-Percentile50 = partial(Percentile, percentile=0.5)
+Percentile75 = partial(Percentile, percentile=0.75)
 
 
 class CardSurveyDataQuerySet(models.QuerySet):
@@ -40,12 +40,54 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         return self.filter(q)
 
+    def invalid_aprs_q(self):
+        """Selector to identify cards with invalid APR relationships.
+
+        This selector includes cards that meet any of these criteria:
+
+        1. {purchase, transfer}_apr_great > {purchase, transfer}_apr_good
+        2. {purchase, transfer}_apr_good > {purchase, transfer}_apr_poor
+        3. {purchase, transfer}_apr_great > {purchase, transfer}_apr_poor
+        4. {purchase, transfer}_median > {purchase, transfer}_max
+        5. {purchase, transfer}_min > {purchase, transfer}_max
+        6. {purchase, transfer}_min > {purchase, transfer}_median
+        """
+        q = Q()
+
+        for apr in ("purchase_apr", "transfer_apr"):
+            for left, right in [
+                ("great", "good"),
+                ("good", "poor"),
+                ("great", "poor"),
+                ("median", "max"),
+                ("min", "max"),
+                ("min", "median"),
+            ]:
+                q |= Q(**{f"{apr}_{left}__gt": F(f"{apr}_{right}")})
+
+        return q
+
+    def exclude_invalid_aprs(self):
+        return self.exclude(self.invalid_aprs_q())
+
+    def only_invalid_aprs(self):
+        return self.filter(self.invalid_aprs_q())
+
     def get_summary_statistics(self):
         """Compute aggregate purchase APR statistics for each credit tier."""
+
+        # These are the statistics we want to compute:
+        # (
+        #   stat name,
+        #   computation function,
+        #   whether to include min/max-only cards in the computation (see below)
+        # )
         stats = [
-            ("pct25", Percentile25),
-            ("pct50", Percentile50),
-            ("count", Count),
+            ("count", Count, True),
+            ("min", Min, True),
+            ("max", Max, True),
+            ("pct25", Percentile25, False),
+            ("pct75", Percentile75, False),
         ]
 
         # Note that we only include a card in a certain tier if it both has a
@@ -53,24 +95,21 @@ class CardSurveyDataQuerySet(models.QuerySet):
         # includes the tier in its value. It's not enough that a card offers an
         # APR to the tier; it also has to be "targeted" to that tier.
         #
-        # If a card is targeted for a tier, we want to include it in the
-        # aggregate statistics for that tier. To do this we need to identify a
-        # single purchase APR value to use for each card. The logic for
-        # choosing this single purchase APR works as follows, using the good
-        # tier as an example:
+        # First we want to compute the 25th and 75th percentiles over all card
+        # purchase APRs in a tier. To do this we need to identify a single
+        # purchase APR value to use for each card. The logic for choosing this
+        # single purchase APR works as follows, using the good tier as an
+        # example:
         #
-        # 1. If the column "targeted_credit_tiers" column doesn't include the
-        #    good tier, assign the card a purchase APR of None, which excludes
-        #    it from aggregation calculations.
+        # 1. If the "targeted_credit_tiers" column doesn't include the good
+        #    tier, assign the card a purchase APR of None, which excludes it
+        #    from percentile calculations.
         # 2. Otherwise, if the column "purchase_apr_good" is defined, use it
-        #    as the card's purchase APR.
+        #    as the card's purchase APR for percentile computations.
         # 3. Otherwise, if the column "purchase_apr_median" is defined, use it
-        #    as the card's purchase APR.
-        # 4. Otherwise, if both columns "purchase_apr_min" and
-        #    "purchase_apr_max" are defined, use the the max APR as the card's
-        #    purchase APR.
-        # 5. Otherwise, use an APR of None, which excludes the card from
-        #    aggregation calculations.
+        #    as the card's purchase APR for percentile computations.
+        # 4. Otherwise, use an APR of None, which excludes the card from
+        #    percentile calculations.
         #
         # This logic can be represented in SQL roughly as follows to aggregate
         # the purchase_apr_good_pct25 statistic:
@@ -79,6 +118,47 @@ class CardSurveyDataQuerySet(models.QuerySet):
         #   PERCENTILE_CONT(0.25)
         #   WITHIN GROUP (
         #     ORDER BY CASE
+        #       WHEN
+        #         targeted_credit_tiers" @> ["Credit scores from 620 to 719"]
+        #       THEN
+        #         COALESCE(
+        #           purchase_apr_good,
+        #           purchase_apr_median
+        #         )
+        #       ELSE NULL
+        #     END
+        #   ) AS purchase_apr_good_pct25
+        # FROM ...
+        #
+        # Note that we deliberately do not use the global (non-tier-specific)
+        # "purchase_apr_min" or "purchase_apr_max" columns when computing APR
+        # percentiles. This excludes cards that lack median purchase APR values
+        # but do provide a min/max pair.
+        #
+        # We also want to count how many cards are in each tier, which we can
+        # do at the same time. This is equivalent to counting how many cards
+        # have a non-null purchase APR for that tier. We can use the same logic
+        # as above, with one exception: here we do want to include cards that
+        # lack median APR values and have only a min/max pair. We do this by
+        # adding an additional step to the logic, using the good tier as an
+        # example:
+        #
+        # 1. If the "targeted_credit_tiers" column doesn't include the good
+        #    tier, exclude this card from the count.
+        # 2. Otherwise, if the column "purchase_apr_good" is defined, include
+        #    this card in the count.
+        # 3. Otherwise, if the column "purchase_apr_median" is defined, include
+        #    this card in the count.
+        # 4. Otherwise, if both columns "purchase_apr_min" and
+        #    "purchase_apr_max" are defined, include this card in the count.
+        # 4. Otherwise, exclude this card from the count.
+        #
+        # This logic can be represented in SQL roughly as follows to aggregate
+        # the purchase_apr_good_count statistic:
+        #
+        # SELECT
+        #   COUNT(
+        #     CASE
         #       WHEN
         #         targeted_credit_tiers" @> ["Credit scores from 620 to 719"]
         #       THEN
@@ -96,30 +176,49 @@ class CardSurveyDataQuerySet(models.QuerySet):
         #         )
         #       ELSE NULL
         #     END
-        #   ) AS purchase_apr_good_pct25
+        #   ) AS purchase_apr_good_count
         # FROM ...
         #
-        # This logic is expressed in Django code here:
+        # Both the percentile and count logic is expressed in Django code here:
         aggregates = {
             f"purchase_apr_{tier_suffix}_{stat_name}": stat_fn(
                 Case(
                     When(
                         targeted_credit_tiers__contains=tier_value,
                         then=Coalesce(
-                            F(f"purchase_apr_{tier_suffix}"),
-                            F("purchase_apr_median"),
-                            Case(
-                                When(
-                                    Q(purchase_apr_min__isnull=False)
-                                    & Q(purchase_apr_max__isnull=False),
-                                    then=F("purchase_apr_max"),
-                                ),
-                            ),
+                            *(
+                                [
+                                    F(f"purchase_apr_{tier_suffix}"),
+                                    F("purchase_apr_median"),
+                                ]
+                                + (
+                                    [
+                                        Case(
+                                            When(
+                                                Q(
+                                                    purchase_apr_min__isnull=False
+                                                )
+                                                & Q(
+                                                    purchase_apr_max__isnull=False
+                                                ),
+                                                then=F(
+                                                    "purchase_apr_"
+                                                    + ["max", "min"][
+                                                        stat_name == "min"
+                                                    ]
+                                                ),
+                                            ),
+                                        )
+                                    ]
+                                    if include_min_max_only
+                                    else []
+                                )
+                            )
                         ),
                     ),
                 )
             )
-            for (stat_name, stat_fn), (
+            for (stat_name, stat_fn, include_min_max_only), (
                 tier_value,
                 tier_suffix,
             ) in product(stats, enums.CreditTierColumns)
@@ -157,7 +256,20 @@ class CardSurveyDataQuerySet(models.QuerySet):
         # the time the min and the max APR for each of these combination will
         # end up being the same.
         #
-        # See get_summary_statistics for details on how this logic works.
+        # The logic for APR selection works the same way as the count logic in
+        # get_summary_statistics above. Using purchase APR for the good tier as
+        # an example:
+        #
+        # 1. If the "targeted_credit_tiers" column doesn't include the good
+        #    tier, assign the card min and max good purchase APRs of None.
+        # 2. Otherwise, if the column "purchase_apr_good" is defined, use it
+        #    for both the min and max good purchase APRs.
+        # 3. Otherwise, if the column "purchase_apr_median" is defined, use it
+        #    for both the min and max good purchase APRs.
+        # 4. Otherwise, if both columns "purchase_apr_min" and
+        #    "purchase_apr_max" are defined, use them as the min and max
+        #    good purchase APRs.
+        # 5. Otherwise, assign the card good min and max purchase APRs of None.
         #
         # This logic can be represented in SQL roughly as follows to annotate
         # the purchase_apr_good_min column:
@@ -224,8 +336,8 @@ class CardSurveyDataQuerySet(models.QuerySet):
         # assigned as:
         #
         #   purchase APR < 25th percentile: 0
-        #   purchase APR < 50th percentile: 1
-        #   purchase APR >= 50th percentile: 2
+        #   purchase APR < 75th percentile: 1
+        #   purchase APR >= 75th percentile: 2
         #   null purchase APR: null
         #
         # This logic can be represented in SQL roughly as:
@@ -237,7 +349,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
         #     THEN
         #       0
         #     WHEN
-        #       purchase_apr_good_max < purchase_apr_good_pct50
+        #       purchase_apr_good_max < purchase_apr_good_pct75
         #     THEN
         #       1
         #     WHEN
@@ -269,7 +381,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
                     When(
                         **{
                             f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
-                                f"purchase_apr_{tier_suffix}_pct50"
+                                f"purchase_apr_{tier_suffix}_pct75"
                             ]
                             or 0
                         },
@@ -612,3 +724,17 @@ class CardSurveyData(models.Model):
             fee += 52 * self.weekly_fee
 
         return fee
+
+    @property
+    def purchase_apr_data_incomplete(self):
+        return self.purchase_apr_offered and not any(
+            chain(
+                *[
+                    [
+                        getattr(self, f"purchase_apr_{tier_column}_min"),
+                        getattr(self, f"purchase_apr_{tier_column}_max"),
+                    ]
+                    for _, tier_column in enums.CreditTierColumns
+                ]
+            )
+        )

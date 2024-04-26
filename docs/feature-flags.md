@@ -54,10 +54,10 @@ An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://g
 {% if flag_enabled('BETA_NOTICE') %}
 <div class="o-banner">
     <div class="wrapper
-                wrapper__match-content">
+                wrapper--match-content">
         <div class="m-notification
-                    m-notification__warning
-                    m-notification__visible">
+                    m-notification--warning
+                    m-notification--visible">
             …
             This beta site is a work in progress.
         </div>
@@ -86,10 +86,10 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 {% if beta_flag %}
 <div class="o-banner">
     <div class="wrapper
-                wrapper__match-content">
+                wrapper--match-content">
         <div class="m-notification
-                    m-notification__warning
-                    m-notification__visible">
+                    m-notification--warning
+                    m-notification--visible">
             …
             This beta site is a work in progress.
         </div>

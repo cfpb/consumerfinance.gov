@@ -37,7 +37,7 @@ describe('Planning your Social Security', () => {
       'not.be.visible',
     );
     cy.get(
-      '#claiming-social-security #step-one-form .cf-icon-svg__help-round',
+      '#claiming-social-security #step-one-form .cf-icon-svg--help-round',
     ).click();
     cy.get('#claiming-social-security #tooltip-container').should('be.visible');
   });
@@ -45,7 +45,7 @@ describe('Planning your Social Security', () => {
   it('should show error if user is over the age of 70', () => {
     claim.enterAgeOver70();
     cy.get(
-      '#claiming-social-security #step-one-form .m-notification__warning',
+      '#claiming-social-security #step-one-form .m-notification--warning',
     ).should('be.visible');
   });
 
@@ -63,7 +63,7 @@ describe('Planning your Social Security', () => {
   //*** Check to see if each bar is showing on the graph ****/
   it('should display all bars in the graph', () => {
     claim.enterAgeUnder50();
-    cy.get('#claiming-social-security #claim-canvas .graph__bar').each(
+    cy.get('#claiming-social-security #claim-canvas .graph--bar').each(
       (elem) => {
         cy.wrap(elem).should('not.have.css', 'height', '0px');
       },
@@ -72,7 +72,7 @@ describe('Planning your Social Security', () => {
 
   it('should only display bars >= age 65 in the graph', () => {
     claim.enterAgeOver50();
-    cy.get('#claiming-social-security #claim-canvas .graph__bar').each(
+    cy.get('#claiming-social-security #claim-canvas .graph--bar').each(
       (elem, index) => {
         switch (index) {
           case 0:

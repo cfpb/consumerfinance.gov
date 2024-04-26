@@ -12,7 +12,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from .enums import RewardsChoices, StateChoices
+from . import enums
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
@@ -36,7 +36,6 @@ class LandingPageView(FlaggedTemplateView):
                 "title": title(self.heading),
                 "heading": self.heading,
                 "form": LandingPageForm(),
-                "stats": CardSurveyData.objects.get_summary_statistics(),
             }
         )
 
@@ -54,6 +53,27 @@ class LandingPageView(FlaggedTemplateView):
                 doseq=True,
             )
         )
+
+
+class AboutView(FlaggedTemplateView):
+    flag_name = "TCCP"
+    template_name = "tccp/about.html"
+    breadcrumb_items = [
+        {
+            "title": "Credit cards",
+            "href": "/consumer-tools/credit-cards/",
+        },
+        {
+            "title": LandingPageView.heading,
+            "href": reverse_lazy("tccp:landing_page"),
+        },
+    ]
+
+    def get_context_data(self, **kwargs):
+        return {
+            **super().get_context_data(**kwargs),
+            "breadcrumb_items": self.breadcrumb_items,
+        }
 
 
 class CardListView(FlaggedViewMixin, ListAPIView):
@@ -76,7 +96,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
     ]
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.exclude_invalid_aprs()
 
     def get_template_names(self):
         if self.request.htmx:
@@ -125,23 +145,12 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             form = filter_backend.used_filterset.form
             situations = form.cleaned_data["situations"]
 
-            # We want to aggregate the counts of cards in each of the {less
-            # than average, average, more than average} purchase APR ratings.
-            # We do this so we can display a results summary like "50 cards
-            # with less than average interest". We could do this with another
-            # database query but the size of the data is small enough that we
-            # can just as easily do it in Python.
-            purchase_apr_rating_labels = ["less", "average", "more"]
-            purchase_apr_rating_counts = {
-                rating: len(
-                    [
-                        card
-                        for card in cards
-                        if card["purchase_apr_for_tier_rating"] == i
-                    ]
-                )
-                for i, rating in enumerate(purchase_apr_rating_labels)
-            }
+            purchase_apr_rating_counts = self.get_purchase_apr_rating_counts(
+                cards
+            )
+            purchase_apr_rating_labels = list(
+                purchase_apr_rating_counts.keys()
+            )
 
             response.data.update(
                 {
@@ -154,11 +163,30 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "speed_bumps": SituationSpeedBumps(situations),
                     "purchase_apr_rating_labels": purchase_apr_rating_labels,
                     "purchase_apr_rating_counts": purchase_apr_rating_counts,
-                    "rewards_lookup": dict(RewardsChoices),
+                    "rewards_lookup": dict(enums.RewardsChoices),
                 }
             )
 
         return response
+
+    @classmethod
+    def get_purchase_apr_rating_counts(cls, cards):
+        # We want to aggregate the counts of cards in each of the {less
+        # than average, average, more than average} purchase APR ratings.
+        # We do this so we can display a results summary like "50 cards
+        # with less than average interest". We could do this with another
+        # database query but the size of the data is small enough that we
+        # can just as easily do it in Python.
+        return {
+            rating_label: len(
+                [
+                    card
+                    for card in cards
+                    if card["purchase_apr_for_tier_rating"] == rating_score
+                ]
+            )
+            for rating_score, rating_label in enums.PurchaseAPRRatings
+        }
 
 
 class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
@@ -177,7 +205,9 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
 
     @cached_property
     def summary_stats(self):
-        return self.model.objects.get_summary_statistics()
+        return (
+            self.model.objects.exclude_invalid_aprs().get_summary_statistics()
+        )
 
     def get_queryset(self):
         return self.model.objects.with_ratings(self.summary_stats)
@@ -198,8 +228,10 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
             response.data.update(
                 {
                     "breadcrumb_items": self.breadcrumb_items,
-                    "state_lookup": dict(StateChoices),
-                    "rewards_lookup": dict(RewardsChoices),
+                    "credit_tier_lookup": enums.CreditTierConciseColumnChoices,
+                    "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
+                    "state_lookup": dict(enums.StateChoices),
+                    "rewards_lookup": dict(enums.RewardsChoices),
                 }
             )
 

@@ -13,7 +13,7 @@ const BASE_CLASS = 'input-contains-label';
 function ClearableInput(element) {
   const _dom = checkDom(element, BASE_CLASS);
   const _inputDom = _dom.querySelector('input');
-  const _clearBtnDom = _dom.querySelector('.' + BASE_CLASS + '_after__clear');
+  const _clearBtnDom = _dom.querySelector(`.${BASE_CLASS}__after--clear`);
 
   let _isClearShowing = true;
 

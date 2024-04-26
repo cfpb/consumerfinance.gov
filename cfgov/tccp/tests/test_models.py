@@ -1,6 +1,9 @@
+from itertools import product
+
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
+from tccp.enums import CreditTierColumns
 from tccp.models import CardSurveyData
 
 from .baker import baker
@@ -128,17 +131,49 @@ class CardSurveyDataQuerySetTests(TestCase):
             {
                 "count": 3,
                 "first_report_date": today,
+                # Poor APRs: 3, 9
                 "purchase_apr_poor_count": 2,
+                "purchase_apr_poor_min": 3,
+                "purchase_apr_poor_max": 9,
                 "purchase_apr_poor_pct25": 4.5,
-                "purchase_apr_poor_pct50": 6,
+                "purchase_apr_poor_pct75": 7.5,
+                # Good APRs: 2, 6
                 "purchase_apr_good_count": 2,
+                "purchase_apr_good_min": 2,
+                "purchase_apr_good_max": 6,
                 "purchase_apr_good_pct25": 3,
-                "purchase_apr_good_pct50": 4,
+                "purchase_apr_good_pct75": 5,
+                # Great APRs: 0, 1, 3
                 "purchase_apr_great_count": 3,
+                "purchase_apr_great_min": 0,
+                "purchase_apr_great_max": 3,
                 "purchase_apr_great_pct25": 0.5,
-                "purchase_apr_great_pct50": 1,
+                "purchase_apr_great_pct75": 2,
             },
         )
+
+    def test_exclude_invalid_aprs(self):
+        baker.make(
+            CardSurveyData,
+            purchase_apr_great=0.5,
+            purchase_apr_good=0.25,
+        )
+        baker.make(
+            CardSurveyData,
+            purchase_apr_great=0.25,
+            purchase_apr_good=0.5,
+        )
+
+        qs = CardSurveyData.objects.all()
+        self.assertEqual(qs.count(), 2)
+
+        invalid_aprs = qs.only_invalid_aprs()
+        self.assertEqual(invalid_aprs.count(), 1)
+        self.assertEqual(invalid_aprs[0].purchase_apr_great, 0.5)
+
+        valid_aprs = qs.exclude_invalid_aprs()
+        self.assertEqual(valid_aprs.count(), 1)
+        self.assertEqual(valid_aprs[0].purchase_apr_great, 0.25)
 
 
 class CardSurveyDataTests(SimpleTestCase):
@@ -164,3 +199,18 @@ class CardSurveyDataTests(SimpleTestCase):
                 self.assertEqual(
                     CardSurveyData(**test).annual_fee_estimated, expected
                 )
+
+    def test_purchase_apr_data_incomplete(self):
+        card = CardSurveyData(purchase_apr_offered=True)
+        for annotated_column in [
+            f"purchase_apr_{tier_column}_{suffix}"
+            for (_, tier_column), suffix in product(
+                CreditTierColumns, ("min", "max")
+            )
+        ]:
+            setattr(card, annotated_column, None)
+
+        self.assertTrue(card.purchase_apr_data_incomplete)
+
+        card.purchase_apr_good_min = 0.99
+        self.assertFalse(card.purchase_apr_data_incomplete)

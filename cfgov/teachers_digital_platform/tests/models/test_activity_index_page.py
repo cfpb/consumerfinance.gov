@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from unittest import mock
 
-from django.http import HttpRequest
 from django.test import RequestFactory, TestCase
 
 from wagtail.blocks import StreamValue
@@ -31,9 +30,7 @@ from teachers_digital_platform.models import (
     get_activity_setup,
 )
 from teachers_digital_platform.models.activity_index_page import (
-    Paginator,
     parse_dsl_facets,
-    validate_page_number,
 )
 from v1.models import HomePage
 
@@ -248,19 +245,6 @@ class ActivitySetUpTests(TestCase):
         mptt_instance = ActivityTopic.objects.first()
         self.assertEqual(str(mptt_instance), mptt_instance.title)
 
-    def test_validate_pagination_number(self):
-        paginator = Paginator([{"fake": "results"}] * 30, 25)
-        request = HttpRequest()
-        self.assertEqual(validate_page_number(request, paginator), 1)
-        request.GET.update({"page": "2"})
-        self.assertEqual(validate_page_number(request, paginator), 2)
-        request = HttpRequest()
-        request.GET.update({"page": "1000"})
-        self.assertEqual(validate_page_number(request, paginator), 1)
-        request = HttpRequest()
-        request.GET.update({"page": "<script>Boo</script>"})
-        self.assertEqual(validate_page_number(request, paginator), 1)
-
 
 class TestActivityIndexPageSearch(TestCase):
     fixtures = ["tdp_initial_data"]
@@ -302,6 +286,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_search_page_get_template(self):
         search_request = self.get_request()
+        self.search_page.serve(search_request)
         self.assertEqual(
             self.search_page.get_template(search_request),
             "teachers_digital_platform/activity_index_page.html",
@@ -310,13 +295,7 @@ class TestActivityIndexPageSearch(TestCase):
     def test_search_results_page_get_template(self):
         # Arrange
         request = self.get_request(data={"partial": "true"})
-        self.assertEqual(
-            self.search_page.get_template(request),
-            "teachers_digital_platform/activity_search_facets_and_results.html",
-        )  # noqa: E501
-        # Act - Should return partial results even if no value is provided
-        request = self.get_request(data={"partial": ""})
-        # Assert
+        self.search_page.serve(request)
         self.assertEqual(
             self.search_page.get_template(request),
             "teachers_digital_platform/activity_search_facets_and_results.html",

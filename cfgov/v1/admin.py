@@ -1,4 +1,3 @@
-import django
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -13,12 +12,7 @@ admin.site.unregister(User)
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    if django.VERSION >= (4, 1):  # pragma: no cover
-        actions = UserAdmin.actions + ("send_password_reset_email",)
-    else:
-        actions = UserAdmin.actions + [
-            "send_password_reset_email",
-        ]
+    actions = UserAdmin.actions + ("send_password_reset_email",)
 
     def send_password_reset_email(self, request, queryset):
         for user in queryset:

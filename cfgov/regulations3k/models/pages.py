@@ -337,6 +337,7 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
             {
                 "regulation": self.regulation,
                 "current_version": self.get_effective_version(request),
+                "canonical": request.build_absolute_uri(self.url).lower(),
                 "breadcrumb_items": self.get_breadcrumbs(
                     request, *args, **kwargs
                 ),

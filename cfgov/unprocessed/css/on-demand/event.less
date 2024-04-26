@@ -9,7 +9,7 @@
 
 /* Event template settings
    ========================================================================== */
-.t-event_details {
+.t-event__details {
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     .modification-date {
@@ -20,7 +20,7 @@
 
 /* Event-Agenda Table
    ========================================================================== */
-.event-agenda_table {
+.event-agenda__table {
   h2 + & td[data-label]::before {
     margin-top: 0;
   }
@@ -41,7 +41,7 @@
 /* Event-Post
    ========================================================================== */
 
-.post__event {
+.post--event {
   > footer {
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
@@ -56,27 +56,27 @@
 /* Event-Media-Container
    ========================================================================== */
 
-.event-media_container {
+.event-media__container {
   border: 1px solid var(--gray-10);
 }
 
 /* Event-Meta
    ========================================================================== */
 
-.event-meta_description {
+.event-meta__description {
   text-transform: none;
 
-  &__block {
+  &--block {
     display: block;
   }
 }
 
-.event-meta_address {
+.event-meta__address {
   text-transform: capitalize;
   display: inline-block;
 
-  .event-meta_street:not(:empty)::after,
-  .event-meta_suite:not(:empty)::after {
+  .event-meta__street:not(:empty)::after,
+  .event-meta__suite:not(:empty)::after {
     // Adding a linebreak after the street if it's contents
     // aren't empty.
     content: '\A';
@@ -84,7 +84,7 @@
   }
 }
 
-.event-calendar_container .datetime {
+.event-calendar__container .datetime {
   letter-spacing: normal;
 }
 
@@ -105,7 +105,7 @@
     margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
   });
 
-  &_body {
+  &__body {
     margin: unit(26px / @base-font-size-px, em) 0
       unit(26px / @base-font-size-px, em);
   }
@@ -115,7 +115,7 @@
   }
 }
 
-.event-status_livestream p:first-child {
+.event-status__livestream p:first-child {
   line-height: 1;
   // The margin is kept at 10px to accommodate the line-height
   // of the text so that the gap appears to be 15px.
@@ -130,7 +130,7 @@
   border-top: 5px solid var(--green);
 }
 
-.event-venue_details {
+.event-venue__details {
   padding: 1.5em 1.5em 0.5em;
 
   .respond-to-max(@bp-xs-max, {
@@ -142,22 +142,22 @@
     text-transform: uppercase;
   }
 
-  .event-meta_address {
+  .event-meta__address {
     .respond-to-max(@bp-xs-max, {
       margin: 0;
     });
   }
 
-  .event-meta_venue {
+  .event-meta__venue {
     display: block;
   }
 }
 
-.event-venue_header {
+.event-venue__header {
   margin-bottom: 10px;
 }
 
-.event-venue_live-btn {
+.event-venue__live-btn {
   margin-right: 10px;
   background-color: var(--green);
   color: var(--black);
@@ -165,7 +165,7 @@
   padding: 6px 15px 4px;
 }
 
-.event-venue_heading {
+.event-venue__heading {
   display: inline-block;
   margin-bottom: 0;
   vertical-align: middle;
@@ -181,7 +181,7 @@
   text-align: center;
 }
 
-.post_heading {
+.post__heading {
   .h2();
   margin-bottom: unit(13px / @font-size, em);
   // Tablet and above.
@@ -190,12 +190,12 @@
   });
 }
 
-.post_dek {
+.post__dek {
   .h4();
   margin-bottom: unit(20px / @font-size, em);
 }
 
-.post_body {
+.post__body {
   .u-clearfix();
   margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
 

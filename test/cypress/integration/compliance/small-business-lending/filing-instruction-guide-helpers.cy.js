@@ -8,7 +8,7 @@ export class FilingInstructionGuide {
   }
 
   toc() {
-    return cy.get('.o-fig .o-fig_sidebar');
+    return cy.get('.o-fig .o-fig__sidebar');
   }
 
   getSection(section) {
@@ -44,11 +44,11 @@ export class FilingInstructionGuide {
   }
 
   getMobileTOCHeader() {
-    return cy.get('.o-fig_sidebar .o-secondary-nav_header');
+    return cy.get('.o-fig__sidebar .o-secondary-nav__header');
   }
 
   getMobileTOCBody() {
-    return cy.get('.o-secondary-nav_content');
+    return cy.get('.o-secondary-nav__content');
   }
 
   goToSection(section) {
@@ -56,7 +56,7 @@ export class FilingInstructionGuide {
   }
 
   getNavItem(section) {
-    return cy.get(`a.o-secondary-nav_link[href="#${section}"]`);
+    return cy.get(`a.o-secondary-nav__link[href="#${section}"]`);
   }
 
   clickNavItem(section) {
@@ -76,11 +76,11 @@ export class FilingInstructionGuide {
   }
 
   toggleToc() {
-    return cy.get('.o-secondary-nav_header').click();
+    return cy.get('.o-secondary-nav__header').click();
   }
 
   scrollToBottom() {
-    return cy.get('.o-fig_heading').last().scrollIntoView();
+    return cy.get('.o-fig__heading').last().scrollIntoView();
   }
 
   getUnrenderedListTags() {

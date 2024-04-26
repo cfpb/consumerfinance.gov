@@ -11,7 +11,7 @@ let prevTarget;
  */
 function init() {
   appRoot = document.querySelector('main.o-fig');
-  navItems = appRoot.querySelectorAll('.o-secondary-nav_link[href]');
+  navItems = appRoot.querySelectorAll('.o-secondary-nav__link[href]');
 
   navItems = Array.from(navItems).reduce(
     (map, navItem) => map.set(navItem.getAttribute('href'), navItem),
@@ -20,7 +20,7 @@ function init() {
 
   navItemContainers = Array.from(navItems).reduce((map, [key, navItem]) => {
     const container =
-      navItem.closest('.o-secondary-nav_list__children') ||
+      navItem.closest('.o-secondary-nav__list--children') ||
       navItem.nextElementSibling;
     return map.set(key, container);
   }, new Map());
@@ -28,10 +28,10 @@ function init() {
   // TODO: Add these methods to SecondaryNav API to avoid adjusting
   // internal secondary nav state here.
   highlightNavItem = (target) =>
-    navItems.get(target).classList.add('o-secondary-nav_link__current');
+    navItems.get(target).classList.add('o-secondary-nav__link--current');
 
   unHighlightNavItem = (target) =>
-    navItems.get(target).classList.remove('o-secondary-nav_link__current');
+    navItems.get(target).classList.remove('o-secondary-nav__link--current');
 
   scrollNavItem = (target) =>
     navItems.get(target).scrollIntoView({

@@ -2,19 +2,19 @@
 {% set block_types = {
     'Fig_Section': {
         'heading': 'h2',
-        'class': 'o-fig_section'
+        'class': 'o-fig__section'
     },
     'Fig_Subsection': {
         'heading': 'h3',
-        'class': 'o-fig_section__sub'
+        'class': 'o-fig__section--sub'
     },
     'Fig_Level_3_Subsection': {
         'heading': 'h4',
-        'class': 'o-fig_section__sub-sub'
+        'class': 'o-fig__section--sub-sub'
     },
 } %}
 {% set block_heading_level = block_types[block_type].heading | default('h4') %}
-{% set block_class = block_types[block_type].class | default('o-fig_section') %}
+{% set block_class = block_types[block_type].class | default('o-fig__section') %}
 
 {% if block_type in ['Fig_Section', 'Fig_Subsection'] %}
     {% set header = value.section_id + ". " + value.header %}
@@ -28,7 +28,7 @@
 
 <div class="{{ block_class }}" data-search-section data-scrollspy="{{ block_toc_id }}">
     <{{ block_heading_level }}
-        class="o-fig_heading">
+        class="o-fig__heading">
         <a id="{{ value.section_id }}"
            href="#{{ value.section_id }}">
                 {{ header }}

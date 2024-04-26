@@ -21,13 +21,13 @@
   });
 
   // TODO - this will be updated to data-open='true' in newer expandables.
-  .o-expandable_target__expanded {
-    .o-expandable_cue-close {
+  .o-expandable__target--expanded {
+    .o-expandable__cue-close {
       display: block;
     }
   }
-  .o-expandable_target__collapsed {
-    .o-expandable_cue-open {
+  .o-expandable__target--collapsed {
+    .o-expandable__cue-open {
       display: block;
     }
   }
@@ -35,7 +35,7 @@
 
 // Regs3K secondary nav sections
 .o-regs3k-sections {
-  .o-expandable_header {
+  .o-expandable__header {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       padding: 0.9375em 0;
@@ -43,7 +43,7 @@
     border: 0;
   }
 
-  .o-expandable_content {
+  .o-expandable__content {
     padding: 0;
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
@@ -68,7 +68,7 @@
 
 // Regs3K secondary nav header
 .o-regs3k-navigation {
-  .o-expandable_label {
+  .o-expandable__label {
     padding: 0 !important;
     font-size: 1.125em;
   }
@@ -79,7 +79,7 @@
     unit( 15px / @base-font-size-px, em );
   });
 
-  .o-regs3k-navigation_header {
+  .o-regs3k-navigation__header {
     display: none;
 
     // Tablet and below.
@@ -89,21 +89,21 @@
 
     padding: unit(10px / @base-font-size-px, em) 0
       unit(5px / @base-font-size-px, em);
-    .o-expandable_label {
+    .o-expandable__label {
       text-transform: uppercase;
     }
   }
 }
 
 // TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
-.o-secondary-nav_link {
+.o-secondary-nav__link {
   color: var(--pacific);
 
-  &__current {
+  &--current {
     color: var(--black);
   }
 
-  &__parent {
+  &--parent {
     .heading-4();
     font-size: 1em;
     font-weight: 300;

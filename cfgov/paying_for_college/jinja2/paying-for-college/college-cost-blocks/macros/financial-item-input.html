@@ -23,15 +23,15 @@
 {% macro render( value ) -%}
 {% set ht_id = 'ht_' ~ value.id %}
 <div class="financial-item">
-    <div class="financial-item_label">
-        <label class="a-label a-label__heading" for="{{ value.id }}">
+    <div class="financial-item__label">
+        <label class="a-label a-label--heading" for="{{ value.id }}">
             {{ value.label }}
         </label>
         {%- if value.helper_text -%}
             <p id="{{ ht_id }}"><small>{{ value.helper_text | safe }}</small></p>
         {%- endif -%}
     </div>
-    <div class="financial-item_value">
+    <div class="financial-item__value">
         <input class="a-text-input"
                type="text"
                autocomplete="off"

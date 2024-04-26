@@ -8,30 +8,30 @@ import beforeExpandableTransitionInit, {
 const HTML_SNIPPET = `
   <div id="test-div"
      class="o-expandable
-            o-expandable__background
+            o-expandable--background
             ">
-    <button class="o-expandable_header" type="button">
-        <span class="o-expandable_label">
+    <button class="o-expandable__header" type="button">
+        <span class="o-expandable__label">
             Building block
         </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="Show">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="Show">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"/></svg>
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+            <span class="o-expandable__cue-close" role="img" aria-label="Hide">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h527.1c27.6 0 50 22.4 50 50s-22.4 50-50 50z"/></svg>
             </span>
         </span>
     </button>
 
-    <div class="o-expandable_content
-                o-expandable_content__onload-open
-                o-expandable__mobile-collapsed">
-            <div class="o-form_group u-mt15">
-                <fieldset class="o-form_fieldset">
-                    <ul class="m-list m-list__unstyled">
+    <div class="o-expandable__content
+                o-expandable__content--onload-open
+                o-expandable--mobile-collapsed">
+            <div class="o-form__group u-mt15">
+                <fieldset class="o-form__fieldset">
+                    <ul class="m-list m-list--unstyled">
                         <li>
-                            <div class="m-form-field m-form-field__checkbox">
+                            <div class="m-form-field m-form-field--checkbox">
                                 <input type="checkbox" class="a-checkbox" aria-label="Executive function" id="building-block--executive-function" name="building_block" value="1">
                                 <label class="a-label" for="building-block--executive-function">Executive function</label>
                             </div>
@@ -46,14 +46,14 @@ const HTML_SNIPPET = `
 global.console = { error: jest.fn(), log: jest.fn() };
 
 let expandableDiv;
-const OPEN_DEFAULT_CLASS = 'o-expandable_content__onload-open';
+const OPEN_DEFAULT_CLASS = 'o-expandable__content--onload-open';
 
 describe('expandable-mobile', () => {
   beforeEach(() => {
     setInnerWidth(1000);
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    expandableDiv = document.querySelector('#test-div .o-expandable_content');
+    expandableDiv = document.querySelector('#test-div .o-expandable__content');
   });
 
   it('should not throw any errors on init', () => {

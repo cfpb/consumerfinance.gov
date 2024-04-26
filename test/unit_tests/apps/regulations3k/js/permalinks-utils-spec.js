@@ -29,17 +29,17 @@ const HTML_SNIPPET2 = `
 
 const HTML_SNIPPET3 = `
   <div class="regulations3k">
-    <div id="content_main">
+    <div id="content__main">
       <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
-          <div class="o-regulations-wayfinder_sidebar">
+          <div class="o-regulations-wayfinder__sidebar">
               <span class="h4">
                   Regulation FOO
               </span>
           </div>
-          <div class="o-regulations-wayfinder_main">
-              <div class="o-regulations-wayfinder_content">
-                  <a href="#NOPE" class="h4 o-regulations-wayfinder_link">
-                      <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+          <div class="o-regulations-wayfinder__main">
+              <div class="o-regulations-wayfinder__content">
+                  <a href="#NOPE" class="h4 o-regulations-wayfinder__link">
+                      <span class="o-regulations-wayfinder__section-title"></span><span class="o-regulations-wayfinder__marker"></span>
                   </a>
               </div>
           </div>
@@ -246,18 +246,18 @@ describe('The Regs3K permalinks utils', () => {
     it('should update the wayfinder', () => {
       updateParagraphPositions();
       const mainContent = document.querySelector(
-        '.regulations3k #content_main',
+        '.regulations3k #content__main',
       );
       const wayfinder = document.querySelector('.o-regulations-wayfinder');
 
       updateWayfinder(false, wayfinder, mainContent);
       expect(
         document
-          .querySelector('.o-regulations-wayfinder_link')
+          .querySelector('.o-regulations-wayfinder__link')
           .textContent.trim(),
       ).toEqual('Comment 33(a)(2)-2');
       expect(
-        document.querySelector('.o-regulations-wayfinder_link').href,
+        document.querySelector('.o-regulations-wayfinder__link').href,
       ).toEqual('http://localhost/#33-a-2-Interp-2');
     });
   });

@@ -1,14 +1,12 @@
-<div class="college-costs_intro-segment">
+<div class="college-costs__intro-segment u-js-only">
     {% if return_user %}
-        <div class="content_wrapper">
-            <div class="content_main">
-                {% include "_templates/no_js.html" %}
+        <div class="content__wrapper">
+            <div class="content__main">
                 <div class="m-notification
-                            m-notification__visible
-                            u-js-only">
+                            m-notification--visible">
                     {{ svg_icon('updating') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">The page is loading…</div>
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">The page is loading…</div>
                     </div>
                 </div>
             </div>
@@ -19,8 +17,8 @@
                 {% include_block block %}
             {% endif %}
         {%- endfor %}
-        <div class="content_wrapper">
-            <div class="content_main">
+        <div class="content__wrapper">
+            <div class="content__main">
                {% for block in page.header -%}
                     {% if block.block_type != 'hero' %}
                         {{ render_block.render(block, loop.index) }}
@@ -29,8 +27,8 @@
                 {% for block in page.content -%}
                     {{ render_block.render(block, loop.index) }}
                 {%- endfor %}
-                <div class="college-costs_tool-section_buttons">
-                    <button class="a-btn college-costs_buttons__start btn__get-started">Get started</button>
+                <div class="college-costs__tool-section-buttons">
+                    <button class="a-btn college-costs__buttons--start btn__get-started">Get started</button>
                 </div>
             </div>
         </div>

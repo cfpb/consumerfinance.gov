@@ -23,28 +23,28 @@
 
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
-    <div class="m-global-search_fallback">
+    <div class="m-global-search__fallback">
         <a rel="nofollow" href="{{ search_url }}">
             {{ _('Search') }}
         </a>
     </div>
-    <button class="m-global-search_trigger"
+    <button class="m-global-search__trigger"
             data-js-hook="behavior_flyout-menu_trigger"
             aria-label="{{ _('Search the consumerfinance.gov website') }}">
-        <span class="m-global-search_trigger-open-label">
+        <span class="m-global-search__trigger-open-label">
             {{ svg_icon('search') }}
             <span class="u-hide-on-mobile">{{ _('Search') }}</span>
         </span>
-        <span class="m-global-search_trigger-close-label">
+        <span class="m-global-search__trigger-close-label">
             {{ svg_icon('error') }}
             <span class="u-hide-on-mobile">{{ _('Close') }}</span>
         </span>
     </button>
-    <div class="m-global-search_content
+    <div class="m-global-search__content
                 u-hidden"
          data-js-hook="behavior_flyout-menu_content"
          role="search">
-        <form class="m-global-search_content-form"
+        <form class="m-global-search__content-form"
               action="{{ search_url_base }}"
               method="get">
             {#
@@ -59,12 +59,12 @@
                    name="affiliate"
                    value="{{ search_gov_affiliate() }}">
 
-            <div class="o-form__input-w-btn">
-               <div class="o-form__input-w-btn_input-container m-form-field">
-                   <div class="a-text-input__full input-contains-label">
+            <div class="o-form--input-w-btn">
+               <div class="o-form--input-w-btn__input-container m-form-field">
+                   <div class="a-text-input--full input-contains-label">
                        <label for="m-global-search_query"
-                              class="input-contains-label_before
-                                     input-contains-label_before__search">
+                              class="input-contains-label__before
+                                     input-contains-label__before--search">
                             {{ svg_icon('search') }}
                             <span class="u-visually-hidden">{{ _('Search') }}</span>
                        </label>
@@ -77,7 +77,7 @@
                               placeholder="{{ _('Search the CFPB') }}">
                    </div>
                </div>
-               <div class="o-form__input-w-btn_btn-container">
+               <div class="o-form--input-w-btn__btn-container">
                    <button class="a-btn">{{ _('Search') }}</button>
                </div>
             </div>

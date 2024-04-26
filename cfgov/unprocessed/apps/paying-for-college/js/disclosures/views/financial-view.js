@@ -29,13 +29,13 @@ function numToWord(num) {
 const financialView = {
   $elements: $('[data-financial]'),
   $reviewAndEvaluate: $('[data-section="review"], [data-section="evaluate"]'),
-  $verifyControls: $('.verify_controls'),
+  $verifyControls: $('.verify__controls'),
   $infoVerified: $('.information-right'),
   $infoIncorrect: $('.information-wrong'),
   $programLength: $('#estimated-years-attending'),
-  $aboutThisTool: $('.instructions_about a'),
-  $addPrivateButton: $('.private-loans_add-btn'),
-  $totalDirectCostSection: $('.verify_direct-cost'),
+  $aboutThisTool: $('.instructions__about a'),
+  $addPrivateButton: $('.private-loans__add-btn'),
+  $totalDirectCostSection: $('.verify__direct-cost'),
   $pellGrantSection: $('[data-section="pellgrant"]'),
   $gradPlusSection: $('[data-section="gradPlus"]'),
   $perkinsSection: $('[data-section="perkins"]'),
@@ -45,8 +45,8 @@ const financialView = {
   $privateLoanClone: $('[data-private-loan]:first-of-type').cloner(),
   privateLoanKeys: ['amount', 'fees', 'rate', 'deferPeriod'],
   $evaluateSection: $('.evaluate'),
-  $jobPlacementContent: $('.content_job-placement'),
-  $graduationCohortContent: $('.content_grad-cohort'),
+  $jobPlacementContent: $('.content__job-placement'),
+  $graduationCohortContent: $('.content__grad-cohort'),
   $salaryContent: $('#content_salary'),
   $medianSalaryContent: $('#content_median-salary'),
   $salaryMetric: $('#salary-and-debt-metric'),
@@ -255,8 +255,8 @@ const financialView = {
     const model = getFinancial.values();
     const gap = Math.round(model.gap);
     const overborrowing = Math.round(model.overborrowing);
-    const positiveRemainingCost = $('.offer-part_content-positive-cost');
-    const negativeRemainingCost = $('.offer-part_content-negative-cost');
+    const positiveRemainingCost = $('.offer-part__content-positive-cost');
+    const negativeRemainingCost = $('.offer-part__content-negative-cost');
     positiveRemainingCost.hide();
     negativeRemainingCost.hide();
 
@@ -291,11 +291,11 @@ const financialView = {
     linksView.updateLinks(values);
     // Update availability of Pell grants, subsidized loans, and gradPLUS loans
     if (values.undergrad === false) {
-      $('.content_graduate-program').show();
+      $('.content__graduate-program').show();
       financialView.pellGrantsVisible(false);
       financialView.subsidizedVisible(false);
     } else {
-      $('.content_graduate-program').hide();
+      $('.content__graduate-program').hide();
       financialView.gradPlusVisible(false);
     }
     this.setGraduationCohortVisibility(
@@ -439,7 +439,7 @@ const financialView = {
         }
         financialView.enumeratePrivateLoanIDs();
         $container
-          .find('[data-private-loan]:last-of-type .aid-form_input')
+          .find('[data-private-loan]:last-of-type .aid-form__input')
           .val('0');
         publish.addPrivateLoan();
         financialView.updateView(getFinancial.values());
@@ -454,7 +454,7 @@ const financialView = {
   removePrivateListener: function () {
     const privLoanContainer = document.querySelector('.private-loans');
     privLoanContainer.addEventListener('click', (event) => {
-      if (event.target.matches('.private-loans_remove-btn')) {
+      if (event.target.matches('.private-loans__remove-btn')) {
         const elem = event.target;
         const $ele = elem.closest('[data-private-loan]');
 
@@ -497,8 +497,8 @@ const financialView = {
         $(elem).attr('id', newID);
       });
       $(elem)
-        .find('.private-loans_remove-btn')
-        .attr('id', 'private-loans_remove-btn_' + index);
+        .find('.private-loans__remove-btn')
+        .attr('id', 'private-loans__remove-btn_' + index);
     });
   },
 
@@ -875,7 +875,7 @@ const financialView = {
   },
 
   continueStep2Listener: function () {
-    const $continueButton = $('.continue_controls > button');
+    const $continueButton = $('.continue__controls > button');
     $continueButton.listen('click', function () {
       // Remove continue button
       $continueButton.hide();
@@ -918,10 +918,10 @@ const financialView = {
   //     $stickyOffers
   //       .stick_in_parent()
   //       .on('sticky_kit:bottom', function (evt) {
-  //         $(evt.target).addClass('is_bottomed');
+  //         $(evt.target).addClass('is__bottomed');
   //       })
   //       .on('sticky_kit:unbottom', function (evt) {
-  //         $(evt.target).removeClass('is_bottomed');
+  //         $(evt.target).removeClass('is__bottomed');
   //       });
   //   } else if ($win.width() < 600) {
   //     $stickyOffers.trigger('sticky_kit:detach');
@@ -964,7 +964,7 @@ const financialView = {
    * @param {string} dataType - type of missing data, 'school' or 'program'
    */
   missingData: function (dataType) {
-    $('.verify_wrapper').hide();
+    $('.verify__wrapper').hide();
     $('[data-missing-data-error="' + dataType + '"]').show();
   },
 

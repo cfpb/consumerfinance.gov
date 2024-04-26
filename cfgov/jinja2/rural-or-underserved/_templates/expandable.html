@@ -17,21 +17,21 @@
 
 {% macro render( heading, content ) %}
 <div class="o-expandable">
-    <button class="o-expandable_header"
+    <button class="o-expandable__header"
             title="Expand content">
-        <h3 class="o-expandable_label">
+        <h3 class="o-expandable__label">
             {{ heading|safe }}
         </h3>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+            <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>
     </button>
-    <div class="o-expandable_content">
+    <div class="o-expandable__content">
         <p>
             {{ content|safe }}
         </p>

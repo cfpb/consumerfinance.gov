@@ -26,34 +26,6 @@ from v1.atomic_elements.tables import (  # noqa: F401
 from v1.util import ref
 
 
-class AskSearch(blocks.StructBlock):
-    show_label = blocks.BooleanBlock(
-        default=True, required=False, help_text="Whether to show form label."
-    )
-
-    complaint_link = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Direct long searches to submit a complaint",
-        help_text=(
-            "Add a link to the complaint submission page to the end of "
-            "the error message for searches over the max length"
-        ),
-    )
-
-    placeholder = blocks.TextBlock(
-        required=False,
-        help_text="Text to show for the input placeholder text.",
-    )
-
-    class Meta:
-        icon = "search"
-        template = "v1/includes/organisms/ask-search.html"
-
-    class Media:
-        js = ["ask-autocomplete.js"]
-
-
 class Well(blocks.StructBlock):
     content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
 
@@ -660,7 +632,7 @@ class ItemIntroduction(blocks.StructBlock):
     class Meta:
         icon = "form"
         template = "v1/includes/organisms/item-introduction.html"
-        classname = "block__flush-top"
+        classname = "block--flush-top"
 
 
 class FilterableList(BaseExpandable):
@@ -877,7 +849,7 @@ class FeaturedContent(blocks.StructBlock):
         template = "v1/includes/organisms/featured-content.html"
         icon = "doc-full-inverse"
         label = "Featured Content"
-        classname = "block__flush"
+        classname = "block--flush"
         value_class = FeaturedContentStructValue
 
     class Media:

@@ -168,10 +168,10 @@ but in the footer on others) on the sidebar tab.
 !!! note "Don't forget the migrations!"
 
       Adding or changing fields on either Python class will always require a new
-      [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations/);
+      [Django schema migration](https://docs.djangoproject.com/en/stable/topics/migrations/);
       additionally, changing field names or types
       on an existing block will require a
-      [Django data migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations).
+      [Django data migration](https://docs.djangoproject.com/en/stable/topics/migrations/#data-migrations).
       See the guide on
       [creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
       for more details.
@@ -206,13 +206,13 @@ StreamField block templates are loaded by the Django template loader
 in the same way that Django page templates are.
 The specified template path must be loadable
 by one of the Django template engines configured in
-[`settings.TEMPLATES`](https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-TEMPLATES).
+[`settings.TEMPLATES`](https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-TEMPLATES).
 (This project supports both the standard
-[Django templates backend](https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.django.DjangoTemplates)
+[Django templates backend](https://docs.djangoproject.com/en/stable/topics/templates/#django.template.backends.django.DjangoTemplates)
 and the
-[Jinja2 backend](https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.jinja2.Jinja2),
+[Jinja2 backend](https://docs.djangoproject.com/en/stable/topics/templates/#django.template.backends.jinja2.Jinja2),
 but Jinja2 is more commonly used.)
-[See the Django templates documentation](https://docs.djangoproject.com/en/1.11/topics/templates/#usage)
+[See the Django templates documentation](https://docs.djangoproject.com/en/stable/topics/templates/#usage)
 for more details on the search algorithm used to locate a template.
 
 Returning to the `RelatedContent` example,
@@ -222,13 +222,13 @@ this is what its Jinja2 template looks like (comments excluded):
 <div class="m-related-content">
   {% if value.heading %}
   <header class="m-slug-header">
-    <h2 class="m-slug-header_heading">{{ value.heading }}</h2>
+    <h2 class="m-slug-header__heading">{{ value.heading }}</h2>
   </header>
   {% endif %} {{ value.paragraph | safe }} {% if value.links %}
-  <ul class="m-list m-list__links">
+  <ul class="m-list m-list--links">
     {% for link in value.links %}
-    <li class="m-list_item">
-      <a href="{{ link.url }}" class="m-list_link">{{ link.text }}</a>
+    <li class="m-list__item">
+      <a href="{{ link.url }}" class="m-list__link">{{ link.text }}</a>
     </li>
     {% endfor %}
   </ul>

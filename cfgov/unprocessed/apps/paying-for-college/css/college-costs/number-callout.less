@@ -1,45 +1,45 @@
 .number-callout {
-  &_header {
+  &__header {
     font-size: unit(16px / @base-font-size-px, em);
     font-weight: 500;
     margin-bottom: 0;
     text-transform: uppercase;
   }
 
-  &_value {
+  &__value {
     margin-top: 0;
     margin-bottom: unit(10px / @base-font-size-px, em);
     font-size: unit(18px / @base-font-size-px, em);
   }
 
-  &__large {
-    .number-callout_value {
+  &--large {
+    .number-callout__value {
       font-size: unit(28px / @base-font-size-px, em);
       font-weight: 600;
     }
   }
 
-  &__right {
+  &--right {
     text-align: right;
     border-right: 5px solid var(--black);
     padding-right: unit(10px / @base-font-size-px, em);
   }
 
-  &__warning {
+  &--warning {
     border-color: var(--red);
 
-    .number-callout_value {
+    .number-callout__value {
       color: var(--red);
     }
   }
 
-  &__border-top {
-    border-top: 1px solid @block__border;
+  &--border-top {
+    border-top: 1px solid @block--border;
     padding-top: unit(10px / @base-font-size-px, em);
     margin-top: unit(30px / @base-font-size-px, em);
   }
 
-  &__divisor .number-callout_value > span {
+  &--divisor .number-callout__value > span {
     border-bottom: 1px solid black;
     padding-bottom: unit(5px / @base-font-size-px, em);
   }

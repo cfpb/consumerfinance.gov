@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse
+import json
 import logging
 import os
 import sys
@@ -49,8 +50,14 @@ parser.add_argument(
     type=str,
     help="Set a timeout level, in seconds; the default is 30.",
 )
+parser.add_argument(
+    "--headers",
+    type=json.loads,
+    help="A JSON object of extra request headers.",
+)
 
 TIMEOUT = 30
+HEADERS = {}
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = "https://www.consumerfinance.gov"
@@ -198,7 +205,7 @@ def check_urls(base, url_list=None):
         count += 1
         url = "{}{}".format(base, url_suffix)
         try:
-            response = requests.get(url, timeout=TIMEOUT)
+            response = requests.get(url, timeout=TIMEOUT, headers=HEADERS)
             code = response.status_code
             if code == 200:
                 pass
@@ -257,5 +264,7 @@ if __name__ == "__main__":  # pragma: nocover
         url_list = args.url_list
     if args.timeout:
         TIMEOUT = int(args.timeout)
+    if args.headers:
+        HEADERS = args.headers
     if not check_urls(BASE, url_list=url_list):
         sys.exit(1)

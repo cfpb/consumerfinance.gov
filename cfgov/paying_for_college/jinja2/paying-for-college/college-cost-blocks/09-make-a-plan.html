@@ -1,6 +1,6 @@
 {% import "v1/includes/atoms/checkbox.html" as checkbox with context %}
 
-<section class="college-costs_tool-section college-costs_tool-section__make-a-plan" data-tool-section="make-a-plan">
+<section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="make-a-plan">
     <h2 tabindex="-1">Make a plan to cover this year's costs</h2>
 
     <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
@@ -25,11 +25,11 @@
         ) }}
     </div>
 
-    <h3 class="h4 header_border-bottom">Costs vs. funding</h3>
+    <h3 class="h4 header__border-bottom">Costs vs. funding</h3>
 
     <div id="make-a-plan_chart"></div>
 
-    <div class="block block__mid">
+    <div class="block block--mid">
         <h3>Get your uncovered costs down to $0</h3>
 
         <p>From cheapest to most expensive, here are your options for closing that gap:</p>
@@ -329,7 +329,7 @@
                 'note': '<strong>Take out more federal loans:</strong> Generally, your financial aid offer includes the maximum amount of Direct Loans available to you. Contact the financial aid office to find out more.' | safe
             } %}
             {% call() flyout(flyout_settings) %}
-                <div class="block block__mid block__flush-top financial-item-group undergrad-content">
+                <div class="block block--mid block--flush-top financial-item-group undergrad-content">
                     {{
                         input.render({
                             'label': 'Direct Subsidized Loan',
@@ -356,7 +356,7 @@
                         })
                     }}
                 </div>
-                <div class="block block__mid block__flush-bottom financial-item-group">
+                <div class="block block--mid block--flush-bottom financial-item-group">
                     {{
                         input.render({
                             'label': 'Direct Unsubsidized Loans',
@@ -392,7 +392,7 @@
                 'note': '<strong>Borrow more from the school:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.' | safe
             } %}
             {% call() flyout(flyout_settings) %}
-                <div class="block block__mid block__flush-top financial-item-group">
+                <div class="block block--mid block--flush-top financial-item-group">
                     {{
                         input.render({
                             'label': 'Loan from your state',
@@ -418,7 +418,7 @@
                         })
                     }}
                 </div>
-                <div class="block block__mid financial-item-group">
+                <div class="block block--mid financial-item-group">
                     {{
                         input.render({
                             'label': 'Loan from this school',
@@ -444,7 +444,7 @@
                         })
                     }}
                 </div>
-                <div class="block block__mid block__flush-bottom financial-item-group">
+                <div class="block block--mid block--flush-bottom financial-item-group">
                     {{
                         input.render({
                             'label': 'Loan from a non-profit',
@@ -471,7 +471,7 @@
                     }}
                 </div>
             {% endcall %}
-            <div class="block block__mid">
+            <div class="block block--mid">
                 <h3 class="other-loan-options">Additional loan options</h3>
                 <p> If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider: </p>
                 <ul>
@@ -650,7 +650,7 @@
                             </div>
                         </div>
 
-                        <button data-state-based-visibility="none" class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
+                        <button data-state-based-visibility="none" class="a-btn a-btn--link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
                     {% endcall %}
                 </div>
             </div>

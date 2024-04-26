@@ -25,7 +25,7 @@
         .m-hero {
             background-color: #7eb7e8;
         }
-        .m-hero_image {
+        .m-hero__image {
             background-image: url( '{{ static("apps/financial-well-being/img/fwb_hero_826x380.png") }}' );
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ static("apps/financial-well-being/img/fwb_hero_826x380.png") }}',
@@ -38,17 +38,17 @@
 
 {% block content_intro -%}
     <section class="m-hero">
-        <div class="m-hero_wrapper wrapper">
-            <div class="m-hero_text">
-                <h1 class="m-hero_heading">{{ _('Find out your financial well-being') }}</h1>
-                <div class="m-hero_subhead">
+        <div class="m-hero__wrapper wrapper">
+            <div class="m-hero__text">
+                <h1 class="m-hero__heading">{{ _('Find out your financial well-being') }}</h1>
+                <div class="m-hero__subhead">
                     <p>
                         {{ _('Answer ten questions to measure your current financial well-being and see steps you can take to improve it.') }}
                     </p>
                 </div>
             </div>
-            <div class="m-hero_image-wrapper">
-                <div class="m-hero_image"></div>
+            <div class="m-hero__image-wrapper">
+                <div class="m-hero__image"></div>
             </div>
         </div>
     </section>
@@ -56,7 +56,10 @@
 
 {% block content_main -%}
 
-    {% include "_templates/no_js.html" %}
+    <div class="block block--flush-top u-hide-if-js">
+        {% include "v1/includes/snippets/no_js_notification.html" %}
+    </div>
+
     <div class="u-js-only">
 
         <h2>{{ _('Here’s how it works:') }}</h2>
@@ -90,18 +93,18 @@
             {{ _('to other U.S. adults from our national survey.') }}
         </p>
 
-        <div class="block block__sub">
+        <div class="block block--sub">
             <div class="m-notification
-                        m-notification__visible
-                        m-notification__warning">
+                        m-notification--visible
+                        m-notification--warning">
                 {{ svg_icon('warning-round') }}
-                <div class="m-notification_content">
-                    <p class="m-notification_message">
+                <div class="m-notification__content">
+                    <p class="m-notification__message">
                         {{ _('We never collect or store the answers you provide.') }}
                     </p>
-                    <ul class="m-list m-list__links">
-                        <li class="m-list_item">
-                            <a class="m-list_link"
+                    <ul class="m-list m-list--links">
+                        <li class="m-list__item">
+                            <a class="m-list__link"
                             href="/privacy/website-privacy-policy/">
                                 {{ _('See how your privacy is protected.') }}
                             </a>
@@ -115,13 +118,13 @@
             <div class="block">
                 <h2>{{ _('Part 1: How well does this statement describe you or your situation?') }}</h2>
                 <div class="o-well">
-                    <fieldset class="o-form_fieldset o-scale" id="question_1">
+                    <fieldset class="o-form__fieldset o-scale" id="question_1">
                         <h3 class="a-legend">
                             {{ _('I could handle a major unexpected expense') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }}</div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_1-completely"
@@ -134,7 +137,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_1-very-well"
@@ -147,7 +150,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_1-somewhat"
@@ -160,7 +163,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_1-very-little"
@@ -173,7 +176,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_1-not-at-all"
@@ -188,13 +191,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_2">
+                    <fieldset class="o-form__fieldset o-scale" id="question_2">
                         <h3 class="a-legend">
                             {{ _('I am securing my financial future') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_2-completely"
@@ -207,7 +210,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_2-very-well"
@@ -220,7 +223,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_2-somewhat"
@@ -233,7 +236,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_2-very-little"
@@ -246,7 +249,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_2-not-at-all"
@@ -261,13 +264,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_3">
+                    <fieldset class="o-form__fieldset o-scale" id="question_3">
                         <h3 class="a-legend">
                             {{ _('Because of my money situation, I feel like I will never have the things I want in life') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_3-completely"
@@ -280,7 +283,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_3-very-well"
@@ -293,7 +296,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_3-somewhat"
@@ -306,7 +309,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_3-very-little"
@@ -319,7 +322,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_3-not-at-all"
@@ -334,13 +337,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_4">
+                    <fieldset class="o-form__fieldset o-scale" id="question_4">
                         <h3 class="a-legend">
                             {{ _('I can enjoy life because of the way I’m managing my money') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_4-completely"
@@ -353,7 +356,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_4-very-well"
@@ -366,7 +369,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_4-somewhat"
@@ -379,7 +382,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_4-very-little"
@@ -392,7 +395,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_4-not-at-all"
@@ -407,13 +410,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_5">
+                    <fieldset class="o-form__fieldset o-scale" id="question_5">
                         <h3 class="a-legend">
                             {{ _('I am just getting by financially') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_5-completely"
@@ -426,7 +429,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_5-very-well"
@@ -439,7 +442,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_5-somewhat"
@@ -452,7 +455,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_5-very-little"
@@ -465,7 +468,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_5-not-at-all"
@@ -480,13 +483,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_6">
+                    <fieldset class="o-form__fieldset o-scale" id="question_6">
                         <h3 class="a-legend">
                             {{ _('I am concerned that the money I have or will save won’t last') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_6-completely"
@@ -499,7 +502,7 @@
                                     {{ _('Completely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_6-very-well"
@@ -512,7 +515,7 @@
                                     {{ _('Very well') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_6-somewhat"
@@ -525,7 +528,7 @@
                                     {{ _('Somewhat') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_6-very-little"
@@ -538,7 +541,7 @@
                                     {{ _('Very little') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_6-not-at-all"
@@ -558,13 +561,13 @@
             <div class="block">
                 <h2>{{ _('Part 2: How often does this statement apply to you?') }}</h2>
                 <div class="o-well">
-                    <fieldset class="o-form_fieldset o-scale" id="question_7">
+                    <fieldset class="o-form__fieldset o-scale" id="question_7">
                         <h3 class="a-legend">
                             {{ _('Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_7-always"
@@ -577,7 +580,7 @@
                                     {{ _('Always') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_7-often"
@@ -590,7 +593,7 @@
                                     {{ _('Often') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_7-sometimes"
@@ -603,7 +606,7 @@
                                     {{ _('Sometimes') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_7-rarely"
@@ -616,7 +619,7 @@
                                     {{ _('Rarely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_7-never"
@@ -631,13 +634,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_8">
+                    <fieldset class="o-form__fieldset o-scale" id="question_8">
                         <h3 class="a-legend">
                             {{ _('I have money left over at the end of the month') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_8-always"
@@ -649,7 +652,7 @@
                                     {{ _('Always') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_8-often"
@@ -662,7 +665,7 @@
                                     {{ _('Often') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_8-sometimes"
@@ -675,7 +678,7 @@
                                     {{ _('Sometimes') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_8-rarely"
@@ -688,7 +691,7 @@
                                     {{ _('Rarely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_8-never"
@@ -703,13 +706,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_9">
+                    <fieldset class="o-form__fieldset o-scale" id="question_9">
                         <h3 class="a-legend">
                             {{ _('I am behind with my finances') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_9-always"
@@ -722,7 +725,7 @@
                                     {{ _('Always') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_9-often"
@@ -735,7 +738,7 @@
                                     {{ _('Often') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_9-sometimes"
@@ -748,7 +751,7 @@
                                     {{ _('Sometimes') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_9-rarely"
@@ -761,7 +764,7 @@
                                     {{ _('Rarely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_9-never"
@@ -776,13 +779,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="o-form_fieldset o-scale" id="question_10">
+                    <fieldset class="o-form__fieldset o-scale" id="question_10">
                         <h3 class="a-legend">
                             {{ _('My finances control my life') }}
                         </h3>
                         <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                         <div class="o-scale_answer-options">
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_10-always"
@@ -795,7 +798,7 @@
                                     {{ _('Always') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_10-often"
@@ -808,7 +811,7 @@
                                     {{ _('Often') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_10-sometimes"
@@ -821,7 +824,7 @@
                                     {{ _('Sometimes') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_10-rarely"
@@ -834,7 +837,7 @@
                                     {{ _('Rarely') }}
                                 </label>
                             </div>
-                            <div class="m-form-field m-form-field__radio">
+                            <div class="m-form-field m-form-field--radio">
                                 <input class="a-radio"
                                     type="radio"
                                     id="question_10-never"
@@ -854,14 +857,14 @@
             <div class="block u-mb30">
                 <h2>{{ _('About you') }}</h2>
                 <div class="o-well">
-                    <div class="o-form_group">
-                        <fieldset class="o-form_fieldset" id="age">
+                    <div class="o-form__group">
+                        <fieldset class="o-form__fieldset" id="age">
                             <h3 class="a-legend">
                                 {{ _('Select your age group. This changes the scoring calculation.') }}
                             </h3>
-                            <ul class="m-list m-list__unstyled content-l">
-                                <li class="content-l_col content-l_col-1-2">
-                                    <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <ul class="m-list m-list--unstyled content-l">
+                                <li class="content-l__col content-l__col-1-2">
+                                    <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                                         <input class="a-radio"
                                             type="radio"
                                             name="age"
@@ -875,8 +878,8 @@
                                         </label>
                                     </div>
                                 </li>
-                                <li class="content-l_col content-l_col-1-2">
-                                    <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                <li class="content-l__col content-l__col-1-2">
+                                    <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                                         <input class="a-radio"
                                             type="radio"
                                             name="age"
@@ -894,13 +897,13 @@
                         </fieldset>
                     </div>
                     <div>
-                        <fieldset class="o-form_fieldset" id="method">
+                        <fieldset class="o-form__fieldset" id="method">
                             <h3 class="a-legend">
                                 {{ _('Select how you completed the questionnaire. This changes the scoring calculation.') }}
                             </h3>
-                            <ul class="m-list m-list__unstyled content-l">
-                                <li class="content-l_col content-l_col-1-2">
-                                    <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <ul class="m-list m-list--unstyled content-l">
+                                <li class="content-l__col content-l__col-1-2">
+                                    <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                                         <input class="a-radio"
                                             type="radio"
                                             name="method"
@@ -915,8 +918,8 @@
                                         </label>
                                     </div>
                                 </li>
-                                <li class="content-l_col content-l_col-1-2">
-                                    <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                <li class="content-l__col content-l__col-1-2">
+                                    <div class="m-form-field m-form-field--radio m-form-field--lg-target">
                                         <input class="a-radio"
                                             type="radio"
                                             name="method"
@@ -936,8 +939,8 @@
                 </div>
             </div>
 
-            <div class="block block__flush-top">
-                <div class="o-form_group">
+            <div class="block block--flush-top">
+                <div class="o-form__group">
                     <input class="submit-quiz a-btn"
                         id="submit-quiz"
                         type="submit"
@@ -953,27 +956,27 @@
 {%- endblock %}
 
 {% block content_sidebar -%}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <h3>{{ _('About us') }}</h3>
         <p>
             {{ _('We&#39;re the Consumer Financial Protection Bureau (CFPB),') }}
             {{ _('a U.S. government agency that makes sure banks, lenders, and other financial companies treat you fairly.') }}
         </p>
-        <a class="a-link a-link__jump" href="/about-us/the-bureau/">
-            <span class="a-link_text">{{ _('Learn how the CFPB can help you') }}</span>
+        <a class="a-link a-link--jump" href="/about-us/the-bureau/">
+            <span class="a-link__text">{{ _('Learn how the CFPB can help you') }}</span>
         </a>
     </div>
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading">{{ _('About this questionnaire') }}</h2>
+            <h2 class="m-slug-header__heading">{{ _('About this questionnaire') }}</h2>
         </header>
         <p>
             {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
             {{ _('that is, how well your current money situation is providing you with financial security and freedom of choice, today and for the future.') }}
         </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
-            <span class="a-link_text">{{ _('See more background') }}</span>
+        <a class="a-link a-link--jump" href="{{ url('fwb_about_' + current_language) }}">
+            <span class="a-link__text">{{ _('See more background') }}</span>
         </a>
     </div>
 

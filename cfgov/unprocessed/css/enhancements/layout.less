@@ -2,14 +2,14 @@
 @import (less) './layout-2-1.less';
 @import (less) './layout-1-3.less';
 
-.wrapper__match-content {
+.wrapper--match-content {
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
   });
 }
 
-.content__half-top-on-desk {
+.content--half-top-on-desk {
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
     padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
@@ -20,7 +20,7 @@
   });
 }
 
-.content__flush-sides-on-small {
+.content--flush-sides-on-small {
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
     padding-left: 0;
@@ -29,8 +29,8 @@
   });
 }
 
-.content-l_col {
-  &.content-l_col-1 + &.content-l_col-1 {
+.content-l__col {
+  &.content-l__col-1 + &.content-l__col-1 {
     margin-top: 0;
   }
 }
@@ -42,7 +42,7 @@
 // Center content and bleed full-width images into gutters
 // Used on our story pages
 .content__center-image-bleed {
-  .u-layout-grid_main {
+  .u-layout-grid__main {
     max-width: 41.875rem;
     margin-left: auto;
     margin-right: auto;

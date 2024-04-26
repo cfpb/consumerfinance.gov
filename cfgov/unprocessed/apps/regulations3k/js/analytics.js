@@ -20,8 +20,8 @@ const sendEvent = (action, label, category) => {
  * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
 const getExpandable = (event) => {
-  const el = event.target.closest('.o-expandable_header') || event.target;
-  if (el.classList.contains('o-expandable_header')) {
+  const el = event.target.closest('.o-expandable__header') || event.target;
+  if (el.classList.contains('o-expandable__header')) {
     return el;
   }
   return null;
@@ -34,7 +34,7 @@ const getExpandable = (event) => {
  */
 const getExpandableState = (expandable) => {
   let state = 'close';
-  if (expandable.classList.contains('o-expandable_target__expanded')) {
+  if (expandable.classList.contains('o-expandable__target--expanded')) {
     state = 'open';
   }
   return state;

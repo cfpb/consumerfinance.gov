@@ -19,7 +19,7 @@ import {
   updateWayfinder,
 } from './permalinks-utils.js';
 
-const wayfinderLink = document.querySelector('.o-regulations-wayfinder_link');
+const wayfinderLink = document.querySelector('.o-regulations-wayfinder__link');
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph

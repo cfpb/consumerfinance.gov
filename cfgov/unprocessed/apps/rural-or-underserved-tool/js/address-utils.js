@@ -103,7 +103,7 @@ function render(result) {
   if (rural !== '-') {
     rowHTML = `${rowHTML}
       <a href="#"
-         class="no-decoration hide-print jsLoadMap right"
+         class="no-decoration hide-print js-load-map right"
          data-map="false"
          data-lat="${result.x}"
          data-lon="${result.y}"

@@ -28,35 +28,35 @@
 
 {% macro flyout(value) %}
 <div class="o-costs-group">
-    <button class="o-costs-group_header
-                   o-costs-group_header__collapsed
+    <button class="o-costs-group__header
+                   o-costs-group__header--collapsed
                    financial-item
-                   financial-item__flyout
-                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" 
+                   financial-item--flyout
+                   {{ ('financial-item--' + value.status | safe ) if value.status else ''}}"
             type="button">
       <span class="flex-container">
-        <span class="h4 o-costs-group_label">
+        <span class="h4 o-costs-group__label">
             {{ value.label }}
         </span>
-        <span class="o-costs-group_link">
-            <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
+        <span class="o-costs-group__link">
+            <span class="financial-item__value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
-            <span class="o-costs-group_cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
+            <span class="o-costs-group__cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
                 {{ svg_icon('edit') if value.is_editable else svg_icon('plus-round') }}
             </span>
-            <span class="o-costs-group_cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
+            <span class="o-costs-group__cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
                 {{ svg_icon('approved-round') if value.is_editable else svg_icon('minus-round') }}
             </span>
         </span>
         </span>
         {% if value.note %}
-            <span class="financial-item_note">
+            <span class="financial-item__note">
                 {{ value.note | safe }}
             </span>
         {% endif %}
     </button>
-    <div class="o-costs-group_content">
+    <div class="o-costs-group__content">
         {% if caller is defined %}
             {{ caller() }}
         {% endif %}

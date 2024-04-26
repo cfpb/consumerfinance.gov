@@ -28,13 +28,14 @@ home price, down payment, and more can affect mortgage interest rates.
 {% endblock %}
 
 {% block content_main %}
-    <div class="block block__flush-top">
+    <div class="block block--flush-top u-hide-if-js">
+        {% include "v1/includes/snippets/no_js_notification.html" %}
+    </div>
 
-        {% include "_templates/no_js.html" %}
-
-        <div class="rate-checker">
+    <div class="block block--flush-top u-js-only">
+        <div class="rate-checker content">
             <section class="page-intro content-l">
-                <div class="content-l_col content-l_col-2-3">
+                <div class="content-l__col content-l__col-2-3">
                     <h1>Explore interest rates</h1>
                     <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                     <div class="page-intro_cols">
@@ -54,14 +55,14 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                     </div>
                 </div>
-                <div class="content-l_col content-l_col-1-3">
+                <div class="content-l__col content-l__col-1-3">
                     <div class="rc-illu-inner">
                         <img class ="rc-home-illu"
                                 src="{{ static('apps/owning-a-home/img/ill-chart.png') }}"
                                 alt="Illustration of interest rate chart">
                     </div>
                 </div>
-                <!-- /.content-l_col-1-3 -->
+                <!-- /.content-l__col-1-3 -->
             </section>
             <div class="calculator content-l" aria-controls="rate-results">
                 <section class="form-intro">
@@ -70,18 +71,18 @@ home price, down payment, and more can affect mortgage interest rates.
                 <section id="credit-score-container">
                     <div class="a-range recalc" id="credit-score-range">
                         <label for="credit-score">Credit score range</label>
-                        <div class="a-range_labels">
-                            <span class="a-range_labels-min">600</span>
-                            <span class="a-range_labels-max">850</span>
+                        <div class="a-range__labels">
+                            <span class="a-range__labels-min">600</span>
+                            <span class="a-range__labels-max">850</span>
                         </div>
                         <input id="credit-score"
-                                class="a-range_input"
+                                class="a-range__input"
                                 type="range"
                                 min="600"
                                 max="840"
                                 step="20"
                                 value="700">
-                        <div id="slider-range" class="a-range_text"></div>
+                        <div id="slider-range" class="a-range__text"></div>
 
                         {#
                             Credit alert for when low credit score is chosen.
@@ -92,9 +93,9 @@ home price, down payment, and more can affect mortgage interest rates.
                                     u-hidden"
                                 id="credit-score-alert"
                                 role="alert">
-                            <div class="a-form-alert a-form-alert__error">
+                            <div class="a-form-alert a-form-alert--error">
                                 {{ svg_icon('warning-round') }}
-                                <span class="a-form-alert_text">
+                                <span class="a-form-alert__text">
                                     Many lenders do not accept
                                     borrowers with credit scores less than 620.
                                     Even if your score is low, you may still have options.
@@ -225,9 +226,9 @@ home price, down payment, and more can affect mortgage interest rates.
                                 u-hidden"
                             id="dp-alert"
                             role="alert">
-                        <div class="a-form-alert a-form-alert__warning">
+                        <div class="a-form-alert a-form-alert--warning">
                             {{ svg_icon('warning-round') }}
-                            <span class="a-form-alert_text">
+                            <span class="a-form-alert__text">
                                 Your down payment cannot be more than your
                                 house price.
                             </span>
@@ -236,9 +237,9 @@ home price, down payment, and more can affect mortgage interest rates.
                 </section>
                 <section class="form-sub warning u-hidden"
                             id="county-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
-                        <span class="a-form-alert_text"></span>
+                        <span class="a-form-alert__text"></span>
                     </div>
                 </section>
                 <section class="calc-loan-details">
@@ -291,17 +292,17 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </section>
                 <section class="form-sub warning u-hidden" id="arm-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
-                        <span class="a-form-alert_text">
+                        <span class="a-form-alert__text">
                             While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.
                         </span>
                     </div>
                 </section>
                 <section class="form-sub warning u-hidden" id="hb-warning">
-                    <div class="a-form-alert a-form-alert__warning">
+                    <div class="a-form-alert a-form-alert--warning">
                         {{ svg_icon('warning-round') }}
-                        <span class="a-form-alert_text"></span>
+                        <span class="a-form-alert__text"></span>
                     </div>
                 </section>
                 <section class="form-sub calc-subsection">
@@ -328,11 +329,11 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
                 <section id="chart-section" class="chart">
                     <div class="chart-menu">
-                        <button class="chart-menu_btn">
+                        <button class="chart-menu__btn">
                             Download chart
                             {{ svg_icon('download') }}
                         </button>
-                        <ul class="chart-menu_options">
+                        <ul class="chart-menu__options">
                             <li>PNG</li>
                             <li>SVG</li>
                             <li>JPEG</li>
@@ -356,12 +357,12 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div id="chart-result-alert"
                             class="result-alert
                                 m-notification
-                                m-notification__error"
+                                m-notification--error"
                             role="alert">
                         {{ svg_icon('error-round') }}
-                        <div class="m-notification_content">
-                            <div class="m-notification_message">We're sorry!</div>
-                            <p class="m-notification_explanation">
+                        <div class="m-notification__content">
+                            <div class="m-notification__message">We're sorry!</div>
+                            <p class="m-notification__explanation">
                                 Based on the information you entered,
                                 we don't have enough data to display results.
                                 Change your settings or
@@ -375,12 +376,12 @@ home price, down payment, and more can affect mortgage interest rates.
                     <div id="chart-fail-alert"
                             class="result-alert
                                 m-notification
-                                m-notification__error"
+                                m-notification--error"
                             role="alert">
                         {{ svg_icon('error-round') }}
-                        <div class="m-notification_content">
-                            <div class="m-notification_message">We're sorry!</div>
-                            <p class="m-notification_explanation">
+                        <div class="m-notification__content">
+                            <div class="m-notification__message">We're sorry!</div>
+                            <p class="m-notification__explanation">
                                 <strong>We're sorry!</strong>
                                 We're having trouble connecting to our data.<br>
                                 Try again another time.
@@ -505,11 +506,11 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-credit-score"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/what-is-a-credit-score-en-315/"
                                     target="_blank"
                                     rel="noopener noreferrer">
-                                    <span class="a-link_text">Learn more about credit scores</span>
+                                    <span class="a-link__text">Learn more about credit scores</span>
                                     {{ svg_icon('right') }}
                                 </a>
                             </p>
@@ -520,11 +521,11 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-good-credit"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/"
                                     target="_blank"
                                     rel="noopener noreferrer">
-                                    <span class="a-link_text">Learn about improving your credit scores</span>
+                                    <span class="a-link__text">Learn about improving your credit scores</span>
                                     {{ svg_icon('right') }}
                                 </a>
                             </p>
@@ -535,11 +536,11 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-down-payment-affect"
                                     class="a-link
-                                            a-link__jump"
+                                            a-link--jump"
                                     href="/ask-cfpb/what-kind-of-down-payment-do-i-need-how-does-the-amount-of-down-payment-i-make-affect-the-terms-of-my-mortgage-loan-en-120/"
                                     target="_blank"
                                     rel="noopener noreferrer">
-                                    <span class="a-link_text">Learn more about down payments</span>
+                                    <span class="a-link__text">Learn more about down payments</span>
                                     {{ svg_icon('right') }}
                                 </a>
                             </p>
@@ -549,20 +550,20 @@ home price, down payment, and more can affect mortgage interest rates.
             </section>
             <!-- /.next-steps -->
             <div class="block
-                        block__border-top
-                        block__flush-top
-                        block__padded-top
+                        block--border-top
+                        block--flush-top
+                        block--padded-top
                         credit-note-ctr">
                 {# TODO: Look into using the default notification macro #}
                 <div class="m-notification__borderless
                             m-notification
-                            m-notification__warning
-                            m-notification__visible"
+                            m-notification--warning
+                            m-notification--visible"
                         role="alert">
                     {{ svg_icon('warning-round') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">Check your credit</div>
-                        <p class="m-notification_explanation">
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">Check your credit</div>
+                        <p class="m-notification__explanation">
                             If you haven’t checked your credit report recently,
                             <a class="external-link"
                                 href="https://annualcreditreport.com"
@@ -577,7 +578,7 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </div>
             <section id="about" class="content-l">
-                <div class="content-l_col content-l_col-1">
+                <div class="content-l__col content-l__col-1">
                     <h3 class="subhead">About our data source for this tool</h3>
                     <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
                     <p>The data is provided by <a href="https://curinos.com/" target="_blank" rel="noopener noreferrer">Curinos</a>, New York, NY. Curinos collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
@@ -587,7 +588,7 @@ home price, down payment, and more can affect mortgage interest rates.
         <!-- END .rate-checker -->
     </div>
 
-    <div class="rate-checker_links">
+    <div class="rate-checker__links u-js-only">
         {% import "_templates/brand-footer.html" as brand_footer %}
         {% set footer_links = [ {
             "img": static("apps/owning-a-home/img/footer_calculator.png"),

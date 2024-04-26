@@ -37,7 +37,7 @@ function Header(element) {
     _globalSearch = new GlobalSearch(_dom);
 
     // Don't initialize the mega menu if it isn't on the page.
-    if (_dom.classList.contains(`${BASE_CLASS}__mega-menu`)) {
+    if (_dom.classList.contains(`${BASE_CLASS}--mega-menu`)) {
       _megaMenu = new MegaMenu(_dom);
       _megaMenu.addEventListener('rootexpandbegin', _megaMenuExpandBegin);
       _megaMenu.addEventListener('rootcollapseend', _megaMenuCollapseEnd);

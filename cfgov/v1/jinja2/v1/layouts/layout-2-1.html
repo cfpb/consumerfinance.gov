@@ -1,27 +1,27 @@
 {% extends 'v1/layouts/base.html' %}
 
 {% block content scoped %}
-    <main class="u-layout-grid u-layout-grid__2-1
+    <main class="u-layout-grid u-layout-grid--2-1
                  {% block content_modifiers -%}{%- endblock %}"
           id="main"
           {% if language == 'ar' %} dir="rtl" {% endif %}>
 
-        {% if self.content_intro() %}
+        {% if self.content_intro().strip() %}
             <div class="u-layout_content-intro">
                 {% block content_intro scoped -%}{%- endblock %}
             </div>
         {% endif %}
 
-        <div class="u-layout-grid_wrapper">
+        <div class="u-layout-grid__wrapper">
             {% block pre_content scoped -%}
                 {% include 'v1/layouts/_breadcrumbs.html' %}
             {%- endblock %}
 
             {% block body_content scoped %}
-                <div class="u-layout-grid_main">
+                <div class="u-layout-grid__main">
                     {% block content_main scoped -%}{%- endblock %}
                 </div>
-                <aside class="u-layout-grid_sidebar">
+                <aside class="u-layout-grid__sidebar">
                     {% block content_sidebar scoped -%}{%- endblock %}
                 </aside>
             {% endblock %}

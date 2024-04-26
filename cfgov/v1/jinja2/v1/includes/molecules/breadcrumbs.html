@@ -28,12 +28,12 @@
             {{ crumb_divider }}
 
             {% if crumb.href or crumb.live %}
-                <a class="m-breadcrumbs_crumb"
+                <a class="m-breadcrumbs__crumb"
                    href="{{ crumb.href if crumb.href else pageurl(crumb) }}">
                     {{ crumb.title }}
                 </a>
             {% else %}
-                <span class="m-breadcrumbs_crumb">
+                <span class="m-breadcrumbs__crumb">
                     {{ crumb.title }}
                 </span>
             {% endif %}

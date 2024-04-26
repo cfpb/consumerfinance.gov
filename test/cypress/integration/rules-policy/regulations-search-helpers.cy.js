@@ -18,11 +18,11 @@ export class RegulationsSearch {
 
   setPageSize(size) {
     cy.get('span').contains('Results per page').click();
-    cy.get(`#results_${size}`).check({ force: true });
+    cy.get(`#results-${size}`).check({ force: true });
   }
 
   searchResult() {
-    return cy.get('.results_item');
+    return cy.get('.results__item');
   }
 
   selectRegulation(regulationNumber) {
@@ -30,6 +30,6 @@ export class RegulationsSearch {
   }
 
   filters() {
-    return cy.get('.filters_applied');
+    return cy.get('.filters__applied');
   }
 }

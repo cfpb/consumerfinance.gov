@@ -1,4 +1,4 @@
-<section class="college-costs_tool-section" data-tool-section="grants-scholarships">
+<section class="college-costs__tool-section" data-tool-section="grants-scholarships">
     <h2 tabindex="-1">Grants and scholarships</h2>
     <p>You do not have to pay back grants and scholarships as long as you meet their requirements. Please enter the grants and scholarships from your financial aid offer as well as any others you have been awarded.</p>
     {{ notification.render(
@@ -7,8 +7,8 @@
         '',
         'Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use the <a href="http://www.myfinancialaidletter.org/" target="_blank" class="external-link" rel="noreferrer noopener">Hechinger Report’s OfferLetterDECODER</a>, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)' | safe
     ) }}
-    <div class="grants-and-scholarships_content-section financial-items">
-        <div class="block block__mid">
+    <div class="grants-and-scholarships__content-section financial-items">
+        <div class="block block--mid">
             <h3 class="u-border-bottom">Grants</h3>
             <div class="undergrad-content">
                 {{
@@ -68,7 +68,7 @@
                     'data_attribute': 'data-financial-item="grant_other"'
                 })
             }}
-            <div class="block block__sub">
+            <div class="block block--sub">
                 <h4 class="u-border-bottom">Servicemember benefits</h4>
                 {{
                     input.render({
@@ -99,8 +99,8 @@
 
         </div>
     </div>
-    <div class="grants-and-scholarships_content-section financial-items">
-        <div class="block block__mid">
+    <div class="grants-and-scholarships__content-section financial-items">
+        <div class="block block--mid">
             <h3 class="u-border-bottom">Scholarships</h3>
             {{
                 input.render({
@@ -128,8 +128,8 @@
             }}
         </div>
     </div>
-    <div class="grants-and-scholarships_content-section financial-items">
-        <div class="block block__mid">
+    <div class="grants-and-scholarships__content-section financial-items">
+        <div class="block block--mid">
             {{
                 text_item.render({
                     'label': 'Total grants and scholarships',

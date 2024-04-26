@@ -49,7 +49,7 @@ htmx.defineExtension('htmx-url-param', {
  * See https://htmx.org/events/#htmx:afterSwap
  */
 htmx.defineExtension('move-tccp-ordering', {
-  onEvent: function (name, event) {
+  onEvent: function (name) {
     if (name === 'htmx:beforeSwap') {
       orderingDropdown.el = document.querySelector('#tccp-ordering');
     }

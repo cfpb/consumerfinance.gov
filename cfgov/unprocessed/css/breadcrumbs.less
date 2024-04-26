@@ -11,13 +11,6 @@
   padding-bottom: unit(15px / @base-font-size-px, rem);
   min-height: 33px;
 
-  &_crumbs {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
     padding-top: unit(30px / @base-font-size-px, rem);
@@ -33,13 +26,3 @@
     display: none;
   }
 });
-
-// TODO: When all full-width templates use layout-full.html this can be removed.
-.content_wrapper .m-breadcrumbs {
-  margin-left: unit(15px / @base-font-size-px, rem);
-
-  // Tablet only.
-  .respond-to-range(@bp-sm-min, @bp-sm-max, {
-    margin-left: unit(30px / @base-font-size-px, rem);
-  });
-}

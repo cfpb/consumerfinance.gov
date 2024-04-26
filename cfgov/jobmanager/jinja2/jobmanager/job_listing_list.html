@@ -23,13 +23,13 @@
 <div class="m-jobs-list">
     {% if value.jobs %}
     <h3>Current openings</h3>
-    <ul class="m-list m-list__unstyled m-list__links">
+    <ul class="m-list m-list--unstyled m-list--links">
         {% for job in value.jobs %}
-        <li class="m-list_item">
-            <a class="m-list_link"
+        <li class="m-list__item">
+            <a class="m-list__link"
                href="{{ job.url }}">
                   {{ job.title }}
-                <span class="m-list_link-subtext">
+                <span class="m-list__link-subtext">
                     Closing
                     {% import 'v1/includes/macros/time.html' as time %}
                     {{ time.render(job.close_date, {'date': true}, text_format=True) }}
@@ -38,7 +38,7 @@
         </li>
         {% endfor %}
     </ul>
-    <a class="a-btn a-btn__full-on-xs"
+    <a class="a-btn a-btn--full-on-xs"
        href="{{ value.more_jobs_url }}">
        View all job openings
     </a>

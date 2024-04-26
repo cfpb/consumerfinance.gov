@@ -2,7 +2,7 @@
   //
   // Header
   //
-  &_header {
+  &__header {
     display: flex;
     justify-content: space-between;
     border: 0;
@@ -15,29 +15,29 @@
       outline-offset: 1px;
     }
 
-    .o-secondary-nav_cue-close,
-    .o-secondary-nav_cue-open {
+    .o-secondary-nav__cue-close,
+    .o-secondary-nav__cue-open {
       display: none;
     }
 
-    &[aria-expanded='false'] .o-secondary-nav_cue-open {
+    &[aria-expanded='false'] .o-secondary-nav__cue-open {
       display: block;
     }
 
-    &[aria-expanded='true'] .o-secondary-nav_cue-close {
+    &[aria-expanded='true'] .o-secondary-nav__cue-close {
       display: block;
     }
   }
 
-  // Using the button element with .o-secondary-nav_header requires setting
+  // Using the button element with .o-secondary-nav__header requires setting
   // an explicit width.
-  button.o-secondary-nav_header {
+  button.o-secondary-nav__header {
     background-color: transparent;
     width: 100%;
     text-align: left;
   }
 
-  &_cues {
+  &__cues {
     min-width: 60px;
     text-align: right;
     color: var(--pacific);
@@ -45,7 +45,7 @@
     line-height: unit((@base-line-height-px / @btn-font-size));
   }
 
-  &_label {
+  &__label {
     // Grow to available width.
     flex-grow: 1;
 
@@ -58,15 +58,15 @@
     margin-bottom: 0;
   }
 
-  &_content {
+  &__content {
     padding: unit((15px / @base-font-size-px), em);
     padding-top: 0;
 
-    // The divider between _header and _content.
+    // The divider between __header and __content.
     &::before {
       content: '';
       display: block;
-      border-top: 1px solid @expandable__border;
+      border-top: 1px solid @expandable--border;
       padding-top: unit((15px / @base-font-size-px), em);
     }
 
@@ -76,7 +76,7 @@
     }
   }
 
-  &_list {
+  &__list {
     padding-left: 0;
     list-style: none;
 
@@ -85,7 +85,7 @@
     }
   }
 
-  &_list__children {
+  &__list--children {
     margin-left: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
 
     // Desktop and above.
@@ -95,13 +95,13 @@
     });
   }
 
-  &_link {
+  &__link {
     display: inline-block;
 
     // Break the menu word when it is too wide to fit in the sidebar area.
     word-break: break-word;
 
-    .u-link__colors( var(--pacific), var(--pacific), var(--black), var(--black), var(--black),
+    .u-link--colors( var(--pacific), var(--pacific), var(--black), var(--black), var(--black),
     transparent, transparent, var(--green), var(--green), var(--green) );
 
     border-style: solid;
@@ -121,12 +121,12 @@
       padding-left: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
     });
 
-    &__current {
-      .u-link__colors( var(--black), var(--black), var(--black), var(--black), var(--black),
+    &--current {
+      .u-link--colors( var(--black), var(--black), var(--black), var(--black), var(--black),
       var(--black), var(--black), var(--black), var(--black), var(--black) );
     }
 
-    &__parent {
+    &--parent {
       .heading-4();
 
       margin-bottom: inherit;
@@ -141,11 +141,11 @@
     // Add drop-shadow.
     box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
 
-    &__no-children {
+    &--no-children {
       display: none;
     }
 
-    &_list__parents {
+    &__list--parents {
       li[data-nav-is-active='False']{
         display: none;
       }
@@ -157,11 +157,11 @@
     .o-secondary-nav {
       background: none;
 
-      &_header {
+      &__header {
         display: none;
       }
 
-      &_content {
+      &__content {
         // These two !important values override basic expandable styling,
         // because these do not function like expandables on med+ screens.
         display: block !important;
@@ -184,30 +184,30 @@
 // Right-to-left (RTL) layout.
 html[lang='ar'] {
   .o-secondary-nav {
-    button.o-secondary-nav_header {
+    button.o-secondary-nav__header {
       text-align: right;
     }
 
-    &_cues {
+    &__cues {
       text-align: left;
     }
 
-    &_list__parents {
+    &__list--parents {
       padding-right: 0;
     }
 
-    &_link {
+    &__link {
       border-left-width: 0;
       border-right-width: 5px;
     }
 
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
-      &_link {
+      &__link {
         padding-right: unit( (@grid_gutter-width / 2 / @base-font-size-px), em );
       }
 
-      &_list__parents {
+      &__list--parents {
         padding-right: unit((@grid_gutter-width / 2 / @base-font-size-px), em);
       }
     });

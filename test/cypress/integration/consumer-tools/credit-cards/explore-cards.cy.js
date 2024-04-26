@@ -14,6 +14,21 @@ describe('Explore credit cards landing page', () => {
 
     cy.get('#id_rewards input').should('be.checked');
   });
+
+  it("should show an error message if a location isn't selected", () => {
+    exploreCards.openLandingPage();
+
+    cy.get('.a-form-alert__text').should('not.be.visible');
+
+    exploreCards.selectSituation('Earn rewards');
+    exploreCards.clickSubmitButton();
+
+    cy.get('.a-form-alert__text').should('be.visible');
+
+    exploreCards.selectLocation('NY');
+
+    cy.get('.a-form-alert__text').should('not.be.visible');
+  });
 });
 
 describe('Explore credit cards results page', () => {
@@ -38,6 +53,23 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
+  it('should only show the "Show more" button when not ordering by product name', () => {
+    exploreCards.openResultsPage('ordering=product_name');
+    exploreCards.getOrderingDropdownValue().should('have.text', 'Card name');
+    cy.get('#u-show-more-fade').should('not.be.visible');
+
+    exploreCards.selectOrdering('Purchase APR');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
+    cy.get('#u-show-more-fade').should('be.visible');
+
+    exploreCards.selectOrdering('Card name');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
+    cy.get('#u-show-more-fade').should('not.be.visible');
+
+    exploreCards.selectOrdering('Purchase APR');
+    cy.get('.htmx-container.htmx-request').should('not.exist');
+    cy.get('#u-show-more-fade').should('be.visible');
+  });
   it('should show speed bumps when situation(s) are selected', () => {
     exploreCards.openResultsPage('situations=Build%20credit');
     exploreCards.getNumberVisibleSpeedBumps().then((numSpeedBumps) => {
@@ -61,7 +93,7 @@ describe('Explore credit cards results page', () => {
     cy.get('.m-card--tabular > a').first().click();
 
     cy.get('h1').contains('Explore credit cards').should('not.exist');
-    cy.get('h2').contains('Making purchases').should('exist');
+    cy.get('h2').contains('Purchase interest rate and fees').should('exist');
   });
   it('should have the ordering option outside the filters expandable', () => {
     exploreCards.openResultsPage();
@@ -77,14 +109,14 @@ describe('Explore credit card details page', () => {
   it('should have a breadcrumb to the filtered list the user came from', () => {
     exploreCards.openLandingPage();
 
-    exploreCards.selectCreditTier('Greater than 720');
+    exploreCards.selectCreditTier('720 and greater');
     exploreCards.selectLocation('NY');
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
     cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('.m-breadcrumbs_crumb:last-child')
+    cy.get('.m-breadcrumbs__crumb:last-child')
       .should('have.attr', 'href')
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
       .and('contain', 'location=NY')
@@ -95,7 +127,7 @@ describe('Explore credit card details page', () => {
 
     cy.get('.m-card--tabular > a').first().click();
 
-    cy.get('.m-breadcrumbs_crumb:last-child')
+    cy.get('.m-breadcrumbs__crumb:last-child')
       .should('have.attr', 'href')
       .and('eq', '/consumer-tools/credit-cards/explore-cards/cards/');
   });

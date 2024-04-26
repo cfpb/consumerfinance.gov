@@ -11,7 +11,7 @@
     <style>
         /* Swap the homepage hero's white text to black on small screens */
         @media only all and (max-width: 37.5625em) {
-            .m-hero__knockout {
+            .m-hero--knockout {
                 /* CFPB Black #101820 */
                 color: #101820;
             }
@@ -28,11 +28,11 @@
 
     {% with value = hardcoded.features %}
         <section class="wrapper
-                        wrapper__match-content
+                        wrapper--match-content
                         block
-                        block__bg
-                        block__border
-                        block__flush-top
+                        block--bg
+                        block--border
+                        block--flush-top
                         u-mb0"
         >
             {% include "v1/includes/organisms/info-unit-group-2.html" with context %}

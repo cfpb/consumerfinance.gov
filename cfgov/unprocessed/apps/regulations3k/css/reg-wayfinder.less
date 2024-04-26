@@ -22,17 +22,17 @@
   padding-top: @regs-wayfinder-padding-top;
   padding-bottom: unit(15px / @base-font-size-px, rem);
 
-  &_link {
+  &__link {
     display: inline-block;
     margin-bottom: 0;
   }
 
-  &_link:visited {
+  &__link:visited {
     border-color: @link-underline;
     color: @link-text;
   }
 
-  &_sidebar {
+  &__sidebar {
     display: none;
   }
 
@@ -44,14 +44,14 @@
 
   // Desktop and above.
   .respond-to-min(@bp-med-min, {
-    &_wrapper {
+    &__wrapper {
       display: grid;
       grid-template-columns: 1fr 3fr;
       max-width: 1170px;
       margin: 0 auto;
     }
 
-    &_sidebar {
+    &__sidebar {
       display: inline-block;
       position: relative;
 
@@ -65,13 +65,13 @@
       }
     }
 
-    &_content {
+    &__content {
       padding-left: unit(30px / @base-font-size-px, rem);
       display: flex;
       justify-content: space-between;
     }
 
-    &_version {
+    &__version {
       text-align: right;
     }
   });

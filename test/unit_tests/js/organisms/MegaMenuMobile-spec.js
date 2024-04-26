@@ -22,12 +22,12 @@ describe('MegaMenuMobile', () => {
        See https://github.com/jsdom/jsdom/issues/1781
     */
     it('should expand on the first level sub-menu button click', (done) => {
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
       const subTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children',
+        '.o-mega-menu__content-1-link--has-children',
       );
-      const firstPanel = navElem.querySelector('.o-mega-menu_content-1');
-      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const firstPanel = navElem.querySelector('.o-mega-menu__content-1');
+      const secondPanel = navElem.querySelector('.o-mega-menu__content-2');
       let isExpanded;
 
       /**
@@ -75,15 +75,15 @@ describe('MegaMenuMobile', () => {
     });
 
     it('should not be expanded by default', () => {
-      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const secondPanel = navElem.querySelector('.o-mega-menu__content-2');
       const isExpanded = secondPanel.getAttribute('data-open');
 
       expect(isExpanded).toEqual('false');
     });
 
     it('should not be expanded on the main trigger click', (done) => {
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
-      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
+      const secondPanel = navElem.querySelector('.o-mega-menu__content-2');
       let isExpanded;
 
       /**
@@ -102,13 +102,13 @@ describe('MegaMenuMobile', () => {
     });
 
     it('should collapse on the first level sub-menu back button click', (done) => {
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
+      const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
       const subTrigger = navElem.querySelector(
-        '.o-mega-menu_content-1-link__has-children',
+        '.o-mega-menu__content-1-link--has-children',
       );
-      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const secondPanel = navElem.querySelector('.o-mega-menu__content-2');
       const subAltTrigger = secondPanel.querySelector(
-        '.o-mega-menu_content-alt-trigger',
+        '.o-mega-menu__content-alt-trigger',
       );
       let isExpanded;
 

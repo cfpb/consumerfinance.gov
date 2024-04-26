@@ -1,4 +1,3 @@
-import json
 import os
 from pathlib import Path
 
@@ -8,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-from cfgov.util import admin_emails
+from cfgov.util import admin_emails, environment_json
 
 
 # Repository root is 4 levels above this file
@@ -115,6 +114,7 @@ INSTALLED_APPS = (
     "tccp",
     "django_filters",
     "django_htmx",
+    "wagtail_content_audit",
 )
 
 MIDDLEWARE = (
@@ -146,7 +146,7 @@ if "CSP_ENFORCE" in os.environ:
 ROOT_URLCONF = "cfgov.urls"
 
 # We support two different template engines: Django templates and Jinja2
-# templates. See https://docs.djangoproject.com/en/dev/topics/templates/
+# templates. See https://docs.djangoproject.com/en/stable/topics/templates/
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
@@ -393,6 +393,15 @@ PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
 # Password Policies
 AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
@@ -728,15 +737,14 @@ CACHES = {
 
 # Set our CORS allowed origins based on a JSON list in the
 # CORS_ALLOWED_ORIGINS environment variable.
-try:
-    CORS_ALLOWED_ORIGINS = json.loads(
-        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
-    )
-except (TypeError, ValueError):
-    raise ImproperlyConfigured(
+CORS_ALLOWED_ORIGINS = environment_json(
+    "CORS_ALLOWED_ORIGINS",
+    (
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
         "Expected a JSON array of allowed origins."
-    )
+    ),
+    default="[]",
+)
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash

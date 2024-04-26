@@ -66,7 +66,7 @@ class TextIntroduction(blocks.StructBlock):
     class Meta:
         icon = "title"
         template = "v1/includes/molecules/text-introduction.html"
-        classname = "block__flush-top"
+        classname = "block--flush-top"
 
 
 class AbstractHero(blocks.StructBlock):
@@ -137,7 +137,7 @@ class AbstractHero(blocks.StructBlock):
 
     class Meta:
         template = "v1/includes/molecules/hero.html"
-        classname = "block__flush-top block__flush-bottom"
+        classname = "block--flush-top block--flush-bottom"
         icon = "image"
 
 

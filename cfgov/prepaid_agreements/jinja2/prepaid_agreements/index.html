@@ -24,12 +24,12 @@
 {# BODY items #}
 
 {% block content_main_modifiers -%}
-    content__1-3 prepaid-agreements prepaid-agreements-search
+    content--1-3 prepaid-agreements prepaid-agreements-search
 {%- endblock %}
 
 {% block content_main scoped %}
-    <div class="search_form">
-        <div class="block block__sub search_intro">
+    <div class="search__form">
+        <div class="block block--sub search__intro">
             <h1>Prepaid product agreements database</h1>
             <div class="lead-paragraph u-readable-width">
                 Find prepaid product agreements by issuer name, product name, prepaid product type, and other criteria. All data is refreshed nightly.
@@ -40,10 +40,10 @@
             <p>Note that we are unable to do a full-text search of agreement files.</p>
         </div>
 
-        <div class="search_wrapper block block__sub">
+        <div class="search__wrapper block block--sub">
             <form class="u-mt15" method="get" action="." >
                 <h3 class="h4 u-mb5">Search within</h3>
-                <div class="layout-row block block__sub block__flush-top">
+                <div class="layout-row block block--sub block--flush-top">
                     <div class="a-select flex-fixed">
                         {% set opts = [
                             ('All fields', 'all'),
@@ -67,7 +67,7 @@
                     <div class="flex-all">
                         <div class="m-btn-inside-input input-contains-label">
                             <label for="searchText"
-                                   class="input-contains-label_before input-contains-label_before__search"
+                                   class="input-contains-label__before input-contains-label__before--search"
                                    aria-hidden="true">
                                 {{ svg_icon('search') }}
                             </label>
@@ -79,7 +79,7 @@
                                    placeholder="Enter search term"
                                    value="{{ query }}"
                                    aria-label="The term to search for">
-                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('error') }} Clear</a>
+                            <a class="a-btn a-btn--link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('error') }} Clear</a>
                         </div>
                     </div>
                     <button class="a-btn flex-fixed">Search</button>
@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <div class="block block__flush-top search_results">
+    <div class="block block--flush-top search__results">
         {% include 'search_results.html' %}
     </div>
 {% endblock %}

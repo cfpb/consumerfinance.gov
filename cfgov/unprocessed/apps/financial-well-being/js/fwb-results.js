@@ -9,14 +9,14 @@ let buttonsDom;
  * @param {string} category - The category to display
  */
 function switchComparisons(category) {
-  const allCategories = document.querySelectorAll('.comparison_data-point');
+  const allCategories = document.querySelectorAll('.comparison__data-point');
   const showCategory = document.querySelectorAll(
-    '[class^="comparison_data-point ' + category + '"]',
+    '[class^="comparison__data-point ' + category + '"]',
   );
   const selectedButton = document.querySelector(
     '[data-compare-by="' + category + '"]',
   );
-  const selectedButtonClass = 'comparison-chart_toggle-button__selected';
+  const selectedButtonClass = 'comparison-chart__toggle-button--selected';
   const hiddenClass = 'u-hidden';
 
   // Hide all categories ...
@@ -73,7 +73,7 @@ function setUpListeners() {
 function init() {
   Expandable.init();
 
-  buttonsDom = document.querySelectorAll('.comparison-chart_toggle-button');
+  buttonsDom = document.querySelectorAll('.comparison-chart__toggle-button');
 
   // Sets up the UI for the default age category.
   switchComparisons('age');

@@ -19,10 +19,10 @@
     {% set category_index = loop.index %}
     {% for item in category.notes %}
         {% set id = 'page-' + page_num | string + '-category-' + category_index | string + '-note-'  + loop.index | string %}
-        <a class="image-map_overlay image-map_overlay__category-{{ category_index }}"
+        <a class="image-map__overlay image-map__overlay--category-{{ category_index }}"
            style="{{ 'top:' + item.coordinates.top | string + '%; left:' + item.coordinates.left | string + '%; width:' + item.coordinates.width | string + '%; height:' + item.coordinates.height | string + '%;' }}"
            href="#{{ id }}"
-           id="image-map_overlay__{{ id }}"
+           id="image-map__overlay--{{ id }}"
            tabindex="-1">
           <span class="u-visually-hidden">{{ item.heading }}</span>
          </a>
@@ -87,21 +87,21 @@
             o-expandable__form-explainer
             o-expandable__form-explainer-category-{{ category_index }}"
      id="{{ id }}">
-    <button class="o-expandable_header"
+    <button class="o-expandable__header"
             tabindex="0">
-        <span class="o-expandable_label">
+        <span class="o-expandable__label">
             {{ item.heading }}
         </span>
-        <span class="o-expandable_cues">
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
+        <span class="o-expandable__cues">
+            <span class="o-expandable__cue-open" role="img" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
+            <span class="o-expandable__cue-close" role="img" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>
     </button>
-    <div class="o-expandable_content" tabindex="0">
+    <div class="o-expandable__content" tabindex="0">
         {{ item.body | safe }}
     </div>
 </div>
@@ -128,12 +128,12 @@
    ========================================================================== #}
 
 {% macro render_pagination( pages ) %}
-<nav class="explain_pagination">
-    <span class="form-explainer_nav-label">Viewing page:</span>
-    <ul class="form-explainer_page-links">
+<nav class="explain__pagination">
+    <span class="form-explainer__nav-label">Viewing page:</span>
+    <ul class="form-explainer__page-links">
         {% for page in pages %}
         <li>
-            <a class="form-explainer_page-link {{ 'current-page' if loop.index == 1 else '' }}"
+            <a class="form-explainer__page-link {{ 'current-page' if loop.index == 1 else '' }}"
                data-page="{{ loop.index }}">
                {{ loop.index }}
             </a>
@@ -143,9 +143,11 @@
 </nav>
 {% endmacro %}
 
+<div class="block block--flush-top u-hide-if-js">
+    {% include "v1/includes/snippets/no_js_notification.html" %}
+</div>
 
-
-<div id="form-explainer" class="form-explainer">
+<div id="form-explainer" class="form-explainer u-js-only">
     {{ value.heading | safe if value.heading else '' }}
     <div class="explain" aria-controls="form-explainer">
 
@@ -156,14 +158,14 @@
 
         {% for page in value.pages %}
         {% set page_num = loop.index %}
-        <div class="explain_page"
-             id="explain_page-{{ page_num }}">
-            <figure class="explain_container">
-                <div class="image-map explain_image-map">
-                    <div class="image-map_wrapper">
+        <div class="explain__page"
+             id="explain__page-{{ page_num }}">
+            <figure class="explain__container">
+                <div class="image-map explain__image-map">
+                    <div class="image-map__wrapper">
                         {% if page_count > 1 %}
-                            <div class="form-explainer_page-buttons">
-                                <button class="prev a-btn a-btn__disabled"
+                            <div class="form-explainer__page-buttons">
+                                <button class="prev a-btn a-btn--disabled"
                                         aria-label="Previous page">
                                     {{ svg_icon('left') }}
                                 </button>
@@ -174,15 +176,15 @@
                             </div>
                         {% endif %}
                         {% set media = image(page.image, 'original') %}
-                        <img class="image-map_image"
+                        <img class="image-map__image"
                              src="{{ media.url }}"
                              alt="">
                         {{ render_map_points( page.categories, page_num ) }}
                     </div>
                 </div>
-                <figcaption class="explain_terms">
+                <figcaption class="explain__terms">
                     <div class="o-expandable-group
-                                o-expandable-group__accordion">
+                                o-expandable-group--accordion">
                         {% for category in page.categories %}
                             {% set category_index = loop.index %}
                             {% if category.title %}

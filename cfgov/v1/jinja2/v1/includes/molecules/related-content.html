@@ -32,7 +32,7 @@
 <div class="m-related-links">
     {% if value.heading %}
         <header class="m-slug-header">
-            <h2 class="m-slug-header_heading" id="{{ value.heading | slugify_unique }}">
+            <h2 class="m-slug-header__heading" id="{{ value.heading | slugify_unique }}">
                 {{ value.heading }}
             </h2>
         </header>
@@ -41,11 +41,11 @@
     {{ value.paragraph | safe }}
     {% endif %}
     {% if value.links %}
-        <ul class="m-list m-list__links">
+        <ul class="m-list m-list--links">
         {% for link in value.links %}
-            <li class="m-list_item">
+            <li class="m-list__item">
                 <a href="{{ link.url }}"
-                  class="m-list_link"
+                  class="m-list__link"
                   {%- if link.aria_label -%}
                     aria-label="{{ link.aria_label }}"
                   {% endif -%}>

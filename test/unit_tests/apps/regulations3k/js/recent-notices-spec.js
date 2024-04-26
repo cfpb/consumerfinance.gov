@@ -32,7 +32,7 @@ describe('The Regs3K search page', () => {
     };
     const processedNotice = processNotice(notice);
     expect(processedNotice.constructor.name).toEqual('HTMLLIElement');
-    expect(processedNotice.className).toEqual('m-list_link');
+    expect(processedNotice.className).toEqual('m-list__link');
     expect(processedNotice.querySelector('a').href).toEqual(
       'https://federalregister.gov/',
     );
@@ -62,7 +62,7 @@ describe('The Regs3K search page', () => {
 
     // Wait for window.load to trigger.
     setTimeout(() => {
-      const numNotices = document.querySelectorAll('.m-list_link').length;
+      const numNotices = document.querySelectorAll('.m-list__link').length;
       expect(numNotices).toEqual(4);
     }, 1000);
   });

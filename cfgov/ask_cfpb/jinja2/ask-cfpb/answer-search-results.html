@@ -9,15 +9,15 @@
 {%- endblock css %}
 
 {% block content_modifiers -%}
-    {{ super() }} ask-cfpb-page ask-cfpb-page__search
+    {{ super() }} ask-cfpb-page ask-cfpb-page--search
 {%- endblock %}
 
 {% block content_main %}
     <div class="block
-                block__flush-top">
+                block--flush-top">
         <h1>{{ _('Search our library of answers') }}</h1>
 
-        <div class="block block__sub">
+        <div class="block block--sub">
         {{ ask_search.render( ask_query=tag or page.query, language=page.language, show_label=False, autocomplete=False, max_length=1024 ) }}
         </div>
 
@@ -35,7 +35,7 @@
 
             <section class="search-results
                             block
-                            block__flush-top">
+                            block--flush-top">
 
                 <div>
                 {% for question in results %}
@@ -47,7 +47,7 @@
 
                 </div>
 
-                <div class="block block__sub">
+                <div class="block block--sub">
                     {{ pagination.render(
                         paginator.num_pages,
                         current_page | int,
@@ -62,7 +62,7 @@
 
             <section class="search-results
                             block
-                            block__flush-top">
+                            block--flush-top">
                 <div data-gtm_ask-no-results="true">
                     <h3 class="results-header">
                         {{ _('No results found for') }} “{{ tag or page.query }}”
@@ -79,7 +79,7 @@
 
             <section class="search-results
                             block
-                            block__flush-top">
+                            block--flush-top">
                 <h4>
                     {{ _('Please enter a search term in the box above.') }}
                 </h4>
@@ -92,7 +92,7 @@
 
 {% block content_sidebar scoped -%}
     {% if about_us %}
-        <div class="block block__flush-top about-us-text">
+        <div class="block block--flush-top about-us-text">
             {{ about_us.text | richtext }}
         </div>
     {% endif %}

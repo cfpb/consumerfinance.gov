@@ -26,9 +26,9 @@
 {% else %}
     {% set sm_img = image(value.image, 'original') %}
 {% endif %}
- <img class="m-search-hero_image"
-    srcset="{{ sm_img.url }},
-        {{ img.url }} 2x"
-    src="{{ img.url }}"
-    width="498"
-    alt="{{ img.alt }}">
+ <img class="m-search-hero__image"
+      srcset="{{ sm_img.url }},
+              {{ img.url }} 2x"
+      src="{{ img.url }}"
+      width="498"
+      alt="{{ img.alt }}">

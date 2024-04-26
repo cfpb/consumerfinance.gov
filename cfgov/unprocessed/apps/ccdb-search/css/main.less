@@ -6,7 +6,7 @@
   max-width: 1200px !important;
 }
 
-.wrapper__match-content {
+.wrapper--match-content {
   // Tablet size.
   @media only screen and (min-width: 600px) and (max-width: 900px) {
     padding-left: 30px !important;
@@ -23,20 +23,22 @@
   left: 50%;
   right: 50%;
   position: relative;
-  padding: 0 unit(30px / 16px, em) !important;
+  padding: unit(30px / @base-font-size-px, rem);
+  padding-bottom: 0;
 
   // Tablet and below.
   .respond-to-max(@bp-sm-max, {
-    padding: 0 unit( 15px / 16px, em ) !important;
+    padding: unit(15px / @base-font-size-px, rem);
+    padding-bottom: 0;
   });
 
   // Overrides for design system.
-  .o-expandable_header .o-expandable_cue-close,
-  .o-expandable_header .o-expandable_cue-open {
+  .o-expandable__header .o-expandable__cue-close,
+  .o-expandable__header .o-expandable__cue-open {
     display: block !important;
   }
 
-  .o-expandable_label {
+  .o-expandable__label {
     margin-bottom: 0.83333333em !important;
   }
 

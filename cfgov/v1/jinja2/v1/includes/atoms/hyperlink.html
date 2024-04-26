@@ -17,10 +17,10 @@
    value.aria_label: An aria-label for the link, if the text is not descriptive.
 
    ========================================================================== #}
-<a class="a-link a-link__jump"
+<a class="a-link a-link--jump"
    href="{{ value.url }}"
    {% if value.aria_label %}aria-label="{{ value.aria_label }}"{% endif %}>
-    <span class="a-link_text">
+    <span class="a-link__text">
         {{ value.text }}
     </span>
 </a>

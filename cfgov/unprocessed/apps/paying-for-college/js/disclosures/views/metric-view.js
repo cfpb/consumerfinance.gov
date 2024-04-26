@@ -117,9 +117,9 @@ const metricView = {
     const $national = $graph.find('[data-bar-graph_number="average"]');
     const metricKey = $graph.attr('data-metric');
     const metrics = metricView.metrics[metricKey];
-    const schoolHeight = $school.find('.bar-graph_label').height();
+    const schoolHeight = $school.find('.bar-graph__label').height();
     const schoolTop = $school.top();
-    const nationalHeight = $national.find('.bar-graph_label').height();
+    const nationalHeight = $national.find('.bar-graph__label').height();
     const nationalTop = $national.top();
     let $higherPoint = $national;
     let $lowerPoint = $school;
@@ -132,7 +132,7 @@ const metricView = {
       $lowerPoint = $national;
     }
     const $higherLabels = $higherPoint.find(
-      '.bar-graph_label, .bar-graph_value',
+      '.bar-graph__label, .bar-graph__value',
     );
 
     // If the values are equal, handle the display with CSS only
@@ -194,8 +194,8 @@ const metricView = {
     const schoolValue = metricView.metrics[metricKey].school;
     const min = $graph.attr('data-graph-min');
     const max = $graph.attr('data-graph-max');
-    const $school = $graph.find('.bar-graph_point__you');
-    const $national = $graph.find('.bar-graph_point__average');
+    const $school = $graph.find('.bar-graph__point--you');
+    const $national = $graph.find('.bar-graph__point--average');
     const bottoms = {};
     const bottomOffset = 20;
 
@@ -228,11 +228,11 @@ const metricView = {
   getNotifications: function (metricKey) {
     let classes = 'cf-notification ';
     const standingClasses = {
-      same: 'metric_notification__same',
-      better: 'metric_notification__better',
+      same: 'metric_notification--same',
+      better: 'metric_notification--better',
       worse:
-        'cf-notification metric_notification__worse ' +
-        'cf-notification__error',
+        'cf-notification metric_notification--worse ' +
+        'cf-notification--error',
     };
     const metrics = metricView.metrics[metricKey];
     const low = metrics.low;
@@ -259,13 +259,13 @@ const metricView = {
   checkWarnings: function (schoolValue, nationalValue) {
     let classes = 'cf-notification ';
     if (isNaN(schoolValue) && isNaN(nationalValue)) {
-      classes += 'metric_notification__no-data cf-notification__warning';
+      classes += 'metric__notification--no-data cf-notification--warning';
       return classes;
     } else if (isNaN(schoolValue)) {
-      classes += 'metric_notification__no-you cf-notification__warning';
+      classes += 'metric__notification--no-you cf-notification--warning';
       return classes;
     } else if (isNaN(nationalValue)) {
-      classes += 'metric_notification__no-average cf-notification__warning';
+      classes += 'metric__notification--no-average cf-notification--warning';
       return classes;
     }
 
@@ -278,7 +278,7 @@ const metricView = {
    * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function ($notification, notificationClasses) {
-    $notification.attr('class', 'metric_notification');
+    $notification.attr('class', 'metric__notification');
     $notification.addClass(notificationClasses);
   },
 
@@ -287,7 +287,7 @@ const metricView = {
    * @param {object} $notification - jQuery object of the notification box.
    */
   hideNotificationClasses: function ($notification) {
-    $notification.attr('class', 'metric_notification');
+    $notification.attr('class', 'metric__notification');
     $notification.hide();
   },
 
@@ -300,7 +300,7 @@ const metricView = {
       const $graph = $(elem);
       const metricKey = $graph.attr('data-metric');
       const notificationClasses = metricView.getNotifications(metricKey);
-      const $notification = $graph.siblings('.metric_notification');
+      const $notification = $graph.siblings('.metric__notification');
 
       metricView.setGraphValues($graph);
       metricView.setGraphSources($graph);
@@ -345,7 +345,7 @@ const metricView = {
     const $elements = $section.find('[data-debt-burden]');
     const financials = getFinancial.values();
     const values = {};
-    const $notification = $('.debt-burden .metric_notification');
+    const $notification = $('.debt-burden .metric__notification');
 
     // Calculate values
     values.loanMonthly = financials.loanMonthly;
@@ -380,8 +380,8 @@ const metricView = {
   updateSalaryWarning: function () {
     const $salaryDebt = $('#salary-and-debt-metric');
     const notificationClasses =
-      'cf-notification metric_notification__no-you cf-notification__warning';
-    const $notification = $salaryDebt.siblings('.metric_notification');
+      'cf-notification metric__notification--no-you cf-notification--warning';
+    const $notification = $salaryDebt.siblings('.metric__notification');
 
     metricView.setNotificationClasses($notification, notificationClasses);
   },
@@ -410,11 +410,11 @@ const metricView = {
    * @param {object} $graph - jQuery object of the graph.
    */
   updateForSettlement: function ($graph) {
-    const $notification = $graph.siblings('.metric_notification');
+    const $notification = $graph.siblings('.metric__notification');
     const selector =
-      '.metric_notification__no-you,.metric_notification__no-data';
+      '.metric__notification--no-you,.metric__notification--no-data';
     $notification.not(selector).hide();
-    $graph.find('.bar-graph_point__average').hide();
+    $graph.find('.bar-graph__point--average').hide();
   },
 };
 

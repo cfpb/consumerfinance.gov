@@ -15,43 +15,43 @@
 {% macro render( nav_items ) %}
 <nav class="o-secondary-nav"
      aria-label="Section navigation">
-    <button class="o-secondary-nav_header" type="button" aria-expanded="false">
-        <span class="o-secondary-nav_label">
+    <button class="o-secondary-nav__header" type="button" aria-expanded="false">
+        <span class="o-secondary-nav__label">
             {{ _('Navigate this section') }}
         </span>
-        <span class="o-secondary-nav_cues">
-            <span class="o-secondary-nav_cue-open" aria-label="Show">
+        <span class="o-secondary-nav__cues">
+            <span class="o-secondary-nav__cue-open" aria-label="Show">
                 {{ svg_icon('down') }}
             </span>
-            <span class="o-secondary-nav_cue-close" aria-label="Hide">
+            <span class="o-secondary-nav__cue-close" aria-label="Hide">
                 {{ svg_icon('up') }}
             </span>
         </span>
     </button>
 
-    <div class="o-secondary-nav_content">
-        <ul class="o-secondary-nav_list
-                   o-secondary-nav_list__parents" role="tablist">
+    <div class="o-secondary-nav__content">
+        <ul class="o-secondary-nav__list
+                   o-secondary-nav__list--parents" role="tablist">
         {%- for item in nav_items %}
             {# TODO: refactor JS to rid of custom `o-secondary-nav_li__parent` #}
-            <li class="o-secondary-nav_list-item__parent"
+            <li class="o-secondary-nav__list-item--parent"
                 data-nav-is-active="{{item.current if item.current else 'False'}}"
                 data-nav-is-open="False"
                 role="tab">
-                <a class="o-secondary-nav_link
-                          o-secondary-nav_link__parent"
+                <a class="o-secondary-nav__link
+                          o-secondary-nav__link--parent"
                     href="#"
                     data-gtm_ignore="true"
                     data-nav_section="{{ item.data }}">
                     {{ item.title }}
                 </a>
             {%- if item.children -%}
-                <ul class="o-secondary-nav_list
-                           o-secondary-nav_list__children"
+                <ul class="o-secondary-nav__list
+                           o-secondary-nav__list--children"
                     role="tablist">
                 {%- for child in item.children -%}
                     <li role="tab">
-                        <a class="o-secondary-nav_link"
+                        <a class="o-secondary-nav__link"
                            href="#"
                            data-gtm_ignore="true"
                            data-nav_item="{{ child.data }}">

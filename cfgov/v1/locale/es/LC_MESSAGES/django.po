@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 11:30-0400\n"
+"POT-Creation-Date: 2024-04-12 18:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr "Lea la declaración de privacidad"
 msgid "Breadcrumbs"
 msgstr "Guía de navegación"
 
-#: v1/jinja2/v1/includes/molecules/feature-card.html:68
+#: v1/jinja2/v1/includes/molecules/feature-card.html:67
 msgid "Read answer"
 msgstr "Leer la respuesta"
 
@@ -174,11 +174,11 @@ msgstr "Busque su pregunta"
 msgid "Search Ask CFPB for your question"
 msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:51
+#: v1/jinja2/v1/includes/organisms/expandable.html:53
 msgid "Show"
 msgstr "Mostrar"
 
-#: v1/jinja2/v1/includes/organisms/expandable.html:54
+#: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -220,6 +220,14 @@ msgstr "Ver video en YouTube"
 #: v1/jinja2/v1/includes/organisms/video-player.html:107
 msgid "Play video"
 msgstr "Ver video"
+
+#: v1/jinja2/v1/includes/snippets/no_js_notification.html:7
+msgid "This tool is not supported in your browser."
+msgstr "Este sitio no es compatible con su navegador web."
+
+#: v1/jinja2/v1/includes/snippets/no_js_notification.html:8
+msgid "Please try a newer browser or confirm that JavaScript is enabled."
+msgstr "Intente con un navegador web más nuevo o confirme que JavaScript está habilitado."
 
 #: v1/jinja2/v1/layouts/base.html:260
 msgid "Skip to main content"

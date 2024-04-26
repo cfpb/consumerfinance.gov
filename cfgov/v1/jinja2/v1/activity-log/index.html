@@ -2,7 +2,7 @@
 
 {% block content_main %}
 
-    <div class="block block__flush-top">
+    <div class="block block--flush-top">
         <h1>Recent updates</h1>
         <p class="lead-paragraph">
             Find the latest CFPB activities and publications here. Use the filters
@@ -12,7 +12,7 @@
 
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
-            <div class="block block__flush-top">
+            <div class="block block--flush-top">
                 {% include_block block %}
             </div>
         {% else %}

@@ -30,9 +30,9 @@
     content: " (" attr(data-pretty-href) ")";
   }
 
-  a.o-header_logo-img:after,
-  a.m-info-unit_heading-link:after,
-  .m-info-unit_content h4 a:after {
+  a.o-header__logo-img:after,
+  a.m-info-unit__heading-link:after,
+  .m-info-unit__content h4 a:after {
     // Do not append hrefs to the logo or info unit headings.
     content: none;
   }
@@ -57,8 +57,8 @@
     }
   }
 
-  a.a-link__jump,
-  a.m-list_link {
+  a.a-link--jump,
+  a.m-list__link {
     // These pseudo-classes are needed to guarantee specificity
     &:link,
     &:visited {
@@ -70,38 +70,38 @@
     }
   }
 
-  .m-list__links .m-list_item {
+  .m-list--links .m-list__item {
     // Space out stand-alone links by .5em
     margin-bottom: unit( 8px / @base-font-size-px, em );
   }
 
   .o-info-unit-group {
-    .content-l_col-1-2,
-    .content-l_col-1-3,
-    .content-l_col-2-3 {
+    .content-l__col-1-2,
+    .content-l__col-1-3,
+    .content-l__col-2-3 {
       // Ensure content remains vertically aligned by rendering them as a table cell
       display: table-cell !important;
     }
-    .content-l_col-1 {
-      .grid_column( 12 );
+    .content-l__col-1 {
+      .grid__column( 12 );
     }
-    .content-l_col-1-2 {
+    .content-l__col-1-2 {
       // Keep 50/50 info unit groups at two columns for print
-      .grid_column( 6 );
+      .grid__column( 6 );
     }
-    .content-l_col-1-3 {
+    .content-l__col-1-3 {
       // Keep 33/33/33 info unit groups at three columns for print
-      .grid_column( 4 );
+      .grid__column( 4 );
     }
-    .content-l_col-2-3 {
+    .content-l__col-2-3 {
       // Maintain 2/3 layouts for print
-      .grid_column( 8 );
+      .grid__column( 8 );
     }
-    .m-info-unit_image {
+    .m-info-unit__image {
       // Print info unit images
       display: block;
     }
-    .m-info-unit__inline .m-info-unit_image {
+    .m-info-unit__inline .m-info-unit__image {
       // Preserve inline info unit image layout
       float: left;
       margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -112,13 +112,13 @@
   .o-featured-content-module {
     display: flex;
 
-    &_text {
+    &__text {
       flex: 1;
       padding-right: @fcm-visual-width + @grid_gutter-width;
       padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 
-    &_visual {
+    &__visual {
       height: 100%;
       overflow: hidden;
       padding-right: 0;
@@ -130,24 +130,24 @@
       width: @fcm-visual-width;
     }
 
-    &_img {
+    &__img {
       max-width: none;
       height: 100%;
       position: absolute;
     }
 
     // Modifiers
-    &__right &_img {
+    &__right &__img {
       right: 0;
     }
 
-    &__center &_img {
+    &__center &__img {
       left: 50%;
       transform: translateX( -50% );
     }
   }
 
-  .o-video-player_play-btn {
+  .o-video-player__play-btn {
     // !important used here to avoid being overridden by a much more specific
     // selector that sets the display property for this element
     // and to avoid using a selector that specific here.
@@ -157,12 +157,12 @@
   .o-video-player {
     // When printing, shrink video preview images to one column with the :after
     // URL in a second column next to it.
-    &_image-container {
-      .grid_column( 6 );
+    &__image-container {
+      .grid__column( 6 );
     }
     &:after {
       content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
-      .grid_column( 6 );
+      .grid__column( 6 );
     }
   }
 
@@ -176,7 +176,7 @@
   .o-email-signup,
   .rss-subscribe,
   .o-search-bar,
-  .m-hero_image-wrapper {
+  .m-hero__image-wrapper {
     // Hide unimportant print things
     display: none;
   }
@@ -189,8 +189,8 @@
   // Cap content line lengths at ~ 75 characters. `ch` equals the width of the
   // 0 glyph in the font, which is wider than some others (i, f, t, etc.),
   // so setting it to 62 gives us approximately 75 characters per line.
-  .content_main,
-  .content_intro {
+  .content__main,
+  .content__intro {
     dd,
     dt,
     li,
@@ -208,24 +208,24 @@
       padding: 0;
     }
 
-    .content_main {
+    .content__main {
       margin: 0;
       display: block !important;
     }
 
-    .content_sidebar {
+    .content__sidebar {
       display: block !important;
     }
   }
 
   // Prevent Chrome from adding in a blank first page
   @media (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
-    .content_main {
+    .content__main {
       margin: 0;
       display: block !important;
     }
 
-    .content_sidebar {
+    .content__sidebar {
       display: block !important;
     }
   }

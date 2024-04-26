@@ -16,6 +16,14 @@
     {%- endif %} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{%- block canonical -%}
+  {%- if section -%}
+    {% set canonical = canonical + section.label %}
+  {%- endif -%}
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:url" content="{{ canonical }}">
+{%- endblock -%}
+
 {% block desc -%}
     {#- 'section' pages are ones that show the actual text of the regulation -#}
     {% if section -%}
@@ -85,17 +93,17 @@
                 <div class="a-date">
                     This version is the current regulation
                 </div>
-                <ul class="m-list m-list__links">
+                <ul class="m-list m-list--links">
                     {% if num_versions > 1 %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">
                             {{ svg_icon('date') }}
                             View all versions of this regulation
                         </a>
                     </li>
                     {% endif %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ search_url }}">
+                    <li class="m-list__item">
+                        <a class="m-list__link" href="{{ search_url }}">
                             {{ svg_icon('search') }}
                             Search this regulation
                         </a>
@@ -104,19 +112,19 @@
             {% else %}
                 <div class="m-full-width-text
                             m-notification
-                            m-notification__visible
-                            m-notification__warning">
+                            m-notification--visible
+                            m-notification--warning">
                     {{ svg_icon('warning-round') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">This version is not the current regulation.</div>
-                        <p class="m-notification_explanation">
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">This version is not the current regulation.</div>
+                        <p class="m-notification__explanation">
                         {% if requested_version.effective_date < current_version.effective_date %}
                             You are viewing a previous version of this regulation with amendments that went into effect on
                         {% endif %}
                         {% if requested_version.effective_date > current_version.effective_date %}
                             You are viewing a future version of this regulation with amendments that will go into effect on
                         {% endif %}
-                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">View all versions of this regulation</a>
+                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list__link" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">View all versions of this regulation</a>
                         </p>
                     </div>
                 </div>
@@ -127,19 +135,19 @@
             <div class="a-rule-break m-full-width-text"></div>
         {% endif %}
 
-        <section class="block block__flush-top">
+        <section class="block block--flush-top">
             <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section.title}}">
-                <div class="o-regulations-wayfinder_wrapper">
-                    <div class="o-regulations-wayfinder_sidebar">
+                <div class="o-regulations-wayfinder__wrapper">
+                    <div class="o-regulations-wayfinder__sidebar">
                         <span class="h4">
                             {{ regulation.short_name }}
                         </span>
                     </div>
-                    <div class="o-regulations-wayfinder_content">
-                        <a href="#" class="h4 o-regulations-wayfinder_link">
-                            <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                    <div class="o-regulations-wayfinder__content">
+                        <a href="#" class="h4 o-regulations-wayfinder__link">
+                            <span class="o-regulations-wayfinder__section-title"></span><span class="o-regulations-wayfinder__marker"></span>
                         </a>
-                        <div class="o-regulations-wayfinder_version">
+                        <div class="o-regulations-wayfinder__version">
                             {% if requested_version.effective_date < current_version.effective_date %}
                                 Previous version (effective
                                 {{ ap_date(requested_version.effective_date) }} to
@@ -184,7 +192,7 @@
         </ul>
 
     {% else %}
-        <div class="block block__flush-top block__flush-bottom">
+        <div class="block block--flush-top block--flush-bottom">
             <h1>{{ page.title }}</h1>
             {% if requested_version == current_version %}
                 <div class="regulation-meta">
@@ -199,17 +207,17 @@
             {{ render_block.render(block, loop.index) }}
         {%- endfor %}
 
-        <div class="block block__flush-bottom block__flush-regs3k">
+        <div class="block block--flush-bottom block--flush-regs3k">
             {% if requested_version != current_version %}
-            <div class="block block__sub">
+            <div class="block block--sub">
                 <div class="m-full-width-text
                             m-notification
-                            m-notification__visible
-                            m-notification__warning">
+                            m-notification--visible
+                            m-notification--warning">
                     {{ svg_icon('warning-round') }}
-                    <div class="m-notification_content">
-                        <div class="m-notification_message">This version is not the current regulation.</div>
-                        <p class="m-notification_explanation">
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">This version is not the current regulation.</div>
+                        <p class="m-notification__explanation">
                             {% if requested_version.effective_date < current_version.effective_date %}
                                 You are viewing a previous version of this regulation with amendments that went into effect on {{ ap_date(requested_version.effective_date) }}.
                             {% endif %}
@@ -222,33 +230,33 @@
             </div>
             {% endif %}
 
-            <div class="block block__sub">
-                    <ul class="m-list m-list__links m-full-width-text">
+            <div class="block block--sub">
+                    <ul class="m-list m-list--links m-full-width-text">
                         {% if requested_version == current_version %}
-                            <li class="m-list_item">
-                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label.lower()) }}">
+                            <li class="m-list__item">
+                                <a class="m-list__link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label.lower()) }}">
                                     View current regulation
                                 </a>
                             </li>
                         {% else %}
-                            <li class="m-list_item">
-                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label.lower()) }}">
+                            <li class="m-list__item">
+                                <a class="m-list__link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label.lower()) }}">
                                     View this version
                                 </a>
                             </li>
                         {% endif %}
 
                         {% if num_versions > 1 %}
-                            <li class="m-list_item">
-                                <a class="m-list_link" href="{{ routablepageurl(page, 'versions') }}">
+                            <li class="m-list__item">
+                                <a class="m-list__link" href="{{ routablepageurl(page, 'versions') }}">
                                     View all versions of this regulation
                                 </a>
                             </li>
                         {% endif %}
 
                         {% if requested_version == current_version %}
-                            <li class="m-list_item">
-                                <a class="m-list_link" href="{{ search_url }}">
+                            <li class="m-list__item">
+                                <a class="m-list__link" href="{{ search_url }}">
                                     Search this regulation
                                 </a>
                             </li>
@@ -266,7 +274,7 @@
     {% endif %}
 
     {% if section %}
-        <div class="block block__sub">
+        <div class="block block--sub">
             <nav class="section-nav" role="navigation">
                 <ul>
                     {% if previous_section %}

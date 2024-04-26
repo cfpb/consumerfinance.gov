@@ -51,7 +51,7 @@
 {%- endif %}
 
 <table class="o-table
-    {{- ' o-table__stack-on-small' if stack_on_mobile else '' -}}
+    {{- ' o-table--stack-on-small' if stack_on_mobile else '' -}}
     {{- ' u-w100pct' if is_full_width else '' -}}
 ">
     {% if value.data.columns | selectattr('heading') | list -%}

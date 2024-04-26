@@ -37,14 +37,14 @@ const defaultScrollOffset = (target) => {
  */
 const handleMobileNav = (event) => {
   event.preventDefault();
-  if (event.target.matches('.o-secondary-nav_link')) {
+  if (event.target.matches('.o-secondary-nav__link')) {
     secondaryNav.collapse();
 
     // Scrolling before the expandable closes causes jitters on some devices.
     setTimeout(() => {
       defaultScrollOffset(event.target);
     }, 300);
-  } else if (event.target.matches('.o-fig_heading > a')) {
+  } else if (event.target.matches('.o-fig__heading > a')) {
     defaultScrollOffset(event.target);
   }
 };
@@ -74,7 +74,7 @@ const init = (secondaryNavArg) => {
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
   if ('IntersectionObserver' in window) {
     appRoot
-      .querySelectorAll('.o-secondary-nav_list__children')
+      .querySelectorAll('.o-secondary-nav__list--children')
       .forEach((ul) => {
         hideElement(ul);
       });
@@ -99,7 +99,7 @@ const init = (secondaryNavArg) => {
 
   // Track clicks on the FIG sidebar nav links
   addEventListenerToSelector(
-    '.o-fig_sidebar .o-secondary-nav_link',
+    '.o-fig__sidebar .o-secondary-nav__link',
     'click',
     (event) => {
       analyticsSendEvent({

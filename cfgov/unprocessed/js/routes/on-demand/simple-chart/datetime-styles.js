@@ -35,7 +35,7 @@ const datetime = {
     ...styles.yAxis,
     plotLines: [
       {
-        className: 'zeroLine',
+        className: 'zero-line',
         value: 0,
         width: 2,
       },

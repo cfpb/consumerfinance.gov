@@ -47,7 +47,7 @@ class FormExplainer {
    */
   initializeUI(elements) {
     if (this.pageCount === 1) {
-      DT.hide('.form-explainer_page-buttons');
+      DT.hide('.form-explainer__page-buttons');
     }
 
     DT.applyAll(elements.pages, (value, index) => {
@@ -66,8 +66,8 @@ class FormExplainer {
    * Update the pagination UI.
    */
   updatePaginationUI() {
-    const BTN_DISABLED = 'a-btn__disabled';
-    const PAGE_BTN_CTR = '.form-explainer_page-buttons';
+    const BTN_DISABLED = 'a-btn--disabled';
+    const PAGE_BTN_CTR = '.form-explainer__page-buttons';
 
     if (this.pageCount > 1) {
       DT.removeClass(PAGE_BTN_CTR + ' button', BTN_DISABLED);
@@ -92,7 +92,7 @@ class FormExplainer {
     const targetId = target.getAttribute('id');
 
     DT.removeClass(
-      '.o-expandable__form-explainer, .image-map_overlay',
+      '.o-expandable__form-explainer, .image-map__overlay',
       className,
     );
 
@@ -120,7 +120,7 @@ class FormExplainer {
    */
   openAndScrollToExpandable(imageOverlay, targetExpandable) {
     const targetExpandableTarget = targetExpandable.querySelector(
-      '.o-expandable_header',
+      '.o-expandable__header',
     );
 
     window.setTimeout(() => {
@@ -138,13 +138,13 @@ class FormExplainer {
    */
   setUIElements() {
     const explain = DT.getEl('.explain');
-    const explainPagination = explain.querySelector('.explain_pagination');
+    const explainPagination = explain.querySelector('.explain__pagination');
     const explainPageBtns = explain.querySelectorAll(
-      '.form-explainer_page-buttons button',
+      '.form-explainer__page-buttons button',
     );
-    const pages = explain.querySelectorAll('.explain_page');
+    const pages = explain.querySelectorAll('.explain__page');
     const formExplainerLinks = explain.querySelectorAll(
-      '.form-explainer_page-link',
+      '.form-explainer__page-link',
     );
 
     return Object.assign(this.elements, {
@@ -191,10 +191,10 @@ class FormExplainer {
    */
   setCurrentPage(pageNum, callback, shouldScrollIntoView = true) {
     const CURRENT_PAGE = 'current-page';
-    const PAGE_LINK = '.form-explainer_page-link';
-    const PAGINATION = '.explain_pagination';
+    const PAGE_LINK = '.form-explainer__page-link';
+    const PAGINATION = '.explain__pagination';
     const CURRENT_PAGE_LINK =
-      '.form-explainer_page-link[data-page="' + pageNum + '"]';
+      '.form-explainer__page-link[data-page="' + pageNum + '"]';
 
     this.currentPage = parseInt(pageNum, 10);
 
@@ -215,7 +215,7 @@ class FormExplainer {
    * @param {number} pageCount - Number of pages.
    */
   setPageCount(pageCount) {
-    const pages = DT.getEls('.explain_page');
+    const pages = DT.getEls('.explain__page');
     this.pageCount = pageCount || pages.length;
   }
 
@@ -269,7 +269,7 @@ class FormExplainer {
      * update the hover styles.
      */
     DT.bindEvents(
-      '.image-map_overlay, .o-expandable__form-explainer',
+      '.image-map__overlay, .o-expandable__form-explainer',
       ['mouseenter', 'mouseleave'],
       (event) => {
         event.preventDefault();
@@ -280,7 +280,7 @@ class FormExplainer {
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents('.o-expandable_header', 'focus', (event) => {
+    DT.bindEvents('.o-expandable__header', 'focus', (event) => {
       const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
@@ -288,7 +288,7 @@ class FormExplainer {
     /* When an overlay is clicked, toggle the corresponding expandable
      * and scroll the page until it is in view.
      */
-    DT.bindEvents('.image-map_overlay', 'click', (event) => {
+    DT.bindEvents('.image-map__overlay', 'click', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const imageOverlay = event.target;
@@ -302,7 +302,7 @@ class FormExplainer {
      * update the image overlay position and hover styles.
      */
     DT.bindEvents(
-      '.o-expandable__form-explainer .o-expandable_header',
+      '.o-expandable__form-explainer .o-expandable__header',
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {

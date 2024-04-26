@@ -27,7 +27,7 @@ export class FindAHousingCounselor {
   }
 
   searchZipCode(zipCode) {
-    cy.get('#hud_hca_api_query').type(zipCode);
+    cy.get('#hud-hca-api-query').type(zipCode);
     cy.get('[data-cy=btn-fahc-submit]').click();
   }
 

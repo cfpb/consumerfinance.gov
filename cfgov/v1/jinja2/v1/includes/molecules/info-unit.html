@@ -61,24 +61,24 @@
             <a href="{{ value.links[0].url }}">
         {% endif %}
         {% if value.image.is_decorative %}
-        <div class="m-info-unit_image
-                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
+        <div class="m-info-unit__image
+                    {{ 'm-info-unit__image--square' if value.image.is_square else '' }}"
              style="background-image: url( {{ value.image.url }} );">
         </div>
         {% else %}
         <img src="{{ value.image.url }}"
              alt="{{ value.image.alt if value.image.alt else '' }}"
-             class="m-info-unit_image
-                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
+             class="m-info-unit__image
+                    {{ 'm-info-unit__image--square' if value.image.is_square else '' }}">
         {% endif %}
         {% if link_image_and_heading %}
             </a>
         {% endif %}
     {% endif %}
 
-    <div class="m-info-unit_content">
+    <div class="m-info-unit__content">
     {% if link_image_and_heading %}
-        <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
+        <a class="m-info-unit__heading-link" href="{{ value.links[0].url }}">
     {% endif %}
             {{ value.heading | safe if value.heading else '' }}
             {{ value.sub_heading | safe if value.sub_heading else '' }}
@@ -89,9 +89,9 @@
         {{ value.body | safe }}
 
         {% if value.links %}
-            <ul class="m-list m-list__links">
+            <ul class="m-list m-list--links">
             {% for link in value.links %}
-                <li class="m-list_item">
+                <li class="m-list__item">
                     {% if link.text is defined and link.text.find('@') > -1 %}
                         {% if not value.emails is defined %}
                             {% do value.update({'emails':[{'url':link.text}]}) %}
@@ -102,7 +102,7 @@
                             else 'Learn More' %}
 
                         {%- set link -%}
-                            <a class="m-list_link"
+                            <a class="m-list__link"
                                 href="{{ link.url }}"
                                 {%- if link.aria_label -%}
                                     aria-label="{{ link.aria_label }}"

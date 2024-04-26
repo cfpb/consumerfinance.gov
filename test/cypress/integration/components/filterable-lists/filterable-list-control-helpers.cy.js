@@ -33,38 +33,38 @@ export class FilterableListControl {
 
   getResultCategoryHasTags() {
     return this.getResults()
-      .find('.m-tags_tag')
+      .find('.m-tags__tag')
       .closest('.o-post-preview')
-      .find('.m-meta-header_item:first');
+      .find('.m-meta-header__item:first');
   }
 
   getResultTagHasCategories() {
     return this.getResults()
-      .find('.m-meta-header_item:first')
+      .find('.m-meta-header__item:first')
       .closest('.o-post-preview')
-      .find('.m-tags_tag:first');
+      .find('.m-tags__tag:first');
   }
 
   getResultTag() {
-    return this.getResults().find('.m-tags_tag:first');
+    return this.getResults().find('.m-tags__tag:first');
   }
 
   getResultTitleHasTag() {
     return this.getResults()
-      .find('.m-tags_tag:first')
+      .find('.m-tags__tag:first')
       .closest('.o-post-preview')
-      .find('.o-post-preview_title:first');
+      .find('.o-post-preview__title:first');
   }
 
   getResultCategory() {
-    return this.getResults().find('.m-meta-header_item:first');
+    return this.getResults().find('.m-meta-header__item:first');
   }
 
   getResultTitleHasCategory() {
     return this.getResults()
-      .find('.m-meta-header_item:first')
+      .find('.m-meta-header__item:first')
       .closest('.o-post-preview')
-      .find('.o-post-preview_title:first');
+      .find('.o-post-preview__title:first');
   }
 
   resultsHeaderContent() {
@@ -72,7 +72,7 @@ export class FilterableListControl {
   }
 
   resultsContent() {
-    return this.getResults().find('.o-post-preview_content');
+    return this.getResults().find('.o-post-preview__content');
   }
 
   firstResultContent() {
@@ -80,7 +80,7 @@ export class FilterableListControl {
   }
 
   resultTitle() {
-    return cy.get('.o-post-preview_title:first');
+    return cy.get('.o-post-preview__title:first');
   }
 
   lastResultContent() {
@@ -89,12 +89,12 @@ export class FilterableListControl {
 
   resultsHeaderLeft() {
     return cy.get(
-      `.o-post-preview .m-meta-header_item-group .m-meta-header_item:first`,
+      `.o-post-preview .m-meta-header__item-group .m-meta-header__item:first`,
     );
   }
 
   resultsHeaderRight() {
-    return cy.get(`.o-post-preview .m-meta-header_item`);
+    return cy.get(`.o-post-preview .m-meta-header__item`);
   }
 
   firstResultHeader() {
@@ -118,14 +118,14 @@ export class FilterableListControl {
   }
 
   clearFilters() {
-    cy.get('.a-btn__warning').click({ force: true });
+    cy.get('.a-btn--warning').click({ force: true });
   }
 
   showFilters() {
-    return cy.get('.o-filterable-list .o-expandable_cue-open').click();
+    return cy.get('.o-filterable-list .o-expandable__cue-open').click();
   }
 
   hideFilters() {
-    return cy.get('.o-expandable_cue-close').click();
+    return cy.get('.o-expandable__cue-close').click();
   }
 }

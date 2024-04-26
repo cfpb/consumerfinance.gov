@@ -6,6 +6,11 @@
     {{ title }} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block javascript scoped %}
+{{ super() }}
+<script src="{{ static( 'apps/tccp/js/index.js' ) }}"></script>
+{% endblock %}
+
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
@@ -18,9 +23,7 @@
         "heading": heading,
         "body": (
             "We know people use credit cards for many reasons. " ~
-            "Our database of " ~
-            (stats.count or "") ~
-            " cards can help you find ones that are best for you."
+            "Our large database of cards can help you find ones that are best for you."
         ),
         "image": {
             "url": static("apps/tccp/img/explore-credit-cards-hero-lg.png"),
@@ -42,38 +45,37 @@
 
 {% block content_main %}
 
-<div class="content_wrapper">
-    <div class="block block__sub block__flush-top">
+    <div class="block block--sub block--flush-top">
         <h2>
             How is this comparison tool different than others you may have used?
         </h2>
         <p>
             <ul class="m-list">
-                <li class="m-list_item">
+                <li class="m-list__item">
                     Larger pool of cards, likely including banks you’ve never heard of with great rates
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item--has-icon">
                     <a
-                        href="/data-research/credit-card-data/terms-credit-card-plans-survey/"
+                        href="{{ url('tccp:about') }}"
                     >Credit card companies are required by law to submit data to us</a>
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item--has-icon">
                     No paid advertising
                 </li>
-                <li class="m-list_item m-list_item__has-icon">
+                <li class="m-list__item m-list__item--has-icon">
                     Card interest is rated, to help you compare
                 </li>
             </ul>
         </p>
     </div>
 
-    <div class="block block__sub">
+    <div class="block block--flush-top">
         <form action="." method="get">
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
-                        class="a-label a-label__heading"
+                        class="a-label a-label--heading"
                         for="{{ form.credit_tier.id_for_label}}"
                     >
                         {{ form.credit_tier.label }}
@@ -81,24 +83,31 @@
 
                     {{ form.credit_tier }}
 
-                    <small class="a-label_helper a-label_helper__block">
+                    <small class="a-label__helper a-label__helper--block">
                         If you don’t know it,
                         <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/"
                             >find your credit score</a>.
-                    </small>
+                    </p>
                 </div>
             </div>
 
-            <div class="o-form_group">
+            <div class="o-form__group">
                 <div class="m-form-field m-form-field__select">
                     <label
-                        class="a-label a-label__heading"
+                        class="a-label a-label--heading"
                         for="{{ form.location.id_for_label}}"
                     >
-                        {{ form.location.label }}
+                        {{ form.location.label }} <small class="a-label_helper">(required)</small>
                     </label>
 
                     {{ form.location }}
+
+                    <div class="a-form-alert a-form-alert__error u-visually-hidden" id="location-required" role="alert">
+                        {{ svg_icon("error-round") }}
+                        <span class="a-form-alert__text">
+                            Required field, select a location.
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -106,14 +115,14 @@
                 I’m looking for a card that will help me...
             </legend>
 
-            <div class="o-form_group">
-                <fieldset class="o-form_fieldset">
+            <div class="o-form__group">
+                <fieldset class="o-form__fieldset">
                     {{ form.situations }}
                 </fieldset>
             </div>
 
             <div class="m-btn-group">
-                <button class="a-btn a-btn__full-on-xs" title="See cards for your situation">See cards for your situation</button>
+                <button class="a-btn a-btn--full-on-xs" title="See cards for your situation" data-js-hook="behavior_submit-situations">See cards for your situation</button>
                 <div class="u-btn-helper">
                     Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
                 </div>
@@ -121,7 +130,6 @@
 
         </form>
     </div>
-</div>
 
 {% endblock content_main %}
 
