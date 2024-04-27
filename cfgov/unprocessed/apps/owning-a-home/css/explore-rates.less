@@ -487,7 +487,7 @@
     border-top: 1px solid var(--gray-10);
   }
 
-  .m-notification__borderless {
+  .m-notification--borderless {
     padding-top: 0;
     padding-bottom: 0;
     border: none;
@@ -554,18 +554,18 @@
 
   .respond-to-min(@bp-sm-max, {
 
-    .m-notification__borderless {
+    .m-notification--borderless {
       .grid__column( 8 );
     }
 
-    .page-intro_cols {
+    .page-intro__cols {
       display: table;
-      .page-intro_col-left,
-      .page-intro_col-right {
+      .page-intro__col-left,
+      .page-intro__col-right {
         display: table-cell;
       }
 
-      .page-intro_col-right {
+      .page-intro__col-right {
         padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         white-space: nowrap;
       }
