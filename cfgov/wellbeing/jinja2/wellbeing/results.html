@@ -116,7 +116,7 @@
              alt="Chart showing that financial well-being scores below 40 are in the lowest of five ranges. Scores between 40 and 50 are in the second lowest. Scores between 50 and 60 are in the middle range. Scores between 60 and 70 are in the second highest range. Scores above 70 are in the highest range."
              height="30">
     {% if user_score %}
-        <div class="score-box score-box__user score-box__{{ score_box_positioning }}"
+        <div class="score-box score-box--user score-box--{{ score_box_positioning }}"
              style="{{ score_box_positioning }}: {{ user_pct_spectrum }}%">
             {{ _('Your score:') }} <b class="score-value">{{ user_score }}</b>
             <div>
@@ -126,7 +126,7 @@
             </div>
         </div>
     {% endif %}
-        <div class="score-box score-box__avg score-box__{{ score_box_positioning }}"
+        <div class="score-box score-box--avg score-box--{{ score_box_positioning }}"
              style="{{ score_box_positioning }}: {{ avg_pct_spectrum }}%" id="score-box__avg">
             {{ _('U.S. average:') }} <b id="score-value__avg">{{ avg_score }}</b>
         </div>
@@ -445,8 +445,8 @@
 
         {% for slug, means in group_means | items %}
             {% for group_name, group_data in means %}
-                <dt class="comparison__data-point {{ slug }}_group">{{ _(group_name) }}</dt>
-                <dd class="comparison__data-point {{ slug }}_mean">
+                <dt class="comparison__data-point {{ slug }}__group">{{ _(group_name) }}</dt>
+                <dd class="comparison__data-point {{ slug }}__mean">
                     <span style="left: {{ group_data.pct }}%; border-color: {{ group_data.color }};">
                         {{ group_data }}
                     </span>
