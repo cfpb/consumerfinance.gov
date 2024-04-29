@@ -12,6 +12,20 @@
     | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block desc -%}
+    Full interest rate and fee information for the
+    {%- if "Card" is in card.product_name -%}
+        {{- ' ' ~ card.product_name -}}
+    {%- else -%}
+        {{- ' ' ~ card.product_name ~ ' ' -}} card
+    {%- endif -%}
+    {{- ' from ' ~ card.institution_name -}}.
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
 {% block javascript scoped %}
     {{ super() }}
     <script src="{{ static( 'js/routes/on-demand/expandable.js' ) }}"></script>

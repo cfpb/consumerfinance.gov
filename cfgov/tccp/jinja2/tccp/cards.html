@@ -7,6 +7,14 @@
     {{ title }} | {{ super() }}
 {%- endblock title %}
 
+{% block desc -%}
+    Search our large database of credit cards to find ones that are best for you.
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
 {% block javascript scoped %}
 {{ super() }}
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
