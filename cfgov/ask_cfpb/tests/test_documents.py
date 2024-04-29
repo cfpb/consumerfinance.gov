@@ -125,6 +125,7 @@ class AnswerPageDocumentTest(TestCase):
             set(mapping.properties.properties.to_dict().keys()),
             set(
                 [
+                    "answer_id",
                     "autocomplete",
                     "portal_categories",
                     "portal_topics",
@@ -157,6 +158,7 @@ class AnswerPageDocumentTest(TestCase):
             )
 
     def test_mapping(self):
+
         self.assertEqual(
             AnswerPageDocument._doc_type.mapping.to_dict(),
             {
@@ -173,6 +175,7 @@ class AnswerPageDocumentTest(TestCase):
                     "search_tags": {"type": "text"},
                     "text": {"analyzer": "synonym_analyzer", "type": "text"},
                     "url": {"type": "text"},
+                    "answer_id": {"type": "keyword"},
                 }
             },
         )
@@ -189,6 +192,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertEqual(
             en_prepared_data,
             {
+                "answer_id": 1234,
                 "autocomplete": self.doc.prepare_autocomplete(self.en_page),
                 "language": "en",
                 "portal_categories": self.doc.prepare_portal_categories(
@@ -209,6 +213,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertEqual(
             es_prepared_data,
             {
+                "answer_id": 1234,
                 "autocomplete": self.doc.prepare_autocomplete(self.es_page),
                 "language": "es",
                 "portal_categories": self.doc.prepare_portal_categories(
