@@ -1,85 +1,48 @@
 {# ==========================================================================
 
-    Feature Card
+    Featured Cards
 
-   ==========================================================================
+    ==========================================================================
 
-   Description:
+    Description:
 
-   Create a feature card molecule when given:
+    Create a 50/50 set of featured cards organism when given:
 
-   value:                        Object defined from a StreamField block.
+    value:                         Object defined from a StreamField block.
 
-   value.category:               A set of values related to the card category
-                                  (title), including:
+    value.feature_cards:           List of Feature Card molecules. See Info Unit
+                                   molecule template for details.
 
-   value.category.url:           A string for the URL of the category page.
+    ========================================================================== #}
 
-   value.category.text:          A string for the title of the category.
+ {%- from 'v1/includes/blocks/heading.html' import heading without context %}
+ {%- from 'v1/includes/molecules/feature-card.html' import feature_card with context %}
 
-   value.icon:                   A string corresponding to an SVG icon.
+ <section>
+     <h2 class="u-show-on-mobile u-mt45">
+         Browse questions by category
+     </h2>
 
-   value.footer_label:           A tuple of items related to the card, including:
+     <ul class="u-show-on-mobile category__list m-list m-list--links u-mb0">
+     {% for card in value.feature_cards %}
+         <li class="m-list__item">
+             <a class="m-list__link a-link a-link--jump a-link--icon-after-text" href="{{ card.category.url }}">
+                 <span class="a-link__text">{{ card.category.text }}</span>
+                 {{ svg_icon( card.icon ) }}
+             </a>
+         </li>
+     {% endfor %}
+     </ul>
 
-   value.links:                  A tuple of items to create a list
-                                 of links, containing:
+     <div class="u-hide-on-mobile question-categories u-mb30">
+         <div class="o-card-group o-card-group--column-2">
+             <div class="o-card-group__cards">
 
-   value.links[i].url:           A string for the URL of the link.
+             {% for card in value.feature_cards %}
+                 {{- feature_card(card) }}
+             {% endfor %}
 
-   value.links[i].text:          A string for the text of the link.
-
-   value.links[i].aria_label:    (Optional) An aria-label for the link.
-
-   ========================================================================== #}
-
-{%- from 'v1/includes/blocks/heading.html' import heading without context %}
-
-{%- macro feature_card(value) -%}
-
-<article class="m-card">
-    <h2 class="m-card__heading">
-        <a href="{{ value.category.url }}">
-            <span class="m-card__icon">{{ svg_icon( value.icon ) }}</span>
-            <span>{{ value.category.text }}</span>
-        </a>
-    </h2>
-
-    <ul class="m-list">
-        {%- for link in value.links %}
-        <li class="m-list__item">
-        {%- if link.text is not none and link.text.find('@') > -1 -%}
-            {%- if not value.emails is defined -%}
-                {%- do value.update({'emails':[{'url':link.text}]}) -%}
-            {%- endif -%}
-            {% include 'contact-email.html' with context %}
-        {%- else -%}
-            {%- set link_text = link.text if link.text else 'Learn More' -%}
-            {%- set link -%}
-                <a class="a_link a-link--partially-styled"
-                   href="{{ link.url }}"
-                   {%- if link.aria_label -%}
-                   aria-label="{{ link.aria_label }}"
-                   {%- endif %}>
-                    <span class="a-link__plain">
-                        {{ link_text }}
-                    </span>
-                    <span class="a-link__underlined">
-                        {{ _('Read answer') }}
-                    </span>
-                </a>
-            {%- endset -%}
-            {{ link | safe }}
-        {%- endif %}
-        </li>
-        {%- endfor %}
-    </ul>
-
-    <div class="m-card_footer">
-        <a href="{{ value.category.url }}">
-            {{ value.footer_label }}
-        </a>
-    </div>
-
-</article>
-
-{% endmacro %}
+             </div>
+         </div>
+     </div>
+ </section>
