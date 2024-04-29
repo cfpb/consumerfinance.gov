@@ -41,12 +41,6 @@
     <div class="eyebrow">{{ card.institution_name }}</div>
 
     <h1>{{ card.product_name }}</h1>
-    {% set credit_tiers = [
-        ("No credit score", "No score"),
-        ("619 or less", "619 or less"),
-        ("620 to 719", "620-719"),
-        ("720 or greater", "720+")
-    ] %}
     {% set tiers_description = 'This credit card is recommended for people with the following credit scores: ' %}
     {% set targeted_tiers = [] %}
     {% for tier_value, tier_name, _ in credit_tier_lookup %}

@@ -37,7 +37,7 @@ htmx.defineExtension('htmx-url-param', {
 
 /**
  * htmx extension that adds an `aria-busy=true` HTML attribute
- * to the htmx target container to indiciate to screenreaders
+ * to the htmx target container to indicate to screenreaders
  * that a request is in-flight. Removes the attribute after the
  * request completes.
  * See https://htmx.org/extensions/
