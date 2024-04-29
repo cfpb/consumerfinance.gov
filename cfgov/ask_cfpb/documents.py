@@ -18,6 +18,7 @@ class AnswerPageDocument(Document):
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
+    answer_id = fields.KeywordField()
     preview = fields.TextField(attr="answer_content_preview")
 
     def get_queryset(self, *args, **kwargs):
@@ -37,6 +38,9 @@ class AnswerPageDocument(Document):
 
     def prepare_url(self, instance):
         return instance.url
+
+    def prepare_answer_id(self, instance):
+        return instance.answer_base.id
 
     class Index:
         name = environment_specific_index("ask-cfpb")
