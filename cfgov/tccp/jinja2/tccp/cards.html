@@ -15,6 +15,10 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+{% block og_image %}
+    {%- include "tccp/includes/og_image.html" -%}
+{% endblock %}
+
 {% block javascript scoped %}
 {{ super() }}
 <script src="{{ static( 'js/routes/on-demand/filterable-list-controls.js' ) }}"></script>
