@@ -51,7 +51,7 @@
     {% set targeted_tiers = [] %}
     {% for tier_value, tier_name, _ in credit_tier_lookup %}
         {% if tier_value in card.targeted_credit_tiers %}
-            {% do targeted_tiers.append(tier_value) %}
+            {% do targeted_tiers.append(tier_name) %}
         {% endif %}
     {% endfor %}
     {% set tiers_description = tiers_description + (targeted_tiers | join(', ')) %}

@@ -9,14 +9,14 @@
 
 // A form fieldset with large block-level areas for
 // helper text under each form field
-.o-form_fieldset--helpers {
+.o-form__fieldset--helpers {
   .a-checkbox:checked + .a-label {
     border: 1px solid var(--pacific);
     border-bottom: 0;
     box-shadow: none;
   }
 
-  .m-form-field__checkbox {
+  .m-form-field--checkbox {
     &:has(.a-checkbox:focus) {
       outline: 1px dotted var(--pacific);
       outline-offset: 1px;
@@ -579,7 +579,7 @@ html.js form[hx-boost] {
   }
 }
 
-.a-form-alert__text {
+.a-form-alert--text {
   display: block;
   margin-left: unit((20px / @base-font-size-px), em);
 }
