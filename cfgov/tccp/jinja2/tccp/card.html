@@ -13,13 +13,7 @@
 {%- endblock title %}
 
 {% block desc -%}
-    Full interest rate and fee information for the
-    {%- if "Card" is in card.product_name -%}
-        {{- ' ' ~ card.product_name -}}
-    {%- else -%}
-        {{- ' ' ~ card.product_name ~ ' ' -}} card
-    {%- endif -%}
-    {{- ' from ' ~ card.institution_name -}}.
+    Full interest rate and fee information for {{ card.product_name }} from {{ card.institution_name }}
 {%- endblock desc %}
 
 {% block og_desc -%}
