@@ -129,7 +129,7 @@ const schoolView = {
       const input = document.querySelector(
         'INPUT[name="' + name + '"][value="' + value + '"]',
       );
-      input.checked = true;
+      if ( input ) input.checked = true;
     }
   },
 
@@ -270,6 +270,8 @@ function _handleResultButtonClick(event) {
     button = target.closest('BUTTON');
   }
 
+  schoolView._searchResults.classList.remove('active');
+
   // Clear pid from state
   updateState.byProperty('pid', false);
 
@@ -279,14 +281,21 @@ function _handleResultButtonClick(event) {
     updateState.byProperty('costsQuestion', false);
   }
 
+  // We make some assumptions about your situation:
+  updateState.byProperty( 'programProgress', '0');
+  updateState.byProperty( 'programRate', 'outOfState');
+  updateState.byProperty( 'programHousing', 'onCampus');
+  updateState.byProperty( 'programDependency', 'dependent');
+
   // If there's a school_id, then proceed with schoolInfo
   if (typeof button.dataset.school_id !== 'undefined') {
     const iped = button.dataset.school_id;
     if (iped !== null && typeof iped !== 'undefined') {
       // Add schoolData to schoolModel
-      updateSchoolData(iped);
+      updateSchoolData(iped, true);
     }
   }
+
 }
 
 /**
@@ -297,10 +306,8 @@ function _handleProgramRadioClick(event) {
   const container = event.target.closest('.m-form-field');
   const input = container.querySelector('input');
   const recalcProps = [
-    'programProgress',
     'programLength',
     'programType',
-    'programDependency',
   ];
 
   // Update the model with program info

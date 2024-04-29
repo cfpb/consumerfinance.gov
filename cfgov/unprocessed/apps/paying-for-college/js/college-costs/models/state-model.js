@@ -86,24 +86,6 @@ const stateModel = {
       inDistrict: 'In district',
     },
   },
-  sectionOrder: [
-    'school-info',
-    'costs',
-    'grants-scholarships',
-    'work-study',
-    'federal-loans',
-    'school-loans',
-    'other-resources',
-    'loan-counseling',
-    'make-a-plan',
-    'max-debt-guideline',
-    'cost-of-borrowing',
-    'affording-your-loans',
-    'school-results',
-    'summary',
-    'action-plan',
-    'save-and-finish',
-  ],
 
   /**
    * Check whether required fields are selected

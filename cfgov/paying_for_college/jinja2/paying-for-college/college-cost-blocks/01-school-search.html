@@ -73,7 +73,7 @@
             }}
         </div>
 
-        <div data-state-based-visibility="school-no-programs">
+        <div data-state-based-visibility="school-no-programs" style="display: none">
             {{ notification.render(
                 'information',
                 true,
@@ -82,7 +82,7 @@
             ) }}
         </div>
 
-        <div class="block block--sub program-select">
+        <div class="block block--sub program-select" style="display: none">
           <h3 class="h4">Select your program</h3>
           <div class="a-select">
             <select id="program-select">
@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <div class="block block--sub program-question" id="school-search_program-progress">
+        <div class="block block--sub program-question" id="school-search_program-progress" style="display: none">
           <h3 class="h4">How much progress have you made towards this degree, excluding credits from AP/IB exams?</h3>
           <div class="a-form-alert a-form-alert--error" data-state-based-visibility="progress-required" role="alert">
               {{ svg_icon('warning-round') }}
@@ -209,7 +209,7 @@
             }}
         </div>
 
-        <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
+        <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate" style="display: none">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="rate-required" role="alert">
               {{ svg_icon('warning-round') }}
@@ -236,7 +236,7 @@
             <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
         </div>
 
-        <div class="block block--sub program-question undergrad-content" id="school-search_program-housing">
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-housing" style="display: none">
             <h3 class="h4">Where do you plan to live while in school?</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="housing-required" role="alert">
               {{ svg_icon('warning-round') }}
@@ -270,7 +270,7 @@
             }}
         </div>
 
-        <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency" style="display: none">
             <h3 class="h4">Are you considered a dependent or independent student?</h3>
             <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
@@ -298,7 +298,19 @@
             }}
         </div>
     </div>
-    <div data-state-based-visibility="school-fields-errors">
+
+    <h3 class="h4">How much money do you and your family have on hand to put towards school?</h3>
+    <div class="block block--sub program-question">
+                {{
+                    input.render({
+                        'label': '',
+                        'id': 'initial-savings_total',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="initial_savingsTotal"'
+                    })
+                }}
+    </div>
+    <div data-state-based-visibility="school-fields-errors" style="display: none">
         {{ notification.render(
             'error',
             true,
@@ -314,5 +326,9 @@
             <div data-state-based-visibility="dependency-required"><li class="m-list__item"><a class="a-link a-link--jump href="#school-search_program-dependency" data-gtm_ignore="true"><span class="a-link__text">Are you considered a dependent or independent student?</span></a></li></div>
             </ul>' | safe
         ) }}
+    </div>
+
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="debt-at-grad">Estimate how much I'll owe</button>
     </div>
 </section>

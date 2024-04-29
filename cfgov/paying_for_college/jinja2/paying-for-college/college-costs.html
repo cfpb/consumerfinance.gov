@@ -34,6 +34,9 @@
                     <div class="app-container">
                         <div class="app">
                             {%- include 'college-cost-blocks/01-school-search.html' with context -%}
+                            {%- include 'college-cost-blocks/01.1-debt-at-grad.html' with context -%}
+                            {%- include 'college-cost-blocks/01.2-customize-estimate.html' with context -%}
+                            {%- include 'college-cost-blocks/01.3-affording-payments.html' with context -%}
                             {%- include 'college-cost-blocks/02-costs.html' with context -%}
                             {%- include 'college-cost-blocks/03-grants-and-scholarships.html' with context -%}
                             {%- include 'college-cost-blocks/04-work-study.html' with context -%}
@@ -42,22 +45,25 @@
                             {%- include 'college-cost-blocks/07-other-resources.html' with context -%}
                             {%- include 'college-cost-blocks/08-loan-counseling.html' with context -%}
                             {%- include 'college-cost-blocks/09-make-a-plan.html' with context -%}
-                            {%- include 'college-cost-blocks/10-max-debt-guideline.html' with context -%}
+                            <!-- {%- include 'college-cost-blocks/10-max-debt-guideline.html' with context -%} -->
                             {%- include 'college-cost-blocks/11-cost-of-borrowing.html' with context -%}
                             {%- include 'college-cost-blocks/12-affording-your-loan.html' with context -%}
                             {%- include 'college-cost-blocks/13-school-results.html' with context -%}
                             {%- include 'college-cost-blocks/14-summary.html' with context -%}
                             {%- include 'college-cost-blocks/15-action-plan.html' with context -%}
                             {%- include 'college-cost-blocks/16-save-and-finish.html' with context -%}
-                            <div class="college-costs__tool-section-buttons block block--mid">
+
+                            <div class="college-costs__tool-section-buttons block block--mid" style="display: none;">
                                 <button class="a-btn college-costs__buttons--next btn__next-step">Next step</button>
                                 <button class="a-btn a-btn--link btn__save" data-app-button="save-and-finish-later">Save and finish later</button>
                             </div>
-                            <div class="college-costs_save-for-later block block--mid" data-state-based-visibility="save-for-later">
+                            <div class="college-costs_save-for-later block block--mid" data-state-based-visibility="save-for-later" style="display: none;">
                                 <p>Copy and save this link so that you can come back and review your plan.</p>
                                 {% include 'college-cost-blocks/copy-link-form.html' %}
                             </div>
+
                         </div>
+<!--
                         <div class="costs-not-covered costs-not-covered-sticky">
                             {{ number_callout.render({
                                     'header': 'Costs not covered yet',
@@ -66,6 +72,7 @@
                                 })
                             }}
                         </div>
+-->
                     </div>
                 </div>
             </div>

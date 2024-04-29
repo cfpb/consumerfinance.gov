@@ -19,6 +19,7 @@ import {
 } from '../dispatchers/get-model-values.js';
 import { updateSchoolView } from './update-view.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 /**
  * initializeExpenseValues - Create financial model values based on the input
@@ -141,9 +142,10 @@ function setSchoolValues(data) {
 /**
  * updateSchoolData - Fetch API data for school and update the model
  * @param {string} iped - The id of the school
+ * @param {boolean} assumptions - if true, make assumptions about data and loans
  * @returns {object} Promise of the XHR request
  */
-function updateSchoolData(iped) {
+function updateSchoolData(iped, assumptions) {
   stateModel.setValue('schoolID', iped);
   return getSchoolData(iped)
     .then((resp) => {
@@ -188,6 +190,21 @@ function updateSchoolData(iped) {
           schoolModel.values.region;
         updateRegion(schoolModel.values.region);
       }
+
+      // We make some assumptions about your situation:
+      // TODO - This is just temporary code, remove it and handle this elsewhere
+      updateState.byProperty( 'programProgress', '0');
+      updateState.byProperty( 'programRate', 'outOfState');
+      updateState.byProperty( 'programHousing', 'onCampus');
+      updateState.byProperty( 'programDependency', 'dependent');
+
+      // Make assumptions for initial data
+      if ( assumptions === true ) {
+        updateState.byProperty('costsQuestion', 'y');
+        updateFinancialsFromSchool();
+        financialModel.assumeMaximumLoans();
+      }
+
       updateSchoolView();
     })
     .catch(function (error) {
@@ -284,7 +301,7 @@ function updateModelsFromQueryString(queryObj) {
   parseQueryParameters(queryObj);
 
   if ({}.hasOwnProperty.call(queryObj, 'iped')) {
-    updateSchoolData(queryObj.iped);
+    updateSchoolData(queryObj.iped, true );
   }
 }
 

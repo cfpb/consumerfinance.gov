@@ -50,7 +50,7 @@ const financialModel = {
   },
 
   /**
-   * recalculate - Public method that runs private recalculation
+   * recalculate - Public method tha recalculates financial values
    * subfunctions
    */
   recalculate: () => {
@@ -90,6 +90,16 @@ const financialModel = {
   setValue: (name, value, updateView) => {
     if ({}.hasOwnProperty.call(financialModel.values, name)) {
       financialModel.values[name] = convertStringToNumber(value);
+
+      // handle the different savings fields
+      if ( name === "initial_savingsTotal" ) {
+        financialModel.values.savings_personal =
+            financialModel.values[name] / financialModel.values.other_programLength;
+      } else if ( name === "savings_personal" ) {
+        financialModel.values.initial_savingsTotal =
+            financialModel.values[name] * financialModel.values.other_programLength;
+      }
+
       financialModel.recalculate();
 
       if (updateView !== false) {
@@ -415,6 +425,22 @@ const financialModel = {
     }
     financialModel.recalculate();
   },
+
+  /**
+   * assumeMaxLoans - Put in the maximum loans ZZZ
+   */
+   assumeMaximumLoans: () => {
+    // TODO: add initial savings to this calculation
+    financialModel.values.fedLoan_directSub = 9999999;
+    financialModel.values.fedLoan_directUnsub = 9999999;
+    financialModel.recalculate();
+    
+    financialModel.values.privLoan_privateLoan1 = financialModel.values.total_gap;
+    financialModel.values.rate_privateLoan1 = financialModel.values.rate_directUnsub;
+    financialModel.values.fee_privateLoan1 = financialModel.values.fee_directUnsub;
+
+    financialModel.recalculate();
+   },
 
   /**
    * init - Initialize this model

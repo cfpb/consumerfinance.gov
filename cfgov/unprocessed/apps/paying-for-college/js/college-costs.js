@@ -23,8 +23,8 @@ function init() {
   expensesView.init();
   financialModel.init();
   schoolView.init(body);
-  financialView.init();
   navigationView.init(body, query.iped);
+  financialView.init();
   chartView.init(body);
   appView.init();
   SecondaryNav.init();

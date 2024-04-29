@@ -5,6 +5,7 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
@@ -14,8 +15,8 @@ const navigationView = {
   _navMenu: null,
   _navListItems: null,
   _navItems: null,
+  _SecondaryNavButtons: null,
   _navButtons: null,
-  _nextButton: null,
   _appSegment: null,
   _stateDomElem: null,
   _affordingChoices: null,
@@ -50,6 +51,7 @@ const navigationView = {
     const navItem = document.querySelector(
       '[data-nav_item="' + activeName + '"]',
     );
+    if ( navItem === null ) return;
     const activeElem = navItem.closest('li');
     const activeParent = activeElem.closest(
       '.o-secondary-nav__list-item--parent',
@@ -127,11 +129,11 @@ const navigationView = {
    */
   init: function (body, iped) {
     this._navMenu = body.querySelector('.o-secondary-nav');
-    this._navButtons = body.querySelectorAll('.o-secondary-nav a');
+    this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
-    this._nextButton = body.querySelector(
-      '.college-costs__tool-section-buttons .btn__next-step',
+    this._navButtons = body.querySelectorAll(
+      '.college-costs__tool-section-buttons .btn__nav',
     );
     this._contentSidebar = body.querySelector('.content__sidebar');
     this._introduction = body.querySelector('.college-costs__intro-segment');
@@ -158,23 +160,25 @@ const navigationView = {
  * @param { string } iped - String representing the chosen school.
  */
 function _addButtonListeners(iped) {
-  navigationView._navButtons.forEach((elem) => {
-    elem.addEventListener('click', _handleNavButtonClick);
+  navigationView._SecondaryNavButtons.forEach((elem) => {
+    elem.addEventListener('click', _handleSecondaryNavButtonClick);
   });
 
   navigationView._affordingChoices.forEach((elem) => {
     elem.addEventListener('click', _handleAffordingChoicesClick);
   });
 
-  navigationView._nextButton.addEventListener('click', _handleNextButtonClick);
-  if (iped) {
-    _handleGetStartedBtnClick();
-  } else {
-    navigationView._getStartedBtn.addEventListener(
-      'click',
-      _handleGetStartedBtnClick,
-    );
-  }
+  navigationView._navButtons.forEach((elem) => {
+    elem.addEventListener('click', _handleNavButtonClick);
+    if (iped) {
+      _handleGetStartedBtnClick();
+    } else {
+      navigationView._getStartedBtn.addEventListener(
+        'click',
+        _handleGetStartedBtnClick,
+      );
+    }
+  })
 }
 
 /**
@@ -199,10 +203,10 @@ function _handleGetStartedBtnClick() {
 }
 
 /**
- * _handleNavButtonClick - Handle click event for secondary nav.
+ * _handleSecondaryNavButtonClick - Handle click event for secondary nav.
  * @param {MouseEvent} event - click event object.
  */
-function _handleNavButtonClick(event) {
+function _handleSecondaryNavButtonClick(event) {
   event.preventDefault();
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
@@ -222,20 +226,29 @@ function _handleNavButtonClick(event) {
 }
 
 /**
- * _handleNextButtonClick - handle the click event for the "Next" button.
+ * _handleNavButtonClick - handle the click event for a nav button.
  */
-function _handleNextButtonClick() {
+function _handleNavButtonClick( event ) {
+  console.log( 'n', event );
   // Check if there are missing form fields
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
   } else {
-    sendAnalyticsEvent(
-      'next step - ' + getStateValue('activeSection'),
-      'time-to-click',
-    );
-    updateState.nextSection();
-    window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
-    document.querySelector('.college-costs__tool-section.active h2').focus();
+    const target = event.target;
+    if ( event.target.dataset.hasOwnProperty( 'destination' ) ) {
+      const destination = event.target.dataset.destination
+      sendAnalyticsEvent(
+        'Navigation Button from ' + getStateValue('activeSection') + ' to ' + destination,
+        'time-to-click',
+      );
+      if ( destination === 'debt-at-grad' ) {
+        console.log( 'teorst' );
+        updateFinancialViewAndFinancialCharts();
+      } 
+      updateState.navigateTo( destination );
+      window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
+      document.querySelector('.college-costs__tool-section.active h2').focus();
+    }
   }
 }
 

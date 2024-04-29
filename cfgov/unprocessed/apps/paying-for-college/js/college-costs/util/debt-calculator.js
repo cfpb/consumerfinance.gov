@@ -245,34 +245,35 @@ function debtCalculator() {
 
   // calculate existing loan debt interest during program
 
-  let existingDebtInterest =
-    fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
+  // let existingDebtInterest =
+  //   fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
 
-  if (isNaN(existingDebtInterest)) {
-    existingDebtInterest = 0;
-  }
+  // if (isNaN(existingDebtInterest)) {
+  //   existingDebtInterest = 0;
+  // }
 
-  const existingDebtTotalAtGrad =
-    fin.existingDebt_amount + existingDebtInterest;
-  const existingDebtMonthly = calcMonthlyPayment(
-    existingDebtTotalAtGrad,
-    fin.rate_existingDebt,
-    10,
-  );
+  // const existingDebtTotalAtGrad =
+  //   fin.existingDebt_amount + existingDebtInterest;
+  // const existingDebtMonthly = calcMonthlyPayment(
+  //   existingDebtTotalAtGrad,
+  //   fin.rate_existingDebt,
+  //   10,
+  // );
 
-  debts.existingDebtInterestAtGrad = existingDebtInterest;
+  // debts.existingDebtInterestAtGrad = existingDebtInterest;
 
-  totalBorrowing += fin.existingDebt_amount;
-  interest.totalAtGrad += existingDebtInterest;
-  debts.totalAtGrad += existingDebtTotalAtGrad;
+  // totalBorrowing += fin.existingDebt_amount;
+  // interest.totalAtGrad += existingDebtInterest;
+  // debts.totalAtGrad += existingDebtTotalAtGrad;
 
-  debts.tenYearMonthly += existingDebtMonthly;
-  debts.tenYearTotal += existingDebtMonthly * 120;
+  // debts.tenYearMonthly += existingDebtMonthly;
+  // debts.tenYearTotal += existingDebtMonthly * 120;
 
   // Calculate totals
   debts.totalInterestAtGrad = interest.totalAtGrad;
   debts.tenYearInterest =
-    debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
+    debts.tenYearTotal - debts.totalAtGrad;
+    // - existingDebtInterest;
 
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
