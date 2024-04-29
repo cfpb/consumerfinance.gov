@@ -303,11 +303,6 @@
     margin-bottom: unit(5px / 18px, em);
   }
 
-  &__caption {
-    margin-bottom: 0;
-    font-size: @small-font-size-px;
-  }
-
   &__label-wrapper,
   .form-label__text-wrapper {
     // Tablet and above.
@@ -350,8 +345,7 @@
       text-align: right;
     }
 
-    &--percent,
-    &--time {
+    &--percent {
       width: unit(65px / @base-font-size-px, em);
       text-align: right;
     }
@@ -1480,18 +1474,18 @@
          .grid__column(8);
        });
   }
+}
 
-  &__answers,
-  &__controls {
-    margin-top: unit(20px / @base-font-size-px, em);
-    margin-bottom: unit(20px / @base-font-size-px, em);
+.continue__controls,
+.question__answers {
+  margin-top: unit(20px / @base-font-size-px, em);
+  margin-bottom: unit(20px / @base-font-size-px, em);
 
-    // Tablet and above.
-    .respond-to-min(@bp-sm-min, {
-         margin-top: unit(30px / @base-font-size-px, em);
-         margin-bottom: unit(30px / @base-font-size-px, em);
-       });
-  }
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    margin-top: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
+  });
 }
 
 /* ==========================================================================
@@ -1812,15 +1806,6 @@
          display: block;
        });
   }
-}
-
-.change-list {
-  padding-left: 1em;
-
-  // Tablet and above.
-  .respond-to-min(@bp-sm-min, {
-       padding-left: 2em;
-     });
 }
 
 /* ==========================================================================
