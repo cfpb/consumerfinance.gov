@@ -6,7 +6,7 @@ export class EmailSignup {
   }
 
   signUp(email) {
-    cy.get('.o-form__email-signup').within(() => {
+    cy.get('.o-email-signup form').within(() => {
       cy.get('input:first').type(email);
       cy.get('button:first').click();
     });
