@@ -194,7 +194,7 @@
   }
 
   signUp(email) {
-    cy.get('.o-form__email-signup').within(() =&gt; {
+    cy.get('.o-email-signup form').within(() =&gt; {
       cy.get('input:first').type(email);
       cy.get('button:first').click();
     });
