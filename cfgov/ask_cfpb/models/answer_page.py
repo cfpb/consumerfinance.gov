@@ -128,7 +128,6 @@ class AnswerPage(CFGOVPage):
         ask_blocks.AskAnswerContent(),
         blank=True,
         verbose_name="Answer",
-        use_json_field=True,
     )
     answer_base = models.ForeignKey(
         Answer,
@@ -194,7 +193,6 @@ class AnswerPage(CFGOVPage):
         ],
         blank=True,
         max_num=1,
-        use_json_field=True,
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -251,7 +249,6 @@ class AnswerPage(CFGOVPage):
             ),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     sidebar_panels = [
