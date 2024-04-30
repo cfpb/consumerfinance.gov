@@ -24,29 +24,29 @@
     {%- set suite  =  event.venue_suite  | default('', true) -%}
     {%- set name   =  event.venue_name   | default('', true) -%}
     {%- set zip    =  event.venue_zipcode | default('', true) -%}
-    <p class="event-meta_address h-adr">
+    <p class="event-meta__address h-adr">
         {%- macro _city() %}
-            <span class="event-meta_city p-locality">{{ city }}</span>
+            <span class="event-meta__city p-locality">{{ city }}</span>
         {% endmacro %}
 
         {%- macro _state() %}
-            <span class="event-meta_state p-state">{{ state }}</span>
+            <span class="event-meta__state p-state">{{ state }}</span>
         {% endmacro %}
 
         {%- macro _street() %}
-            <span class="event-meta_street p-street-address">{{ street }}</span>
+            <span class="event-meta__street p-street-address">{{ street }}</span>
         {% endmacro -%}
 
         {%- macro _suite() %}
-            <span class="event-meta_suite p-extended-address">{{ suite }}</span>
+            <span class="event-meta__suite p-extended-address">{{ suite }}</span>
         {% endmacro -%}
 
         {% macro _venue() %}
-            <span class="event-meta_venue p-extended-address">{{ name }}</span>
+            <span class="event-meta__venue p-extended-address">{{ name }}</span>
         {% endmacro %}
 
         {% macro _zip() %}
-            <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+            <span class="event-meta__zip p-postal-code">{{ zip }}</span>
         {% endmacro %}
 
         {{
@@ -85,15 +85,15 @@
     {% set city_prefix_state = event.venue_city ~ state_prefix ~ event.venue_state %}
 
     <section class="event-venue">
-        <div class="event-venue_details">
-            <header class="event-venue_header">
+        <div class="event-venue__details">
+            <header class="event-venue__header">
                 {% if ( event_state == 'present' ) %}
-                <button class="a-btn event-venue_live-btn">
+                <button class="a-btn event-venue__live-btn">
                     {{ svg_icon('broadcast') }}
-                    <span class="event-venue_live-btn_text">Live</span>
+                    <span>Live</span>
                 </button>
                 {% endif %}
-                <h2 class="event-venue_heading">
+                <h2 class="event-venue__heading">
                     {{ city_prefix_state }}
                 </h2>
             </header>
@@ -120,7 +120,7 @@
        or (event_state == 'past' and event.archive_video_id)
        or (event_state == 'present' and event.live_video_id) %}
         <footer>
-            <figure class="event-media_container">
+            <figure class="event-media__container">
                 {% if event_state == 'present' and event.live_video_id %}
                     {# DISPLAY LIVESTREAM #}
                     {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
@@ -187,7 +187,7 @@
               block--border-top">
     <h2>Agenda</h2>
     <table class="o-table
-                  event-agenda_table
+                  event-agenda__table
                   o-table--stack-on-small
                   u-w100pct
                   block
