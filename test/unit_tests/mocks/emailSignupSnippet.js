@@ -8,7 +8,7 @@ export default `
     <p>
         Subscribe to our email newsletter. We will update you on new blogs.
     </p>
-    <form class="o-form o-form__email-signup"
+    <form class="o-form"
           id="o-form__email-signup_371b6fce64d1b6"
           method="POST"
           action="/subscriptions/new/"
