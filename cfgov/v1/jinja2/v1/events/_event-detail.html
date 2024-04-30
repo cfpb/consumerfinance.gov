@@ -1,11 +1,11 @@
 {% import 'v1/includes/macros/time.html' as time %}
 
-<article class="post post--event">
+<article class="block block--flush-top">
     <header>
-        <h1 class="post__heading">
+        <h1 class="h1">
             {{ page.title | safe }}
         </h1>
-        <p class="post__dek">
+        <p class="h4">
             {{ page.body | safe }}
         </p>
         <div class="t-event__details">
@@ -29,7 +29,7 @@
         {% from 'events/_macros.html' import event_venue as event_venue with context %}
         {{ event_venue( page, event_state ) }}
     </header>
-    <div class="post__body">
+    <div class="block">
         {% if event_state == 'future' and page.live_stream_availability %}
         <aside class="event-status">
             <div class="event-status__body">
@@ -40,7 +40,7 @@
                       <strong>Available on live stream</strong>
                   </p>
                   <p class="event-meta">
-                      <span class="event-meta__description event-meta__description--block">
+                      <span class="event-meta__description">
                           Video link available:
                       </span>
                       {{ time.render(page.live_stream_date) }}
