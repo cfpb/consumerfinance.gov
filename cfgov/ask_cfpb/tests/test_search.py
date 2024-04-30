@@ -136,7 +136,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         results = AnswerPageSearch("test").search()
         ordered_ids = list(
             [
-                answer_page_document.answer_id
+                str(answer_page_document.answer_id)
                 for answer_page_document in results["results"]
             ]
         )
