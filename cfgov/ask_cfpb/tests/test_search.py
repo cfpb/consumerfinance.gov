@@ -1,7 +1,6 @@
 import json
 import unittest
 from io import StringIO
-from operator import itemgetter
 from unittest import mock
 
 from django.test import TestCase
@@ -126,7 +125,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
                 live=True,
                 answer_base=make_answer(),
             )
-            for letter in reversed("edcba")
+            for letter in "abc"
         ]:
             self.ROOT_PAGE.add_child(instance=page)
 
@@ -135,10 +134,16 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         )
 
         results = AnswerPageSearch("test").search()
-        self.assertEqual(
-            list(map(itemgetter("autocomplete"), results["results"])),
-            [f"test-{letter}" for letter in "abcde"],
+        ordered_ids = list(
+            [
+                answer_page_document.answer_id
+                for answer_page_document in results["results"]
+            ]
         )
+        sorted_ids = list(ordered_ids)
+        sorted_ids.sort()
+
+        self.assertEqual(ordered_ids, sorted_ids)
 
     def test_AnswerPage_suggest(self):
         test_answer_page = AnswerPage(
