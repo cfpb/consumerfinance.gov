@@ -4,6 +4,18 @@
     About this tool | Consumer Financial Protection Bureau
 {%- endblock %}
 
+{% block desc -%}
+    Details on how our tool to explore credit cards works.
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block og_image %}
+    {%- include "tccp/includes/og_image.html" -%}
+{% endblock %}
+
 {% block content_main %}
 <div class="block block--flush-top">
     <div class="eyebrow">Explore credit cards</div>
