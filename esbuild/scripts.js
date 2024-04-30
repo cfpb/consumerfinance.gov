@@ -20,7 +20,6 @@ const jsPaths = [
   // on-demand: components included on a page via Wagtail
   ...getAll(onDemand),
   `${onDemand}/simple-chart/simple-chart.js`,
-  `${onDemand}/youth-employment-programs/buying-a-car/index.js`,
   // apps
   ...getAll(`${apps}/admin/js`),
   ...getAll(`${apps}/analytics-gtm/js`),

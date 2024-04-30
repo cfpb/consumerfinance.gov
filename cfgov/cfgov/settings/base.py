@@ -90,7 +90,6 @@ INSTALLED_APPS = (
     "treemodeladmin",
     "housing_counselor",
     "hmda",
-    "youth_employment",
     "diversity_inclusion",
     "privacy",
     "mega_menu.apps.MegaMenuConfig",
