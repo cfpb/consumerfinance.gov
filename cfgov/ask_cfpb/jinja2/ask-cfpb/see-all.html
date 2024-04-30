@@ -16,10 +16,7 @@
       {{ page.title }}
     </h1>
     {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-    {% set t_links = translation_links.render() %}
-    {% if t_links and t_links | trim | length > 1 %}
-      {{ t_links }}
-    {% endif %}
+    {{ translation_links.render() }}
     {% if page.glossary_terms %}
         <dl class="terms" itemscope itemtype="https://schema.org/DefinedTermSet">
         {% for term in page.glossary_terms %}
