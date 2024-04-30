@@ -209,9 +209,9 @@ function initIndicator() {
 function highlightAgeFields(bool) {
   const $ageFields = $('#bd-day, #bd-month, #bd-year');
   if (bool) {
-    $ageFields.addClass('notification-input__warning');
+    $ageFields.addClass('notification-input-warning');
   } else {
-    $ageFields.removeClass('notification-input__warning');
+    $ageFields.removeClass('notification-input-warning');
   }
 }
 
