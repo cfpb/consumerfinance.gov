@@ -67,8 +67,8 @@ class AnswerPageSearch:
             search = search.query(
                 "match", text={"query": self.search_term, "operator": "AND"}
             )
-        else:
-            search = search.sort("autocomplete.raw")
+
+        search = search.sort("answer_id")
 
         total_results = search.count()
         search = search[0:total_results]
