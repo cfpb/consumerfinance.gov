@@ -21,7 +21,7 @@ msgstr ""
 
 #: v1/jinja2/v1/blog/blog_page.html:26
 #: v1/jinja2/v1/includes/molecules/social-media.html:95
-msgid "https://twitter.com/CFPB"
+msgid "https://x.com/CFPB"
 msgstr ""
 
 #: v1/jinja2/v1/blog/blog_page.html:29

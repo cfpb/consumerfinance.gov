@@ -92,12 +92,12 @@
             'icon': 'facebook'
         } %}
 
-        {% set twitter_homepage = _('https://twitter.com/CFPB') %}
+        {% set twitter_homepage = _('https://x.com/CFPB') %}
         {% set twitter_info = {
-            'name': 'Twitter',
+            'name': 'X',
             'homepage': twitter_homepage,
             'share_url': _share_twitter_url(parsed_url, twitter_text, value) | trim,
-            'icon': 'twitter'
+            'icon': 'x'
         } %}
 
         {% set linkedin_info = {
@@ -218,7 +218,7 @@
    ========================================================================== #}
 
 {%- macro _share_twitter_url(parsed_url, blurb, options) -%}
-    {%- set _share_twitter_url = 'https://twitter.com/intent/tweet' -%}
+    {%- set _share_twitter_url = 'https://x.com/intent/tweet' -%}
     {%- set _share_twitter_url = _share_twitter_url + '?url=' + parsed_url -%}
     {%- set _share_twitter_url = _share_twitter_url + '&via=CFPB' -%}
     {%- set _share_twitter_url = _share_twitter_url + '&text=' + blurb + '%20--' -%}
