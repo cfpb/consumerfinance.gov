@@ -20,8 +20,8 @@ msgstr ""
 
 #: v1/jinja2/v1/blog/blog_page.html:26
 #: v1/jinja2/v1/includes/molecules/social-media.html:95
-msgid "https://twitter.com/CFPB"
-msgstr "https://twitter.com/CFPBespanol"
+msgid "https://x.com/CFPB"
+msgstr "https://x.com/CFPBespanol"
 
 #: v1/jinja2/v1/blog/blog_page.html:29
 #: v1/jinja2/v1/includes/molecules/social-media.html:87
