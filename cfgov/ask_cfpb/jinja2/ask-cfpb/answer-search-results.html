@@ -39,8 +39,8 @@
 
                 <div>
                 {% for question in results %}
-                    <article class="question_summary">
-                        <p class="question_title"><a href="{{ question[0] }}">{{ question[1] | safe }}</a></p>
+                    <article class="question__summary">
+                        <p class="question__title"><a href="{{ question[0] }}">{{ question[1] | safe }}</a></p>
                         <p>{{ question[2] }}</p>
                     </article>
                 {% endfor %}
