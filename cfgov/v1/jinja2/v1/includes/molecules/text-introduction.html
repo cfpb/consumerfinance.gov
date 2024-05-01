@@ -61,9 +61,9 @@
                 <a class="m-list__link"
                    href="{{ link.url }}"
                    {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
-                   {% if link.is_link_boldface %}<strong>{% endif %}
-                   {{ link.text }}
-                   {% if link.is_link_boldface %}</strong>{% endif %}
+                   {%- if link.is_link_boldface -%}<strong>{%- endif -%}
+                   {{- link.text -}}
+                   {%- if link.is_link_boldface -%}</strong>{%- endif -%}
                 </a>
             </li>
         {% if loop.last %}</ul>{% endif %}
