@@ -24,7 +24,7 @@ ASK_CFPB_LINKS = re.compile(
     r"(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$"  # noqa: E501
 )
 
-LINK_ICON_CLASSES = ["a-link", "a-link__icon"]
+LINK_ICON_CLASSES = ["a-link", "a-link--icon"]
 
 LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 
