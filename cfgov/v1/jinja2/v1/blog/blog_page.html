@@ -24,11 +24,7 @@
                     join-the-conversation">
             <p>
                 {% set twitter_url = _("https://x.com/CFPB") %}
-                {% if language == 'es' %}
-                    {% set twitter_handle = '@CFPBespanol' %}
-                {% else %}
-                    {% set twitter_handle = '@CFPB' %}
-                {% endif %}
+                {% set twitter_handle = _("(formerly Twitter)") %}
                 {%- set twitter_link = '<a href="%s">X %s</a>' | format(twitter_url, twitter_handle) | safe %}
 
                 {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
