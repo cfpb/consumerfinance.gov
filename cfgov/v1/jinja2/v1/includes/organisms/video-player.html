@@ -45,14 +45,14 @@
     -%}
 
     <div class="o-video-player
-                o-video-player__youtube
+                o-video-player--youtube
                 {{- ' o-featured-content-module__visual' if is_fcm else '' }}"
          data-id="{{ video_id }}"
          data-src="{{ video_url }}"
          {{- ' data-custom-thumbnail' if thumbnail_url else '' }}>
         {{ caller() | safe if caller else '' }}
         <div class="o-video-player__video-container
-                    {{- ' o-video-player__video-container__flexible' if not is_fcm else '' }}
+                    {{- ' o-video-player__video-container--flexible' if not is_fcm else '' }}
                     u-show-on-video-playing">
             <div class="o-video-player__video-actions-container">
                 <div class="o-video-player__video-actions">
