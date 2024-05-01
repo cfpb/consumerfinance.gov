@@ -252,7 +252,7 @@ class LinkUtilsTests(SimpleTestCase):
             '<a class="a-btn" '
             f'href="{url}">'
             "Click"
-            '<span class="a-btn_icon a-btn_icon__on-right">'
+            '<span class="a-btn__icon a-btn__icon--on-right">'
             f"{self.external_link_icon}"
             "</span>"
             "</a>"

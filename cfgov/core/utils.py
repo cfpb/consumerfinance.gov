@@ -171,7 +171,7 @@ def add_link_markup(tag, request_path):
     # the right side.
     if not spans and "a-btn" in class_attrs:
         span = soup.new_tag(
-            "span", **{"class": "a-btn_icon a-btn_icon__on-right"}
+            "span", **{"class": "a-btn__icon a-btn__icon--on-right"}
         )
         span.contents.append(icon_soup)
 
