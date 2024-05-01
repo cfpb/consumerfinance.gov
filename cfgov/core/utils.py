@@ -26,7 +26,7 @@ ASK_CFPB_LINKS = re.compile(
 
 LINK_ICON_CLASSES = ["a-link", "a-link__icon"]
 
-LINK_ICON_TEXT_CLASSES = ["a-link_text"]
+LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 
 # Regular expression format string that will match any tag <tag_name> (that is
 # not self-closing) and group its contents.

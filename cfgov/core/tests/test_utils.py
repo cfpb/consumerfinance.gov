@@ -148,7 +148,7 @@ class LinkUtilsTests(SimpleTestCase):
             '<a class="a-link a-link__icon" '
             f"{data_pretty_href}"
             f'href="{url}">'
-            '<span class="a-link_text">foo</span> '
+            '<span class="a-link__text">foo</span> '
             f"{self.external_link_icon}"
             "</a>"
         )
@@ -199,7 +199,7 @@ class LinkUtilsTests(SimpleTestCase):
         tag = (
             f'<a class="a-link" href="{url}">'
             "<svg></svg>"
-            '<span class="a-link_text">foo</span>'
+            '<span class="a-link__text">foo</span>'
             "</a>"
         )
         path = "/about-us/blog/"
@@ -208,7 +208,7 @@ class LinkUtilsTests(SimpleTestCase):
             '<a class="a-link a-link__icon" '
             f'href="{url}">'
             "<svg></svg>"
-            '<span class="a-link_text">foo</span> '
+            '<span class="a-link__text">foo</span> '
             f"{self.external_link_icon}"
             "</a>"
         )
