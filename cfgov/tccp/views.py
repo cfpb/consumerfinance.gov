@@ -16,6 +16,7 @@ from . import enums
 from .filter_backend import CardSurveyDataFilterBackend
 from .filterset import CardSurveyDataFilterSet
 from .forms import LandingPageForm
+from .jinja2tags import render_contact_info
 from .models import CardSurveyData
 from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
 from .situations import Situation, SituationFeatures, SituationSpeedBumps
@@ -232,6 +233,7 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
                     "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
                     "state_lookup": dict(enums.StateChoices),
                     "rewards_lookup": dict(enums.RewardsChoices),
+                    "render_contact_info": render_contact_info,
                 }
             )
 
