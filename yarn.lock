@@ -310,6 +310,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cfpb/browserslist-config@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/browserslist-config/-/browserslist-config-0.0.2.tgz#d9a5c67512d6c870c15d499c97ccf4f64abf80d0"
+  integrity sha512-qmKdBMzVEHcw7CGmkJmIbszRkRckDaz6w7matCjnO/DkfE4nB5ZiUEBVYxyA6c5aCS0+IO7e0/5iDSGIn2aNHQ==
+
 "@cfpb/cfpb-analytics@0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.1.tgz#ea155c005eeb0e9e3027d3b11d0661522426883b"
