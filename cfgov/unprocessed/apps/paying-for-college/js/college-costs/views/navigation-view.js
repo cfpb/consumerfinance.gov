@@ -130,14 +130,10 @@ const navigationView = {
     this._navButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
-    this._nextButton = body.querySelector(
-      '.college-costs__tool-section-buttons .btn__next-step',
-    );
+    this._nextButton = body.querySelector('#college-costs-btn-next-step');
     this._contentSidebar = body.querySelector('.content__sidebar');
     this._introduction = body.querySelector('.college-costs__intro-segment');
-    this._getStartedBtn = body.querySelector(
-      '.college-costs__intro-segment .btn__get-started',
-    );
+    this._getStartedBtn = body.querySelector('#college-costs-btn-get-started');
     this._appSegment = body.querySelector('.college-costs__app-segment');
     this._sections = body.querySelectorAll('.college-costs__tool-section');
     this._stateDomElem = document.querySelector('main.college-costs');

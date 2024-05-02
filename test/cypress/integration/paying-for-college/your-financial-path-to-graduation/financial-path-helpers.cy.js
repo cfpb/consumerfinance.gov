@@ -1,10 +1,10 @@
 export class PfcFinancialPathToGraduation {
   clickGetStarted() {
-    cy.get('.btn__get-started').click();
+    cy.get('#college-costs-btn-get-started').click();
   }
 
   clickNextStep() {
-    cy.get('.btn__next-step').click();
+    cy.get('#college-costs-btn-next-step').click();
   }
 
   enter(name) {
