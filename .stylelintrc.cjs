@@ -25,7 +25,9 @@ rule-empty-line-before -
   Custom setting that differs from stylelint-config-standard.
 selector-id-pattern -
   Turned off.
-  TODO: Turn on this rule and work out regex for BEM syntax.
+  TODO: Turn on this rule and work out regex for consistent IDs.
+selector-class-pattern -
+  Set to getBEM.com style BEM pattern.
 less/color-no-invalid-hex
 less/no-duplicate-variables
   Both of the above settings are turned off till
@@ -44,7 +46,6 @@ module.exports = {
     'declaration-property-value-no-unknown': null,
     'function-no-unknown': [true, { ignoreFunctions: ['unit'] }],
     'media-feature-range-notation': ['prefix'],
-    'media-query-no-invalid': null,
     'no-descending-specificity': null,
     'number-max-precision': 10,
     'rule-empty-line-before': [
