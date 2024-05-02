@@ -24,10 +24,11 @@
                     join-the-conversation">
             <p>
                 {% set twitter_url = _("https://x.com/CFPB") %}
-                {%- set twitter_link = ( '<a href="%s">X @CFPB</a>' % twitter_url ) | safe %}
+                {% set twitter_handle = _("(formerly Twitter)") %}
+                {%- set twitter_link = '<a href="%s">X %s</a>' | format(twitter_url, twitter_handle) | safe %}
 
                 {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
-                {%- set facebook_link = ( '<a href="%s">Facebook</a>' % facebook_url ) | safe %}
+                {%- set facebook_link = '<a href="%s">Facebook</a>' | format(facebook_url) | safe %}
 
                 {% trans trimmed %}
                     Join the conversation.
