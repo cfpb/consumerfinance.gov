@@ -1,7 +1,6 @@
 import json
 import unittest
 from io import StringIO
-from operator import itemgetter
 from unittest import mock
 
 from django.test import TestCase
@@ -11,12 +10,19 @@ from opensearchpy.exceptions import RequestError
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.forms import AutocompleteForm
 from ask_cfpb.models.answer_page import AnswerPage
+from ask_cfpb.models.django import Answer
 from ask_cfpb.models.search import (
     UNSAFE_CHARACTERS,
     AnswerPageSearch,
     make_safe,
 )
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+
+
+def make_answer():
+    test_answer = Answer()
+    test_answer.save()
+    return test_answer
 
 
 class TestSearchMakeSafe(unittest.TestCase):
@@ -58,6 +64,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             question="What is money?",
             slug="test-answer-page",
             live=True,
+            answer_base=make_answer(),
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
         self.rebuild_elasticsearch_index(
@@ -95,6 +102,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             ),
             slug="test-answer-page",
             live=True,
+            answer_base=make_answer(),
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
         self.rebuild_elasticsearch_index(
@@ -110,13 +118,14 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             "What is money?\nMoney makes the world go round.",
         )
 
-    def test_answerpage_search_default_alphabetical_sort_order(self):
+    def test_answerpage_search_default_id_sort_order(self):
         for page in [
             AnswerPage(
                 **{k: f"test-{letter}" for k in ("title", "slug", "question")},
                 live=True,
+                answer_base=make_answer(),
             )
-            for letter in reversed("edcba")
+            for letter in "abc"
         ]:
             self.ROOT_PAGE.add_child(instance=page)
 
@@ -125,10 +134,16 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         )
 
         results = AnswerPageSearch("test").search()
-        self.assertEqual(
-            list(map(itemgetter("autocomplete"), results["results"])),
-            [f"test-{letter}" for letter in "abcde"],
+        ordered_ids = list(
+            [
+                str(answer_page_document.answer_id)
+                for answer_page_document in results["results"]
+            ]
         )
+        sorted_ids = list(ordered_ids)
+        sorted_ids.sort()
+
+        self.assertEqual(ordered_ids, sorted_ids)
 
     def test_AnswerPage_suggest(self):
         test_answer_page = AnswerPage(
@@ -147,6 +162,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             ),
             slug="test-answer-page3",
             live=True,
+            answer_base=make_answer(),
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
         self.rebuild_elasticsearch_index(

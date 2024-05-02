@@ -22,10 +22,7 @@
     {%- endfor %}
     {% if has_hero.found %}
       {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-      {% set t_links = translation_links.render(modifier_classes='block--flush-top') %}
-      {% if t_links and t_links | trim | length > 1 %}
-        {{ t_links }}
-      {% endif %}
+      {{ translation_links.render(modifier_classes='block--flush-top') }}
     {% endif %}
     {% for block in page.content -%}
         {{ render_block.render(block, loop.index) }}

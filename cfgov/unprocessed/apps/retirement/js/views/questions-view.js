@@ -11,8 +11,8 @@ function init() {
     const $container = $(this).closest('.question');
     const respTo = $(this).val();
 
-    $container.find('.lifestyle-btn').removeClass('lifestyle-btn__active');
-    $(this).addClass('lifestyle-btn__active');
+    $container.find('.lifestyle-btn').removeClass('lifestyle-btn--active');
+    $(this).addClass('lifestyle-btn--active');
 
     $container.find('.lifestyle-img').slideUp();
     $container

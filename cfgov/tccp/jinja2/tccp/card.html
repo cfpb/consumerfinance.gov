@@ -12,6 +12,18 @@
     | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block desc -%}
+    Full interest rate and fee information for {{ card.product_name }} from {{ card.institution_name }}
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block og_image %}
+    {%- include "tccp/includes/og_image.html" -%}
+{% endblock %}
+
 {% block javascript scoped %}
     {{ super() }}
     <script src="{{ static( 'js/routes/on-demand/expandable.js' ) }}"></script>

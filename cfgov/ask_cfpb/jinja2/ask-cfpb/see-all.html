@@ -15,6 +15,8 @@
     <h1>
       {{ page.title }}
     </h1>
+    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {{ translation_links.render() }}
     {% if page.glossary_terms %}
         <dl class="terms" itemscope itemtype="https://schema.org/DefinedTermSet">
         {% for term in page.glossary_terms %}

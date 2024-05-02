@@ -24,9 +24,9 @@ ASK_CFPB_LINKS = re.compile(
     r"(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$"  # noqa: E501
 )
 
-LINK_ICON_CLASSES = ["a-link", "a-link__icon"]
+LINK_ICON_CLASSES = ["a-link", "a-link--icon"]
 
-LINK_ICON_TEXT_CLASSES = ["a-link_text"]
+LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 
 # Regular expression format string that will match any tag <tag_name> (that is
 # not self-closing) and group its contents.
@@ -171,7 +171,7 @@ def add_link_markup(tag, request_path):
     # the right side.
     if not spans and "a-btn" in class_attrs:
         span = soup.new_tag(
-            "span", **{"class": "a-btn_icon a-btn_icon__on-right"}
+            "span", **{"class": "a-btn__icon a-btn__icon--on-right"}
         )
         span.contents.append(icon_soup)
 

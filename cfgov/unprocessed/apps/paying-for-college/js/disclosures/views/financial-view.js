@@ -685,13 +685,13 @@ const financialView = {
 
         if (programLength > 1) {
           yearsAttending += ' years';
-          $multiYears.filter('.line-item_title').show('inline-block');
+          $multiYears.filter('.line-item__title').show('inline-block');
           $multiYears.filter('.line-item').show();
           $yearOrLess.hide();
         } else {
           yearsAttending += ' year';
           $multiYears.hide();
-          $yearOrLess.filter('.line-item_title').show('inline-block');
+          $yearOrLess.filter('.line-item__title').show('inline-block');
           $yearOrLess.filter('.line-item').show();
         }
 
@@ -909,7 +909,7 @@ const financialView = {
    * if the summaries are in the inline-block sidebar column
    */
   // stickySummariesListener: function () {
-  //   const $stickyOffers = $('.offer-part_summary-wrapper');
+  //   const $stickyOffers = $('.offer-part__summary-wrapper');
   //   const $win = $(window);
 
   //   if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {

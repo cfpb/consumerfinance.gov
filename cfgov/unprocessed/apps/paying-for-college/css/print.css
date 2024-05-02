@@ -41,14 +41,6 @@ body {
   margin-bottom: 6px;
 }
 
-.btn {
-  display: none;
-}
-
-.btn-close {
-  display: none;
-}
-
 .uc {
   text-transform: uppercase;
   font-weight: 500;

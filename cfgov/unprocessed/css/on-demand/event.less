@@ -10,6 +10,8 @@
 /* Event template settings
    ========================================================================== */
 .t-event__details {
+  margin-bottom: unit(10px / @base-font-size-px, rem);
+
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
     .modification-date {
@@ -38,21 +40,6 @@
   });
 }
 
-/* Event-Post
-   ========================================================================== */
-
-.post--event {
-  > footer {
-    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-  }
-
-  // Desktop and above.
-  .respond-to-min(@bp-med-min, {
-    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
-    margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
-  });
-}
-
 /* Event-Media-Container
    ========================================================================== */
 
@@ -64,11 +51,8 @@
    ========================================================================== */
 
 .event-meta__description {
+  display: block;
   text-transform: none;
-
-  &--block {
-    display: block;
-  }
 }
 
 .event-meta__address {
@@ -176,56 +160,6 @@
   background: var(--green-20);
   color: var(--black);
   letter-spacing: 0;
-  padding: unit(1px / @base-font-size-px, em)
-    unit(10px / @base-font-size-px, em);
+  padding: unit(9px / @base-font-size-px, rem);
   text-align: center;
-}
-
-.post__heading {
-  .h2();
-  margin-bottom: unit(13px / @font-size, em);
-  // Tablet and above.
-  .respond-to-min(@bp-sm-min, {
-    .h1();
-  });
-}
-
-.post__dek {
-  .h4();
-  margin-bottom: unit(20px / @font-size, em);
-}
-
-.post__body {
-  .u-clearfix();
-  margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-
-  p ~ h1,
-  p ~ .h1 {
-    margin-top: unit(22px / @base-font-size-px, em);
-  }
-
-  p ~ h2,
-  p ~ .h2 {
-    margin-top: unit(31px / @base-font-size-px, em);
-  }
-
-  p ~ h3,
-  p ~ .h3 {
-    margin-top: unit(35px / @base-font-size-px, em);
-  }
-
-  p ~ h4,
-  p ~ .h4 {
-    margin-bottom: unit(7px / @base-font-size-px, em);
-  }
-
-  p ~ h5,
-  p ~ .h5 {
-    margin-bottom: unit(6px / @base-font-size-px, em);
-  }
-
-  p ~ h6,
-  p ~ .h6 {
-    margin-bottom: unit(5px / @base-font-size-px, em);
-  }
 }

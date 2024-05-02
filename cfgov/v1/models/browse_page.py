@@ -13,7 +13,6 @@ from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
 from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
-from youth_employment.blocks import YESChecklist
 
 
 class AbstractBrowsePage(CFGOVPage):
@@ -138,7 +137,6 @@ class BrowsePage(AbstractBrowsePage):
             ("mortgage_downloads_block", MortgageDataDownloads()),
             ("data_snapshot", organisms.DataSnapshot()),
             ("job_listing_table", JobListingTable()),
-            ("yes_checklist", YESChecklist()),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,

@@ -101,7 +101,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
 
     # If the image is both large and its height-to-width ratio is approximately
     # 1/2 we instruct the template to render large Twitter cards
-    # See https://dev.twitter.com/cards/types/summary-large-image
+    # See https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary-card-with-large-image
     @property
     def should_display_summary_large_image(self):
         image_ratio = float(self.height) / self.width

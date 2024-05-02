@@ -137,7 +137,7 @@ const metricView = {
 
     // If the values are equal, handle the display with CSS only
     if (metrics.school === metrics.national) {
-      $graph.addClass('bar-graph__equal');
+      $graph.addClass('bar-graph--equal');
       return;
     }
     // If the points partially overlap, move the higher point's labels up
@@ -171,12 +171,12 @@ const metricView = {
     const metricKey = $graph.attr('data-metric');
     const metrics = metricView.metrics[metricKey];
     if (isNaN(metrics.school)) {
-      $graph.addClass('bar-graph__missing-you');
+      $graph.addClass('bar-graph--missing-you');
     } else {
       this.updateText($school, metrics.school, metrics.format);
     }
     if (isNaN(metrics.national)) {
-      $graph.addClass('bar-graph__missing-average');
+      $graph.addClass('bar-graph--missing-average');
     } else {
       this.updateText($national, metrics.national, metrics.format);
     }
@@ -210,7 +210,7 @@ const metricView = {
        prevent those values from falling off the top of the graph */
     if (schoolValue > max) {
       bottoms.school = graphHeight;
-      $graph.addClass('bar-graph__high-point');
+      $graph.addClass('bar-graph--high-point');
     }
     $school.each((elem) => {
       elem.style.bottom = bottoms.school + 'px';
@@ -228,10 +228,10 @@ const metricView = {
   getNotifications: function (metricKey) {
     let classes = 'cf-notification ';
     const standingClasses = {
-      same: 'metric_notification--same',
-      better: 'metric_notification--better',
+      same: 'metric__notification--same',
+      better: 'metric__notification--better',
       worse:
-        'cf-notification metric_notification--worse ' +
+        'cf-notification metric__notification--worse ' +
         'cf-notification--error',
     };
     const metrics = metricView.metrics[metricKey];
