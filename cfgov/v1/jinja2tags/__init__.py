@@ -20,9 +20,7 @@ def is_filter_selected(context, fieldname, value):
     """
     request_get = context["request"].GET
 
-    query_string_values = [k for k in request_get.getlist(fieldname) if k]
-
-    return value in query_string_values
+    return value and value in request_get.getlist(fieldname)
 
 
 def unique_id_in_context(context):
