@@ -16,16 +16,11 @@ def is_filter_selected(context, fieldname, value):
 
     Returns True if fieldname=value is found in the GET data in order to output
     the `checked` attribute on a checkbox or radio button in the
-    _filter_selectable macro (see: filterable-list-controls.html).
+    _render_filter_fields macro (see: filterable-list-controls.html).
     """
     request_get = context["request"].GET
 
-    query_string_values = [
-        k
-        for k in request_get.getlist(fieldname)
-        + request_get.getlist("filter_" + fieldname)
-        if k
-    ]
+    query_string_values = [k for k in request_get.getlist(fieldname) if k]
 
     return value in query_string_values
 
