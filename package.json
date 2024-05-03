@@ -15,10 +15,11 @@
   "engines": {
     "node": ">=20.x"
   },
-  "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
+  "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
     "@cfpb/cfpb-analytics": "0.3.1",
     "@cfpb/cfpb-atomic-component": "1.0.0",
+    "@cfpb/browserslist-config": "0.0.2",
     "@cfpb/cfpb-buttons": "1.1.2",
     "@cfpb/cfpb-core": "1.1.0",
     "@cfpb/cfpb-expandables": "1.1.2",
