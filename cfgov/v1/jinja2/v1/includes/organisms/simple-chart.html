@@ -66,9 +66,8 @@
           {% set href =  make_download_href(value.download_file, data_location) %}
           {% if href %}
             <strong>Download:</strong>
-            <a class="icon-link icon-link__download"
-               href="{{href}}">
-              <span class="icon-link_text">{{value.download_text}}</span></a><br>
+            <a href="{{href}}">
+              {{value.download_text}}</a><br>
           {% endif %}
         {% endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
