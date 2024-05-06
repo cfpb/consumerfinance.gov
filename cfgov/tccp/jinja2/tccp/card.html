@@ -48,7 +48,7 @@
             {% do targeted_tiers.append(tier_name) %}
         {% endif %}
     {% endfor %}
-    {% set tiers_description = tiers_description + (targeted_tiers | join(', ')) %}
+    {% set tiers_description = tiers_description + oxfordize(targeted_tiers) %}
     <div class="o-card-details-section o-card-details-section--introduction">
         <div class="m-credit-tier-chart" role="figure">
             <p class="u-visually-hidden">{{ tiers_description }}</p>
