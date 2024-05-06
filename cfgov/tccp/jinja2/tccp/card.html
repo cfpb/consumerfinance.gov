@@ -197,7 +197,14 @@
                 - No min and max but a median: "29.74% median purchase APR"
                 - Single APR for everyone: "24.90% purchase APR"
             #}
-            <div class="h2 u-mb0" role="definition" id="card-purchase-apr">
+            {% if card.purchase_apr_min is not none
+                and card.purchase_apr_max is not none
+            %}
+                {% set purchase_apr_term = 'Purchase APR' %}
+            {% elif card.purchase_apr_median is not none %}
+                {% set purchase_apr_term = 'Median purchase APR' %}
+            {% endif %}
+            <div class="h2 u-mb0">
                 {% if card.purchase_apr_min is not none
                     and card.purchase_apr_max is not none
                 %}
@@ -205,17 +212,12 @@
                 {% elif card.purchase_apr_median is not none %}
                     {{ apr(card.purchase_apr_median) }}
                 {% endif %}
+                <span class="u-visually-hidden">{{ purchase_apr_term }}</span>
             </div>
-            <div class="h4 u-mt0" role="term" aria-details="card-purchase-apr card-purchase-apr-definition">
-                {% if card.purchase_apr_min is not none
-                    and card.purchase_apr_max is not none
-                %}
-                    Purchase APR
-                {% elif card.purchase_apr_median is not none %}
-                    Median purchase APR
-                {% endif %}
+            <div class="h4 u-mt0" aria-hidden="true">
+                {{ purchase_apr_term }}
             </div>
-            <p role="definition" id="card-purchase-apr-definition">
+            <p>
                 An APR, or annual percentage rate, is the interest you‘ll pay
                 on purchases.
                 {{ 'Your APR will vary based on your credit score. '
@@ -246,7 +248,14 @@
             <p>This card does not charge interest on purchases.</p>
         {% endif %}
         {% if card.introductory_apr_offered %}
-            <div class="h3 u-mb0 u-mt30" role="definition" id="card-introductory-apr">
+            {% if card.intro_apr_min is not none
+                and card.intro_apr_max is not none
+            %}
+                {% set introductory_apr_term = 'Introductory APR' %}
+            {% elif card.intro_apr_median is not none %}
+                {% set introductory_apr_term = 'Median introductory APR' %}
+            {% endif %}
+            <div class="h3 u-mb0 u-mt30">
                 {% if card.intro_apr_min is not none
                     and card.intro_apr_max is not none
                 %}
@@ -257,15 +266,10 @@
                 for
                 {{ '%.0f' | format(card.median_length_of_introductory_apr ) }}
                 months
+                <span class="u-visually-hidden">{{ introductory_apr_term }}</span>
             </div>
-            <div class="u-mb15" role="term" aria-details="card-introductory-apr">
-                {% if card.intro_apr_min is not none
-                    and card.intro_apr_max is not none
-                %}
-                    Introductory APR
-                {% elif card.intro_apr_median is not none %}
-                    Median introductory APR
-                {% endif %}
+            <div class="u-mb15" aria-hidden="true">
+                {{ introductory_apr_term }}
             </div>
             {% if card.introductory_apr_vary_by_credit_tier %}
                 <p>
@@ -398,7 +402,7 @@
         <div class="m-payment-calculation u-mb15">
             {% if card.annual_fee or not card.periodic_fee_type %}
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt0" role="definition" id="card-annual-fee">
+                    <div class="h2 u-mb0 u-mt0">
                         {# A handful of cards have both an annual and monthly
                             fee with one of those fees varying. Because of how
                             the data is (not) structured, we can only tell which
@@ -418,8 +422,9 @@
                         {% else %}
                             {{ currency(card.annual_fee) if card.annual_fee else currency(0) }}
                         {% endif %}
+                        <span class="u-visually-hidden">Annual fee</span>
                     </div>
-                    <div class="h4 u-mt0 u-mb0" role="term" aria-details="card-annual-fee">
+                    <div class="h4 u-mt0 u-mb0" aria-hidden="true">
                         Annual fee
                     </div>
                 </div>
@@ -429,7 +434,7 @@
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt0" role="definition" id="card-monthly-fee">
+                    <div class="h2 u-mb0 u-mt0">
                         {# A handful of cards have both an annual and monthly
                             fee with one of those fees varying. Because of how
                             the data is (not) structured, we can only tell which
@@ -449,8 +454,9 @@
                         {% else %}
                             {{ currency(card.monthly_fee) }}
                         {% endif %}
+                        <span class="u-visually-hidden">Monthly fee</span>
                     </div>
-                    <div class="h4 u-mt0 u-mb0" role="term" aria-details="card-monthly-fee">
+                    <div class="h4 u-mt0 u-mb0" aria-hidden="true">
                         Monthly fee
                     </div>
                 </div>
@@ -460,10 +466,11 @@
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt0" role="definition" id="card-weekly-fee">
+                    <div class="h2 u-mb0 u-mt0">
                         {{ currency(card.weekly_fee) }}
+                        <span class="u-visually-hidden">Weekly fee</span>
                     </div>
-                    <div class="h4 u-mt0 u-mb0" role="term" aria-details="card-weekly-fee">
+                    <div class="h4 u-mt0 u-mb0" aria-hidden="true">
                         Weekly fee
                     </div>
                 </div>
@@ -473,10 +480,14 @@
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0 u-mt0" role="definition" id="card-other-periodic-fee">
+                    <div class="h2 u-mb0 u-mt0">
                         {{ currency(card.other_periodic_fee_amount) }}
+                        <span class="u-visually-hidden">
+                            {{ card.other_periodic_fee_name | capitalize }},
+                            {{ card.other_periodic_fee_frequency | lower }}
+                        </span>
                     </div>
-                    <div class="h4 u-mt0 u-mb0" role="term" aria-details="card-other-periodic-fee">
+                    <div class="h4 u-mt0 u-mb0" aria-hidden="true">
                         {{ card.other_periodic_fee_name | capitalize }},
                         {{ card.other_periodic_fee_frequency | lower }}
                     </div>
@@ -603,14 +614,15 @@
             Rewards and perks
         </h2>
         {% if card.rewards %}
-            <div class="h2 u-mb0" role="definition" id="card-rewards">
+            <div class="h2 u-mb0">
                 {%- set rewards = [] -%}
                 {%- for reward in card.rewards -%}
                     {%- do rewards.append(rewards_lookup[reward]) -%}
                 {%- endfor -%}
                 {{ oxfordize(rewards) | capitalize }}
+                <span class="u-visually-hidden">Rewards</span>
             </div>
-            <div class="h4 u-mt0" role="term" aria-details="card-rewards">
+            <div class="h4 u-mt0" aria-hidden="true">
                 Rewards
             </div>
         {% else %}
@@ -676,9 +688,16 @@
             - Minimum transfer fee: "($5 minimum)" added at the end
         #}
         {% if card.balance_transfer_offered %}
+            {% if card.transfer_apr_min is not none
+                and card.transfer_apr_max is not none
+            %}
+                {% set balance_transfer_apr_term = 'Balance transfer APR' %}
+            {% elif card.transfer_apr_median is not none %}
+                {% set balance_transfer_apr_term = 'Median balance transfer APR' %}
+            {% endif %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0" role="definition" id="card-balance-transfer-apr">
+                    <div class="h2 u-mb0">
                         {% if card.transfer_apr_min is not none
                             and card.transfer_apr_max is not none
                         %}
@@ -686,23 +705,19 @@
                         {% elif card.transfer_apr_median is not none %}
                             {{ apr(card.transfer_apr_median) }}
                         {% endif %}
+                        <span class="u-visually-hidden">
+                            {{ balance_transfer_apr_term }} for {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                        months
+                        </span>
                     </div>
-                    <div class="h4 u-mt0" role="term" aria-details="card-balance-transfer-apr">
-                        {% if card.transfer_apr_min is not none
-                            and card.transfer_apr_max is not none
-                        %}
-                            Balance transfer APR
-                        {% elif card.transfer_apr_median is not none %}
-                            Median balance transfer APR
-                        {% endif %}
-                        for
-                        {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                    <div class="h4 u-mt0" aria-hidden="true">
+                        {{ balance_transfer_apr_term }} for {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
                         months
                     </div>
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0" role="definition" id="card-balance-transfer-fee">
+                    <div class="h2 u-mb0">
                         {{ currency(card.balance_transfer_fee_dollars) if
                             card.balance_transfer_fee_dollars is not none
                         }}
@@ -722,8 +737,12 @@
                             and card.balance_transfer_fee_percentage is none
                         }}
                         {{ currency(0) if not card.balance_transfer_fees }}
+                        <span class="u-visually-hidden">
+                            Balance transfer fee
+                            {{- ', see details' if card.balance_transfer_fee_calculation }}
+                        </span>
                     </div>
-                    <div class="h4 u-mt0" role="term" aria-details="card-balance-transfer-fee">
+                    <div class="h4 u-mt0" aria-hidden="true">
                         Balance transfer fee
                         {{- ', see details' if card.balance_transfer_fee_calculation }}
                     </div>
@@ -767,9 +786,18 @@
             Cash advance interest rate and fees
         </h2>
         {% if card.cash_advance_apr_offered %}
+            {% if card.advance_apr_min is not none
+                and card.advance_apr_max is not none
+            %}
+                {% set cash_advance_apr_term = 'Cash advance APR' %}
+            {% elif card.advance_apr_median is not none %}
+                {% set cash_advance_apr_term = 'Median cash advance APR' %}
+            {% else %}
+                {% set cash_advance_apr_term = 'Cash advance APR' %}
+            {% endif %}
             <div class="m-payment-calculation u-mb15">
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0" role="definition" id="card-cash-advance-apr">
+                    <div class="h2 u-mb0">
                         {% if card.advance_apr_min is not none
                             and card.advance_apr_max is not none
                         %}
@@ -779,22 +807,15 @@
                         {% else %}
                             N/A
                         {% endif %}
+                        <span class="u-visually-hidden">{{ cash_advance_apr_term }}</span>
                     </div>
-                    <div class="h4 u-mt0" role="term" aria-details="card-cash-advance-apr">
-                        {% if card.advance_apr_min is not none
-                            and card.advance_apr_max is not none
-                        %}
-                            Cash advance APR
-                        {% elif card.advance_apr_median is not none %}
-                            Median cash advance APR
-                        {% else %}
-                            Cash advance APR
-                        {% endif %}
+                    <div class="h4 u-mt0" aria-hidden="true">
+                        {{ cash_advance_apr_term }}
                     </div>
                 </div>
                 <div class="m-payment-calculation__operator h2">+</div>
                 <div class="m-payment-calculation__part">
-                    <div class="h2 u-mb0" role="definition" id="card-cash-advance-fee">
+                    <div class="h2 u-mb0">
                         {{ currency(card.cash_advance_fee_dollars) if
                             card.cash_advance_fee_dollars is not none
                         }}
@@ -814,8 +835,12 @@
                             and card.cash_advance_fee_percentage is none
                         }}
                         {{ currency(0) if not card.cash_advance_fees }}
+                        <span class="u-visually-hidden">
+                            Cash advance fee
+                            {{- ', see details' if card.cash_advance_fee_calculation }}
+                        </span>
                     </div>
-                    <div class="h4 u-mt0" role="term" aria-details="card-cash-advance-fee">
+                    <div class="h4 u-mt0" aria-hidden="true">
                         Cash advance fee
                         {{- ', see details' if card.cash_advance_fee_calculation }}
                     </div>
