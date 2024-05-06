@@ -2,7 +2,7 @@
 {%- import 'v1/includes/molecules/notification.html' as notification -%}
 
 {%- macro render_field(field, field_type) -%}
-<div class="m-form-field m-form-field__{{ field_type }}">
+<div class="m-form-field{{ ' m-form-field--checkbox' if field_type == 'checkbox' }}">
     {# Checkboxes render the label after the input. #}
     {% if field_type == "checkbox" -%}
         {{ field }}

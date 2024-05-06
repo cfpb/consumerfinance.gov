@@ -46,7 +46,7 @@ function makeSelectFilterDOM(options, chartNode, filter) {
   )[0];
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'filter-wrapper m-form-field m-form-field__select';
+  wrapper.className = 'filter-wrapper m-form-field';
 
   const label = document.createElement('label');
   label.className = 'a-label a-label--heading';

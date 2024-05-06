@@ -17,7 +17,7 @@
     ========================================================================== #}
 
 {% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
-    <li class="m-form-field m-form-field__{{ type }}">
+    <li class="m-form-field m-form-field--{{ type }}">
         <input class="a-{{ type }}"
                type="{{ type }}"
                value="{{ value }}"
