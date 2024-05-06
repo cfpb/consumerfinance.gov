@@ -18,16 +18,16 @@ describe('Explore credit cards landing page', () => {
   it("should show an error message if a location isn't selected", () => {
     exploreCards.openLandingPage();
 
-    cy.get('.a-form-alert--text').should('not.be.visible');
+    cy.get('.a-form-alert__text').should('not.be.visible');
 
     exploreCards.selectSituation('Earn rewards');
     exploreCards.clickSubmitButton();
 
-    cy.get('.a-form-alert--text').should('be.visible');
+    cy.get('.a-form-alert__text').should('be.visible');
 
     exploreCards.selectLocation('NY');
 
-    cy.get('.a-form-alert--text').should('not.be.visible');
+    cy.get('.a-form-alert__text').should('not.be.visible');
   });
 });
 
