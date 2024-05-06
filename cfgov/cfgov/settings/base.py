@@ -794,10 +794,5 @@ if ENABLE_SSO:
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
 
 # Baking testing config
-INSTALLED_APPS += (
-    "bakery",
-    "wagtailbakery",
-    "archival",
-)
-BUILD_DIR = "/srv/cfgov/archive/"
-BAKERY_VIEWS = ("wagtailbakery.views.AllPagesView",)
+INSTALLED_APPS += ("archival",)
+ARCHIVE_DIR = "/srv/cfgov/archive/"
