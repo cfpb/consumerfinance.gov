@@ -34,12 +34,10 @@ class BrowseFilterablePage(AbstractFilterablePage, AbstractBrowsePage):
             ("text_introduction", molecules.TextIntroduction()),
             ("featured_content", organisms.FeaturedContent()),
         ],
-        use_json_field=True,
     )
     content = StreamField(
         BrowseFilterableContent,
         blank=True,
-        use_json_field=True,
     )
 
     # General content tab

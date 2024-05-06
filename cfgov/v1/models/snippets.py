@@ -52,7 +52,6 @@ class Contact(models.Model):
             ("hyperlink", molecules.ContactHyperlink()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     panels = [
@@ -154,7 +153,6 @@ class ReusableNotification(RevisionMixin, models.Model):
         [("content", Notification())],
         min_num=1,
         max_num=1,
-        use_json_field=True,
     )
 
     def __str__(self):

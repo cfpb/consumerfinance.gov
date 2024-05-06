@@ -16,7 +16,6 @@ class CollegeCostsPage(CFGOVPage):
             ("featured_content", organisms.FeaturedContent()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     content = StreamField(
@@ -29,7 +28,6 @@ class CollegeCostsPage(CFGOVPage):
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     content_panels = CFGOVPage.content_panels + [

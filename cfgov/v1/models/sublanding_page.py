@@ -25,7 +25,6 @@ class SublandingPage(CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
-        use_json_field=True,
     )
     content = StreamField(
         [
@@ -42,7 +41,6 @@ class SublandingPage(CFGOVPage):
             ("expandable", organisms.Expandable()),
         ],
         blank=True,
-        use_json_field=True,
     )
     sidebar_breakout = StreamField(
         [
@@ -85,7 +83,6 @@ class SublandingPage(CFGOVPage):
             ("job_listing_list", JobListingList()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     # General content tab
