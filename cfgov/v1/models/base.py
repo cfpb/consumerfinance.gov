@@ -148,7 +148,6 @@ class CFGOVPage(Page):
             ),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     # Panels

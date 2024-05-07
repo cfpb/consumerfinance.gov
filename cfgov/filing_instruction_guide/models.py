@@ -95,7 +95,6 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
             )
         ],
         blank=True,
-        use_json_field=True,
     )
 
     content = StreamField(
@@ -104,7 +103,6 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
             ("Fig_Subsection", FigSubsection()),
             ("Fig_Level_3_Subsection", FigLevel3Subsection()),
         ],
-        use_json_field=True,
     )
 
     # Main content panel
