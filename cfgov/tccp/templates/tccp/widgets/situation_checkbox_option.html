@@ -3,14 +3,13 @@
 
     <label class="a-label" for="{{ widget.attrs.id }}">
         {{ widget.label }}
-
-        <div class="a-label__helper">
-            {{ widget.value.select_html }}
-
-            <p>
-                You’ll be able to further customize that list of cards
-                to find ones that work for you.
-            </p>
-        </div>
     </label>
+    <div data-helper-text>
+        {{ widget.value.select_html }}
+
+        <p class="u-mt10">
+            You'll be able to further customize that list of cards
+            to find ones that work for you.
+        </p>
+    </div>
 </div>
