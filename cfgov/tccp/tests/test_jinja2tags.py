@@ -26,23 +26,30 @@ class FormatContactWebsiteTests(SimpleTestCase):
         for value, expected in [
             (
                 "http://example.com",
-                {"text": "http://example.com", "url": "http://example.com"},
+                {"text": "example.com", "url": "http://example.com"},
             ),
             (
                 "https://example.com",
-                {"text": "https://example.com", "url": "https://example.com"},
+                {"text": "example.com", "url": "https://example.com"},
             ),
             (
                 "https://www.example.com",
                 {
-                    "text": "https://www.example.com",
+                    "text": "example.com",
                     "url": "https://www.example.com",
+                },
+            ),
+            (
+                "https://subdomain.example.com",
+                {
+                    "text": "subdomain.example.com",
+                    "url": "https://subdomain.example.com",
                 },
             ),
             (
                 "https://example.com/path/",
                 {
-                    "text": "https://example.com",
+                    "text": "example.com",
                     "url": "https://example.com/path/",
                 },
             ),
