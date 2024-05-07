@@ -3,7 +3,7 @@ from django.db import models
 
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField, StreamField
-from wagtail.models import RevisionMixin
+from wagtail.models import PreviewableMixin, RevisionMixin
 
 from v1.atomic_elements import molecules
 from v1.atomic_elements.molecules import Notification
@@ -36,7 +36,7 @@ class ReusableText(RevisionMixin, models.Model):
         return self.title
 
 
-class Contact(models.Model):
+class Contact(PreviewableMixin, models.Model):
     heading = models.CharField(
         verbose_name=("Heading"),
         max_length=255,
@@ -65,6 +65,9 @@ class Contact(models.Model):
 
     class Meta:
         ordering = ["heading"]
+
+    def get_preview_template(self, request, mode_name):
+        return "v1/includes/organisms/contact-preview.html"
 
 
 class EmailSignUp(RevisionMixin, models.Model):

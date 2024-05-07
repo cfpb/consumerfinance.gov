@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.test import TestCase
 
 from wagtail.models import Site
@@ -13,11 +15,31 @@ from v1.models import (
 )
 
 
-class TestUnicodeCompatibility(TestCase):
+class ContactTests(TestCase):
     def test_unicode_contact_heading_unicode(self):
         contact = Contact(heading="Unicod\xeb")
         self.assertEqual(str(contact), "Unicod\xeb")
         self.assertIsInstance(str(contact), str)
+
+    def test_contact_preview(self):
+        contact = Contact(
+            heading="Contact name",
+            contact_info=json.dumps(
+                [
+                    {
+                        "type": "hyperlink",
+                        "value": {
+                            "url": "https://example.com",
+                            "text": "Example",
+                        },
+                    }
+                ]
+            ),
+        )
+
+        response = contact.make_preview_request()
+        self.assertContains(response, "<h3>Contact name</h3>")
+        self.assertContains(response, 'href="https://example.com"')
 
 
 class TestModelStrings(TestCase):

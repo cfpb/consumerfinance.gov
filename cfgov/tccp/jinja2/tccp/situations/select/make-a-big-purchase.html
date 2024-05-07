@@ -12,30 +12,13 @@
         </span>
     </li>
 </ul>
-<p>
-    <div class="m-notification m-notification--warning m-notification--visible">
-        {{ svg_icon("warning-round") }}
-
-        <div class="m-notification__content">
-            <div class="m-notification__message">
-                What about 0% offers?
-            </div>
-
-            <div class="m-notification__explanation">
-                If a card has promotional interest, ensure you’re on track to
-                pay off the balance within the promotional period, or you
-                could end up owing more in interest than the original
-                purchase amount.
-            </div>
-
-            <p>
-                <a
-                    class="a-link a-link--jump"
-                    href="/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/"
-                >
-                    <span class="a-link__text">More about intro APRs</span>
-                </a>
-            </p>
-        </div>
-    </div>
-</p>
+{{ notification.render(
+    "warning",
+    true,
+    "What about 0% offers?",
+    "If a card has promotional interest, ensure you're on track to
+    pay off the balance within the promotional period, or you
+    could end up owing more in interest than the original
+    purchase amount.",
+    [{'text': 'More about intro APRs', 'url': '/ask-cfpb/i-got-a-credit-card-promising-no-interest-for-a-purchase-if-i-pay-in-full-within-12-months-how-does-this-work-en-40/' }]
+) }}
