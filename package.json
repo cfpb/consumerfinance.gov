@@ -15,8 +15,9 @@
   "engines": {
     "node": ">=20.x"
   },
-  "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
+  "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
+    "@cfpb/browserslist-config": "0.0.2",
     "@cfpb/cfpb-analytics": "0.3.1",
     "@cfpb/cfpb-atomic-component": "1.0.0",
     "@cfpb/cfpb-buttons": "1.1.2",
@@ -46,7 +47,7 @@
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
-    "cypress": "13.7.3",
+    "cypress": "13.8.1",
     "cypress-fail-fast": "7.1.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -60,8 +61,8 @@
     "jest-fetch-mock": "3.0.3",
     "postcss-less": "6.0.0",
     "prettier": "3.2.5",
-    "snyk": "1.1288.0",
-    "stylelint": "16.3.1",
+    "snyk": "1.1291.0",
+    "stylelint": "16.5.0",
     "stylelint-config-standard": "36.0.0",
     "stylelint-less": "3.0.1"
   },

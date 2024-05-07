@@ -35,7 +35,7 @@ export class AdminPage {
   }
 
   getImages() {
-    return cy.get('#image-results').find('li');
+    return cy.get('#listing-results').find('li');
   }
 
   tags() {
@@ -47,7 +47,7 @@ export class AdminPage {
   }
 
   getFirstDocument() {
-    return cy.get('#document-results').find('tr').eq(1);
+    return cy.get('#listing-results').find('tr').eq(1);
   }
 
   openContacts() {

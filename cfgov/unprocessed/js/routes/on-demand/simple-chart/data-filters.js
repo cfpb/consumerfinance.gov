@@ -42,11 +42,11 @@ function processDate(option) {
 function makeSelectFilterDOM(options, chartNode, filter) {
   const id = Math.random() + filter.key;
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters',
+    'o-simple-chart__filters',
   )[0];
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'filter-wrapper m-form-field m-form-field__select';
+  wrapper.className = 'filter-wrapper m-form-field';
 
   const label = document.createElement('label');
   label.className = 'a-label a-label--heading';
@@ -106,7 +106,7 @@ function makeSelectFilterDOM(options, chartNode, filter) {
  */
 function makeRadioFilterDOM(buckets, chartNode, filter) {
   const attachPoint = chartNode.getElementsByClassName(
-    'o-simple-chart_filters',
+    'o-simple-chart__filters',
   )[0];
   const radios = [];
 

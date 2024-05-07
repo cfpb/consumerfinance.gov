@@ -30,10 +30,10 @@ class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
-        use_json_field=True,
     )
     content = StreamField(
-        SublandingFilterableContent, blank=True, use_json_field=True
+        SublandingFilterableContent,
+        blank=True,
     )
 
     # General content tab

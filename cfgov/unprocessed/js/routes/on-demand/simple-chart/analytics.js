@@ -8,7 +8,7 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 function getChartTitle(evt) {
   const chartWrapper = evt.target.chart.container.parentNode.parentNode;
   const titleNodes = chartWrapper.getElementsByClassName(
-    'o-simple-chart_title',
+    'o-simple-chart__title',
   );
   if (titleNodes.length) return titleNodes[0].textContent;
   return 'Unknown chart title';

@@ -36,6 +36,26 @@ htmx.defineExtension('htmx-url-param', {
 });
 
 /**
+ * htmx extension that adds an `aria-busy=true` HTML attribute
+ * to the htmx target container to indicate to screenreaders
+ * that a request is in-flight. Removes the attribute after the
+ * request completes.
+ * See https://htmx.org/extensions/
+ * See https://htmx.org/events/#htmx:beforeRequest
+ * See https://htmx.org/events/#htmx:afterRequest
+ */
+htmx.defineExtension('htmx-aria-busy', {
+  onEvent: function (name, event) {
+    if (name === 'htmx:beforeRequest') {
+      event.detail.target.setAttribute('aria-busy', 'true');
+    }
+    if (name === 'htmx:afterRequest') {
+      event.detail.target.setAttribute('aria-busy', 'false');
+    }
+  },
+});
+
+/**
  * htmx extension that saves a snapshot of the TCCP ordering dropdown
  * immediately before rendering new card results and injects it
  * into the page immediately after rendering the results.
@@ -93,6 +113,6 @@ document.body.setAttribute('hx-history', 'false');
 // Add htmx extensions to the dom and initialize them
 document.body.setAttribute(
   'hx-ext',
-  'htmx-url-param, store-tccp-filter-path, move-tccp-ordering',
+  'htmx-url-param, store-tccp-filter-path, move-tccp-ordering, htmx-aria-busy',
 );
 htmx.process(document.body);
