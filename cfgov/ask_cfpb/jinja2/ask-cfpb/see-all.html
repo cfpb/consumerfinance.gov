@@ -90,8 +90,3 @@
         {% endif %}
     {% endif %}
 {% endblock %}
-
-{% block javascript scoped %}
-    {{ super() }}
-    <script src="{{ static('apps/ask-cfpb/js/main.js') }}"></script>
-{% endblock javascript %}

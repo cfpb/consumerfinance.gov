@@ -1,7 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 {% import 'v1/includes/macros/util/format/datetime.html' as dt %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-{% import './_ask-search.html' as ask_search with context %}
+{% import 'ask-cfpb/_ask-search.html' as ask_search with context %}
 
 {% block title -%}
     {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}

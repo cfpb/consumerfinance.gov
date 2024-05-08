@@ -22,6 +22,7 @@ const jsPaths = [
   ...getAll(`${apps}/admin/js`),
   ...getAll(`${apps}/analytics-gtm/js`),
   `${apps}/ask-cfpb/js/main.js`,
+  `${apps}/careers/js/main.js`,
   `${apps}/ccdb-search/js/main.js`,
   `${apps}/financial-well-being/js/home.js`,
   `${apps}/financial-well-being/js/results.js`,
