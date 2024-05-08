@@ -108,6 +108,9 @@ IndexChoices = make_choices(
 IndexTypeChoices = make_choices("F", "V")
 
 
+InstitutionTypeChoices = make_choices("Bank", "CU")
+
+
 LateFeeTypeChoices = make_choices(
     "1. What is the amount of the first late fee on the account?",
     (
