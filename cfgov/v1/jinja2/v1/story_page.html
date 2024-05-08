@@ -27,8 +27,8 @@
 
 {% block content_main %}
 
-{% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-{{ translation_links.render(modifier_classes='block--flush-top') }}
+    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {{ translation_links.render(modifier_classes='block--flush-top') }}
 
     {% for block in page.content %}
         <div class="block{{ ' block--flush-top' if loop.first else '' }}">
