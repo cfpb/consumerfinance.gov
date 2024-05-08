@@ -1,6 +1,7 @@
 import re
 from collections import OrderedDict
 
+from django.conf import settings
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
@@ -330,6 +331,29 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
             .filter("match", portal_categories=self.portal_category.heading)
         )
         return self.get_results(request)
+
+    def get_translation_links(self, request, inclusive=True, live=True):
+        if self.portal_category:
+            language_names = dict(settings.LANGUAGES)
+
+            return [
+                {
+                    "href": translation.get_url(request=request)
+                    + {
+                        v: k
+                        for k, v in translation.specific.category_map.items()
+                    }[self.portal_category]
+                    + "/",
+                    "language": translation.language,
+                    "text": language_names[translation.language],
+                }
+                for translation in super().get_translations(
+                    inclusive=inclusive, live=live
+                )
+            ]
+        return super().get_translation_links(
+            request, inclusive=inclusive, live=live
+        )
 
 
 class AnswerResultsPage(CFGOVPage):

@@ -426,17 +426,7 @@ class CFGOVPage(Page):
 
         return [
             {
-                "href": (translation.get_url(request=request) or "")
-                + (
-                    {
-                        v: k
-                        for k, v in translation.specific.category_map.items()
-                    }[self.portal_category]
-                    + "/"
-                    if str(self._meta) == "ask_cfpb.portalsearchpage"
-                    and self.portal_category
-                    else ""
-                ),
+                "href": translation.get_url(request=request),
                 "language": translation.language,
                 "text": language_names[translation.language],
             }
