@@ -118,7 +118,11 @@
                     {% endif %}
                 </ul>
             {% endif %}
-            {% if card.professional_affiliation is not none or card.other is not none %}
+            {% if
+                card.professional_affiliation is not none
+                or card.other is not none
+                or card.issued_by_credit_union
+            %}
                 <div class="h4 u-mt15">Eligibility requirements</div>
                 <ul>
                     {% for requirement in [
@@ -129,6 +133,13 @@
                             <li>{{ requirement }}</li>
                         {% endif %}
                     {% endfor %}
+                    {% if card.issued_by_credit_union -%}
+                    <li>
+                        This card is from a credit union, a not-for-profit, member-owned
+                        institution that you must join before applying for the card.
+                        Check with the credit union for membership requirements.
+                    </li>
+                    {%- endif %}
                 </ul>
             {% endif %}
         </div>

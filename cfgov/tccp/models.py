@@ -741,3 +741,7 @@ class CardSurveyData(models.Model):
                 ]
             )
         )
+
+    @property
+    def issued_by_credit_union(self):
+        return self.institution_type == "CU"
