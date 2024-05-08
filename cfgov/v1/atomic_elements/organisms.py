@@ -962,7 +962,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
-        css = ["mortgage-performance-trends.css"]
+        css = ["mortgage-performance-trends.css", "chart.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
