@@ -175,9 +175,12 @@
             <div class="u-mt30">
                 {# TODO: Maybe unify this content with the card list version? #}
                 {{ speed_bump( {
-                    'content': 'This card is from a small bank or credit union,
-                    which often offer lower interest rates and could save you
-                    hundreds of dollars per year.'
+                    'content': (
+                        'This card is from a ' ~
+                        ['small bank or ', ''][card.issued_by_credit_union] ~
+                        'credit union, which often offer lower interest rates ' ~
+                        'and could save you hundreds of dollars per year.'
+                    )
                 } ) }}
             </div>
         {% endif %}
