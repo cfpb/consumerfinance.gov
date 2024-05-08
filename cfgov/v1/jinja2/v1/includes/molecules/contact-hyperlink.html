@@ -21,8 +21,8 @@
         Web
     </span>
     <p>
-        <a href="{{ value.url }}">
-            {{ value.text | default( value.url, true ) }}
-        </a>
+        {% if value.url %}<a href="{{ value.url }}">{% endif %}
+            {{- value.text | default( value.url, true ) -}}
+        {% if value.url %}</a>{% endif %}
     </p>
 </div>
