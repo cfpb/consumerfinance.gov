@@ -132,34 +132,9 @@
                 </ul>
             {% endif %}
         </div>
-        <div class="o-contact-info">
-            {% if card.website_for_consumer %}
-                {# Some issuers submitted more than one URL for a card, always
-                    separated by a space. To catch those, we'll make a list and
-                    render a link for each URL. #}
-                {% set urls = card.website_for_consumer.split() %}
-                {% for url in urls %}
-                    {# TODO: Make this into a custom filter instead of rpartition #}
-                    {% with value = {
-                        "url": url,
-                        "text": url.rpartition("//")[-1].partition("/")[0]
-                            | replace('www.', '')}
-                    %}
-                        {% include "v1/includes/molecules/contact-hyperlink.html" %}
-                    {% endwith %}
-                {% endfor %}
-            {% endif %}
-            {% if card.telephone_number_for_consumers %}
-                {# TODO: Make this into a custom filter instead of this terribleness #}
-                {% set phone_number = card.telephone_number_for_consumers | replace('-', '') | replace('(', '') | replace(')', '') | replace(' ', '') %}
-                {% if phone_number.startswith('1') %}
-                    {% set phone_number = phone_number[1:] %}
-                {% endif %}
-                {% with value = {"phones": [{"number": phone_number}]} %}
-                    {% include "v1/includes/molecules/contact-phone.html" %}
-                {% endwith %}
-            {% endif %}
-        </div>
+
+        {{ render_contact_info(card) }}
+
         {% if not card.top_25_institution %}
             <div class="u-mt30">
                 {# TODO: Maybe unify this content with the card list version? #}
