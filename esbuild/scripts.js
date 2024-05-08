@@ -11,9 +11,7 @@ const jsPaths = [
   `${routes}/common.js`,
 
   // js for entire sub-paths
-  `${routes}/ask-cfpb/single.js`,
   `${routes}/credit-cards/single.js`,
-  `${routes}/es/single.js`,
   // js for specific pages, based on url
   `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
 
@@ -23,6 +21,7 @@ const jsPaths = [
   // apps
   ...getAll(`${apps}/admin/js`),
   ...getAll(`${apps}/analytics-gtm/js`),
+  `${apps}/ask-cfpb/js/main.js`,
   `${apps}/ccdb-search/js/main.js`,
   `${apps}/financial-well-being/js/home.js`,
   `${apps}/financial-well-being/js/results.js`,

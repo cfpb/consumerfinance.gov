@@ -4,7 +4,7 @@
 
 {% block css -%}
     {{ super() }}
-    <link rel="stylesheet" href="{{ static('css/on-demand/ask.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/ask-cfpb/css/main.css') }}">
 {%- endblock css %}
 
 {% block content_modifiers -%}
@@ -90,3 +90,8 @@
         {% endif %}
     {% endif %}
 {% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script src="{{ static('apps/ask-cfpb/js/main.js') }}"></script>
+{% endblock javascript %}
