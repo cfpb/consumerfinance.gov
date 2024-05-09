@@ -214,3 +214,11 @@ class CardSurveyDataTests(SimpleTestCase):
 
         card.purchase_apr_good_min = 0.99
         self.assertFalse(card.purchase_apr_data_incomplete)
+
+    def test_issued_by_credit_union(self):
+        self.assertTrue(
+            CardSurveyData(institution_type="CU").issued_by_credit_union
+        )
+        self.assertFalse(
+            CardSurveyData(institution_type="Bank").issued_by_credit_union
+        )

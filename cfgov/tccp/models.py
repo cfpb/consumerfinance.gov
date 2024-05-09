@@ -440,6 +440,9 @@ class CardSurveyDataQuerySet(models.QuerySet):
 class CardSurveyData(models.Model):
     slug = models.SlugField(max_length=255, primary_key=True)
     institution_name = models.TextField()
+    institution_type = models.TextField(
+        choices=enums.InstitutionTypeChoices, null=True, blank=True
+    )
     product_name = models.TextField(db_index=True)
     report_date = models.DateField()
     availability_of_credit_card_plan = models.TextField(
@@ -738,3 +741,7 @@ class CardSurveyData(models.Model):
                 ]
             )
         )
+
+    @property
+    def issued_by_credit_union(self):
+        return self.institution_type == "CU"
