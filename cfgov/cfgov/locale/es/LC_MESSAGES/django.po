@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 11:30-0400\n"
+"POT-Creation-Date: 2024-05-10 14:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cfgov/settings/base.py:233
+#: cfgov/settings/base.py:232
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:234
+#: cfgov/settings/base.py:233
 msgid "Spanish"
 msgstr "Español"
 
-#: cfgov/settings/base.py:235
+#: cfgov/settings/base.py:234
 msgid "Chinese"
 msgstr ""
 
-#: cfgov/settings/base.py:236
+#: cfgov/settings/base.py:235
 msgid "Vietnamese"
 msgstr ""
 
-#: cfgov/settings/base.py:237
+#: cfgov/settings/base.py:236
 msgid "Korean"
 msgstr ""
 
-#: cfgov/settings/base.py:238
+#: cfgov/settings/base.py:237
 msgid "Tagalog"
 msgstr ""
 
-#: cfgov/settings/base.py:239
+#: cfgov/settings/base.py:238
 msgid "Russian"
 msgstr ""
 
-#: cfgov/settings/base.py:240
+#: cfgov/settings/base.py:239
 msgid "Arabic"
 msgstr ""
 
-#: cfgov/settings/base.py:241
+#: cfgov/settings/base.py:240
 msgid "Haitian Creole"
 msgstr ""
 

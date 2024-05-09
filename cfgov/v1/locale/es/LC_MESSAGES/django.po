@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 18:25-0400\n"
+"POT-Creation-Date: 2024-05-10 14:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,8 +89,7 @@ msgstr "Enviar una queja"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:28
 #: v1/jinja2/v1/includes/molecules/global-search.html:36
-#: v1/jinja2/v1/includes/molecules/global-search.html:69
-#: v1/jinja2/v1/includes/molecules/global-search.html:81
+#: v1/jinja2/v1/includes/organisms/search-input.html:64
 msgid "Search"
 msgstr "Buscar"
 
@@ -103,8 +102,7 @@ msgstr "Busque en el sitio web consumerfinance.gov"
 msgid "Close"
 msgstr "Cerrar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:74
-#: v1/jinja2/v1/includes/molecules/global-search.html:77
+#: v1/jinja2/v1/includes/molecules/global-search.html:63
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
@@ -184,6 +182,11 @@ msgstr "https://www.usa.gov/es/"
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
+#: v1/jinja2/v1/includes/organisms/search-input.html:55
+#: v1/jinja2/v1/includes/organisms/search-input.html:56
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
 #: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:33
 #: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:36
 #, fuzzy
@@ -217,7 +220,9 @@ msgstr "Este sitio no es compatible con su navegador web."
 
 #: v1/jinja2/v1/includes/snippets/no_js_notification.html:8
 msgid "Please try a newer browser or confirm that JavaScript is enabled."
-msgstr "Intente con un navegador web más nuevo o confirme que JavaScript está habilitado."
+msgstr ""
+"Intente con un navegador web más nuevo o confirme que JavaScript está "
+"habilitado."
 
 #: v1/jinja2/v1/layouts/base.html:261
 msgid "Skip to main content"
@@ -275,6 +280,3 @@ msgstr ""
 
 #~ msgid "Tip"
 #~ msgstr "Consejo"
-
-#~ msgid "Clear search"
-#~ msgstr "Borrar búsqueda"

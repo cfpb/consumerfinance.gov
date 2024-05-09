@@ -41,6 +41,14 @@ describe('Ask CFPB', () => {
       search.maxLengthErrorMessage().should('be.visible');
       search.submitButton().should('be.disabled');
     });
+
+    it('should allow clearing of search', () => {
+      search.enter('typed a typoo');
+      search.resetButton().should('be.visible');
+      search.clearSearch();
+      search.input().invoke('val').should('be.empty');
+      search.resetButton().should('not.be.visible');
+    });
   });
 
   describe('Answer Page', () => {

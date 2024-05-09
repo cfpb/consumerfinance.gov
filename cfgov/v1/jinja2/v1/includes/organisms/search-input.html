@@ -1,0 +1,68 @@
+{# ==========================================================================
+
+   Search Input with Button
+
+   ==========================================================================
+
+   Description:
+
+   Create a Search Input with Button organism.
+
+   value.input_id: ID for the input and its label.
+
+   value.input_name: Name for the input.
+
+   value.input_value: Value for the input content.
+
+   value.input_aria_label: Hidden text for the input search label.
+
+   value.input_input_aria_describedby_id: ID for an error box that describes this element.
+
+   value.has_autocomplete: Whether it has an autocomplete or not.
+
+   value.placeholder: Placeholder text for the input.
+
+   value.submit_aria_label: Label for the search button.
+
+   ========================================================================== #}
+
+{% macro render(value) %}
+
+<div class="o-search-input">
+    <div class="o-search-input__input{% if value.has_autocomplete %} m-autocomplete{% endif %}"
+         {% if language %}
+         data-language="{{ language }}"
+         {% endif %}>
+        <label for="{{ value.input_id }}"
+               class="o-search-input__input-label"
+               aria-label="{{ value.input_aria_label }}">
+            {{ svg_icon('search') }}
+        </label>
+        <input type="search"
+               id="{{ value.input_id }}"
+               name="{{ value.input_name }}"
+               value="{{ value.input_value or '' }}"
+               class="a-text-input a-text-input__full"
+               placeholder="{{ value.placeholder }}"
+               title="{{ value.placeholder }}"
+               autocomplete="off"
+               maxlength="75"
+               {% if value.input_aria_describedby_id %}
+               aria-describedby="{{ value.input_aria_describedby_id }}"
+               {% endif %}>
+        <button type="reset"
+                onclick="document.getElementById('{{ value.input_id }}').setAttribute('value','')"
+                aria-label="{{ _('Clear search') }}"
+                title="{{ _('Clear search') }}">
+            {{ svg_icon('error')}}
+        </button>
+    </div>
+
+    <button class="a-btn"
+            type="submit"
+            aria-label="{{ value.submit_aria_label }}">
+        {{ _('Search') }}
+    </button>
+</div>
+
+{% endmacro %}

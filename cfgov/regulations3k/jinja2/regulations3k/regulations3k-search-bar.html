@@ -1,32 +1,30 @@
 {% macro render(hidden_fields, q='') %}
 
-<form action="." data-js-hook="behavior_submit-search">
+<form action="."
+      data-js-hook="behavior_submit-search"
+      data-cy="regs-search-form">
     <h2 class="h4">
         Search term
     </h2>
-    <div class="o-form--input-w-btn">
-        {% if hidden_fields | length > 0 %}
-            <div id="regs3k-hidden-filters">
-            {% for field in hidden_fields %}
-                {% for value in field.value.split(',') %}
-                    <input type="hidden" name="{{ field.name }}" value="{{ value }}">
-                {% endfor %}
+    {% if hidden_fields | length > 0 %}
+        <div id="regs3k-hidden-filters">
+        {% for field in hidden_fields %}
+            {% for value in field.value.split(',') %}
+                <input type="hidden" name="{{ field.name }}" value="{{ value }}">
             {% endfor %}
-            </div>
-        {% endif %}
-        <div class="o-form--input-w-btn__input-container">
-            <div class="m-btn-inside-input input-contains-label">
-                <label for="query" class="input-contains-label__before input-contains-label__before--search">
-                    {{ svg_icon('search') }}
-                    <span class="u-visually-hidden">Search</span>
-                </label>
-                <input id="query" name="q" type="text" title="Search terms" class="a-text-input" value="{{ q }}" placeholder="Search terms">
-            </div>
+        {% endfor %}
         </div>
-        <div class="o-form--input-w-btn__btn-container">
-            <button class="a-btn" aria-label="Search for a term in the regulations">Search</button>
-        </div>
-    </div>
+    {% endif %}
+
+    {% import 'v1/includes/organisms/search-input.html' as search_input with context %}
+    {{ search_input.render({
+        "input_id": "query",
+        "input_name": "q",
+        "input_value": q,
+        "input_aria_label": "Search for a term",
+        "placeholder": "Enter your search term",
+        "submit_aria_label": "Search for a term in the regulations"
+    }) }}
 </form>
 
 {% endmacro %}
