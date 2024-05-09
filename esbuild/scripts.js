@@ -1,3 +1,4 @@
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { getAll } from './utils.js';
 import environment from '../config/environment.js';
 const { unprocessed } = environment.paths;
@@ -53,7 +54,7 @@ function scripts(baseConfig) {
   return {
     ...baseConfig,
     entryPoints: jsPaths,
-    target: 'es6',
+    target: browserslistToEsbuild(),
   };
 }
 

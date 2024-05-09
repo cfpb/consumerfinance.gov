@@ -34,7 +34,7 @@
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.19",
     "cfpb-chart-builder": "6.5.0",
-    "esbuild": "0.20.2",
+    "esbuild": "0.21.1",
     "fancy-log": "2.0.0",
     "glob": "10.3.12",
     "highcharts": "7.2.2",
@@ -47,6 +47,7 @@
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
+    "browserslist-to-esbuild": "2.1.1",
     "cypress": "13.8.1",
     "cypress-fail-fast": "7.1.0",
     "eslint": "8.57.0",

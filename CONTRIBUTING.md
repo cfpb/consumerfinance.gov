@@ -44,29 +44,28 @@ When in doubt, mimic the styles and patterns in the existing codebase.
 
 ### Browser support
 
-- We serve JavaScript to any browser that
-  [supports fetch](https://caniuse.com/fetch).
-  We use [esbuild](https://github.com/evanw/esbuild) to transpile
-  and minify our JavaScript.
-
 - We prefix CSS for [every browser in our browserslist](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json#L18).
-  We use [autoprefixer](https://github.com/postcss/autoprefixer) to add
-  vendor-specific prefixes to rules where necessary.
+  We use [`autoprefixer`](https://github.com/postcss/autoprefixer) to add
+  vendor-specific prefixes to the CSS rules where necessary.
+
+- For JavaScript, we process the browserslist using
+  [`browserslist-to-esbuild`](https://github.com/marcofugaro/browserslist-to-esbuild/)
+  to generate a list of targets for [`esbuild`](https://github.com/evanw/esbuild),
+  which transpiles and minifies our JavaScript.
 
 #### Outputting browser support metrics
 
 Within the root directory, run `npx browserslist` to output the set of browser
 targets given to `autoprefixer` (CSS) transpiling.
 
+Run `npx browserslist-to-esbuild` to output the `target` string given to
+`esbuild` for JavaScript transpiling.
+
 > [!NOTE]
 > A browserslist string is used in `package.json`.
 > See the
 > [browserslist docs](https://github.com/browserslist/browserslist#full-list)
 > for information on this string and the defaults.
-
-For JavaScript, `esbuild` uses the [`es6`](http://es6-features.org/) target and
-our code conditionally includes JavaScript in browsers that
-[support fetch](https://caniuse.com/fetch).
 
 > [!NOTE]
 > JavaScript may still
