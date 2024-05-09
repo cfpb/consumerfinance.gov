@@ -24,14 +24,14 @@
                  id="{{ term.anchor(page.language) }}"
                  itemscope
                  itemtype="https://schema.org/DefinedTerm">
-                <dt class="term_name" itemprop="name">
+                <dt class="term__name" itemprop="name">
                     {{ term.name(page.language) }}
                     <link itemprop="url" href="{{ page.full_url }}{{ page.category_slug }}/#{{ term.anchor(page.language) }}">
                 </dt>
-                <dd class="term_definition" itemprop="description">
+                <dd class="term__definition" itemprop="description">
                     {{ term.definition(page.language) | richtext }}
                     {% if term.answer_page_en -%}
-                        <a class="term_link" href="{{ term.answer_page_url(page.language) }}">{{ _('Read more') }}</a>
+                        <a class="term__link" href="{{ term.answer_page_url(page.language) }}">{{ _('Read more') }}</a>
                     {%- endif %}
                 </dd>
             </div>

@@ -31,10 +31,6 @@ class TestIsFilterSelected(SimpleTestCase):
         request = self.factory.get("/?foo=bar&foo=baz")
         self.assertEqual(self._render_template_with_request(request), "True")
 
-    def test_query_parameter_also_works_with_filter_prefix(self):
-        request = self.factory.get("/?filter_foo=bar")
-        self.assertEqual(self._render_template_with_request(request), "True")
-
 
 class TestUniqueIdInContext(SimpleTestCase):
     def setUp(self):

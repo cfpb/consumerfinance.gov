@@ -171,7 +171,7 @@
     <p class="m-chart-footnote block--sub block--border-top block short-desc">
     <strong>Source:</strong> National Mortgage Database<br>
     <strong>Date published:</strong> {{ pub_date_formatted }}<br>
-    <strong>Downloads:</strong> CSV files with data by <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro and non-metro areas</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}).<br>
+    <strong>Downloads:</strong> CSV files with data by <a href="{{ state_meta['url'] }}">state</a> ({{ state_meta['size'] }}), <a href="{{ metro_meta['url'] }}">metro and non-metro areas</a> ({{ metro_meta['size'] }}), or <a href="{{ county_meta['url'] }}">county</a> ({{ county_meta['size'] }}).<br>
     {% if value.note %}<strong>Note:</strong> {{ value.note }} <a href="/data-research/mortgage-performance-trends/about-the-data/">Learn more about the data</a>.<br>{% endif %}
     </p>
 </div>

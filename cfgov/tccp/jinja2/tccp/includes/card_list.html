@@ -134,7 +134,10 @@
                             {{ card_rewards(card) | safe }}
                         </dd>
                     </div>
-                    {%- if card.requirements_for_opening -%}
+                    {%- if
+                        card.requirements_for_opening
+                        or card.issued_by_credit_union
+                    -%}
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have requirements?</dt>
                         <dd>
