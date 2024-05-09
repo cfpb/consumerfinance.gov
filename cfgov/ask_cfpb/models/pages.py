@@ -340,9 +340,9 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
                 {
                     "href": translation.get_url(request=request)
                     + {
-                        v: k
+                        v.heading: k
                         for k, v in translation.specific.category_map.items()
-                    }[self.portal_category]
+                    }[self.portal_category.heading]
                     + "/",
                     "language": translation.language,
                     "text": language_names[translation.language],

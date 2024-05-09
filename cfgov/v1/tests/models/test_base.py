@@ -7,7 +7,6 @@ from django.test.client import RequestFactory
 from wagtail import blocks
 from wagtail.models import Page, Site
 
-from ask_cfpb.models import PortalSearchPage
 from v1.models import (
     AbstractFilterPage,
     BrowsePage,
@@ -16,7 +15,6 @@ from v1.models import (
     SublandingPage,
 )
 from v1.models.banners import Banner
-from v1.models.portal_topics import PortalCategory
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
@@ -498,9 +496,9 @@ class TestCFGOVPageTranslations(TestCase):
     def setUp(self):
         self.site_root = Site.objects.get(is_default_site=True).root_page
 
-    def make_page(self, Model=BrowsePage, **kwargs):
+    def make_page(self, **kwargs):
         language = kwargs.pop("language", "en")
-        page = Model(
+        page = BrowsePage(
             title="test",
             slug=language,
             language=language,
@@ -642,37 +640,6 @@ class TestCFGOVPageTranslations(TestCase):
             [
                 {
                     "href": "/es/",
-                    "language": "es",
-                    "text": "Spanish",
-                },
-            ],
-        )
-
-    def test_portal_page_translations(self):
-        category = PortalCategory(
-            heading="key terms", heading_es="palabras claves"
-        )
-        category.save()
-        page_en = self.make_page(Model=PortalSearchPage, language="en")
-        page_es = self.make_page(
-            Model=PortalSearchPage, language="es", english_page=page_en
-        )
-
-        page_en.portal_category = category
-        page_es.portal_category = category
-
-        request = RequestFactory().get("/")
-
-        self.assertEqual(
-            page_en.get_translation_links(request),
-            [
-                {
-                    "href": "/en/key-terms/",
-                    "language": "en",
-                    "text": "English",
-                },
-                {
-                    "href": "/es/palabras-claves/",
                     "language": "es",
                     "text": "Spanish",
                 },

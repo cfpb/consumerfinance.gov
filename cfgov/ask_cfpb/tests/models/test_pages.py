@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpRequest
 from django.test import SimpleTestCase, TestCase, override_settings
+from django.test.client import RequestFactory
 from django.urls import reverse
 from django.utils import timezone, translation
 
@@ -468,6 +469,46 @@ class PortalSearchPageTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortización")
+
+    def make_page(self, **kwargs):
+        language = kwargs.pop("language", "en")
+        page = PortalSearchPage(
+            title="test",
+            slug=language,
+            language=language,
+            **kwargs,
+        )
+        self.ROOT_PAGE.add_child(instance=page)
+        return page
+
+    def test_portal_page_translations(self):
+        category = PortalCategory(
+            heading="Key terms", heading_es="Palabras claves"
+        )
+        category.save()
+        page_en = self.make_page(language="en")
+        page_es = self.make_page(language="es", english_page=page_en)
+
+        page_en.portal_category = category
+        page_es.portal_category = category
+
+        request = RequestFactory().get("/")
+
+        self.assertEqual(
+            page_en.get_translation_links(request),
+            [
+                {
+                    "href": "/en/key-terms/",
+                    "language": "en",
+                    "text": "English",
+                },
+                {
+                    "href": "/es/palabras-claves/",
+                    "language": "es",
+                    "text": "Spanish",
+                },
+            ],
+        )
 
 
 class AnswerPageTest(TestCase):
