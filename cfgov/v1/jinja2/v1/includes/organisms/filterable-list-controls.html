@@ -16,22 +16,6 @@
 
     ========================================================================== #}
 
-{% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
-    <li class="m-form-field m-form-field--{{ type }}">
-        <input class="a-{{ type }}"
-               type="{{ type }}"
-               value="{{ value }}"
-               id="filter_{{ id }}"
-               name="{{ name }}"
-               {{ 'data-required=' ~ required if required else ''  }}
-               {{ 'data-group=' ~ group if group else ''  }}
-               {{ 'checked' if is_filter_selected(name, value) else '' }}>
-        <label class="a-label"  for="filter_{{ id }}">
-            {{ label_text if label_text else value }}
-        </label>
-    </li>
-{% endmacro %}
-
 {% macro _filter_multiselect( label, data, filter_count ) %}
     <div class="content-l__col
                 content-l__col-1-{{ '3' if filter_count == 3 else '2' }}">
