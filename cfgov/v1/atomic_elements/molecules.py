@@ -566,3 +566,6 @@ class FeatureCard(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "v1/includes/molecules/feature-card.html"
+
+    class Media:
+        css = ["partially-styled-link.css"]
