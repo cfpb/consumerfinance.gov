@@ -1,0 +1,9 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{% block content_main %}
+<div class="block block--flush-top">
+    {% with value = {"contact": object} %}
+        {% include "v1/includes/organisms/sidebar-contact-info.html" %}
+    {% endwith %}
+</div>
+{% endblock %}

@@ -137,7 +137,7 @@ function updateView() {
           }
         }
 
-        sortedKeys.sort();
+        sortedKeys.sort((a, b) => a - b);
 
         const len = sortedKeys.length;
         for (let x = 0; x < len; x++) {

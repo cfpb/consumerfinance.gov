@@ -68,8 +68,9 @@
     hx-trigger="change from:.htmx-container"
     hx-swap="show:none"
     hx-indicator=".htmx-container"
-    hx-target=".htmx-results"
-    hx-replace-url="true">
+    hx-target="#htmx-results"
+    hx-replace-url="true"
+    aria-controls="htmx-results">
     <div class="content-l">
 
         {{ render_form_fields(form) }}
