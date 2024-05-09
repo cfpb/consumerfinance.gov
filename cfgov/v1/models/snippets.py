@@ -25,7 +25,7 @@ class ReusableText(RevisionMixin, models.Model):
         help_text='Applies "slug" style heading. '
         "Only for use in sidebars and prefooters "
         '(the "sidefoot"). See '
-        "[GHE]/flapjack/Modules-V1/wiki/Atoms#slugs",
+        "https://cfpb.github.io/design-system/foundation/headings#slug-heading",
     )
     text = RichTextField()
     revisions = GenericRelation(
