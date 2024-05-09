@@ -61,31 +61,29 @@
         <h2>
             How is this comparison tool different than others you may have used?
         </h2>
-        <p>
-            <ul class="m-list">
-                <li class="m-list__item">
-                    Larger pool of cards, likely including banks you’ve never heard of with great rates
-                </li>
-                <li class="m-list__item m-list__item--has-icon">
-                    <a
-                        href="{{ url('tccp:about') }}"
-                    >Credit card companies are required by law to submit data to us</a>
-                </li>
-                <li class="m-list__item m-list__item--has-icon">
-                    No paid advertising
-                </li>
-                <li class="m-list__item m-list__item--has-icon">
-                    Card interest is rated, to help you compare
-                </li>
-            </ul>
-        </p>
+        <ul class="m-list">
+            <li class="m-list__item">
+                Larger pool of cards, likely including banks you’ve never heard of with great rates
+            </li>
+            <li class="m-list__item">
+                <a
+                    href="{{ url('tccp:about') }}"
+                >Credit card companies are required by law to submit data to us</a>
+            </li>
+            <li class="m-list__item">
+                No paid advertising
+            </li>
+            <li class="m-list__item">
+                Card interest is rated, to help you compare
+            </li>
+        </ul>
     </div>
 
     <div class="block block--flush-top">
         <form action="." method="get">
 
             <div class="o-form__group">
-                <div class="m-form-field m-form-field__select">
+                <div class="m-form-field">
                     <label
                         class="a-label a-label--heading"
                         for="{{ form.credit_tier.id_for_label}}"
@@ -95,7 +93,7 @@
 
                     {{ form.credit_tier }}
 
-                    <small class="a-label__helper a-label__helper--block">
+                    <p class="a-label__helper a-label__helper--block">
                         If you don’t know it,
                         <a href="/ask-cfpb/where-can-i-get-my-credit-scores-en-316/"
                             >find your credit score</a>.
@@ -104,7 +102,7 @@
             </div>
 
             <div class="o-form__group">
-                <div class="m-form-field m-form-field__select">
+                <div class="m-form-field">
                     <label
                         class="a-label a-label--heading"
                         for="{{ form.location.id_for_label}}"
@@ -114,7 +112,7 @@
 
                     {{ form.location }}
 
-                    <div class="a-form-alert a-form-alert__error u-visually-hidden" id="location-required" role="alert">
+                    <div class="a-form-alert a-form-alert--error u-visually-hidden" id="location-required" role="alert">
                         {{ svg_icon("error-round") }}
                         <span class="a-form-alert__text">
                             Required field, select a location.
@@ -123,18 +121,17 @@
                 </div>
             </div>
 
-            <legend class="a-legend">
-                I’m looking for a card that will help me...
-            </legend>
-
             <div class="o-form__group">
-                <fieldset class="o-form__fieldset">
+                <fieldset class="o-form__fieldset o-form__fieldset--helpers">
+                    <legend class="a-legend">
+                        I’m looking for a card that will help me...
+                    </legend>
                     {{ form.situations }}
                 </fieldset>
             </div>
 
             <div class="m-btn-group">
-                <button class="a-btn a-btn--full-on-xs" title="See cards for your situation" data-js-hook="behavior_submit-situations">See cards for your situation</button>
+                <button class="a-btn a-btn--full-on-xs" data-js-hook="behavior_submit-situations">See cards for your situation</button>
                 <div class="u-btn-helper">
                     Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
                 </div>

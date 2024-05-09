@@ -76,7 +76,6 @@ class ActivityIndexPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     results = {}

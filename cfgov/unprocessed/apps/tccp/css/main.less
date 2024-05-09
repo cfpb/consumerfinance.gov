@@ -7,89 +7,79 @@
   }
 });
 
-// @TODO refactor and remove this override
-// See https://github.com/cfpb/consumerfinance.gov/pull/8247
-.o-form__fieldset {
-  ul {
-    list-style: none;
-    padding-left: 0;
+// A form fieldset with large block-level areas for
+// helper text under each form field
+.o-form__fieldset--helpers {
+  .a-checkbox:checked + .a-label {
+    border: 1px solid var(--pacific);
+    border-bottom: 0;
+    box-shadow: none;
   }
 
-  input[type='checkbox'],
-  input[type='radio'] {
-    margin-right: 4px;
-  }
-}
-
-.m-btn-group {
-  .u-btn-helper {
-    width: 100%;
-    margin-top: unit((15px / @base-font-size-px), rem);
-    text-align: center;
-    a {
-      border-bottom-width: 1px;
-    }
-    .respond-to-min(@bp-sm-min, {
-      display: inline-block;
-      width: auto;
-      margin-top: 0;
-      margin-left: unit((6px / @btn-font-size), rem);
-    });
-  }
-}
-
-.a-checkbox + .a-label > .a-label__helper {
-  display: none;
-}
-
-.a-checkbox:checked + .a-label > .a-label__helper {
-  display: grid;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.a-label__helper .m-list {
-  list-style: square;
-  padding-left: 1.125em;
-
-  .m-list__item {
-    margin-left: unit((15px / @base-font-size-px), rem);
-  }
-
-  .m-list__item--has-icon {
-    display: flex;
-    margin-left: 0;
-
-    .cf-icon-svg {
-      display: inline;
-      margin-right: 6px;
-      color: var(--green);
+  .m-form-field--checkbox {
+    &:has(.a-checkbox:focus) {
+      outline: 1px dotted var(--pacific);
+      outline-offset: 1px;
     }
 
-    span {
-      margin-top: unit((-1px / @base-font-size-px), rem);
+    .a-checkbox:focus + .a-label {
+      outline: none;
+    }
+
+    .a-checkbox ~ [data-helper-text] {
+      display: none;
+      box-sizing: border-box;
+      width: 100%;
+      padding: unit((15px / @base-font-size-px), rem);
+      padding-top: 0;
+      background-color: var(--pacific-20);
+      border: 1px solid var(--pacific);
+      border-top: 0;
+    }
+
+    .a-checkbox:checked ~ [data-helper-text] {
+      display: block;
+    }
+  }
+
+  [data-helper-text] > .m-list {
+    list-style: square;
+    padding-left: 1.125em;
+
+    .m-list__item {
+      margin-left: unit((15px / @base-font-size-px), rem);
+    }
+
+    .m-list__item--has-icon {
+      display: flex;
+      margin-left: 0;
+
+      .cf-icon-svg {
+        display: inline;
+        margin-right: 6px;
+        color: var(--green);
+      }
+
+      span {
+        margin-top: unit((-1px / @base-font-size-px), rem);
+      }
     }
   }
 }
 
-.tool-features {
-  .cf-icon-svg--credit-card-round {
-    color: var(--gold);
+.u-btn-helper {
+  width: 100%;
+  margin-top: unit((15px / @base-font-size-px), rem);
+  text-align: center;
+  a {
+    border-bottom-width: 1px;
   }
-
-  .cf-icon-svg--court-round {
-    color: var(--gray);
-  }
-
-  .cf-icon-svg--disabled-round {
-    color: var(--red);
-  }
-
-  .cf-icon-svg--dollar-round {
-    color: var(--green);
-  }
+  .respond-to-min(@bp-sm-min, {
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
+    margin-left: unit((6px / @btn-font-size), rem);
+  });
 }
 
 .u-small-text--subtle {
@@ -337,11 +327,6 @@
 // Only show the first 10 results
 html.js .o-filterable-list-results--partial {
   .o-card-group__cards {
-    .m-card:nth-child(10) {
-      border-bottom: 1px solid @table-border;
-      margin-bottom: unit((10px / @base-font-size-px), rem);
-    }
-
     .u-show-more {
       display: none;
     }
@@ -388,10 +373,10 @@ html.js .o-filterable-list-results--partial {
         unit((20px / @base-font-size-px), rem);
     });
   }
-  &__tier:first-child {
+  &__tier:first-of-type {
     border-radius: 20px 0 0 20px;
   }
-  &__tier:last-child {
+  &__tier:last-of-type {
     border-radius: 0 20px 20px 0;
   }
   &__tier--selected {
@@ -527,12 +512,13 @@ html.js .o-filterable-list-results--partial {
     }
     &::after {
       animation-name: indeterminate-short;
+      animation-delay: 1s;
     }
   }
 }
 
 // Dim search results while inflight
-.htmx-request .htmx-results {
+.htmx-request #htmx-results {
   opacity: 0.5;
 }
 

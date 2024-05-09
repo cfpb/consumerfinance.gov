@@ -21,7 +21,6 @@ class Menu(PreviewableMixin, models.Model):
 
     submenus = StreamField(
         MenuStreamBlock(),
-        use_json_field=True,
     )
 
     class Meta:

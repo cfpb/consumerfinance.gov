@@ -27,7 +27,6 @@ class Banner(models.Model):
         [("content", Notification())],
         min_num=1,
         max_num=1,
-        use_json_field=True,
     )
 
     enabled = models.BooleanField()
