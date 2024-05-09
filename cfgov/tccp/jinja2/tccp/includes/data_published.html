@@ -4,11 +4,11 @@
 
 <p class="u-small-text u-small-text--subtle">
     Data reported
-    {{- ' directly by the issuer ' if verbose -}}
+    {{- ' directly by the company ' if verbose -}}
     on {{ time.render(
         ensure_date(date), {"date": true}, text_format=true
     ) }}
-    ({{- 'credit card terms may have changed since then, check with the issuer
+    ({{- 'credit card terms may have changed since then, double-check with the company
           for the most current terms or ' if verbose -}}
     <a href="{{ url('tccp:about') }}">{{ 'l' if verbose else 'L' }}earn about the data</a>)
 </p>
