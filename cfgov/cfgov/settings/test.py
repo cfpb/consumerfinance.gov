@@ -72,8 +72,4 @@ if SKIP_DJANGO_MIGRATIONS:
 
 DEPLOY_ENVIRONMENT = "test"
 
-# Axes requires a request for authentication, which breaks uses of Django's
-# test client .login() method. This disables it when running tests.
-AXES_ENABLED = False
-
 INSTALLED_APPS += ("tccp.tests.testapp",)

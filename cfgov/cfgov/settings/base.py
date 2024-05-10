@@ -74,7 +74,6 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "axes",
     "wagtail.search",
     "storages",
     "data_research",
@@ -133,9 +132,6 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # AxesMiddleware should be the last middleware in the MIDDLEWARE list
-    # that touches authentication.
-    "axes.middleware.AxesMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -391,6 +387,8 @@ WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
+AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
+
 # Password Policies
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -449,19 +447,6 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     },
 ]
-
-# Login lockout rules using django-axes
-AUTHENTICATION_BACKENDS = (
-    "axes.backends.AxesStandaloneBackend",
-    "django.contrib.auth.backends.ModelBackend",
-)
-AXES_ENABLED = True
-AXES_VERBOSE = False
-AXES_FAILURE_LIMIT = 5
-AXES_COOLOFF_TIME = 2  # Hours
-AXES_LOCKOUT_PARAMETERS = ["username"]
-AXES_LOCKOUT_CALLABLE = "login.views.lockout"
-LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 
 DATE_FORMAT = "n/j/Y"
 

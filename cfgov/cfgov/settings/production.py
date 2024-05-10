@@ -101,60 +101,6 @@ ALLOWED_HOSTS = environment_json(
     ),
 )
 
-# SSO Authentication
-#
-# Two abbreviations to note:
-# - OP indicates the OIDC identity provider
-# - RP indicates the OIDC relay provider, the client, this application
-#
-# Requires the following environment variables to be defined:
-#
-# - ENABLE_SSO: Enable SSO authentication with a value of "True".
-# - OIDC_RP_CLIENT_ID: OIDC client identifier provided by the OP
-# - OIDC_RP_CLIENT_SECRET: OIDC client secret provided by the OP
-#
-# Endpoints
-# - OIDC_OP_BASE_URL: Base URL for all OP endpoitns
-#
-# Optional environment variables:
-#
-# - OIDC_RP_SIGN_ALGO: The algorithm used to sign ID tokens (default: HS256)
-# - OIDC_RP_IDP_SIGN_KEY: The key (PEM) to sign ID tokens when
-#                         OIDC_RP_SIGN_ALGO is RS256 (default: None)
-#
-# See the mozilla-django-oidc documentation for more details about the
-# settings below:
-# https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html
-ENABLE_SSO = os.environ.get("ENABLE_SSO") == "True"
-if ENABLE_SSO:
-    INSTALLED_APPS += ("mozilla_django_oidc",)
-    AUTHENTICATION_BACKENDS += (
-        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
-    )
-    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-    OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
-    OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
-    OIDC_RP_SIGN_ALGO = os.environ.get("OIDC_RP_SIGN_ALGO", "HS256")
-    OIDC_RP_IDP_SIGN_KEY = os.environ.get("OIDC_RP_IDP_SIGN_KEY")
-    OIDC_OP_BASE_URL = os.environ["OIDC_OP_BASE_URL"]
-
-    OIDC_OP_AUTHORIZATION_ENDPOINT = f"{OIDC_OP_BASE_URL}/authorize"
-    OIDC_OP_TOKEN_ENDPOINT = f"{OIDC_OP_BASE_URL}/token"
-    OIDC_OP_USER_ENDPOINT = f"{OIDC_OP_BASE_URL}/userinfo"
-
-    # Do not create users just-in-time. This will require users to be created
-    # both in the IDP and the Django instance.
-    OIDC_CREATE_USER = False
-
-    LOGIN_URL = "oidc_authentication_init"
-    LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
-    LOGOUT_REDIRECT_URL = "/"
-
-    LOGGING["loggers"]["mozilla_django_oidc"] = {
-        "level": "DEBUG",
-    }
-
 # Django baseline required settings
 SECURE_REFERRER_POLICY = "same-origin"
 SESSION_COOKIE_SAMESITE = "Strict"
