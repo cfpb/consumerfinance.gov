@@ -286,8 +286,6 @@ WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
-
-WAGTAILADMIN_USER_LOGIN_FORM = "login.forms.LoginForm"
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
@@ -432,18 +430,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "OPTIONS": {
             "regex": r"[@#$%&!]",
             "message": "Password must include at least one special character (@#$%&!).",
-        },
-    },
-    {
-        "NAME": "login.password_validation.HistoryValidator",
-        "OPTIONS": {
-            "count": 10,
-        },
-    },
-    {
-        "NAME": "login.password_validation.AgeValidator",
-        "OPTIONS": {
-            "hours": 24,
         },
     },
 ]
