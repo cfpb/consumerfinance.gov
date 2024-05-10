@@ -209,7 +209,7 @@
             }}
         </div>
 
-        <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate" style="display: none">
+        <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="rate-required" role="alert">
               {{ svg_icon('warning-round') }}
@@ -236,7 +236,35 @@
             <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
         </div>
 
-        <div class="block block--sub program-question undergrad-content" id="school-search_program-housing" style="display: none">
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
+            <h3 class="h4">Are you considered a dependent or independent student?</h3>
+            <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
+            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
+              {{ svg_icon('warning-round') }}
+              <span class="a-form-alert__text">
+                  Please select whether you are considered a dependent or independent student.
+              </span>
+            </div>
+
+            {{
+                radio.render({
+                  'name':  "programDependency",
+                  'label': 'Dependent',
+                  'value': 'dependent',
+                  'id': 'program-dependency-radio_dependent'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programDependency",
+                  'label': 'Independent',
+                  'value': 'independent',
+                  'id': 'program-dependency-radio_independent'
+                })
+            }}
+        </div>
+
+        <div class="block block--sub program-question undergrad-content" id="school-search_program-housing">
             <h3 class="h4">Where do you plan to live while in school?</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="housing-required" role="alert">
               {{ svg_icon('warning-round') }}
@@ -269,46 +297,17 @@
                 })
             }}
         </div>
-
-        <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency" style="display: none">
-            <h3 class="h4">Are you considered a dependent or independent student?</h3>
-            <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
-            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
-              {{ svg_icon('warning-round') }}
-              <span class="a-form-alert__text">
-                  Please select whether you are considered a dependent or independent student.
-              </span>
-            </div>
-
-            {{
-                radio.render({
-                  'name':  "programDependency",
-                  'label': 'Dependent',
-                  'value': 'dependent',
-                  'id': 'program-dependency-radio_dependent'
-                })
-            }}
-            {{
-                radio.render({
-                  'name':  "programDependency",
-                  'label': 'Independent',
-                  'value': 'independent',
-                  'id': 'program-dependency-radio_independent'
-                })
-            }}
-        </div>
     </div>
 
     <h3 class="h4">How much money do you and your family have on hand to put towards school?</h3>
-    <div class="block block--sub program-question">
-                {{
-                    input.render({
-                        'label': '',
-                        'id': 'initial-savings_total',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="initial_savingsTotal"'
-                    })
-                }}
+    <div class="block block--sub program-question school-info--savings-total">
+      <p>
+          <input type="text"
+                 name="search__savings-total"
+                 class="a-text-input"
+                 autocomplete="off"
+                 data-financial-item="initial_savingsTotal">
+      </p>
     </div>
     <div data-state-based-visibility="school-fields-errors" style="display: none">
         {{ notification.render(

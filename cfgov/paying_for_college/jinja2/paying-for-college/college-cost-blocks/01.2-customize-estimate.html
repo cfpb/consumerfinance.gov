@@ -582,7 +582,7 @@
                         'information',
                         true,
                         '',
-                        '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_totalAtGrad">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
+                        '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
                         'data-state_uncovered_costs="true"' | safe
                     ) }}                    
                 </div>
@@ -591,6 +591,9 @@
         </div>
     </div>
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="affording-payments">Estimate how much I'll owe</button>
+        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="affording-payments">See if this is too much to repay</button>
+        <ul>
+            <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Customize this estimate for your situation</button></li>
+        </ul>
     </div>
 </section>

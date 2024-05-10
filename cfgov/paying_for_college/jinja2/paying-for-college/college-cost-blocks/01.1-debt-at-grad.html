@@ -1,17 +1,39 @@
 <section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
     <h1>Your estimated debt at graduation</h1>
-    <p>This estimate is based on the most recent data from the U.S. Department of Education.</p>
+    <p>Your actual expenses will depend on your situation&mdash;any financial aid you receive, your personal budgeting, and other factors.</p>
 
-    <h2><span data-school-item="school"></span>'s costs: <span data-financial-item="total_costs"></h2>
+    <h2><strong><span data-school-item="school"></span>'s costs: <span data-financial-item="total_costs"></strong></h2>
+    <ul>
+        <li>Estimated time frame: <span data-state-item="programLengthText"></span></li>
+        <li>Average undergrad yearly costs: <span data-number-display="currency" data-school-item="netPriceAvg"></span></li>
+        <li>This estimate includes tuition, books, housing and is based on data from the U.S. Department of Education.</li>
+    </ul>
 
-    <h2>Your estimated debt: <span data-financial-item="debt_totalAtGrad"></h2>
+    <h2><strong>Your estimated debt: <span data-financial-item="debt_tenYearTotal"></strong></h2>
+
+    <p>Based on the cost of attending the school and the amount of money you and your family can put towards school.</p>
+
+    <h2><strong>Is this too much to repay?</strong></h2>
 
     <p><strong>A common guideline:</strong> Keep your student loan total below your first-year salary out of school. If your debt will be higher than your salary, consider whether it might be more debt than you can afford.</p>
 
     <div class="college-costs__chart" id="max-debt-guideline_chart"></div>
 
+    <h2><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h2>
+
     <div class="college-costs__tool-section-buttons block block--mid">
         <button class="a-btn college-costs__buttons--next btn__nav" data-destination="customize-estimate">Customize this estimate for your situation</button>
+        <ul>
+            <li>
+                <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="school-compare">See how this school compares to others like it</button>
+            </li>
+            <li>
+                <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Estimate costs for another school</button>
+            </li>
+            <li>
+                <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="save-data">Save and get a URL for later</button>
+            </li>
+        </ul>
     </div>
 
 </section>

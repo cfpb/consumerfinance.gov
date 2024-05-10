@@ -229,7 +229,6 @@ function _handleSecondaryNavButtonClick(event) {
  * _handleNavButtonClick - handle the click event for a nav button.
  */
 function _handleNavButtonClick( event ) {
-  console.log( 'n', event );
   // Check if there are missing form fields
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
@@ -242,7 +241,6 @@ function _handleNavButtonClick( event ) {
         'time-to-click',
       );
       if ( destination === 'debt-at-grad' ) {
-        console.log( 'teorst' );
         updateFinancialViewAndFinancialCharts();
       } 
       updateState.navigateTo( destination );

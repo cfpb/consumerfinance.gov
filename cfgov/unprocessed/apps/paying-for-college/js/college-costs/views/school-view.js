@@ -19,6 +19,7 @@ import {
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { decimalToPercentString } from '../util/number-utils.js';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
@@ -50,6 +51,11 @@ const schoolView = {
       // Prevent improper values from being displayed on the page
       if (typeof val === 'undefined' || val === false || val === null) {
         val = '';
+      }
+
+      if (elem.dataset.numberDisplay === 'currency') {
+        console.log( prop, val );
+        val = formatUSD( convertStringToNumber(val) );
       }
 
       if (elem.dataset.numberDisplay === 'percentage') {
@@ -283,6 +289,7 @@ function _handleResultButtonClick(event) {
 
   // We make some assumptions about your situation:
   updateState.byProperty( 'programProgress', '0');
+  updateState.byProperty( 'programType', 'bachelors');
   updateState.byProperty( 'programRate', 'outOfState');
   updateState.byProperty( 'programHousing', 'onCampus');
   updateState.byProperty( 'programDependency', 'dependent');

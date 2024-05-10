@@ -1,9 +1,27 @@
 <section class="college-costs__tool-section college-costs__tool-section--affording" data-tool-section="affording-payments">
-    <h1 tabindex="-1">See if you can afford an estimated <span data-financial-item="debt_tenYearMonthly"></span> payment</h1>
+    <h1 tabindex="-1">Can you afford to pay <span data-financial-item="debt_tenYearTotal"></span></h1>
 
-    <p class="lead-paragraph">Making loan payments on time can help you avoid financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid.</p>
+    <p class="lead-paragraph">The cost of student loans may be a good investment in your future&mdash;if you can afford to repay them.</p>    
 
-    <h2>Check out two ways to help you decide if you can afford this payment</h2>
+    {{ notification.render(
+        'information',
+        true,
+        '',
+        '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
+        '' | safe
+    ) }}    
+
+    <h2>Two steps to see if this is too much to repay</h2>
+
+    <h3><strong>Step 1: Compare the amount you'll owe to your estimated salary</strong></h3>
+
+    <p><strong>A common guideline:</strong> Keep your student loan total below your first-year salary out of school. If your debt will be higher than your salary, consider whether it might be more debt than you can afford.</p>
+
+    <div class="college-costs__chart" id="max-debt-guideline_chart-also">
+    <h4>CHART GOES HERE</h4>
+    </div>
+
+    <h3><strong>Step 2: See if you can afford a <span data-financial-item="debt_tenYearMonthly"></span> monthly payment</strong></h3>
 
     <div class="affording-loans-choices block block--sub">
         {{
@@ -259,6 +277,17 @@
             })
         }}
         {% endcall %}
+    </div>
+
+
+    <h2>What do you want to do next?</h2>
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="review-plan">Review your plan</button>
+        <ul>
+            <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="school-compare">See how this school compares to others like it</button></li>
+            <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Estimate costs for another school</button></li>
+            <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="save-data">Save and get a URL for later</button></li>
+        </ul>
     </div>
 
 </section>

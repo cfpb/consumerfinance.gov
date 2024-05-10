@@ -430,17 +430,26 @@ const financialModel = {
    * assumeMaxLoans - Put in the maximum loans ZZZ
    */
    assumeMaximumLoans: () => {
-    // TODO: add initial savings to this calculation
-    financialModel.values.fedLoan_directSub = 9999999;
-    financialModel.values.fedLoan_directUnsub = 9999999;
-    financialModel.recalculate();
-    
-    financialModel.values.privLoan_privateLoan1 = financialModel.values.total_gap;
-    financialModel.values.rate_privateLoan1 = financialModel.values.rate_directUnsub;
-    financialModel.values.fee_privateLoan1 = financialModel.values.fee_directUnsub;
+    // Fill the gap with Direct subsidized loans
+    if ( financialModel.values.total_gap > 0 ) {
+      financialModel.values.fedLoan_directSub = financialModel.values.total_gap;
+      financialModel.recalculate();
+    }
 
-    financialModel.recalculate();
-   },
+    // Fill the gap with Direct unsubsidized loans
+    if ( financialModel.values.total_gap > 0 ) {
+      financialModel.values.fedLoan_directUnsub = financialModel.values.total_gap;
+      financialModel.recalculate();
+    }
+    
+    // Fill any remaining gap with a theoretical private loan
+    if ( financialModel.values.total_gap > 0 ) {
+      financialModel.values.privLoan_privateLoan1 = financialModel.values.total_gap;
+      financialModel.values.rate_privateLoan1 = financialModel.values.rate_directUnsub;
+      financialModel.values.fee_privateLoan1 = financialModel.values.fee_directUnsub;
+      financialModel.recalculate();
+    }
+  },
 
   /**
    * init - Initialize this model

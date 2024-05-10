@@ -265,6 +265,10 @@ function parseQueryParameters(queryObj) {
     modelMatch[key](modelArrays[key]);
   });
 
+  // Set the initial savings fields
+  financialModel.values.initial_savingsTotal = financialModel.values.savings_personal
+      * financialModel.values.other_programLength;
+
   stateModel._setProgramLevel();
   stateModel._setSalaryAvailable();
   stateModel._checkRequiredFields();
