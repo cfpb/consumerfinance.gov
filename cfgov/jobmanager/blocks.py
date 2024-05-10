@@ -33,7 +33,7 @@ class JobListingList(blocks.StructBlock):
         template = "jobmanager/job_listing_list.html"
 
     class Media:
-        css = ["job_listing_list.css"]
+        css = ["job-listing-list.css"]
 
 
 class JobListingTable(blocks.StaticBlock):

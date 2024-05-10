@@ -2,7 +2,7 @@
    Scripts for Ask Autocomplete.
    ========================================================================== */
 
-import Autocomplete from '../../molecules/Autocomplete';
+import Autocomplete from './Autocomplete.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 const URLS = {
