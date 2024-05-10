@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from opensearchpy import RequestsHttpConnection
@@ -462,10 +463,6 @@ AXES_LOCKOUT_PARAMETERS = ["username"]
 AXES_LOCKOUT_CALLABLE = "login.views.lockout"
 LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 
-# Initialize our SAML_AUTH variable as false. Our production settings will
-# override this based on the SAML_AUTH environment variable.
-SAML_AUTH = False
-
 DATE_FORMAT = "n/j/Y"
 
 # CDNs
@@ -753,3 +750,49 @@ WAGTAILADMIN_BASE_URL = os.getenv(
 )
 
 DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"
+
+# Two abbreviations to note:
+# - OP indicates the OIDC identity provider
+# - RP indicates the OIDC relying party, the client, this application
+#
+# Requires the following environment variables to be defined:
+#
+# - ENABLE_SSO: Enables SSO authentication if defined.
+# - OIDC_RP_CLIENT_ID: OIDC client identifier provided by the OP
+# - OIDC_RP_CLIENT_SECRET: OIDC client secret provided by the OP
+# - OIDC_RP_SIGN_ALGO: The algorithm used to sign ID tokens
+#
+# Endpoints on the OIDC provider (with typical last path components):
+# - OIDC_OP_AUTHORIZATION_ENDPOINT: authorization endpoint (/authorize)
+# - OIDC_OP_TOKEN_ENDPOINT: token endpoint (/token)
+# - OIDC_OP_USER_ENDPOINT: userinfo endpoint (/userinfo)
+# - OIDC_OP_JWKS_ENDPOINT: JWKS endpoint (alternative to OIDC_RP_IDP_SIGN_KEY)
+#
+# Optional environment variables:
+# - OIDC_RP_IDP_SIGN_KEY: The key (PEM) to sign ID tokens when
+#                         OIDC_RP_SIGN_ALGO is RS256 (default: None)
+#
+# See the mozilla-django-oidc documentation for more details about the
+# settings below:
+# https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html
+ENABLE_SSO = bool(os.environ.get("ENABLE_SSO"))
+if ENABLE_SSO:
+    INSTALLED_APPS += ("mozilla_django_oidc",)
+    AUTHENTICATION_BACKENDS += (
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    )
+    LOGIN_URL = "oidc_authentication_init"
+    LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
+    LOGOUT_REDIRECT_URL = "/"
+    ALLOW_LOGOUT_GET_METHOD = True
+
+    OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
+    OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
+    OIDC_RP_SIGN_ALGO = os.environ["OIDC_RP_SIGN_ALGO"]
+    OIDC_RP_IDP_SIGN_KEY = os.environ.get("OIDC_RP_IDP_SIGN_KEY")
+    OIDC_OP_JWKS_ENDPOINT = os.environ.get("OIDC_OP_JWKS_ENDPOINT")
+    OIDC_OP_AUTHORIZATION_ENDPOINT = os.environ[
+        "OIDC_OP_AUTHORIZATION_ENDPOINT"
+    ]
+    OIDC_OP_TOKEN_ENDPOINT = os.environ["OIDC_OP_TOKEN_ENDPOINT"]
+    OIDC_OP_USER_ENDPOINT = os.environ["OIDC_OP_USER_ENDPOINT"]

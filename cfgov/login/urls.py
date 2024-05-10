@@ -3,24 +3,21 @@ from django.urls import include, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 
-if settings.SAML_AUTH:  # pragma: no cover
+if settings.ENABLE_SSO:  # pragma: no cover
     urlpatterns = [
-        # If SAML2 auth is enabled, /login will redirect to /saml2/login,
+        # If SSO auth is enabled, /login will redirect to /oidc/login,
         # which in turn will redirect to the configured identity provider.
-        re_path(r"saml2/", include("djangosaml2.urls")),
-        # Redirect the Wagtail login/logout views to djangosaml2.
-        # For admin authentication, /django-admin/login is preserved when SSO
-        # is enabled.
+        re_path(r"^oidc/", include("mozilla_django_oidc.urls")),
         re_path(
-            r"^/admin/login/$",
+            r"^admin/login/$",
             RedirectView.as_view(
-                url=reverse_lazy("saml2_login"), query_string=True
+                url=reverse_lazy("oidc_authentication_init"), query_string=True
             ),
         ),
         re_path(
-            r"^/admin/logout/$",
+            r"^admin/logout/$",
             RedirectView.as_view(
-                url=reverse_lazy("saml2_logout"),
+                url=reverse_lazy("oidc_logout"),
                 query_string=True,
             ),
         ),
@@ -37,8 +34,7 @@ else:
     ]
 
 urlpatterns = urlpatterns + [
-    # Redirect root-level /login and /logout to Wagtail.
-    # If SSO is enabled, these will redirect from there to djangosaml2.
+    # Redirect root-level /login and /logout to Wagtail's URLs
     re_path(
         r"^login/$",
         RedirectView.as_view(

@@ -6,8 +6,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.text import format_lazy
 
-import saml2
-
 from cfgov.settings.base import *
 from cfgov.util import environment_json
 
@@ -103,78 +101,58 @@ ALLOWED_HOSTS = environment_json(
     ),
 )
 
-# SAML2 Authentication
+# SSO Authentication
 #
-# Requires the SAML_AUTH, SAML_ROOT_URL, SAML_ENTITY_ID, and SAML_METADATA_URL
-# environment variables to be defined.
+# Two abbreviations to note:
+# - OP indicates the OIDC identity provider
+# - RP indicates the OIDC relay provider, the client, this application
 #
-# - SAML_AUTH: Enable SAML2 authentication with a value of "True".
-# - SAML_ROOT_URL: The URL that browsers will use to access this site. The
-#   SAML2 relay URL will be constructed from this, and it must match what is
-#   configured for this site in the SAML2 identity provider.
-# - SAML_ENTITY_ID: The entity id configured for this service provider in the
-#   SAML2 identity provider.
-# - SAML_METADATA_URL: The remote URL of the identity provider's metadata for
-#   this service provider.
+# Requires the following environment variables to be defined:
 #
-# See the djangosaml2 documentation at
-# https://djangosaml2.readthedocs.io/contents/setup.html#configuration
-# and the pySAML2 documentation at https://pysaml2.readthedocs.io/
-# for more details about the configuration below.
-SAML_AUTH = os.environ.get("SAML_AUTH") == "True"
-if SAML_AUTH:
-    # Update built-in Django settings for SAML authetnication
-    INSTALLED_APPS += ("djangosaml2",)
-    MIDDLEWARE += ("djangosaml2.middleware.SamlSessionMiddleware",)
-    AUTHENTICATION_BACKENDS += ("djangosaml2.backends.Saml2Backend",)
-    LOGIN_URL = "/saml2/login/"
+# - ENABLE_SSO: Enable SSO authentication with a value of "True".
+# - OIDC_RP_CLIENT_ID: OIDC client identifier provided by the OP
+# - OIDC_RP_CLIENT_SECRET: OIDC client secret provided by the OP
+#
+# Endpoints
+# - OIDC_OP_BASE_URL: Base URL for all OP endpoitns
+#
+# Optional environment variables:
+#
+# - OIDC_RP_SIGN_ALGO: The algorithm used to sign ID tokens (default: HS256)
+# - OIDC_RP_IDP_SIGN_KEY: The key (PEM) to sign ID tokens when
+#                         OIDC_RP_SIGN_ALGO is RS256 (default: None)
+#
+# See the mozilla-django-oidc documentation for more details about the
+# settings below:
+# https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html
+ENABLE_SSO = os.environ.get("ENABLE_SSO") == "True"
+if ENABLE_SSO:
+    INSTALLED_APPS += ("mozilla_django_oidc",)
+    AUTHENTICATION_BACKENDS += (
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    )
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-    # Map Django attributes to our SAML identity provider
-    SAML_DJANGO_USER_MAIN_ATTRIBUTE = "email"
-    SAML_DJANGO_USER_MAIN_ATTRIBUTE_LOOKUP = "__iexact"
-    SAML_ATTRIBUTE_MAPPING = {
-        "emailAddress": ("email",),
-    }
-    SAML_CREATE_UNKNOWN_USER = False
+    OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
+    OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
+    OIDC_RP_SIGN_ALGO = os.environ.get("OIDC_RP_SIGN_ALGO", "HS256")
+    OIDC_RP_IDP_SIGN_KEY = os.environ.get("OIDC_RP_IDP_SIGN_KEY")
+    OIDC_OP_BASE_URL = os.environ["OIDC_OP_BASE_URL"]
 
-    # URL lookups
-    SAML_ROOT_URL = os.environ["SAML_ROOT_URL"]
-    ACS_URL = format_lazy(
-        "{root_url}{acs_path}",
-        root_url=SAML_ROOT_URL,
-        acs_path=reverse_lazy("saml2_acs"),
-    )
-    ACS_DEFAULT_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
+    OIDC_OP_AUTHORIZATION_ENDPOINT = f"{OIDC_OP_BASE_URL}/authorize"
+    OIDC_OP_TOKEN_ENDPOINT = f"{OIDC_OP_BASE_URL}/token"
+    OIDC_OP_USER_ENDPOINT = f"{OIDC_OP_BASE_URL}/userinfo"
 
-    # Configure PySAML2 for our identity provider
-    SAML_CONFIG = {
-        "debug": DEBUG,
-        "xmlsec_binary": "/usr/bin/xmlsec1",
-        "entityid": os.environ["SAML_ENTITY_ID"],
-        "metadata": {
-            "remote": [{"url": os.environ["SAML_METADATA_URL"]}],
-        },
-        "service": {
-            "sp": {
-                "endpoints": {
-                    "assertion_consumer_service": [
-                        (ACS_URL, saml2.BINDING_HTTP_REDIRECT),
-                        (ACS_URL, saml2.BINDING_HTTP_POST),
-                    ],
-                },
-                "allow_unsolicited": True,
-                "authn_requests_signed": False,
-                "logout_requests_signed": True,
-                "want_assertions_signed": True,
-                "want_response_signed": False,
-            },
-        },
-    }
+    # Do not create users just-in-time. This will require users to be created
+    # both in the IDP and the Django instance.
+    OIDC_CREATE_USER = False
 
-    # Add logging
-    LOGGING["loggers"]["saml2"] = {
-        "level": "INFO",
+    LOGIN_URL = "oidc_authentication_init"
+    LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
+    LOGOUT_REDIRECT_URL = "/"
+
+    LOGGING["loggers"]["mozilla_django_oidc"] = {
+        "level": "DEBUG",
     }
 
 # Django baseline required settings
@@ -211,3 +189,12 @@ SECRET_KEY_FALLBACKS = environment_json(
     ),
     default="[]",
 )
+
+if ENABLE_SSO:
+    # We need the OIDC identity provider to be able to send the sessionid to
+    # the OIDC callback view in order to validate the OIDC state
+    SESSION_COOKIE_SAMESITE = "Lax"
+
+    LOGGING["loggers"]["mozilla_django_oidc"] = {
+        "level": "INFO",
+    }
