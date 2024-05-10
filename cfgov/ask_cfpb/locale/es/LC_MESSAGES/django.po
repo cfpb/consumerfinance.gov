@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 11:30-0400\n"
+"POT-Creation-Date: 2024-05-08 18:25-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:44
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:87
+msgid "/ask-cfpb/search/"
+msgstr "/es/obtener-respuestas/buscar/"
+
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:47
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:63
+msgid "Search for your question"
+msgstr "Busque su pregunta"
+
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:93
+msgid "Search Ask CFPB for your question"
+msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
+
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:94
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:59
+msgid "Search"
+msgstr "Buscar"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:7
 msgid "Consumer Financial Protection Bureau"
@@ -31,7 +50,7 @@ msgid "Read full answer"
 msgstr "Leer más"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:66
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:84
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:86
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
@@ -86,31 +105,23 @@ msgstr "Por favor escriba su búsqueda arriba"
 msgid "Read answer"
 msgstr "Leer la respuesta"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:32
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:34
 msgid "Read more"
 msgstr "Leer más"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:47
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:49
 msgid "Narrow your results"
 msgstr "Búsqueda especial"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:53
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:55
 msgid "Search term"
 msgstr "Palabra a buscar"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:57
-msgid "Search"
-msgstr "Buscar"
-
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:61
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:63
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:85
-msgid "/ask-cfpb/search/"
-msgstr "/es/obtener-respuestas/buscar/"
-
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:85
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:87
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
 

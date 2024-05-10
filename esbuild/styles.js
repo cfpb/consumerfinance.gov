@@ -10,6 +10,8 @@ const css = `${unprocessed}/css`;
 const apps = `${unprocessed}/apps`;
 
 const styledApps = [
+  'ask-cfpb',
+  'careers',
   'ccdb-search',
   'financial-well-being',
   'find-a-housing-counselor',
