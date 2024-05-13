@@ -49,8 +49,7 @@ function handleMaxCharacters(event) {
 }
 
 if (autocompleteContainer) {
-  const language = autocompleteContainer.getAttribute('data-language');
-
+  const language = document.documentElement.getAttribute('lang')
   const autocomplete = new Autocomplete(autocompleteContainer, {
     url: language === 'es' ? URLS.es : URLS.en,
     onSubmit: function (event, selected) {
