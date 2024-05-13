@@ -15,6 +15,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     purchase_apr_poor_min = serializers.FloatField()
     purchase_apr_poor_rating = serializers.IntegerField()
     purchase_apr_data_incomplete = serializers.BooleanField()
+    issued_by_credit_union = serializers.BooleanField()
 
     class Meta:
         model = CardSurveyData
@@ -51,6 +52,7 @@ class CardSurveyDataListSerializer(CardSurveyDataSerializer):
         fields = [
             "annual_fee_estimated",
             "institution_name",
+            "issued_by_credit_union",
             "periodic_fee_type",
             "product_name",
             "purchase_apr_for_tier_max",

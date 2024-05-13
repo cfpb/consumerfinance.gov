@@ -38,7 +38,7 @@
 
 <div class="block block--sub o-apr-rating-group">
     <p class="o-apr-rating-group--heading">
-        Use our ratings to compare your results:
+        Use the ratings to compare your results:
     </p>
     <dl>
         {% for label, label_count in purchase_apr_rating_counts.items() %}
@@ -134,7 +134,10 @@
                             {{ card_rewards(card) | safe }}
                         </dd>
                     </div>
-                    {%- if card.requirements_for_opening -%}
+                    {%- if
+                        card.requirements_for_opening
+                        or card.issued_by_credit_union
+                    -%}
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have requirements?</dt>
                         <dd>

@@ -4,7 +4,7 @@
 
 {% block css -%}
   {{ super() }}
-  <link rel="stylesheet" href="{{ static('css/on-demand/job_listing_page.css') }}">
+  <link rel="stylesheet" href="{{ static('apps/careers/css/main.css') }}">
 {%- endblock css %}
 
 {% block content_main %}
@@ -211,7 +211,6 @@
 
 {% block javascript %}
 {{ super() }}
-
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -266,4 +265,5 @@
     }
 </script>
 
+<script src="{{ static('apps/careers/js/main.js') }}"></script>
 {% endblock %}
