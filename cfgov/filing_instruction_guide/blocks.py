@@ -6,7 +6,7 @@ from wagtail import blocks
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from v1.atomic_elements import organisms, schema
+from v1.atomic_elements import molecules, organisms, schema
 
 
 content_block_options = [
@@ -18,6 +18,7 @@ content_block_options = [
     ("expandable", organisms.Expandable()),
     ("video_player", organisms.VideoPlayer()),
     ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
+    ("notification", molecules.Notification()),
     ("faq_group", schema.FAQGroup()),
 ]
 
