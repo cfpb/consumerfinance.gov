@@ -2,18 +2,28 @@
 
 The consumerfinance.gov codebase support single sign-on (SSO) with [Open ID Connect (OIDC) providers](https://openid.net/). We use Mozilla's [mozilla-django-oidc](https://mozilla-django-oidc.readthedocs.io/en/stable/) library for OIDC support.
 
-For development of mozilla-django-oidc, Mozilla [uses a test OIDC provider](https://github.com/mozilla/docker-test-mozilla-django-oidc), which is published to Docker Hub as `mozilla/oidc-testprovider:oidc_testprovider-latest`. This test provider is a Django project that uses [django-oidc-provider](https://django-oidc-provider.readthedocs.io/) as the OIDC provider application.
+## Local implementation
 
-We make use of this test provider to enable local testing and development related to SSO for consumerfinance.gov.
+Our implementation of OIDC SSO uses a custom subclass of mozilla-django-oidc's `OIDCAuthenticationBackend`, found in `login.auth.CFPBOIDCAuthenticationBackend`, that supports additional OIDC claims processing. This enables us to map OIDC roles to Django groups and/or superuser permissioning, and lets us synchronize a user's name to the profile information in the OIDC provider.
+
+If the `OIDC_OP_ADMIN_ROLE` setting is defined, Django's `is_superuser` will be set for users who the OIDC provider reports as having this role identifier.
+
+Every user who is authorized in the SSO provider will be assigned to a "Wagtail Users" group. This enables all members to log into the Wagtail admin.
+
+This group is created with the `wagtailadmin.access_admin` permission once via data migration in the `login` app. If for any reason this group is removed, it will need to be recreated, otherwise new SSO users will not be able to login without an admin user assigning them the `wagtailadmin.access_admin` permission manually.
 
 ## Testing OIDC single sign-on locally
 
-The OIDC test provider is available in the `docker-compose.sso.yml` file.
+For development of mozilla-django-oidc, Mozilla [uses a test OIDC provider](https://github.com/mozilla/docker-test-mozilla-django-oidc), which is published to Docker Hub as `mozilla/oidc-testprovider:oidc_testprovider-latest`. This test provider is a Django project that uses [django-oidc-provider](https://django-oidc-provider.readthedocs.io/) as the OIDC provider application.
 
-Mozilla's test provider has fixture data built-in that supports the [`testrp` and `testprovider` hostnames that they document for local development](https://github.com/mozilla/mozilla-django-oidc?tab=readme-ov-file#local-development). For consumerfinance.gov, our compose file adds another set of fixture data that adds `localhost:8000` as a client.
+We make use of this test provider to enable local testing and development related to SSO for consumerfinance.gov. The OIDC test provider is available in the `docker-compose.sso.yml` file.
+
+For consumerfinance.gov, our compose file adds another set of fixture data that adds `localhost:8000` as a client in addition to the test provider's built-in [`testrp` client that Mozilla uses for local development](https://github.com/mozilla/mozilla-django-oidc?tab=readme-ov-file#local-development).
 
 ### Run the test OIDC provider
 
+
+fasdfoasdfo
 The test OIDC provider can be run with:
 
 ```shell
@@ -37,7 +47,7 @@ Either uncomment or add the following lines to your `.env` file:
 ```shell
 export ENABLE_SSO=True
 export OIDC_RP_CLIENT_ID=4
-export OIDC_RP_CLIENT_SECRET=c99760513bc6
+export OIDC_RP_CLIENT_SECRET=itsasecret
 export OIDC_RP_SIGN_ALGO=HS256
 export OIDC_OP_AUTHORIZATION_ENDPOINT=http://localhost:8080/openid/authorize
 export OIDC_OP_TOKEN_ENDPOINT=http://localhost:8080/openid/token
@@ -47,7 +57,7 @@ export OIDC_OP_USER_ENDPOINT=http://localhost:8080/openid/userinfo
 And then make sure to `source` it:
 
 ```shell
-source.env
+source .env
 ```
 
 ### Run consumerfinance.gov and log in

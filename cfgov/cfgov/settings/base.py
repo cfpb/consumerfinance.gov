@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     "django_filters",
     "django_htmx",
     "wagtail_content_audit",
+    "mozilla_django_oidc",
 )
 
 MIDDLEWARE = (
@@ -742,29 +743,49 @@ DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"
 # Optional environment variables:
 # - OIDC_RP_IDP_SIGN_KEY: The key (PEM) to sign ID tokens when
 #                         OIDC_RP_SIGN_ALGO is RS256 (default: None)
+# - OIDC_ADMIN_GROUP: The group claim for admins
 #
 # See the mozilla-django-oidc documentation for more details about the
 # settings below:
 # https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html
 ENABLE_SSO = bool(os.environ.get("ENABLE_SSO"))
 if ENABLE_SSO:
-    INSTALLED_APPS += ("mozilla_django_oidc",)
-    AUTHENTICATION_BACKENDS += (
-        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
-    )
+    # Add our OIDC authentication backend, a subclass of
+    # mozilla_django_oidc.auth.OIDCAuthenticationBackend
+    AUTHENTICATION_BACKENDS += ("login.auth.CFPBOIDCAuthenticationBackend",)
+
+    # Add OIDC middleware that refreshes sessions from the provider
     MIDDLEWARE += ("mozilla_django_oidc.middleware.SessionRefresh",)
-    LOGIN_URL = "oidc_authentication_init"
+
+    # Configure login/out URLs for OIDC
     LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
     LOGOUT_REDIRECT_URL = "/"
     ALLOW_LOGOUT_GET_METHOD = True
 
+    # This OIDC client's id and secret
     OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
     OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
+
+    # The OIDC provider's signing algorithms and key/key endpoint
     OIDC_RP_SIGN_ALGO = os.environ["OIDC_RP_SIGN_ALGO"]
+
+    # Because only one of these two values is required if
+    # OIDC_RP_SIGN_ALGO="RS256", we allow them to be None, and the OIDC
+    # library will raise an error if neither are defined.
     OIDC_RP_IDP_SIGN_KEY = os.environ.get("OIDC_RP_IDP_SIGN_KEY")
     OIDC_OP_JWKS_ENDPOINT = os.environ.get("OIDC_OP_JWKS_ENDPOINT")
+
+    # OIDC provider endpoints
     OIDC_OP_AUTHORIZATION_ENDPOINT = os.environ[
         "OIDC_OP_AUTHORIZATION_ENDPOINT"
     ]
     OIDC_OP_TOKEN_ENDPOINT = os.environ["OIDC_OP_TOKEN_ENDPOINT"]
     OIDC_OP_USER_ENDPOINT = os.environ["OIDC_OP_USER_ENDPOINT"]
+
+    # For users created just-in-time, assign a username based on the
+    # username portion of their email address.
+    OIDC_USERNAME_ALGO = "login.auth.username_from_email"
+
+    # Now we do some role/group-mapping for admins and regular users
+    # Upstream "role" for users who get is_superuser
+    OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")

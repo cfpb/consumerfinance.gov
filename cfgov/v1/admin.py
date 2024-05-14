@@ -1,12 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
 
 from v1.models import Contact, PortalCategory, PortalTopic
 
 
 admin.site.register(Contact)
-admin.site.unregister(User)
-
 
 # class AnswerPageInline(admin.TabularInline):
 #     from ask_cfpb.models import AnswerPage
