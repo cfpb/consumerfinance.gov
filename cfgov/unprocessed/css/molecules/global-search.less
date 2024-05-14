@@ -162,44 +162,6 @@
     }
   });
 
-  // Mobile size.
-  .respond-to-min(480px, {
-    &__content-form {
-
-      // The  search  button needs to be more flexible than in our usual
-      // input-w-btn element to accommodate longer translations of  search ,
-      // so we will make it flexbox
-      .o-form--input-w-btn {
-        display: flex;
-        padding-right: 0.25em;
-      }
-
-      .o-form--input-w-btn__input-container {
-        display: flex;
-        width: initial;
-        flex: 0 1 75%;
-      }
-
-      .o-form--input-w-btn__btn-container {
-        width: initial;
-        border-left: 0;
-        flex: 1 1 25%;
-
-        button {
-          padding-left: 1em;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          white-space: nowrap;
-
-          // Characters in some languages, like Chinese, have a larger x-height,
-          // which will make the button taller than the input. Fix that by
-          // setting the line height on the button.
-          line-height: unit(19px / @base-font-size-px);
-        }
-      }
-    }
-  });
-
   // Hide on print.
   .respond-to-print( {
     & {

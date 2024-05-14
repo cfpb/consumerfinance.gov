@@ -232,7 +232,7 @@
                 <a href="/ask-cfpb/what-is-the-difference-between-a-fixed-apr-and-a-variable-apr-en-45/">fixed versus variable APRs</a>.
             </p>
         {% elif card.purchase_apr_offered and card.purchase_apr_data_incomplete %}
-            <p>The issuer did not submit information about purchase APR.</p>
+            <p>The company did not submit information about purchase APR.</p>
         {% else %}
             <p>This card does not charge interest on purchases.</p>
         {% endif %}
@@ -487,14 +487,26 @@
             <p>{{ card.fee_explanation }}</p>
         {% endif %}
         <div class="o-additional-details">
-            {% set other_fees = [card.other_fee_name, card.other_fee_name_2,
-                card.other_fee_name_3, card.other_fee_name_4, card.other_fee_name_5
-            ] %}
-            {% set other_fees_count = other_fees | length - other_fees.count('') %}
-            {% if other_fees_count == 1 %}
-                {% set other_fees_label = 'Late, over-limit, and 1 other fee' %}
-            {% elif other_fees_count > 1 %}
-                {% set other_fees_label = 'Late, over-limit, and ' ~ other_fees_count ~ ' other fees' %}
+            {% set other_fees = [] %}
+            {% for i in range(5) %}
+                {% set loop_suffix = ('_' ~ (i + 1)) if i else '' %}
+                {% set other_fee_name = card['other_fee_name' ~ loop_suffix] %}
+                {% if other_fee_name %}
+                    {% do other_fees.append({
+                        "name": other_fee_name,
+                        "amount": card['other_fee_amount' ~ loop_suffix],
+                        "explanation": card['other_fee_explanation' ~ loop_suffix]
+                    }) %}
+                {% endif %}
+            {% endfor %}
+
+            {% if other_fees %}
+                {% set other_fees_label = (
+                    'Late, over-limit, and '
+                    ~ other_fees | length
+                    ~ ' other fee'
+                    ~ ('s' if other_fees | length > 1)
+                ) %}
             {% else %}
                 {% set other_fees_label = 'Late and over-limit fees' %}
             {% endif %}
@@ -573,25 +585,17 @@
                         <dt>Over-limit fee details</dt>
                         <dd>{{ card.overlimit_fee_detail }}</dd>
                     {% endif %}
-                    {% if card.other_fees %}
-                        {% for fee_name in other_fees %}
-                            {% if fee_name %}
-                                <dt>{{ fee_name }}</dt>
-                                <dd>
-                                    {% if loop.first %}
-                                        {{ currency(card.other_fee_amount) ~ ' (' ~
-                                            card.other_fee_explanation ~ ')'
-                                        }}
-                                    {% else %}
-                                        {{ currency(card['other_fee_amount_' ~ loop.index]) ~ ' (' ~
-                                            card['other_fee_explanation_' ~ loop.index] ~
-                                            ')'
-                                        }}
-                                    {% endif %}
-                                </dd>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                    {% for other_fee in other_fees %}
+                        <dt>{{ other_fee.name }}</dt>
+                        <dd>
+                            {{-
+                                currency(other_fee.amount)
+                                ~ ' ('
+                                ~ other_fee.explanation
+                                ~ ')'
+                            -}}
+                        </dd>
+                    {% endfor %}
                 </dl>
             {% endcall %}
         </div>

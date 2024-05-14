@@ -13,6 +13,14 @@ describe('Policy Compliance', () => {
       regulationsSearch.searchResults().should('be.visible');
     });
 
+    it('should allow clearing of search', () => {
+      regulationsSearch.input().type('typed a typoo');
+      regulationsSearch.resetButton().should('be.visible');
+      regulationsSearch.clearSearch();
+      regulationsSearch.input().invoke('val').should('be.empty');
+      regulationsSearch.resetButton().should('not.be.visible');
+    });
+
     it('should adjust results based on the page size', () => {
       regulationsSearch.setPageSize(50);
       regulationsSearch.searchResult().should('have.length', '50');

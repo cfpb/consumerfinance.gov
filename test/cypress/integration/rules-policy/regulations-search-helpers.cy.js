@@ -3,13 +3,33 @@ export class RegulationsSearch {
     cy.visit('/rules-policy/regulations/search-regulations/results/');
   }
 
-  searchForm() {
-    return cy.get('form[action="."]');
+  searchInputComponent() {
+    return cy.get('[data-cy=regs-search-form] .o-search-input');
+  }
+
+  input() {
+    return this.searchInputComponent().find('input');
+  }
+
+  submitButton() {
+    return this.searchInputComponent().find('button[type="submit"]');
+  }
+
+  resetButton() {
+    return this.searchInputComponent().find('button[type="reset"]');
+  }
+
+  search() {
+    this.submitButton().click();
+  }
+
+  clearSearch() {
+    this.resetButton().click();
   }
 
   searchTerm(term) {
-    this.searchForm().find('#query').type(term);
-    this.searchForm().submit();
+    this.input().type(term);
+    this.search();
   }
 
   searchResults() {

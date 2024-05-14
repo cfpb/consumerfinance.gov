@@ -133,18 +133,19 @@ With the `Document` class created for your model in a `documents.py` module with
 ./cfgov/manage.py opensearch document --force --indices [INDEX] --refresh --parallel index
 ```
 
-The index for that app's models can also be rebuilt at any time:
-
-```shell
-./cfgov/manage.py opensearch index --force rebuild [INDEX]
-./cfgov/manage.py opensearch document --force --indices [INDEX] --refresh --parallel index
-```
+The above commands can also be run to rebuild the index for an app's models at any time.
 
 Finally, the indexes for all apps can be rebuilt using:
 
 ```shell
 ./cfgov/manage.py opensearch index --force rebuild
 ./cfgov/manage.py opensearch document --force --refresh --parallel index
+```
+
+Conveniently, we have a shell script that invokes the above two commands to rebuild all indexes:
+
+```shell
+./index.sh
 ```
 
 ## Searching

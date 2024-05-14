@@ -159,7 +159,11 @@ SITUATIONS = [
                     "fees typically exceed the value of any rewards earned."
                 ),
                 "link": "Learn why rewards may not be as beneficial as they seem.",
-                "url": "/",
+                "url": (
+                    "/about-us/newsroom/"
+                    "cfpb-report-highlights-consumer-frustrations-with-credit-card-"
+                    "rewards-programs/"
+                ),
             }
         ],
     ),

@@ -4,8 +4,12 @@ export class AskCfpbSearch {
     cy.visit(path);
   }
 
+  searchInputComponent() {
+    return cy.get('[data-cy=ask-search-form] .o-search-input');
+  }
+
   input() {
-    return cy.get('#o-search-bar_query');
+    return this.searchInputComponent().find('input');
   }
 
   enter(term) {
@@ -17,11 +21,19 @@ export class AskCfpbSearch {
   }
 
   submitButton() {
-    return cy.get('.o-search-bar .a-btn');
+    return this.searchInputComponent().find('button[type="submit"]');
+  }
+
+  resetButton() {
+    return this.searchInputComponent().find('button[type="reset"]');
   }
 
   search() {
     this.submitButton().click();
+  }
+
+  clearSearch() {
+    this.resetButton().click();
   }
 
   resultsSection() {

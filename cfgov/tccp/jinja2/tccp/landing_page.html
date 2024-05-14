@@ -34,8 +34,7 @@
     value = {
         "heading": heading,
         "body": (
-            "We know people use credit cards for many reasons. " ~
-            "Our large database of cards can help you find ones that are best for you."
+            "Our large database can help you find cards that are best for you."
         ),
         "image": {
             "url": static("apps/tccp/img/explore-credit-cards-hero-lg.png"),
@@ -59,7 +58,7 @@
 
     <div class="block block--sub block--flush-top">
         <h2>
-            How is this comparison tool different than others you may have used?
+            How is this comparison site different?
         </h2>
         <ul class="m-list">
             <li class="m-list__item">
@@ -68,13 +67,20 @@
             <li class="m-list__item">
                 <a
                     href="{{ url('tccp:about') }}"
-                >Credit card companies are required by law to submit data to us</a>
+                >150 credit card companies are required by law to submit data to us</a>
+            </li>
+           <li class="m-list__item">
+                Any credit card company can
+                <a href="/credit-card-data/terms-credit-card-plans-survey/">voluntarily contribute data</a>
             </li>
             <li class="m-list__item">
                 No paid advertising
             </li>
             <li class="m-list__item">
                 Card interest is rated, to help you compare
+            </li>
+          <li class="m-list__item">
+                Data is public and can be used by anyone
             </li>
         </ul>
     </div>
@@ -133,7 +139,7 @@
             <div class="m-btn-group">
                 <button class="a-btn a-btn--full-on-xs" data-js-hook="behavior_submit-situations">See cards for your situation</button>
                 <div class="u-btn-helper">
-                    Or <a href="{{ url('tccp:cards') }}">see all cards</a> in our database
+                    Or <a href="{{ url('tccp:cards') }}">see all cards</a>
                 </div>
             </div>
 
