@@ -46,7 +46,7 @@
         {% endif %}
 
         <div>
-            {% import 'v1/includes/organisms/search-input.html' as search_input with context %}
+            {% import 'v1/includes/organisms/search-input.html' as search_input %}
             {% set placeholder_value = _('Search Ask CFPB for your question') %}
             {{ search_input.render({
                 "input_aria_describedby_id": "o-search-bar_error-message",

@@ -59,7 +59,7 @@
                    name="affiliate"
                    value="{{ search_gov_affiliate() }}">
 
-            {% import 'v1/includes/organisms/search-input.html' as search_input with context %}
+            {% import 'v1/includes/organisms/search-input.html' as search_input %}
             {% set placeholder_value = _('Search the CFPB') %}
             {{ search_input.render({
                 "input_id": "m-global-search_query",

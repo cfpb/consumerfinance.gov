@@ -7,7 +7,7 @@ import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teache
 const HTML_SNIPPET = `
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
     <div class="o-search-input">
-      <div class="o-search-input__input" data-language="en">
+      <div class="o-search-input__input">
           <label for="search-text" class="o-search-input__input-label" aria-label="Search for a term">
             <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg--search" viewBox="0 0 15 19"><path d="M14.147 15.488a1.11 1.11 0 0 1-1.567 0l-3.395-3.395a5.575 5.575 0 1 1 1.568-1.568l3.394 3.395a1.11 1.11 0 0 1 0 1.568m-6.361-3.903a4.488 4.488 0 1 0-1.681.327 4.4 4.4 0 0 0 1.68-.327z"></path></svg>
           </label>
