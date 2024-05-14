@@ -14,7 +14,6 @@ import {
   handleClearAllClick,
   handleFetchSearchResults,
 } from './tdp-analytics.js';
-import { ClearableInput } from './ClearableInput.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -44,13 +43,6 @@ function attachHandlers() {
   attach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
-  const inputContainsLabel = document.querySelector(
-    '.tdp-activity-search .input-contains-label',
-  );
-  if (inputContainsLabel) {
-    const clearableInput = new ClearableInput(inputContainsLabel);
-    clearableInput.init();
-  }
 }
 
 /**

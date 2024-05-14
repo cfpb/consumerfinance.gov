@@ -15,6 +15,19 @@ const errorMessage = document.querySelector('#o-search-bar_error-message');
 const submitButton = document.querySelector(
   '.o-search-bar button[type="submit"]',
 );
+const resetButton = document.querySelector(
+  '.o-search-bar button[type="reset"]',
+);
+
+resetButton.addEventListener('click', resetErrorMsg);
+
+/**
+ * Reset the error message appearance.
+ */
+function resetErrorMsg() {
+  submitButton.removeAttribute('disabled');
+  errorMessage.classList.add('u-hidden');
+}
 
 /**
  * Disable the submit button if the query character limit is reached
@@ -31,14 +44,12 @@ function handleMaxCharacters(event) {
       event: 'Ask Search',
     });
   } else {
-    submitButton.removeAttribute('disabled');
-    errorMessage.classList.add('u-hidden');
+    resetErrorMsg();
   }
 }
 
 if (autocompleteContainer) {
-  const language = autocompleteContainer.getAttribute('data-language');
-
+  const language = document.documentElement.getAttribute('lang')
   const autocomplete = new Autocomplete(autocompleteContainer, {
     url: language === 'es' ? URLS.es : URLS.en,
     onSubmit: function (event, selected) {

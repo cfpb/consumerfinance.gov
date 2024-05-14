@@ -1,0 +1,128 @@
+@import (reference) 'cfpb-core.less';
+
+.o-search-input {
+  display: flex;
+  flex-direction: column;
+  row-gap: unit(15px / @base-font-size-px, rem);
+
+  &__input {
+    position: relative;
+    display: flex;
+    width: initial;
+    flex: 0 1 100%;
+
+    &-label {
+      position: absolute;
+      left: 10px;
+      align-self: center;
+      cursor: pointer;
+    }
+
+    input[type='search'] {
+      width: 100%;
+      white-space: nowrap;
+      padding-left: 30px;
+
+      // Remove default rounding in Safari.
+      -webkit-appearance: none;
+    }
+
+    // Style the clear x button, and hide it by default.
+    button[type='reset'] {
+      display: none;
+      position: absolute;
+      right: 0;
+      align-self: center;
+
+      color: var(--gray-40);
+      font-size: 20px;
+      border: 1px solid transparent;
+      background-color: transparent;
+      outline: 0;
+
+      // Set the touch target minimum for iOS.
+      width: 44px;
+      padding: 5px;
+      text-align: right;
+
+      > svg {
+        // Set width of SVG width to create a box for the focus rectangle.
+        width: 25px;
+        cursor: pointer;
+
+        // Prevent targeting of button's internal SVG icon.
+        pointer-events: none;
+      }
+    }
+
+    button[type='reset']:hover {
+      color: var(--black);
+    }
+
+    // Style the clear x focus rectangle.
+    button[type='reset']:focus {
+      color: var(--black);
+
+      // Put the focus rectangle on the icon
+      // because the button touch target is larger and would be lop-sided if
+      // we put the rectangle on the button.
+      > svg {
+        outline: 1px dotted var(--pacific);
+      }
+    }
+
+    // However, hide it if we haven't entered any text yet.
+    input[type='search']:placeholder-shown ~ button[type='reset'] {
+      display: none;
+    }
+
+    // When the reset button is showing, pad the input so there's no overlap.
+    input[type='search']:not(:placeholder-shown) {
+      padding-right: 34px;
+    }
+
+    // Remove the default x mark in Chrome.
+    input[type='search']::-webkit-search-decoration,
+    input[type='search']::-webkit-search-cancel-button,
+    input[type='search']::-webkit-search-results-button,
+    input[type='search']::-webkit-search-results-decoration {
+      display: none;
+    }
+  }
+
+  // Show the clear x button if we're focused within the search input area.
+  &:focus-within button[type='reset'],
+  & &__input:hover button[type='reset'] {
+    display: block;
+  }
+
+  button[type='submit'] {
+    // Characters in some languages, like Chinese, have a larger x-height,
+    // which will make the button taller than the input.
+    // Fix that by setting the line height on the button.
+    line-height: unit(19px / @base-font-size-px);
+  }
+
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    flex-direction: row;
+    border-left: 0;
+
+    button[type='submit'] {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      flex-basis: 25%;
+    }
+  });
+}
+
+// If the value attribute of the search input has been set by the backend,
+// then the reset (x) button will only reset the input to the initial value
+// at page load.
+// We add a small amount of JS to fully clear the input for this circumstance.
+// However, this doesn't work when JS is disabled, so in that case we hide the
+// reset (x) button.
+.no-js .o-search-input button[type='reset'] {
+  display: none !important;
+}

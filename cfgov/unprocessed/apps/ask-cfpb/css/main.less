@@ -1,5 +1,4 @@
 @import (reference) '../../../css/main.less';
-@import (less) './ask-search.less';
 @import (less) './autocomplete.less';
 
 /* ==========================================================================
@@ -175,20 +174,6 @@
     padding-top: unit(7px / @base-font-size-px, em);
   }
 
-  .o-search-bar__input {
-    max-width: 500px;
-  }
-
-  // The max-width on the search bar cuts off the last few letters of the
-  // Spanish button text when the input and button are side by side; setting
-  // the width of that button to auto lets it overrun its container if needed.
-  // Desktop and above.
-  .respond-to-min(@bp-med-min, {
-    .o-form--input-w-btn__btn-container .a-btn {
-      width: auto;
-    }
-  });
-
   .lead-paragraph {
     // This makes for line lengths between 85-95 characters
     max-width: 41.875rem;
@@ -211,10 +196,6 @@
     }
   });
 
-  .o-search-bar__input {
-    max-width: 31.25rem;
-  }
-
   form[action='/ask-cfpb/search/'] h2 {
     .heading-4();
 
@@ -223,16 +204,6 @@
       .heading-3();
     });
   }
-
-  // The max-width on the search bar cuts off the last few letters of the
-  // Spanish button text at widths where there's a sidebar; setting the width
-  // of that button to auto lets it overrun its container if needed.
-  // Desktop and above.
-  .respond-to-min(@bp-med-min, {
-    .o-form--input-w-btn__btn-container .a-btn {
-      width: auto;
-    }
-  });
 }
 
 .ask-cfpb-page {

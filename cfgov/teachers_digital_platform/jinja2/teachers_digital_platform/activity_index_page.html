@@ -28,29 +28,20 @@
         </section>
         <div class="block block--padded-top block--flush-top u-mb30">
             <h2>Search for activities</h2>
-            <form class="u-mt30" method="get" action="." data-js-hook="behavior_submit-search">
-                <div class="o-form--input-w-btn">
-                    <div class="o-form--input-w-btn__input-container">
-                        <div class="m-btn-inside-input input-contains-label">
-                            <label for="search-text" class="input-contains-label__before input-contains-label__before--search">
-                                {{ svg_icon('search') }}
-                                <span class="u-visually-hidden">The term to search for</span>
-                            </label>
-                            <input id="search-text" type="text" autocomplete="off" class="a-text-input" name="q"
-                                    placeholder="Enter your search term(s)"
-                                    value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}">
-                            <label for="search-text"
-                                  class="input-contains-label__after
-                                         input-contains-label__after--clear
-                                         u-hidden" data-js-hook="behavior_clear-search">
-                                Clear {{ svg_icon('error') }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="o-form--input-w-btn__btn-container">
-                        <button class="a-btn" aria-label="Search for an activity">Search</button>
-                    </div>
-                </div>
+            <form class="u-mt30"
+                  method="get"
+                  action="."
+                  data-js-hook="behavior_submit-search">
+
+                {% import 'v1/includes/organisms/search-input.html' as search_input %}
+                {{ search_input.render({
+                    "input_id": "search-text",
+                    "input_name": "q",
+                    "input_value": page.results.search_query if page.results.search_query else '',
+                    "input_aria_label": "Search for a term",
+                    "placeholder": "Enter your search term(s)",
+                    "submit_aria_label": "Search for term(s)"
+                }) }}
             </form>
         </div>
         <div id="tdp-search-facets-and-results">

@@ -13,7 +13,6 @@ const EMPTY_SEARCH_HTML = `
 `;
 
 const HTML_SNIPPET = `
-
   <form id="search-form" action="." data-js-hook="behavior_submit-search">
     <input id="search-text" type="text" autocomplete="off" class="a-text-input" name="q" placeholder="Enter your search term(s)" value="executive">
     <button class="a-btn">Search</button>
