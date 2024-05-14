@@ -130,17 +130,13 @@
   }
 }
 
-.heading-4-size-only() {
-  @h4-font-size: @size-iv;
-
-  font-size: @h4-font-size;
+.u-heading-4-size-only() {
+  font-size: @size-iv;
   line-height: 1.25;
 
   // Mobile only.
   .respond-to-max(@bp-xs-max, {
-    @h4-font-size-on-xs: @base-font-size-px;
-
-    font-size: unit(@h4-font-size-on-xs / @base-font-size-px, em);
+    font-size: unit(16px / @base-font-size-px, rem);
     line-height: unit(18px /  @base-font-size-px);
   });
 }
@@ -211,9 +207,14 @@
   }
 
   .m-apr-rating {
-    .heading-4-size-only();
-    margin-bottom: unit((20px / @base-font-size-px), rem);
+    .u-heading-4-size-only();
+    margin-bottom: unit(20px / @base-font-size-px, rem);
     font-weight: 600;
+
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      margin-bottom: unit(10px / @base-font-size-px, rem);
+    });
   }
 }
 
@@ -223,14 +224,14 @@
   }
 
   .m-apr-rating {
-    margin-bottom: unit((5px / @base-font-size-px), rem);
+    margin-bottom: unit(5px / @base-font-size-px, rem);
     display: grid;
     grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
     align-items: baseline;
     gap: unit(5px / @base-font-size-px, em);
     font-weight: 500;
 
-    .heading-4-size-only();
+    .u-heading-4-size-only();
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
