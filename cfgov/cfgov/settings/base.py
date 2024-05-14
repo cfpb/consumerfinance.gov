@@ -752,6 +752,7 @@ if ENABLE_SSO:
     AUTHENTICATION_BACKENDS += (
         "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
     )
+    MIDDLEWARE += ("mozilla_django_oidc.middleware.SessionRefresh",)
     LOGIN_URL = "oidc_authentication_init"
     LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
     LOGOUT_REDIRECT_URL = "/"
