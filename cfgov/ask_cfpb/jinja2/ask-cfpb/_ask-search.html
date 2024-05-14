@@ -24,10 +24,6 @@
 
    max_length:     Integer; the maximum length of a query string, in characters
 
-   complaint_link: Boolean; whether to add a link to the complaint submission
-                   page to the end of the error message for searches over the
-                   max length
-
    ========================================================================== #}
 
 {% macro render(
@@ -37,8 +33,7 @@
     autocomplete=True,
     placeholder='',
     is_subsection=True,
-    max_length=autocomplete_max_chars,
-    complaint_link=False
+    max_length=autocomplete_max_chars
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
@@ -79,11 +74,6 @@
                         <p class="a-form-alert__text">
                             Searches are limited to {{ autocomplete_max_chars }}
                             characters.
-                            {% if complaint_link %}
-                            Are you trying to
-                            <a href="/complaint/getting-started/">
-                                submit a complaint</a>?
-                            {% endif %}
                         </p>
                     </div>
                 </div>
@@ -108,8 +98,7 @@
       value.autocomplete | default( True ),
       value.placeholder | default( '' ),
       value.is_subsection | default( True ),
-      value.max_length | default( autocomplete_max_chars ),
-      value.complaint_link | default( False )
+      value.max_length | default( autocomplete_max_chars )
     )
   }}
 {% endif %}
