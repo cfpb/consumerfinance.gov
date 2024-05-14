@@ -29,7 +29,7 @@
 {% macro render(value) %}
 
 <div class="o-search-input">
-  <div class="o-search-input__input{% if value.has_autocomplete %} m-autocomplete{% endif %}">
+    <div class="o-search-input__input{% if value.has_autocomplete %} m-autocomplete{% endif %}">
         <label for="{{ value.input_id }}"
                class="o-search-input__input-label"
                aria-label="{{ value.input_aria_label }}">
