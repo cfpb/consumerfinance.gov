@@ -117,10 +117,12 @@
   });
 }
 
-// If the value is on a search input by the backend, then the reset button will
-// only reset the input back to initial value at page load. We add a small
-// amount of JS to fully clear the input for this circumstance. However, this
-// doesn't work when JS is disabled, so in that case we hide the reset button.
+// If the value attribute of the search input has been set by the backend,
+// then the reset (x) button will only reset the input to the initial value
+// at page load.
+// We add a small amount of JS to fully clear the input for this circumstance.
+// However, this doesn't work when JS is disabled, so in that case we hide the
+// reset (x) button.
 .no-js .o-search-input button[type='reset'] {
   display: none !important;
 }
