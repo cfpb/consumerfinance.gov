@@ -386,31 +386,12 @@
             - Other fee: "$50 {fee name, period}"
             - Annual and other fee: "$495 annual fee + $50 {fee name, period}"
             - No periodic fee: "$0 annual fee"
-            - Fee that varies: "$25 - $55 annual/monthly fee"
         #}
         <div class="m-payment-calculation u-mb15">
             {% if card.annual_fee or not card.periodic_fee_type %}
                 <div class="m-payment-calculation__part">
                     <div class="h2 u-mb0 u-mt0">
-                        {# A handful of cards have both an annual and monthly
-                            fee with one of those fees varying. Because of how
-                            the data is (not) structured, we can only tell which
-                            fee varies by looking for either "annual" or
-                            "monthly" in the text of the fee explanation.
-                        #}
-                        {% if card.fee_varies %}
-                            {% if card.periodic_fee_type | join == "Annual" %}
-                                {{ currency(card.periodic_min) ~ ' - '
-                                    ~ currency(card.periodic_max) }}
-                            {% elif card.fee_explanation.lower().count('annual') %}
-                                {{ currency(card.periodic_min) ~ ' - '
-                                    ~ currency(card.periodic_max) }}
-                            {% else %}
-                                {{ currency(card.annual_fee) }}
-                            {% endif %}
-                        {% else %}
-                            {{ currency(card.annual_fee) if card.annual_fee else currency(0) }}
-                        {% endif %}
+                        {{ currency(card.annual_fee) if card.annual_fee else currency(0) }}
                         <span class="u-visually-hidden">Annual fee</span>
                     </div>
                     <div class="h4 u-mt0 u-mb0" aria-hidden="true">
@@ -419,30 +400,12 @@
                 </div>
             {% endif %}
             {% if card.monthly_fee %}
-                {% if card.annual_fee %}
+                {% if card.annual_fee or not card.periodic_fee_type %}
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
                     <div class="h2 u-mb0 u-mt0">
-                        {# A handful of cards have both an annual and monthly
-                            fee with one of those fees varying. Because of how
-                            the data is (not) structured, we can only tell which
-                            fee varies by looking for either "annual" or
-                            "monthly" in the text of the fee explanation.
-                        #}
-                        {% if card.fee_varies %}
-                            {% if card.periodic_fee_type | join == "Monthly" %}
-                                {{ currency(card.periodic_min) ~ ' - '
-                                    ~ currency(card.periodic_max) }}
-                            {% elif card.fee_explanation.lower().count('monthly') %}
-                                {{ currency(card.periodic_min) ~ ' - '
-                                    ~ currency(card.periodic_max) }}
-                            {% else %}
-                                {{ currency(card.monthly_fee) }}
-                            {% endif %}
-                        {% else %}
-                            {{ currency(card.monthly_fee) }}
-                        {% endif %}
+                        {{ currency(card.monthly_fee) if card.monthly_fee else currency(0) }}
                         <span class="u-visually-hidden">Monthly fee</span>
                     </div>
                     <div class="h4 u-mt0 u-mb0" aria-hidden="true">
@@ -451,7 +414,11 @@
                 </div>
             {% endif %}
             {% if card.weekly_fee %}
-                {% if card.annual_fee or card.monthly_fee %}
+                {% if
+                    card.annual_fee
+                    or not card.periodic_fee_type
+                    or card.monthly_fee
+                %}
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
@@ -465,7 +432,12 @@
                 </div>
             {% endif %}
             {% if card.other_periodic_fee_amount %}
-                {% if card.annual_fee or card.monthly_fee or card.weekly_fee %}
+                {% if
+                    card.annual_fee
+                    or not card.periodic_fee_type
+                    or card.monthly_fee
+                    or card.weekly_fee
+                %}
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
