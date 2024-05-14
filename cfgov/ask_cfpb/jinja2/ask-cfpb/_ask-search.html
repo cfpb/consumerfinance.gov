@@ -45,6 +45,7 @@
         </{{ 'h3' if is_subsection else 'h2' }}>
         {% endif %}
 
+<<<<<<< ans_search_input
         <div>
             {% import 'v1/includes/organisms/search-input.html' as search_input %}
             {% set placeholder_value = _('Search Ask CFPB for your question') %}
@@ -67,6 +68,49 @@
                     Searches are limited to {{ autocomplete_max_chars }}
                     characters.
                 </p>
+=======
+        <div class="o-search-bar__input">
+            <div class="o-form--input-w-btn">
+                <div class="o-form--input-w-btn__input-container">
+                    <div class="m-btn-inside-input
+                                input-contains-label
+                                {% if autocomplete %}m-autocomplete{% endif %}"
+                         data-language="{{ language }}">
+                        <label for="o-search-bar_query"
+                               class="input-contains-label__before
+                                      input-contains-label__before--search">
+                            {{ svg_icon('search') }}
+                            <span class="u-visually-hidden">
+                                {{ _('Search for your question') }}
+                            </span>
+                        </label>
+                        <input class="a-text-input"
+                               type="text"
+                               name="q"
+                               id="o-search-bar_query"
+                               value="{{ ask_query }}"
+                               placeholder="{{ placeholder }}"
+                               maxlength="{{ max_length }}"
+                               aria-describedby="o-search-bar_error-message">
+                    </div>
+                    <div class="a-form-alert a-form-alert--error u-hidden"
+                         id="o-search-bar_error-message"
+                         role="alert">
+                        {{ svg_icon('error-round') }}
+                        <p class="a-form-alert__text">
+                            Searches are limited to {{ autocomplete_max_chars }}
+                            characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="o-form--input-w-btn__btn-container">
+                    <button class="a-btn"
+                            type="submit"
+                            aria-label="{{ _('Search Ask CFPB for your question') }}">
+                        {{ _('Search') }}
+                    </button>
+                </div>
+>>>>>>> main
             </div>
         </div>
     </form>
