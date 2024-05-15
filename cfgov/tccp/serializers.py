@@ -16,6 +16,8 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     purchase_apr_poor_rating = serializers.IntegerField()
     purchase_apr_data_incomplete = serializers.BooleanField()
     issued_by_credit_union = serializers.BooleanField()
+    has_only_variable_late_fees = serializers.BooleanField()
+    has_only_variable_over_limit_fees = serializers.BooleanField()
 
     class Meta:
         model = CardSurveyData

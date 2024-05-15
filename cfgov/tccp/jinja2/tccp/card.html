@@ -530,27 +530,28 @@
                                 ' for a late payment within six billing cycles of another
                                 late payment' if card.late_fee_six_month_billing_cycle
                             }}
-                            {# A handful of cards specify neither a first nor repeat late
-                                fee and put all late fee info in the late_fee_policy_details
-                                field. For cards like that, we'll show the details here and
-                                not show the "Late fee policy details" item.
+                            {#
+                                A handful of cards specify neither a first nor repeat
+                                late fee and put all late fee info in the
+                                late_fee_policy_details field. For cards like that,
+                                we'll show the details here and not show the "Late fee
+                                policy details" item.
                             #}
-                            {# TODO: Refactor to not use the exact string #}
-                            {{ card.late_fee_policy_details if card.late_fee_types ==
-                                ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                            {{
+                                card.late_fee_policy_details
+                                if card.has_only_variable_late_fees
                             }}
                         {% else %}
                             None
                         {% endif %}
                     </dd>
-                    {# See the comment above: we won't show this if we're already showing
-                        late fee details in the "Late fee" item, i.e. if the card has *only*
-                        policy details chosen in late_fee_types
+                    {#
+                        See the comment above: we won't show this if we're already
+                        showing late fee details in the "Late fee" item, i.e. if the
+                        card has *only* policy details chosen in late_fee_types.
                     #}
-                    {# TODO: Refactor to not use the exact string #}
                     {% if card.late_fee_policy_details
-                        and card.late_fee_types !=
-                        ['3. If you charge late fees that are not fixed dollar amounts, please explain your late fee policy here.']
+                        and not card.has_only_variable_late_fees
                     %}
                         <dt>Late fee policy details</dt>
                         <dd>{{ card.late_fee_policy_details }}</dd>
@@ -561,26 +562,28 @@
                             {{ currency(card.over_limit_fee_dollars) if
                                 card.over_limit_fee_dollars
                             }}
-                            {# A handful of cards specify only over-limit fee details and
-                                not a fixed dollar amount. For cards like that, we'll show
-                                the details here and not show the "Over-limit fee details."
+                            {#
+                                A handful of cards specify only over-limit fee details
+                                and not a fixed dollar amount. For cards like that,
+                                we'll show the details here and not show the
+                                "Over-limit fee details."
                             #}
-                            {# TODO: Refactor to not use the exact string #}
-                            {{ card.overlimit_fee_detail if card.over_limit_fee_types ==
-                                ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                            {{
+                                card.overlimit_fee_detail
+                                if card.has_only_variable_over_limit_fees
                             }}
                         {% else %}
                             None
                         {% endif %}
                     </dd>
-                    {# See the comment above: we won't show this if we're already showing
-                        over-limit fee details in the "Over-limit fee" item, i.e. if the
-                        card has *only* details chosen in over_limit_fee_types.
+                    {#
+                        See the comment above: we won't show this if we're already
+                        showing over-limit fee details in the "Over-limit fee" item,
+                        i.e. if the card has *only* details chosen in
+                        over_limit_fee_types.
                     #}
-                    {# TODO: Refactor to not use the exact string #}
                     {% if card.overlimit_fee_detail
-                        and card.over_limit_fee_types !=
-                        ['2. If you charge overlimit fees that are not fixed dollar amounts, please explain what overlimit fees you charge here:']
+                        and not card.has_only_variable_over_limit_fees
                     %}
                         <dt>Over-limit fee details</dt>
                         <dd>{{ card.overlimit_fee_detail }}</dd>

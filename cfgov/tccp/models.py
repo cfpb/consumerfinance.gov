@@ -745,3 +745,13 @@ class CardSurveyData(models.Model):
     @property
     def issued_by_credit_union(self):
         return self.institution_type == "CU"
+
+    @property
+    def has_only_variable_late_fees(self):
+        return [enums.LateFeeTypeChoices[2][0]] == self.late_fee_types
+
+    @property
+    def has_only_variable_over_limit_fees(self):
+        return [
+            enums.OverlimitFeeTypeChoices[1][0]
+        ] == self.over_limit_fee_types

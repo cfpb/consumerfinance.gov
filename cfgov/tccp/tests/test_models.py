@@ -3,7 +3,11 @@ from itertools import product
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
-from tccp.enums import CreditTierColumns
+from tccp.enums import (
+    CreditTierColumns,
+    LateFeeTypeChoices,
+    OverlimitFeeTypeChoices,
+)
 from tccp.models import CardSurveyData
 
 from .baker import baker
@@ -221,4 +225,34 @@ class CardSurveyDataTests(SimpleTestCase):
         )
         self.assertFalse(
             CardSurveyData(institution_type="Bank").issued_by_credit_union
+        )
+
+    def test_has_only_variable_late_fees(self):
+        self.assertFalse(
+            CardSurveyData(
+                late_fee_types=[
+                    LateFeeTypeChoices[0][0],
+                    LateFeeTypeChoices[2][0],
+                ]
+            ).has_only_variable_late_fees
+        )
+        self.assertTrue(
+            CardSurveyData(
+                late_fee_types=[LateFeeTypeChoices[2][0]]
+            ).has_only_variable_late_fees
+        )
+
+    def test_has_only_variable_over_limit_fees(self):
+        self.assertFalse(
+            CardSurveyData(
+                over_limit_fee_types=[
+                    OverlimitFeeTypeChoices[0][0],
+                    OverlimitFeeTypeChoices[1][0],
+                ]
+            ).has_only_variable_over_limit_fees
+        )
+        self.assertTrue(
+            CardSurveyData(
+                over_limit_fee_types=[OverlimitFeeTypeChoices[1][0]]
+            ).has_only_variable_over_limit_fees
         )
