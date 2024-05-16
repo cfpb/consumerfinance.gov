@@ -22,7 +22,7 @@ urlpatterns = [
         name="fwb_results_es",
     ),
     re_path(
-        r"^sobre/$",
+        r"^mas-sobre/$",
         TranslatedTemplateView.as_view(
             template_name="wellbeing/about.html", language="es"
         ),
