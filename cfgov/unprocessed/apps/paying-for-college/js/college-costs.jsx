@@ -43,46 +43,46 @@ window.addEventListener('load', init);
 
 // Set up Stepper 
 
-  const headings = Array.from(
-        document.querySelectorAll('.o-secondary-nav__link')
-      ).map( (obj) => obj.text.trim() );
+const headings = Array.from(
+      document.querySelectorAll('.o-secondary-nav__link')
+    ).map( (obj) => obj.text.trim() );
 
-  const stepMap = Object.fromEntries(
-      Array.from(
-        document.querySelectorAll( '.o-secondary-nav__link' ) )
-        .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
+const stepMap = Object.fromEntries(
+    Array.from(
+      document.querySelectorAll( '.o-secondary-nav__link' ) )
+      .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
 
-  // const headings = [
-  //   'Estimate Debt',
-  //   'Customize estimate',
-  //   'Affording your loans',
-  //   'four',
-  //   'Review'
-  // ]
+// const headings = [
+//   'Estimate Debt',
+//   'Customize estimate',
+//   'Affording your loans',
+//   'four',
+//   'Review'
+// ]
 
-  // const stepMap = {
-  //   'school-info': 1,
-  //   'debt-at-grad': 1,
-  //   'customize-estimate': 2,
-  //   'affording-payments': 3,
-  //   'review-plan': 5,
-  // }
+// const stepMap = {
+//   'school-info': 1,
+//   'debt-at-grad': 1,
+//   'customize-estimate': 2,
+//   'affording-payments': 3,
+//   'review-plan': 5,
+// }
 
 
 
-  let getAndSetCallback
+let getAndSetCallback
 
-  function Wrapper(){
-    const [step, setStep] = useState(1)
+function Wrapper(){
+  const [step, setStep] = useState(1)
 
-    function getAndSetStep(activeName){
-      return setStep(stepMap[activeName])
-    }
-
-    getAndSetCallback = getAndSetStep;
-
-    return step ? <Stepper steps={7} step={step} headings={headings}/> : null
+  function getAndSetStep(activeName){
+    return setStep(stepMap[activeName])
   }
 
-  const root = createRoot(document.getElementById('react-stepper'));
-  root.render(<Wrapper/>);
+  getAndSetCallback = getAndSetStep;
+
+  return step ? <Stepper steps={headings.length} step={step} headings={headings}/> : null
+}
+
+const root = createRoot(document.getElementById('react-stepper'));
+root.render(<Wrapper/>);
