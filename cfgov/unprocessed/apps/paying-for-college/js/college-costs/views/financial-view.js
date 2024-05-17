@@ -109,10 +109,11 @@ function _addInputListeners() {
  * Listeners for INPUT fields and radio buttons.
  */
 function _addButtonListeners() {
-  financialView._costsOfferButton.addEventListener(
-    'click',
-    _handleCostsButtonClick,
-  );
+  // TODO: Remove this, assumimg it is not going to be used
+  // financialView._costsOfferButton.addEventListener(
+  //   'click',
+  //   _handleCostsButtonClick,
+  // );
 }
 
 /**

@@ -49,13 +49,13 @@ const navigationView = {
     });
 
     const navItem = document.querySelector(
-      '[data-nav_item="' + activeName + '"]',
+      '[data-nav_section="' + activeName + '"]',
     );
     if (navItem === null) return;
     const activeElem = navItem.closest('li');
-    const activeParent = activeElem.closest(
-      '.o-secondary-nav__list-item--parent',
-    );
+    // const activeParent = activeElem.closest(
+    //   '.o-secondary-nav__list-item--parent',
+    // );
 
     this._navListItems.forEach((elem) => {
       elem.setAttribute('data-nav-is-active', 'False');
@@ -64,14 +64,14 @@ const navigationView = {
 
     activeElem.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
-    activeParent.setAttribute('data-nav-is-open', 'True');
-    activeParent.setAttribute('data-nav-is-active', 'True');
-    activeElem.setAttribute('aria-selected', true);
-    activeParent
-      .querySelectorAll('.o-secondary-nav__list--children li')
-      .forEach((elem) => {
-        elem.setAttribute('data-nav-is-active', 'True');
-      });
+    // activeParent.setAttribute('data-nav-is-open', 'True');
+    // activeParent.setAttribute('data-nav-is-active', 'True');
+    // activeElem.setAttribute('aria-selected', true);
+    // activeParent
+    //   .querySelectorAll('.o-secondary-nav__list--children li')
+    //   .forEach((elem) => {
+    //     elem.setAttribute('data-nav-is-active', 'True');
+    //   });
 
     navItem.classList.add('active-section');
   },
@@ -133,7 +133,7 @@ const navigationView = {
     this._navMenu = body.querySelector('.o-secondary-nav');
     this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
-    this._navItems = body.querySelectorAll('[data-nav_item]');
+    this._navItems = body.querySelectorAll('[data-nav_item]'); 
     this._navButtons = body.querySelectorAll(
       '.college-costs__tool-section-buttons .btn__nav',
     );
@@ -218,13 +218,17 @@ function _handleSecondaryNavButtonClick(event) {
     const target = event.target;
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
-    if (typeof target.dataset.nav_item !== 'undefined') {
-      updateState.activeSection(target.dataset.nav_item);
-    } else if (typeof target.dataset.nav_section !== 'undefined') {
-      target
-        .closest('[data-nav-is-open]')
-        .setAttribute('data-nav-is-open', 'True');
+    if ( typeof target.dataset.nav_section !== 'undefined' ) {
+      updateState.activeSection( target.dataset.nav_section );
     }
+
+    // if (typeof target.dataset.nav_item !== 'undefined') {
+    //   updateState.activeSection(target.dataset.nav_item);
+    // } else if (typeof target.dataset.nav_section !== 'undefined') {
+    //   target
+    //     .closest('[data-nav-is-open]')
+    //     .setAttribute('data-nav-is-open', 'True');
+    // }
   }
 }
 

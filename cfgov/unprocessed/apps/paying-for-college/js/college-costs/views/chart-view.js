@@ -541,20 +541,21 @@ const chartView = {
       },
     });
 
-    chartView.costOfBorrowingChart = Highcharts.chart(
-      chartView.costOfBorrowingElem,
-      { ...costOfBorrowingOpts },
-    );
+    // TODO: Add these back in when/if the chart is used again
+    // chartView.costOfBorrowingChart = Highcharts.chart(
+    //   chartView.costOfBorrowingElem,
+    //   { ...costOfBorrowingOpts },
+    // );
 
-    chartView.compareCostOfBorrowingChart = Highcharts.chart(
-      chartView.compareCostElem,
-      { ...columnChartOpts, ...compareCostOfBorrowingOpts },
-    );
+    // chartView.compareCostOfBorrowingChart = Highcharts.chart(
+    //   chartView.compareCostElem,
+    //   { ...columnChartOpts, ...compareCostOfBorrowingOpts },
+    // );
 
-    chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
-      ...horizontalBarOpts,
-      ...makePlanOpts,
-    });
+    // chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
+    //   ...horizontalBarOpts,
+    //   ...makePlanOpts,
+    // });
 
     chartView.maxDebtChart = Highcharts.chart(chartView.maxDebtElem, {
       ...maxDebtOpts,
@@ -606,17 +607,18 @@ const chartView = {
       decimalPlaces: 0,
     });
 
-    chartView.costOfBorrowingChart.yAxis[0].update({
-      max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
-    });
-    chartView.costOfBorrowingChart.series[0].update({
-      data: [interest10years],
-      name: 'Estimated total interest: <strong>' + interestString + '</strong>',
-    });
-    chartView.costOfBorrowingChart.series[1].update({
-      data: [totalBorrowingAtGrad],
-      name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
-    });
+    // TODO: Use this code if these charts are added back into the app
+    // chartView.costOfBorrowingChart.yAxis[0].update({
+    //   max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
+    // });
+    // chartView.costOfBorrowingChart.series[0].update({
+    //   data: [interest10years],
+    //   name: 'Estimated total interest: <strong>' + interestString + '</strong>',
+    // });
+    // chartView.costOfBorrowingChart.series[1].update({
+    //   data: [totalBorrowingAtGrad],
+    //   name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
+    // });
   },
 
   updateMakePlanChart: () => {
@@ -630,25 +632,26 @@ const chartView = {
         decimalPlaces: 0,
       });
 
-    chartView.makePlanChart.yAxis[0].update({
-      max: max,
-      plotLines: [
-        {
-          color: 'red',
-          width: 2,
-          value: totalCosts,
-          zIndex: 4,
-          label: {
-            align: 'center',
-            text: text,
-            rotation: 0,
-            x: 0,
-            y: -25,
-          },
-        },
-      ],
-    });
-    chartView.makePlanChart.series[0].setData([totalFunding]);
+    // TODO: Use this code if these charts are added back into the app
+    // chartView.makePlanChart.yAxis[0].update({
+    //   max: max,
+    //   plotLines: [
+    //     {
+    //       color: 'red',
+    //       width: 2,
+    //       value: totalCosts,
+    //       zIndex: 4,
+    //       label: {
+    //         align: 'center',
+    //         text: text,
+    //         rotation: 0,
+    //         x: 0,
+    //         y: -25,
+    //       },
+    //     },
+    //   ],
+    // });
+    // chartView.makePlanChart.series[0].setData([totalFunding]);
   },
 
   updateMaxDebtChart: () => {

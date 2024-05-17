@@ -41,35 +41,48 @@ function init() {
 
 window.addEventListener('load', init);
 
-const headings = [
-  'Estimate Debt',
-  'Customize estimate',
-  'Affording your loans',
-  'four',
-  'Review'
-]
+// Set up Stepper 
 
-const stepMap = {
-  'school-info': 1,
-  'debt-at-grad': 1,
-  'customize-estimate': 2,
-  'affording-payments': 3,
-  'review-plan': 5,
-}
+  const headings = Array.from(
+        document.querySelectorAll('.o-secondary-nav__link')
+      ).map( (obj) => obj.text.trim() );
 
-let getAndSetCallback
+  const stepMap = Object.fromEntries(
+      Array.from(
+        document.querySelectorAll( '.o-secondary-nav__link' ) )
+        .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
 
-function Wrapper(){
-  const [step, setStep] = useState(1)
+  // const headings = [
+  //   'Estimate Debt',
+  //   'Customize estimate',
+  //   'Affording your loans',
+  //   'four',
+  //   'Review'
+  // ]
 
-  function getAndSetStep(activeName){
-    return setStep(stepMap[activeName])
+  // const stepMap = {
+  //   'school-info': 1,
+  //   'debt-at-grad': 1,
+  //   'customize-estimate': 2,
+  //   'affording-payments': 3,
+  //   'review-plan': 5,
+  // }
+
+
+
+  let getAndSetCallback
+
+  function Wrapper(){
+    const [step, setStep] = useState(1)
+
+    function getAndSetStep(activeName){
+      return setStep(stepMap[activeName])
+    }
+
+    getAndSetCallback = getAndSetStep;
+
+    return step ? <Stepper steps={7} step={step} headings={headings}/> : null
   }
 
-  getAndSetCallback = getAndSetStep;
-
-  return step ? <Stepper steps={5} step={step} headings={headings}/> : null
-}
-
-const root = createRoot(document.getElementById('react-stepper'));
-root.render(<Wrapper/>);
+  const root = createRoot(document.getElementById('react-stepper'));
+  root.render(<Wrapper/>);
