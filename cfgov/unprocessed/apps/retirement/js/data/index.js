@@ -20,17 +20,12 @@ export let lifetime = {};
 /**
  * @param {string} birthdate - Birthday in MM-DD-YYYY format
  * @param {number} salary - Entered salary as a number
- * @param {string} dataLang - Language
  * @returns {Promise} A promise that resolved to the parsed response
  */
-export function fetchApiData(birthdate, salary, dataLang) {
+export function fetchApiData(birthdate, salary) {
   if (typeof birthdate !== 'string' || typeof salary !== 'number')
     throw new Error('Invalid API call');
-  let url = `../retirement-api/estimator/${birthdate}/${salary}/`;
-
-  if (dataLang === 'es') {
-    url = `../${url}es/`;
-  }
+  const url = `../retirement-api/estimator/${birthdate}/${salary}/`;
 
   return fetch(url).then((v) => v.json());
 }

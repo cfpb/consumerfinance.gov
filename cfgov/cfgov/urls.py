@@ -247,6 +247,10 @@ urlpatterns = [
         r"^consumer-tools/retirement/",
         include("retirement_api.urls", namespace="retirement_api"),
     ),
+    re_path(
+        r"^es/herramientas-del-consumidor/jubilacion/",
+        include("retirement_api.es_urls", namespace="retirement_api_es"),
+    ),
     # CCDB5-API
     re_path(
         r"^data-research/consumer-complaints/search/api/v1/",

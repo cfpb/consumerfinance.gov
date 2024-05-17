@@ -241,7 +241,6 @@ function validateBirthdayFields() {
  * using a variety of view-updating functions.
  */
 function getYourEstimates() {
-  const dataLang = document.querySelector('html').getAttribute('lang');
   const dates = validateBirthdayFields();
   const salaryInputElm = document.querySelector('#salary-input');
   const salary = convertStringToNumber(salaryInputElm.value);
@@ -251,7 +250,7 @@ function getYourEstimates() {
   highlightAgeFields(false);
   const loadIndDom = document.querySelector('#api-data-loading-indicator');
   loadIndDom.style.display = 'inline-block';
-  fetchApiData(dates.concat, salary, dataLang).then((resp) => {
+  fetchApiData(dates.concat, salary).then((resp) => {
     if (resp.error === '') {
       updateDataFromApi(resp);
       $('.step-two .question').css('display', 'inline-block');
