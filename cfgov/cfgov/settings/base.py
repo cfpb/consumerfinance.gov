@@ -536,6 +536,7 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
+    "*.googletagmanager.com",
     "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
