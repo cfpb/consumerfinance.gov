@@ -31,6 +31,7 @@ function init() {
 
   financialView.updateFinancialItems();
   appView.updateUI();
+  schoolView.setProgramDefaults();
   updateModelsFromQueryString(query);
 }
 

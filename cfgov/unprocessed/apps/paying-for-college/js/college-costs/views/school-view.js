@@ -40,8 +40,20 @@ const schoolView = {
     updateGradMeterChart();
     updateRepaymentMeterChart();
     schoolView._updateSchoolRadioButtons();
+    schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
+  },
+
+  setProgramDefaults: () => {
+    // Set default program values
+    updateState.byProperty( 'programProgress', '0'); // Not shown or used currently
+    updateState.byProperty( 'programType', 'bachelors');
+    updateState.byProperty( 'programLength', '4');
+    updateState.byProperty( 'programDependency', 'dependent');
+    updateState.byProperty( 'programRate', 'inState');
+    updateState.byProperty( 'programHousing', 'onCampus');
+    schoolView._updateSchoolRadioButtons();
   },
 
   updateSchoolItems: function () {
@@ -54,8 +66,7 @@ const schoolView = {
       }
 
       if (elem.dataset.numberDisplay === 'currency') {
-        console.log( prop, val );
-        val = formatUSD( convertStringToNumber(val) );
+        val = formatUSD({ amount: val});
       }
 
       if (elem.dataset.numberDisplay === 'percentage') {
@@ -108,6 +119,14 @@ const schoolView = {
     }
   },
 
+  _updateSchoolName: () => {
+    const school = getSchoolValue('school');
+
+    schoolView._searchResults.classList.remove('active');
+    if ( school ) schoolView._searchBox.value = school;
+    schoolView._schoolInfo.classList.add('active');
+  },
+
   _updateSchoolRadioButtons: () => {
     const buttons = [
       'programLength',
@@ -117,10 +136,6 @@ const schoolView = {
       'programRate',
       'programDependency',
     ];
-
-    schoolView._searchResults.classList.remove('active');
-    schoolView._searchBox.value = getSchoolValue('school');
-    schoolView._schoolInfo.classList.add('active');
 
     buttons.forEach((name) => {
       const val = getStateValue(name);
@@ -286,13 +301,6 @@ function _handleResultButtonClick(event) {
     clearFinancialCosts();
     updateState.byProperty('costsQuestion', false);
   }
-
-  // We make some assumptions about your situation:
-  updateState.byProperty( 'programProgress', '0');
-  updateState.byProperty( 'programType', 'bachelors');
-  updateState.byProperty( 'programRate', 'outOfState');
-  updateState.byProperty( 'programHousing', 'onCampus');
-  updateState.byProperty( 'programDependency', 'dependent');
 
   // If there's a school_id, then proceed with schoolInfo
   if (typeof button.dataset.school_id !== 'undefined') {
