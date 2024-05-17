@@ -252,6 +252,7 @@ class RelatedPosts(blocks.StructBlock):
         queryset = (
             AbstractFilterPage.objects.live()
             .exclude(id=page.id)
+            .filter(language=page.language)
             .order_by("-date_published")
             .distinct()
             .specific()
