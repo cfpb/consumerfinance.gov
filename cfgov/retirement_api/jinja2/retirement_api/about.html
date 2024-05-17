@@ -12,6 +12,19 @@
         <h2>
             {{ _("Planning your Social Security claiming age") }}
         </h2>
+        {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+        {{ translation_links.render(
+            links=[
+            {
+                'href': url('retirement_api_en:about'),
+                'language': 'en',
+                'text': 'English'
+            },{
+                'href': url('retirement_api_es:about'),
+                'language': 'es',
+                'text': 'Spanish'
+            }]
+        ) }}
         <h3>
             {{ _("How do we generate your estimates?") }}
         </h3>
