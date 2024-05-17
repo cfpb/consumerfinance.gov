@@ -388,7 +388,7 @@
             - No periodic fee: "$0 annual fee"
         #}
         <div class="m-payment-calculation u-mb15">
-            {% if card.annual_fee or not card.periodic_fee_type %}
+            {% if card.annual_fee %}
                 <div class="m-payment-calculation__part">
                     <div class="h2 u-mb0 u-mt0">
                         {{ currency(card.annual_fee) if card.annual_fee else currency(0) }}
@@ -400,7 +400,7 @@
                 </div>
             {% endif %}
             {% if card.monthly_fee %}
-                {% if card.annual_fee or not card.periodic_fee_type %}
+                {% if card.annual_fee %}
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
@@ -414,11 +414,7 @@
                 </div>
             {% endif %}
             {% if card.weekly_fee %}
-                {% if
-                    card.annual_fee
-                    or not card.periodic_fee_type
-                    or card.monthly_fee
-                %}
+                {% if card.annual_fee or card.monthly_fee %}
                     <div class="m-payment-calculation__operator h2">+</div>
                 {% endif %}
                 <div class="m-payment-calculation__part">
@@ -434,7 +430,6 @@
             {% if card.other_periodic_fee_amount %}
                 {% if
                     card.annual_fee
-                    or not card.periodic_fee_type
                     or card.monthly_fee
                     or card.weekly_fee
                 %}
