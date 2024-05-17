@@ -51,7 +51,7 @@ const navigationView = {
     const navItem = document.querySelector(
       '[data-nav_item="' + activeName + '"]',
     );
-    if ( navItem === null ) return;
+    if (navItem === null) return;
     const activeElem = navItem.closest('li');
     const activeParent = activeElem.closest(
       '.o-secondary-nav__list-item--parent',
@@ -101,6 +101,7 @@ const navigationView = {
     if (started && activeName) {
       this._updateSideNav(activeName);
       this._showAndHideSections(activeName);
+      this._updateViewCallback(activeName);
     }
   },
 
@@ -126,8 +127,9 @@ const navigationView = {
    * init - Initialize the navigation view
    * @param {object} body - The body element of the page
    * @param { string } iped - String representing the chosen school.
+   * @param {Function} updateViewCallback - = A function called when the view updates
    */
-  init: function (body, iped) {
+  init: function (body, iped, updateViewCallback) {
     this._navMenu = body.querySelector('.o-secondary-nav');
     this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
@@ -146,6 +148,7 @@ const navigationView = {
     this._affordingChoices = document.querySelectorAll(
       '.affording-loans-choices .m-form-field',
     );
+    this._updateViewCallback = updateViewCallback;
 
     _addButtonListeners(iped);
     this.updateView();
@@ -178,7 +181,7 @@ function _addButtonListeners(iped) {
         _handleGetStartedBtnClick,
       );
     }
-  })
+  });
 }
 
 /**
@@ -227,23 +230,27 @@ function _handleSecondaryNavButtonClick(event) {
 
 /**
  * _handleNavButtonClick - handle the click event for a nav button.
+ * @param event
  */
-function _handleNavButtonClick( event ) {
+function _handleNavButtonClick(event) {
   // Check if there are missing form fields
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
   } else {
     const target = event.target;
-    if ( event.target.dataset.hasOwnProperty( 'destination' ) ) {
-      const destination = event.target.dataset.destination
+    if (event.target.dataset.hasOwnProperty('destination')) {
+      const destination = event.target.dataset.destination;
       sendAnalyticsEvent(
-        'Navigation Button from ' + getStateValue('activeSection') + ' to ' + destination,
+        'Navigation Button from ' +
+          getStateValue('activeSection') +
+          ' to ' +
+          destination,
         'time-to-click',
       );
-      if ( destination === 'debt-at-grad' ) {
+      if (destination === 'debt-at-grad') {
         updateFinancialViewAndFinancialCharts();
-      } 
-      updateState.navigateTo( destination );
+      }
+      updateState.navigateTo(destination);
       window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
       document.querySelector('.college-costs__tool-section.active h2').focus();
     }

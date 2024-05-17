@@ -32,7 +32,7 @@ const jsPaths = [
   `${apps}/owning-a-home/js/common.js`,
   `${apps}/owning-a-home/js/explore-rates/index.js`,
   `${apps}/paying-for-college/js/disclosures/index.js`,
-  `${apps}/paying-for-college/js/college-costs.js`,
+  `${apps}/paying-for-college/js/college-costs.jsx`,
   `${apps}/prepaid-agreements/js/common.js`,
   `${apps}/regulations3k/js/index.js`,
   `${apps}/regulations3k/js/permalinks.js`,

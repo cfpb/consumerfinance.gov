@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { SecondaryNav } from '../../../js/organisms/SecondaryNav.js';
 import { appView } from './college-costs/views/app-view.js';
 import { chartView } from './college-costs/views/chart-view.js';
@@ -11,6 +12,9 @@ import { navigationView } from './college-costs/views/navigation-view.js';
 import { schoolView } from './college-costs/views/school-view.js';
 import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
 
+import { createRoot } from 'react-dom/client';
+import Stepper from './Stepper.jsx';
+
 /**
  * Initialize the app
  */
@@ -23,7 +27,7 @@ function init() {
   expensesView.init();
   financialModel.init();
   schoolView.init(body);
-  navigationView.init(body, query.iped);
+  navigationView.init(body, query.iped, getAndSetCallback);
   financialView.init();
   chartView.init(body);
   appView.init();
@@ -36,3 +40,36 @@ function init() {
 }
 
 window.addEventListener('load', init);
+
+const headings = [
+  'Estimate Debt',
+  'Customize estimate',
+  'Affording your loans',
+  'four',
+  'Review'
+]
+
+const stepMap = {
+  'school-info': 1,
+  'debt-at-grad': 1,
+  'customize-estimate': 2,
+  'affording-payments': 3,
+  'review-plan': 5,
+}
+
+let getAndSetCallback
+
+function Wrapper(){
+  const [step, setStep] = useState(1)
+
+  function getAndSetStep(activeName){
+    return setStep(stepMap[activeName])
+  }
+
+  getAndSetCallback = getAndSetStep;
+
+  return step ? <Stepper steps={5} step={step} headings={headings}/> : null
+}
+
+const root = createRoot(document.getElementById('react-stepper'));
+root.render(<Wrapper/>);
