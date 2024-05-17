@@ -371,6 +371,10 @@ urlpatterns = [
         r"^consumer-tools/financial-well-being/", include("wellbeing.urls")
     ),
     re_path(
+        r"^es/herramientas-del-consumidor/bienestar-financiero/",
+        include("wellbeing.es_urls"),
+    ),
+    re_path(
         r"^about-us/diversity-and-inclusion/",
         include(
             ("diversity_inclusion.urls", "diversity_inclusion"),
