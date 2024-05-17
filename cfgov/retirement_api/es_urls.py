@@ -11,7 +11,7 @@ app_name = "retirement_api_es"
 
 urlpatterns = [
     re_path(
-        r"^before-you-claim/mas-sobre/$",
+        r"^antes-de-solicitar/mas-sobre/$",
         TranslatedTemplateView.as_view(
             template_name="retirement_api/about.html", language="es"
         ),
