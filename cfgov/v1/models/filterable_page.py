@@ -13,6 +13,19 @@ from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
 
 
+class SearchResultsPaginator(Paginator):
+    def _get_page(self, object_list, *args, **kwargs):
+        if object_list and object_list.to_queryset:
+            object_list = (
+                object_list.to_queryset()
+                .specific()
+                .live()
+                .prefetch_related("authors", "categories", "tags")
+            )
+
+        return super()._get_page(object_list, *args, **kwargs)
+
+
 class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
     """Wagtail Page class that allows for filtering of other pages."""
 
@@ -124,8 +137,8 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
 
         return search
 
-    def get_cache_key_prefix(self):
-        return self.url
+    def get_cache_key_prefix(self, request=None):
+        return self.get_url(request=request)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -133,28 +146,46 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
         form_data, has_active_filters = self.get_form_data(request.GET)
         filterable_search = self.get_filterable_search()
         has_unfiltered_results = filterable_search.count() > 0
+
         form = self.get_form_class()(
             form_data,
             filterable_search=filterable_search,
-            cache_key_prefix=self.get_cache_key_prefix(),
+            cache_key_prefix=self.get_cache_key_prefix(request),
         )
-        results_page = self.process_form(request, form)
+        form_valid = form.is_valid()
 
         context.update(
             {
                 "form": form,
+                "form_valid": form_valid,
                 "has_unfiltered_results": has_unfiltered_results,
                 "has_active_filters": has_active_filters,
-                "results_page": results_page,
             }
         )
 
+        if form_valid:
+            context.update(**self.get_valid_form_results(request, form))
+
         return context
 
-    def process_form(self, request, form):
-        results = form.get_page_set() if form.is_valid() else []
-        paginator = Paginator(results, self.filterable_per_page_limit)
-        return paginator.get_page(request.GET.get("page"))
+    def get_valid_form_results(self, request, form):
+        filtered_qs = form.get_page_set()
+        paginator = SearchResultsPaginator(
+            filtered_qs, self.filterable_per_page_limit
+        )
+        filtered_qs_page = paginator.get_page(request.GET.get("page"))
+
+        from v1.serializers import FilterPageSerializer
+
+        serializer = FilterPageSerializer(
+            filtered_qs_page, many=True, context={"request": request}
+        )
+
+        return {
+            "paginator": paginator,
+            "page_number": filtered_qs_page.number,
+            "results": serializer.data,
+        }
 
     def set_do_not_index(self, field, value):
         """Do not index queries unless they consist of a single topic field."""

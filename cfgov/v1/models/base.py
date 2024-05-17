@@ -194,18 +194,15 @@ class CFGOVPage(Page):
         validate_social_sharing_image(self.social_sharing_image)
 
     def get_authors(self):
-        """Returns a sorted list of authors. Default is alphabetical"""
-        return self.alphabetize_authors()
+        """Return page authors sorted alphabetically."""
 
-    def alphabetize_authors(self):
-        """
-        Alphabetize authors of this page by last name,
-        then first name if needed
-        """
-        # First sort by first name
-        author_names = self.authors.order_by("name")
-        # Then sort by last name
-        return sorted(author_names, key=lambda x: x.name.split()[-1])
+        def sorting(name):
+            parts = name.rsplit(" ", 1)
+            return parts[1], parts[0]
+
+        return sorted(
+            [author.name for author in self.authors.all()], key=sorting
+        )
 
     def is_faq_block(self, item):
         return item.block_type == "faq_group" or (

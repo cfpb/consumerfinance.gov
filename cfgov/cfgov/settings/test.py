@@ -21,6 +21,12 @@ LOGGING = {
     },
 }
 
+LOGGING["loggers"]["django.db.backends"] = {
+    "handlers": ["console"],
+    "level": "DEBUG",
+    "propagate": False,
+}
+
 # Disable caching for testing
 CACHES = {
     k: {

@@ -303,8 +303,6 @@ def is_blog(page):
         for choice in choices_for_page_type("blog"):
             if category.name == choice[0]:
                 return True
-    if "Blog" in page.specific_class.__name__:
-        return True
 
 
 def is_report(page):

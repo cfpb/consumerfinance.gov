@@ -16,15 +16,14 @@
                 </th>
             </tr>
         {%- for post in posts %}
-            {% set post_url = pageurl(post) %}
             <tr>
                 <td class="u-w20pct">
-                    {% if is_blog(post) %}
+                    {% if post.is_blog %}
                         {{ category_slug.render(category='blog', href=page_url) }}
-                    {% elif is_report(post) %}
+                    {% elif post.is_report %}
                         {{ category_slug.render(category='report', href=page_url) }}
                     {% else %}
-                        {% for cat in post.categories.all() %}
+                        {% for cat in post.categories %}
                             {% if loop.index > 1 %}
                                 |
                             {% endif %}
@@ -33,15 +32,15 @@
                     {% endif %}
                 </td>
                 <td class="u-w65pct">
-                    <a href="{{ post_url }}">
+                    <a href="{{ post.url }}">
                         <span class="h4 u-mb0">
-                            {{- post.seo_title or post.title -}}
+                            {{- post.title -}}
                         </span>
                     </a>
                 </td>
                 <td class="u-w15pct">
                     {% import 'v1/includes/macros/time.html' as time %}
-                    {{ time.render(post.date_published, {'date':true}) }}
+                    {{ time.render(post.start_date, {'date':true}) }}
                 </td>
             </tr>
         {%- endfor %}

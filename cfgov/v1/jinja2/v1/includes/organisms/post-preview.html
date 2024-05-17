@@ -7,45 +7,33 @@
 
    Description:
 
-   Render an article when given:
+   Render a post preview when given:
 
-   post:                          An object with specific article information.
+   post:                          An object with specific post information.
+   post.url:                      The URL of the post.
+   post.language:                 The language code of the post.
+   post.start_date:               A date to associate with the post.
+   post.title:                    The title of the post.
+   post.authors:                  A list of post authors.
+   post.is_event:                 Whether this post is about an event.
+   post.event_location_str:       The location of this post's event.
+   post.search_description:       A short summary of the post.
+   post.image_url:                An image to associate with the post.
+   post.image_alt:                Alt text to associate with the post image.
 
-   post.specific_class.__name__:  String used to check for EventPage post type.
-   post.specific:                 An object with specific event information.
-   post.specific.start_dt:        A datetime object with the time of the event.
-   post.specific.venue_city:      A string with the event venue city.
-   post.specific.venue_state:     A string with the event venue state.
-   post.specific.venue_name:      A string with the event venue name.
-   post.specific.live_video_id:   YouTube video ID for the event live stream.
+   post.categories:               An list of post categories, with:
+    category.slug:                 The category slug.
+    category.name:                 The category name.
+    category.icon:                 The category icon name.
 
-   post.date_published:           A date timestamp to format.
-   post.categories:               An array with the categories for the post.
-                                  Maximum length of array is 2.
-   post.title:                    A string with the title of the post.
-   post.seo_title:                A string with an alternate title for the post
-                                  (overrides post.title).
-   post.search_description:      A string with content of post summary.
-   post.get_authors():            An array with authors of the post.
-   post.tags:                     An array with the post tags for the post.
-
-   post.event_start_dt:     A datetime object with the time of the event.
-   post.event_stream_link:  A string with livestream link
-   post.event_venue:        A string with the event venue.
-   post.event_street:       A string with the event street.
-   post.event_city:         A string with the event city.
-   post.event_state:        A string with the event state.
-   post.event_zip:          A string with the event zip.
-
-   post.preview_link_text:  A string with the description text of an external link.
-   post.preview_link_url:   A string with the url of an external link.
+   post.tags:                     An list of post tags, with:
+     tag.slug:                     The tag slug.
+     tag.name:                     The tag name.
+     tag.url:                      A URL to filter the current page by the tag.
 
    show_categories: Whether to render categories for this post.
-
    show_date: Whether to render a date for this post.
-
    date_label: Label to use for the date, e.g. "Published".
-
    show_tags: Whether to render the tags for this post.
 
    ========================================================================== #}
@@ -58,102 +46,84 @@
     show_date=true,
     date_label='',
     show_tags=true
-) %}
-    <article class="o-post-preview" lang="{{ post.language }}">
-        <div class="m-meta-header">
-            {% if show_categories and post.categories.exists()  %}
-            <div class="m-meta-header__item-group">
-                {% import 'v1/includes/macros/category-slug.html' as category_slug %}
-                {% for cat in post.categories.all() %}
-                    <span class="m-meta-header__item">{{ category_slug.render(category=cat.name) }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% if show_date %}
-            <div class="m-meta-header__item">
-                <span class="a-date">
-                    {{ date_label | default( '', true ) }}
-                    {% if 'EventPage' in post.specific_class.__name__ %}
-                        {{ time.render(post.specific.start_dt, {'date':true}) }}
-                    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.specific.initial_filing_date %}
-                        {{ time.render(post.specific.initial_filing_date, {'date':true}) }}
-                    {% else %}
-                        {{ time.render(post.date_published, {'date':true}) }}
-                    {% endif %}
+) -%}
+
+<article class="o-post-preview" lang="{{ post.language }}">
+    <div class="m-meta-header">
+        {% if show_categories and post.categories %}
+        <div class="m-meta-header__item-group">
+            {% import 'v1/includes/macros/category-slug.html' as category_slug %}
+            {% for category in post.categories %}
+                <span class="m-meta-header__item">
+                    {{ category_slug.render(category=category.name) }}
                 </span>
-            </div>
-            {% endif %}
+            {% endfor %}
         </div>
-
-        {% cache post.post_preview_cache_key, 'post_preview' %}
-        {% set post_url = pageurl(post) %}
-        {% if 'EventPage' in post.specific_class.__name__ %}
-            {% set event = post.specific %}
-            {% if event.venue_image_type != 'none' %}
-                <div class="o-post-preview__image-container">
-                    {% if event.venue_image_type == 'map' %}
-                        <img class="o-post-preview__image"
-                             src="{{ event.location_image_url() }}"
-                             alt="">
-                    {% elif event.venue_image_type == 'image' and event.venue_image %}
-                        {% set img = image(event.venue_image, 'width-540') %}
-                        <img class="o-post-preview__image"
-                             src="{{ img.url }}"
-                             alt="{{ image_alt_value(img) }}">
-                    {% endif %}
-                </div>
-            {% endif %}
         {% endif %}
 
-        <div class="o-post-preview__content">
-        {% if 'EventPage' in post.specific_class.__name__ %}
-            {% set event = post.specific %}
-            {% if event.start_dt %}
-                <time class="calendar-icon"
-                      data-month="{{ event.start_dt | date('%b') }}"
-                      data-day="{{ event.start_dt | date('%-d') }}"
-                      datetime="{{ event.start_dt | date('%c') }}"
-                      aria-hidden="true">
-                </time>
-            {% endif %}
+        {% if show_date %}
+        <div class="m-meta-header__item">
+            <span class="a-date">
+                {{ date_label | default( '', true ) }}
+                {{ time.render(post.start_date, {'date':true}) }}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if post.image_url %}
+    <div class="o-post-preview__image-container">
+        <img
+            class="o-post-preview__image"
+            src="{{ post.image_url }}"
+            alt="post.image_alt_value"
+        >
+    </div>
+    {% endif %}
+
+    <div class="o-post-preview__content">
+        {% if post.is_event -%}
+        <time class="calendar-icon"
+            data-month="{{ post.start_date | date('%b') }}"
+            data-day="{{ post.start_date | date('%-d') }}"
+            datetime="{{ post.start_date | date('%c') }}"
+            aria-hidden="true">
+        </time>
+        {%- endif %}
+
+        <h3 class="o-post-preview__title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+        </h3>
+
+        {% if post.is_event %}
+        <div class="o-post-preview__subtitle">
+            {{ post.event_location_str }}
+            {{- " - " if post.event_location_str -}}
+            {{ time.render(post.start_date) }}
+        </div>
         {% endif %}
 
-            <h3 class="o-post-preview__title">
-                <a href="{{ post_url }}">
-                    {{- post.seo_title or post.title -}}
-                </a>
-            </h3>
-
-            {% if 'EventPage' in post.specific_class.__name__ %}
-                {% set event = post.specific %}
-                {% if event.start_dt %}
-                    <div class="o-post-preview__subtitle">
-                        {{ event.location_str }}
-                        {{- " - " if event.location_str -}}
-                        {{ time.render(event.start_dt) }}
-                    </div>
-                {% endif %}
-            {% endif %}
-            {% if post.search_description %}
-                <div class="o-post-preview__description">
-                    {{ post.search_description }}
-                </div>
-            {% endif %}
-            {% if post.get_authors() %}
-                <div class="o-post-preview__byline-group">
-                {% for author in post.get_authors() %}
-                    {% if loop.first %}By {% elif loop.last %}and {% endif %}
-                    {{ author.name }}</a>
-                    {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
-                {% endfor %}
-                </div>
-            {% endif %}
-
-            {% if show_tags and post.tags.exists() %}
-                {%- import 'v1/includes/tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags().links, show_heading=false) }}
-            {% endif %}
+        {% if post.search_description %}
+        <div class="o-post-preview__description">
+            {{ post.search_description }}
         </div>
-        {% endcache %}
-    </article>
-{% endmacro %}
+        {% endif %}
+
+        {% if post.authors %}
+        <div class="o-post-preview__byline-group">
+            {% for author in post.authors %}
+                {% if loop.first %}By {% elif loop.last %}and {% endif %}
+                {{ author }}</a>
+                {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {%- if show_tags and post.tags %}
+        {%- import 'v1/includes/tags.html' as tags_tmpl %}
+        {{ tags_tmpl.render(post.tags, show_heading=false) }}
+        {% endif -%}
+    </div>
+</article>
+
+{%- endmacro %}

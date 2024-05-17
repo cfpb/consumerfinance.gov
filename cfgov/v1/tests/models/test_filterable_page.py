@@ -5,9 +5,10 @@ from django.test import RequestFactory, TestCase
 
 from wagtail.models import Page, Site
 
+from core.testutils.test_cases import WagtailPageTreeTestCase
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
-from v1.models import BlogPage, BrowseFilterablePage
+from v1.models import BlogPage, BrowseFilterablePage, SublandingFilterablePage
 from v1.models.filterable_page import AbstractFilterablePage
 
 
@@ -188,3 +189,50 @@ class FilterableListSearchTestCase(TestCase):
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
         self.assertEqual(search.ordering, "title")
+
+
+class FilterableResultsRenderingTests(
+    ElasticsearchTestsMixin, WagtailPageTreeTestCase
+):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
+
+    @classmethod
+    def get_page_tree(cls):
+        return [
+            (
+                SublandingFilterablePage(title="search"),
+                [
+                    BlogPage(title="child1"),
+                    BlogPage(title="child2"),
+                ],
+            )
+        ]
+
+    def test_render(self):
+        page = self.page_tree[0]
+        request = RequestFactory().get("/")
+
+        # Basic page rendering requires 4 database queries:
+        #
+        # 1. Retrieving the Wagtail Site to build the full page URL used for
+        #    the search cache key.
+        # 2. Retrieving the list of page tags to populate the form topic
+        #    choices.
+        # 3. Executing a count() against the database to check if the search
+        #    has any results.
+        #
+        # These are required to generate the TemplateResponse and its context;
+        # the actual HTML content rendering requires additional database
+        # queries which are measured below.
+        with self.assertNumQueries(3):
+            response = page.render(request)
+
+        with self.assertNumQueries(0):
+            response.render()
+
+        breakpoint()

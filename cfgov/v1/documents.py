@@ -124,6 +124,7 @@ class FilterablePagesDocumentSearch:
             search = search.sort(ordering)
 
         self.search_obj = search
+        self._count = None
 
     def filter_topics(self, topics=None):
         if topics is None:
@@ -132,6 +133,7 @@ class FilterablePagesDocumentSearch:
             self.search_obj = self.search_obj.filter(
                 "terms", tags__slug=topics
             )
+            self._count = None
 
     def filter_categories(self, categories=None):
         if categories is None:
@@ -140,6 +142,7 @@ class FilterablePagesDocumentSearch:
             self.search_obj = self.search_obj.filter(
                 "terms", categories__name=categories
             )
+            self._count = None
 
     def filter_language(self, language=None):
         if language is None:
@@ -148,6 +151,7 @@ class FilterablePagesDocumentSearch:
             self.search_obj = self.search_obj.filter(
                 "terms", language=language
             )
+            self._count = None
 
     def filter_date(self, from_date=None, to_date=None):
         if from_date and to_date:
@@ -165,6 +169,9 @@ class FilterablePagesDocumentSearch:
         for range in ranges:
             self.search_obj = self.search_obj.filter("range", **range)
 
+        if ranges:
+            self._count = None
+
     def search_title(self, title=""):
         if title not in ([], "", None):
             query = MultiMatch(
@@ -178,6 +185,7 @@ class FilterablePagesDocumentSearch:
                 slop=2,
             )
             self.search_obj = self.search_obj.query(query)
+            self._count = None
 
     def filter(
         self,
@@ -199,15 +207,19 @@ class FilterablePagesDocumentSearch:
         self.filter_categories(categories=categories)
         self.filter_language(language=language)
         self.filter_date(from_date=from_date, to_date=to_date)
+        self._count = None
 
     def search(self, title=""):
         """Perform a search for the given title"""
         self.search_title(title=title)
-        return self.search_obj[0 : self.count()].to_queryset(keep_order=True)
+        self._count = None
+        return self.search_obj
 
     def count(self):
         """Return the search object's current result count"""
-        return self.search_obj.count()
+        if self._count is None:
+            self._count = self.search_obj.count()
+        return self._count
 
     def get_raw_results(self):
         """Get the Elasticsearch DSL Response object for current results.
