@@ -119,7 +119,7 @@ APPS = [
     "/paying-for-college/",
     "/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/",  # noqa: E501
     "/retirement/before-you-claim/",
-    "/retirement/before-you-claim/es/",
+    "/es/retirement/before-you-claim/",
     "/consumer-tools/auto-loans/",
     "/consumer-tools/credit-reports-and-scores/",
     "/consumer-tools/debt-collection/",
