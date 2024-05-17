@@ -24,6 +24,8 @@
 
    value.submit_aria_label: Label for the search button.
 
+   value.max_length: The maximum length of characters for the input.
+
    ========================================================================== #}
 
 {% macro render(value) %}
@@ -43,7 +45,7 @@
                placeholder="{{ value.placeholder }}"
                title="{{ value.placeholder }}"
                autocomplete="off"
-               maxlength="75"
+               maxlength="{{ value.max_length or '75' }}"
                {% if value.input_aria_describedby_id %}
                aria-describedby="{{ value.input_aria_describedby_id }}"
                {% endif %}>
