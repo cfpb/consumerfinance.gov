@@ -45,7 +45,7 @@ Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:
 
 ```sh
-git clone git@github.com:cfpb/consumerfinance.gov.git
+git clone https://github.com/cfpb/consumerfinance.gov.git
 cd consumerfinance.gov
 ```
 

@@ -30,29 +30,6 @@ it would be a good idea to peruse their docs before diving in here.
 
 ## Running unit tests
 
-### Run a single test file
-
-To run a single test file, pass the name (or path) of the spec:
-
-```bash
-yarn jest Notification-spec.js
-# Equivalent to:
-yarn jest test/unit_tests/js/molecules/Notification-spec.js
-# The name argument would technically would match all Notification-spec.js files
-# This usually isn't a problem in our codebase (and you can always get more specific if needed)
-```
-
-### Run a directory of unit tests
-
-A directory of unit tests can be run by passing its name or path:
-
-```bash
-yarn jest organisms
-yarn jest test/unit_tests/js/organisms
-```
-
-### Run all unit tests
-
 To run all of the unit tests:
 
 ```bash
@@ -64,6 +41,23 @@ To first lint all files and then run tests:
 ```bash
 yarn test
 ```
+
+!!! note
+
+    To run a single test, or a directory of tests, you can run, for example:
+
+    ```bash
+    # Single test file:
+    yarn jest Notification-spec.js
+    # Equivalent to:
+    yarn jest test/unit_tests/js/molecules/Notification-spec.js
+
+    # Directory:
+    yarn jest organisms
+    # Equivalent to:
+    yarn jest test/unit_tests/js/organisms
+
+    ```
 
 Because we invoke jest directly, you can pass any command-line args it accepts
 to filter your output or to target specific tests [see the docs for more](https://jestjs.io/docs/cli).
