@@ -208,12 +208,7 @@ For example:</p>
 <pre class="highlight"><code>nav:
 - Introduction: index.md</code></pre>
 <h2 id="running-the-docs-locally">Running the docs locally<a class="headerlink" href="#running-the-docs-locally" title="Permanent link">¶</a></h2>
-<p>With a
-<a href="../installation/#set-up-a-local-python-environment-optional">stand-alone Python virtualenv for consumerfinance.gov</a>:</p>
-<pre class="highlight"><code class="language-bash">pyenv activate consumerfinance.gov
-pip install -r requirements/docs.txt
-mkdocs serve -a :8888</code></pre>
-<p>Once running, they are accessible at <a href="http://localhost:8888">http://localhost:8888</a>.</p>
+<p>See <a href="../running-docs/">Running documentation site locally</a>.</p>
 <h2 id="deploying-the-docs-to-github-pages">Deploying the docs to GitHub Pages<a class="headerlink" href="#deploying-the-docs-to-github-pages" title="Permanent link">¶</a></h2>
 <p>Every time a PR is merged to main,
 GitHub Actions will build and deploy the documentation to
@@ -229,8 +224,12 @@ The docs will then be available at <a href="https://USER.github.io/consumerfinan
 for more information.</p>
 <h2 id="public-vs-private-documentation">Public vs. private documentation<a class="headerlink" href="#public-vs-private-documentation" title="Permanent link">¶</a></h2>
 <p>Some internal documentation is not suitable for inclusion in the public docs.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Internal documentation can be linked from publicly-viewable documentation only
-if internal domain names and URLs are not shared publicly. To support such linking,
+if internal domain names and URLs are not shared publicly.</p>
+</div>
+<p>To support such linking,
 the consumerfinance.gov Wagtail admin has a custom "Internal documentation" setting
 that allows for dynamic linking to an internal URL without exposing that URL in
 public source code or documentation.</p>
