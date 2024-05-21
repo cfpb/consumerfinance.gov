@@ -161,6 +161,11 @@
       padding-bottom: unit((20px / @base-font-size-px), rem);
     });
   }
+
+  dl {
+    margin-bottom: 0;
+  }
+
   &:hover {
     > a {
       box-shadow:
@@ -204,6 +209,11 @@
 
   .m-card__footer {
     margin-top: unit((5px / @base-font-size-px), rem);
+
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
+      margin-top: unit((20px / @base-font-size-px), rem);
+    });
   }
 
   .m-apr-rating {
@@ -253,12 +263,10 @@
   grid-template-columns: 2fr 3fr;
   column-gap: 20px;
   row-gap: 15px;
-  margin-bottom: 0;
 
   .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
-    margin-bottom: unit((15px / @base-font-size-px), rem);
   });
 }
 
