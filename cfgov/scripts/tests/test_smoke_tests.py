@@ -6,12 +6,7 @@ from unittest import mock
 import requests
 
 from scripts import static_asset_smoke_test
-from scripts.http_smoke_test import (
-    ALLOWED_TIMEOUTS,
-    FALLBACK_URLS,
-    check_urls,
-    get_full_list,
-)
+from scripts.http_smoke_test import ALLOWED_TIMEOUTS, URLS, check_urls
 
 
 class StaticAssetTests(unittest.TestCase):
@@ -63,21 +58,6 @@ class HttpTests(unittest.TestCase):
     """Tests for the http smoke tests."""
 
     @mock.patch("scripts.http_smoke_test.requests.get")
-    def test_get_full_list(self, mock_get):
-        mock_response = mock.Mock()
-        mock_response.json.return_value = {"top": ["url1"], "apps": ["url2"]}
-        mock_get.return_value = mock_response
-        full_list = get_full_list()
-        self.assertEqual(len(full_list), 2)
-        self.assertEqual(mock_get.call_count, 1)
-
-    @mock.patch("scripts.http_smoke_test.requests.get", side_effect=ValueError)
-    def test_get_full_list_fallback(self, mock_get):
-        """Check that script falls back to hard-coded list."""
-        full_list = get_full_list()
-        self.assertEqual(len(full_list), len(FALLBACK_URLS))
-
-    @mock.patch("scripts.http_smoke_test.requests.get")
     def test_http_success_url_list(self, mock_get):
         mock_response = mock.Mock()
         mock_response.status_code = 200
@@ -86,14 +66,12 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(mock_get.call_count, 2)
 
     @mock.patch("scripts.http_smoke_test.requests.get")
-    @mock.patch("scripts.http_smoke_test.get_full_list")
-    def test_http_success_full(self, mock_list, mock_get):
-        mock_list.return_value = FALLBACK_URLS
+    def test_http_success_full(self, mock_get):
         mock_response = mock.Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
         self.assertTrue(check_urls("pro1"))
-        self.assertEqual(mock_get.call_count, len(FALLBACK_URLS))
+        self.assertEqual(mock_get.call_count, len(URLS))
 
     @mock.patch("scripts.http_smoke_test.requests.get")
     def test_http_fail_url_list(self, mock_get):
@@ -106,15 +84,13 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(mock_get.call_count, 1)
 
     @mock.patch("scripts.http_smoke_test.requests.get")
-    @mock.patch("scripts.http_smoke_test.get_full_list")
-    def test_http_fail_full(self, mock_list, mock_get):
+    def test_http_fail_full(self, mock_get):
         mock_response = mock.Mock()
-        mock_list.return_value = FALLBACK_URLS
         mock_response.status_code = 404
         mock_get.return_value = mock_response
         result = check_urls("pro1")
         self.assertFalse(result)
-        self.assertEqual(mock_get.call_count, len(FALLBACK_URLS))
+        self.assertEqual(mock_get.call_count, len(URLS))
 
     @mock.patch(
         "scripts.http_smoke_test.requests.get",
@@ -129,7 +105,7 @@ class HttpTests(unittest.TestCase):
         side_effect=requests.exceptions.Timeout,
     )
     def test_http_fail_timeout_full(self, mock_get):
-        expected_call_count = len(FALLBACK_URLS) + 1  # one call for s3
+        expected_call_count = len(URLS)
         self.assertFalse(check_urls("pro1"))
         self.assertEqual(mock_get.call_count, expected_call_count)
 
@@ -139,7 +115,7 @@ class HttpTests(unittest.TestCase):
     )
     def test_allowed_timeouts(self, mock_get):
         too_many = ALLOWED_TIMEOUTS + 2
-        urls = FALLBACK_URLS[:too_many]
+        urls = URLS[:too_many]
         self.assertFalse(check_urls("pro1", url_list=urls))
 
     @mock.patch(
@@ -148,9 +124,7 @@ class HttpTests(unittest.TestCase):
     )
     def test_http_fail_connection_error(self, mock_get):
         check_urls("pro1")
-        self.assertEqual(
-            mock_get.call_count, len(FALLBACK_URLS) + 1
-        )  # one call for s3
+        self.assertEqual(mock_get.call_count, len(URLS))
 
     @mock.patch(
         "scripts.http_smoke_test.requests.get",
