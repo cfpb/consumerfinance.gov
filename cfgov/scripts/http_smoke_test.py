@@ -63,35 +63,35 @@ FULL = False
 BASE = "https://www.consumerfinance.gov"
 S3_URI = "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
 
-# Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
+# Fall-back list of top 25 URLs, as of May 2024
 # All URLs in the list should be canonical locations of the given pages,
 # not redirects.
 TOP = [
-    "/",  # home page
-    "/about-us/blog/guide-covid-19-economic-stimulus-checks/",
-    "/about-us/blog/guide-coronavirus-mortgage-relief-options/",
-    "/find-a-housing-counselor/",
+    "/",
     "/complaint/",
+    "/find-a-housing-counselor/",
+    "/housing/housing-insecurity/help-for-renters/get-help-paying-rent-and-bills/",
     "/learnmore/",
-    "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
-    "/coronavirus/",
-    "/about-us/blog/guide-covid-19-economic-stimulus-checks/#qualify/",
-    "/consumer-tools/prepaid-cards/",
-    "/coronavirus/cares-act-mortgage-forbearance-what-you-need-know/",
-    "/about-us/blog/economic-impact-payment-prepaid-card/",
-    "/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/",  # noqa: E501
-    "/complaint/getting-started/",
-    "/coronavirus/mortgage-and-housing-assistance/",
-    "/ask-cfpb/what-is-forbearance-en-289/",
-    "/about-us/blog/guide-covid-19-economic-stimulus-checks/#when/",
+    "/consumer-tools/debt-collection/",
+    "/consumer-tools/guide-to-filing-your-taxes/",
     "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",
-    "/about-us/blog/protect-yourself-financially-from-impact-of-coronavirus/",
-    "/about-us/contact-us/",
-    "/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/",  # noqa: E501
-    "/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/",  # noqa: E501
-    "/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/",
+    "/ask-cfpb/how-do-i-negotiate-a-settlement-with-a-debt-collector-en-1447/",
+    "/ask-cfpb/how-do-i-get-a-free-copy-of-my-credit-reports-en-5/",
     "/rules-policy/regulations/",
-    "/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/",  # noqa: E501
+    "/about-us/newsroom/consumer-advisory-opportunity-to-cancel-student-loan-debt-ends-soon/",
+    "/ask-cfpb/what-is-a-money-market-account-en-1007/",
+    "/data-research/consumer-complaints/search/",
+    "/about-us/newsroom/",
+    "/enforcement/actions/",
+    "/ask-cfpb/does-a-persons-debt-go-away-when-they-die-en-1463/",
+    "/about-us/contact-us/",
+    "/ask-cfpb/where-can-i-get-my-credit-scores-en-316/",
+    "/ask-cfpb/what-is-a-reverse-mortgage-en-224/",
+    "/ask-cfpb/how-do-i-get-my-money-back-after-i-discover-an-unauthorized-transaction-or-money-missing-from-my-bank-account-en-1017/",
+    "/paying-for-college/student-loan-forgiveness/",
+    "/ask-cfpb/what-do-i-need-to-know-if-im-thinking-about-consolidating-my-credit-card-debt-en-1861/",
+    "/rules-policy/regulations/1026/",
+    "/ask-cfpb/what-should-i-do-if-im-sued-by-a-debt-collector-or-creditor-en-334/",
 ]
 
 # URLs for cfgov sub-apps that are expected to be present
@@ -155,24 +155,13 @@ APPS = [
     "/compliance/implementation-guidance/hmda-implementation/",
     "/compliance/implementation-guidance/mortserv/",
     "/compliance/implementation-guidance/tila-respa-disclosure-rule/",
+    "/oah-api/rates/rate-checker?price=200000&loan_amount=180000&minfico=740&maxfico=759&state=AL&rate_structure=fixed&loan_term=30&loan_type=conf",
+    "/consumer-tools/retirement/retirement-api/estimator/1-1-1970/99000/",
+    "/data-research/consumer-complaints/search/api/v1/?size=1",
 ]
 
 # call `set` on the combined list to weed out dupes
-FALLBACK_URLS = sorted(set(TOP + APPS))
-
-
-def get_full_list():
-    """Fetch a list of URLs to test from s3, or fall back to local default."""
-    try:
-        url_data = requests.get(S3_URI).json()
-    except Exception as e:
-        logger.warning(
-            "Using fallback because request for S3 list failed: {}".format(e)
-        )
-        url_list = FALLBACK_URLS
-    else:
-        url_list = sorted(set(url_data.get("top") + url_data.get("apps")))
-    return url_list
+URLS = sorted(set(TOP + APPS))
 
 
 def check_urls(base, url_list=None):
@@ -199,7 +188,7 @@ def check_urls(base, url_list=None):
     failures = []
     starter = time.time()
     if not url_list:
-        url_list = get_full_list()
+        url_list = URLS
     for url_suffix in url_list:
         logger.info(url_suffix)
         count += 1
