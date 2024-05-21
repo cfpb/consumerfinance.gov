@@ -202,7 +202,6 @@ function updateSchoolData(iped, assumptions) {
       if ( assumptions === true ) {
         updateState.byProperty('costsQuestion', 'y');
         updateFinancialsFromSchool();
-        financialModel.assumeMaximumLoans();
       }
 
       updateSchoolView();

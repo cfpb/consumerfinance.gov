@@ -27,8 +27,12 @@ import { convertStringToNumber } from '../../../../../js/modules/util/format.js'
 
 const financialModel = {
   /* Note: financialModel's values should all be numeric. Other information (degree type,
-     housing situation, etc) is stored in the stateModel, schoolModel */
-  values: {},
+     housing situation, etc) is stored in the stateModel, schoolModel.
+     Note: The list of 'values' properties is scraped from the HTML, except gapLoan values. */
+  values: {
+    rate_gapLoan: 0.01,
+    fee_gapLoan: 0.01
+  },
 
   createFinancialProperty: function (name) {
     if (!{}.hasOwnProperty.call(financialModel.values, name)) {
@@ -59,11 +63,10 @@ const financialModel = {
     financialModel._calculateTotals();
     // Fill any remaining gap with a theoretical gap loan
     if ( financialModel.values.total_gap > 0 ) {
-      financialModel.values.privLoan_gapLoan = financialModel.values.total_gap;
+      financialModel.values.gapLoan_gapLoan = financialModel.values.total_gap;
     } else {
-      financialModel.values.privLoan_gapLoan = 0;
+      financialModel.values.gapLoan_gapLoan = 0;
     }
-    console.log( 'f', financialModel.values.privLoan_gapLoan )
     debtCalculator();
 
     // set monthly salary value
@@ -140,7 +143,6 @@ const financialModel = {
       fellowAssist: 'total_fellowAssist',
       income: 'total_income',
       fedLoan: 'total_fedLoans',
-      publicLoan: 'total_publicLoans',
       workStudy: 'total_workStudy',
       plusLoan: 'total_plusLoans',
       privLoan: 'total_privLoans',
@@ -173,8 +175,7 @@ const financialModel = {
     // Calculate more totals
     vals.total_borrowing =
       vals.total_fedLoans +
-      vals.total_publicLoans +
-      vals.total_privateLoans +
+      vals.total_privLoans +
       vals.total_plusLoans;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
@@ -192,7 +193,7 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
-      vals.total_funding - vals.total_costs,
+      vals.total_funding - vals.total_costs 
     );
 
     if (vals.total_gap < 0) {
@@ -432,31 +433,6 @@ const financialModel = {
       }
     }
     financialModel.recalculate();
-  },
-
-  /**
-   * assumeMaxLoans - Put in the maximum loans
-   */
-   assumeMaximumLoans: () => {
-    // // Fill the gap with Direct subsidized loans
-    // if ( financialModel.values.total_gap > 0 ) {
-    //   financialModel.values.fedLoan_directSub = financialModel.values.total_gap;
-    //   financialModel.recalculate();
-    // }
-
-    // // Fill the gap with Direct unsubsidized loans
-    // if ( financialModel.values.total_gap > 0 ) {
-    //   financialModel.values.fedLoan_directUnsub = financialModel.values.total_gap;
-    //   financialModel.recalculate();
-    // }
-    
-    // Fill any remaining gap with a theoretical gap loan
-    if ( financialModel.values.total_gap > 0 ) {
-      financialModel.values.privLoan_gapLoan = financialModel.values.total_gap;
-      financialModel.values.rate_gapLoan = financialModel.values.rate_directUnsub;
-      financialModel.values.fee_gapLoan = financialModel.values.fee_directUnsub;
-      financialModel.recalculate();
-    }
   },
 
   /**

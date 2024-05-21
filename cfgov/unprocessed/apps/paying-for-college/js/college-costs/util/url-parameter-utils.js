@@ -58,16 +58,6 @@ const urlParameters = {
   subl: 'financialModel.fedLoan_directSub',
   unsl: 'financialModel.fedLoan_directUnsub',
 
-  insl: 'financialModel.publicLoan_institutional',
-  insr: 'financialModel.rate_institutional',
-  insf: 'financialModel.fee_institutional',
-  stal: 'financialModel.publicLoan_state',
-  star: 'financialModel.rate_state',
-  staf: 'financialModel.fee_state',
-  npol: 'financialModel.publicLoan_nonprofit',
-  npor: 'financialModel.rate_nonprofit',
-  npof: 'financialModel.fee_nonprofit',
-
   pers: 'financialModel.savings_personal',
   fams: 'financialModel.savings_family',
   '529p': 'financialModel.savings_collegeSavings',

@@ -109,11 +109,12 @@ function calculateDirectLoanDebt(
  * Calculate debts based on financial values
  */
 function debtCalculator() {
+  // TODO: This code uses a pre-defined namespace. It'd be nice if it was dynamic.
   const fedLoans = ['directSub', 'directUnsub'];
   const plusLoans = ['gradPlus', 'parentPlus'];
-  const publicLoans = ['state', 'institutional', 'nonprofit'];
-  const privateLoans = ['privLoan1', 'gapLoan'];
-  const newLoans = fedLoans.concat(plusLoans, publicLoans, privateLoans);
+  const privateLoans = ['privLoan1'];
+  const gapLoan = ['gapLoan'];
+  const newLoans = fedLoans.concat(plusLoans, privateLoans, gapLoan);
   const fin = financialModel.values;
   const debts = {
     totalAtGrad: 0,
@@ -170,23 +171,6 @@ function debtCalculator() {
 
   // calculate debts of other loans
 
-  publicLoans.forEach((key) => {
-    const principal = fin['publicLoan_' + key] * fin.other_programLength;
-    let int = calcInterestAtGrad(
-      fin['publicLoan_' + key],
-      fin['rate_' + key],
-      fin.other_programLength,
-    );
-
-    if (isNaN(int)) {
-      int = 0;
-    }
-
-    totalBorrowing += principal;
-    debts[key] = int + principal;
-    interest[key] = int;
-  });
-
   privateLoans.forEach((key) => {
     const principal = fin['privLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
@@ -203,6 +187,24 @@ function debtCalculator() {
     debts[key] = int + principal;
     interest[key] = int;
   });
+
+  //gap loan calc
+  gapLoan.forEach( key => {
+    const principal = fin['gapLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
+      fin['gapLoan_' + key],
+      fin['rate_' + key],
+      fin.other_programLength,
+    );
+
+    if (isNaN(int)) {
+      int = 0;
+    }
+
+    totalBorrowing += principal;
+    debts[key] = int + principal;
+    interest[key] = int;
+  })
 
   newLoans.forEach((key) => {
     interest.totalAtGrad += interest[key];
@@ -282,6 +284,9 @@ function debtCalculator() {
   fin.total_borrowingAtGrad = totalBorrowing;
   for (const key in debts) {
     fin['debt_' + key] = debts[key];
+  }
+  for (const key in interest) {
+    fin['interest_' + key] = interest[key];
   }
 }
 

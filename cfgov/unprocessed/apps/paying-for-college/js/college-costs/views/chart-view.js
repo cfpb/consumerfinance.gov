@@ -552,10 +552,10 @@ const chartView = {
     //   { ...columnChartOpts, ...compareCostOfBorrowingOpts },
     // );
 
-    chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
-      ...horizontalBarOpts,
-      ...makePlanOpts,
-    });
+    // chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
+    //   ...horizontalBarOpts,
+    //   ...makePlanOpts,
+    // });
 
     chartView.maxDebtElems.forEach( elem => {
       chartView.maxDebtCharts.push( Highcharts.chart( elem, { ...maxDebtOpts, } ) );
@@ -609,7 +609,6 @@ const chartView = {
       decimalPlaces: 0,
     });
 
-    TODO: Use this code if these charts are added back into the app
     chartView.costOfBorrowingChart.yAxis[0].update({
       max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
     });
@@ -624,35 +623,36 @@ const chartView = {
   },
 
   updateMakePlanChart: () => {
-    const totalCosts = getFinancialValue('total_costs');
-    const totalFunding = getFinancialValue('total_funding');
-    const max = Math.max(totalCosts * 1.1, totalFunding * 1.1);
-    const text =
-      'Your costs<br>' +
-      formatUSD({
-        amount: totalCosts,
-        decimalPlaces: 0,
-      });
+    // TODO: Remove this if this chart is unused
+    // const totalCosts = getFinancialValue('total_costs');
+    // const totalFunding = getFinancialValue('total_funding');
+    // const max = Math.max(totalCosts * 1.1, totalFunding * 1.1);
+    // const text =
+    //   'Your costs<br>' +
+    //   formatUSD({
+    //     amount: totalCosts,
+    //     decimalPlaces: 0,
+    //   });
 
-    chartView.makePlanChart.yAxis[0].update({
-      max: max,
-      plotLines: [
-        {
-          color: 'red',
-          width: 2,
-          value: totalCosts,
-          zIndex: 4,
-          label: {
-            align: 'center',
-            text: text,
-            rotation: 0,
-            x: 0,
-            y: -25,
-          },
-        },
-      ],
-    });
-    chartView.makePlanChart.series[0].setData([totalFunding]);
+    // chartView.makePlanChart.yAxis[0].update({
+    //   max: max,
+    //   plotLines: [
+    //     {
+    //       color: 'red',
+    //       width: 2,
+    //       value: totalCosts,
+    //       zIndex: 4,
+    //       label: {
+    //         align: 'center',
+    //         text: text,
+    //         rotation: 0,
+    //         x: 0,
+    //         y: -25,
+    //       },
+    //     },
+    //   ],
+    // });
+    // chartView.makePlanChart.series[0].setData([totalFunding]);
   },
 
   updateMaxDebtChart: () => {
