@@ -74,7 +74,9 @@
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
                 </div>
-                {{ apr_rating(card.purchase_apr_for_tier_rating) }}
+                <dl>
+                    {{ apr_rating(card.purchase_apr_for_tier_rating) }}
+                </dl>
                 <dl class="m-data-specs">
                     <div class="m-data-spec m-data-spec--apr">
                         <dt><strong>Purchase APR</strong></dt>
