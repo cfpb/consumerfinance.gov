@@ -1,9 +1,8 @@
 <section class="college-costs__tool-section college-costs__tool-section--school-search" id="college-costs_school-search" data-tool-section="school-info">
     <div class="school-search__start" id="school-search_what-school">
-        <h2 tabindex="-1">School & living situation</h2>
-        <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
+        <h2 tabindex="-1">Estimate how much your program costs</h2>
         <label class="a-label a-label--heading u-mb15" for="search__school-input">
-            Enter the name of the school. (You can also search by mascot.)
+            Enter the name of your school.
         </label>
         <p>
             <input type="text"
@@ -83,7 +82,7 @@
         </div>
 
         <div class="block block--sub program-select" style="display: none">
-          <h3 class="h4">Select your program</h3>
+          <h3 class="h4">Select your program (optional)</h3>
           <div class="a-select">
             <select id="program-select">
 
@@ -299,17 +298,7 @@
         </div>
     </div>
 
-    <h3 class="h4">How much money do you and your family have on hand to put towards school?</h3>
-    <div class="block block--sub program-question school-info--savings-total">
-      <p>
-          <input type="text"
-                 name="search__savings-total"
-                 class="a-text-input"
-                 autocomplete="off"
-                 data-financial-item="initial_savingsTotal">
-      </p>
-    </div>
-    <div data-state-based-visibility="school-fields-errors" style="display: none">
+    <div data-state-based-visibility="school-fields-errors">
         {{ notification.render(
             'error',
             true,
@@ -328,6 +317,6 @@
     </div>
 
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="debt-at-grad">Estimate how much I'll owe</button>
+        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="school-costs">Estimate how much you'll owe</button>
     </div>
 </section>

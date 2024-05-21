@@ -112,7 +112,7 @@ function debtCalculator() {
   const fedLoans = ['directSub', 'directUnsub'];
   const plusLoans = ['gradPlus', 'parentPlus'];
   const publicLoans = ['state', 'institutional', 'nonprofit'];
-  const privateLoans = ['privateLoan1'];
+  const privateLoans = ['privLoan1', 'gapLoan'];
   const newLoans = fedLoans.concat(plusLoans, publicLoans, privateLoans);
   const fin = financialModel.values;
   const debts = {

@@ -608,7 +608,7 @@
                         'label': 'Private loans',
                         'value': '$0',
                         'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_privateLoans"',
+                        'data_attribute': 'data-financial-item="total_privLoans"',
                         'note': 'If you need a private loan, you\'ll have to apply directly to lenders. Shop around for the lowest interest rates and loan fees. Private lenders typically require a cosigner for these loans.'
                     } %}
                     {% call() flyout(flyout_settings) %}
@@ -617,33 +617,33 @@
                             {{
                                 input.render({
                                     'label': 'Loan amount',
-                                    'id': 'plan__privateLoan1',
+                                    'id': 'plan__privLoan1',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="privLoan_privateLoan1"'
+                                    'data_attribute': 'data-financial-item="privLoan_privLoan1"'
                                 })
                             }}
                             {{
                                 input.render({
                                     'label': 'Interest rate (%)',
-                                    'id': 'plan__privateLoan1Rate',
+                                    'id': 'plan__privLoan1Rate',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="rate_privateLoan1"',
+                                    'data_attribute': 'data-financial-item="rate_privLoan1"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
                                 })
                             }}
                             {{
                                 input.render({
                                     'label': 'Loan fee (%)',
-                                    'id': 'plan__privateLoan1Fee',
+                                    'id': 'plan__privLoan1Fee',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="fee_privateLoan1"',
+                                    'data_attribute': 'data-financial-item="fee_privLoan1"',
                                     'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                                 })
                             }}
                             <div class="undergrad-content u-mt30">
                                 {{
                                     checkbox.render({
-                                        'id': 'plan__privateLoan1Repay',
+                                        'id': 'plan__privLoan1Repay',
                                         'label': 'Click here if you plan to repay this private loan, and this loan amount will be added to your projected debt total.',
                                   })
                                 }}

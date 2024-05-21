@@ -159,22 +159,6 @@ main.college-costs {
     }
   }
 
-  // Costs button content control
-  &:not([data-state_costsquestion]) {
-    // Don't show the Next button on Costs page until a costs choice is made
-    &[data-state_activesection='costs'] {
-      .college-costs__tool-section-buttons {
-        display: none;
-      }
-    }
-    #costs_inputs-section {
-      display: none;
-    }
-    [data-state-based-visibility='costs-question-hide'] {
-      display: block;
-    }
-  }
-
   // Program selection visibility
   &[data-state_schoolhasprograms='yes'] {
     [data-state-based-visibility='school-has-programs'] {

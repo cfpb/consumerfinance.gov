@@ -57,6 +57,13 @@ const financialModel = {
     financialModel.rate_existingDebt = getConstantsValue('existingDebtRate');
     financialModel._updateRates();
     financialModel._calculateTotals();
+    // Fill any remaining gap with a theoretical gap loan
+    if ( financialModel.values.total_gap > 0 ) {
+      financialModel.values.privLoan_gapLoan = financialModel.values.total_gap;
+    } else {
+      financialModel.values.privLoan_gapLoan = 0;
+    }
+    console.log( 'f', financialModel.values.privLoan_gapLoan )
     debtCalculator();
 
     // set monthly salary value
@@ -136,7 +143,7 @@ const financialModel = {
       publicLoan: 'total_publicLoans',
       workStudy: 'total_workStudy',
       plusLoan: 'total_plusLoans',
-      privLoan: 'total_privateLoans',
+      privLoan: 'total_privLoans',
     };
 
     // Reset all totals to 0
@@ -181,6 +188,7 @@ const financialModel = {
       vals.total_directCosts +
       vals.total_indirectCosts +
       vals.otherCost_additional;
+    vals.total_costOfProgram = vals.total_costs * vals.other_programLength
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
@@ -427,26 +435,26 @@ const financialModel = {
   },
 
   /**
-   * assumeMaxLoans - Put in the maximum loans ZZZ
+   * assumeMaxLoans - Put in the maximum loans
    */
    assumeMaximumLoans: () => {
-    // Fill the gap with Direct subsidized loans
-    if ( financialModel.values.total_gap > 0 ) {
-      financialModel.values.fedLoan_directSub = financialModel.values.total_gap;
-      financialModel.recalculate();
-    }
+    // // Fill the gap with Direct subsidized loans
+    // if ( financialModel.values.total_gap > 0 ) {
+    //   financialModel.values.fedLoan_directSub = financialModel.values.total_gap;
+    //   financialModel.recalculate();
+    // }
 
-    // Fill the gap with Direct unsubsidized loans
-    if ( financialModel.values.total_gap > 0 ) {
-      financialModel.values.fedLoan_directUnsub = financialModel.values.total_gap;
-      financialModel.recalculate();
-    }
+    // // Fill the gap with Direct unsubsidized loans
+    // if ( financialModel.values.total_gap > 0 ) {
+    //   financialModel.values.fedLoan_directUnsub = financialModel.values.total_gap;
+    //   financialModel.recalculate();
+    // }
     
-    // Fill any remaining gap with a theoretical private loan
+    // Fill any remaining gap with a theoretical gap loan
     if ( financialModel.values.total_gap > 0 ) {
-      financialModel.values.privLoan_privateLoan1 = financialModel.values.total_gap;
-      financialModel.values.rate_privateLoan1 = financialModel.values.rate_directUnsub;
-      financialModel.values.fee_privateLoan1 = financialModel.values.fee_directUnsub;
+      financialModel.values.privLoan_gapLoan = financialModel.values.total_gap;
+      financialModel.values.rate_gapLoan = financialModel.values.rate_directUnsub;
+      financialModel.values.fee_gapLoan = financialModel.values.fee_directUnsub;
       financialModel.recalculate();
     }
   },

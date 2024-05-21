@@ -39,6 +39,7 @@ const urlParameters = {
   schg: 'financialModel.grant_school',
   tuig: 'financialModel.grant_tuition',
   othg: 'financialModel.grant_other',
+  geng: 'financialModel.grant_general',
 
   mta: 'financialModel.grant_mta',
   gi: 'financialModel.grant_gibill',
@@ -47,6 +48,7 @@ const urlParameters = {
   stas: 'financialModel.scholarship_state',
   schs: 'financialModel.scholarship_school',
   oths: 'financialModel.scholarship_other',
+  gens: 'financialModel.scholarship_general',
 
   wkst: 'financialModel.workStudy_workStudy',
 
@@ -69,6 +71,7 @@ const urlParameters = {
   pers: 'financialModel.savings_personal',
   fams: 'financialModel.savings_family',
   '529p': 'financialModel.savings_collegeSavings',
+  gsav: 'financialModel.savings_general',
 
   offj: 'financialModel.income_jobOffCampus',
   onj: 'financialModel.income_jobOnCampus',

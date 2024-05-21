@@ -1,34 +1,34 @@
 <section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
-    <h1>Your estimated debt at graduation</h1>
-    <p>Your actual expenses will depend on your situation&mdash;any financial aid you receive, your personal budgeting, and other factors.</p>
+    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad"></strong></h2>
 
-    <h2><strong><span data-school-item="school"></span>'s costs: <span data-financial-item="total_costs"></strong></h2>
-    <ul>
-        <li>Estimated time frame: <span data-state-item="programLengthText"></span></li>
-        <li>Average undergrad yearly costs: <span data-number-display="currency" data-school-item="netPriceAvg"></span></li>
-        <li>This estimate includes tuition, books, housing and is based on data from the U.S. Department of Education.</li>
-    </ul>
-
-    <h2><strong>Your estimated debt: <span data-financial-item="debt_tenYearTotal"></strong></h2>
-
-    <p>Based on the cost of attending the school and the amount of money you and your family can put towards school.</p>
+    <p>Based on the cost of attending the school and the amount of money you and your family can put towards school, you'll likely need to take out student loans. School costs can change, so we've provided you a range of the amount you might need to borrow.</p>
 
     <h2><strong>Is this too much to repay?</strong></h2>
 
-    <p><strong>A common guideline:</strong> Keep your student loan total below your first-year salary out of school. If your debt will be higher than your salary, consider whether it might be more debt than you can afford.</p>
+    <p>One way to see if this is too much to repay is to compare the amount you'll owe at graduation to the median salary of recent graduates.</p>
 
-    <div class="college-costs__chart" id="max-debt-guideline_chart"></div>
+    <p>If you need to borrow more than the median salary, consider whether this plan is right for you.</p>
+
+    <div class="college-costs__chart" data-chart_id="max-debt-guideline_chart"></div>
+
+    <p>Your actual salary will depdend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a></p>
 
     <h2><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h2>
 
+    <p>Your payment estimate is based on making payments over 10 years on the standard repayment plan. Other plans may be available with lower monthly payments, but the total cost of borrowing will be higher.</p>
+
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="customize-estimate">Customize this estimate for your situation</button>
+
+        <button class="a-btn a-btn--prev btn__nav" data-destination="school-info">
+        <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon("left") }}</span>Your school and living situation</button>
+        <button class="a-btn a-btn--next btn__nav" data-destination="estimate-debt">Estimate how much you'll owe <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon("right") }}</span></button>
         <ul>
             <li>
                 <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="compare-school">See how this school compares to others like it</button>
             </li>
-            <li><a class="a--link" href="?=">Estimate costs for another school</a></li>
-
+            <li>
+                <a class="a--link" href="?=">Estimate costs for another school</a>
+            </li>
             <li>
                 <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="save-finish">Save and get a URL for later</button>
             </li>

@@ -3,9 +3,9 @@
 <section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="customize-estimate">
     <h2 tabindex="-1">Customize your estimate</h2>
 
-    <div class="block block--mid">
-        <h3>Enter information from your financial aid offer</h3>
+    <p>This page will let you customize your estimate and help you determine whether you can cover the cost of attending this particular school.</p>
 
+    <div class="block block--mid">
         <div class="financial-item-group">
             {% set flyout_settings = {
                 'label': 'Costs',
@@ -80,47 +80,12 @@
                 'data_attribute': 'data-financial-item="total_grantsScholarships"'
             } %}
             {% call() flyout(flyout_settings) %}
-                <div class="undergrad-content">
-                    {{
-                        input.render({
-                            'label': 'Federal Pell Grants',
-                            'id': 'plan__pellGrants',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="grant_pell"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Federal SEOG grant',
-                            'id': 'plan__seog',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="grant_seog"'
-                        })
-                    }}
-                </div>
                 {{
                     input.render({
-                        'label': 'Other federal grants',
-                        'id': 'plan__other-federal',
+                        'label': 'Grants',
+                        'id': 'plan__grant-general',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="grant_otherFederal"'
-                    })
-                }}
-
-                {{
-                    input.render({
-                        'label': 'State grant(s)',
-                        'id': 'plan__stateGrants',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_state"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'School grant(s)',
-                        'id': 'plan__schoolGrants',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_school"'
+                        'data_attribute': 'data-financial-item="grant_general"'
                     })
                 }}
                 {{
@@ -133,43 +98,18 @@
                 }}
                 {{
                     input.render({
-                        'label': 'Other grant(s)',
-                        'id': 'plan__grant-other',
+                        'label': 'Servicemember benefits',
+                        'id': 'plan__grant-serviceMember',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="grant_other"'
+                        'data_attribute': 'data-financial-item="grant_servicemember"'
                     })
                 }}
                 {{
                     input.render({
-                        'label': 'Military Tuition Assistance',
-                        'id': 'plan__mta',
+                        'label': 'Scholarships',
+                        'id': 'plan__general-cholarships',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="grant_mta"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'GI Bill',
-                        'id': 'plan__gibill',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_gibill"'
-                    })
-                }}
-
-                {{
-                    input.render({
-                        'label': 'Other servicemember benefits',
-                        'id': 'plan__serviceMemberOther',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_servicememberOther"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'State scholarship(s)',
-                        'id': 'plan__stateScholarships',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="scholarship_state"'
+                        'data_attribute': 'data-financial-item="scholarship_general"'
                     })
                 }}
                 {{
@@ -314,26 +254,10 @@
                 }}
                 {{
                     input.render({
-                        'label': 'Family contribution',
-                        'id': 'plan__familySavings',
+                        'label': 'Income',
+                        'id': 'plan__income',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="savings_family"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'Estimated off-campus job income',
-                        'id': 'plan__jobIncome',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="income_jobOffCampus"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'Estimated on-campus job income (not work-study)',
-                        'id': 'plan__onCampusJob',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="income_jobOnCampus"'
+                        'data_attribute': 'data-financial-item="income_general"'
                     })
                 }}
                 {{
@@ -344,102 +268,14 @@
                         'data_attribute': 'data-financial-item="income_employerAssist"'
                     })
                 }}
-                {{
-                    input.render({
-                        'label': 'Other funding',
-                        'id': 'plan__otherFunding',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="income_otherFunding"'
-                    })
-                }}
             {% endcall %}
 
             {% set flyout_settings = {
-                'label': 'Other loans (minus loan fees)' | safe,
+                'label': 'Other loans' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_publicLoans"'
             } %}
-            {% call() flyout(flyout_settings) %}
-                <div class="block block--mid block--flush-top financial-item-group">
-                    {{
-                        input.render({
-                            'label': 'Loan from your state',
-                            'id': 'plan__stateLoan',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="publicLoan_state"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Interest rate (%)',
-                            'id': 'plan__stateLoanRate',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="rate_state"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Loan fee (%)',
-                            'id': 'plan__stateLoanFee',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="fee_state"'
-                        })
-                    }}
-                </div>
-                <div class="block block--mid financial-item-group">
-                    {{
-                        input.render({
-                            'label': 'Loan from this school',
-                            'id': 'plan__schoolLoan',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="publicLoan_institutional"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Interest rate (%)',
-                            'id': 'plan__schoolLoanRate',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="rate_institutional"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Loan fee (%)',
-                            'id': 'plan__schoolLoanFee',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="fee_institutional"'
-                        })
-                    }}
-                </div>
-                <div class="block block--mid block--flush-bottom financial-item-group">
-                    {{
-                        input.render({
-                            'label': 'Loan from a non-profit',
-                            'id': 'plan__nonprofitLoan',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="publicLoan_nonprofit"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Interest rate (%)',
-                            'id': 'plan__nonprofitLoanRate',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="rate_nonprofit"'
-                        })
-                    }}
-                    {{
-                        input.render({
-                            'label': 'Loan fee (%)',
-                            'id': 'plan__nonprofitLoanFee',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="fee_nonprofit"'
-                        })
-                    }}
-                </div>
-            {% endcall %}
             <div class="block block--mid">
                 <div class="plus-loan-flyout graduate-content">
                     {% set flyout_settings = {
@@ -533,7 +369,7 @@
                         'label': 'Private loans',
                         'value': '$0',
                         'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_privateLoans"'
+                        'data_attribute': 'data-financial-item="total_privLoans"'
                     } %}
                     {% call() flyout(flyout_settings) %}
                         <div class="private-loan-form">
@@ -541,33 +377,33 @@
                             {{
                                 input.render({
                                     'label': 'Loan amount',
-                                    'id': 'plan__privateLoan1',
+                                    'id': 'plan__privLoan1',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="privLoan_privateLoan1"'
+                                    'data_attribute': 'data-financial-item="privLoan_privLoan1"'
                                 })
                             }}
                             {{
                                 input.render({
                                     'label': 'Interest rate (%)',
-                                    'id': 'plan__privateLoan1Rate',
+                                    'id': 'plan__privLoan1Rate',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="rate_privateLoan1"',
+                                    'data_attribute': 'data-financial-item="rate_privLoan1"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
                                 })
                             }}
                             {{
                                 input.render({
                                     'label': 'Loan fee (%)',
-                                    'id': 'plan__privateLoan1Fee',
+                                    'id': 'plan__privLoan1Fee',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="fee_privateLoan1"',
+                                    'data_attribute': 'data-financial-item="fee_privLoan1"',
                                     'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                                 })
                             }}
                             <div class="undergrad-content u-mt30">
                                 {{
                                     checkbox.render({
-                                        'id': 'plan__privateLoan1Repay',
+                                        'id': 'plan__privLoan1Repay',
                                         'label': 'Click here if you plan to repay this private loan, and this loan amount will be added to your projected debt total.',
                                   })
                                 }}
@@ -591,7 +427,9 @@
         </div>
     </div>
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="affording-payments">See if this is too much to repay</button>
+        <button class="a-btn a-btn--prev btn__nav" data-destination="debt-at-grad">
+        <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon("left") }}</span>Your estimated debt</button>
+        <button class="a-btn a-btn--next btn__nav" data-destination="debt-guideline">Is this too much debt? <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon("right") }}</span></button>
         <ul>
             <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Customize this estimate for your situation</button></li>
         </ul>

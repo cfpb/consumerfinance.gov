@@ -43,30 +43,34 @@ window.addEventListener('load', init);
 
 // Set up Stepper 
 
-const headings = Array.from(
-      document.querySelectorAll('.o-secondary-nav__link')
-    ).map( (obj) => obj.text.trim() );
+// const headings = Array.from(
+//       document.querySelectorAll('.o-secondary-nav__link')
+//     ).map( (obj) => obj.text.trim() );
 
-const stepMap = Object.fromEntries(
-    Array.from(
-      document.querySelectorAll( '.o-secondary-nav__link' ) )
-      .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
+// const stepMap = Object.fromEntries(
+//     Array.from(
+//       document.querySelectorAll( '.o-secondary-nav__link' ) )
+//       .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
 
-// const headings = [
-//   'Estimate Debt',
-//   'Customize estimate',
-//   'Affording your loans',
-//   'four',
-//   'Review'
-// ]
+const headings = [
+  'Estimate Debt',
+  'Customize estimate',
+  'Affording your loans',
+  'School Comparison',
+  'Review'
+]
 
-// const stepMap = {
-//   'school-info': 1,
-//   'debt-at-grad': 1,
-//   'customize-estimate': 2,
-//   'affording-payments': 3,
-//   'review-plan': 5,
-// }
+const stepMap = {
+  'school-info': 1,
+  'school-costs': 1,
+  'estimate-debt': 1,
+  'debt-at-grad': 1,
+  'customize-estimate': 2,
+  'cost-of-borrowing': 3,
+  'affording-payments': 3,
+  'compare-school': 4,
+  'review-plan': 5,
+}
 
 
 

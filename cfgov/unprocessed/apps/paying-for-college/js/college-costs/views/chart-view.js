@@ -496,14 +496,14 @@ const chartView = {
   compareCostElem: null,
   meterElems: null,
   makePlanElem: null,
-  maxDebtElem: null,
+  maxDebtElems: null,
   affordingElem: null,
   gradMeterElem: null,
   repaymentMeterElem: null,
   costOfBorrowingChart: null,
   compareCostOfBorrowingChart: null,
   makePlanChart: null,
-  maxDebtChart: null,
+  maxDebtCharts: [],
   affordingChart: null,
   gradMeterChart: null,
   repaymentMeterChart: null,
@@ -519,7 +519,7 @@ const chartView = {
       '#compare-cost-of-borrowing_chart',
     );
     chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
-    chartView.maxDebtElem = body.querySelector('#max-debt-guideline_chart');
+    chartView.maxDebtElems = body.querySelectorAll('[data-chart_id="max-debt-guideline_chart"]');
     chartView.affordingElem = body.querySelector('#affording-your-loans_chart');
     chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
     chartView.repaymentMeterElem = body.querySelector(
@@ -541,44 +541,46 @@ const chartView = {
       },
     });
 
-    // TODO: Add these back in when/if the chart is used again
-    // chartView.costOfBorrowingChart = Highcharts.chart(
-    //   chartView.costOfBorrowingElem,
-    //   { ...costOfBorrowingOpts },
-    // );
+
+    chartView.costOfBorrowingChart = Highcharts.chart(
+      chartView.costOfBorrowingElem,
+      { ...costOfBorrowingOpts },
+    );
 
     // chartView.compareCostOfBorrowingChart = Highcharts.chart(
     //   chartView.compareCostElem,
     //   { ...columnChartOpts, ...compareCostOfBorrowingOpts },
     // );
 
-    // chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
-    //   ...horizontalBarOpts,
-    //   ...makePlanOpts,
-    // });
-
-    chartView.maxDebtChart = Highcharts.chart(chartView.maxDebtElem, {
-      ...maxDebtOpts,
+    chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
+      ...horizontalBarOpts,
+      ...makePlanOpts,
     });
 
-    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer
-      .text('Estimated total debt at graduation: ', 60, 90)
-      .attr({
-        zIndex: 5,
-      })
-      .css({
-        fontSize: '14px',
-      })
-      .add();
-    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
-      .text('Estimated total debt at graduation: ', 60, 90)
-      .attr({
-        zIndex: 5,
-      })
-      .css({
-        fontSize: '14px',
-      })
-      .add();
+    chartView.maxDebtElems.forEach( elem => {
+      chartView.maxDebtCharts.push( Highcharts.chart( elem, { ...maxDebtOpts, } ) );
+    });
+
+    chartView.maxDebtCharts.forEach( chart => {
+      chart.debtText = chart.renderer
+        .text('Estimated total debt at graduation: ', 60, 90)
+        .attr({
+          zIndex: 5,
+        })
+        .css({
+          fontSize: '14px',
+        })
+        .add();
+      chart.salaryText = chart.renderer
+        .text('Estimated total debt at graduation: ', 60, 90)
+        .attr({
+          zIndex: 5,
+        })
+        .css({
+          fontSize: '14px',
+        })
+        .add();
+    });
 
     chartView.affordingChart = Highcharts.chart(chartView.affordingElem, {
       ...affordingOpts,
@@ -607,18 +609,18 @@ const chartView = {
       decimalPlaces: 0,
     });
 
-    // TODO: Use this code if these charts are added back into the app
-    // chartView.costOfBorrowingChart.yAxis[0].update({
-    //   max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
-    // });
-    // chartView.costOfBorrowingChart.series[0].update({
-    //   data: [interest10years],
-    //   name: 'Estimated total interest: <strong>' + interestString + '</strong>',
-    // });
-    // chartView.costOfBorrowingChart.series[1].update({
-    //   data: [totalBorrowingAtGrad],
-    //   name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
-    // });
+    TODO: Use this code if these charts are added back into the app
+    chartView.costOfBorrowingChart.yAxis[0].update({
+      max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
+    });
+    chartView.costOfBorrowingChart.series[0].update({
+      data: [interest10years],
+      name: 'Estimated total interest: <strong>' + interestString + '</strong>',
+    });
+    chartView.costOfBorrowingChart.series[1].update({
+      data: [totalBorrowingAtGrad],
+      name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
+    });
   },
 
   updateMakePlanChart: () => {
@@ -632,26 +634,25 @@ const chartView = {
         decimalPlaces: 0,
       });
 
-    // TODO: Use this code if these charts are added back into the app
-    // chartView.makePlanChart.yAxis[0].update({
-    //   max: max,
-    //   plotLines: [
-    //     {
-    //       color: 'red',
-    //       width: 2,
-    //       value: totalCosts,
-    //       zIndex: 4,
-    //       label: {
-    //         align: 'center',
-    //         text: text,
-    //         rotation: 0,
-    //         x: 0,
-    //         y: -25,
-    //       },
-    //     },
-    //   ],
-    // });
-    // chartView.makePlanChart.series[0].setData([totalFunding]);
+    chartView.makePlanChart.yAxis[0].update({
+      max: max,
+      plotLines: [
+        {
+          color: 'red',
+          width: 2,
+          value: totalCosts,
+          zIndex: 4,
+          label: {
+            align: 'center',
+            text: text,
+            rotation: 0,
+            x: 0,
+            y: -25,
+          },
+        },
+      ],
+    });
+    chartView.makePlanChart.series[0].setData([totalFunding]);
   },
 
   updateMaxDebtChart: () => {
@@ -661,47 +662,49 @@ const chartView = {
     const salaryString = formatUSD({ amount: salary, decimalPlaces: 0 });
     const max = Math.max(totalDebt * 1.1, salary * 1.1);
 
-    chartView.maxDebtChart.yAxis[0].update({
-      min: 0,
-      max: max,
+    chartView.maxDebtCharts.forEach( chart => {
+      chart.yAxis[0].update({
+        min: 0,
+        max: max,
+      });
+
+      chart.series[0].setData([totalDebt]);
+
+      chart.series[1].setData([salary]);
+
+      chart.salaryText.destroy();
+      chart.debtText.destroy();
+
+      chart.debtText = chart.renderer
+        .text(
+          'Estimated total debt at graduation: <strong>' +
+            debtString +
+            '</strong>',
+          13,
+          50,
+        )
+        .attr({
+          zIndex: 5,
+        })
+        .css({
+          fontSize: '14px',
+        })
+        .add();
+
+      chart.salaryText = chart.renderer
+        .text(
+          'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
+          13,
+          160,
+        )
+        .attr({
+          zIndex: 5,
+        })
+        .css({
+          fontSize: '14px',
+        })
+        .add();
     });
-
-    chartView.maxDebtChart.series[0].setData([totalDebt]);
-
-    chartView.maxDebtChart.series[1].setData([salary]);
-
-    chartView.maxDebtChart.salaryText.destroy();
-    chartView.maxDebtChart.debtText.destroy();
-
-    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer
-      .text(
-        'Estimated total debt at graduation: <strong>' +
-          debtString +
-          '</strong>',
-        13,
-        50,
-      )
-      .attr({
-        zIndex: 5,
-      })
-      .css({
-        fontSize: '14px',
-      })
-      .add();
-
-    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
-      .text(
-        'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
-        13,
-        160,
-      )
-      .attr({
-        zIndex: 5,
-      })
-      .css({
-        fontSize: '14px',
-      })
-      .add();
   },
 
   updateAffordingChart: () => {
