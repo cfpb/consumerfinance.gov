@@ -6,6 +6,9 @@
             {% for i in range(rating + 1) -%}
                 {{ svg_icon("dollar-round") }}
             {%- endfor %}
+            <span class="u-visually-hidden">
+                {{ rating + 1 }} dollar sign symbol{{ (rating + 1) | pluralize() }}
+            </span>
         </dt>
         <dd>
             Pay {{ label }} interest

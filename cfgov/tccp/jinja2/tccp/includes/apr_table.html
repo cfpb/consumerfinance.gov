@@ -38,7 +38,9 @@
                     {% if show_comparison %}
                     <td>
                         {% if tier_apr_rating is not none -%}
+                        <dl>
                             {{ apr_rating(tier_apr_rating) }}
+                        </dl>
                         {%- endif %}
                     </td>
                     {% endif %}
