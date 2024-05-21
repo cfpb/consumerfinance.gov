@@ -299,7 +299,7 @@ urlpatterns = [
     re_path(
         r"^empowerment/$",
         RedirectView.as_view(
-            url="/consumer-tools/educator-tools/economically-vulnerable/",
+            url="/consumer-tools/educator-tools/your-money-your-goals/",
             permanent=True,
         ),
     ),
@@ -307,7 +307,7 @@ urlpatterns = [
     re_path(
         r"^students/(?P<path>.*)$",
         RedirectView.as_view(
-            url="/consumer-tools/educator-tools/students/%(path)s",
+            url="/paying-for-college/",
             permanent=True,
         ),
     ),
