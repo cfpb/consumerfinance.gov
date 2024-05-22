@@ -1,0 +1,26 @@
+{%- macro apr_rating(rating, count=none) -%}
+    {%- set label = apr_rating_lookup[rating] -%}
+
+    <div class="m-apr-rating m-apr-rating--{{ label }}">
+        <dt>
+            {% for i in range(rating + 1) -%}
+                {{ svg_icon("dollar-round") }}
+            {%- endfor %}
+            <span class="u-visually-hidden">
+                {{ rating + 1 }} dollar sign symbol{{ (rating + 1) | pluralize() }}
+            </span>
+        </dt>
+        <dd>
+            Pay {{ label }} interest
+            {{-
+                (
+                    ' ('
+                    ~ count
+                    ~ ' card'
+                    ~ count | pluralize()
+                    ~ ')'
+                ) if count is not none
+            }}
+        </dd>
+    </div>
+{%- endmacro -%}
