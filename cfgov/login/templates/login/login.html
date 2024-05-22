@@ -1,6 +1,12 @@
 {% extends "wagtailadmin/login.html" %}
+{% load wagtailadmin_tags %}
 
 {% block below_login %}
+    {% if sso_enabled %}
+        <hr>
+        <p><a href="{% url 'oidc_authentication_init' %}" class="button" style="text-align: center;">Sign in with Single Sign-On</a></p>
+        <hr>
+    {% endif %}
     <p>This is a Consumer Financial Protection Bureau (CFPB) information system. The CFPB is an independent agency of the United States Government. CFPB information systems are provided for the processing of official information only. Unauthorized or improper use of this system may result in administrative action, as well as civil and criminal penalties.</p>
     <p>Because this is a CFPB information system, you have no reasonable expectation of privacy regarding any communication or data, transiting or stored, on this information system. All data contained in CFPB information systems is owned by the CFPB, and your use of the CFPB information system serves as your consent to your usage being monitored, intercepted, recorded, read, copied, captured, or otherwise audited in any manner by authorized personnel, including, but not limited to, employees, contractors, and/or agents of the United States Government.</p>
 {% endblock %}

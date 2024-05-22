@@ -24,6 +24,7 @@ ADMIN_URL_ALLOWLIST = [
     "^django-admin/",
     "^login",
     "^logout",
+    "^oidc/",
     "^password/",
     "^tasks/",
 ]

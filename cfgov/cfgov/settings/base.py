@@ -759,7 +759,7 @@ if ENABLE_SSO:
 
     # Configure login/out URLs for OIDC
     LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
-    LOGOUT_REDIRECT_URL = "/"
+    LOGOUT_REDIRECT_URL = reverse_lazy("cfgov_login")
     ALLOW_LOGOUT_GET_METHOD = True
 
     # This OIDC client's id and secret

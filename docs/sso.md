@@ -62,7 +62,7 @@ source .env
 
 ### Run consumerfinance.gov and log in
 
-Start or restart your local consumerfinance.gov instance, then visit http://localhost:8000/admin.
+Start or restart your local consumerfinance.gov instance, then visit http://localhost:8000/admin. Click "Sign in with Single Sign-On".
 
 This should redirect you to the test OIDC provider at http://localhost:8080/openid/authorize with a prompt to authorize "Wagtail (Local HS256)" (the name of the client application as configured in the test provider) to access the OIDC user's address.
 
