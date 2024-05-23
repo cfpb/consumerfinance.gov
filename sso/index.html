@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Consumer Complaints - consumerfinance.gov</title>
+    <title>Single Sign-On - consumerfinance.gov</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Consumer Complaints";
-        var mkdocs_page_input_path = "consumer-complaint-database.md";
+        var mkdocs_page_name = "Single Sign-On";
+        var mkdocs_page_input_path = "sso.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -75,7 +75,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Supporting Features</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../caching/">Caching</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../feature-flags/">Feature Flags</a>
@@ -86,7 +86,21 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../site-search/">Site Search</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sso/">Single Sign-On</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Single Sign-On</a>
+    <ul class="current">
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#local-implementation">Local implementation</a></li>
+        
+            <li><a class="toctree-l4" href="#testing-oidc-single-sign-on-locally">Testing OIDC single sign-on locally</a></li>
+        
+            <li><a class="toctree-l4" href="#references">References</a></li>
+        
+        </ul>
+    
+
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../translation/">Translation</a>
                   </li>
@@ -118,20 +132,10 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">APIs and Data</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../ask-cfpb/">Ask CFPB</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Consumer Complaints</a>
-    <ul class="current">
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#a-resource-for-searching-complaints-submitted-to-the-cfpb">A resource for searching complaints submitted to the CFPB</a></li>
-        
-        </ul>
-    
-
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../consumer-complaint-database/">Consumer Complaints</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
                   </li>
@@ -150,10 +154,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">APIs and Data</li>
-      <li class="breadcrumb-item active">Consumer Complaints</li>
+          <li class="breadcrumb-item">Supporting Features</li>
+      <li class="breadcrumb-item active">Single Sign-On</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/consumer-complaint-database.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/sso.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -161,19 +165,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="consumer-complaint-database-api">Consumer Complaint Database API<a class="headerlink" href="#consumer-complaint-database-api" title="Permanent link">¶</a></h1>
-<h3 id="a-resource-for-searching-complaints-submitted-to-the-cfpb">A resource for searching complaints submitted to the CFPB<a class="headerlink" href="#a-resource-for-searching-complaints-submitted-to-the-cfpb" title="Permanent link">¶</a></h3>
-<p>Each week the CFPB sends thousands of consumers’ complaints about financial products and services to companies for response. Those complaints are <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/">published</a> on our website after the company responds or after 15 days, whichever comes first.</p>
-<p>The API allows automation of the same filtering and searching functions offered to website visitors.</p>
-<p>Detailed documentation for the search API can be found <a href="https://cfpb.github.io/ccdb5-api/documentation/">here</a>.</p>
-<h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h4>
-<p>The database generally updates daily, and contains certain information for each complaint, including the source of the complaint, the date of submission, and the company the complaint was sent to for response. The database also includes information about the actions taken by the company in response to the complaint, such as, whether the company’s response was timely and how the company responded. If the consumer opts to share it and after we take steps to remove personal information, we publish the consumer’s description of what happened. Companies also have the option to select a public response. Company level information should be considered in context of company size and/or market share. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database.</p>
+                <h1 id="single-sign-on">Single Sign-On<a class="headerlink" href="#single-sign-on" title="Permanent link">¶</a></h1>
+<p>The consumerfinance.gov codebase support single sign-on (SSO) with <a href="https://openid.net/">Open ID Connect (OIDC) providers</a>. We use Mozilla's <a href="https://mozilla-django-oidc.readthedocs.io/en/stable/">mozilla-django-oidc</a> library for OIDC support.</p>
+<h2 id="local-implementation">Local implementation<a class="headerlink" href="#local-implementation" title="Permanent link">¶</a></h2>
+<p>Our implementation of OIDC SSO uses a custom subclass of mozilla-django-oidc's <code>OIDCAuthenticationBackend</code>, found in <code>login.auth.CFPBOIDCAuthenticationBackend</code>, that supports additional OIDC claims processing. This enables us to map OIDC roles to Django groups and/or superuser permissioning, and lets us synchronize a user's name to the profile information in the OIDC provider.</p>
+<p>If the <code>OIDC_OP_ADMIN_ROLE</code> setting is defined, Django's <code>is_superuser</code> will be set for users who the OIDC provider reports as having this role identifier.</p>
+<p>Every user who is authorized in the SSO provider will be assigned to a "Wagtail Users" group. This enables all members to log into the Wagtail admin.</p>
+<p>This group is created with the <code>wagtailadmin.access_admin</code> permission once via data migration in the <code>login</code> app. If for any reason this group is removed, it will need to be recreated, otherwise new SSO users will not be able to login without an admin user assigning them the <code>wagtailadmin.access_admin</code> permission manually.</p>
+<h2 id="testing-oidc-single-sign-on-locally">Testing OIDC single sign-on locally<a class="headerlink" href="#testing-oidc-single-sign-on-locally" title="Permanent link">¶</a></h2>
+<p>For development of mozilla-django-oidc, Mozilla <a href="https://github.com/mozilla/docker-test-mozilla-django-oidc">uses a test OIDC provider</a>, which is published to Docker Hub as <code>mozilla/oidc-testprovider:oidc_testprovider-latest</code>. This test provider is a Django project that uses <a href="https://django-oidc-provider.readthedocs.io/">django-oidc-provider</a> as the OIDC provider application.</p>
+<p>We make use of this test provider to enable local testing and development related to SSO for consumerfinance.gov. The OIDC test provider is available in the <code>docker-compose.sso.yml</code> file.</p>
+<p>For consumerfinance.gov, our compose file adds another set of fixture data that adds <code>localhost:8000</code> as a client in addition to the test provider's built-in <a href="https://github.com/mozilla/mozilla-django-oidc?tab=readme-ov-file#local-development"><code>testrp</code> client that Mozilla uses for local development</a>.</p>
+<h3 id="run-the-test-oidc-provider">Run the test OIDC provider<a class="headerlink" href="#run-the-test-oidc-provider" title="Permanent link">¶</a></h3>
+<p>fasdfoasdfo
+The test OIDC provider can be run with:</p>
+<pre class="highlight"><code class="language-shell">docker-compose -f docker-compose.sso.yml up</code></pre>
+<p>This will start the test provider at <a href="http://localhost:8080">http://localhost:8080</a>.</p>
+<h3 id="create-a-user-in-the-test-oidc-provider">Create a user in the test OIDC provider<a class="headerlink" href="#create-a-user-in-the-test-oidc-provider" title="Permanent link">¶</a></h3>
+<p>To sign-in via the test provider requires a user. mozilla-django-oidc defaults to using email address to map users between the OIDC provider and the client, and we do not override this default.</p>
+<p>Navigate to <a href="http://localhost:8080">http://localhost:8080</a> and you will see an option to sign up, as well as log in. Sign up using an email address you know is already set up as a user in your local consumerfinance.gov database.</p>
+<h3 id="configure-the-consumerfinancegov-environment">Configure the consumerfinance.gov environment<a class="headerlink" href="#configure-the-consumerfinancegov-environment" title="Permanent link">¶</a></h3>
+<p>Our <code>.env_SAMPLE</code> file includes SSO-related environment variables with defaults intended for local development against the test OIDC provider.</p>
+<p>Either uncomment or add the following lines to your <code>.env</code> file:</p>
+<pre class="highlight"><code class="language-shell">export ENABLE_SSO=True
+export OIDC_RP_CLIENT_ID=4
+export OIDC_RP_CLIENT_SECRET=itsasecret
+export OIDC_RP_SIGN_ALGO=HS256
+export OIDC_OP_AUTHORIZATION_ENDPOINT=http://localhost:8080/openid/authorize
+export OIDC_OP_TOKEN_ENDPOINT=http://localhost:8080/openid/token
+export OIDC_OP_USER_ENDPOINT=http://localhost:8080/openid/userinfo</code></pre>
+<p>And then make sure to <code>source</code> it:</p>
+<pre class="highlight"><code class="language-shell">source .env</code></pre>
+<h3 id="run-consumerfinancegov-and-log-in">Run consumerfinance.gov and log in<a class="headerlink" href="#run-consumerfinancegov-and-log-in" title="Permanent link">¶</a></h3>
+<p>Start or restart your local consumerfinance.gov instance, then visit <a href="http://localhost:8000/admin">http://localhost:8000/admin</a>. Click "Sign in with Single Sign-On".</p>
+<p>This should redirect you to the test OIDC provider at <a href="http://localhost:8080/openid/authorize">http://localhost:8080/openid/authorize</a> with a prompt to authorize "Wagtail (Local HS256)" (the name of the client application as configured in the test provider) to access the OIDC user's address.</p>
+<p>Click "Authorize", and you should be returned to <a href="http://localhost:8000/admin">http://localhost:8000/admin</a>, logged in as the expected user.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<p>For more information on our OIDC single sign-on implementation, please refer to:</p>
+<ul>
+<li><a href="https://mozilla-django-oidc.readthedocs.io/en/stable/">mozilla-django-oidc documentation</a></li>
+<li><a href="https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html">mozilla-django-oidc's settings documentation</a></li>
+<li><a href="https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims">Open ID Connect specification</a></li>
+</ul>
+<p>Additionally, the source code to the following may also be useful:</p>
+<ul>
+<li><a href="https://github.com/mozilla/mozilla-django-oidc">mozilla-django-oidc</a></li>
+<li><a href="https://github.com/mozilla/docker-test-mozilla-django-oidc/tree/main/testprovider">Mozilla's test OIDC provider</a></li>
+<li><a href="https://github.com/mozilla/docker-test-mozilla-django-oidc/tree/main/testrp">Mozilla's test OIDC client</a></li>
+<li><a href="https://github.com/juanifioren/django-oidc-provider">django-oidc-provider</a></li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ask-cfpb/" class="btn btn-neutral float-left" title="Ask CFPB"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../housing-counselor-tool/" class="btn btn-neutral float-right" title="Find a Housing Counselor Tool">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../site-search/" class="btn btn-neutral float-left" title="Site Search"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../translation/" class="btn btn-neutral float-right" title="Translation">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -200,10 +246,10 @@
         </span>
     
     
-      <span><a href="../ask-cfpb/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../site-search/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../housing-counselor-tool/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../translation/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
