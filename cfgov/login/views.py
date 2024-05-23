@@ -1,8 +1,12 @@
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.conf import settings
+
+from wagtail.admin.views.account import LoginView as WagtailLoginView
 
 
-def lockout(request, credentials):
-    messages.error(request, "Account is locked.")
-    return redirect(reverse_lazy("wagtailadmin_login"))
+class LoginView(WagtailLoginView):
+    template_name = "login/login.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sso_enabled"] = settings.ENABLE_SSO
+        return context

@@ -1,28 +1,16 @@
-from unittest import mock
-
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.test import RequestFactory, TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from login.views import lockout
 
+class LoginViewTestCase(TestCase):
 
-class TestLockoutView(TestCase):
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.session_middleware = SessionMiddleware(mock.MagicMock())
-        self.messages_middleware = MessageMiddleware(mock.MagicMock())
+    @override_settings(ENABLE_SSO=True)
+    def test_view_gets_sso_enabled_context(self):
+        response = self.client.get(reverse("cfgov_login"))
+        self.assertTrue(response.context["sso_enabled"])
+        pass
 
-    def test_lockout_view_redirects(self):
-        request = self.factory.post("/admin/login")
-        self.session_middleware.process_request(request)
-        self.messages_middleware.process_request(request)
-        response = lockout(request, None)
-        # Because this response is from calling the view directly, not from
-        # Django's test client, we can't use assertRedirects, which checks
-        # for the client instance on the response object.
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.headers["Location"], reverse("wagtailadmin_login")
-        )
+    @override_settings(ENABLE_SSO=False)
+    def test_view_gets_sso_disabled_context(self):
+        response = self.client.get(reverse("cfgov_login"))
+        self.assertFalse(response.context["sso_enabled"])
