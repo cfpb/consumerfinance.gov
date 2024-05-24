@@ -349,7 +349,7 @@ class IdLevelState:
             graph_text += "\n{" + pid + "}\n"
             graph = (
                 p_element.text.replace(
-                    "{}.".format(pid), "**{}.**".format(pid), 1
+                    f"{pid}.", f"**{pid}.**", 1
                 )
                 .replace("  ", " ")
                 .replace("** **", " ", 1)

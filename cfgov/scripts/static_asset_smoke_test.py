@@ -74,42 +74,34 @@ def check_static(url):
     failures = []
     response = requests.get(url)
     if not response.ok:
-        return "\x1B[91mFAIL! Request to {} failed ({})".format(
-            url, response.reason
-        )
+        return f"\x1B[91mFAIL! Request to {url} failed ({response.reason})"
     static_links = extract_static_links(response.content)
     for link in static_links:
         count += 1
         if link.startswith("/"):
-            final_url = "{}{}".format(CFPB_BASE, link)
+            final_url = f"{CFPB_BASE}{link}"
         else:
-            final_url = "{}{}".format(url, link)
+            final_url = f"{url}{link}"
         code = requests.get(
             final_url, headers={"referer": CFPB_BASE}
         ).status_code
         if code == 200:
-            logger.info("checked {}".format(final_url))
+            logger.info(f"checked {final_url}")
         else:
             failures.append((link, code))
     if failures:
         if len(failures) > 2:  # allow for font failures when testing locally
             return (
-                "\x1B[91mFAIL! {} static links out of {} failed "
-                "for {}: {}\x1B[0m\n".format(
-                    len(failures), count, url, failures
-                )
+                f"\x1B[91mFAIL! {len(failures)} static links out of {count} failed "
+                f"for {url}: {failures}\x1B[0m\n"
             )
         else:
             return (
-                "\x1B[91mPartial failure: {} static links out of {} failed"
-                " for {}: {}\x1B[0m\n".format(
-                    len(failures), count, url, failures
-                )
+                f"\x1B[91mPartial failure: {len(failures)} static links out of {count} failed"
+                f" for {url}: {failures}\x1B[0m\n"
             )
     else:
-        return "\x1B[32m{} static links passed " "for {}\x1B[0m\n".format(
-            count, url
-        )
+        return f"\x1B[32m{count} static links passed " f"for {url}\x1B[0m\n"
 
 
 if __name__ == "__main__":  # pragma: nocover
@@ -128,16 +120,14 @@ if __name__ == "__main__":  # pragma: nocover
         logger.info(base_msg)
     if args.sub_urls:
         for arg in args.sub_urls:
-            sub_msg = check_static("{}{}".format(CFPB_BASE, arg))
+            sub_msg = check_static(f"{CFPB_BASE}{arg}")
             if "FAIL!" in sub_msg:
                 fail = True
                 logger.warning(sub_msg)
             else:
                 logger.info(sub_msg)
     logger.info(
-        "{} took {} seconds to check {}\n".format(
-            sys.argv[0], int(time.time() - start), CFPB_BASE
-        )
+        f"{sys.argv[0]} took {int(time.time() - start)} seconds to check {CFPB_BASE}\n"
     )
     if fail:
         logger.warning(

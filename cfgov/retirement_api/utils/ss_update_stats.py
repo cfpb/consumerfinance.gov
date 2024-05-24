@@ -199,11 +199,9 @@ def update_life():
                 output_csv(outcsv, headings, rows)
                 msg += "updated %s with %s rows" % (outcsv, len(rows))
                 output_json(outjson, headings, rows)
-                msg += "updated {0} with {1} entries".format(
-                    outjson, len(rows)
-                )
+                msg += f"updated {outjson} with {len(rows)} entries"
             else:
-                msg += "didn't find more than 100 rows at {0}".format(url)
+                msg += f"didn't find more than 100 rows at {url}"
     log.info(msg)
     return msg
 
@@ -219,7 +217,5 @@ if __name__ == "__main__":
     starter = datetime.datetime.now()
     harvest_all()
     log.info(
-        "update took {0} to update four data stores".format(
-            (datetime.datetime.now() - starter)
-        )
+        f"update took {datetime.datetime.now() - starter} to update four data stores"
     )

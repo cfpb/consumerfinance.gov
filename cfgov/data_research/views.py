@@ -95,9 +95,7 @@ class TimeSeriesData(APIView):
             data = {
                 "meta": {
                     "fips": fips,
-                    "name": "Non-metro area of {}".format(
-                        records.first().state.name
-                    ),
+                    "name": f"Non-metro area of {records.first().state.name}",
                     "fips_type": "non_msa",
                 },
                 "data": [record.time_series(days_late) for record in records],
@@ -122,7 +120,7 @@ class TimeSeriesData(APIView):
             except County.DoesNotExist:
                 return Response("County is below display threshold.")
             records = CountyMortgageData.objects.filter(fips=fips)
-            name = "{}, {}".format(county.name, county.state.abbr)
+            name = f"{county.name}, {county.state.abbr}"
             data = {
                 "meta": {"fips": fips, "name": name, "fips_type": "county"},
                 "data": [record.time_series(days_late) for record in records],
@@ -195,7 +193,7 @@ class MapData(APIView):
             payload = {
                 "meta": {
                     "fips_type": geo_dict[geo]["fips_type"],
-                    "date": "{}".format(date),
+                    "date": f"{date}",
                 },
                 "data": {},
             }
@@ -207,7 +205,7 @@ class MapData(APIView):
             payload = {
                 "meta": {
                     "fips_type": geo_dict[geo]["fips_type"],
-                    "date": "{}".format(date),
+                    "date": f"{date}",
                     "national_average": nat_data_series["value"],
                 },
                 "data": {},
@@ -216,9 +214,7 @@ class MapData(APIView):
                 data_series = record.time_series(days_late)
                 geo_parent = getattr(record, geo_dict[geo]["geo_obj"])
                 if geo == "counties":
-                    name = "{}, {}".format(
-                        geo_parent.name, geo_parent.state.abbr
-                    )
+                    name = f"{geo_parent.name}, {geo_parent.state.abbr}"
                 else:
                     name = geo_parent.name
                 data_series.update({"name": name})
@@ -231,7 +227,7 @@ class MapData(APIView):
                     non_data_series = record.time_series(days_late)
                     if record.state.non_msa_valid is False:
                         non_data_series["value"] = None
-                    non_name = "Non-metro area of {}".format(record.state.name)
+                    non_name = f"Non-metro area of {record.state.name}"
                     non_data_series.update({"name": non_name})
                     del non_data_series["date"]
                     payload["data"].update({record.fips: non_data_series})

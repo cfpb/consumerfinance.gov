@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from datetime import timedelta
 from io import StringIO
 
@@ -91,7 +90,7 @@ class InactiveUsersTestCase(TestCase):
         )
         self.assertEqual(
             Command().format_inactive_users([self.user_1]),
-            "\tuser_1: {}\n".format(short_date),
+            f"\tuser_1: {short_date}\n",
         )
 
     def test_format_inactive_users_never_logged_in(self):

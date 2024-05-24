@@ -26,12 +26,12 @@ class Command(WagtailClient, BaseCommand):
             try:
                 self.add_image(filename)
             except Exception as e:
-                self.stderr.write("failed to add image {}".format(filename))
+                self.stderr.write(f"failed to add image {filename}")
                 self.stderr.write(str(e))
                 failures.append(filename)
 
         if failures:
-            raise CommandError("failed to add images: {}".format(filenames))
+            raise CommandError(f"failed to add images: {filenames}")
 
     def add_image(self, filename):
         filename_only = os.path.split(filename)[-1]
@@ -48,9 +48,9 @@ class Command(WagtailClient, BaseCommand):
         )
 
         if 302 != response.status_code:
-            raise RuntimeError("something went wrong: {}".format(response))
+            raise RuntimeError(f"something went wrong: {response}")
 
         image_model = get_image_model()
         image = image_model.objects.filter(title=filename_only).latest("pk")
 
-        self.stdout.write("added image {}: {}".format(image.pk, image))
+        self.stdout.write(f"added image {image.pk}: {image}")

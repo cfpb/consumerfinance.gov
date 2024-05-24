@@ -20,7 +20,7 @@ import requests
 
 API_KEY = os.getenv("ED_API_KEY", "")
 API_ROOT = "https://api.data.gov/ed/collegescorecard/v1"
-SCHOOLS_ROOT = "{}/schools.json".format(API_ROOT)
+SCHOOLS_ROOT = f"{API_ROOT}/schools.json"
 QUERY_URL = "{}?id={}&api_key={}&fields={}"
 PAGE_MAX = 100  # the max page size allowed as of 2015-09-14
 
@@ -229,7 +229,7 @@ def api_school_query(school_id, fields):
 def build_field_string():
     """Assemble fields for a fat API query."""
     latest_fields = [
-        "latest.{}".format(field) for field in (YEAR_FIELDS + PROGRAM_FIELDS)
+        f"latest.{field}" for field in (YEAR_FIELDS + PROGRAM_FIELDS)
     ]
     fields = BASE_FIELDS + latest_fields
     return ",".join(fields)
@@ -238,9 +238,7 @@ def build_field_string():
 def search_by_school_name(name):
     """Search api by school name, return school name, id, city, state."""
     fields = "id,school.name,school.city,school.state"
-    url = "{0}?api_key={1}&school.name={2}&fields={3}".format(
-        SCHOOLS_ROOT, API_KEY, name, fields
-    )
+    url = f"{SCHOOLS_ROOT}?api_key={API_KEY}&school.name={name}&fields={fields}"
     data = requests.get(url).json()["results"]
     return data
 

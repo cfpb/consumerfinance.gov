@@ -43,7 +43,7 @@ class ZipCodeBasedCounselorGeocoder:
         logger.warning("need to geocode counselor with zipcode %s", zipcode)
 
         if zipcode not in self.zipcodes:
-            raise KeyError("{} not in zipcodes".format(zipcode))
+            raise KeyError(f"{zipcode} not in zipcodes")
 
         coordinates = self.zipcodes[zipcode]
         counselor.update(zip(lat_lng_keys, coordinates))
@@ -103,7 +103,7 @@ class BulkZipCodeGeocoder:
     @staticmethod
     def generate_possible_zipcodes(start=0):
         for n in range(start, 100000):
-            yield "{:05d}".format(n)
+            yield f"{n:05d}"
 
     def mapbox_geocode_zipcodes(self, zipcodes):
         """Geocode an iterable list of string zipcodes using Mapbox.
@@ -122,7 +122,7 @@ class BulkZipCodeGeocoder:
             time_now = time.time()
             if time_now - request_start_time > rate_limit_timeout:
                 raise RuntimeError(
-                    "rate limit timeout {} exceeded".format(rate_limit_timeout)
+                    f"rate limit timeout {rate_limit_timeout} exceeded"
                 )
 
             response = requests.get(url)
@@ -184,13 +184,13 @@ class GeocodedZipCodeCsv:
     Each line in the file is: zipcode,latitude_degrees,longitude_degrees
     """
 
-    DELIMITER = str(",")
+    DELIMITER = ","
 
     @classmethod
     def read(cls, filename):
         """Returns dictionary of zipcode, (latitude, longitude) pairs."""
         logger.info("Reading zipcodes from %s", filename)
-        with open(filename, "r") as f:
+        with open(filename) as f:
             reader = csv.reader(f, delimiter=cls.DELIMITER)
             zipcodes = dict(
                 (zipcode, (float(latitude), float(longitude)))
@@ -220,13 +220,13 @@ class GazetteerZipCodeFile:
     See https://www.census.gov/geo/maps-data/data/gazetteer2016.html
     """
 
-    DELIMITER = str("\t")
+    DELIMITER = "\t"
 
     @classmethod
     def read(cls, filename):
         """Returns dictionary of zipcode, (latitude, longitude) pairs."""
         logger.info("Reading zipcodes from %s", filename)
-        with open(filename, "r") as f:
+        with open(filename) as f:
             reader = csv.reader(f, delimiter=cls.DELIMITER)
             next(reader)
 

@@ -36,7 +36,7 @@ from paying_for_college.models import (
 )
 
 
-COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
+COLLEGE_ROOT = f"{settings.PROJECT_ROOT}/paying_for_college"
 
 
 class ProgamDataTest(django.test.TestCase):
@@ -169,10 +169,10 @@ class PurgeTests(django.test.TestCase):
 
 class TestScripts(django.test.TestCase):
     fixtures = ["test_fixture.json", "test_contacts.json"]
-    api_fixture = "{}/fixtures/sample_4yr_api_result.json".format(COLLEGE_ROOT)
+    api_fixture = f"{COLLEGE_ROOT}/fixtures/sample_4yr_api_result.json"
 
     # a full sample API return for a 4-year school (Texas Tech 229115)
-    with open(api_fixture, "r") as f:
+    with open(api_fixture) as f:
         mock_results = json.loads(f.read())
 
     # a partial sample API return for a community college
@@ -545,7 +545,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_write.call_count, 3)
 
     def test_unzip_file(self):
-        test_zip = "{}/data_sources/ipeds/" "test.txt.zip".format(COLLEGE_ROOT)
+        test_zip = f"{COLLEGE_ROOT}/data_sources/ipeds/" "test.txt.zip"
         self.assertTrue(update_ipeds.unzip_file(test_zip))
 
     @patch("paying_for_college.disclosures.scripts.update_ipeds.requests.get")

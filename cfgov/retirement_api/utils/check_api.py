@@ -33,7 +33,7 @@ def handler(signum, frame):
 
 class Collector:
     data = ""
-    date = ("{0}".format(timestamp))[:16]
+    date = (f"{timestamp}")[:16]
     domain = ""
     status = ""
     error = ""
@@ -75,16 +75,16 @@ api_string = "retirement-api/estimator/{0}-{1}-{2}/{3}/".format(
 BASES = {
     "unitybox": "http://localhost:8080/retirement",
     "standalone": "http://localhost:8000/retirement",
-    default_base: "{0}{1}{2}".format(prefix, default_base, suffix),
-    "prod": "{0}www{1}".format(prefix, suffix),
+    default_base: f"{prefix}{default_base}{suffix}",
+    "prod": f"{prefix}www{suffix}",
 }
 
 
 def run(base):
     if base not in BASES:
-        collector.error = "Server '{0}' isn't recognized".format(base)
+        collector.error = f"Server '{base}' isn't recognized"
         return collector
-    url = "{0}/{1}".format(BASES[base], api_string)
+    url = f"{BASES[base]}/{api_string}"
     collector.domain = base
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(timeout_seconds)
@@ -102,14 +102,12 @@ def run(base):
         end = time.time()
         signal.alarm(0)
         collector.status = "TIMEDOUT"
-        collector.error = "SSA request exceeded {0} sec".format(
-            timeout_seconds
-        )
+        collector.error = f"SSA request exceeded {timeout_seconds} sec"
     else:
         if test_request.status_code != 200:
             signal.alarm(0)
             end = time.time()
-            collector.status = "{0}".format(test_request.status_code)
+            collector.status = f"{test_request.status_code}"
             collector.error = test_request.reason.replace(",", ";")
             collector.api_fail = "FAIL"
         else:

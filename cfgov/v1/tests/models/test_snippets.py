@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 
 from django.test import TestCase
@@ -72,7 +71,7 @@ class TestReusableTextRendering(TestCase):
         default_site = Site.objects.get(is_default_site=True)
         default_site.root_page.add_child(instance=page)
 
-        html = '<a linktype="page" id="{}">Link</a>'.format(page.pk)
+        html = f'<a linktype="page" id="{page.pk}">Link</a>'
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn('<a href="/foo/">', block.render({"text": html}))
 

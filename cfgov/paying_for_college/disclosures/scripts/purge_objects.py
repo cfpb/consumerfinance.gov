@@ -24,6 +24,6 @@ def purge(objects):
     if objects not in object_map.keys():
         return error_msg
     queryset = object_map[objects]
-    msg = "Purging {} {}".format(queryset.count(), objects)
+    msg = f"Purging {queryset.count()} {objects}"
     queryset.delete()
     return msg

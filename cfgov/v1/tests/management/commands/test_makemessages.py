@@ -64,7 +64,7 @@ class TestCustomMakeMessages(SimpleTestCase):
     def test_extraction_works_as_expected_including_jinja2_block(self):
         call_command("makemessages", locale=[self.LOCALE], verbosity=0)
 
-        with open(self.PO_FILE, "r") as f:
+        with open(self.PO_FILE) as f:
             contents = f.read()
 
         self.assertIn('msgid "Test string from Python file."', contents)

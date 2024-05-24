@@ -112,9 +112,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 snippet = Markup("".join(hit.meta.highlight.text[0]))
             except TypeError as e:
                 logger.warning(
-                    "Query string {} produced a TypeError: {}".format(
-                        search_query, e
-                    )
+                    f"Query string {search_query} produced a TypeError: {e}"
                 )
                 continue
             hit_payload = {
@@ -123,12 +121,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 "reg": hit.short_name,
                 "label": hit.title,
                 "snippet": snippet,
-                "url": "{}{}/{}/#{}".format(
-                    self.get_parent().specific.url,
-                    hit.part,
-                    hit.section_label.lower(),
-                    hit.paragraph_id,
-                ),
+                "url": f"{self.get_parent().specific.url}{hit.part}/{hit.section_label.lower()}/#{hit.paragraph_id}",
             }
             payload["results"].append(hit_payload)
 

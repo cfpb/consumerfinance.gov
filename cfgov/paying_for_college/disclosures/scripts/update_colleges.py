@@ -33,9 +33,9 @@ logger = logging.getLogger(__name__)
 
 DATESTAMP = datetime.datetime.now().strftime("%Y-%m-%d")
 HOME = os.path.expanduser("~")
-NO_DATA_FILE = "{}/no_data_{}.json".format(HOME, DATESTAMP)
+NO_DATA_FILE = f"{HOME}/no_data_{DATESTAMP}.json"
 SCRIPTNAME = os.path.basename(__file__).partition(".")[0]
-ID_BASE = "{}?api_key={}".format(api_utils.SCHOOLS_ROOT, api_utils.API_KEY)
+ID_BASE = f"{api_utils.SCHOOLS_ROOT}?api_key={api_utils.API_KEY}"
 FIELDS = sorted(MODEL_MAP.keys())
 FIELDSTRING = api_utils.build_field_string()
 
@@ -60,7 +60,7 @@ def update_programs(api_data, school):
             continue
         level = entry["credential"]["level"]
         cip_code = entry["code"]
-        program_code = "{}-{}".format(cip_code, level)
+        program_code = f"{cip_code}-{level}"
         program, _created = Program.objects.update_or_create(
             institution=school,
             program_code=program_code,
@@ -85,9 +85,9 @@ def update_programs(api_data, school):
 def fix_zip5(zip5):
     """Add leading zeros if they have been stripped by the scorecard db."""
     if len(zip5) == 4:
-        return "0{}".format(zip5)
+        return f"0{zip5}"
     if len(zip5) == 3:
-        return "00{}".format(zip5)
+        return f"00{zip5}"
     else:
         return zip5[:5]
 
@@ -100,7 +100,7 @@ def get_scorecard_data(url):
         logger.exception("SSL error connecting with Scorecard")
         return
     if not response.ok:
-        logger.info("request not OK, returned {}".format(response.reason))
+        logger.info(f"request not OK, returned {response.reason}")
         if response.status_code == 429:
             logger.info("API limit reached")
         return
@@ -198,21 +198,19 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
     base_query = School.objects.exclude(pk__in=excluded_ids)
     if single_school:
         if not base_query.filter(pk=single_school).exists():
-            no_school_msg = "Could not find school with ID {}".format(
-                single_school
-            )
+            no_school_msg = f"Could not find school with ID {single_school}"
             return (no_data, no_school_msg)
         base_query = base_query.filter(pk=single_school)
-        logger.info("Updating {}".format(base_query[0]))
+        logger.info(f"Updating {base_query[0]}")
     else:
         logger.info(
-            "Seeking updates for {} schools.".format(base_query.count())
+            f"Seeking updates for {base_query.count()} schools."
         )
         logger.info(job_msg)
     for school in base_query:
         processed += 1
         if processed % 500 == 0:  # pragma: no cover
-            logger.info("\n{}\n".format(processed))
+            logger.info(f"\n{processed}\n")
         if processed % 5 == 0:
             time.sleep(1)
         url = id_url.format(ID_BASE, school.school_id, FIELDSTRING)
@@ -250,18 +248,12 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
         school.save()
         if store_programs:
             programs_created += update_programs(data, school)
-    endmsg = """
-    Updated {} schools and found no data for {}\n\
-    Schools that closed since last run: {}\n\
-    \n{} took {} to run""".format(
-        update_count,
-        len(no_data),
-        len(closed),
-        SCRIPTNAME,
-        (datetime.datetime.now() - starter),
-    )
+    endmsg = f"""
+    Updated {update_count} schools and found no data for {len(no_data)}\n\
+    Schools that closed since last run: {len(closed)}\n\
+    \n{SCRIPTNAME} took {datetime.datetime.now() - starter} to run"""
     if programs_created:
-        logger.info("\nCreated {} program records".format(programs_created))
+        logger.info(f"\nCreated {programs_created} program records")
     if no_data:
         logger.info(
             "\n\nSchools for which we found no data on {}:".format(
@@ -269,9 +261,9 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
             )
         )
         for school in no_data:
-            logger.info("- {}".format(school))
+            logger.info(f"- {school}")
     if closed:
         logger.info("\n\nSchools that have closed since the last update:")
         for school in closed:
-            logger.info("- {}".format(school))
+            logger.info(f"- {school}")
     return (no_data, endmsg)

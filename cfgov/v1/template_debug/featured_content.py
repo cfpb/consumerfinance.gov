@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 featured_content_defaults = {
     "heading": "Featured content",
     "body": (

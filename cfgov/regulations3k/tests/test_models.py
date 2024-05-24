@@ -224,9 +224,7 @@ class RegModelTests(DjangoTestCase):
         part = self.part_1002
         self.assertEqual(
             part.cfr_title,
-            "{} CFR Part {} ({})".format(
-                part.cfr_title_number, part.part_number, part.short_name
-            ),
+            f"{part.cfr_title_number} CFR Part {part.part_number} ({part.short_name})",
         )
 
     def test_subpart_string_method(self):

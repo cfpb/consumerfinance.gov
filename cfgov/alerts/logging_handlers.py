@@ -32,7 +32,7 @@ class CFGovErrorHandler(logging.Handler):
     def emit(self, record):
         title = self.format_title(record)
         body = self.format_body(record)
-        message = "{title} - {body}".format(title=title, body=body)
+        message = f"{title} - {body}"
         self.sqs_queue.post(message=message)
 
     def format_title(self, record):

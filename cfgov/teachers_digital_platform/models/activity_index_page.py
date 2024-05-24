@@ -49,7 +49,7 @@ FACET_LIST = [tup[0] for tup in FACET_MAP]
 FACET_DICT = {"aggs": {}}
 for facet in FACET_LIST:
     FACET_DICT["aggs"].update(
-        {"{}_terms".format(facet): {"terms": {"field": facet}}}
+        {f"{facet}_terms": {"terms": {"field": facet}}}
     )
 ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [

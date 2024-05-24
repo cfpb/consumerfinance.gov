@@ -74,10 +74,10 @@ class Command(BaseCommand):
         inactive_users = _get_inactive_users(period)
 
         if len(inactive_users) == 0:
-            self.stdout.write("No users are inactive {}+ days".format(period))
+            self.stdout.write(f"No users are inactive {period}+ days")
         else:
             # List inactive users and then deactivate them
-            self.stdout.write("Users inactive for {}+ days:\n".format(period))
+            self.stdout.write(f"Users inactive for {period}+ days:\n")
             self.stdout.write(self.format_inactive_users(inactive_users))
 
             # Notify specified emails (e.g. system admins)
@@ -96,10 +96,8 @@ class Command(BaseCommand):
 
                 # Deactivate and notify inactive users
                 self.stdout.write(
-                    "Deactivating and emailing {} users who "
-                    "have been inactive for {} days".format(
-                        len(inactive_users), period
-                    )
+                    f"Deactivating and emailing {len(inactive_users)} users who "
+                    f"have been inactive for {period} days"
                 )
 
         if warn_users_flag_set:
@@ -110,8 +108,8 @@ class Command(BaseCommand):
 
             # Notify users approaching deactivation
             self.stdout.write(
-                "Emailing {} users who have been "
-                "inactive for {} days".format(len(warn_users), warn_period)
+                f"Emailing {len(warn_users)} users who have been "
+                f"inactive for {warn_period} days"
             )
 
             for user in warn_users:
@@ -128,9 +126,7 @@ class Command(BaseCommand):
             else:
                 last_login = "never"
 
-            inactive_users_str += "\t{username}: {last_login}\n".format(
-                username=user.username, last_login=last_login
-            )
+            inactive_users_str += f"\t{user.username}: {last_login}\n"
 
         return inactive_users_str
 
@@ -138,12 +134,10 @@ class Command(BaseCommand):
         """Sends a report email to specified emails listing the users who have
         been inactive for the specified time period."""
         now = date_format(timezone.now(), "SHORT_DATETIME_FORMAT")
-        subject = "{prefix}Inactive users as of {now}".format(
-            prefix=settings.EMAIL_SUBJECT_PREFIX, now=now
-        )
+        subject = f"{settings.EMAIL_SUBJECT_PREFIX}Inactive users as of {now}"
         msg = (
             "The following active users have not logged in for "
-            "{period}+ days:\n".format(period=period)
+            f"{period}+ days:\n"
         )
         msg += self.format_inactive_users(inactive_users)
         email_message = mail.EmailMessage(subject, msg, None, emails)
@@ -151,9 +145,7 @@ class Command(BaseCommand):
 
     def send_user_warning_email(self, user, warn_period, period):
         """Send the specified user a warning that they have been inactive"""
-        subject = "{prefix}Wagtail account inactivity".format(
-            prefix=settings.EMAIL_SUBJECT_PREFIX
-        )
+        subject = f"{settings.EMAIL_SUBJECT_PREFIX}Wagtail account inactivity"
         msg = (
             "Hello,\n\n"
             + "Your consumerfinance.gov Wagtail account has not been "
@@ -169,9 +161,7 @@ class Command(BaseCommand):
     def send_user_deactivation_email(self, user, period):
         """Send the specified user a warning that the have been deactivated
         due to inactivity"""
-        subject = "{prefix}Wagtail account deactivation".format(
-            prefix=settings.EMAIL_SUBJECT_PREFIX
-        )
+        subject = f"{settings.EMAIL_SUBJECT_PREFIX}Wagtail account deactivation"
         msg = (
             "Hello,\n\n"
             + "Your Wagtail account has not been accessed for more than "

@@ -1,4 +1,3 @@
-# coding: utf-8
 import datetime
 import json
 import logging
@@ -63,12 +62,10 @@ def get_note(note_type, language):
 
 # this datafile specifies years that have unique retirement age values
 # since this may change, it is maintained in an external file
-datafile = "{0}\
-/retirement_api/data/unique_retirement_ages.json".format(
-    BASE_DIR
-)
+datafile = f"{BASE_DIR}\
+/retirement_api/data/unique_retirement_ages.json"
 
-with open(datafile, "r") as f:
+with open(datafile) as f:
     age_map = json.loads(f.read())
     for year in age_map:
         age_map[year] = tuple(age_map[year])

@@ -35,7 +35,7 @@ def convert_http_image_match(match, url_mappings):
             return re.sub(from_prefix, to_prefix, match.group(0))
 
     raise ValueError(
-        "cannot convert HTTP image link {}".format(http_image_url)
+        f"cannot convert HTTP image link {http_image_url}"
     )
 
 

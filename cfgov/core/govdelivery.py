@@ -100,7 +100,7 @@ class LoggingMockGovDelivery(MockGovDelivery):
                 method=method,
                 args=", ".join(map(str, args)),
                 kwargs=", ".join(
-                    "{k}={v}".format(k=k, v=v) for k, v in kwargs.items()
+                    f"{k}={v}" for k, v in kwargs.items()
                 ),
             )
         )

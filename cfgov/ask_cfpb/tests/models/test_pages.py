@@ -451,7 +451,7 @@ class PortalSearchPageTest(TestCase):
             portal_topic=page.portal_topic,
         )
         glossary_term.save()
-        url = "{}key-terms/".format(page.url)
+        url = f"{page.url}key-terms/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortization")
@@ -465,7 +465,7 @@ class PortalSearchPageTest(TestCase):
             portal_topic=page.portal_topic,
         )
         glossary_term.save()
-        url = "{}palabras-claves/".format(page.url)
+        url = f"{page.url}palabras-claves/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Amortización")
@@ -881,7 +881,7 @@ class AnswerPageTest(TestCase):
         self.assertTrue(page.answer_base)
         result = page.__str__()
         self.assertEqual(
-            result, "{}: {}".format(page.answer_base.pk, page.title)
+            result, f"{page.answer_base.pk}: {page.title}"
         )
 
     def test_search_tags(self):

@@ -49,7 +49,7 @@ def dump_as_csv(rows_out, dump_slug):
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open("{}.csv".format(dump_slug), "w") as f:
+    with open(f"{dump_slug}.csv", "w") as f:
         writer = csv.writer(f)
         for row in rows_out:
             writer.writerow(row)
@@ -80,7 +80,7 @@ def process_source(starting_date, through_date, dump_slug=None):
     # truncate table
     CountyMortgageData.objects.all().delete()
 
-    source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
+    source_url = f"{S3_SOURCE_BUCKET}/{S3_SOURCE_FILE}"
     raw_data = read_in_s3_csv(source_url)
 
     # Ensure state objects are up to date
@@ -117,13 +117,11 @@ def process_source(starting_date, through_date, dump_slug=None):
                     sys.stdout.write(".")
                     sys.stdout.flush()
                 if counter % 100000 == 0:  # pragma: no cover
-                    logger.info("\n{}".format(counter))
+                    logger.info(f"\n{counter}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
-        "\n{} took {} "
-        "to create {} countymortgage records".format(
-            SCRIPT_NAME, (datetime.datetime.now() - starter), len(new_objects)
-        )
+        f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
+        f"to create {len(new_objects)} countymortgage records"
     )
     if dump_slug:
         dump_as_csv(
@@ -131,7 +129,7 @@ def process_source(starting_date, through_date, dump_slug=None):
                 (
                     obj.pk,
                     obj.fips,
-                    "{}".format(obj.date),
+                    f"{obj.date}",
                     obj.total,
                     obj.current,
                     obj.thirty,

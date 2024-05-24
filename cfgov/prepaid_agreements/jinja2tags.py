@@ -24,7 +24,7 @@ def remove_url_parameter(request, discards):
                 item.encode("utf-8") for item in params[key]
             ]
     querystring = urlencode(items, "utf-8")
-    return "?{}".format(querystring) if querystring else ""
+    return f"?{querystring}" if querystring else ""
 
 
 class PrepaidAgreementsExtension(Extension):

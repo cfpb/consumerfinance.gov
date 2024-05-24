@@ -27,27 +27,21 @@ class AskBlocksTestCase(TestCase):
         block = AskAnswerContent()
         value = block.to_python([self.tip_data])
         html = block.render(value)
-        expected_html = '<div class="row">{}</div>'.format(
-            self.expected_tip_html
-        )
+        expected_html = f'<div class="row">{self.expected_tip_html}</div>'
         self.assertHTMLEqual(html, expected_html)
 
     def test_content_block_applies_wrapper_to_tip_and_next_block(self):
         block = AskAnswerContent()
         value = block.to_python([self.tip_data, self.text_data])
         html = block.render(value)
-        expected_html = '<div class="row">{}{}</div>'.format(
-            self.expected_tip_html, self.expected_text_html
-        )
+        expected_html = f'<div class="row">{self.expected_tip_html}{self.expected_text_html}</div>'
         self.assertHTMLEqual(html, expected_html)
 
     def test_content_block_does_not_apply_wrapper_without_tip(self):
         block = AskAnswerContent()
         value = block.to_python([self.text_data])
         html = block.render(value)
-        expected_html = '<div class="row">{}</div>'.format(
-            self.expected_text_html
-        )
+        expected_html = f'<div class="row">{self.expected_text_html}</div>'
         self.assertNotIn('<div class="row">', html)
         self.assertHTMLEqual(html, expected_html)
 

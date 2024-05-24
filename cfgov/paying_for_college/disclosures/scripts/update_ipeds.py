@@ -24,30 +24,24 @@ PFC_ROOT = Path(__file__).resolve().parents[2]
 # from the previous academic year, whose first year is two years ago.
 # In early 2020, the latest data came from the 2018-2019 academic year.
 DATA_YEAR = datetime.datetime.now().year - 2
-ipeds_directory = "{}/data_sources/ipeds".format(PFC_ROOT)
+ipeds_directory = f"{PFC_ROOT}/data_sources/ipeds"
 ipeds_data_url = "https://nces.ed.gov/ipeds/datacenter/data/"
-data_slug = "IC{}_AY".format(DATA_YEAR)
-dictionary_slug = "IC{}_AY_Dict".format(DATA_YEAR)
+data_slug = f"IC{DATA_YEAR}_AY"
+dictionary_slug = f"IC{DATA_YEAR}_AY_Dict"
 
 DATA_VARS = {
-    "universe_url": "{}/HD{}.zip".format(ipeds_data_url, DATA_YEAR),
-    "universe_zip": "{}/HD{}.zip".format(ipeds_directory, DATA_YEAR),
-    "universe_csv": "{}/hd{}.csv".format(ipeds_directory, DATA_YEAR),
-    "universe_cleaned": "{}/hd{}_cleaned.csv".format(
-        ipeds_directory, DATA_YEAR
-    ),
-    "data_url": "{}/{}.zip".format(ipeds_data_url, data_slug),
-    "data_zip": "{}/{}.zip".format(ipeds_directory, data_slug),
-    "data_csv": "{}/{}.csv".format(ipeds_directory, data_slug.lower()),
-    "data_cleaned": "{}/{}_cleaned.csv".format(
-        ipeds_directory, data_slug.lower()
-    ),
-    "services_url": "{}/IC{}.zip".format(ipeds_data_url, DATA_YEAR),
-    "services_zip": "{}/IC{}.zip".format(ipeds_directory, DATA_YEAR),
-    "services_csv": "{}/ic{}.csv".format(ipeds_directory, DATA_YEAR),
-    "services_cleaned": "{}/ic{}_cleaned.csv".format(
-        ipeds_directory, DATA_YEAR
-    ),
+    "universe_url": f"{ipeds_data_url}/HD{DATA_YEAR}.zip",
+    "universe_zip": f"{ipeds_directory}/HD{DATA_YEAR}.zip",
+    "universe_csv": f"{ipeds_directory}/hd{DATA_YEAR}.csv",
+    "universe_cleaned": f"{ipeds_directory}/hd{DATA_YEAR}_cleaned.csv",
+    "data_url": f"{ipeds_data_url}/{data_slug}.zip",
+    "data_zip": f"{ipeds_directory}/{data_slug}.zip",
+    "data_csv": f"{ipeds_directory}/{data_slug.lower()}.csv",
+    "data_cleaned": f"{ipeds_directory}/{data_slug.lower()}_cleaned.csv",
+    "services_url": f"{ipeds_data_url}/IC{DATA_YEAR}.zip",
+    "services_zip": f"{ipeds_directory}/IC{DATA_YEAR}.zip",
+    "services_csv": f"{ipeds_directory}/ic{DATA_YEAR}.csv",
+    "services_cleaned": f"{ipeds_directory}/ic{DATA_YEAR}_cleaned.csv",
 }
 
 # mapping the vars of our data_json to the IPEDS data csv
@@ -121,13 +115,13 @@ def write_clean_csv(fpath, fieldnames, clean_headings, data):
 def download_files():
     """Download the latest IPEDS Institutional Characteristics file."""
     for slug in ["universe", "data", "services"]:
-        url = DATA_VARS["{}_url".format(slug)]
-        target = DATA_VARS["{}_zip".format(slug)]
+        url = DATA_VARS[f"{slug}_url"]
+        target = DATA_VARS[f"{slug}_zip"]
         target_slug = target.split("/")[-1]
         if download_zip_file(url, target):
-            print("Downloaded {}".format(target_slug))
+            print(f"Downloaded {target_slug}")
         else:
-            print("Failed to download {}".format(target_slug))
+            print(f"Failed to download {target_slug}")
     clean_csv_headings()
 
 
@@ -151,8 +145,8 @@ def dump_csv(fpath, header, data):
 def clean_csv_headings():
     """Strip nasty leading or trailing spaces from column headings."""
     for slug in ["universe", "data", "services"]:
-        original_file = DATA_VARS["{}_csv".format(slug)]
-        cleaned_file = DATA_VARS["{}_cleaned".format(slug)]
+        original_file = DATA_VARS[f"{slug}_csv"]
+        cleaned_file = DATA_VARS[f"{slug}_cleaned"]
         fieldnames, data = read_csv(original_file, encoding="latin-1")
         clean_headings = [name.strip() for name in fieldnames]
         write_clean_csv(cleaned_file, fieldnames, clean_headings, data)
@@ -201,9 +195,7 @@ def create_school(iped, data):
 def process_missing(missing_ids):
     """Create missing school and alias objects and dump csv of additions."""
     csv_out_data = []
-    csv_slug = "{}/schools_added_on_{}.csv".format(
-        ipeds_directory, datetime.date.today()
-    )
+    csv_slug = f"{ipeds_directory}/schools_added_on_{datetime.date.today()}.csv"
     missing_data = process_datafiles(add_schools=missing_ids)
     for school_id in missing_data:
         create_school(int(school_id), missing_data[school_id])
@@ -247,22 +239,14 @@ def load_values(dry_run=True):
     if dry_run:
         msg = (
             "DRY RUN:\n"
-            "- {} would have updated {} data points for {} schools\n"
-            "- {} schools found with on-campus housing\n"
-            "- {} new school records "
-            "would have been created".format(
-                SCRIPT,
-                intcomma(points),
-                intcomma(updated),
-                intcomma(oncampus),
-                len(missing),
-            )
+            f"- {SCRIPT} would have updated {intcomma(points)} data points for {intcomma(updated)} schools\n"
+            f"- {intcomma(oncampus)} schools found with on-campus housing\n"
+            f"- {len(missing)} new school records "
+            "would have been created"
         )
         return msg
     msg = (
-        "{} updated {} data points for {} schools;\n"
-        "{} new school records were created".format(
-            SCRIPT, intcomma(points), intcomma(updated), len(missing)
-        )
+        f"{SCRIPT} updated {intcomma(points)} data points for {intcomma(updated)} schools;\n"
+        f"{len(missing)} new school records were created"
     )
     return msg

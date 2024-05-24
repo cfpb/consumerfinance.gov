@@ -492,7 +492,7 @@ class DataExportTest(django.test.TestCase):
                 "County",
                 county.state.abbr,
                 county.name,
-                "'{}'".format(county_data.fips),
+                f"'{county_data.fips}'",
             ],
         )
         metro_data = MSAMortgageData.objects.filter(fips="35840").first()
@@ -506,7 +506,7 @@ class DataExportTest(django.test.TestCase):
         state_starter = row_starter("State", state_data)
         self.assertEqual(
             state_starter,
-            ["State", state.name, "'{}'".format(state_data.fips)],
+            ["State", state.name, f"'{state_data.fips}'"],
         )
         non_metro_data = NonMSAMortgageData.objects.get(fips="12-non")
         non_metro_starter = row_starter("NonMetroArea", non_metro_data)

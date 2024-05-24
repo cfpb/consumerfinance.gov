@@ -62,7 +62,7 @@ class SectionPreviewIndexView(TreeIndexView):
                 "url": preview_url,
                 "label": label,
                 "classname": "button button-small button-secondary",
-                "title": "Preview this {}".format(self.verbose_name),
+                "title": f"Preview this {self.verbose_name}",
             }
             btns.insert(-1, preview_button)
 

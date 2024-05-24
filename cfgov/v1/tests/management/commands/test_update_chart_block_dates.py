@@ -61,7 +61,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
         call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
+            "update_chart_block_dates", f"--snapshot_file={filename}"
         )
         response = self.client.get("/browse/")
 
@@ -97,7 +97,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
         call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
+            "update_chart_block_dates", f"--snapshot_file={filename}"
         )
         response = self.client.get("/browse/")
 
@@ -133,7 +133,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
         call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
+            "update_chart_block_dates", f"--snapshot_file={filename}"
         )
         response = self.client.get("/browse/")
 

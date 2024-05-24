@@ -68,7 +68,7 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
     agreement = issuer.agreement_set.create(
         file_name=filename,
         size=int(zipinfo.file_size),
-        uri="{}/{}".format(uri_hostname, s3_key),
+        uri=f"{uri_hostname}/{s3_key}",
         description=filename,
     )
     agreement.save()
@@ -77,9 +77,7 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
         pdf_file = agreements_zip.open(zipinfo)
         upload_to_s3(pdf_file, s3_key)
         outfile.write(
-            "{} uploaded".format(
-                repr(s3_key),
-            )
+            f"{repr(s3_key)} uploaded"
         )
 
     return agreement

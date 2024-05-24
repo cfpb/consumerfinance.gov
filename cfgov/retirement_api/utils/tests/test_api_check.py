@@ -61,7 +61,7 @@ class TestApi(unittest.TestCase):
         self.assertTrue(msg == "OK")
 
     def test_build_msg(self):
-        target_text = ",{0},build,,,,".format(self.test_collector.date)
+        target_text = f",{self.test_collector.date},build,,,,"
         test_text = build_msg(self.test_collector)
         self.assertTrue(test_text == target_text)
 

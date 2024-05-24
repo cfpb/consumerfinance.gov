@@ -259,20 +259,20 @@ class GeoValidationTests(django.test.TestCase):
     def test_state_name_string(self):
         state = State.objects.get(fips="12")
         self.assertEqual(
-            state.__str__(), "{} ({})".format(state.name, state.fips)
+            state.__str__(), f"{state.name} ({state.fips})"
         )
 
     def test_metro_name_string(self):
         metro = MetroArea.objects.get(fips="35840")
         self.assertEqual(
-            metro.__str__(), "{} ({})".format(metro.name, metro.fips)
+            metro.__str__(), f"{metro.name} ({metro.fips})"
         )
 
     def test_county_name_string(self):
         county = County.objects.get(fips="12081")
         self.assertEqual(
             county.__str__(),
-            "{}, {} ({})".format(county.name, county.state.abbr, county.fips),
+            f"{county.name}, {county.state.abbr} ({county.fips})",
         )
 
 
@@ -392,11 +392,11 @@ class MortgageModelTests(django.test.TestCase):
 
     def test_constant_string(self):
         constant = MortgageDataConstant.objects.first()
-        self.assertEqual(constant.__str__(), "{}".format(constant))
+        self.assertEqual(constant.__str__(), f"{constant}")
 
     def test_meta_string(self):
         meta = MortgageMetaData.objects.first()
-        self.assertEqual(meta.__str__(), "{}".format(meta))
+        self.assertEqual(meta.__str__(), f"{meta}")
 
     def test_base_data_properties(self):
         """Test basic calculation functions"""

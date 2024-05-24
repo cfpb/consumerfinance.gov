@@ -34,12 +34,12 @@ def purge(url=None):
         if any(
             k for k in cloudfront_config.get("DISTRIBUTION_ID", {}) if k in url
         ):
-            logger.info('Purging {} from "files" cache'.format(url))
+            logger.info(f'Purging {url} from "files" cache')
             batch.purge(backends=["files"])
 
         # Otherwise invalidate with our default backend
         else:
-            logger.info('Purging {} from "akamai" cache'.format(url))
+            logger.info(f'Purging {url} from "akamai" cache')
             batch.purge(backends=["akamai"])
 
         return "Submitted invalidation for %s" % url

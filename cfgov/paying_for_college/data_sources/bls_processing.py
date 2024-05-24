@@ -35,10 +35,10 @@ This will create a new file in `paying_for_college/fixtures/bls_data.json`
 """
 
 BASE_DIR = "paying_for_college/data_sources"
-WE_CSVFILE = "{}/xregnw.csv".format(BASE_DIR)
-NE_CSVFILE = "{}/xregnne.csv".format(BASE_DIR)
-MW_CSVFILE = "{}/xregnmw.csv".format(BASE_DIR)
-SO_CSVFILE = "{}/xregns.csv".format(BASE_DIR)
+WE_CSVFILE = f"{BASE_DIR}/xregnw.csv"
+NE_CSVFILE = f"{BASE_DIR}/xregnne.csv"
+MW_CSVFILE = f"{BASE_DIR}/xregnmw.csv"
+SO_CSVFILE = f"{BASE_DIR}/xregns.csv"
 YEAR = 2014
 
 OUT_FILE = "paying_for_college/fixtures/bls_data.json"
@@ -83,21 +83,19 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
     }
 
     data = load_bls_data(csvfile)
-    print("******Processing {} file...******".format(region))
+    print(f"******Processing {region} file...******")
     for row in data:
         item = row["Item"].strip()
         if item in CATEGORIES_KEY_MAP.keys():
-            print("Current processing {}.....".format(item))
+            print(f"Current processing {item}.....")
             print(
-                "Will be adding {} to base_bls_dict...".format(
-                    CATEGORIES_KEY_MAP[item]
-                )
+                f"Will be adding {CATEGORIES_KEY_MAP[item]} to base_bls_dict..."
             )
             base_bls_dict[CATEGORIES_KEY_MAP[item]].setdefault(region, {})
             for income_key, income_json_key in INCOME_KEY_MAP.items():
-                print("adding {} ...".format(income_key))
+                print(f"adding {income_key} ...")
                 amount = int(row[income_key].replace(",", ""))
-                print("amount: {}".format(amount))
+                print(f"amount: {amount}")
                 base_bls_dict[CATEGORIES_KEY_MAP[item]][region].setdefault(
                     income_json_key, 0
                 )

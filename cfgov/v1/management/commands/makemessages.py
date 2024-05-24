@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # This command overrides the built-in Django makemessages command to extract
 # messages from both Django templates and Jinja2 templates.
 #

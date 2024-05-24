@@ -83,7 +83,7 @@ def run(single_school=None):
         by_control = {}
         count += 1
         if count % 500 == 0:  # pragma: no cover
-            logger.info("{} schools processed".format(count))
+            logger.info(f"{count} schools processed")
         # degree_cohort is the default, national base cohort
         # base query weeds out schools without state or degrees_highest values
         degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
@@ -131,7 +131,5 @@ def run(single_school=None):
         school.cohort_ranking_by_highest_degree = by_degree
         school.save()
     logger.info(
-        "\nCohort script took {} to process {} schools".format(
-            datetime.datetime.now() - starter, count
-        )
+        f"\nCohort script took {datetime.datetime.now() - starter} to process {count} schools"
     )

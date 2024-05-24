@@ -439,14 +439,12 @@ class UtilitiesTests(unittest.TestCase):
             self.assertEqual(get_retirement_age(year), sample_inputs[year])
 
     def test_past_fra_test(self):
-        one_one = "{0}".format(
-            date(1980, 1, 1).replace(year=self.today.year - 25)
-        )
-        way_old = "{0}".format(self.today - timedelta(days=80 * 365))
-        too_old = "{0}".format(self.today - timedelta(days=68 * 365))
-        ok = "{0}".format(self.today - timedelta(days=57 * 365))
-        too_young = "{0}".format(self.today - timedelta(days=21 * 365))
-        future = "{0}".format(self.today + timedelta(days=365))
+        one_one = f"{date(1980, 1, 1).replace(year=self.today.year - 25)}"
+        way_old = f"{self.today - timedelta(days=80 * 365)}"
+        too_old = f"{self.today - timedelta(days=68 * 365)}"
+        ok = f"{self.today - timedelta(days=57 * 365)}"
+        too_young = f"{self.today - timedelta(days=21 * 365)}"
+        future = f"{self.today + timedelta(days=365)}"
         # edge = "{0}".format(self.today - timedelta(days=67 * 365))
         invalid = "xx/xx/xxxx"
         self.assertFalse(past_fra_test(one_one, language="en"))

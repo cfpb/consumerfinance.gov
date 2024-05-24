@@ -31,7 +31,7 @@ class TestIssuerSearch(TestCase):
     def test_issuer_has_agreements(self):
         issuer = Issuer.objects.create(name="A & B Bank", slug="a-b-bank")
         for i in range(2):
-            filename = "agreement{}.pdf".format(i + 1)
+            filename = f"agreement{i + 1}.pdf"
             Agreement.objects.create(
                 issuer=issuer, description=filename, file_name=filename, size=0
             )

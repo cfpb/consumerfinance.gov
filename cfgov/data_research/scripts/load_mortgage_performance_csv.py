@@ -36,7 +36,7 @@ def load_values(return_fips=False):
     """
 
     counter = 0
-    source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
+    source_url = f"{S3_SOURCE_BUCKET}/{S3_SOURCE_FILE}"
     starting_date = MortgageDataConstant.objects.get(
         name="starting_date"
     ).date_value
@@ -51,9 +51,7 @@ def load_values(return_fips=False):
     logger.info("Deleting CountyMortgageData objects.")
     CountyMortgageData.objects.all().delete()
     logger.info(
-        "CountyMorgtgageData count is now {}".format(
-            CountyMortgageData.objects.count()
-        )
+        f"CountyMorgtgageData count is now {CountyMortgageData.objects.count()}"
     )
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()
@@ -78,11 +76,9 @@ def load_values(return_fips=False):
                     sys.stdout.write(".")
                     sys.stdout.flush()
                 if counter % 100000 == 0:  # pragma: no cover
-                    logger.info("\n{}".format(counter))
+                    logger.info(f"\n{counter}")
     logger.info(
-        "\nCreated {} CountyMortgageData objects".format(
-            CountyMortgageData.objects.count()
-        )
+        f"\nCreated {CountyMortgageData.objects.count()} CountyMortgageData objects"
     )
 
 

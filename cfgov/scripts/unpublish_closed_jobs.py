@@ -27,7 +27,7 @@ def job_page_closed(link):
         closed_div = soup.find("div", attrs={"class": "usajobs-joa-closed"})
         return closed_div and CLOSED_TEXT in closed_div.contents
     except Exception:
-        logger.exception('Check of USAJobs page "{}" failed'.format(link))
+        logger.exception(f'Check of USAJobs page "{link}" failed')
         sys.exit(1)
 
 
@@ -45,7 +45,7 @@ def job_archived(link):
             item = results["SearchResultItems"][0]
             return item["MatchedObjectId"] == job
     except Exception:
-        logger.exception('API check for job "{}" failed'.format(link))
+        logger.exception(f'API check for job "{link}" failed')
         sys.exit(1)
 
 
@@ -67,7 +67,7 @@ def run():
     if job_pages:
         for page in job_pages:
             logger.info(
-                'Checking status of job posting "{}"...'.format(page.title)
+                f'Checking status of job posting "{page.title}"...'
             )
             if page.usajobs_application_links:
                 closed_count = 0
@@ -78,7 +78,7 @@ def run():
                 if closed_count == links.count():
                     page.unpublish(set_expired=True)
                     logger.info(
-                        "Job posting {} has closed.".format(page.title)
+                        f"Job posting {page.title} has closed."
                     )
     else:
         logger.info("No live job posting pages found...")
