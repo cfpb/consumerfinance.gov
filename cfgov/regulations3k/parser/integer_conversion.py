@@ -86,7 +86,7 @@ def int_to_alpha(num):
     double_range = list(range(27, 53))
     double_map = dict(zip(double_range, double_letters))
     int_map.update(double_map)
-    return int_map.get(num, None)
+    return int_map.get(num)
 
 
 LETTER_CODES = {

@@ -86,7 +86,7 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
     print(f"******Processing {region} file...******")
     for row in data:
         item = row["Item"].strip()
-        if item in CATEGORIES_KEY_MAP.keys():
+        if item in CATEGORIES_KEY_MAP:
             print(f"Current processing {item}.....")
             print(
                 f"Will be adding {CATEGORIES_KEY_MAP[item]} to base_bls_dict..."

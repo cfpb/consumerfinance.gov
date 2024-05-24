@@ -81,10 +81,10 @@ def get_current_age(dob):
         except (TypeError, ValueError):
             return None
 
-    if DOB > today:
+    if today < DOB:
         return None
 
-    if DOB == today:
+    if today == DOB:
         return 0
 
     try:
@@ -186,7 +186,7 @@ def past_fra_test(dob=None, language="en"):
         return "invalid birth date entered"
     today = datetime.date.today()
     current_age = get_current_age(dob)
-    if DOB >= today:
+    if today <= DOB:
         return get_note("too_young", language)
     # SSA has a special rule for people born on Jan. 1
     # http://www.socialsecurity.gov/OACT/ProgData/nra.html

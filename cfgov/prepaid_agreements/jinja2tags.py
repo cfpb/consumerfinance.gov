@@ -12,7 +12,7 @@ def remove_url_parameter(request, discards):
     """
     params = dict(request.GET.lists())
     items = {}
-    for key in params.keys():
+    for key in params:
         if key in discards:
             items[key.encode("utf-8")] = [
                 item.encode("utf-8")

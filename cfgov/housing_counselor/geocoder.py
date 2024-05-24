@@ -127,7 +127,7 @@ class BulkZipCodeGeocoder:
             response = requests.get(url)
 
             # Handle rate limiting
-            if 429 == response.status_code:
+            if response.status_code == 429:
                 logger.info(
                     "rate limited, url %s, headers: %s", url, response.headers
                 )

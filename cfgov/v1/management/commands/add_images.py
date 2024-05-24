@@ -47,7 +47,7 @@ class Command(WagtailClient, BaseCommand):
             },
         )
 
-        if 302 != response.status_code:
+        if response.status_code != 302:
             raise RuntimeError(f"something went wrong: {response}")
 
         image_model = get_image_model()
