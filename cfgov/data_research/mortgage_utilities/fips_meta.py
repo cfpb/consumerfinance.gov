@@ -1,3 +1,4 @@
+import contextlib
 import csv
 import logging
 
@@ -5,7 +6,6 @@ from django.conf import settings
 from django.db import transaction
 
 from data_research.models import County, State
-import contextlib
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT

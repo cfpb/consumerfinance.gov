@@ -19,9 +19,8 @@ class TestPostSQSMessages(TestCase):
     session = GitHubSession()
     session.basic_auth("test", "test")
 
-    issue = ShortIssue(
-        json.load(open(f"{JSON_DIR}/github_open_issue.json")), session
-    )
+    with open(f"{JSON_DIR}/github_open_issue.json") as f:
+        issue = ShortIssue(json.load(f), session)
 
     @patch("alerts.mattermost_alert.MattermostAlert.post")
     @patch("alerts.github_alert.GithubAlert.post", return_value=issue)

@@ -18,17 +18,14 @@ class TestGithubAlert(TestCase):
     session = GitHubSession()
     session.basic_auth("test", "test")
 
-    repository = ShortRepository(
-        json.load(open(f"{JSON_DIR}/github_repository.json")), session
-    )
+    with open(f"{JSON_DIR}/github_repository.json") as f:
+        repository = ShortRepository(json.load(f), session)
 
-    closed_issue = ShortIssue(
-        json.load(open(f"{JSON_DIR}/github_closed_issue.json")), session
-    )
+    with open(f"{JSON_DIR}/github_closed_issue.json") as f:
+        closed_issue = ShortIssue(json.load(f), session)
 
-    open_issue = ShortIssue(
-        json.load(open(f"{JSON_DIR}/github_open_issue.json")), session
-    )
+    with open(f"{JSON_DIR}/github_open_issue.json") as f:
+        open_issue = ShortIssue(json.load(f), session)
 
     def setUp(self):
         self.text = "foö"

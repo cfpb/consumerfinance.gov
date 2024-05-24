@@ -91,7 +91,9 @@ def round_pct(value):
 
 
 def row_starter(geo_type, obj):
-    if geo_type == "County":
+    # flake8-simplify flags this with SIM116, and wants it to be a
+    # dict-lookup. That would make the logic here less readable.
+    if geo_type == "County":  # noqa: SIM116
         return [
             geo_type,
             obj.county.state.abbr,

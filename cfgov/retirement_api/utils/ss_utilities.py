@@ -204,7 +204,7 @@ def past_fra_test(dob=None, language="en"):
         return True
     elif age_tuple[0] < fra_tuple[0]:
         return False
-    elif age_tuple[0] == fra_tuple[0] and age_tuple[1] >= fra_tuple[1]:
+    elif age_tuple[0] == fra_tuple[0] and age_tuple[1] >= fra_tuple[1]:  # noqa: SIM103
         return True
     else:  # pragma: no cover -- can't currently happen, but could in future
         return False

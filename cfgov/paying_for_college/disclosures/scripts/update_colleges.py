@@ -41,14 +41,11 @@ FIELDSTRING = api_utils.build_field_string()
 
 
 def test_for_program_data(program_data):
-    if (
+    return (
         program_data.get("earnings").get("median_earnings")
         or program_data.get("debt").get("median_debt")
         or program_data.get("debt").get("monthly_debt_payment")
-    ):
-        return True
-    else:
-        return False
+    )
 
 
 def update_programs(api_data, school):

@@ -126,11 +126,13 @@ class SourceToTableTest(django.test.TestCase):
         )
 
     def test_dump_as_csv(self):
-        with tempfile.NamedTemporaryFile(suffix=".csv") as f:
+        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
             # dump_as_csv appends .csv to the destination file.
-            dump_as_csv([self.data_row], f.name[:-4])
+            dump_as_csv([self.data_row], tf.name[:-4])
 
-            content = open(f.name).read()
+            with open(tf.name) as f:
+                content = f.read()
+
             self.assertEqual(content.strip(), ",".join(self.data_row))
 
     @mock.patch(
