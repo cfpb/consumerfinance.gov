@@ -597,8 +597,7 @@ class Notification(models.Model):
         }
         now = datetime.datetime.now()
         no_contact_msg = (
-            "School notification failed: "
-            f"No endpoint or email info {now}"
+            "School notification failed: " f"No endpoint or email info {now}"
         )
         # we prefer to use endpount notification, so use it first if existing
         if school.contact:
@@ -609,26 +608,19 @@ class Notification(models.Model):
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
                 except requests.exceptions.ConnectionError as e:
-                    exmsg = (
-                        "Error: connection error at school "
-                        f"{now} {e}\n"
-                    )
+                    exmsg = "Error: connection error at school " f"{now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.Timeout:
                     exmsg = (
-                        "Error: connection with school "
-                        f"timed out {now}\n"
+                        "Error: connection with school " f"timed out {now}\n"
                     )
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.RequestException as e:
-                    exmsg = (
-                        "Error: request error at school: "
-                        f"{now} {e}\n"
-                    )
+                    exmsg = "Error: request error at school: " f"{now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg

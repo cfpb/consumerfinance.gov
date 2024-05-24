@@ -11,7 +11,9 @@ import requests
 # bake_to_s3 functions require S3 secrets to be stored in the env
 BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-PUBLIC_ACCESS_BASE = f"https://s3.amazonaws.com/{BASE_BUCKET}/{MORTGAGE_SUB_BUCKET}"
+PUBLIC_ACCESS_BASE = (
+    f"https://s3.amazonaws.com/{BASE_BUCKET}/{MORTGAGE_SUB_BUCKET}"
+)
 S3_MORTGAGE_DOWNLOADS_BASE = f"{PUBLIC_ACCESS_BASE}/downloads"
 S3_SOURCE_BUCKET = f"{PUBLIC_ACCESS_BASE}/source"
 S3_SOURCE_FILE = "latest_county_delinquency.csv"

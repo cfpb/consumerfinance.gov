@@ -30,5 +30,7 @@ class Command(BaseCommand):
         )
 
         self.stdout.write(
-            "{} mega menu for language {}.".format("Created" if created else "Updated", language)
+            "{} mega menu for language {}.".format(
+                "Created" if created else "Updated", language
+            )
         )

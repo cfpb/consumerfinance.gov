@@ -76,8 +76,6 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
     if upload:
         pdf_file = agreements_zip.open(zipinfo)
         upload_to_s3(pdf_file, s3_key)
-        outfile.write(
-            f"{repr(s3_key)} uploaded"
-        )
+        outfile.write(f"{repr(s3_key)} uploaded")
 
     return agreement

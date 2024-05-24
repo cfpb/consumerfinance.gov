@@ -68,9 +68,7 @@ parser.add_argument(
 
 def cache_known_violations(known_violations_filename, known_violations):
     with open(known_violations_filename, "w") as known_violations_file:
-        known_violations_file.writelines(
-            [f"{v}\n" for v in known_violations]
-        )
+        known_violations_file.writelines([f"{v}\n" for v in known_violations])
 
     logger.info(f"cached known violations {known_violations}")
 

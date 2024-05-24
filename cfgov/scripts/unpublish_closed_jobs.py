@@ -66,9 +66,7 @@ def run():
     job_pages = JobListingPage.objects.filter(live=True)
     if job_pages:
         for page in job_pages:
-            logger.info(
-                f'Checking status of job posting "{page.title}"...'
-            )
+            logger.info(f'Checking status of job posting "{page.title}"...')
             if page.usajobs_application_links:
                 closed_count = 0
                 links = page.usajobs_application_links.all()
@@ -77,8 +75,6 @@ def run():
                         closed_count += 1
                 if closed_count == links.count():
                     page.unpublish(set_expired=True)
-                    logger.info(
-                        f"Job posting {page.title} has closed."
-                    )
+                    logger.info(f"Job posting {page.title} has closed.")
     else:
         logger.info("No live job posting pages found...")

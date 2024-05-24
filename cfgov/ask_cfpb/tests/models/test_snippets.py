@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 
 from ask_cfpb.models.snippets import GlossaryTerm

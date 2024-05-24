@@ -3,7 +3,6 @@ from django.urls import reverse
 
 
 class LoginViewTestCase(TestCase):
-
     @override_settings(ENABLE_SSO=True)
     def test_view_gets_sso_enabled_context(self):
         response = self.client.get(reverse("cfgov_login"))

@@ -34,8 +34,12 @@ class ImporterTestCase(DjangoTestCase):
 
     fixtures = ["test_parts.json"]
     # xml_fixture has partial XML for regs 1002 and 1005
-    xml_fixture = f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
-    interp_fixture = f"{settings.PROJECT_ROOT}/regulations3k/fixtures/interptest.xml"
+    xml_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
+    )
+    interp_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/interptest.xml"
+    )
     with open(xml_fixture) as f:
         test_xml = f.read()
     with open(interp_fixture) as f:
@@ -247,7 +251,9 @@ class AppendixCreationTestCase(DjangoTestCase):
     """Checks that parse_appendices() creates objects as expected."""
 
     fixtures = ["tree_limb.json"]
-    xml_fixture = f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
+    xml_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
+    )
     with open(xml_fixture) as f:
         test_xml = f.read()
 

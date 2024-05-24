@@ -99,9 +99,7 @@ class LoggingMockGovDelivery(MockGovDelivery):
                 account_code=self.account_code,
                 method=method,
                 args=", ".join(map(str, args)),
-                kwargs=", ".join(
-                    f"{k}={v}" for k, v in kwargs.items()
-                ),
+                kwargs=", ".join(f"{k}={v}" for k, v in kwargs.items()),
             )
         )
 

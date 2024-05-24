@@ -24,13 +24,11 @@ User = get_user_model()
 
 
 class UsernameFromEmailTestCase(TestCase):
-
     def test_email_address(self):
         self.assertEqual(username_from_email("test@example.com"), "test")
 
 
 class ProcessRolesClaimTestCase(TestCase):
-
     def setUp(self):
         self.user = User.objects.create(
             username="user1", email="email@example.com", first_name="User"
@@ -130,7 +128,6 @@ class ProcessRolesClaimTestCase(TestCase):
 
 
 class CFPBOIDCAuthenticationBackendTestCase(TestCase):
-
     @override_settings(
         OIDC_OP_TOKEN_ENDPOINT="https://server.example.com/token"
     )

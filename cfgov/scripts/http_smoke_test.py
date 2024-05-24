@@ -61,7 +61,9 @@ HEADERS = {}
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = "https://www.consumerfinance.gov"
-S3_URI = "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
+S3_URI = (
+    "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
+)
 
 # Fall-back list of top 25 URLs, as of May 2024
 # All URLs in the list should be canonical locations of the given pages,
@@ -217,20 +219,20 @@ def check_urls(base, url_list=None):
         logger.error(f"These URLs failed: {failures}")
     if len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error(
-            f"These URLs timed out after {TIMEOUT} seconds: "
-            f"{timeouts}"
+            f"These URLs timed out after {TIMEOUT} seconds: " f"{timeouts}"
         )
     elif timeouts:
         logger.info(
-            "{} allowed timeouts occurred:\n"
-            "{}".format(len(timeouts), "\n".join(timeouts))
+            "{} allowed timeouts occurred:\n" "{}".format(
+                len(timeouts), "\n".join(timeouts)
+            )
         )
 
     if failures or len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("FAIL")
         return False
 
-    logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
+    logger.info("\x1b[32mAll URLs return 200. No smoke!\x1b[0m")
     return True
 
 

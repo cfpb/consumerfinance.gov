@@ -1,4 +1,3 @@
-
 import logging
 import re
 
@@ -66,9 +65,7 @@ def insert_links(reg=None):
             continue
         linked_regdown = insert_section_links(section.contents)
         if not linked_regdown:
-            logger.info(
-                f"No section references found in section {section}"
-            )
+            logger.info(f"No section references found in section {section}")
             continue
         else:
             logger.info(f"Links added to section {section}")

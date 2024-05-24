@@ -12,12 +12,10 @@ INTRO = (
     "Notification delivery failed for the following offer IDs:\n\n"
 )
 NOTE_TEMPLATE = Template(
-    
-        "Offer ID $oid:\n"
-        "    timestamp: $time\n"
-        "    app errors: $errors\n"
-        "SEND LOG:\n$log\n"
-    
+    "Offer ID $oid:\n"
+    "    timestamp: $time\n"
+    "    app errors: $errors\n"
+    "SEND LOG:\n$log\n"
 )
 
 
@@ -74,4 +72,7 @@ def send_stale_notifications(add_email=None):
             recipients,
             fail_silently=False,
         )
-        return f"Found {stale_notifications.count()} stale notifications; emails sent to " f"{recipients}"
+        return (
+            f"Found {stale_notifications.count()} stale notifications; emails sent to "
+            f"{recipients}"
+        )

@@ -60,9 +60,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", f"--snapshot_file={filename}"
-        )
+        call_command("update_chart_block_dates", f"--snapshot_file={filename}")
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct
@@ -96,9 +94,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", f"--snapshot_file={filename}"
-        )
+        call_command("update_chart_block_dates", f"--snapshot_file={filename}")
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct
@@ -132,9 +128,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", f"--snapshot_file={filename}"
-        )
+        call_command("update_chart_block_dates", f"--snapshot_file={filename}")
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct

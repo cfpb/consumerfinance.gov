@@ -880,9 +880,7 @@ class AnswerPageTest(TestCase):
         page = self.page1
         self.assertTrue(page.answer_base)
         result = page.__str__()
-        self.assertEqual(
-            result, f"{page.answer_base.pk}: {page.title}"
-        )
+        self.assertEqual(result, f"{page.answer_base.pk}: {page.title}")
 
     def test_search_tags(self):
         """Test the list produced by page.clean_search_tags()."""

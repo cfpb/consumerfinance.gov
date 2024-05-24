@@ -129,6 +129,4 @@ def run():
         metro.validate()
     for state in State.objects.all():
         state.validate_non_msas()
-    logger.info(
-        f"{script} took {datetime.datetime.now() - starter} to run."
-    )
+    logger.info(f"{script} took {datetime.datetime.now() - starter} to run.")

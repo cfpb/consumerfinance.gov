@@ -65,11 +65,7 @@ class ActivityPageDocument(Document):
 
     def get_queryset(self, *args, **kwargs):
         """Prevent non-live pages from being indexed."""
-        return (
-            super()
-            .get_queryset(*args, **kwargs)
-            .filter(live=True)
-        )
+        return super().get_queryset(*args, **kwargs).filter(live=True)
 
     def prepare_activity_duration(self, instance):
         if instance.activity_duration:

@@ -258,15 +258,11 @@ class GeoValidationTests(django.test.TestCase):
 
     def test_state_name_string(self):
         state = State.objects.get(fips="12")
-        self.assertEqual(
-            state.__str__(), f"{state.name} ({state.fips})"
-        )
+        self.assertEqual(state.__str__(), f"{state.name} ({state.fips})")
 
     def test_metro_name_string(self):
         metro = MetroArea.objects.get(fips="35840")
-        self.assertEqual(
-            metro.__str__(), f"{metro.name} ({metro.fips})"
-        )
+        self.assertEqual(metro.__str__(), f"{metro.name} ({metro.fips})")
 
     def test_county_name_string(self):
         county = County.objects.get(fips="12081")

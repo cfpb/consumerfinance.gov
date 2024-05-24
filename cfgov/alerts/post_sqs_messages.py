@@ -64,7 +64,8 @@ def cleanup_message(message):
     return message.replace(
         "#", "# "
     ).replace(  # Avoids erroneous Github issue link
-        "[Open]", ""  # We want to expand the link
+        "[Open]",
+        "",  # We want to expand the link
     )
 
 

@@ -28,9 +28,7 @@ def run():
 
     # If specified in the environment, create or activate superuser.
     if admin_username and admin_password:
-        logger.info(
-            f"Configuring superuser, username: {admin_username}"
-        )
+        logger.info(f"Configuring superuser, username: {admin_username}")
 
         User.objects.update_or_create(
             username=admin_username,

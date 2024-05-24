@@ -41,8 +41,11 @@ def write_agreements_data(path=""):
     agreements_location = path + "prepaid_metadata_all_agreements.csv"
     products_location = path + "prepaid_metadata_recent_agreements.csv"
 
-    with open(agreements_location, "w", encoding="utf-8") as agreements_file, open(products_location, "w", encoding="utf-8") as products_file:
-
+    with open(
+        agreements_location, "w", encoding="utf-8"
+    ) as agreements_file, open(
+        products_location, "w", encoding="utf-8"
+    ) as products_file:
         # Write a BOM at the top of the file so Excel knows it's UTF-8
         agreements_file.write("\ufeff")
         products_file.write("\ufeff")

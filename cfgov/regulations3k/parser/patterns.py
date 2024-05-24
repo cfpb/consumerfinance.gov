@@ -345,9 +345,7 @@ class IdLevelState:
             pid = self.next_appendix_id() or ""
             graph_text += "\n{" + pid + "}\n"
             graph = (
-                p_element.text.replace(
-                    f"{pid}.", f"**{pid}.**", 1
-                )
+                p_element.text.replace(f"{pid}.", f"**{pid}.**", 1)
                 .replace("  ", " ")
                 .replace("** **", " ", 1)
             )

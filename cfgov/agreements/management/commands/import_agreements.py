@@ -90,7 +90,8 @@ class Command(BaseCommand):
         Issuer.objects.all().delete()
 
         with (
-            nullcontext(self.stdout) if options["verbosity"] >= 1
+            nullcontext(self.stdout)
+            if options["verbosity"] >= 1
             else open(os.devnull, "a")
         ) as output_file:
             for pdf_path in all_pdfs:

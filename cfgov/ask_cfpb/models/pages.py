@@ -393,9 +393,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             activate(self.language)
         else:
             deactivate_all()
-        context = super().get_context(
-            request, *args, **kwargs
-        )
+        context = super().get_context(request, *args, **kwargs)
         return context
 
     @route(r"^$")

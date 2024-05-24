@@ -200,9 +200,7 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
         base_query = base_query.filter(pk=single_school)
         logger.info(f"Updating {base_query[0]}")
     else:
-        logger.info(
-            f"Seeking updates for {base_query.count()} schools."
-        )
+        logger.info(f"Seeking updates for {base_query.count()} schools.")
         logger.info(job_msg)
     for school in base_query:
         processed += 1

@@ -58,13 +58,13 @@ class Command(BaseCommand):
                     last_updated_inquiry = get_inquiry_month(
                         markets, chart_options["data_source"]
                     )
-                    chart["value"][
-                        "last_updated_projected_data"
-                    ] = last_updated_inquiry
+                    chart["value"]["last_updated_projected_data"] = (
+                        last_updated_inquiry
+                    )
                 else:
-                    chart["value"][
-                        "last_updated_projected_data"
-                    ] = last_updated
+                    chart["value"]["last_updated_projected_data"] = (
+                        last_updated
+                    )
             publish_changes(page.specific)
 
     def handle(self, *args, **options):

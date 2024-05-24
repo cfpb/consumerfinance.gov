@@ -195,7 +195,9 @@ def create_school(iped, data):
 def process_missing(missing_ids):
     """Create missing school and alias objects and dump csv of additions."""
     csv_out_data = []
-    csv_slug = f"{ipeds_directory}/schools_added_on_{datetime.date.today()}.csv"
+    csv_slug = (
+        f"{ipeds_directory}/schools_added_on_{datetime.date.today()}.csv"
+    )
     missing_data = process_datafiles(add_schools=missing_ids)
     for school_id in missing_data:
         create_school(int(school_id), missing_data[school_id])

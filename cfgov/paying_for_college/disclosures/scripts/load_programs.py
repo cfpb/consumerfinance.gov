@@ -211,8 +211,9 @@ def load(source, s3=False):
             data = serializer.validated_data
             if not validate_pid(data["program_code"]):
                 print(
-                    "ERROR: invalid program code: "
-                    "{}".format(data["program_code"])
+                    "ERROR: invalid program code: " "{}".format(
+                        data["program_code"]
+                    )
                 )
                 continue
             (school, error) = get_school(data["ipeds_unit_id"])
@@ -264,6 +265,9 @@ def load(source, s3=False):
                     fail_msg = f"{fail_msg} {e},"
                 FAILED.append(fail_msg)
 
-    endmsg = f"{new_programs} programs created. " f"{updated_programs} programs updated."
+    endmsg = (
+        f"{new_programs} programs created. "
+        f"{updated_programs} programs updated."
+    )
 
     return (FAILED, endmsg)

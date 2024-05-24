@@ -420,9 +420,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = (
-            mock_count
-        )
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),
@@ -437,9 +435,7 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(response.status_code, 200)
 
     @mock.patch.object(SectionParagraphDocument, "search")
-    def test_routable_search_page_handles_null_highlights(
-        self, mock_search
-    ):  # noqa: E501
+    def test_routable_search_page_handles_null_highlights(self, mock_search):  # noqa: E501
         mock_hit = mock.Mock()
         mock_hit.text = (
             "i. Mortgage escrow accounts for collecting",
@@ -457,9 +453,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = (
-            mock_count
-        )
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),

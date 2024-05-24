@@ -83,8 +83,9 @@ class Command(BaseCommand):
             # Notify specified emails (e.g. system admins)
             if len(emails) > 0:
                 self.stdout.write(
-                    "Sending inactive user list to "
-                    "{}\n".format(",".join(emails))
+                    "Sending inactive user list to " "{}\n".format(
+                        ",".join(emails)
+                    )
                 )
                 self.send_email(emails, period, inactive_users)
 
@@ -161,7 +162,9 @@ class Command(BaseCommand):
     def send_user_deactivation_email(self, user, period):
         """Send the specified user a warning that the have been deactivated
         due to inactivity"""
-        subject = f"{settings.EMAIL_SUBJECT_PREFIX}Wagtail account deactivation"
+        subject = (
+            f"{settings.EMAIL_SUBJECT_PREFIX}Wagtail account deactivation"
+        )
         msg = (
             "Hello,\n\n"
             + "Your Wagtail account has not been accessed for more than "

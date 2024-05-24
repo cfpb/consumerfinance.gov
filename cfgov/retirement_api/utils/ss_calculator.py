@@ -19,6 +19,7 @@ Optional inputs that SSA allows, but we're not using:
 Outputs:
 - a python dictionary of benefit data and error messages
 """
+
 import datetime
 import logging
 import re
@@ -544,16 +545,12 @@ def get_retire_data(params, language):
             results, base_benefit, current_age, dob
         )
     else:
-        results["data"]["benefits"][
-            f"age {fra_tuple[0]}"
-        ] = base_benefit
+        results["data"]["benefits"][f"age {fra_tuple[0]}"] = base_benefit
         results = interpolate_benefits(
             results, base_benefit, fra_tuple, current_age, dob
         )
     final_results = calculate_lifetime_benefits(
         results, base_benefit, fra_tuple, dob, past_fra
     )
-    LOGGER.info(
-        f"script took {datetime.datetime.now() - starter} to run"
-    )
+    LOGGER.info(f"script took {datetime.datetime.now() - starter} to run")
     return final_results

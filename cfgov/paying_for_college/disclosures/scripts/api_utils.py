@@ -238,7 +238,9 @@ def build_field_string():
 def search_by_school_name(name):
     """Search api by school name, return school name, id, city, state."""
     fields = "id,school.name,school.city,school.state"
-    url = f"{SCHOOLS_ROOT}?api_key={API_KEY}&school.name={name}&fields={fields}"
+    url = (
+        f"{SCHOOLS_ROOT}?api_key={API_KEY}&school.name={name}&fields={fields}"
+    )
     data = requests.get(url).json()["results"]
     return data
 

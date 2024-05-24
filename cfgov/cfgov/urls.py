@@ -622,8 +622,7 @@ def handle_error(code, request, exception=None):
         # the results of a security scan, or a malformed static file reference.
 
         return HttpResponse(
-            "This request could not be processed, "
-            f"HTTP Error {str(code)}.",
+            "This request could not be processed, " f"HTTP Error {str(code)}.",
             status=code,
         )
 

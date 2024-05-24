@@ -642,7 +642,10 @@ def ecfr_to_regdown(part_number, file_path=None):
     PAYLOAD.parse_version(part_soup, part)
     # parse_subparts will create and associate sections and appendices
     parse_subparts(part_soup, part)
-    msg = f"Draft version of Part {part_number} created.\n" f"Parsing took {datetime.datetime.now() - starter}"
+    msg = (
+        f"Draft version of Part {part_number} created.\n"
+        f"Parsing took {datetime.datetime.now() - starter}"
+    )
     return msg
 
 
