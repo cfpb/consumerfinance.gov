@@ -6,9 +6,8 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, QueryDict
-from django.test import RequestFactory
+from django.test import RequestFactory, override_settings
 from django.test import TestCase as DjangoTestCase
-from django.test import override_settings
 
 from wagtail.models import Site
 
