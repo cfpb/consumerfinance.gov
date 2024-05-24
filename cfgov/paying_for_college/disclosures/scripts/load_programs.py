@@ -202,7 +202,7 @@ def load(source, s3=False):
         return ([f"ERROR: could not read data from {source}"], "")
 
     for row in raw_data:
-        if "test" in row.keys() and row["test"].lower() == "true":
+        if "test" in row and row["test"].lower() == "true":
             test_program = True
         fixed_data = clean(row)
         serializer = ProgramSerializer(data=fixed_data)

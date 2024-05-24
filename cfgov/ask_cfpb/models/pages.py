@@ -259,7 +259,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
             {
                 "title": self.portal_topic.title(self.language),
                 "url": url,
-                "active": False if self.portal_category else True,
+                "active": not self.portal_category,
                 "expanded": True,
                 "children": sorted_categories,
             }

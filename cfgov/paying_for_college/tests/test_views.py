@@ -83,7 +83,7 @@ class TestViews(django.test.TestCase):
     def test_get_json_file(self):
         test_json = get_json_file(EXPENSE_FILE)
         test_data = json.loads(test_json)
-        self.assertTrue("Other" in test_data.keys())
+        self.assertTrue("Other" in test_data)
         test_json2 = get_json_file("xxx")
         self.assertTrue(test_json2 == "")
 
@@ -107,7 +107,7 @@ class TestViews(django.test.TestCase):
         response = self.client.get(
             reverse("paying_for_college:disclosures:pfc-technote")
         )
-        self.assertTrue("url_root" in response.context_data.keys())
+        self.assertTrue("url_root" in response.context_data)
 
 
 class SchoolProgramTest(django.test.TestCase):

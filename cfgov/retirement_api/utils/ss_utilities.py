@@ -162,7 +162,7 @@ def get_retirement_age(birth_year):
     b_string = yob_test(birth_year)
     if b_string:
         yob = int(birth_year)
-        if b_string in age_map.keys():
+        if b_string in age_map:
             return age_map[b_string]
         elif yob <= 1937:
             return (65, 0)

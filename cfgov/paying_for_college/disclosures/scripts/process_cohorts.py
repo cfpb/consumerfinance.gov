@@ -15,7 +15,7 @@ STATES = sorted(
     + [tup[0] for tup in localflavor.us.us_states.NON_CONTIGUOUS_STATES]
     + ["PR"]
 )
-DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES.keys()}
+DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES}
 logger = logging.getLogger(__name__)
 
 

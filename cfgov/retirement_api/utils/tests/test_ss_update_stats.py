@@ -105,7 +105,7 @@ class UpdateSsStatsTests(TestCase):
         with open(mockpath) as f:
             data = json.loads(f.read())
         self.assertEqual(type(data), dict)
-        for key in data["0"].keys():
+        for key in data["0"]:
             self.assertTrue(key in self.life_headings)
         for age in sample_json_results:
             for key in sample_json_results[age]:

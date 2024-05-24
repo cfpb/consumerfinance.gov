@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import transaction
 
 from data_research.models import County, State
+import contextlib
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT
@@ -188,10 +189,7 @@ def validate_fips(raw_fips, keep_outdated=False):
         return None
     if raw_fips in FIPS_SWAP:
         return FIPS_SWAP[raw_fips]
-    if len(raw_fips) == 4:
-        new_fips = f"0{raw_fips}"
-    else:
-        new_fips = raw_fips
+    new_fips = f"0{raw_fips}" if len(raw_fips) == 4 else raw_fips
     if keep_outdated is False and new_fips in IGNORE_FIPS:
         return None
     else:
@@ -368,10 +366,8 @@ def load_states():
         for row in msas:
             state = row["county_name"][-2:]
             states[state]["msas"].append(row["msa_id"])
-            try:
+            with contextlib.suppress(ValueError):
                 states[state]["non_msa_counties"].remove(row["county_fips"])
-            except ValueError:
-                pass
 
     State.objects.bulk_create([State(**state) for state in states.values()])
 

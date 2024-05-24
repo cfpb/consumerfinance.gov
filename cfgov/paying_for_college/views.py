@@ -55,19 +55,13 @@ def validate_oid(oid):
     if find_illegal:
         return False
     else:
-        if len(oid) >= 40 and len(oid) <= 128:
-            return True
-        else:
-            return False
+        return bool(len(oid) >= 40 and len(oid) <= 128)
 
 
 def validate_pid(pid):
     if not pid:
         return False
-    for char in [";", "<", ">", "{", "}", "_"]:
-        if char in pid:
-            return False
-    return True
+    return all(char not in pid for char in [";", "<", ">", "{", "}", "_"])
 
 
 def url_is_safe(url):

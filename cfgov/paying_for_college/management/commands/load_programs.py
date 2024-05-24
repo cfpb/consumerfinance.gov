@@ -18,10 +18,7 @@ class Command(BaseCommand):
         parser.add_argument("--s3", help=S3_HELP, type=str, default="false")
 
     def handle(self, *args, **options):
-        if options["s3"].upper() == "TRUE":
-            S3 = True
-        else:
-            S3 = False
+        S3 = options["s3"].upper() == "TRUE"
         for filesource in options["source"]:
             try:
                 if S3:

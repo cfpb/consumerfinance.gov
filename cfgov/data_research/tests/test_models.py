@@ -339,7 +339,7 @@ class ModelStringTest(django.test.TestCase):
                     len(lister)
                     for lister in [
                         ", ".join(FIPS.msa_fips[each]["county_list"])
-                        for each in FIPS.msa_fips.keys()
+                        for each in FIPS.msa_fips
                     ]
                 ]
             )

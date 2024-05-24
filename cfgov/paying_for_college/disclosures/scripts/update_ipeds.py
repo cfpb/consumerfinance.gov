@@ -212,7 +212,7 @@ def load_values(dry_run=True):
     oncampus = 0
     source_dict = process_datafiles()
     current_ids = [school.pk for school in School.objects.all()]
-    missing = [pk for pk in source_dict.keys() if int(pk) not in current_ids]
+    missing = [pk for pk in source_dict if int(pk) not in current_ids]
     if missing and dry_run is False:
         process_missing(missing)
     for ID in source_dict:

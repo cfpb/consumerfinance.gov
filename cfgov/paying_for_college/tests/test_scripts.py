@@ -593,7 +593,7 @@ class TestScripts(django.test.TestCase):
         mock_read.return_value = (mock_fieldnames, [mock_return_dict])
         mock_results = update_ipeds.process_datafiles()
         self.assertTrue(mock_read.call_count == 2)
-        self.assertTrue("999999" in mock_results.keys())
+        self.assertTrue("999999" in mock_results)
         mock_fieldnames = ["UNITID"] + list(school_points.keys())
         mock_return_dict = {school_points[key]: "x" for key in school_points}
         mock_return_dict["UNITID"] = "999999"

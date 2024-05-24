@@ -66,8 +66,8 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
         }
     else:
         current = download_meta_file.json_value
-        if thru_month in current.keys():
-            if days_late in current[thru_month].keys():
+        if thru_month in current:
+            if days_late in current[thru_month]:
                 current[thru_month][days_late].update(new_posting)
             else:
                 current[thru_month][days_late] = new_posting

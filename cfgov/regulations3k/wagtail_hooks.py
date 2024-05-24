@@ -49,10 +49,7 @@ class SectionPreviewIndexView(TreeIndexView):
         page = part.page.first()
 
         if page is not None:
-            if effective_version.draft:
-                label = "View draft"
-            else:
-                label = "View live"
+            label = "View draft" if effective_version.draft else "View live"
 
             preview_url = page.url + page.reverse_subpage(
                 "section",
