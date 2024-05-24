@@ -49,10 +49,7 @@ class TestFragmentCacheJinjaTag(TestCase):
         cache_key = "test-cache-key"
 
         """Render a template with a single cached value."""
-        s = '{%% cache "%s", "%s" %%}{{ value }}{%% endcache %%}' % (
-            cache_key,
-            cache_name,
-        )
+        s = f'{{% cache "{cache_key}", "{cache_name}" %}}{{{{ value }}}}{{% endcache %}}'
 
         template = self.jinja_engine.from_string(s)
         return template.render({"value": value})

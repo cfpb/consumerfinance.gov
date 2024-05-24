@@ -71,7 +71,7 @@ class TestApi(unittest.TestCase):
         mock_requests.return_value.text = json.dumps(self.test_data)
         mock_requests.return_value.status_code = 200
         mock_build_msg.return_value = (
-            ",%s,,,mock error,,," % self.test_collector.date
+            f",{self.test_collector.date},,,mock error,,,"
         )
         run("build")
         self.assertTrue(mock_build_msg.call_count == 1)

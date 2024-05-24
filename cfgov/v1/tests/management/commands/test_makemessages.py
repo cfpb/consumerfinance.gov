@@ -18,7 +18,7 @@ class TestCustomMakeMessages(SimpleTestCase):
 
     LOCALE = "de"
 
-    PO_FILE = "locale/%s/LC_MESSAGES/django.po" % LOCALE
+    PO_FILE = f"locale/{LOCALE}/LC_MESSAGES/django.po"
 
     def setUp(self):
         # https://github.com/django/django/blob/1.11.18/tests/i18n/utils.py#L33

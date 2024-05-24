@@ -403,7 +403,7 @@ class TestScripts(django.test.TestCase):
     def check_compile_net_prices(self, control):
         mock_api_data = self.mock_results.get("results")[0]
         mock_avg_net_price = mock_api_data.get(
-            "latest.cost.avg_net_price.%s" % control.lower()
+            f"latest.cost.avg_net_price.{control.lower()}"
         )
         school, _ = School.objects.get_or_create(school_id=229115)
         school.control = control

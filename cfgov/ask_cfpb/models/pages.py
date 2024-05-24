@@ -366,7 +366,7 @@ class AnswerResultsPage(CFGOVPage):
     template = "ask-cfpb/answer-search-results.html"
 
     def get_context(self, request, **kwargs):
-        context = super(AnswerResultsPage, self).get_context(request, **kwargs)
+        context = super().get_context(request, **kwargs)
         context.update(**kwargs)
         paginator = Paginator(self.answers, 25)
         page_number = validate_page_number(request, paginator)
@@ -393,7 +393,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             activate(self.language)
         else:
             deactivate_all()
-        context = super(TagResultsPage, self).get_context(
+        context = super().get_context(
             request, *args, **kwargs
         )
         return context

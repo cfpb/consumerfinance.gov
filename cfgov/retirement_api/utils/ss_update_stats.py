@@ -21,12 +21,12 @@ TODAY = datetime.datetime.now().date()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(BASE_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-APP_DIR = "%s/retirement_api" % BASE_DIR
+APP_DIR = f"{BASE_DIR}/retirement_api"
 
-data_dir = "%s/data" % APP_DIR
-backup_dir = "%s/data/backups" % APP_DIR
-outcsv = "%s/early_penalty_%s.csv" % (data_dir, TODAY.year)
-outjson = "%s/early_penalty_%s.json" % (data_dir, TODAY.year)
+data_dir = f"{APP_DIR}/data"
+backup_dir = f"{APP_DIR}/data/backups"
+outcsv = f"{data_dir}/early_penalty_{TODAY.year}.csv"
+outjson = f"{data_dir}/early_penalty_{TODAY.year}.json"
 
 ss_table_urls = {
     "cola": "https://www.ssa.gov/OACT/COLA/colaseries.html",
@@ -101,7 +101,7 @@ def make_soup(url):
     req = requests.get(url)
     if req.reason != "OK":
         log.warn(
-            "request to %s failed: %s %s" % (url, req.status_code, req.reason)
+            f"request to {url} failed: {req.status_code} {req.reason}"
         )
         return ""
     else:
@@ -129,48 +129,48 @@ def update_example_reduction():
         table = soup.findAll("table")[5].find("table")
         rows = [row for row in table.findAll("tr") if row.findAll("td")]
         output_csv(outcsv, headings, rows)
-        log.info("updated %s with %s rows" % (outcsv, len(rows)))
+        log.info(f"updated {outcsv} with {len(rows)} rows")
         output_json(outjson, headings, rows)
-        log.info("updated %s with %s entries" % (outjson, len(rows)))
+        log.info(f"updated {outjson} with {len(rows)} entries")
 
 
 def update_awi_series():
     url = ss_table_urls["awi_series"]
-    outcsv = "%s/awi_series_%s.csv" % (data_dir, TODAY.year)
-    outjson = "%s/awi_series_%s.json" % (data_dir, TODAY.year)
+    outcsv = f"{data_dir}/awi_series_{TODAY.year}.csv"
+    outjson = f"{data_dir}/awi_series_{TODAY.year}.json"
     headings = ["Year", "Index"]
     soup = make_soup(url)
     if soup:
         tables = soup.findAll("table")[1].findAll("table")
         rows = []
-        log.info("found %s tables" % len(tables))
+        log.info(f"found {len(tables)} tables")
         for table in tables:
             rows.extend(
                 [row for row in table.findAll("tr") if row.findAll("td")]
             )
         output_csv(outcsv, headings, rows)
-        log.info("updated %s with %s rows" % (outcsv, len(rows)))
+        log.info(f"updated {outcsv} with {len(rows)} rows")
         output_json(outjson, headings, rows)
-        log.info("updated %s with %s entries" % (outjson, len(rows)))
+        log.info(f"updated {outjson} with {len(rows)} entries")
 
 
 def update_cola():
     url = ss_table_urls["cola"]
-    outcsv = "%s/ss_cola_%s.csv" % (data_dir, TODAY.year)
-    outjson = "%s/ss_cola_%s.json" % (data_dir, TODAY.year)
+    outcsv = f"{data_dir}/ss_cola_{TODAY.year}.csv"
+    outjson = f"{data_dir}/ss_cola_{TODAY.year}.json"
     headings = ["Year", "COLA"]
     soup = make_soup(url)
     if soup:
         [s.extract() for s in soup("small")]
         tables = soup.findAll("table")[-3:]
     rows = []
-    log.info("found %s tables" % len(tables))
+    log.info(f"found {len(tables)} tables")
     for table in tables:
         rows.extend([row for row in table.findAll("tr") if row.findAll("td")])
     output_csv(outcsv, headings, rows)
-    log.info("updated %s with %s rows" % (outcsv, len(rows)))
+    log.info(f"updated {outcsv} with {len(rows)} rows")
     output_json(outjson, headings, rows)
-    log.info("updated %s with %s entries" % (outjson, len(rows)))
+    log.info(f"updated {outjson} with {len(rows)} entries")
 
 
 def update_life():
@@ -192,12 +192,12 @@ def update_life():
     if soup:
         table = soup.find("table").find("table")
         if not table:
-            log.info("couldn't find table at %s" % url)
+            log.info(f"couldn't find table at {url}")
         else:
             rows = table.findAll("tr")[2:]
             if len(rows) > 100:
                 output_csv(outcsv, headings, rows)
-                msg += "updated %s with %s rows" % (outcsv, len(rows))
+                msg += f"updated {outcsv} with {len(rows)} rows"
                 output_json(outjson, headings, rows)
                 msg += f"updated {outjson} with {len(rows)} entries"
             else:

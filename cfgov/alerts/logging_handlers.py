@@ -44,10 +44,7 @@ class CFGovErrorHandler(logging.Handler):
         except AttributeError:
             request = None
 
-        return "%s\n\nRequest repr(): \n%s" % (
-            self.format(record),
-            self._get_request_repr(request),
-        )
+        return f"{self.format(record)}\n\nRequest repr(): \n{self._get_request_repr(request)}"
 
     def _get_request_repr(self, request):
         """
@@ -113,13 +110,5 @@ class CFGovErrorHandler(logging.Handler):
         path = request.path
 
         return force_str(
-            "<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>"
-            % (
-                request.__class__.__name__,
-                path,
-                str(get),
-                str(post),
-                str(cookies),
-                str(meta),
-            )
+            f"<{request.__class__.__name__}\npath:{path},\nGET:{str(get)},\nPOST:{str(post)},\nCOOKIES:{str(cookies)},\nMETA:{str(meta)}>"
         )

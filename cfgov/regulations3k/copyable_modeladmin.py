@@ -73,9 +73,7 @@ class CopyableModelAdmin(TreeModelAdmin):
         )(request)
 
     def get_admin_urls_for_registration(self, parent=None):
-        urls = super(
-            CopyableModelAdmin, self
-        ).get_admin_urls_for_registration()
+        urls = super().get_admin_urls_for_registration()
 
         # Add the copy URL
         urls = urls + (

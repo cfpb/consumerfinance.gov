@@ -42,7 +42,7 @@ def purge(url=None):
             logger.info(f'Purging {url} from "akamai" cache')
             batch.purge(backends=["akamai"])
 
-        return "Submitted invalidation for %s" % url
+        return f"Submitted invalidation for {url}"
 
     else:
         # purge_all only exists on our AkamaiBackend
@@ -91,7 +91,7 @@ def manage_cdn(request):
         else:
             for field, error_list in form.errors.items():
                 for error in error_list:
-                    messages.error(request, "Error in %s: %s" % (field, error))
+                    messages.error(request, f"Error in {field}: {error}")
 
     history = CDNHistory.objects.all().order_by("-created")[:20]
     return render(

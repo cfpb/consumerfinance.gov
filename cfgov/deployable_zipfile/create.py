@@ -33,8 +33,8 @@ def save_wheels(python_executable, destination, *args):
     """
     subprocess.check_call(  # nosec
         [python_executable, "-m", "pip", "wheel"]
-        + ["--wheel-dir=%s" % destination]
-        + ["--find-links=%s" % destination]
+        + [f"--wheel-dir={destination}"]
+        + [f"--find-links={destination}"]
         + list(args)
     )
 
@@ -50,7 +50,7 @@ def create_project_pth_file(project_name, target_directory):
     project_pth = project_pth_template.substitute(project_name=project_name)
 
     project_pth_filename = os.path.join(
-        target_directory, "%s.pth" % project_name
+        target_directory, f"{project_name}.pth"
     )
 
     with open(project_pth_filename, "w") as f:
@@ -71,7 +71,7 @@ def create_zipfile(
         # Other wheels get stored in the zip under /wheels/.
         wheel_dir = os.path.join(temp_dir, "wheels")
 
-        save_wheels(sys.executable, wheel_dir, "-r%s" % requirements_file)
+        save_wheels(sys.executable, wheel_dir, f"-r{requirements_file}")
 
         # Copy the project code into the zip.
         project_name = os.path.basename(os.path.realpath(project_path))
@@ -100,7 +100,7 @@ def create_zipfile(
         # Add any static file directories, if provided.
         for i, static_dir in enumerate(extra_static or []):
             shutil.copytree(
-                static_dir, os.path.join(temp_dir, "static.in/%s/" % i)
+                static_dir, os.path.join(temp_dir, f"static.in/{i}/")
             )
 
         zipfile = shutil.make_archive(zipfile_basename, "zip", temp_dir)

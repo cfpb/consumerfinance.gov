@@ -69,9 +69,7 @@ def check_data(data):
 
 prefix = "https://"
 suffix = ".consumerfinance.gov/retirement"
-api_string = "retirement-api/estimator/{0}-{1}-{2}/{3}/".format(
-    dob.month, dob.day, dob.year, random.randrange(20000, 100000)  # nosec
-)
+api_string = f"retirement-api/estimator/{dob.month}-{dob.day}-{dob.year}/{random.randrange(20000, 100000)}/"   # nosec
 BASES = {
     "unitybox": "http://localhost:8080/retirement",
     "standalone": "http://localhost:8000/retirement",
@@ -114,9 +112,9 @@ def run(base):
             end = time.time()
             signal.alarm(0)
             data = json.loads(test_request.text)
-            collector.status = "%s" % test_request.status_code
+            collector.status = f"{test_request.status_code}"
             collector.error = (
-                "{0}".format(data["error"])
+                "{}".format(data["error"])
                 .replace(",", ";")
                 .replace("'", "")
                 .replace('"', "")
@@ -125,7 +123,7 @@ def run(base):
             collector.data = check_data(data)
             if collector.data == "BAD DATA":
                 collector.api_fail = "FAIL"
-    collector.timer = "%s" % round(end - start, 1)
+    collector.timer = f"{round(end - start, 1)}"
     build_msg(collector)
     # print msg
     # with open('%s/tests/logs/api_check.log' % API_ROOT, 'a') as f:

@@ -85,8 +85,7 @@ class BulkZipCodeGeocoder:
         longitude) in degrees.
         """
         for chunk in self.chunker(zipcodes, chunk_size):
-            for zipcode, coordinates in self.mapbox_geocode_zipcodes(chunk):
-                yield zipcode, coordinates
+            yield from self.mapbox_geocode_zipcodes(chunk)
 
     @staticmethod
     def chunker(it, n):

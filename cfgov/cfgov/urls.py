@@ -612,7 +612,7 @@ def handle_error(code, request, exception=None):
     try:
         return render(
             request,
-            "v1/layouts/%s.html" % code,
+            f"v1/layouts/{code}.html",
             context={"request": request},
             status=code,
         )
@@ -623,7 +623,7 @@ def handle_error(code, request, exception=None):
 
         return HttpResponse(
             "This request could not be processed, "
-            "HTTP Error %s." % str(code),
+            f"HTTP Error {str(code)}.",
             status=code,
         )
 

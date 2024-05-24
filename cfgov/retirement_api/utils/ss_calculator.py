@@ -373,10 +373,10 @@ def set_up_runvars(params, language="en"):
       to match SSA's handling of edge cases
     """
     today = date.today()
-    dobstring = "{0}-{1}-{2}".format(
+    dobstring = "{}-{}-{}".format(
         params["yob"], params["dobmon"], params["dobday"]
     )
-    yobstring = "{0}".format(params["yob"])
+    yobstring = "{}".format(params["yob"])
     current_age = get_current_age(dobstring)
     dob = parser.parse(dobstring).date()
     benefits = {}
@@ -459,7 +459,7 @@ def parse_response(results, html, language):
 
 def validate_date(params):
     """Make sure delivered date is real"""
-    dobstring = "{0}-{1}-{2}".format(
+    dobstring = "{}-{}-{}".format(
         params["yob"], params["dobmon"], params["dobday"]
     )
     try:

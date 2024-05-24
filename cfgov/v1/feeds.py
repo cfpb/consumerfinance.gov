@@ -33,7 +33,7 @@ class FilterableFeed(Feed):
         return self.page.full_url
 
     def title(self):
-        return "%s | Consumer Financial Protection Bureau" % self.page.title
+        return f"{self.page.title} | Consumer Financial Protection Bureau"
 
     def items(self):
         return self.context["results_page"]
@@ -56,7 +56,7 @@ class FilterableFeed(Feed):
         return categories + tags
 
     def item_guid(self, item):
-        return "%s<>consumerfinance.gov" % item.page_ptr_id
+        return f"{item.page_ptr_id}<>consumerfinance.gov"
 
 
 def get_appropriate_rss_feed_url_for_page(page, request=None):

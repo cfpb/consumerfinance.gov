@@ -59,7 +59,7 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
         issuer_name = Path(path).parts[-2]
     except ValueError:
         # too many slashes...
-        outfile.write("%s Does not match issuer/file.pdf pattern" % path)
+        outfile.write(f"{path} Does not match issuer/file.pdf pattern")
         return
 
     issuer = get_issuer(issuer_name)

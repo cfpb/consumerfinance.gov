@@ -41,7 +41,7 @@ class SyncStorageCommandMixin:
         url = self.base_url + path
         filename = self.dest_dir + path
 
-        self.stdout.write("Saving %s to %s\n" % (url, filename))
+        self.stdout.write(f"Saving {url} to {filename}\n")
 
         response = requests.get(url, stream=True)
 
