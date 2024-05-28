@@ -18,6 +18,7 @@ nav:
       - Django and Wagtail Migrations: migrations.md
       - Wagtail Pages: wagtail-pages.md
   - Supporting Features:
+      - Browser Support: browser-support.md
       - Caching: caching.md
       - Feature Flags: feature-flags.md
       - Filterable Lists: filterable-lists.md
