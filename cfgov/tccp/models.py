@@ -78,9 +78,9 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         # These are the statistics we want to compute:
         # (
-        #   stat name,
-        #   computation function,
-        #   whether to include min/max-only cards in the computation (see below)
+        #  stat name,
+        #  computation function,
+        #  whether to include min/max-only cards in the computation (see below)
         # )
         stats = [
             ("count", Count, True),
@@ -371,7 +371,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
                 f"purchase_apr_{tier_suffix}_rating": Case(
                     When(
                         **{
-                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[  # noqa: E501
                                 f"purchase_apr_{tier_suffix}_pct25"
                             ]
                             or 0
@@ -380,7 +380,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
                     ),
                     When(
                         **{
-                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[  # noqa: E501
                                 f"purchase_apr_{tier_suffix}_pct75"
                             ]
                             or 0

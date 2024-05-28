@@ -690,10 +690,11 @@ class AnswerPageTest(TestCase):
                         "content": (
                             "<p><span>"
                             "This is more than forty words: "
-                            "word word word word word word word word word word "
-                            "word word word word word word word word word word "
-                            "word word word word word word word word word word "
-                            "word word word word word word too-many."
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "too-many."
                             "</span></p>"
                         )
                     },
@@ -732,10 +733,11 @@ class AnswerPageTest(TestCase):
                             "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
                             "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
                             "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-                            "char char char char char char char char char char "
-                            "char char char char char char char char char char "
-                            "char char char char char char char char char char "
-                            "char char char char char char too-many."
+                            "char char char char char char char char char "
+                            "char char char char char char char char char "
+                            "char char char char char char char char char "
+                            "char char char char char char char char char "
+                            "too-many."
                             "</span></p>"
                         )
                     },
@@ -781,10 +783,11 @@ class AnswerPageTest(TestCase):
                         "content": (
                             "<p><span>"
                             "This is more than forty words: "
-                            "word word word word word word word word word word "
-                            "word word word word word word word word word word "
-                            "word word word word word word word word word word "
-                            "word word word word word word too-many."
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "word word word word word word word word word "
+                            "too-many."
                             "</span></p>"
                         )
                     },

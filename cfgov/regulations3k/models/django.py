@@ -146,8 +146,8 @@ class EffectiveVersion(models.Model):
             raise ValidationError(
                 {
                     "effective_date": [
-                        "The part selected below already has an effective version "
-                        "with this date."
+                        "The part selected below already has an effective "
+                        "version with this date."
                     ]
                 }
             )
@@ -209,7 +209,7 @@ class Subpart(models.Model):
             return ""
 
         sections = self.sections.all()
-        return f"{sections[0].numeric_label}–{sections.reverse()[0].numeric_label}"
+        return f"{sections[0].numeric_label}–{sections.reverse()[0].numeric_label}"  # noqa: E501
 
     class Meta:
         ordering = ["subpart_type", "label"]
@@ -343,7 +343,7 @@ class SectionParagraph(models.Model):
     )
 
     def __str__(self):
-        return f"Section {self.section.part}-{self.section.label} paragraph {self.paragraph_id}"
+        return f"Section {self.section.part}-{self.section.label} paragraph {self.paragraph_id}"  # noqa: E501
 
 
 @receiver(post_save, sender=EffectiveVersion)

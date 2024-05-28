@@ -131,5 +131,6 @@ def run(single_school=None):
         school.cohort_ranking_by_highest_degree = by_degree
         school.save()
     logger.info(
-        f"\nCohort script took {datetime.datetime.now() - starter} to process {count} schools"
+        f"\nCohort script took {datetime.datetime.now() - starter} to "
+        f"process {count} schools"
     )

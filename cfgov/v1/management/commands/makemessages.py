@@ -22,9 +22,11 @@ class Command(makemessages.Command):
         django_block_re = translate_tag.block_re
         django_endblock_re = translate_tag.endblock_re
 
-        # This monkey-patches support for Jinja2's {% translate %}{% endtrans %}
+        # This monkey-patches support for Jinja2's:
+        # {% translate %}{% endtrans %}
         # blocks into trans_real's block/endblock-matching regular expressions.
-        # These differ from Django's {% blocktranslate %}{% endblocktranslate %}
+        # These differ from Django's
+        # {% blocktranslate %}{% endblocktranslate %}
         # blocks.
         #
         # trans_real's other regular expressions, context_re, inline_re,

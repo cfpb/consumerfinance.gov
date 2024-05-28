@@ -33,7 +33,8 @@ def update_sampling_dates():
     date_list_obj.json_value = date_list
     date_list_obj.save()
     logger.info(
-        f"Sampling dates updated; the {len(date_list)} dates now range from {date_list[0]} to {date_list[-1]}"
+        f"Sampling dates updated; the {len(date_list)} dates now range from "
+        f"{date_list[0]} to {date_list[-1]}"
     )
 
 

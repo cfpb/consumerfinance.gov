@@ -69,7 +69,7 @@ def check_data(data):
 
 prefix = "https://"
 suffix = ".consumerfinance.gov/retirement"
-api_string = f"retirement-api/estimator/{dob.month}-{dob.day}-{dob.year}/{random.randrange(20000, 100000)}/"  # nosec
+api_string = f"retirement-api/estimator/{dob.month}-{dob.day}-{dob.year}/{random.randrange(20000, 100000)}/"  # nosec  # noqa: E501
 BASES = {
     "unitybox": "http://localhost:8080/retirement",
     "standalone": "http://localhost:8000/retirement",

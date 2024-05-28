@@ -215,5 +215,6 @@ if __name__ == "__main__":
     starter = datetime.datetime.now()
     harvest_all()
     log.info(
-        f"update took {datetime.datetime.now() - starter} to update four data stores"
+        f"update took {datetime.datetime.now() - starter} to update four "
+        f"data stores"
     )

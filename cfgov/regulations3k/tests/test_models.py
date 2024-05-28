@@ -224,7 +224,7 @@ class RegModelTests(DjangoTestCase):
         part = self.part_1002
         self.assertEqual(
             part.cfr_title,
-            f"{part.cfr_title_number} CFR Part {part.part_number} ({part.short_name})",
+            f"{part.cfr_title_number} CFR Part {part.part_number} ({part.short_name})",  # noqa: E501
         )
 
     def test_subpart_string_method(self):
@@ -420,7 +420,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),
@@ -453,7 +453,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),
@@ -633,7 +633,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",
+                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
             },
         }
     )
@@ -651,7 +651,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",
+                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
             },
         }
     )

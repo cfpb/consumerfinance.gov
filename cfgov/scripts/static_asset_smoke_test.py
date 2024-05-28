@@ -93,13 +93,13 @@ def check_static(url):
     if failures:
         if len(failures) > 2:  # allow for font failures when testing locally
             return (
-                f"\x1b[91mFAIL! {len(failures)} static links out of {count} failed "
-                f"for {url}: {failures}\x1b[0m\n"
+                f"\x1b[91mFAIL! {len(failures)} static links out of {count} "
+                f"failed for {url}: {failures}\x1b[0m\n"
             )
         else:
             return (
-                f"\x1b[91mPartial failure: {len(failures)} static links out of {count} failed"
-                f" for {url}: {failures}\x1b[0m\n"
+                f"\x1b[91mPartial failure: {len(failures)} static links out "
+                f"of {count} failed for {url}: {failures}\x1b[0m\n"
             )
     else:
         return f"\x1b[32m{count} static links passed " f"for {url}\x1b[0m\n"
@@ -128,7 +128,8 @@ if __name__ == "__main__":  # pragma: nocover
             else:
                 logger.info(sub_msg)
     logger.info(
-        f"{sys.argv[0]} took {int(time.time() - start)} seconds to check {CFPB_BASE}\n"
+        f"{sys.argv[0]} took {int(time.time() - start)} seconds to check "
+        f"{CFPB_BASE}\n"
     )
     if fail:
         logger.warning(

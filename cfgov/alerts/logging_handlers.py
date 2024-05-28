@@ -44,7 +44,7 @@ class CFGovErrorHandler(logging.Handler):
         except AttributeError:
             request = None
 
-        return f"{self.format(record)}\n\nRequest repr(): \n{self._get_request_repr(request)}"
+        return f"{self.format(record)}\n\nRequest repr(): \n{self._get_request_repr(request)}"  # noqa: E501
 
     def _get_request_repr(self, request):
         """

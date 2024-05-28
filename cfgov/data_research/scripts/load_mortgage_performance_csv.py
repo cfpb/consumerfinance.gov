@@ -51,7 +51,8 @@ def load_values(return_fips=False):
     logger.info("Deleting CountyMortgageData objects.")
     CountyMortgageData.objects.all().delete()
     logger.info(
-        f"CountyMorgtgageData count is now {CountyMortgageData.objects.count()}"
+        "CountyMorgtgageData count is now "
+        f"{CountyMortgageData.objects.count()}"
     )
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()
@@ -78,7 +79,8 @@ def load_values(return_fips=False):
                 if counter % 100000 == 0:  # pragma: no cover
                     logger.info(f"\n{counter}")
     logger.info(
-        f"\nCreated {CountyMortgageData.objects.count()} CountyMortgageData objects"
+        f"\nCreated {CountyMortgageData.objects.count()} CountyMortgageData "
+        "objects"
     )
 
 

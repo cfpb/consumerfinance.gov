@@ -210,7 +210,8 @@ def check_urls(base, url_list=None):
             failures.append((url, e))
     timer = int(time.time() - starter)
     logger.info(
-        f"\n{sys.argv[0]} took {timer} seconds to check {count} URLs at {base}\n  "
+        f"\n{sys.argv[0]} took {timer} seconds to check {count} "
+        f"URLs at {base}\n  "
         f"{len(failures)} failed\n  "
         f"{len(timeouts)} timed out"
     )

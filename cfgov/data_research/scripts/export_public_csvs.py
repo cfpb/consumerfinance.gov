@@ -183,7 +183,7 @@ def export_downloadable_csv(geo_type, late_value):
             ),
         },
     }
-    slug = f"{geo_type}Mortgages{LATE_VALUE_TITLE[late_value]}DaysLate-thru-{thru_month}"
+    slug = f"{geo_type}Mortgages{LATE_VALUE_TITLE[late_value]}DaysLate-thru-{thru_month}"  # noqa: E501
     _map = geo_dict.get(geo_type)
     fips_list = _map["fips_list"]
     csvfile = StringIO()

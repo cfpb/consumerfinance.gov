@@ -376,5 +376,6 @@ def validate_counties():
     valid = County.objects.filter(valid=True).count()
     if total != 0:
         logger.info(
-            f"{valid} counties of {total} were found to be valid -- {round((valid * 100.0 / total), 1)}%)"
+            f"{valid} counties of {total} were found to be valid -- "
+            f"{round((valid * 100.0 / total), 1)}%)"
         )

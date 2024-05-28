@@ -113,7 +113,7 @@ def parse_subparts(part_soup, part):
     appendix_subpart.save()
     PAYLOAD.subparts["appendix_subpart"] = appendix_subpart
     interp_subpart = Subpart(
-        title=f"Supplement I to Part {part.part_number} - Official Interpretations",
+        title=f"Supplement I to Part {part.part_number} - Official Interpretations",  # noqa: E501
         label="Interpretations",
         subpart_type=Subpart.INTERPRETATION,
         version=PAYLOAD.version,
@@ -628,7 +628,8 @@ def ecfr_to_regdown(part_number, file_path=None):
         ecfr_request = requests.get(LATEST_ECFR)
         if not ecfr_request.ok:
             logger.info(
-                f"ECFR request failed with code {ecfr_request.status_code} and reason {ecfr_request.reason}"
+                f"ECFR request failed with code {ecfr_request.status_code} "
+                f"and reason {ecfr_request.reason}"
             )
             return
         ecfr_request.encoding = "utf-8"

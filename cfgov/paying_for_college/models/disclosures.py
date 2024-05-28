@@ -583,7 +583,7 @@ class Notification(models.Model):
     log = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.oid} {self.institution.primary_alias} ({self.institution.pk})"
+        return f"{self.oid} {self.institution.primary_alias} ({self.institution.pk})"  # noqa: E501
 
     def notify_school(self):
         school = self.institution

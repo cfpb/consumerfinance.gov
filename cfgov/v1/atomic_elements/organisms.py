@@ -16,7 +16,7 @@ from wagtailmedia.blocks import AbstractMediaChooserBlock
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 
-# Bring tables into this module to maintain import structure across the project.
+# Bring tables into this module to maintain import structure across the project
 from v1.atomic_elements.tables import (  # noqa: F401
     CaseDocketTable,
     ConsumerReportingCompanyTable,
@@ -106,9 +106,9 @@ class InfoUnitGroup(blocks.StructBlock):
                     raise StructBlockValidationError(
                         block_errors={
                             "format": ValidationError(
-                                "Info units must include images when using the "
-                                '25/75 format. Search for an "FPO" image if you '
-                                "need a temporary placeholder."
+                                "Info units must include images when using "
+                                'the 25/75 format. Search for an "FPO" image '
+                                "if you need a temporary placeholder."
                             )
                         }
                     )
@@ -653,7 +653,9 @@ class FilterableList(BaseExpandable):
     )
     filter_by_topics = blocks.BooleanBlock(
         required=False,
-        help_text='Whether to include a "Topics" filter in the filter controls',
+        help_text=(
+            'Whether to include a "Topics" filter in the filter controls'
+        ),
     )
     filter_by_enforcement_statuses = blocks.BooleanBlock(
         default=False,
@@ -744,7 +746,8 @@ class VideoPlayer(blocks.StructBlock):
                 errors["video_id"] = ValidationError("This field is required.")
             elif cleaned["thumbnail_image"]:
                 errors["thumbnail_image"] = ValidationError(
-                    "This field should not be used if YouTube video ID is not set."
+                    "This field should not be used if YouTube video ID is "
+                    "not set."
                 )
 
         if errors:
@@ -806,8 +809,8 @@ class FeaturedContentStructValue(blocks.StructValue):
         if post and self.get("show_post_link"):
             links.append(
                 {
-                    # Unfortunately, we don't have access to the request context
-                    # here, so we can't do post.get_url(request).
+                    # Unfortunately, we don't have access to the request
+                    # context here, so we can't do post.get_url(request).
                     "url": post.url,
                     "text": self.get("post_link_text") or post.title,
                 }
@@ -1040,7 +1043,7 @@ class DataSnapshot(blocks.StructBlock):
     tightness_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text="Descriptive sentence, e.g. In year-over-year credit tightness",  # noqa
+        help_text="Descriptive sentence, e.g. In year-over-year credit tightness",  # noqa: E501
     )
 
     # Select an image

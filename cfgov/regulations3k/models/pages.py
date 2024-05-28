@@ -121,7 +121,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 "reg": hit.short_name,
                 "label": hit.title,
                 "snippet": snippet,
-                "url": f"{self.get_parent().specific.url}{hit.part}/{hit.section_label.lower()}/#{hit.paragraph_id}",
+                "url": f"{self.get_parent().specific.url}{hit.part}/{hit.section_label.lower()}/#{hit.paragraph_id}",  # noqa: E501
             }
             payload["results"].append(hit_payload)
 

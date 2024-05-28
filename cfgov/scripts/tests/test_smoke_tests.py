@@ -12,8 +12,10 @@ from scripts.http_smoke_test import ALLOWED_TIMEOUTS, URLS, check_urls
 class StaticAssetTests(unittest.TestCase):
     """Tests for the static assets smoke tests."""
 
-    mock_links = '<script src="/static/js/atomic/header.97504b419ce4.js"></script>\n\
-                  <script src="static/js/atomic/header.97504b419ce4.js"></script>'  # noqa: E501
+    mock_links = (
+        '<script src="/static/js/atomic/header.97504b419ce4.js"></script>\n'
+        '<script src="static/js/atomic/header.97504b419ce4.js"></script>'
+    )
 
     @mock.patch("scripts.static_asset_smoke_test.requests.get")
     def test_home_page_test_success(self, mock_get):

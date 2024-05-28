@@ -73,6 +73,6 @@ def send_stale_notifications(add_email=None):
             fail_silently=False,
         )
         return (
-            f"Found {stale_notifications.count()} stale notifications; emails sent to "
-            f"{recipients}"
+            f"Found {stale_notifications.count()} stale notifications; "
+            f"emails sent to {recipients}"
         )

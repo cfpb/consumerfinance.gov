@@ -97,8 +97,8 @@ class Command(BaseCommand):
 
                 # Deactivate and notify inactive users
                 self.stdout.write(
-                    f"Deactivating and emailing {len(inactive_users)} users who "
-                    f"have been inactive for {period} days"
+                    f"Deactivating and emailing {len(inactive_users)} users "
+                    f"who have been inactive for {period} days"
                 )
 
         if warn_users_flag_set:

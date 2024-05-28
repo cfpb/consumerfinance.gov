@@ -28,7 +28,7 @@ class EmailApplicationLink(Orderable, models.Model):
 
     @property
     def mailto_link(self):
-        return f"mailto:{self.address}?subject=Application for Position: {urlquote(self.job_listing.title)}"
+        return f"mailto:{self.address}?subject=Application for Position: {urlquote(self.job_listing.title)}"  # noqa: E501
 
 
 class USAJobsApplicationLink(Orderable, models.Model):

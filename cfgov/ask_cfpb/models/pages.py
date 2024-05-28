@@ -316,7 +316,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         if self.category_slug not in self.category_map:
             raise Http404
         self.portal_category = self.category_map.get(self.category_slug)
-        self.title = f"{self.portal_topic.title(self.language)} {self.portal_category.title(self.language).lower()}"
+        self.title = f"{self.portal_topic.title(self.language)} {self.portal_category.title(self.language).lower()}"  # noqa: E501
         if self.portal_category.heading == "Key terms":
             self.glossary_terms = self.get_glossary_terms()
             return TemplateResponse(

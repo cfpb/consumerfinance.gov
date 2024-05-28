@@ -241,14 +241,16 @@ def load_values(dry_run=True):
     if dry_run:
         msg = (
             "DRY RUN:\n"
-            f"- {SCRIPT} would have updated {intcomma(points)} data points for {intcomma(updated)} schools\n"
+            f"- {SCRIPT} would have updated {intcomma(points)} data points "
+            f"for {intcomma(updated)} schools\n"
             f"- {intcomma(oncampus)} schools found with on-campus housing\n"
             f"- {len(missing)} new school records "
             "would have been created"
         )
         return msg
     msg = (
-        f"{SCRIPT} updated {intcomma(points)} data points for {intcomma(updated)} schools;\n"
+        f"{SCRIPT} updated {intcomma(points)} data points for "
+        f"{intcomma(updated)} schools;\n"
         f"{len(missing)} new school records were created"
     )
     return msg
