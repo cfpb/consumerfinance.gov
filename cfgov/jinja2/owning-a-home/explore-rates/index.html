@@ -549,33 +549,26 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </section>
             <!-- /.next-steps -->
-            <div class="block
-                        block--border-top
-                        block--flush-top
-                        block--padded-top
-                        credit-note-ctr">
-                {# TODO: Look into using the default notification macro #}
-                <div class="m-notification
-                            m-notification--borderless
-                            m-notification--warning
-                            m-notification--visible"
-                        role="alert">
-                    {{ svg_icon('warning-round') }}
-                    <div class="m-notification__content">
-                        <div class="m-notification__message">Check your credit</div>
-                        <p class="m-notification__explanation">
-                            If you haven’t checked your credit report recently,
-                            <a class="external-link"
-                                href="https://annualcreditreport.com"
-                                target="_blank"
-                                rel="noopener noreferrer">do so now</a>. If you find errors,
-                            <a href="/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/"
-                                target="_blank"
-                                rel="noopener noreferrer">get them corrected
-                            </a> before you apply for a mortgage.
-                        </p>
-                    </div>
-                </div>
+            <div class="block">
+                {% import 'v1/includes/molecules/notification.html' as notification %}
+                {{- notification.render(
+                    'warning',
+                    true,
+                    'Check your credit',
+                    'If you haven’t checked your credit report recently, do so now. ' ~
+                    'If you find errors, get them corrected before you apply for a mortgage.',
+                    [
+                       {
+                        'text': 'Check your credit report now',
+                        'url': 'https://annualcreditreport.com',
+                        'open_link_in_new_window': True
+                       },
+                       {
+                        'text': 'How do I dispute an error on my credit report?',
+                        'url': '/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/'
+                       },
+                    ] ) }}
+
             </div>
             <section id="about" class="content-l">
                 <div class="content-l__col content-l__col-1">
