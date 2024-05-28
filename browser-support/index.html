@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Ask CFPB - consumerfinance.gov</title>
+    <title>Browser Support - consumerfinance.gov</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Ask CFPB";
-        var mkdocs_page_input_path = "ask-cfpb.md";
+        var mkdocs_page_name = "Browser Support";
+        var mkdocs_page_input_path = "browser-support.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -75,8 +75,20 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Supporting Features</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../browser-support/">Browser Support</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Browser Support</a>
+    <ul class="current">
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#outputting-browser-support-metrics">Outputting browser support metrics</a></li>
+        
+            <li><a class="toctree-l4" href="#current-browser-support-metrics">Current browser support metrics</a></li>
+        
+        </ul>
+    
+
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../caching/">Caching</a>
                   </li>
@@ -120,20 +132,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">APIs and Data</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Ask CFPB</a>
-    <ul class="current">
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#usage">Usage</a></li>
-        
-            <li><a class="toctree-l4" href="#spanish-content">Spanish content</a></li>
-        
-        </ul>
-    
-
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../ask-cfpb/">Ask CFPB</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../consumer-complaint-database/">Consumer Complaints</a>
                   </li>
@@ -154,10 +154,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">APIs and Data</li>
-      <li class="breadcrumb-item active">Ask CFPB</li>
+          <li class="breadcrumb-item">Supporting Features</li>
+      <li class="breadcrumb-item active">Browser Support</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/ask-cfpb.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/browser-support.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -165,67 +165,69 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="ask-cfpb-api">Ask CFPB API<a class="headerlink" href="#ask-cfpb-api" title="Permanent link">¶</a></h1>
-<p>This API provides search access to the English and Spanish content behind <a href="https://www.consumerfinance.gov/ask-cfpb/">Ask CFPB</a> and <a href="https://www.consumerfinance.gov/es/obtener-respuestas/">Obtener respuestas</a>.</p>
-<p>The financial topics covered include:</p>
+                <h1 id="browser-support">Browser support<a class="headerlink" href="#browser-support" title="Permanent link">¶</a></h1>
 <ul>
-<li>Auto loans</li>
-<li>Bank accounts and services</li>
-<li>Credit cards</li>
-<li>Credit reports and scores</li>
-<li>Debt collection</li>
-<li>Families and money</li>
-<li>Money transfers</li>
-<li>Mortgages</li>
-<li>Payday loans</li>
-<li>Prepaid cards</li>
-<li>Student loans</li>
+<li>
+<p>We serve JavaScript to any browser that
+  <a href="https://caniuse.com/fetch">supports fetch</a>.
+  We use <a href="https://github.com/evanw/esbuild">esbuild</a> to transpile
+  and minify our JavaScript.</p>
+</li>
+<li>
+<p>We prefix CSS for <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/package.json#L18">every browser in our browserslist</a>.
+  We use <a href="https://github.com/postcss/autoprefixer">autoprefixer</a> to add
+  vendor-specific prefixes to rules where necessary.</p>
+</li>
 </ul>
-<h2 id="usage"><code>Usage</code><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
-<p>The API is a read-only resource that delivers search results in <a href="https://www.json.org/">json</a> format.</p>
-<p>Requests follow this pattern:</p>
-<ul>
-<li><code>https://www.consumerfinance.gov/ask-cfpb/search/json/?q=[SEARCH TERMS]</code></li>
-</ul>
-<p>The json response will includes a list of results, each with a question, an answer, and a URL for the related CFPB page.
-If no results are found, the "suggestion" field will offer a more promising search term if one can be found.</p>
-<p>The payload for the search term "tuition" would look like this, but with more result entries:</p>
-<pre class="highlight"><code class="language-json">{
-  "query": "tuition",
-  "suggestion": null,
-  "result_query": "tuition",
-  "results": [
-    {
-      "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-a-tuition-payment-plan-en-563/",
-      "text": "Tuition payment plans, also called tuition installment plans, are short-term (12 months or less) payment plans that split your college bills into equal monthly payments. Tuition installment plans can be an alternative to student loans if you can afford to pay tuition, just not in a lump sum at the start of the semester or quarter. These payment plans do not generally charge interest, but they may have up-front fees. What is a tuition payment plan?",
-      "question": "What is a tuition payment plan?"
-    }
-  ]
-}</code></pre>
-<h2 id="spanish-content">Spanish content<a class="headerlink" href="#spanish-content" title="Permanent link">¶</a></h2>
-<p>For questions and answers in Spanish, requests should follow this pattern:</p>
-<ul>
-<li><code>https://www.consumerfinance.gov/es/obtener-respuestas/buscar/json/?q=[SPANISH SEARCH TERMS]</code></li>
-</ul>
-<p>The payload for the Spanish search term "vehiculo" would look like this, but with more result entries:</p>
-<pre class="highlight"><code class="language-json">{
-  query: "vehiculo",
-  suggestion: null,
-  result_query: "vehiculo",
-  results: [
-    {
-      url: "https://www.consumerfinance.gov/es/obtener-respuestas/como-puedo-averiguar-el-significado-de-los-terminos-de-mi-contrato-de-leasing-es-2047/",
-      text: " Bajo la Ley de Arrendamientos del Consumidor (CLA, por sus siglas en inglés), la persona o compañía de quien usted hace el leasing de un vehículo, conocida como el "arrendador", deberá informar por escrito ciertos costos y plazos si el leasing es de más de cuatro meses y si cumple con otros requisitos. La mayoría de los arrendamientos de vehículos está sujeta a la CLA. Los siguientes materiales le pueden ayudar a entender los términos de su contrato de leasing. En el sitio web Comprenda cómo funciona la financiación de vehículos de la Comisión Federal de Comercio se ofrece la siguiente información en español: Antes de comprar un vehículo o hacer un leasing ¿Debería hacer un leasing para un vehículo? Glosario de términos específicos Más información en español de GobiernoUSA.gov: Consejos para comprar un auto usado: Arrendamiento con derecho a compra o “leasing”     Bajo la Ley de Arrendamientos del Consumidor (CLA, por sus siglas en ingles), la persona o compania de quien usted hace el leasing de un vehiculo, conocida como el "arrendador", debera informar por escrito ciertos costos y plazos si el leasing es de mas de cuatro meses y si cumple con otros requisitos. La mayoria de los arrendamientos de vehiculos esta sujeta a la CLA. Los siguientes materiales le pueden ayudar a entender los terminos de su contrato de leasing. En el sitio web Comprenda como funciona la financiacion de vehiculos de la Comision Federal de Comercio se ofrece la siguiente informacion en espanol: Antes de comprar un vehiculo o hacer un leasing Deberia hacer un leasing para un vehiculo? Glosario de terminos especificos Mas informacion en espanol de GobiernoUSA.gov: Consejos para comprar un auto usado: Arrendamiento con derecho a compra o leasing ¿Cómo puedo averiguar el significado de los términos de mi contrato de leasing? Como puedo averiguar el significado de los terminos de mi contrato de leasing?",
-      question: "¿Cómo puedo averiguar el significado de los términos de mi contrato de leasing?"
-    }
-  ]
-}</code></pre>
+<h2 id="outputting-browser-support-metrics">Outputting browser support metrics<a class="headerlink" href="#outputting-browser-support-metrics" title="Permanent link">¶</a></h2>
+<p>Within the root directory, run <code>npx browserslist</code> to output the set of browser
+targets given to <code>autoprefixer</code> (CSS) transpiling.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A browserslist string is used in <code>package.json</code>.
+See the
+<a href="https://github.com/browserslist/browserslist#full-list">browserslist docs</a>
+for information on this string and the defaults.</p>
+</div>
+<p>For JavaScript, <code>esbuild</code> uses the <a href="http://es6-features.org/"><code>es6</code></a> target and
+our code conditionally includes JavaScript in browsers that
+<a href="https://caniuse.com/fetch">support fetch</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>JavaScript may still
+be delivered to legacy browsers in the form of our analytics and
+related scripts.</p>
+</div>
+<h2 id="current-browser-support-metrics">Current browser support metrics<a class="headerlink" href="#current-browser-support-metrics" title="Permanent link">¶</a></h2>
+<p>Twice per year we aim to updated the browser metrics that are fed into our
+browserslist config at
+<a href="https://github.com/cfpb/cfpb-analytics/tree/main/packages/browserslist-config">@cfpb/browserslist-config</a>.</p>
+<p>Per the <a href="https://github.com/browserslist/browserslist?tab=readme-ov-file#best-practices">best practices published by browserslist</a>,
+we use a 0.2% cutoff with this config for the browsers
+that get fed into our build systems.</p>
+<p>However, for what we actively aim to support and test, we use a higher cutoff
+of 1%. The current 1% cutoff list is:</p>
+<pre class="highlight"><code>and_chr 123
+chrome 124
+chrome 123
+chrome 122
+chrome 121
+chrome 120
+edge 123
+edge 122
+edge 121
+edge 120
+ios_saf 17.4
+ios_saf 17.3
+ios_saf 17.2
+ios_saf 17.1
+ios_saf 16.6-16.7</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../github-actions/" class="btn btn-neutral float-left" title="How We Use GitHub Actions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../consumer-complaint-database/" class="btn btn-neutral float-right" title="Consumer Complaints">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../wagtail-pages/" class="btn btn-neutral float-left" title="Wagtail Pages"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../caching/" class="btn btn-neutral float-right" title="Caching">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -252,10 +254,10 @@ If no results are found, the "suggestion" field will offer a more promising sear
         </span>
     
     
-      <span><a href="../github-actions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../wagtail-pages/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../consumer-complaint-database/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../caching/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
