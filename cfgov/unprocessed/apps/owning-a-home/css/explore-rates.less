@@ -12,14 +12,31 @@
 .rate-checker {
   position: relative;
 
-  /* lead paragraphs are typically the first paragraph in a content area */
+  // lead paragraphs are typically the first paragraph in a content area.
   .lead {
     margin-bottom: unit(30px / @base-font-size-px, em);
     font-size: 1.125em;
   }
 
+  // Page intros are content areas that are in place of a hero.
   .page-intro {
     border-bottom: 1px solid var(--gray-10);
+    padding-bottom: unit(36px / @base-font-size-px, rem);
+
+    &__cols {
+      display: flex;
+      gap: unit(15px / @base-font-size-px, rem);
+      flex-direction: column;
+
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
+        flex-direction: row;
+      });
+    }
+
+    &__cols-first {
+      flex-basis: fit-content;
+    }
   }
 
   .rc-illu-inner {
@@ -556,19 +573,6 @@
 
     .m-notification--borderless {
       .grid__column( 8 );
-    }
-
-    .page-intro__cols {
-      display: table;
-      .page-intro__col-left,
-      .page-intro__col-right {
-        display: table-cell;
-      }
-
-      .page-intro__col-right {
-        padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        white-space: nowrap;
-      }
     }
   });
 
