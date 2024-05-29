@@ -245,24 +245,22 @@ you can provide a dotted path to the test as the final argument to any of the ab
 <p>If you would like to skip running Django migrations when testing, set the
 <code>SKIP_DJANGO_MIGRATIONS</code> environment variable to any value before running <code>tox</code>.</p>
 <h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">¶</a></h3>
-<p>We use <code>black</code> to autoformat our Python code. <code>black</code> is invoked by Tox using
-the <code>lint</code> environment (this will also run <code>ruff</code> and <code>isort</code>):</p>
+<p>We use <code>ruff</code> to do <code>black</code>-compatible formatting of our Python code. <code>ruff</code> is invoked by Tox using the <code>lint</code> environment (this will also run <code>bandit</code> to do Python-specific static security analysis).</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
-<p><strong>It is highly recommended to only invoke black via tox</strong></p>
+<p>This will run <code>ruff</code> in check-only mode. To automatically fix any formatting issues it flags, run:</p>
+<pre class="highlight"><code class="language-sh">ruff format</code></pre>
 <h3 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">¶</a></h3>
-<p>We use the <code>ruff</code> and <code>isort</code> tools to ensure compliance with
+<p>We also use <code>ruff</code> to ensure compliance with
 <a href="https://www.python.org/dev/peps/pep-0008/">PEP8 style guide</a>,
 <a href="https://docs.djangoproject.com/en/stable/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>,
 and the
 <a href="https://github.com/cfpb/development/blob/main/standards/python.md#linting">CFPB Python style guide</a>.</p>
 <p>We also use <a href="https://bandit.readthedocs.io/">Bandit</a> to find any common
 security issues in our Python code.</p>
-<p><code>ruff</code>, <code>isort</code>, and <code>bandit</code> can all be run using the Tox <code>lint</code> environment
-(this will also run <code>black</code>):</p>
+<p><code>ruff</code> and <code>bandit</code> can all be run using the Tox <code>lint</code> environment:</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
-<p>This will run <code>isort</code> in check-only mode and it will print diffs for imports
-that need to be fixed. To automatically fix import sort issues, run:</p>
-<pre class="highlight"><code class="language-sh">isort --recursive cfgov/</code></pre>
+<p>This will run <code>ruff</code> in check-only mode. To automatically (try to) fix any linting issues it flags, run:</p>
+<pre class="highlight"><code class="language-sh">ruff check --fix</code></pre>
 <p>From the root of <code>consumerfinance.gov</code>.</p>
 <h3 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">¶</a></h3>
 <p>To see Python code coverage information immediately following a test run,
