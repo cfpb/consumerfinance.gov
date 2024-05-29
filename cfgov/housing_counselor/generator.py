@@ -107,7 +107,7 @@ def generate_counselor_json(counselors, zipcodes, target):
             "counseling_agencies": counselors,
         }
 
-        json_filename = os.path.join(target, "{}.json".format(zipcode))
+        json_filename = os.path.join(target, f"{zipcode}.json")
 
         with open(json_filename, "w") as f:
             f.write(json.dumps(zipcode_data))
@@ -118,7 +118,7 @@ def generate_counselor_html(source_dir, target_dir):
     template = loader.get_template(template_name)
 
     for zipcode, filename in get_counselor_json_files(source_dir):
-        with open(filename, "r") as f:
+        with open(filename) as f:
             zipcode_data = json.loads(f.read())
 
         html = template.render(
@@ -129,7 +129,7 @@ def generate_counselor_html(source_dir, target_dir):
             }
         )
 
-        html_filename = os.path.join(target_dir, "{}.html".format(zipcode))
+        html_filename = os.path.join(target_dir, f"{zipcode}.html")
 
         with open(html_filename, "w") as f:
             f.write(html)
@@ -146,7 +146,7 @@ def get_counselor_json_files(directory):
     )
 
     if not filenames:
-        raise RuntimeError("no input files found in {}".format(directory))
+        raise RuntimeError(f"no input files found in {directory}")
 
     logger.info("Found %d input files", len(filenames))
 

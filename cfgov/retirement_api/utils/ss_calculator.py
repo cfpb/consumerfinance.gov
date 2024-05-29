@@ -1,4 +1,3 @@
-# coding: utf-8
 """
 A utility to get benefit data from SSA and handle errors.
 
@@ -20,6 +19,7 @@ Optional inputs that SSA allows, but we're not using:
 Outputs:
 - a python dictionary of benefit data and error messages
 """
+
 import datetime
 import logging
 import re
@@ -79,7 +79,7 @@ def get_note(note_type, language):
 # ORIGINAL_BASE_URL = "https://www.socialsecurity.gov  # NOW REDIRECTED"
 # QUICK_URL = "{0}/OACT/quickcalc/".format(BASE_URL)  # where users go
 BASE_URL = "https://www.ssa.gov"
-RESULT_URL = "{0}/cgi-bin/benefit6.cgi".format(BASE_URL)
+RESULT_URL = f"{BASE_URL}/cgi-bin/benefit6.cgi"
 CHART_AGES = range(62, 71)
 
 comment = re.compile(r"<!--[\s\S]*?-->")  # regex for parsing indexing data
@@ -103,7 +103,7 @@ def num_test(value=""):
         try:
             int(float(value))
         except ValueError:
-            LOGGER.info("Numeric test failed for {}".format(value))
+            LOGGER.info(f"Numeric test failed for {value}")
             return False
         else:
             return True
@@ -131,8 +131,8 @@ def calculate_lifetime_benefits(results, base, fra_tuple, dob, past_fra):
     BENS = results["data"]["benefits"]
     LIFE = results["data"]["lifetime"] = {}
     for year in range(62, 71):
-        benkey = "age {0}".format(year)
-        lifekey = "age{0}".format(year)
+        benkey = f"age {year}"
+        lifekey = f"age{year}"
         if BENS[benkey] == 0:
             LIFE[lifekey] = 0
         else:
@@ -374,15 +374,15 @@ def set_up_runvars(params, language="en"):
       to match SSA's handling of edge cases
     """
     today = date.today()
-    dobstring = "{0}-{1}-{2}".format(
+    dobstring = "{}-{}-{}".format(
         params["yob"], params["dobmon"], params["dobday"]
     )
-    yobstring = "{0}".format(params["yob"])
+    yobstring = "{}".format(params["yob"])
     current_age = get_current_age(dobstring)
     dob = parser.parse(dobstring).date()
     benefits = {}
     for age in CHART_AGES:
-        benefits["age {0}".format(age)] = 0
+        benefits[f"age {age}"] = 0
     results = {
         "data": {
             "months_past_birthday": get_months_past_birthday(dob),
@@ -415,16 +415,16 @@ def set_up_runvars(params, language="en"):
         ssa_params["dobday"] = 2
         if dob.month == 1:
             yob = ssa_params["yob"] - 1
-            yobstring = "{0}".format(yob)
+            yobstring = f"{yob}"
             ssa_params["dobmon"] = 12
             ssa_params["yob"] = yob
         else:
             ssa_params["dobmon"] = params["dobmon"] - 1
     fra_tuple = get_retirement_age(yobstring)  # returns tuple: (year, months)
     if fra_tuple[1]:
-        FRA = "{0} and {1} months".format(fra_tuple[0], fra_tuple[1])
+        FRA = f"{fra_tuple[0]} and {fra_tuple[1]} months"
     else:
-        FRA = "{0}".format(fra_tuple[0])
+        FRA = f"{fra_tuple[0]}"
     results["data"]["full retirement age"] = FRA
     if past_fra is True:
         ssa_params["retireyear"] = today.year
@@ -460,7 +460,7 @@ def parse_response(results, html, language):
 
 def validate_date(params):
     """Make sure delivered date is real"""
-    dobstring = "{0}-{1}-{2}".format(
+    dobstring = "{}-{}-{}".format(
         params["yob"], params["dobmon"], params["dobday"]
     )
     try:
@@ -517,7 +517,7 @@ def get_retire_data(params, language):
             RESULT_URL, data=results["data"]["params"], timeout=TIMEOUT_SECONDS
         )
     except requests.exceptions.ConnectionError as e:
-        results["error"] = "connection error at SSA's website: {0}".format(e)
+        results["error"] = f"connection error at SSA's website: {e}"
         results["note"] = get_note("down", language)
         return results
     except requests.exceptions.Timeout:
@@ -525,7 +525,7 @@ def get_retire_data(params, language):
         results["note"] = get_note("down", language)
         return results
     except requests.exceptions.RequestException as e:
-        results["error"] = "request error at SSA's website: {0}".format(e)
+        results["error"] = f"request error at SSA's website: {e}"
         results["note"] = get_note("down", language)
         return results
     except Exception:
@@ -545,16 +545,12 @@ def get_retire_data(params, language):
             results, base_benefit, current_age, dob
         )
     else:
-        results["data"]["benefits"][
-            "age {0}".format(fra_tuple[0])
-        ] = base_benefit
+        results["data"]["benefits"][f"age {fra_tuple[0]}"] = base_benefit
         results = interpolate_benefits(
             results, base_benefit, fra_tuple, current_age, dob
         )
     final_results = calculate_lifetime_benefits(
         results, base_benefit, fra_tuple, dob, past_fra
     )
-    LOGGER.info(
-        "script took {0} to run".format((datetime.datetime.now() - starter))
-    )
+    LOGGER.info(f"script took {datetime.datetime.now() - starter} to run")
     return final_results

@@ -371,7 +371,7 @@ class CFGOVPage(Page):
 
     @property
     def post_preview_cache_key(self):
-        return "post_preview_{}".format(self.id)
+        return f"post_preview_{self.id}"
 
     def get_translations(self, inclusive=True, live=True):
         if self.language == "en" and self.pk:

@@ -275,15 +275,12 @@ class IdLevelState:
 
     def token_validity_test(self, token):
         "Make sure a singleton token is some kind of valid ID."
-        if (
+        return (
             token.isdigit()
             or roman_to_int(token)
             or (token.isalpha() and len(token) == 1)
             or (token.isalpha() and len(token) == 2 and token[0] == token[1])
-        ):
-            return True
-        else:
-            return False
+        )
 
     def sniff_appendix_id_type(self, paragraphs):
         """
@@ -348,9 +345,7 @@ class IdLevelState:
             pid = self.next_appendix_id() or ""
             graph_text += "\n{" + pid + "}\n"
             graph = (
-                p_element.text.replace(
-                    "{}.".format(pid), "**{}.**".format(pid), 1
-                )
+                p_element.text.replace(f"{pid}.", f"**{pid}.**", 1)
                 .replace("  ", " ")
                 .replace("** **", " ", 1)
             )

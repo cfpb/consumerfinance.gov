@@ -49,7 +49,7 @@ def create_answer_id(request, page):
         sister_page = create_sister_page(page, new_answer_base)
         sister_page.save()
         sister_page.save_revision(user=request.user)
-        page.title = "{}-{}-{}".format(page.title, page.language, new_id)
-        page.slug = "{}-{}-{}".format(page.slug, page.language, new_id)
+        page.title = f"{page.title}-{page.language}-{new_id}"
+        page.slug = f"{page.slug}-{page.language}-{new_id}"
         page.save()
         page.save_revision(user=request.user)

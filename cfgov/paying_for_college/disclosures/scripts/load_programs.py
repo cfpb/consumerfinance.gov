@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import io
 from csv import DictReader as cdr
 
@@ -85,7 +84,7 @@ def get_school(iped):
     try:
         school = School.objects.get(school_id=int(iped))
     except Exception:
-        return ("", "ERROR: couldn't find school for ID {0}".format(iped))
+        return ("", f"ERROR: couldn't find school for ID {iped}")
     else:
         return (school, "")
 
@@ -200,10 +199,10 @@ def load(source, s3=False):
     else:
         raw_data = read_in_data(source)
     if not raw_data[0]:
-        return (["ERROR: could not read data from {0}".format(source)], "")
+        return ([f"ERROR: could not read data from {source}"], "")
 
     for row in raw_data:
-        if "test" in row.keys() and row["test"].lower() == "true":
+        if "test" in row and row["test"].lower() == "true":
             test_program = True
         fixed_data = clean(row)
         serializer = ProgramSerializer(data=fixed_data)
@@ -212,8 +211,9 @@ def load(source, s3=False):
             data = serializer.validated_data
             if not validate_pid(data["program_code"]):
                 print(
-                    "ERROR: invalid program code: "
-                    "{}".format(data["program_code"])
+                    "ERROR: invalid program code: " "{}".format(
+                        data["program_code"]
+                    )
                 )
                 continue
             (school, error) = get_school(data["ipeds_unit_id"])
@@ -260,15 +260,14 @@ def load(source, s3=False):
 
         else:  # There is error
             for key, error_list in dict.items(serializer.errors):
-                fail_msg = "ERROR on row {}: {}: ".format(
-                    raw_data.index(row) + 1, key
-                )
+                fail_msg = f"ERROR on row {raw_data.index(row) + 1}: {key}: "
                 for e in error_list:
-                    fail_msg = "{} {},".format(fail_msg, e)
+                    fail_msg = f"{fail_msg} {e},"
                 FAILED.append(fail_msg)
 
-    endmsg = "{} programs created. " "{} programs updated.".format(
-        new_programs, updated_programs
+    endmsg = (
+        f"{new_programs} programs created. "
+        f"{updated_programs} programs updated."
     )
 
     return (FAILED, endmsg)

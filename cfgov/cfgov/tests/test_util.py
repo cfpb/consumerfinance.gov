@@ -8,7 +8,6 @@ from cfgov.util import admin_emails, environment_json
 
 
 class AdminEmailsTestCase(SimpleTestCase):
-
     def test_empty(self):
         self.assertEqual(admin_emails(""), [])
 
@@ -20,7 +19,6 @@ class AdminEmailsTestCase(SimpleTestCase):
 
 
 class EnvironmentJsonTestCase(SimpleTestCase):
-
     @mock.patch.dict(os.environ, {})
     def test_with_variable_dne(self):
         with self.assertRaises(ImproperlyConfigured):

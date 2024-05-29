@@ -33,7 +33,7 @@ class Command(BaseCommand):
         ]
 
         for mapping in http_image_url_mappings:
-            if 2 != len(mapping):
+            if len(mapping) != 2:
                 raise CommandError(
                     "HTTP image URL mappings must be comma-separated pairs"
                 )

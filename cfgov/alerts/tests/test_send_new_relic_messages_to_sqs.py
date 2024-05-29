@@ -28,6 +28,6 @@ class TestSendNewRelicMessagesToSQS(unittest.TestCase):
 
     def test_read_known_violations_nonexisting(self):
         with mock.patch("builtins.open", create=True) as mock_open:
-            mock_open.side_effect = IOError()
+            mock_open.side_effect = OSError()
             known_violations = read_known_violations("/some/file.json")
         self.assertEqual([], known_violations)

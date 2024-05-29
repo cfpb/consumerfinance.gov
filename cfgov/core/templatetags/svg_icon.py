@@ -28,7 +28,7 @@ def load_svg(name: str) -> str:
     if not (static_filename := finders.find(relative_path)):
         raise FileNotFoundError(f"{relative_path} not found in staticfiles.")
 
-    with open(static_filename, "r") as f:
+    with open(static_filename) as f:
         content = f.read()
         if not SVG_REGEX.match(content):
             raise ValueError(f"{static_filename} not a valid SVG.")

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
 from django.utils import timezone
@@ -66,9 +65,7 @@ class ActivityPage(CFGOVPage):
     big_idea = RichTextField("Big idea", blank=False)
     essential_questions = RichTextField("Essential questions", blank=False)
     objectives = RichTextField("Objectives", blank=False)
-    what_students_will_do = RichTextField(
-        "What students will do", blank=False
-    )  # noqa: E501
+    what_students_will_do = RichTextField("What students will do", blank=False)  # noqa: E501
     search_tags = models.TextField(
         "Activity search tags",
         blank=True,
@@ -187,9 +184,7 @@ class ActivityPage(CFGOVPage):
         FieldPanel("school_subject", widget=forms.CheckboxSelectMultiple),
         MultiFieldPanel(
             [
-                FieldPanel(
-                    "grade_level", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: E501
+                FieldPanel("grade_level", widget=forms.CheckboxSelectMultiple),  # noqa: E501
                 FieldPanel("age_range", widget=forms.CheckboxSelectMultiple),
                 FieldPanel(
                     "student_characteristics",

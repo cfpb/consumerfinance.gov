@@ -4,10 +4,10 @@ from pathlib import Path
 
 
 FIXTURES_DIR = Path(__file__).resolve().parents[2]
-NAT_DATA_FILE = "{0}/fixtures/national_stats.json".format(FIXTURES_DIR)
-BACKUP_FILE = "{0}/fixtures/national_stats_backup.json".format(FIXTURES_DIR)
+NAT_DATA_FILE = f"{FIXTURES_DIR}/fixtures/national_stats.json"
+BACKUP_FILE = f"{FIXTURES_DIR}/fixtures/national_stats_backup.json"
 # source for BLS_FILE: https://www.bls.gov/cex/#tables_long
-BLS_FILE = "{0}/fixtures/bls_data.json".format(FIXTURES_DIR)
+BLS_FILE = f"{FIXTURES_DIR}/fixtures/bls_data.json"
 LENGTH_MAP = {
     "earnings": {2: "median_earnings_l4", 4: "median_earnings_4"},
     "completion": {2: "completion_rate_l4", 4: "completion_rate_4"},
@@ -17,7 +17,7 @@ LENGTH_MAP = {
 def get_bls_stats():
     """Deliver BLS spending stats stored in the repo."""
     try:
-        with open(BLS_FILE, "r") as f:
+        with open(BLS_FILE) as f:
             data = json.loads(f.read())
     except FileNotFoundError:
         data = {}
@@ -26,7 +26,7 @@ def get_bls_stats():
 
 def get_national_stats():
     """return dictionary of national college statistics"""
-    with open(NAT_DATA_FILE, "r") as f:
+    with open(NAT_DATA_FILE) as f:
         return json.loads(f.read())
 
 

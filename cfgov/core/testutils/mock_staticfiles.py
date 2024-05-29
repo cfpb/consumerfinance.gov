@@ -45,12 +45,12 @@ class MockStaticfilesFinder(BaseFinder):
             patterns = getattr(settings, self.setting)
         except AttributeError as err:
             raise ImproperlyConfigured(
-                "settings.{} must be defined".format(self.setting)
+                f"settings.{self.setting} must be defined"
             ) from err
 
         if not isinstance(patterns, dict):
             raise ImproperlyConfigured(
-                "settings.{} must be a dict".format(self.setting)
+                f"settings.{self.setting} must be a dict"
             )
 
         return patterns

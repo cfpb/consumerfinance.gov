@@ -49,9 +49,9 @@ class TestFragmentCacheJinjaTag(TestCase):
         cache_key = "test-cache-key"
 
         """Render a template with a single cached value."""
-        s = '{%% cache "%s", "%s" %%}{{ value }}{%% endcache %%}' % (
-            cache_key,
-            cache_name,
+        s = (
+            f'{{% cache "{cache_key}", "{cache_name}" %}}'
+            f"{{{{ value }}}}{{% endcache %}}"
         )
 
         template = self.jinja_engine.from_string(s)
@@ -78,7 +78,7 @@ class TestFragmentCacheJinjaTag(TestCase):
     )
     def test_if_caching_is_disabled_value_always_has_right_value(self):
         value = "foo"
-        self._render_tag(value, cache_name="default"),
+        self._render_tag(value, cache_name="default")
         value = "bar"
         self.assertEqual(self._render_tag(value, cache_name="default"), "bar")
 
@@ -94,7 +94,7 @@ class TestFragmentCacheJinjaTag(TestCase):
         value = "foo"
 
         # Rendering this value will store False in the cache.
-        self._render_tag(value, cache_name="default"),
+        self._render_tag(value, cache_name="default")
 
         value = "bar"
 
@@ -118,7 +118,7 @@ class TestFragmentCacheJinjaTag(TestCase):
         value = "foo"
 
         # Rendering this value will store 'foo' in the 'default' cache.
-        self._render_tag(value, cache_name="default"),
+        self._render_tag(value, cache_name="default")
 
         value = "bar"
 

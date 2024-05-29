@@ -75,7 +75,7 @@ def estimator(request, dob=None, income=None, language="en"):
 def get_full_retirement_age(request, birth_year):
     data_tuple = get_retirement_age(birth_year)
     if not data_tuple:
-        return HttpResponseBadRequest("bad birth year (%s)" % birth_year)
+        return HttpResponseBadRequest(f"bad birth year ({birth_year})")
     else:
         data = json.dumps(data_tuple)
         return HttpResponse(data, content_type="application/json")

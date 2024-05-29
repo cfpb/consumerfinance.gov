@@ -11,13 +11,13 @@ def tag_schools(s3_url):
     counter = 0
     csv_data = read_in_s3(s3_url)
     if not csv_data[0]:
-        return "ERROR: could not read data from {0}".format(s3_url)
+        return f"ERROR: could not read data from {s3_url}"
     headings = csv_data[0].keys()
     for heading in ["ipeds_unit_id", "flag"]:
         if heading not in headings:
             return (
                 "ERROR: CSV doesn't have required fields; "
-                "fields found were {}".format(headings)
+                f"fields found were {headings}"
             )
     initial_flag = csv_data[0]["flag"]
     for row in csv_data:
@@ -29,6 +29,4 @@ def tag_schools(s3_url):
             school.save()
             counter += 1
     intro = "school was" if counter == 1 else "schools were"
-    return "{} {} tagged as '{}' settlement schools".format(
-        counter, intro, initial_flag
-    )
+    return f"{counter} {intro} tagged as '{initial_flag}' settlement schools"

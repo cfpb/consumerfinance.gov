@@ -35,7 +35,8 @@ class Command(BaseCommand):
                     card.full_clean()
                 except ValidationError:
                     self.stderr.write(
-                        f"Validation failed for card survey data: {survey_data}"
+                        "Validation failed for card survey data: "
+                        f"{survey_data}"
                     )
                     raise
 

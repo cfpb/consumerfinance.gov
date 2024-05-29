@@ -48,7 +48,7 @@ class JobListingListTestCase(JobListingBlockTestUtils, TestCase):
     def test_shows_jobs(self):
         self.make_job("live1")
         # This job should not show up because it is closed.
-        self.make_job("live_closed", close_date=date(1970, 1, 1)),
+        self.make_job("live_closed", close_date=date(1970, 1, 1))
         self.make_job("live2")
         # This job should not show up because it is not live.
         self.make_job("draft", live=False)
@@ -95,7 +95,7 @@ class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
     def test_shows_jobs(self):
         self.make_job("live1")
         # This job should not show up because it is closed.
-        self.make_job("live_closed", close_date=date(1970, 1, 1)),
+        self.make_job("live_closed", close_date=date(1970, 1, 1))
         self.make_job("live2")
         # This job should not show up because it is not live.
         self.make_job("draft", live=False)

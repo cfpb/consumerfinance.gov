@@ -15,7 +15,11 @@ class RegionViewSetTests(WagtailTestUtils, TestCase):
         texas = State.objects.create(
             name="Texas", abbreviation="TX", region_id=usa.pk
         )
-        State.objects.create(name="Utah", abbreviation="UT", region_id=usa.pk),
+        (
+            State.objects.create(
+                name="Utah", abbreviation="UT", region_id=usa.pk
+            ),
+        )
         MajorCity.objects.create(
             name="Dallas", state_id=texas.pk, region_id=usa.pk
         )

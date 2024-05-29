@@ -83,7 +83,7 @@ INFERRED_SECTION_IDS = ["1030"]
 # The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = (
     "https://www.gpo.gov/fdsys/bulkdata/ECFR/"
-    "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE)
+    f"title-{CFR_TITLE}/ECFR-title{CFR_TITLE}.xml"
 )
 HEADLINE_MAP = {
     "HD1": "\n## {}\n",
@@ -113,9 +113,7 @@ def parse_subparts(part_soup, part):
     appendix_subpart.save()
     PAYLOAD.subparts["appendix_subpart"] = appendix_subpart
     interp_subpart = Subpart(
-        title="Supplement I to Part {} - Official Interpretations".format(
-            part.part_number
-        ),
+        title=f"Supplement I to Part {part.part_number} - Official Interpretations",  # noqa: E501
         label="Interpretations",
         subpart_type=Subpart.INTERPRETATION,
         version=PAYLOAD.version,
@@ -187,7 +185,7 @@ def parse_multi_id_graph(graph, ids, label):
     id_refs = PAYLOAD.interp_refs.get(label)
     LEVEL_STATE.next_token = ids[0]
     pid1 = LEVEL_STATE.next_id()
-    split1 = graph.partition("({})".format(ids[1]))
+    split1 = graph.partition(f"({ids[1]})")
     text1 = lint_paragraph(combine_bolds(split1[0]))
     pid2_marker = split1[1]
     remainder = bold_first_italics(split1[2])
@@ -207,7 +205,7 @@ def parse_multi_id_graph(graph, ids, label):
             new_graphs += "\n" + id_refs[pid2] + "\n"
         return new_graphs
     else:
-        split2 = remainder.partition("({})".format(ids[2]))
+        split2 = remainder.partition(f"({ids[2]})")
         pid3_marker = split2[1]
         remainder2 = bold_first_italics(split2[2])
         text2 = lint_paragraph(
@@ -236,7 +234,7 @@ def parse_ids(graph, label):
     for clean_id in clean_ids:
         #  clean up edge-case bolding caused by italicized IDs, such as
         #  '(F)(<I>1</I>)' from reg 1026.7
-        graph = graph.replace("**{}**".format(clean_id), clean_id)
+        graph = graph.replace(f"**{clean_id}**", clean_id)
     valid_ids = LEVEL_STATE.multiple_id_test(clean_ids)
     if not valid_ids or LEVEL_STATE.level() == 6:
         return parse_singleton_graph(graph, label)
@@ -263,7 +261,7 @@ def parse_interp_graph(p_element):
         pid = LEVEL_STATE.next_interp_id()
         graph_text += "\n{" + pid + "}\n"
         graph = (
-            p_element.text.replace("{}.".format(pid), "**{}.**".format(pid), 1)
+            p_element.text.replace(f"{pid}.", f"**{pid}.**", 1)
             .replace("  ", " ")
             .replace("** **", " ", 1)
             .replace("\n", "")
@@ -322,14 +320,14 @@ def parse_appendix_elements(appendix_soup, label):
     paragraphs = appendix_soup.find_all("P")
     tables = appendix_soup.find_all("TABLE")
     for i, table_soup in enumerate(tables):
-        table_label = "{{table-{}-{}}}".format(label, i)
+        table_label = f"{{table-{label}-{i}}}"
         if set_table(table_soup, table_label):
-            table_soup.replaceWith("\n{}\n".format(table_label))
+            table_soup.replaceWith(f"\n{table_label}\n")
     for form_line in appendix_soup.find_all("FP-DASH"):
         form_line.string = form_line.text.replace("\n", "") + "__\n"
     for i, image in enumerate(appendix_soup.find_all("img")):
         ref = "![image-{}-{}]({})".format(label, i + 1, image.get("src"))
-        image.replaceWith("\n{}\n".format(ref))
+        image.replaceWith(f"\n{ref}\n")
     LEVEL_STATE.current_id = ""
     id_type = LEVEL_STATE.sniff_appendix_id_type(paragraphs)
     for citation in appendix_soup.find_all("CITA"):
@@ -501,7 +499,7 @@ def register_interp_reference(interp_id, section_tag):
     if section_label not in PAYLOAD.interp_refs:
         PAYLOAD.interp_refs[section_label] = {}
     PAYLOAD.interp_refs[section_label].update(
-        {graph_id: "see({}-{}-Interp)".format(section_tag, graph_id)}
+        {graph_id: f"see({section_tag}-{graph_id}-Interp)"}
     )
 
 
@@ -540,7 +538,7 @@ def parse_interps(interp_div, part, subpart):
         LEVEL_STATE.current_id = ""
         section_hed = section_heading.text.strip()
         section_label = get_interp_section_tag(section_hed)
-        interp_section_label = "Interp-{}".format(section_label)
+        interp_section_label = f"Interp-{section_label}"
         section = Section(
             subpart=subpart,
             label=interp_section_label,
@@ -553,9 +551,9 @@ def parse_interps(interp_div, part, subpart):
             divine_interp_tag_use(section_heading, part.part_number)
             == "appendix"
         ):
-            interp_id = "{}-1-Interp".format(section_label)
+            interp_id = f"{section_label}-1-Interp"
             LEVEL_STATE.current_id = interp_id
-            see = "see({}-1-Interp)".format(section_label)
+            see = f"see({section_label}-1-Interp)"
             ref = {section_label: {"1": see}}
             PAYLOAD.interp_refs.update(ref)
         for element in section_heading.findNextSiblings():
@@ -574,7 +572,7 @@ def parse_interps(interp_div, part, subpart):
                 )
                 register_interp_reference(interp_id, section_label)
                 section.contents += "\n{" + interp_id + "}\n"
-                section.contents += "### {}\n".format(_hed)
+                section.contents += f"### {_hed}\n"
             elif element.name == "P":
                 tag_use = divine_interp_tag_use(element, part.part_number)
                 if tag_use in ["graph_id", "graph_id_inferred_section"]:
@@ -585,12 +583,12 @@ def parse_interps(interp_div, part, subpart):
                     section.contents += "\n{" + interp_id + "}\n"
                     if tag_use == "graph_id_inferred_section":
                         element.insert(0, section_label)
-                    section.contents += "### {}\n".format(element.text.strip())
+                    section.contents += f"### {element.text.strip()}\n"
                 else:
                     p = pre_process_tags(element)
                     section.contents += parse_interp_graph(p)
             else:
-                section.contents += "\n{}\n".format(element.text.strip())
+                section.contents += f"\n{element.text.strip()}\n"
         section.save()
         if section not in PAYLOAD.interpretations:
             PAYLOAD.interpretations.append(section)
@@ -621,18 +619,17 @@ def ecfr_to_regdown(part_number, file_path=None):
     starter = datetime.datetime.now()
     if file_path:
         try:
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 markup = f.read()
-        except IOError:
-            logger.info("Could not open local file {}".format(file_path))
+        except OSError:
+            logger.info(f"Could not open local file {file_path}")
             return
     else:
         ecfr_request = requests.get(LATEST_ECFR)
         if not ecfr_request.ok:
             logger.info(
-                "ECFR request failed with code {} and reason {}".format(
-                    ecfr_request.status_code, ecfr_request.reason
-                )
+                f"ECFR request failed with code {ecfr_request.status_code} "
+                f"and reason {ecfr_request.reason}"
             )
             return
         ecfr_request.encoding = "utf-8"
@@ -646,8 +643,9 @@ def ecfr_to_regdown(part_number, file_path=None):
     PAYLOAD.parse_version(part_soup, part)
     # parse_subparts will create and associate sections and appendices
     parse_subparts(part_soup, part)
-    msg = "Draft version of Part {} created.\n" "Parsing took {}".format(
-        part_number, (datetime.datetime.now() - starter)
+    msg = (
+        f"Draft version of Part {part_number} created.\n"
+        f"Parsing took {datetime.datetime.now() - starter}"
     )
     return msg
 
@@ -664,27 +662,23 @@ def run(*args):
         if args[0] == "ALL":
             starter = datetime.datetime.now()
             for part in LEGACY_PARTS:
-                logger.info("parsing {} from the latest eCFR XML".format(part))
+                logger.info(f"parsing {part} from the latest eCFR XML")
                 logger.info(ecfr_to_regdown(part))
             logger.info(
-                "Overall, parsing took {}".format(
-                    datetime.datetime.now() - starter
-                )
+                f"Overall, parsing took {datetime.datetime.now() - starter}"
             )
         else:
-            logger.info("parsing {} from the latest eCFR XML".format(args[0]))
+            logger.info(f"parsing {args[0]} from the latest eCFR XML")
             logger.info(ecfr_to_regdown(args[0]))
     else:
         if args[0] == "ALL":
             starter = datetime.datetime.now()
             for part in LEGACY_PARTS:
-                logger.info("parsing {} from local XML file".format(part))
+                logger.info(f"parsing {part} from local XML file")
                 logger.info(ecfr_to_regdown(part, file_path=args[1]))
             logger.info(
-                "Overall, parsing took {}".format(
-                    datetime.datetime.now() - starter
-                )
+                f"Overall, parsing took {datetime.datetime.now() - starter}"
             )
         else:
-            logger.info("parsing {} from local XML file".format(args[0]))
+            logger.info(f"parsing {args[0]} from local XML file")
             logger.info(ecfr_to_regdown(args[0], file_path=args[1]))

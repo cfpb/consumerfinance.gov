@@ -120,7 +120,8 @@ class ElasticsearchTestsMixin:
             raise SkipTest("Cannot connect to local Elasticsearch") from e
 
         # Patch the Elasticsearch bulk API call to ensure that reindexes and
-        # individual document updates are immediately available in search results.
+        # individual document updates are immediately available in search
+        # results.
         #
         # See the Elasticsearch documentation on refresh:
         # https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-refresh.html

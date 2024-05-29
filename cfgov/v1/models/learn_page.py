@@ -383,12 +383,9 @@ class EventPage(AbstractFilterPage):
                 self.venue_city, self.venue_state
             )
         api_url = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static"
-        static_map_image_url = "{}/{},{}/{}?access_token={}".format(
-            api_url,
-            self.venue_coords,
-            zoom,
-            size,
-            settings.MAPBOX_ACCESS_TOKEN,
+        static_map_image_url = (
+            f"{api_url}/{self.venue_coords},{zoom}/{size}"
+            f"?access_token={settings.MAPBOX_ACCESS_TOKEN}"
         )
 
         return static_map_image_url
@@ -402,8 +399,9 @@ class EventPage(AbstractFilterPage):
         if self.post_event_image_type == "image" and not self.post_event_image:
             raise ValidationError(
                 {
-                    "post_event_image": 'Required if "Post-event image type" is '
-                    '"Image".'
+                    "post_event_image": (
+                        'Required if "Post-event image type" is "Image".'
+                    )
                 }
             )
         if self.live_stream_availability:

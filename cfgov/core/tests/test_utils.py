@@ -178,7 +178,7 @@ class LinkUtilsTests(SimpleTestCase):
 
     def test_content_cfgov(self):
         url = "http://content.cfpb.gov"
-        tag = "<a href='{}'>foo</a>".format(url)
+        tag = f"<a href='{url}'>foo</a>"
         path = "/"
         self.assertIsNone(add_link_markup(tag, path))
 
@@ -226,7 +226,7 @@ class LinkUtilsTests(SimpleTestCase):
         ]
         path = "/"
         for url in urls:
-            tag = "<a href='{}'>foo</a>".format(url)
+            tag = f"<a href='{url}'>foo</a>"
             self.assertIn(
                 'data-pretty-href="cfpb.gov/askcfpb/108"',
                 add_link_markup(tag, path),
@@ -240,7 +240,7 @@ class LinkUtilsTests(SimpleTestCase):
             "https://consumerfinance.gov/ask-cfpb-in-the-url/123",
         ]
         for url in urls:
-            tag = "<a href='{}'>foo</a>".format(url)
+            tag = f"<a href='{url}'>foo</a>"
             self.assertIsNone(add_link_markup(tag, path))
 
     def test_link_button(self):

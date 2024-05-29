@@ -80,7 +80,6 @@ def process_family_name_claim(user, family_name):
 
 
 class CFPBOIDCAuthenticationBackend(OIDCAuthenticationBackend):
-
     def get_userinfo(self, access_token, id_token, payload):
         # Roles are part of the parent payload here, and not the userinfo.
         # Preserve them if we can.

@@ -61,7 +61,9 @@ HEADERS = {}
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = "https://www.consumerfinance.gov"
-S3_URI = "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
+S3_URI = (
+    "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
+)
 
 # Fall-back list of top 25 URLs, as of May 2024
 # All URLs in the list should be canonical locations of the given pages,
@@ -188,51 +190,50 @@ def check_urls(base, url_list=None):
     for url_suffix in url_list:
         logger.info(url_suffix)
         count += 1
-        url = "{}{}".format(base, url_suffix)
+        url = f"{base}{url_suffix}"
         try:
             response = requests.get(url, timeout=TIMEOUT, headers=HEADERS)
             code = response.status_code
             if code == 200:
                 pass
             else:
-                logger.info("{} failed with status code {}".format(url, code))
+                logger.info(f"{url} failed with status code {code}")
                 failures.append((url, code))
         except requests.exceptions.Timeout:
-            logger.info("{} timed out".format(url))
+            logger.info(f"{url} timed out")
             timeouts.append(url)
         except requests.exceptions.ConnectionError as e:
-            logger.info("{} returned a connection error".format(url))
+            logger.info(f"{url} returned a connection error")
             failures.append((url, e))
         except requests.exceptions.RequestException as e:
-            logger.info("{} failed for '{}'".format(url, e))
+            logger.info(f"{url} failed for '{e}'")
             failures.append((url, e))
     timer = int(time.time() - starter)
     logger.info(
-        "\n{} took {} seconds to check {} URLs at {}\n  "
-        "{} failed\n  "
-        "{} timed out".format(
-            sys.argv[0], timer, count, base, len(failures), len(timeouts)
-        )
+        f"\n{sys.argv[0]} took {timer} seconds to check {count} "
+        f"URLs at {base}\n  "
+        f"{len(failures)} failed\n  "
+        f"{len(timeouts)} timed out"
     )
 
     if failures:
-        logger.error("These URLs failed: {}".format(failures))
+        logger.error(f"These URLs failed: {failures}")
     if len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error(
-            "These URLs timed out after {} seconds: "
-            "{}".format(TIMEOUT, timeouts)
+            f"These URLs timed out after {TIMEOUT} seconds: " f"{timeouts}"
         )
     elif timeouts:
         logger.info(
-            "{} allowed timeouts occurred:\n"
-            "{}".format(len(timeouts), "\n".join(timeouts))
+            "{} allowed timeouts occurred:\n" "{}".format(
+                len(timeouts), "\n".join(timeouts)
+            )
         )
 
     if failures or len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("FAIL")
         return False
 
-    logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
+    logger.info("\x1b[32mAll URLs return 200. No smoke!\x1b[0m")
     return True
 
 

@@ -68,7 +68,7 @@ class TestCreateDeployableZip(TestCase):
         # requirements file.
         self.assertEqual(save_wheels.call_count, 2)
 
-        self.assertEqual(zipfile_filename, "%s.zip" % zipfile_basename)
+        self.assertEqual(zipfile_filename, f"{zipfile_basename}.zip")
 
         archive = ZipFile(zipfile_filename)
         self.assertCountEqual(
