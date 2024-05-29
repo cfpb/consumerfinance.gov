@@ -27,14 +27,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
 
 TODAY = datetime.date.today()
-mock_data_path = "{0}/retirement_api/data/mock_data".format(BASE_DIR)
+mock_data_path = f"{BASE_DIR}/retirement_api/data/mock_data"
 
 
 class UpdateSsStatsTests(TestCase):
-    cola_page = "{0}/ssa_cola.html".format(mock_data_path)
-    awi_page = "{0}/ssa_awi_series.html".format(mock_data_path)
-    life_page = "{0}/ssa_life.html".format(mock_data_path)
-    earlyretire_page = "{0}/ssa_earlyretire.html".format(mock_data_path)
+    cola_page = f"{mock_data_path}/ssa_cola.html"
+    awi_page = f"{mock_data_path}/ssa_awi_series.html"
+    life_page = f"{mock_data_path}/ssa_life.html"
+    earlyretire_page = f"{mock_data_path}/ssa_earlyretire.html"
     life_headings = [
         "exact_age",
         "male_death_probability",
@@ -61,14 +61,14 @@ class UpdateSsStatsTests(TestCase):
         """outputs csv based on inputs of
         headings and beautiful_soup rows
         """
-        mockpath = "{0}/mock_life.csv".format(self.tempdir)
-        with open(self.life_page, "r") as f:
+        mockpath = f"{self.tempdir}/mock_life.csv"
+        with open(self.life_page) as f:
             mockpage = f.read()
         table = bs(mockpage, "html.parser").find("table").find("table")
         rows = table.findAll("tr")[2:]
         output_csv(mockpath, self.life_headings, rows)
         self.assertTrue(os.path.isfile(mockpath))
-        with open(mockpath, "r") as f:
+        with open(mockpath) as f:
             reader = csv.reader(f)
             data = [row for row in reader]
         for sample in self.sample_life_results:
@@ -81,7 +81,7 @@ class UpdateSsStatsTests(TestCase):
         """outputs json to file based on inputs of
         path, headings and beautiful_soup rows
         """
-        mockpath = "{0}/mock_life.json".format(self.tempdir)
+        mockpath = f"{self.tempdir}/mock_life.json"
         sample_json_results = {
             "0": {
                 "female_life_expectancy": "80.94",
@@ -96,16 +96,16 @@ class UpdateSsStatsTests(TestCase):
                 "male_life_expectancy": "2.22",
             },
         }
-        with open(self.life_page, "r") as f:
+        with open(self.life_page) as f:
             mockpage = f.read()
         table = bs(mockpage, "html.parser").find("table").find("table")
         rows = table.findAll("tr")[2:]
         output_json(mockpath, self.life_headings, rows)
         self.assertTrue(os.path.isfile(mockpath))
-        with open(mockpath, "r") as f:
+        with open(mockpath) as f:
             data = json.loads(f.read())
         self.assertEqual(type(data), dict)
-        for key in data["0"].keys():
+        for key in data["0"]:
             self.assertTrue(key in self.life_headings)
         for age in sample_json_results:
             for key in sample_json_results[age]:
@@ -153,7 +153,7 @@ class UpdateSsStatsTests(TestCase):
         self, mock_soup, mock_output_json, mock_output_csv
     ):
         # arrange
-        with open(self.earlyretire_page, "r") as f:
+        with open(self.earlyretire_page) as f:
             mockpage = f.read()
         mock_soup.return_value = bs(mockpage, "html.parser")
 
@@ -171,7 +171,7 @@ class UpdateSsStatsTests(TestCase):
     @mock.patch("retirement_api.utils.ss_update_stats.make_soup")
     def test_update_life(self, mock_soup, mock_output_json, mock_output_csv):
         # arrange
-        with open(self.life_page, "r") as f:
+        with open(self.life_page) as f:
             mockpage = f.read()
         mock_soup.return_value = bs(mockpage, "html.parser")
 
@@ -189,7 +189,7 @@ class UpdateSsStatsTests(TestCase):
     @mock.patch("retirement_api.utils.ss_update_stats.make_soup")
     def test_update_cola(self, mock_soup, mock_output_json, mock_output_csv):
         # arrange
-        with open(self.cola_page, "r") as f:
+        with open(self.cola_page) as f:
             mockpage = f.read()
         mock_soup.return_value = bs(mockpage, "html.parser")
 
@@ -208,7 +208,7 @@ class UpdateSsStatsTests(TestCase):
         self, mock_soup, mock_output_json, mock_output_csv
     ):
         # arrange
-        with open(self.awi_page, "r") as f:
+        with open(self.awi_page) as f:
             mockpage = f.read()
         mock_soup.return_value = bs(mockpage, "html.parser")
 

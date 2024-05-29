@@ -23,9 +23,9 @@ class DecoratorTests(SimpleTestCase):
 
         wrapped_view = add_headers(view, {"Test-Header": "test"})
         response_with_headers = wrapped_view(self.request)
-        self.assertEquals(response_with_headers["Test-Header"], "test")
+        self.assertEqual(response_with_headers["Test-Header"], "test")
 
     def test_akamai_no_store(self):
         response = view_no_store(self.request)
-        self.assertEquals(response["Edge-Control"], "no-store")
-        self.assertEquals(response["Akamai-Cache-Control"], "no-store")
+        self.assertEqual(response["Edge-Control"], "no-store")
+        self.assertEqual(response["Akamai-Cache-Control"], "no-store")

@@ -22,7 +22,7 @@ class CopyButtonHelper(TreeButtonHelper):
             "url": self.url_helper.get_action_url("copy", quote(pk)),
             "label": "Copy",
             "classname": cn,
-            "title": "Copy this {}".format(self.verbose_name),
+            "title": f"Copy this {self.verbose_name}",
         }
 
     def get_buttons_for_obj(
@@ -73,9 +73,7 @@ class CopyableModelAdmin(TreeModelAdmin):
         )(request)
 
     def get_admin_urls_for_registration(self, parent=None):
-        urls = super(
-            CopyableModelAdmin, self
-        ).get_admin_urls_for_registration()
+        urls = super().get_admin_urls_for_registration()
 
         # Add the copy URL
         urls = urls + (

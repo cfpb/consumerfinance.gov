@@ -24,6 +24,8 @@ try:
 except ImportError:
     from backports import zoneinfo
 
+import contextlib
+
 from modelcluster.fields import ParentalManyToManyField
 
 from jobmanager.models.django import (
@@ -235,12 +237,10 @@ class JobListingPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request)
 
-        try:
+        with contextlib.suppress(ReusableText.DoesNotExist):
             context["about_us"] = ReusableText.objects.get(
                 title="About us (For consumers)"
             )
-        except ReusableText.DoesNotExist:
-            pass
 
         context.update(
             {

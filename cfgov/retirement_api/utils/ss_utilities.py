@@ -1,4 +1,3 @@
-# coding: utf-8
 import datetime
 import json
 import logging
@@ -63,12 +62,10 @@ def get_note(note_type, language):
 
 # this datafile specifies years that have unique retirement age values
 # since this may change, it is maintained in an external file
-datafile = "{0}\
-/retirement_api/data/unique_retirement_ages.json".format(
-    BASE_DIR
-)
+datafile = f"{BASE_DIR}\
+/retirement_api/data/unique_retirement_ages.json"
 
-with open(datafile, "r") as f:
+with open(datafile) as f:
     age_map = json.loads(f.read())
     for year in age_map:
         age_map[year] = tuple(age_map[year])
@@ -84,10 +81,10 @@ def get_current_age(dob):
         except (TypeError, ValueError):
             return None
 
-    if DOB > today:
+    if today < DOB:
         return None
 
-    if DOB == today:
+    if today == DOB:
         return 0
 
     try:
@@ -165,7 +162,7 @@ def get_retirement_age(birth_year):
     b_string = yob_test(birth_year)
     if b_string:
         yob = int(birth_year)
-        if b_string in age_map.keys():
+        if b_string in age_map:
             return age_map[b_string]
         elif yob <= 1937:
             return (65, 0)
@@ -189,7 +186,7 @@ def past_fra_test(dob=None, language="en"):
         return "invalid birth date entered"
     today = datetime.date.today()
     current_age = get_current_age(dob)
-    if DOB >= today:
+    if today <= DOB:
         return get_note("too_young", language)
     # SSA has a special rule for people born on Jan. 1
     # http://www.socialsecurity.gov/OACT/ProgData/nra.html
@@ -207,7 +204,7 @@ def past_fra_test(dob=None, language="en"):
         return True
     elif age_tuple[0] < fra_tuple[0]:
         return False
-    elif age_tuple[0] == fra_tuple[0] and age_tuple[1] >= fra_tuple[1]:
+    elif age_tuple[0] == fra_tuple[0] and age_tuple[1] >= fra_tuple[1]:  # noqa: SIM103
         return True
     else:  # pragma: no cover -- can't currently happen, but could in future
         return False

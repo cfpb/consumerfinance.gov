@@ -12,12 +12,10 @@ INTRO = (
     "Notification delivery failed for the following offer IDs:\n\n"
 )
 NOTE_TEMPLATE = Template(
-    (
-        "Offer ID $oid:\n"
-        "    timestamp: $time\n"
-        "    app errors: $errors\n"
-        "SEND LOG:\n$log\n"
-    )
+    "Offer ID $oid:\n"
+    "    timestamp: $time\n"
+    "    app errors: $errors\n"
+    "SEND LOG:\n$log\n"
 )
 
 
@@ -30,7 +28,7 @@ def retry_notifications(days=1):
         sent=False, timestamp__gt=days_old
     )
     for each in failed_notifications:
-        endmsg += "{}\n".format(each.notify_school())
+        endmsg += f"{each.notify_school()}\n"
     if not endmsg:
         endmsg = "No failed notifications found"
     return endmsg
@@ -74,6 +72,7 @@ def send_stale_notifications(add_email=None):
             recipients,
             fail_silently=False,
         )
-        return "Found {} stale notifications; emails sent to " "{}".format(
-            stale_notifications.count(), recipients
+        return (
+            f"Found {stale_notifications.count()} stale notifications; "
+            f"emails sent to {recipients}"
         )

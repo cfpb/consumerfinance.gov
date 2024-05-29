@@ -85,7 +85,7 @@ class ViewTests(TestCase):
         self.assertIsInstance(response.content, bytes)
         rdata = json.loads(response.content)
         for each in self.return_keys:
-            self.assertTrue(each in rdata.keys())
+            self.assertTrue(each in rdata)
 
     def test_estimator_url_data_bad_income(self):
         request = self.req_blank
@@ -104,7 +104,7 @@ class ViewTests(TestCase):
         self.assertIsInstance(response.content, bytes)
         rdata = json.loads(response.content)
         for each in self.return_keys:
-            self.assertTrue(each in rdata.keys())
+            self.assertTrue(each in rdata)
 
     def test_estimator_query_data_blank(self):
         request = self.req_blank

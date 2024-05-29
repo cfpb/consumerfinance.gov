@@ -32,7 +32,7 @@ class CFGovErrorHandler(logging.Handler):
     def emit(self, record):
         title = self.format_title(record)
         body = self.format_body(record)
-        message = "{title} - {body}".format(title=title, body=body)
+        message = f"{title} - {body}"
         self.sqs_queue.post(message=message)
 
     def format_title(self, record):
@@ -44,10 +44,7 @@ class CFGovErrorHandler(logging.Handler):
         except AttributeError:
             request = None
 
-        return "%s\n\nRequest repr(): \n%s" % (
-            self.format(record),
-            self._get_request_repr(request),
-        )
+        return f"{self.format(record)}\n\nRequest repr(): \n{self._get_request_repr(request)}"  # noqa: E501
 
     def _get_request_repr(self, request):
         """
@@ -113,13 +110,5 @@ class CFGovErrorHandler(logging.Handler):
         path = request.path
 
         return force_str(
-            "<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>"
-            % (
-                request.__class__.__name__,
-                path,
-                str(get),
-                str(post),
-                str(cookies),
-                str(meta),
-            )
+            f"<{request.__class__.__name__}\npath:{path},\nGET:{str(get)},\nPOST:{str(post)},\nCOOKIES:{str(cookies)},\nMETA:{str(meta)}>"
         )

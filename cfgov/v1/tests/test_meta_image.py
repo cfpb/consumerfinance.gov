@@ -63,7 +63,7 @@ class TestMetaImage(TestCase):
             response,
             (
                 '<meta property="og:image" content='
-                '"{}{}">'.format(expected_root, rendition_url)
+                f'"{expected_root}{rendition_url}">'
             ),
             html=True,
         )

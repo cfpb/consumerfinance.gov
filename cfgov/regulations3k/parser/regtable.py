@@ -74,4 +74,4 @@ class RegTable:
                     else:
                         td["class"] = self.cell_class
                 self.body_rows.append(clean_row(row.prettify()))
-        return "Table is set for {}!".format(self.label)
+        return f"Table is set for {self.label}!"

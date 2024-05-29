@@ -10,7 +10,7 @@ def get_venue_coords(city=None, state=None):
     if not city or not state or not settings.MAPBOX_ACCESS_TOKEN:
         return venue_coords
 
-    location = "{} {}".format(city, state)
+    location = f"{city} {state}"
     api = "https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/"
     location_api_url = api + location + ".json"
 

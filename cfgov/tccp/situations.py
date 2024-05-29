@@ -116,8 +116,8 @@ SITUATIONS = [
             },
             {
                 "content": (
-                    "If a card has an introductory interest rate offer, ensure "
-                    "you're on track to pay off the balance within the "
+                    "If a card has an introductory interest rate offer, "
+                    "ensure you're on track to pay off the balance within the "
                     "promotional period, or you could end up owing more "
                     "interest than the original purchase amount."
                 ),
@@ -141,8 +141,13 @@ SITUATIONS = [
                     "for necessary purchases and pay your credit card balance "
                     "in full every month."
                 ),
-                "link": "Learn about ways to build credit and your credit score.",
-                "url": "/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/",
+                "link": (
+                    "Learn about ways to build credit and your credit score."
+                ),
+                "url": (
+                    "/ask-cfpb/"
+                    "how-do-i-get-and-keep-a-good-credit-score-en-318/"
+                ),
             }
         ],
     ),
@@ -158,7 +163,9 @@ SITUATIONS = [
                     "If you carry a balance on your credit card, interest and "
                     "fees typically exceed the value of any rewards earned."
                 ),
-                "link": "Learn why rewards may not be as beneficial as they seem.",
+                "link": (
+                    "Learn why rewards may not be as beneficial as they seem.",
+                ),
                 "url": (
                     "/about-us/newsroom/"
                     "cfpb-report-highlights-consumer-frustrations-with-credit-card-"

@@ -56,7 +56,7 @@ class TestDisclosureConsentForm(TestCase):
         response = self.client.get(reverse("privacy:disclosure_consent"))
         self.assertContains(
             response,
-            "Consent for disclosure of records protected under the Privacy Act",
+            "Consent for disclosure of records protected under the Privacy Act",  # noqa: E501
         )
 
     def test_invalid_form_post_does_not_send_email(self):

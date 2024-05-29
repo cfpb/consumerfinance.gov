@@ -36,7 +36,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
         # django-rest-framework. This code is needed to ensure that
         # JSONListFields are serialized properly as JSON.
         if isinstance(model_field, JSONListField):
-            field_kwargs.pop("encoder"),
+            field_kwargs.pop("encoder")
             field_kwargs.pop("decoder")
 
         return field_class, field_kwargs

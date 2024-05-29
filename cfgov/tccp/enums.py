@@ -16,8 +16,8 @@ BalanceTransferFeeTypeChoices = make_choices(
     "2. If fee is percentage of transaction amount, what is it?",
     "3. If there's a minimum dollar amount, what is it?",
     (
-        "4. If the fee is not a percentage, or a percentage subject to a minimum "
-        "dollar amount, how do you calculate the fee?"
+        "4. If the fee is not a percentage, or a percentage subject to a "
+        "minimum dollar amount, how do you calculate the fee?"
     ),
 )
 
@@ -27,8 +27,8 @@ CashAdvanceFeeTypeChoices = make_choices(
     "2. If the fee is a percentage of transaction amount, what is it?",
     "3. If there's a minimum dollar amount, what is it?",
     (
-        "4. If the fee is not a percentage, or a percentage subject to a minimum "
-        "dollar amount, how do you calculate the fee?"
+        "4. If the fee is not a percentage, or a percentage subject to a "
+        "minimum dollar amount, how do you calculate the fee?"
     ),
 )
 
@@ -79,8 +79,8 @@ ForeignTransactionFeeTypeChoices = make_choices(
     "2. If fee is percentage of transaction amount, what is it?",
     "3. If there's a minimum dollar amount, what is it?",
     (
-        "4. If the fee is not a percentage, or a percentage subject to a minimum "
-        "dollar amount, how do you calculate the fee?"
+        "4. If the fee is not a percentage, or a percentage subject to a "
+        "minimum dollar amount, how do you calculate the fee?"
     ),
 )
 
@@ -114,12 +114,12 @@ InstitutionTypeChoices = make_choices("Bank", "CU")
 LateFeeTypeChoices = make_choices(
     "1. What is the amount of the first late fee on the account?",
     (
-        "2. What is the amount of late fees charged within six billing cycles of a "
-        "previous late fee (repeat late fee)?"
+        "2. What is the amount of late fees charged within six billing cycles "
+        "of a previous late fee (repeat late fee)?"
     ),
     (
-        "3. If you charge late fees that are not fixed dollar amounts, please explain "
-        "your late fee policy here."
+        "3. If you charge late fees that are not fixed dollar amounts, please "
+        "explain your late fee policy here."
     ),
 )
 
@@ -127,8 +127,8 @@ LateFeeTypeChoices = make_choices(
 OverlimitFeeTypeChoices = make_choices(
     "1. What is the amount of the overlimit fee when charged?",
     (
-        "2. If you charge overlimit fees that are not fixed dollar amounts, please "
-        "explain what overlimit fees you charge here:"
+        "2. If you charge overlimit fees that are not fixed dollar amounts, "
+        "please explain what overlimit fees you charge here:"
     ),
 )
 
@@ -144,15 +144,18 @@ PurchaseAPRRatings = [
 
 
 PurchaseTransactionFeeTypeChoices = make_choices(
-    "1. If you have such a charge, enter the amount of the charge in dollars here:",
     (
-        "2. or if the charge is a percentage of the transaction amount, enter that "
-        "percentage here"
+        "1. If you have such a charge, enter the amount of the charge in "
+        "dollars here:"
+    ),
+    (
+        "2. or if the charge is a percentage of the transaction amount, enter "
+        "that percentage here"
     ),
     "3. If there's a minimum dollar amount, what is it?",
     (
-        "4. If the fee is not a percentage, or a percentage subject to a minimum "
-        "dollar amount, how do you calculate the fee?"
+        "4. If the fee is not a percentage, or a percentage subject to a "
+        "minimum dollar amount, how do you calculate the fee?"
     ),
 )
 

@@ -33,10 +33,7 @@ def process_tags(queryset):
 
 
 def process_related_item(related_item, key):
-    if related_item:
-        value = getattr(related_item, key)
-    else:
-        value = ""
+    value = getattr(related_item, key) if related_item else ""
     return str(value)
 
 

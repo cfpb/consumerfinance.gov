@@ -2,23 +2,17 @@ exclude: .+\/migrations\/.+\.py
 default_language_version:
   python: python3.8
 repos:
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.1.1
-    hooks:
-      - id: black
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.3.0
-    hooks:
-      - id: ruff
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        name: isort (python)
-        args: ['cfgov']
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.7
-    hooks:
-      - id: bandit
-        args: ['-c', 'pyproject.toml', '--recursive']
-        additional_dependencies: ['bandit[toml]']
+-  repo: https://github.com/charliermarsh/ruff-pre-commit
+   rev: v0.4.5
+   hooks:
+     # Run the linter.
+     - id: ruff
+       args: ['--fix']
+     # Run the formatter.
+     - id: ruff-format
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.8
+  hooks:
+    - id: bandit
+      args: ['-c', 'pyproject.toml', '--recursive']
+      additional_dependencies: ['bandit[toml]']

@@ -246,7 +246,7 @@ class ResultsForm(forms.Form):
         answer_values = 0
 
         for i in range(1, 11):
-            q = "question_%s" % i
+            q = f"question_{i}"
             answers.append(int(cleaned_data.get(q)))
             answer_values += int(cleaned_data.get(q))
 

@@ -1,3 +1,4 @@
+import contextlib
 import csv
 import logging
 
@@ -8,7 +9,7 @@ from data_research.models import County, State
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT
-FIPS_DATA_PATH = "{}/data_research/data".format(PROJECT_ROOT)
+FIPS_DATA_PATH = f"{PROJECT_ROOT}/data_research/data"
 
 # We have minimal data for smaller territories, so we exclude them.
 # For project launch, we also excluded Puerto Rico (72) as out of scope.
@@ -188,10 +189,7 @@ def validate_fips(raw_fips, keep_outdated=False):
         return None
     if raw_fips in FIPS_SWAP:
         return FIPS_SWAP[raw_fips]
-    if len(raw_fips) == 4:
-        new_fips = "0{}".format(raw_fips)
-    else:
-        new_fips = raw_fips
+    new_fips = f"0{raw_fips}" if len(raw_fips) == 4 else raw_fips
     if keep_outdated is False and new_fips in IGNORE_FIPS:
         return None
     else:
@@ -287,7 +285,7 @@ def load_constants():
         value = MortgageDataConstant.objects.get(name=threshold).value
         setattr(FIPS, threshold, value)
     dates = MortgageMetaData.objects.get(name="sampling_dates").json_value
-    FIPS.dates = ["{}".format(date) for date in dates]
+    FIPS.dates = [f"{date}" for date in dates]
     FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
@@ -309,7 +307,7 @@ def load_fips_meta(counties=True):
         4: county_name
     """
     for filename in ["state_county_fips.csv", "msa_county_crosswalk.csv"]:
-        with open("{}/{}".format(FIPS_DATA_PATH, filename), "r") as f:
+        with open(f"{FIPS_DATA_PATH}/{filename}") as f:
             reader = csv.DictReader(f)
             fips_data = list(reader)
             if "state" in filename:
@@ -339,7 +337,7 @@ def load_states():
     State.objects.all().delete()
     states = {}
 
-    with open("{}/states.csv".format(FIPS_DATA_PATH), "r") as f:
+    with open(f"{FIPS_DATA_PATH}/states.csv") as f:
         reader = csv.DictReader(f)
         for row in list(reader):
             if row["abbr"] not in NON_STATES:
@@ -352,7 +350,7 @@ def load_states():
                     "non_msa_counties": [],
                 }
 
-    with open("{}/state_county_fips.csv".format(FIPS_DATA_PATH), "r") as f:
+    with open(f"{FIPS_DATA_PATH}/state_county_fips.csv") as f:
         reader = csv.DictReader(f)
         counties = list(reader)
         for row in counties:
@@ -362,16 +360,14 @@ def load_states():
                     row["complete_fips"]
                 )
 
-    with open("{}/msa_county_crosswalk.csv".format(FIPS_DATA_PATH), "r") as f:
+    with open(f"{FIPS_DATA_PATH}/msa_county_crosswalk.csv") as f:
         reader = csv.DictReader(f)
         msas = list(reader)
         for row in msas:
             state = row["county_name"][-2:]
             states[state]["msas"].append(row["msa_id"])
-            try:
+            with contextlib.suppress(ValueError):
                 states[state]["non_msa_counties"].remove(row["county_fips"])
-            except ValueError:
-                pass
 
     State.objects.bulk_create([State(**state) for state in states.values()])
 
@@ -382,7 +378,7 @@ def load_counties():
     Load County objects from state_county_fips.csv
     """
     County.objects.all().delete()
-    with open("{}/state_county_fips.csv".format(FIPS_DATA_PATH), "r") as f:
+    with open(f"{FIPS_DATA_PATH}/state_county_fips.csv") as f:
         reader = csv.DictReader(f)
         fips_data = list(reader)
         counties = [

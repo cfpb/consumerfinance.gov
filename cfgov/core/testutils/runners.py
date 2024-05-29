@@ -122,9 +122,8 @@ class StdoutCapturingTestRunner(TestRunner):
 
         if captured_stdout.getvalue():
             raise RuntimeError(
-                "unit tests should avoid writing to stdout: {}".format(
-                    captured_stdout.getvalue()
-                )
+                "unit tests should avoid writing to stdout: "
+                f"{captured_stdout.getvalue()}"
             )
 
         return return_value

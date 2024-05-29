@@ -64,7 +64,7 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 def ask_short_url(url):
     match = ASK_CFPB_LINKS.search(url)
     ask_id = match.groupdict().get("ask_id")
-    return "cfpb.gov/askcfpb/{}".format(ask_id)
+    return f"cfpb.gov/askcfpb/{ask_id}"
 
 
 def extract_answers_from_request(request):
@@ -80,7 +80,7 @@ def format_file_size(bytecount, suffix="B"):
     """Convert a byte count into a rounded human-friendly file size."""
     for unit in ["", "K", "M", "G"]:
         if abs(bytecount) < 1024.0:
-            return "{:1.0f} {}{}".format(bytecount, unit, suffix)
+            return f"{bytecount:1.0f} {unit}{suffix}"
         bytecount /= 1024.0
     return "{:.0f} {}{}".format(bytecount, "T", suffix)
 

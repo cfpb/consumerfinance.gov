@@ -83,7 +83,7 @@ class TestViews(django.test.TestCase):
     def test_get_json_file(self):
         test_json = get_json_file(EXPENSE_FILE)
         test_data = json.loads(test_json)
-        self.assertTrue("Other" in test_data.keys())
+        self.assertTrue("Other" in test_data)
         test_json2 = get_json_file("xxx")
         self.assertTrue(test_json2 == "")
 
@@ -107,7 +107,7 @@ class TestViews(django.test.TestCase):
         response = self.client.get(
             reverse("paying_for_college:disclosures:pfc-technote")
         )
-        self.assertTrue("url_root" in response.context_data.keys())
+        self.assertTrue("url_root" in response.context_data)
 
 
 class SchoolProgramTest(django.test.TestCase):
@@ -170,7 +170,7 @@ class ConstantsTest(django.test.TestCase):
 class OfferTest(django.test.TestCase):
     fixtures = ["test_fixture.json", "test_program.json"]
 
-    # /paying-for-college2/understanding-your-financial-aid-offer/offer/?[QUERYSTRING]
+    # /paying-for-college2/understanding-your-financial-aid-offer/offer/?[QUERYSTRING]  # noqa: E501
     def test_offer(self):
         url = reverse("paying_for_college:disclosures:offer")
         # offer_test_url = reverse("paying_for_college:disclosures:offer_test")
@@ -244,7 +244,7 @@ class APITests(django.test.TestCase):
         "test_program.json",
     ]
 
-    # /paying-for-college2/understanding-your-financial-aid-offer/api/school/155317.json
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/school/155317.json  # noqa: E501
     def test_school_json(self):
         """api call for school details."""
         url = reverse(
@@ -254,7 +254,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"Kansas", resp.content)
         self.assertIn(b"155317", resp.content)
 
-    # /paying-for-college2/understanding-your-financial-aid-offer/api/constants/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/constants/  # noqa: E501
     def test_constants_json(self):
         """api call for constants."""
 
@@ -263,7 +263,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"institutionalLoanRate", resp.content)
         self.assertIn(b"apiYear", resp.content)
 
-    # /paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/  # noqa: E501
     def test_national_stats_json(self):
         """api call for national statistics."""
 

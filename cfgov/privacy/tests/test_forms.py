@@ -64,7 +64,7 @@ class RecordsAccessFormTests(TestCase):
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),
-            "Records request from consumerfinance.gov: Rufus Xavier Sarsapa...",
+            "Records request from consumerfinance.gov: Rufus Xavier Sarsapa…",
         )
 
     def test_email_body(self):

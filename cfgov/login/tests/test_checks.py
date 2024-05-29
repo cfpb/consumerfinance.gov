@@ -6,7 +6,6 @@ from login.checks import check_oidc_admin_role_setting
 
 
 class ChecksTestCase(TestCase):
-
     @override_settings(ENABLE_SSO=True, OIDC_OP_ADMIN_ROLE=None)
     def test_check_oidc_admin_role_setting(self):
         errors = check_oidc_admin_role_setting(apps.get_app_configs())

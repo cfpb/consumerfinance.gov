@@ -6,9 +6,8 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, QueryDict
-from django.test import RequestFactory
+from django.test import RequestFactory, override_settings
 from django.test import TestCase as DjangoTestCase
-from django.test import override_settings
 
 from wagtail.models import Site
 
@@ -225,9 +224,7 @@ class RegModelTests(DjangoTestCase):
         part = self.part_1002
         self.assertEqual(
             part.cfr_title,
-            "{} CFR Part {} ({})".format(
-                part.cfr_title_number, part.part_number, part.short_name
-            ),
+            f"{part.cfr_title_number} CFR Part {part.part_number} ({part.short_name})",  # noqa: E501
         )
 
     def test_subpart_string_method(self):
@@ -423,9 +420,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = (
-            mock_count
-        )
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),
@@ -440,9 +435,7 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(response.status_code, 200)
 
     @mock.patch.object(SectionParagraphDocument, "search")
-    def test_routable_search_page_handles_null_highlights(
-        self, mock_search
-    ):  # noqa: E501
+    def test_routable_search_page_handles_null_highlights(self, mock_search):  # noqa: E501
         mock_hit = mock.Mock()
         mock_hit.text = (
             "i. Mortgage escrow accounts for collecting",
@@ -460,9 +453,7 @@ class RegModelTests(DjangoTestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort().__getitem__().count = (
-            mock_count
-        )
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),
@@ -642,7 +633,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",
+                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
             },
         }
     )
@@ -660,7 +651,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",
+                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
             },
         }
     )

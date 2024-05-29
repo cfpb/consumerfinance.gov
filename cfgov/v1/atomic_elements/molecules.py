@@ -201,7 +201,9 @@ class Notification(blocks.StructBlock):
     )
     explanation = blocks.TextBlock(
         required=False,
-        help_text="Explanation text appears below the message in smaller type.",
+        help_text=(
+            "Explanation text appears below the message in smaller type."
+        ),
     )
     links = blocks.ListBlock(
         atoms.Hyperlink(required=False),
@@ -292,7 +294,10 @@ class ContactPhone(blocks.StructBlock):
                     "number",
                     blocks.CharBlock(
                         max_length=15,
-                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        help_text=(
+                            "Do not include spaces or dashes. "
+                            "Ex. 8554112372"
+                        ),
                         validators=[phone_number_format_validator()],
                     ),
                 ),
@@ -312,7 +317,10 @@ class ContactPhone(blocks.StructBlock):
                         max_length=15,
                         required=False,
                         label="TTY",
-                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        help_text=(
+                            "Do not include spaces or dashes. "
+                            "Ex. 8554112372"
+                        ),
                         validators=[phone_number_format_validator()],
                     ),
                 ),

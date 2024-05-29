@@ -120,9 +120,9 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_text_introduction_intro(
+    def test_get_context_sets_meta_description_from_header_text_introduction_intro(  # noqa: E501
         self,
-    ):  # noqa
+    ):
         expected = "Correct Meta Description"
         self.page = LandingPage(
             title="test",
@@ -151,9 +151,9 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_content_text_introduction_intro(
+    def test_get_context_sets_meta_description_from_content_text_introduction_intro(  # noqa: E501
         self,
-    ):  # noqa
+    ):
         expected = "Correct Meta Description"
         self.page = SublandingPage(
             title="test",
@@ -192,9 +192,9 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_to_blank_if_no_other_data_to_set(
+    def test_get_context_sets_meta_description_to_blank_if_no_other_data_to_set(  # noqa: E501
         self,
-    ):  # noqa
+    ):
         expected = ""
         self.page = SublandingPage(
             title="test",

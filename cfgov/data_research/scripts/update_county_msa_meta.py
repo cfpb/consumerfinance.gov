@@ -20,7 +20,7 @@ def update_allowlist():
         state.fips for state in State.objects.exclude(fips__in=NON_STATE_FIPS)
     ]
     non_msa_list = [
-        "{}-non".format(state.fips)
+        f"{state.fips}-non"
         for state in State.objects.filter(fips__in=state_list)
         if state.non_msa_valid is True
     ]
@@ -150,17 +150,17 @@ def update_state_to_geo_meta(geo):
             fips for fips in FIPS.state_fips if fips not in NON_STATE_FIPS
         ]
         for state_fips in live_fips:
-            non_fips = "{}-non".format(state_fips)
+            non_fips = f"{state_fips}-non"
             s_dict = FIPS.state_fips[state_fips]
             state_abbr = s_dict["abbr"]
             state_name = s_dict["name"]
-            non_fips_name = "Non-metro area of {}".format(state_name)
+            non_fips_name = f"Non-metro area of {state_name}"
             non_valid = non_fips in FIPS.allowlist
             setup[state_abbr][geo_list].append(
                 {
                     "fips": non_fips,
                     "valid": non_valid,
-                    "name": "Non-metro area of {}".format(state_name),
+                    "name": f"Non-metro area of {state_name}",
                 }
             )
             non_msa_fips_output.append(
@@ -177,7 +177,7 @@ def update_state_to_geo_meta(geo):
     meta_obj, cr = MortgageMetaData.objects.get_or_create(name=slug)
     meta_obj.json_value = setup
     meta_obj.save()
-    logger.info("Saved metadata object '{}.'".format(slug))
+    logger.info(f"Saved metadata object '{slug}.'")
     if non_msa_fips_output:
         non_msa_fips_output.sort(key=lambda k: k["state_name"])
         non_meta_obj, cr = MortgageMetaData.objects.get_or_create(

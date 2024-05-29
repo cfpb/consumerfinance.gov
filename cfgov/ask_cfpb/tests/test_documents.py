@@ -158,7 +158,6 @@ class AnswerPageDocumentTest(TestCase):
             )
 
     def test_mapping(self):
-
         self.assertEqual(
             AnswerPageDocument._doc_type.mapping.to_dict(),
             {
