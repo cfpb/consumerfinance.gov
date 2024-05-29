@@ -39,11 +39,11 @@ home price, down payment, and more can affect mortgage interest rates.
                     <h1>Explore interest rates</h1>
                     <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                     <div class="page-intro__cols">
-                        <p class="page-intro__col-left u-mb30">
+                        <p class="page-intro__cols-first">
                             Keep in mind that the interest rate is important,
                             but not the only cost of a mortgage.  Fees, <a href="/ask-cfpb/what-are-discount-points-and-lender-credits-and-how-do-they-work-en-136/">points</a>, <a href="/ask-cfpb/what-is-mortgage-insurance-and-how-does-it-work-en-1953/">mortgage insurance</a>, and <a href="/ask-cfpb/what-fees-or-charges-are-paid-when-closing-on-a-mortgage-and-who-pays-them-en-1845/">closing costs</a> all add up.  Compare <a href="/ask-cfpb/what-is-a-loan-estimate-en-1995/">Loan Estimates</a> to get the best deal.
                         </p>
-                        <div class="page-intro__col-right u-right-on-desktop">
+                        <div>
                             {{ social_media.render( {
                                 "twitter_text": "Use the @CFPB\'s interest rates tool to explore the range of mortgage interest rates you can expect.",
                                 "email_title": "Wondering what interest rate you can expect on a mortgage?",
@@ -549,33 +549,26 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </section>
             <!-- /.next-steps -->
-            <div class="block
-                        block--border-top
-                        block--flush-top
-                        block--padded-top
-                        credit-note-ctr">
-                {# TODO: Look into using the default notification macro #}
-                <div class="m-notification
-                            m-notification--borderless
-                            m-notification--warning
-                            m-notification--visible"
-                        role="alert">
-                    {{ svg_icon('warning-round') }}
-                    <div class="m-notification__content">
-                        <div class="m-notification__message">Check your credit</div>
-                        <p class="m-notification__explanation">
-                            If you haven’t checked your credit report recently,
-                            <a class="external-link"
-                                href="https://annualcreditreport.com"
-                                target="_blank"
-                                rel="noopener noreferrer">do so now</a>. If you find errors,
-                            <a href="/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/"
-                                target="_blank"
-                                rel="noopener noreferrer">get them corrected
-                            </a> before you apply for a mortgage.
-                        </p>
-                    </div>
-                </div>
+            <div class="block">
+                {% import 'v1/includes/molecules/notification.html' as notification %}
+                {{- notification.render(
+                    'warning',
+                    true,
+                    'Check your credit',
+                    'If you haven’t checked your credit report recently, do so now. ' ~
+                    'If you find errors, get them corrected before you apply for a mortgage.',
+                    [
+                       {
+                        'text': 'Check your credit report now',
+                        'url': 'https://annualcreditreport.com',
+                        'open_link_in_new_window': True
+                       },
+                       {
+                        'text': 'How do I dispute an error on my credit report?',
+                        'url': '/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/'
+                       },
+                    ] ) }}
+
             </div>
             <section id="about" class="content-l">
                 <div class="content-l__col content-l__col-1">
@@ -588,7 +581,7 @@ home price, down payment, and more can affect mortgage interest rates.
         <!-- END .rate-checker -->
     </div>
 
-    <div class="rate-checker__links u-js-only">
+    <div class="u-js-only">
         {% import "_templates/brand-footer.html" as brand_footer %}
         {% set footer_links = [ {
             "img": static("apps/owning-a-home/img/footer_calculator.png"),
