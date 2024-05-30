@@ -26,14 +26,16 @@
     <ul class="m-list m-list--unstyled m-list--links">
         {% for job in value.jobs %}
         <li class="m-list__item">
-            <a class="m-list__link"
+            <a class="a-link a-link--jump"
                href="{{ job.url }}">
-                  {{ job.title }}
-                <span class="m-list__link-subtext">
-                    Closing
-                    {% import 'v1/includes/macros/time.html' as time %}
-                    {{ time.render(job.close_date, {'date': true}, text_format=True) }}
-               </span>
+                <span class="a-link__text">
+                    {{ job.title }}
+                    <span class="a-link__subtext">
+                        Closing
+                        {% import 'v1/includes/macros/time.html' as time %}
+                        {{ time.render(job.close_date, {'date': true}, text_format=True) }}
+                    </span>
+                </span>
             </a>
         </li>
         {% endfor %}
