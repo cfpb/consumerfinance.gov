@@ -68,9 +68,9 @@
                              target="_blank"
                              rel="noopener noreferrer"
                              {% endif %}>
-                            {% if link.is_link_boldface %}<strong>{% endif %}
+                            {%- if link.is_link_boldface %}<strong>{% endif -%}
                             {{ link.text }}
-                            {% if link.is_link_boldface %}</strong>{% endif %}
+                            {%- if link.is_link_boldface %}</strong>{% endif -%}
                           </a>
                       </li>
                   {% if loop.last %}</ul>{% endif %}
