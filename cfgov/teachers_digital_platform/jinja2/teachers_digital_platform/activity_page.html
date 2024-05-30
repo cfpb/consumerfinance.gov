@@ -136,10 +136,10 @@
         <h4 class="u-mb5">National standards</h4>
         <p class="u-mb20"><small>
             (<a
-            class="a-link a-link--icon" target="_blank" rel="noreferrer noopener"
+            class="a-link" target="_blank" rel="noreferrer noopener"
             href="https://files.consumerfinance.gov/f/documents/2021_Natl_Standards_Downloadable_final.pdf"
-            ><span class="a-link__text">What are the national standards? </span>
-            <span class="a-icon">{{ svg_icon('download') }}</span></a>)
+            ><span class="a-link__text">What are the national standards?</span
+            ><span class="a-icon"> {{ svg_icon('download') }}</span></a>)
         </small></p>
         {% if page.council_for_economic_education.all() %}<p><strong>Standards:</strong>
             {{ page.council_for_economic_education.all() | join(', ') }}</p>{% endif %}
