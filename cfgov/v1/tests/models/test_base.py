@@ -35,11 +35,6 @@ class TestCFGOVPageContext(TestCase):
         self.factory = RequestFactory()
         self.request = self.factory.get("/")
 
-    def test_post_preview_cache_key_contains_page_id(self):
-        save_new_page(self.page)
-        key = self.page.post_preview_cache_key
-        self.assertIn(str(self.page.id), key)
-
     def test_get_context_no_banners(self):
         test_context = self.page.get_context(self.request)
         self.assertFalse(test_context["banners"])

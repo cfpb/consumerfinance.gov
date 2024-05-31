@@ -92,15 +92,10 @@ if os.environ.get("ENABLE_DEBUG_TOOLBAR"):
 MIDDLEWARE += CSP_MIDDLEWARE
 
 # Disable caching unless enabled via environment variable
-for _cache_name, _cache_envvar in (
-    ("default", "ENABLE_DEFAULT_CACHE"),
-    ("post_preview", "ENABLE_POST_PREVIEW_CACHE"),
-):
-    if not os.getenv(_cache_envvar):
-        CACHES[_cache_name] = {
-            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-            "TIMEOUT": 0,
-        }
+if not os.getenv("ENABLE_DEFAULT_CACHE"):
+    CACHES["default"] = {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
 
 # Use a mock GovDelivery API instead of the real thing,
 # unless the GOVDELIVERY_BASE_URL environment variable is set.

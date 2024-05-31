@@ -366,10 +366,6 @@ class CFGOVPage(Page):
     def meta_image(self):
         return self.social_sharing_image
 
-    @property
-    def post_preview_cache_key(self):
-        return f"post_preview_{self.id}"
-
     def get_translations(self, inclusive=True, live=True):
         if self.language == "en" and self.pk:
             query = Q(english_page=self)
