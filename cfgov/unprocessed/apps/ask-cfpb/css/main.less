@@ -170,10 +170,6 @@
     font-weight: 500;
   }
 
-  .m-list__item--last {
-    padding-top: unit(7px / @base-font-size-px, em);
-  }
-
   .lead-paragraph {
     // This makes for line lengths between 85-95 characters
     max-width: 41.875rem;
@@ -184,6 +180,13 @@
     display: block;
     color: var(--gray-90);
   }
+
+  // Tablet and above.
+  .respond-to-min(@bp-sm-min, {
+    .m-list__item--last {
+      padding-top: unit(7px / @base-font-size-px, em);
+    }
+  });
 }
 
 /* Landing page */
