@@ -373,13 +373,13 @@ class EventPage(AbstractFilterPage):
         parts = []
 
         if self.venue_city and self.venue_state:
-            parts.append(f"{self.venue_city}, {self.venue_state}")
+            parts.extend([self.venue_city, self.venue_state])
         if self.venue_name:
             parts.append(self.venue_name)
         if self.live_video_id:
             parts.append("Livecast")
 
-        return " ".join(parts)
+        return ", ".join(parts)
 
     @property
     def page_js(self):

@@ -217,5 +217,13 @@ class EventPageNoDBTests(SimpleTestCase):
                 venue_name="CFPB HQ",
                 live_video_id="abcde",
             ).location_str,
-            "Washington, DC CFPB HQ Livecast",
+            "Washington, DC, CFPB HQ, Livecast",
+        )
+        self.assertEqual(
+            EventPage(live_video_id="abcde").location_str,
+            "Livecast",
+        )
+        self.assertEqual(
+            EventPage(venue_name="CFPB HQ").location_str,
+            "CFPB HQ",
         )
