@@ -1,9 +1,5 @@
 {% extends 'v1/layouts/base.html' %}
 
-{% if page and page.get_breadcrumbs and not breadcrumb_items %}
-    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}
-
 {% block content scoped %}
     {# content_modifiers block is only used by story_page.html, 404.html, and 500.html #}
     <main class="u-layout-grid {% block content_modifiers -%}{%- endblock %}"
