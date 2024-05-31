@@ -43,11 +43,11 @@
         <ul class="m-list m-list--links">
             {% for link in value.links %}
                 <li class="m-list__item">
-                    <a class="m-list__link"
+                    <a class="a-link a-link--jump"
                        href="{{ link.url }}"
                        {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
                        {% if link.is_link_boldface == True%}<strong>{% endif %}
-                       {{- link.text | default( link.url ) -}}
+                       <span class="a-link__text">{{- link.text | default( link.url ) -}}</span>
                        {% if link.is_link_boldface == True%}</strong>{% endif %}
                     </a>
                 </li>

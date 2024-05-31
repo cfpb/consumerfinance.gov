@@ -299,7 +299,7 @@ class FeaturedContentTests(TestCase):
             ("/bar/", "Another link"),
         ):
             self.assertIn(
-                f'<a class="m-list__link"\n                       '
+                f'<a class="a-link a-link--jump"\n                       '
                 f'href="{url}"\n                       >\n'
                 f"                       {text}\n"
                 f"                    </a>",
