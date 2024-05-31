@@ -24,7 +24,7 @@ ASK_CFPB_LINKS = re.compile(
     r"(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$"  # noqa: E501
 )
 
-LINK_ICON_CLASSES = ["a-link", "a-link--icon"]
+LINK_ICON_CLASSES = ["a-link"]
 
 LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 
@@ -180,7 +180,7 @@ def add_link_markup(tag, request_path):
     # it has the proper non-button link classes, and then add the icon after
     # the span.
     else:
-        # Since we're adding an icon, also add class="a-link a-link_icon" to
+        # Since we're adding an icon, also add class="a-link" to
         # the <a> tag. We don't do this if the link is a button.
         for cls in LINK_ICON_CLASSES:
             if cls not in class_attrs:
