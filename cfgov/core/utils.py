@@ -2,7 +2,7 @@ import re
 
 from django.template.defaultfilters import slugify
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 from core.templatetags.svg_icon import svg_icon
 
@@ -194,6 +194,19 @@ def add_link_markup(tag, request_path):
 
             tag.clear()
             tag.append(span)
+
+        # Whether we used an existing text span with a-link__text or added a
+        # new one, we want to make sure that the link text doesn't include any
+        # wrapping whitespace, otherwise it'll be incorrectly underlined.
+        #
+        # This fixes tags like <a> text with surrounding whitespace </a> or
+        # tags like <a> text with <strong>other</strong> tag </a> but not tags
+        # like <a> text with <strong>other tag with whitespace </strong></a>.
+        if span.contents:
+            if isinstance(span.contents[0], NavigableString):
+                span.contents[0] = NavigableString(span.contents[0].lstrip())
+            if isinstance(span.contents[-1], NavigableString):
+                span.contents[-1] = NavigableString(span.contents[-1].rstrip())
 
         tag.append(" ")
         tag.append(icon_soup)

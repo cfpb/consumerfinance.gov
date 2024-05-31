@@ -261,3 +261,19 @@ class LinkUtilsTests(SimpleTestCase):
         expected_tag = BeautifulSoup(expected_html, "html.parser")
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
+
+    def test_link_with_whitespace_in_text(self):
+        url = "https://example.com"
+        tag = f'<a href="{url}">\nClick <strong>here</strong> now! </a>'
+        path = "/about-us/blog/"
+
+        expected_html = (
+            f'<a class="a-link a-link--icon" href="{url}">'
+            '<span class="a-link__text">'
+            "Click <strong>here</strong> now!</span> "
+            f"{self.external_link_icon}"
+            "</a>"
+        )
+
+        expected_tag = BeautifulSoup(expected_html, "html.parser")
+        self.assertEqual(add_link_markup(tag, path), str(expected_tag))
