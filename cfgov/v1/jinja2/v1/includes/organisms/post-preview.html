@@ -25,8 +25,6 @@
    post.title:                    A string with the title of the post.
    post.seo_title:                A string with an alternate title for the post
                                   (overrides post.title).
-   post.comments_close_date:      A datetime object marking the deadline of the
-                                  comment period.
    post.search_description:      A string with content of post summary.
    post.get_authors():            An array with authors of the post.
    post.tags:                     An array with the post tags for the post.
@@ -139,11 +137,6 @@
                     {{ time.render(event.start_dt) }}
                     </div>
                 {% endif %}
-            {% endif %}
-            {% if post.comments_close_date %}
-                <div class="o-post-preview__subtitle">
-                    Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
-                </div>
             {% endif %}
             {% if post.search_description %}
                 <div class="o-post-preview__description">
