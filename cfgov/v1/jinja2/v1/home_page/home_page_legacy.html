@@ -35,7 +35,7 @@
                         block--flush-top
                         u-mb0"
         >
-            {% include "v1/includes/organisms/info-unit-group-2.html" with context %}
+            {% include "v1/includes/organisms/info-unit-group.html" with context %}
         </section>
     {% endwith %}
 {% endblock %}
@@ -44,7 +44,7 @@
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with value = hardcoded.info_units %}
-        {% include 'v1/includes/organisms/info-unit-group-2.html' %}
+        {% include 'v1/includes/organisms/info-unit-group.html' %}
     {% endwith %}
 
     <section class="block">

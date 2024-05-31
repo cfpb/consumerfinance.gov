@@ -117,7 +117,7 @@ class InfoUnitGroup(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "v1/includes/organisms/info-unit-group-2.html"
+        template = "v1/includes/organisms/info-unit-group.html"
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
