@@ -500,48 +500,6 @@ how the function should respond to various kinds of input.
 Inside each <code>it</code>, invoke the function
 with the input described in the <code>it</code> statement
 and use <code>expect</code> to check that you receive the desired result.</p>
-<p>Here is a simple example from our
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
-(<code>cfgov/unprocessed/js/modules/util/array-helpers.js</code>):</p>
-<pre class="highlight"><code class="language-js">function indexOfObject(array, key, val) {
-  let match = -1;
-
-  if (!array.length &gt; 0) {
-    return match;
-  }
-
-  array.forEach(function (item, index) {
-    if (item[key] === val) {
-      match = index;
-    }
-  });
-
-  return match;
-}</code></pre>
-<p>Tests for that function, from
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
-<pre class="highlight"><code class="language-js">describe('indexOfObject()', () =&gt; {
-  it('should return -1 if the array is empty', () =&gt; {
-    array = [];
-    index = arrayHelpers.indexOfObject(array, 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return -1 if there is no match', () =&gt; {
-    array = [{ value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return the matched index', () =&gt; {
-    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(0);
-  });
-});</code></pre>
 <h3 id="testing-dom-manipulation">Testing DOM manipulation<a class="headerlink" href="#testing-dom-manipulation" title="Permanent link">¶</a></h3>
 <p><a href="https://jestjs.io/en/">Jest</a>, the JavaScript testing framework we use,
 <a href="https://jestjs.io/docs/en/configuration#testenvironment-string">includes jsdom</a>,
