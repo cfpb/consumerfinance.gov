@@ -76,8 +76,8 @@
 
 {% macro render_link( link ) %}
 <div class="brand-footer__img">
-    <a href="{{ link.url }}">
-        <img src="{{ link.img }}" alt="{{ link.label }}">
+  <a href="{{ link.url }}" aria-label="{{link.label}}">
+        <img src="{{ link.img }}">
     </a>
 </div>
 {% if link.intro %}
