@@ -268,7 +268,7 @@ class LinkUtilsTests(SimpleTestCase):
         path = "/about-us/blog/"
 
         expected_html = (
-            f'<a class="a-link a-link--icon" href="{url}">'
+            f'<a class="a-link" href="{url}">'
             '<span class="a-link__text">'
             "Click <strong>here</strong> now!</span> "
             f"{self.external_link_icon}"
