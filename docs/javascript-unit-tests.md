@@ -425,56 +425,6 @@ Inside each `it`, invoke the function
 with the input described in the `it` statement
 and use `expect` to check that you receive the desired result.
 
-Here is a simple example from our
-[array helpers module](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js)
-(`cfgov/unprocessed/js/modules/util/array-helpers.js`):
-
-```js
-function indexOfObject(array, key, val) {
-  let match = -1;
-
-  if (!array.length > 0) {
-    return match;
-  }
-
-  array.forEach(function (item, index) {
-    if (item[key] === val) {
-      match = index;
-    }
-  });
-
-  return match;
-}
-```
-
-Tests for that function, from
-[test/unit_tests/js/modules/util/array-helpers-spec.js](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js):
-
-```js
-describe('indexOfObject()', () => {
-  it('should return -1 if the array is empty', () => {
-    array = [];
-    index = arrayHelpers.indexOfObject(array, 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return -1 if there is no match', () => {
-    array = [{ value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return the matched index', () => {
-    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(0);
-  });
-});
-```
-
 ### Testing DOM manipulation
 
 [Jest](https://jestjs.io/en/), the JavaScript testing framework we use,

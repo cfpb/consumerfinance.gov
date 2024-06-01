@@ -15,7 +15,6 @@ import {
 } from './util';
 import { getCounties, getData } from './data-loader';
 import { getSelection } from './dom-values';
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
 import jumbo from '@cfpb/jumbo-mortgage';
@@ -184,7 +183,7 @@ function updateView() {
           return;
         }
 
-        data.uniqueLabels = uniquePrimitives(data.labels.slice(0));
+        data.uniqueLabels = data.labels.slice(0);
 
         finishLoading();
         hideSummary();
