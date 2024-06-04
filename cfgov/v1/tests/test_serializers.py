@@ -5,16 +5,22 @@ from django.test import RequestFactory
 from wagtail.models import Site
 
 from core.testutils.test_cases import WagtailPageTreeTestCase
-from v1.models import BlogPage, CFGOVPageCategory
+from v1.models import CFGOVPageCategory, EventPage
 from v1.models.learn_page import AbstractFilterPage
 from v1.serializers import FilterPageSerializer
 
 
 class FilterablePageSerializerTests(WagtailPageTreeTestCase):
+    maxDiff = None
+
     @classmethod
     def get_page_tree(cls):
         return [
-            BlogPage(title=f"child{i}", date_published=date(2000, 1, 2))
+            EventPage(
+                title=f"child{i}",
+                start_dt=date(2000, 1, 2),
+                venue_name="CFPB HQ",
+            )
             for i in range(10)
         ]
 
@@ -27,8 +33,9 @@ class FilterablePageSerializerTests(WagtailPageTreeTestCase):
         site.root_page._get_site_root_paths(self.request)
 
         for i in range(10):
-            page = BlogPage.objects.get(slug=f"child{i}")
+            page = EventPage.objects.get(slug=f"child{i}")
             page.authors.add("Famous Author", "Another Person")
+            page.tags.add("Foo", "Bar")
             page.save()
 
             for category_name in ["at-the-cfpb", "auto-loans"]:
@@ -43,7 +50,7 @@ class FilterablePageSerializerTests(WagtailPageTreeTestCase):
             queryset, many=True, context={"request": self.request}
         )
 
-        # Fetching BlogPages and related objects takes 4 queries:
+        # Fetching BlogPages and related objects takes 5 queries:
         #
         # 1. Fetching the base Page objects from the database.
         # 2. Fetching the specific BlogPage objects from the database.
@@ -51,13 +58,15 @@ class FilterablePageSerializerTests(WagtailPageTreeTestCase):
         #    using prefetch_related above.
         # 4. Fetching Page categories from the database, done as a single query
         #    using prefetch_related above.
+        # 5. Fetching Page tags from the database, done as a single query using
+        #    prefetch_related above.
         #
         # The serializing itself shouldn't take any additional queries,
         # assuming the fetching is implemented as above.
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
             data = serializer.data
 
-        self.assertEqual(
+        self.assertSequenceEqual(  # TODO maake this assertEqual
             data,
             [
                 {
@@ -77,8 +86,25 @@ class FilterablePageSerializerTests(WagtailPageTreeTestCase):
                             "icon": "car",
                         },
                     ],
+                    "event_location_str": "CFPB HQ",
+                    "image_url": "",
+                    "is_blog": False,
+                    "is_event": False,
+                    "is_report": False,
                     "language": "en",
                     "start_date": date(2000, 1, 2),
+                    "tags": [
+                        {
+                            "slug": "foo",
+                            "text": "Foo",
+                            "url": "?topics=foo",
+                        },
+                        {
+                            "slug": "bar",
+                            "text": "Bar",
+                            "url": "?topics=bar",
+                        },
+                    ],
                     "title": f"child{i}",
                     "url": f"/child{i}/",
                 }
