@@ -120,13 +120,13 @@
                         else 'Learn More' -%}
 
                     {%- set link -%}
-                        <a class="m-list__link"
+                        <a class="a-link a-link--jump"
                             href="{{ link.url }}"
                             {%- if link.aria_label -%}
                                 aria-label="{{ link.aria_label }}"
                             {%- endif %}>
                             {% if link.is_link_boldface %}<strong>{% endif %}
-                            {{ link_text }}
+                            <span class="a-link__text">{{ link.text }}</span>
                             {% if link.is_link_boldface %}</strong>{% endif %}
                         </a>
                     {%- endset -%}

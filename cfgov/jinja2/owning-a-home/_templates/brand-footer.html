@@ -86,7 +86,8 @@
 
 <a class="a-link
           a-link--jump"
-   href="{{ link.url }}">
-    {{ link.text | safe }}
+   href="{{ link.url }}"
+   aria-label="{{ link.label }}">
+    <span class="a-link__text">{{ link.text | safe }}</span>
 </a>
 {% endmacro %}

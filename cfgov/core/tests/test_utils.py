@@ -145,7 +145,7 @@ class LinkUtilsTests(SimpleTestCase):
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
-            '<a class="a-link a-link--icon" '
+            '<a class="a-link" '
             f"{data_pretty_href}"
             f'href="{url}">'
             '<span class="a-link__text">foo</span> '
@@ -205,7 +205,7 @@ class LinkUtilsTests(SimpleTestCase):
         path = "/about-us/blog/"
 
         expected_html = (
-            '<a class="a-link a-link--icon" '
+            '<a class="a-link" '
             f'href="{url}">'
             "<svg></svg>"
             '<span class="a-link__text">foo</span> '
@@ -268,7 +268,7 @@ class LinkUtilsTests(SimpleTestCase):
         path = "/about-us/blog/"
 
         expected_html = (
-            f'<a class="a-link a-link--icon" href="{url}">'
+            f'<a class="a-link" href="{url}">'
             '<span class="a-link__text">'
             "Click <strong>here</strong> now!</span> "
             f"{self.external_link_icon}"

@@ -1,6 +1,17 @@
 @import (reference) '../enhancements/typography.less';
 
+.u-upper-hover-line {
+  position: absolute;
+  top: -1px;
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  border-top: 1px solid currentColor;
+}
+
 .o-footer {
+  font-weight: 500;
   // Adding an extra 5px to the top to account for the absolute positioned
   // social media icons.
   padding-top: unit(50px / @base-font-size-px, em);
@@ -9,6 +20,42 @@
   padding-bottom: unit(50px / @base-font-size-px, em);
   border-top: 5px solid var(--green);
   background: var(--gray-5);
+
+  .m-list__link {
+    font-weight: 500;
+  }
+
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
+    .m-list__link {
+      display: block;
+      box-sizing: border-box;
+      padding-top: unit(10px / @base-font-size-px, em);
+      padding-bottom: unit(10px / @base-font-size-px, em);
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+
+      .a-link__text {
+        border-bottom: none;
+      }
+    }
+
+    // Handle the borders of jump links that are adjacent in a list.
+    .o-footer-middle-right .m-list__link:hover:before {
+      .u-upper-hover-line();
+    }
+
+    li:has(.m-list__link) + li:has(.m-list__link) {
+      .m-list__link {
+        position: relative;
+        border-top: none;
+      }
+
+      .m-list__link:hover:before {
+        .u-upper-hover-line();
+      }
+    }
+  });
 
   &__nav-list {
     .m-list--links();
@@ -137,6 +184,9 @@
   &-middle-right {
     // Mobile only.
     .respond-to-max(@bp-xs-max, {
+      // Fix missing top line hover.
+      position: relative;
+
       // Fix doubled border in mobile view.
       .o-footer__list {
         .m-list__item .m-list__link {

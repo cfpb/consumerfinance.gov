@@ -116,16 +116,16 @@
                 <ul class="m-list m-list--links">
                     {% if num_versions > 1 %}
                     <li class="m-list__item">
-                        <a class="m-list__link" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">
+                        <a class="a-link a-link--jump" href="{{ routablepageurl(page, 'versions', section_label=section.url_path) }}">
                             {{ svg_icon('date') }}
-                            View all versions of this regulation
+                            <span class="a-link__text">View all versions of this regulation</span>
                         </a>
                     </li>
                     {% endif %}
                     <li class="m-list__item">
-                        <a class="m-list__link" href="{{ search_url }}">
+                        <a class="a-link a-link--jump" href="{{ search_url }}">
                             {{ svg_icon('search') }}
-                            Search this regulation
+                            <span class="a-link__text">Search this regulation</span>
                         </a>
                     </li>
                 </ul>
@@ -234,30 +234,30 @@
                     <ul class="m-list m-list--links m-full-width-text">
                         {% if requested_version == current_version %}
                             <li class="m-list__item">
-                                <a class="m-list__link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label.lower()) }}">
-                                    View current regulation
+                                <a class="a-link a-link--jump" href="{{ routablepageurl(page, 'section', section_label=sections[0].label.lower()) }}">
+                                    <span class="a-link__text">View current regulation</span>
                                 </a>
                             </li>
                         {% else %}
                             <li class="m-list__item">
-                                <a class="m-list__link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label.lower()) }}">
-                                    View this version
+                                <a class="a-link a-link--jump" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label.lower()) }}">
+                                    <span class="a-link__text">View this version</span>
                                 </a>
                             </li>
                         {% endif %}
 
                         {% if num_versions > 1 %}
                             <li class="m-list__item">
-                                <a class="m-list__link" href="{{ routablepageurl(page, 'versions') }}">
-                                    View all versions of this regulation
+                                <a class="a-link a-link--jump" href="{{ routablepageurl(page, 'versions') }}">
+                                    <span class="a-link__text">View all versions of this regulation</span>
                                 </a>
                             </li>
                         {% endif %}
 
                         {% if requested_version == current_version %}
                             <li class="m-list__item">
-                                <a class="m-list__link" href="{{ search_url }}">
-                                    Search this regulation
+                                <a class="a-link a-link--jump" href="{{ search_url }}">
+                                    <span class="a-link__text">Search this regulation</span>
                                 </a>
                             </li>
                         {% endif %}

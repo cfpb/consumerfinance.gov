@@ -55,8 +55,8 @@
                 and Urban Development (HUD) and they can
                 offer independent advice, often at little or
                 no cost to you. There is also a
-                <a class="a-link a-link--icon"
-                    href="https://www.hud.gov/program_offices/housing/sfh/hcc/hcc_home">
+                <a class="a-link"
+                   href="https://www.hud.gov/program_offices/housing/sfh/hcc/hcc_home">
                     <span class="a-link__text">list of nationwide HUD-approved counseling agencies</span></a>.
             </p>
             <p>
@@ -120,7 +120,7 @@
                             <div class="m-form-field-with-button__info">
                                 <p>
                                     This tool is powered by
-                                    <a class="a-link a-link--icon"
+                                    <a class="a-link"
                                         href="https://data.hud.gov/housing_counseling.html">
                                         <span class="a-link__text">HUD's</span>
                                         {{ svg_icon('external-link') }}</a>
@@ -165,8 +165,7 @@
                            m-list--horizontal
                            hud-hca-api-results-actions">
                     <li class="m-list__item">
-                        <a class="a-link
-                                    a-link--icon"
+                        <a class="a-link"
                             id="hud_print-page-link"
                             href="#">
                             <span class="a-link__text">Print list</span>
@@ -174,7 +173,7 @@
                         </a>
                     </li>
                     <li class="m-list__item">
-                        <a class="a-link a-link--icon"
+                        <a class="a-link"
                             id="generate-pdf-link"
                             href="{{ pdf_url }}"
                             target="_blank"
@@ -214,7 +213,7 @@
                                             itemtype="https://schema.org/PostalAddress">
 
                                         {% if counselor.weburl %}
-                                        <a class="a-link a-link--icon"
+                                        <a class="a-link"
                                             href="{{ counselor.weburl }}">
                                             <span class="a-link__text"><b itemprop="name">{{ counselor.nme }}</b></span>
                                             {{ svg_icon('external-link') }}
@@ -241,7 +240,7 @@
                                         {% if counselor.weburl %}
                                         <dt>Website:</dt>
                                         <dd>
-                                        <a class="a-link a-link--icon"
+                                        <a class="a-link"
                                             href="{{ counselor.weburl }}"
                                             itemprop="url">
                                             <span class="a-link__text">{{ counselor.weburl }}</span>
