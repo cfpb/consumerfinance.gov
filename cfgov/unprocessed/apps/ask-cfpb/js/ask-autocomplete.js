@@ -49,7 +49,7 @@ function handleMaxCharacters(event) {
 }
 
 if (autocompleteContainer) {
-  const language = document.documentElement.getAttribute('lang')
+  const language = document.documentElement.getAttribute('lang');
   const autocomplete = new Autocomplete(autocompleteContainer, {
     url: language === 'es' ? URLS.es : URLS.en,
     onSubmit: function (event, selected) {
@@ -64,7 +64,7 @@ if (autocompleteContainer) {
       li.setAttribute('data-val', item.question);
       const link = document.createElement('a');
       link.setAttribute('href', item.url);
-      link.innerHTML = item.question;
+      link.innerText = item.question;
       li.appendChild(link);
       return li;
     },
