@@ -38,7 +38,7 @@
    ========================================================================== #}
 
 {%- from 'v1/includes/blocks/heading.html' import heading without context %}
-{%- from 'v1/includes/molecules/info-unit-2.html' import info_unit with context %}
+{%- from 'v1/includes/molecules/info-unit.html' import info_unit with context %}
 
 <div class="o-info-unit-group"
      {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading and value.heading.text else ' ' -}}>
