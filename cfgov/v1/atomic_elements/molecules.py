@@ -23,7 +23,6 @@ class InfoUnit(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "v1/includes/molecules/info-unit.html"
 
 
 class TextIntroduction(blocks.StructBlock):
