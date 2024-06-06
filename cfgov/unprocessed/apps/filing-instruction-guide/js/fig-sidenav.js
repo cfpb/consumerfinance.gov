@@ -44,7 +44,7 @@ const handleMobileNav = (event) => {
     setTimeout(() => {
       defaultScrollOffset(event.target);
     }, 300);
-  } else if (event.target.matches('.o-fig__heading > a')) {
+  } else if (event.target.matches('.o-fig__section--sub a')) {
     defaultScrollOffset(event.target);
   }
 };
