@@ -162,7 +162,7 @@ class FormExplainer {
    * @returns {object} Page DOM element.
    */
   getPageEl(pageNum) {
-    return DT.getEl(`#explain_page-${pageNum}`);
+    return DT.getEl(`#explain__page-${pageNum}`);
   }
 
   /**
