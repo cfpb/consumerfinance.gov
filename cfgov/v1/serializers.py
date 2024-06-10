@@ -13,13 +13,16 @@ from v1.util.ref import get_category_icon, is_blog, is_report
 class FilterPageSerializer(serializers.Serializer):
     authors = serializers.ListField(source="get_authors")
     categories = serializers.SerializerMethodField()
+    date_published = serializers.ReadOnlyField()
     event_location_str = serializers.SerializerMethodField()
+    full_url = serializers.SerializerMethodField()
     image_alt = serializers.SerializerMethodField()
     image_url = serializers.SerializerMethodField()
     is_blog = serializers.SerializerMethodField()
     is_event = serializers.SerializerMethodField()
     is_report = serializers.SerializerMethodField()
     language = serializers.ChoiceField(choices=settings.LANGUAGES)
+    search_description = serializers.ReadOnlyField()
     start_date = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
@@ -44,6 +47,9 @@ class FilterPageSerializer(serializers.Serializer):
 
     def get_event_location_str(self, page):
         return page.location_str if isinstance(page, EventPage) else None
+
+    def get_full_url(self, page):
+        return page.get_full_url(request=self.context.get("request"))
 
     def get_image_alt(self, page):
         if (

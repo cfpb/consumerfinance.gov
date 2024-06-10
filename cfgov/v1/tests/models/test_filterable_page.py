@@ -33,15 +33,6 @@ class TestAbstractFilterablePage(TestCase):
         data = self.page.get_form_data(self.factory.get(request_string).GET)
         assert data[0]["categories"] == ["test1", "test2"]
 
-    @mock.patch("v1.models.filterable_page.Paginator")
-    def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
-        mock_request = mock.Mock()
-        mock_request.GET = self.factory.get("/").GET
-        mock_form = mock.Mock()
-        self.page.process_form(mock_request, mock_form)
-        assert mock_form.is_valid.called
-
-    # AbstractFilterablePage.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
         assert self.page.do_not_index is False
 
@@ -85,9 +76,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def test_index_route(self):
         response = self.client.get("/test/")
-        self.assertEqual(
-            response.context_data["results_page"][0].title, "Test"
-        )
+        self.assertEqual(response.context_data["results"][0]["title"], "Test")
 
     def test_feed_route(self):
         response = self.client.get("/test/feed/")
@@ -217,22 +206,36 @@ class FilterableResultsRenderingTests(
         page = self.page_tree[0]
         request = RequestFactory().get("/")
 
-        # Basic page rendering requires 4 database queries:
+        # Page rendering requires 8 database queries in total.
         #
-        # 1. Retrieving the Wagtail Site to build the full page URL used for
-        #    the search cache key.
-        # 2. Retrieving the list of page tags to populate the form topic
-        #    choices.
-        # 3. Executing a count() against the database to check if the search
-        #    has any results.
+        # 2 are needed for Wagtail page URL generation:
         #
-        # These are required to generate the TemplateResponse and its context;
-        # the actual HTML content rendering requires additional database
-        # queries which are measured below.
-        with self.assertNumQueries(3):
+        #   1. Fetching Wagtail Site root paths.
+        #   2. Fetching the root page of the default Wagtail Site.
+        #
+        # 1 is needed to render our filterable form:
+        #
+        #   3. Retrieving the list of page tags to populate the form topic
+        #      choices.
+        #
+        # 2 are needed to fetch page results from the database:
+        #
+        #   4. Fetching Page content types based on search result IDs.
+        #   5. Fetching specific Page model instances.
+        #
+        # 3 are needed for efficient page rendering:
+        #
+        #   6. Prefetching all authors for all result pages.
+        #   7. Prefecthing all categories for all result pages.
+        #   8. Prefetching all topic tags for all result pages.
+        with self.assertNumQueries(8):
             response = page.render(request)
 
-        with self.assertNumQueries(0):
+        # All data is fetched as part of the response context. No additional
+        # queries are needed to render the results themselves, but there are
+        # 2 additional queries for all pages:
+        #
+        #   1. Fetching the mega menu.
+        #   2. Fetching any banners associated with the page.
+        with self.assertNumQueries(2):
             response.render()
-
-        breakpoint()

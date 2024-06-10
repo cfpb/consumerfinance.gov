@@ -53,7 +53,7 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
     def test_no_pages_by_default(self):
         filterable_search = self.newsroom_page.get_filterable_search()
         result = filterable_search.search()
-        self.assertFalse(result.exists())
+        self.assertFalse(result.count())
 
     def make_page_with_category(self, category_name, parent):
         page = AbstractFilterPage(title="test", slug="test")
@@ -72,14 +72,14 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
 
         filterable_search = self.newsroom_page.get_filterable_search()
         result = filterable_search.search()
-        self.assertFalse(result.exists())
+        self.assertFalse(result.count())
 
     def test_page_matches_categories(self):
         self.make_page_with_category("op-ed", parent=self.site_root)
 
         filterable_search = self.newsroom_page.get_filterable_search()
         result = filterable_search.search()
-        self.assertTrue(result.exists())
+        self.assertTrue(result.count())
 
     def test_page_in_other_site_not_included(self):
         wagtail_root = Page.objects.get(pk=1)
@@ -87,4 +87,4 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
 
         filterable_search = self.newsroom_page.get_filterable_search()
         result = filterable_search.search()
-        self.assertFalse(result.exists())
+        self.assertFalse(result.count())

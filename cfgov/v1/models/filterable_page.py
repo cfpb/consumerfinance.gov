@@ -238,5 +238,12 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
 
     @route(r"^feed/$")
     def feed_route(self, request, *args, **kwargs):
-        context = self.get_context(request)
-        return FilterableFeed(self, context)(request)
+        context = self.get_context(request, *args, **kwargs)
+
+        view = FilterableFeed(request, self, context["results"])
+        response = view(request, *args, **kwargs)
+
+        # Tell Akamai that the feed should have a maximum age of 10 minutes.
+        response["Edge-Control"] = "cache-maxage=10m"
+
+        return response

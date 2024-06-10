@@ -16,11 +16,14 @@ def select_menu_for_context(context):
         except Menu.DoesNotExist:
             pass
 
-    # Next try to find a menu for the default Django language.
-    try:
-        return Menu.objects.get(language=settings.LANGUAGE_CODE[:2])
-    except Menu.DoesNotExist:
-        pass
+    # Next try to find a menu for the default Django language, if it differs
+    # from the language in the context.
+    default_language = settings.LANGUAGE_CODE[:2]
+    if default_language != language:
+        try:
+            return Menu.objects.get(language=default_language)
+        except Menu.DoesNotExist:
+            pass
 
     # If we can't find a menu, return None.
     return None
