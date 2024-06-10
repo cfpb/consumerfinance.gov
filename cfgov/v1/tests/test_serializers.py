@@ -1,113 +1,163 @@
 from datetime import date
 
-from django.test import RequestFactory
+from django.test import RequestFactory, TestCase
+from django.utils import timezone
 
+from wagtail.images.tests.utils import get_test_image_file
 from wagtail.models import Site
 
-from core.testutils.test_cases import WagtailPageTreeTestCase
-from v1.models import CFGOVPageCategory, EventPage
-from v1.models.learn_page import AbstractFilterPage
+from v1.models import BlogPage, CFGOVImage, CFGOVPageCategory, EventPage
 from v1.serializers import FilterPageSerializer
 
 
-class FilterablePageSerializerTests(WagtailPageTreeTestCase):
-    maxDiff = None
-
-    @classmethod
-    def get_page_tree(cls):
-        return [
-            EventPage(
-                title=f"child{i}",
-                start_dt=date(2000, 1, 2),
-                venue_name="CFPB HQ",
-            )
-            for i in range(10)
-        ]
-
+class FilterablePageSerializerTests(TestCase):
     def setUp(self):
         self.request = RequestFactory().get("/")
+        self.root_page = Site.objects.get(is_default_site=True).root_page
 
-        # Deliberately pre-cache Site root paths on the request object
-        # so we don't need to make database queries for these later.
-        site = Site.find_for_request(self.request)
-        site.root_page._get_site_root_paths(self.request)
-
-        for i in range(10):
-            page = EventPage.objects.get(slug=f"child{i}")
-            page.authors.add("Famous Author", "Another Person")
-            page.tags.add("Foo", "Bar")
-            page.save()
-
-            for category_name in ["at-the-cfpb", "auto-loans"]:
-                CFGOVPageCategory.objects.create(page=page, name=category_name)
-
-    def test_serialization(self):
-        queryset = AbstractFilterPage.objects.prefetch_related(
-            "authors", "categories", "tags"
-        ).specific()
-
+    def assertSerialization(self, page, expected):
+        self.root_page.add_child(instance=page)
         serializer = FilterPageSerializer(
-            queryset, many=True, context={"request": self.request}
+            page, context={"request": self.request}
+        )
+        self.assertDictEqual(serializer.data, expected)
+
+    def test_blog_serialization(self):
+        blog = BlogPage(title="Blog", date_published=date(2024, 1, 1))
+        blog.authors.add(
+            "Mark Twain",
+            "William Shakespeare",
+        )
+        blog.categories.add(
+            CFGOVPageCategory(name="info-for-consumers"),
+            CFGOVPageCategory(name="at-the-cfpb"),
+        )
+        blog.tags.add("Mortgages", "Payments")
+
+        self.assertSerialization(
+            blog,
+            {
+                "authors": ["William Shakespeare", "Mark Twain"],
+                "categories": [
+                    {
+                        "icon": "bullhorn",
+                        "name": "At the CFPB",
+                        "slug": "at-the-cfpb",
+                    },
+                    {
+                        "icon": "information",
+                        "name": "Info for consumers",
+                        "slug": "info-for-consumers",
+                    },
+                ],
+                "event_location_str": None,
+                "image_alt": None,
+                "image_url": None,
+                "is_blog": True,
+                "is_event": False,
+                "is_report": False,
+                "language": "en",
+                "start_date": date(2024, 1, 1),
+                "tags": [
+                    {
+                        "slug": "mortgages",
+                        "text": "Mortgages",
+                        "url": "?topics=mortgages",
+                    },
+                    {
+                        "slug": "payments",
+                        "text": "Payments",
+                        "url": "?topics=payments",
+                    },
+                ],
+                "title": "Blog",
+                "url": "/blog/",
+            },
         )
 
-        # Fetching BlogPages and related objects takes 5 queries:
-        #
-        # 1. Fetching the base Page objects from the database.
-        # 2. Fetching the specific BlogPage objects from the database.
-        # 3. Fetching Page authors from the database, done as a single query
-        #    using prefetch_related above.
-        # 4. Fetching Page categories from the database, done as a single query
-        #    using prefetch_related above.
-        # 5. Fetching Page tags from the database, done as a single query using
-        #    prefetch_related above.
-        #
-        # The serializing itself shouldn't take any additional queries,
-        # assuming the fetching is implemented as above.
-        with self.assertNumQueries(5):
-            data = serializer.data
+    def test_event_serialization_no_image(self):
+        now = timezone.now()
+        event = EventPage(title="Event", start_dt=now, venue_image_type="none")
 
-        self.assertSequenceEqual(  # TODO maake this assertEqual
-            data,
-            [
-                {
-                    "authors": [
-                        "Famous Author",
-                        "Another Person",
-                    ],
-                    "categories": [
-                        {
-                            "slug": "at-the-cfpb",
-                            "name": "At the CFPB",
-                            "icon": "bullhorn",
-                        },
-                        {
-                            "slug": "auto-loans",
-                            "name": "Auto loans",
-                            "icon": "car",
-                        },
-                    ],
-                    "event_location_str": "CFPB HQ",
-                    "image_url": "",
-                    "is_blog": False,
-                    "is_event": False,
-                    "is_report": False,
-                    "language": "en",
-                    "start_date": date(2000, 1, 2),
-                    "tags": [
-                        {
-                            "slug": "foo",
-                            "text": "Foo",
-                            "url": "?topics=foo",
-                        },
-                        {
-                            "slug": "bar",
-                            "text": "Bar",
-                            "url": "?topics=bar",
-                        },
-                    ],
-                    "title": f"child{i}",
-                    "url": f"/child{i}/",
-                }
-                for i in range(10)
-            ],
+        self.assertSerialization(
+            event,
+            {
+                "authors": [],
+                "categories": [],
+                "event_location_str": "",
+                "image_alt": None,
+                "image_url": None,
+                "is_blog": False,
+                "is_event": True,
+                "is_report": False,
+                "language": "en",
+                "start_date": now.date(),
+                "tags": [],
+                "title": "Event",
+                "url": "/event/",
+            },
+        )
+
+    def test_event_serialization_with_map_image(self):
+        now = timezone.now()
+        event = EventPage(
+            title="Event",
+            start_dt=now,
+            venue_name="CFPB HQ",
+            venue_image_type="map",
+        )
+
+        self.assertSerialization(
+            event,
+            {
+                "authors": [],
+                "categories": [],
+                "event_location_str": "CFPB HQ",
+                "image_alt": None,
+                "image_url": (
+                    "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
+                    "-77.039628,38.898238,12/276x155?access_token=None"
+                ),
+                "is_blog": False,
+                "is_event": True,
+                "is_report": False,
+                "language": "en",
+                "start_date": now.date(),
+                "tags": [],
+                "title": "Event",
+                "url": "/event/",
+            },
+        )
+
+    def test_event_serialization_with_venue_image(self):
+        now = timezone.now()
+        image = CFGOVImage.objects.create(
+            title="Venue image",
+            file=get_test_image_file(),
+            alt="Venue image alt text",
+        )
+        event = EventPage(
+            title="Event",
+            start_dt=now,
+            venue_image_type="image",
+            venue_image=image,
+        )
+
+        self.assertSerialization(
+            event,
+            {
+                "authors": [],
+                "categories": [],
+                "event_location_str": "",
+                "image_alt": "Venue image alt text",
+                "image_url": "/f/images/test.width-540.png",
+                "is_blog": False,
+                "is_event": True,
+                "is_report": False,
+                "language": "en",
+                "start_date": now.date(),
+                "tags": [],
+                "title": "Event",
+                "url": "/event/",
+            },
         )

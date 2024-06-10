@@ -304,12 +304,16 @@ def is_blog(page):
             if category.name == choice[0]:
                 return True
 
+    return False
+
 
 def is_report(page):
     for category in page.categories.all():
         for choice in choices_for_page_type("research-reports"):
             if category.name == choice[0]:
                 return True
+
+    return False
 
 
 def filterable_list_page_types():

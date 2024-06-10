@@ -1,3 +1,6 @@
+from datetime import datetime
+from operator import itemgetter
+
 from django.conf import settings
 
 from rest_framework import serializers
@@ -37,7 +40,7 @@ class FilterPageSerializer(serializers.Serializer):
                 }
             )
 
-        return categories
+        return sorted(categories, key=itemgetter("name"))
 
     def get_event_location_str(self, page):
         return page.location_str if isinstance(page, EventPage) else None
@@ -68,7 +71,8 @@ class FilterPageSerializer(serializers.Serializer):
         return is_report(page)
 
     def get_start_date(self, page):
-        return getattr(page, page.start_date_field)
+        value = getattr(page, page.start_date_field)
+        return value.date() if isinstance(value, datetime) else value
 
     def get_title(self, page):
         return page.seo_title or page.title
@@ -77,7 +81,7 @@ class FilterPageSerializer(serializers.Serializer):
         return page.get_url(request=self.context.get("request"))
 
     def get_tags(self, page):
-        return [
+        tags = [
             {
                 "slug": tag.slug,
                 "text": tag.name,
@@ -85,3 +89,5 @@ class FilterPageSerializer(serializers.Serializer):
             }
             for tag in page.tags.all()
         ]
+
+        return sorted(tags, key=itemgetter("text"))
