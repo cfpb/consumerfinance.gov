@@ -498,14 +498,14 @@ const chartView = {
   makePlanElem: null,
   maxDebtElems: null,
   affordingElem: null,
-  gradMeterElem: null,
+  gradMeterElems: null,
   repaymentMeterElem: null,
   costOfBorrowingChart: null,
   compareCostOfBorrowingChart: null,
   makePlanChart: null,
   maxDebtCharts: [],
   affordingChart: null,
-  gradMeterChart: null,
+  gradMeterCharts: [],
   repaymentMeterChart: null,
 
   init: (body) => {
@@ -521,7 +521,7 @@ const chartView = {
     chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
     chartView.maxDebtElems = body.querySelectorAll('[data-chart_id="max-debt-guideline_chart"]');
     chartView.affordingElem = body.querySelector('#affording-your-loans_chart');
-    chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
+    chartView.gradMeterElems = body.querySelectorAll('[data-chart_id="school-results_grad-meter"]');
     chartView.repaymentMeterElem = body.querySelector(
       '#school-results_repayment-meter',
     );
@@ -586,9 +586,12 @@ const chartView = {
       ...affordingOpts,
     });
 
-    chartView.gradMeterChart = Highcharts.chart(chartView.gradMeterElem, {
-      ...meterOpts,
-      ...gradMeterOpts,
+    chartView.gradMeterElems.forEach( elem => {
+      chartView.gradMeterCharts.push( Highcharts.chart( elem, {
+          ...meterOpts,
+          ...gradMeterOpts,
+        })
+      );
     });
 
     chartView.repaymentMeterChart = Highcharts.chart(
@@ -772,7 +775,9 @@ const chartView = {
 
       // Percentile works along a 180-degree axis:
       percentile = (percentile / 100) * 180;
-      chartView.gradMeterChart.series[0].setData([percentile]);
+      chartView.gradMeterCharts.forEach( chart => {
+        chart.series[0].setData([percentile]);
+      });
     } else {
       updateState.byProperty('gradMeterThird', '');
     }
