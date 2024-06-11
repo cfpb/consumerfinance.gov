@@ -46,6 +46,8 @@ const handleMobileNav = (event) => {
     }, 300);
   } else if (event.target.matches('.o-fig__section--sub a')) {
     defaultScrollOffset(event.target);
+  } else if (event.target.matches('.o-fig__section--sub a > span')) {
+    defaultScrollOffset(event.target.parentNode);
   }
 };
 
