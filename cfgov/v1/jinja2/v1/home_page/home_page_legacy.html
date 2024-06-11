@@ -26,18 +26,6 @@
         {% include "v1/includes/molecules/hero.html" with context %}
     {% endwith %}
 
-    {% with value = hardcoded.features %}
-        <section class="wrapper
-                        wrapper--match-content
-                        block
-                        block--bg
-                        block--border
-                        block--flush-top
-                        u-mb0"
-        >
-            {% include "v1/includes/organisms/info-unit-group.html" with context %}
-        </section>
-    {% endwith %}
 {% endblock %}
 
 {% block content_main %}
