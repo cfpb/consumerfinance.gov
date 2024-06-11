@@ -128,13 +128,9 @@
                 {% set event = post.specific %}
                 {% if event.start_dt %}
                     <div class="o-post-preview__subtitle">
-                    {% if event.venue_city and event.venue_state %}
-                        {{ event.venue_city }}, {{ event.venue_state }}
-                    {% endif %}
-                            {{ event.venue_name if event.venue_name else '' }}
-                    {{ 'Livecast' if event.live_video_id else '' }}
-                     -
-                    {{ time.render(event.start_dt) }}
+                        {{ event.location_str }}
+                        {{- " - " if event.location_str -}}
+                        {{ time.render(event.start_dt) }}
                     </div>
                 {% endif %}
             {% endif %}

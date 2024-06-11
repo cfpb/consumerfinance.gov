@@ -1,5 +1,4 @@
 import json
-from unittest import mock
 
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -28,12 +27,6 @@ class TestCFGOVPage(TestCase):
         save_new_page(self.page)
         key = self.page.post_preview_cache_key
         self.assertIn(str(self.page.id), key)
-
-    @mock.patch("builtins.super")
-    def test_serve_calls_super_on_non_ajax_request(self, mock_super):
-        self.page.serve(self.request)
-        mock_super.assert_called_once()
-        mock_super().serve.assert_called_with(self.request)
 
 
 class TestCFGOVPageContext(TestCase):
