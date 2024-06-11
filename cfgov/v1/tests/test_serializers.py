@@ -1,5 +1,3 @@
-from datetime import date
-
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
@@ -14,6 +12,8 @@ class FilterablePageSerializerTests(TestCase):
     def setUp(self):
         self.request = RequestFactory().get("/")
         self.root_page = Site.objects.get(is_default_site=True).root_page
+        self.now = timezone.now()
+        self.today = self.now.date()
 
     def assertSerialization(self, page, expected):
         self.root_page.add_child(instance=page)
@@ -23,7 +23,11 @@ class FilterablePageSerializerTests(TestCase):
         self.assertDictEqual(serializer.data, expected)
 
     def test_blog_serialization(self):
-        blog = BlogPage(title="Blog", date_published=date(2024, 1, 1))
+        blog = BlogPage(
+            title="Blog",
+            date_published=self.today,
+            search_description="A blog post",
+        )
         blog.authors.add(
             "Mark Twain",
             "William Shakespeare",
@@ -50,14 +54,17 @@ class FilterablePageSerializerTests(TestCase):
                         "slug": "info-for-consumers",
                     },
                 ],
+                "date_published": self.today,
                 "event_location_str": None,
+                "full_url": "http://localhost/blog/",
                 "image_alt": None,
                 "image_url": None,
                 "is_blog": True,
                 "is_event": False,
                 "is_report": False,
                 "language": "en",
-                "start_date": date(2024, 1, 1),
+                "search_description": "A blog post",
+                "start_date": self.today,
                 "tags": [
                     {
                         "slug": "mortgages",
@@ -76,22 +83,29 @@ class FilterablePageSerializerTests(TestCase):
         )
 
     def test_event_serialization_no_image(self):
-        now = timezone.now()
-        event = EventPage(title="Event", start_dt=now, venue_image_type="none")
+        event = EventPage(
+            title="Event",
+            date_published=self.today,
+            start_dt=self.now,
+            venue_image_type="none",
+        )
 
         self.assertSerialization(
             event,
             {
                 "authors": [],
                 "categories": [],
+                "date_published": self.today,
                 "event_location_str": "",
+                "full_url": "http://localhost/event/",
                 "image_alt": None,
                 "image_url": None,
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
-                "start_date": now.date(),
+                "search_description": "",
+                "start_date": self.today,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",
@@ -99,10 +113,10 @@ class FilterablePageSerializerTests(TestCase):
         )
 
     def test_event_serialization_with_map_image(self):
-        now = timezone.now()
         event = EventPage(
             title="Event",
-            start_dt=now,
+            date_published=self.today,
+            start_dt=self.now,
             venue_name="CFPB HQ",
             venue_image_type="map",
         )
@@ -112,7 +126,9 @@ class FilterablePageSerializerTests(TestCase):
             {
                 "authors": [],
                 "categories": [],
+                "date_published": self.today,
                 "event_location_str": "CFPB HQ",
+                "full_url": "http://localhost/event/",
                 "image_alt": None,
                 "image_url": (
                     "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
@@ -122,7 +138,8 @@ class FilterablePageSerializerTests(TestCase):
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
-                "start_date": now.date(),
+                "search_description": "",
+                "start_date": self.today,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",
@@ -130,15 +147,15 @@ class FilterablePageSerializerTests(TestCase):
         )
 
     def test_event_serialization_with_venue_image(self):
-        now = timezone.now()
         image = CFGOVImage.objects.create(
             title="Venue image",
-            file=get_test_image_file(),
+            file=get_test_image_file(filename="event-serialization.png"),
             alt="Venue image alt text",
         )
         event = EventPage(
             title="Event",
-            start_dt=now,
+            date_published=self.today,
+            start_dt=self.now,
             venue_image_type="image",
             venue_image=image,
         )
@@ -148,14 +165,17 @@ class FilterablePageSerializerTests(TestCase):
             {
                 "authors": [],
                 "categories": [],
+                "date_published": self.today,
                 "event_location_str": "",
+                "full_url": "http://localhost/event/",
                 "image_alt": "Venue image alt text",
-                "image_url": "/f/images/test.width-540.png",
+                "image_url": "/f/images/event-serialization.width-540.png",
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
-                "start_date": now.date(),
+                "search_description": "",
+                "start_date": self.today,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",
