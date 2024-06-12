@@ -1,21 +1,8 @@
-import sys
-import warnings
-
-import django
-
 from .base import *
 
 
-if sys.version_info[0] < 3:
-    raise Exception(
-        "Python 2 is no longer supported. "
-        "If you are running in a virtual environment, please see "
-        "https://cfpb.github.io/consumerfinance.gov/running-virtualenv/"
-        "#reinstalling-the-virtual-environment "
-        "for how to reinstall."
-    )
-
 DEBUG = True
+ALLOW_ADMIN_URL = True
 SECRET_KEY = "not-secret-key-for-testing"
 
 INSTALLED_APPS += (
@@ -24,8 +11,6 @@ INSTALLED_APPS += (
 )
 
 STATIC_ROOT = REPOSITORY_ROOT.joinpath("collectstatic")
-
-ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)
 
 LOGGING = {
     "version": 1,
