@@ -38,6 +38,12 @@ class FilterablePagesDocument(Document):
     products = fields.KeywordField()
     content = fields.TextField()
 
+    def update(self, thing, *args, **kwargs):
+        if isinstance(thing, AbstractFilterPage):
+            thing = thing.specific
+
+        return super().update(thing, *args, **kwargs)
+
     def get_queryset(self, *args, **kwargs):
         return AbstractFilterPage.objects.live().public().specific()
 
