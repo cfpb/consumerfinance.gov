@@ -108,7 +108,9 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
                 "<link>http://localhost/test/one/</link>"
                 "<description>A blog post</description>"
                 "<pubDate>Mon, 01 Jan 2024 00:00:00 -0500</pubDate>"
-                "<guid>123&lt;&gt;consumerfinance.gov</guid>"
+                '<guid isPermaLink="false">'
+                "123&lt;&gt;consumerfinance.gov"
+                "</guid>"
                 "</item>"
                 "</channel>"
                 "</rss>"
