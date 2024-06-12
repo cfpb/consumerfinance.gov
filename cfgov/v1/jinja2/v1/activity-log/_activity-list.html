@@ -24,17 +24,15 @@
                         {{ category_slug.render(category='report', href=page_url) }}
                     {% else %}
                         {% for cat in post.categories %}
-                            {% if loop.index > 1 %}
-                                |
-                            {% endif %}
-                            {{ category_slug.render(category=cat.name, href=page_url) }}
+                            {% if loop.index > 1 %}|{% endif %}
+                            {{ category_slug.render(category=cat.slug, href=page_url) }}
                         {% endfor %}
                     {% endif %}
                 </td>
                 <td class="u-w65pct">
                     <a href="{{ post.url }}">
                         <span class="h4 u-mb0">
-                            {{- post.title -}}
+                            {{- post.preview_title -}}
                         </span>
                     </a>
                 </td>

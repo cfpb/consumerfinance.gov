@@ -26,6 +26,7 @@ class FilterablePageSerializerTests(TestCase):
         blog = BlogPage(
             pk=123,
             title="Blog",
+            seo_title="Read this blog!",
             date_published=self.today,
             search_description="A blog post",
         )
@@ -37,7 +38,7 @@ class FilterablePageSerializerTests(TestCase):
             CFGOVPageCategory(name="info-for-consumers"),
             CFGOVPageCategory(name="at-the-cfpb"),
         )
-        blog.tags.add("Mortgages", "Payments")
+        blog.tags.add("Payments", "Mortgages")
 
         self.assertSerialization(
             blog,
@@ -58,13 +59,14 @@ class FilterablePageSerializerTests(TestCase):
                 "date_published": self.today,
                 "event_location_str": None,
                 "full_url": "http://localhost/blog/",
-                "image_alt": None,
+                "image_alt": "",
                 "image_url": None,
                 "is_blog": True,
                 "is_event": False,
                 "is_report": False,
                 "language": "en",
                 "page_id": 123,
+                "preview_title": "Read this blog!",
                 "search_description": "A blog post",
                 "start_date": self.today,
                 "tags": [
@@ -101,15 +103,16 @@ class FilterablePageSerializerTests(TestCase):
                 "date_published": self.today,
                 "event_location_str": "",
                 "full_url": "http://localhost/event/",
-                "image_alt": None,
+                "image_alt": "",
                 "image_url": None,
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
                 "page_id": 123,
+                "preview_title": "Event",
                 "search_description": "",
-                "start_date": self.today,
+                "start_date": self.now,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",
@@ -134,7 +137,7 @@ class FilterablePageSerializerTests(TestCase):
                 "date_published": self.today,
                 "event_location_str": "CFPB HQ",
                 "full_url": "http://localhost/event/",
-                "image_alt": None,
+                "image_alt": "",
                 "image_url": (
                     "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
                     "-77.039628,38.898238,12/276x155?access_token=None"
@@ -144,8 +147,9 @@ class FilterablePageSerializerTests(TestCase):
                 "is_report": False,
                 "language": "en",
                 "page_id": 123,
+                "preview_title": "Event",
                 "search_description": "",
-                "start_date": self.today,
+                "start_date": self.now,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",
@@ -182,8 +186,9 @@ class FilterablePageSerializerTests(TestCase):
                 "is_report": False,
                 "language": "en",
                 "page_id": 123,
+                "preview_title": "Event",
                 "search_description": "",
-                "start_date": self.today,
+                "start_date": self.now,
                 "tags": [],
                 "title": "Event",
                 "url": "/event/",

@@ -1,4 +1,3 @@
-from datetime import datetime
 from operator import itemgetter
 
 from django.conf import settings
@@ -6,7 +5,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from v1.jinja2tags.images import image_alt_value, wagtail_image_fn
-from v1.models import BlogPage, CFGOVPageCategory, EventPage
+from v1.models import CFGOVPageCategory, EventPage
 from v1.util.ref import get_category_icon, is_blog, is_report
 
 
@@ -23,9 +22,10 @@ class FilterPageSerializer(serializers.Serializer):
     is_report = serializers.SerializerMethodField()
     language = serializers.ChoiceField(choices=settings.LANGUAGES)
     page_id = serializers.ReadOnlyField(source="id")
+    preview_title = serializers.SerializerMethodField()
     search_description = serializers.ReadOnlyField()
     start_date = serializers.SerializerMethodField()
-    title = serializers.SerializerMethodField()
+    title = serializers.ReadOnlyField()
     url = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
 
@@ -60,6 +60,8 @@ class FilterPageSerializer(serializers.Serializer):
         ):
             return image_alt_value(page.venue_image)
 
+        return ""
+
     def get_image_url(self, page):
         if isinstance(page, EventPage):
             if page.venue_image_type == "map":
@@ -69,7 +71,7 @@ class FilterPageSerializer(serializers.Serializer):
                 return rendition.url
 
     def get_is_blog(self, page):
-        return isinstance(page, BlogPage) or is_blog(page)
+        return is_blog(page)
 
     def get_is_event(self, page):
         return isinstance(page, EventPage)
@@ -77,12 +79,11 @@ class FilterPageSerializer(serializers.Serializer):
     def get_is_report(self, page):
         return is_report(page)
 
-    def get_start_date(self, page):
-        value = getattr(page, page.start_date_field)
-        return value.date() if isinstance(value, datetime) else value
-
-    def get_title(self, page):
+    def get_preview_title(self, page):
         return page.seo_title or page.title
+
+    def get_start_date(self, page):
+        return getattr(page, page.start_date_field)
 
     def get_url(self, page):
         return page.get_url(request=self.context.get("request"))

@@ -15,6 +15,8 @@ eastern = zoneinfo.ZoneInfo("US/Eastern")
 
 
 class FilterableFeed(Feed):
+    item_guid_is_permalink = False
+
     def __init__(self, request, page, items):
         self.request = request
         self.page = page
@@ -41,7 +43,7 @@ class FilterableFeed(Feed):
         return item["search_description"]
 
     def item_categories(self, item):
-        return [category.name for category in item["categories"]] + [
+        return [category["name"] for category in item["categories"]] + [
             tag["text"] for tag in item["tags"]
         ]
 

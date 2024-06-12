@@ -13,7 +13,7 @@
    post.url:                      The URL of the post.
    post.language:                 The language code of the post.
    post.start_date:               A date to associate with the post.
-   post.title:                    The title of the post.
+   post.preview_title:            The title of the post.
    post.authors:                  A list of post authors.
    post.is_event:                 Whether this post is about an event.
    post.event_location_str:       The location of this post's event.
@@ -92,7 +92,7 @@
         {%- endif %}
 
         <h3 class="o-post-preview__title">
-            <a href="{{ post.url }}">{{ post.title }}</a>
+            <a href="{{ post.url }}">{{ post.preview_title }}</a>
         </h3>
 
         {% if post.is_event %}
