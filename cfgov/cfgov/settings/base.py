@@ -762,6 +762,9 @@ if ENABLE_SSO:
     LOGOUT_REDIRECT_URL = reverse_lazy("cfgov_login")
     ALLOW_LOGOUT_GET_METHOD = True
 
+    # Disable Wagtail password reset
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+
     # This OIDC client's id and secret
     OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
     OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
