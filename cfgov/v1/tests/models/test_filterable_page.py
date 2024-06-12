@@ -1,3 +1,4 @@
+from datetime import date
 from io import StringIO
 from unittest import mock
 
@@ -64,9 +65,12 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         self.root.add_child(instance=self.filterable_page)
 
         self.page = BlogPage(
+            pk=123,
             title="Test",
             slug="one",
             live=True,
+            search_description="A blog post",
+            date_published=date(2024, 1, 1),
         )
         self.filterable_page.add_child(instance=self.page)
 
@@ -84,6 +88,32 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
             response["content-type"], "application/rss+xml; charset=utf-8"
         )
         self.assertEqual(response["Edge-Control"], "cache-maxage=10m")
+
+        self.assertContains(
+            response,
+            (
+                '<?xml version="1.0" encoding="utf-8"?>\n'
+                '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
+                "<channel>"
+                "<title>Blog | Consumer Financial Protection Bureau</title>"
+                "<link>http://localhost/test/</link>"
+                "<description/>"
+                '<atom:link href="http://testserver/test/feed/" rel="self"/>'
+                "<language>en-us</language>"
+                "<lastBuildDate>"
+                "Mon, 01 Jan 2024 00:00:00 -0500"
+                "</lastBuildDate>"
+                "<item>"
+                "<title>Test</title>"
+                "<link>http://localhost/test/one/</link>"
+                "<description>A blog post</description>"
+                "<pubDate>Mon, 01 Jan 2024 00:00:00 -0500</pubDate>"
+                "<guid>123&lt;&gt;consumerfinance.gov</guid>"
+                "</item>"
+                "</channel>"
+                "</rss>"
+            ),
+        )
 
     def test_cache_tag_applied(self):
         response = self.client.get(self.filterable_page.url)

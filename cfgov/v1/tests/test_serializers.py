@@ -24,6 +24,7 @@ class FilterablePageSerializerTests(TestCase):
 
     def test_blog_serialization(self):
         blog = BlogPage(
+            pk=123,
             title="Blog",
             date_published=self.today,
             search_description="A blog post",
@@ -63,6 +64,7 @@ class FilterablePageSerializerTests(TestCase):
                 "is_event": False,
                 "is_report": False,
                 "language": "en",
+                "page_id": 123,
                 "search_description": "A blog post",
                 "start_date": self.today,
                 "tags": [
@@ -84,6 +86,7 @@ class FilterablePageSerializerTests(TestCase):
 
     def test_event_serialization_no_image(self):
         event = EventPage(
+            pk=123,
             title="Event",
             date_published=self.today,
             start_dt=self.now,
@@ -104,6 +107,7 @@ class FilterablePageSerializerTests(TestCase):
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
+                "page_id": 123,
                 "search_description": "",
                 "start_date": self.today,
                 "tags": [],
@@ -114,6 +118,7 @@ class FilterablePageSerializerTests(TestCase):
 
     def test_event_serialization_with_map_image(self):
         event = EventPage(
+            pk=123,
             title="Event",
             date_published=self.today,
             start_dt=self.now,
@@ -138,6 +143,7 @@ class FilterablePageSerializerTests(TestCase):
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
+                "page_id": 123,
                 "search_description": "",
                 "start_date": self.today,
                 "tags": [],
@@ -153,6 +159,7 @@ class FilterablePageSerializerTests(TestCase):
             alt="Venue image alt text",
         )
         event = EventPage(
+            pk=123,
             title="Event",
             date_published=self.today,
             start_dt=self.now,
@@ -174,6 +181,7 @@ class FilterablePageSerializerTests(TestCase):
                 "is_event": True,
                 "is_report": False,
                 "language": "en",
+                "page_id": 123,
                 "search_description": "",
                 "start_date": self.today,
                 "tags": [],

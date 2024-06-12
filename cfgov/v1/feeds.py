@@ -26,9 +26,6 @@ class FilterableFeed(Feed):
     def title(self):
         return f"{self.page.title} | Consumer Financial Protection Bureau"
 
-    def items(self):
-        return self.items
-
     def item_link(self, item):
         return item["full_url"]
 
@@ -37,6 +34,9 @@ class FilterableFeed(Feed):
         naive = datetime.combine(item_date, datetime.min.time())
         return make_aware(naive, eastern)
 
+    def item_title(self, item):
+        return item["title"]
+
     def item_description(self, item):
         return item["search_description"]
 
@@ -44,6 +44,9 @@ class FilterableFeed(Feed):
         return [category.name for category in item["categories"]] + [
             tag["text"] for tag in item["tags"]
         ]
+
+    def item_guid(self, item):
+        return f'{item["page_id"]}<>consumerfinance.gov'
 
 
 def get_appropriate_rss_feed_url_for_page(page, request=None):

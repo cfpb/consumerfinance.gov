@@ -22,6 +22,7 @@ class FilterPageSerializer(serializers.Serializer):
     is_event = serializers.SerializerMethodField()
     is_report = serializers.SerializerMethodField()
     language = serializers.ChoiceField(choices=settings.LANGUAGES)
+    page_id = serializers.ReadOnlyField(source="id")
     search_description = serializers.ReadOnlyField()
     start_date = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
