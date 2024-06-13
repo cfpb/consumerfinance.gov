@@ -198,7 +198,17 @@ const directories = [
     ['cfgov/unprocessed/apps/regulations3k', 'cfgov/regulations3k'],
     'rules-policy',
   ],
-  [['test/cypress/spec-map.js', 'requirements/', /^package.json/], 'all'],
+  [
+    [
+      'test/cypress/spec-map.js',
+      'requirements/',
+      /^package.json/,
+      /cfgov\/v1\/.*\.py/,
+      /cfgov\/core\/.*\.py/,
+      'cfgov/v1/jinja2/v1/layouts/base.html',
+    ],
+    'all',
+  ],
 ];
 
 rl.on('line', (file) => {
