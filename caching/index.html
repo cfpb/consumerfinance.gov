@@ -85,8 +85,6 @@
         
             <li><a class="toctree-l4" href="#akamai">Akamai</a></li>
         
-            <li><a class="toctree-l4" href="#django-caching">Django caching</a></li>
-        
         </ul>
     
 
@@ -187,16 +185,6 @@
 <li><code>TCP_DENIED</code>: Denied access to the client for whatever reason.</li>
 <li><code>TCP_COOKIE_DENY</code>: Denied access on cookie authentication (if centralized or decentralized authorization feature is being used in config).</li>
 </ul>
-<h3 id="django-caching">Django caching<a class="headerlink" href="#django-caching" title="Permanent link">¶</a></h3>
-<p>Starting in December 2017, we use <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/jinja2tags/fragment_cache.py">template fragment caching</a> to cache all or part of a template. It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. <a href="https://consumerfinance.gov/about-us/blog">our blog page</a> &amp; <a href="https://www.consumerfinance.gov/data-research/research-reports/">research &amp; reports</a>).</p>
-<p>It can easily be enabled on other templates. See <a href="https://github.com/cfpb/consumerfinance.gov/pull/3663/files">this PR</a> as an example of the code that would need to be introduced to cache a new fragment.</p>
-<p>When a page gets published, it will update the post preview cache for that particular page. However, if there are code changes that impact the page's content, or the post preview template itself gets updated, the entire post preview cache will need to be manually cleared. Clearing this particular cache could be an option when deploying, as it is with Akamai, but should not be a default since most deploys wouldn't impact the code in question. Currently, the manual way to do this would be to run the following from a production server's django shell:</p>
-<pre class="highlight"><code>from django.core.cache import caches
-
-caches['post_preview'].clear()</code></pre>
-<p>To run the application locally with caching for post previews enabled, run <code>ENABLE_POST_PREVIEW_CACHE=1 ./runserver.sh</code>
-Alternatively, add this variable to your <code>.env</code> if you generally want it enabled locally.</p>
-<p>Due to the impossibility/difficulty/complexity of caching individual Wagtail blocks (they are not serializable) and invalidating content that does not have some type of <code>post_save</code> hook (e.g. Taggit models), we have started with caching segments that are tied to a Wagtail page (which can be easily invalidated using the <code>page_published</code> Wagtail signal), hence the post previews. With more research or improvements to these third-party libraries, it is possible we could expand Django-level caching to more content.</p>
               
             </div>
           </div><footer>
