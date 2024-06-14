@@ -137,6 +137,10 @@
 }
 
 .financial-item-group {
+  & + h3 {
+    margin-top: unit(30px / @base-font-size-px, em);
+  }
+
   .o-costs-group {
     border-bottom: 1px solid @flyout-border;
     &:first-child {

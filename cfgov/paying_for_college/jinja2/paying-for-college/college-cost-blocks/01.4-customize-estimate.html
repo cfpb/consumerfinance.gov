@@ -226,8 +226,11 @@
                     }}
                 </div>
             {% endcall %}
+        </div>
 
-            <h3>What other sources will help you cover the rest of your costs?</h3>
+        <h3>What other sources will help you cover the rest of aaayour costs?</h3>
+
+        <div class="financial-item-group">
 
             {% set flyout_settings = {
                 'label': 'Other sources',
@@ -271,158 +274,130 @@
             {% endcall %}
 
             {% set flyout_settings = {
-                'label': 'Other loans' | safe,
-                'value': '$99,999',
+                'label': 'Direct PLUS (Grad PLUS) loan' | safe,
+                'value': '$0',
+                'class': 'graduate-content',
                 'is_editable': 'True',
-                'data_attribute': 'data-financial-item="total_publicLoans"'
+                'data_attribute': 'data-financial-item="total_plusLoans"'
             } %}
-            <div class="block block--mid">
-                <div class="plus-loan-flyout graduate-content">
-                    {% set flyout_settings = {
-                        'label': 'Direct PLUS (Grad PLUS) loan' | safe,
-                        'value': '$0',
-                        'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_plusLoans"'
-                    } %}
-                    {% call() flyout(flyout_settings) %}
-                        <div class="plus-loan-form" >
-                            {{
-                                input.render({
-                                    'label': 'Loan amount',
-                                    'id': 'plan__gradPlus',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
-                                })
-                            }}
-                            {{
-                                text_item.render({
-                                    'label': 'Interest rate (%)',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="rate_gradPlus"',
-                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
-                                })
-                            }}
-                            {{
-                                text_item.render({
-                                    'label': 'Loan fee (%)',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="fee_gradPlus"',
-                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
-                                })
-                            }}
-                        </div>
-                    {% endcall %}
+            {% call() flyout(flyout_settings) %}
+                <div class="plus-loan-form" >
+                    {{
+                        input.render({
+                            'label': 'Loan amount',
+                            'id': 'plan__gradPlus',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Interest rate (%)',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_gradPlus"',
+                            'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loan fee (%)',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_gradPlus"',
+                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                        })
+                    }}
                 </div>
-                <div class="plus-loan-flyout dependent-content">
-                    {% set flyout_settings = {
-                        'label': 'Parent PLUS loan' | safe,
-                        'value': '$0',
-                        'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_plusLoans"'
-                    } %}
-                    {% call() flyout(flyout_settings) %}
-                         <div class="plus-loan-form">
-                            {{
-                                input.render({
-                                    'label': 'Loan amount',
-                                    'id': 'plan__parentPlus',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
-                                })
-                            }}
-                            {{
-                                text_item.render({
-                                    'label': 'Interest rate (%)' ~ tooltip.render('Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'),
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="rate_parentPlus"',
-                                })
-                            }}
-                            {{
-                                text_item.render({
-                                    'label': 'Loan fee (%)',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="fee_parentPlus"',
-                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
-                                })
-                            }}
-                            <div class="u-mt30">
-                                {{
-                                    checkbox.render({
-                                        'id': 'plan__parentPlusFeeRepay',
-                                        'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount will be added to your projected debt total.',
-                                  })
-                                }}
+            {% endcall %}
 
-                            </div>
-                        </div>
-                       {{ notification.render(
-                            'information',
-                            true,
-                            '',
-                            'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
-                        ) }}
-                    {% endcall %}
+            {% set flyout_settings = {
+                'label': 'Parent PLUS loan' | safe,
+                'value': '$0',
+                'class': 'dependent-content',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_plusLoans"'
+            } %}
+            {% call() flyout(flyout_settings) %}
+                 <div class="plus-loan-form">
+                    {{
+                        input.render({
+                            'label': 'Loan amount',
+                            'id': 'plan__parentPlus',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Interest rate (%)' ~ tooltip.render('Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'),
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_parentPlus"',
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loan fee (%)',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_parentPlus"',
+                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                        })
+                    }}
                 </div>
-                 <div class="private-loan-flyout">
-                    {% set flyout_settings = {
-                        'label': 'Private loans',
-                        'value': '$0',
-                        'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_privLoans"'
-                    } %}
-                    {% call() flyout(flyout_settings) %}
-                        <div class="private-loan-form">
-                            <h4>Private Loan</h4>
-                            {{
-                                input.render({
-                                    'label': 'Loan amount',
-                                    'id': 'plan__privLoan1',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="privLoan_privLoan1"'
-                                })
-                            }}
-                            {{
-                                input.render({
-                                    'label': 'Interest rate (%)',
-                                    'id': 'plan__privLoan1Rate',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="rate_privLoan1"',
-                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
-                                })
-                            }}
-                            {{
-                                input.render({
-                                    'label': 'Loan fee (%)',
-                                    'id': 'plan__privLoan1Fee',
-                                    'value': '0',
-                                    'data_attribute': 'data-financial-item="fee_privLoan1"',
-                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
-                                })
-                            }}
-                            <div class="undergrad-content u-mt30">
-                                {{
-                                    checkbox.render({
-                                        'id': 'plan__privLoan1Repay',
-                                        'label': 'Click here if you plan to repay this private loan, and this loan amount will be added to your projected debt total.',
-                                  })
-                                }}
-                            </div>
-                        </div>
+               {{ notification.render(
+                    'information',
+                    true,
+                    '',
+                    'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
+                ) }}
+            {% endcall %}
 
-                        <button data-state-based-visibility="none" class="a-btn a-btn--link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
-                    {% endcall %}
+            {% set flyout_settings = {
+                'label': 'Private loans',
+                'value': '$0',
+                'class': 'private-loan-flyout',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_privLoans"'
+            } %}
+            {% call() flyout(flyout_settings) %}
+                <div class="private-loan-form">
+                    <h4>Private Loan</h4>
+                    {{
+                        input.render({
+                            'label': 'Loan amount',
+                            'id': 'plan__privLoan1',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="privLoan_privLoan1"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Interest rate (%)',
+                            'id': 'plan__privLoan1Rate',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_privLoan1"',
+                            'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Loan fee (%)',
+                            'id': 'plan__privLoan1Fee',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_privLoan1"',
+                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                        })
+                    }}
                 </div>
-                <div class="estimate--total-costs">
-                    {{ notification.render(
-                        'information',
-                        true,
-                        '',
-                        '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
-                        'data-state_uncovered_costs="true"' | safe
-                    ) }}
-                </div>
-            </div>
+            {% endcall %}
+        </div>
 
+        <div class="estimate--total-costs">
+            {{ notification.render(
+                'information',
+                true,
+                '',
+                '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
+                'data-state_uncovered_costs="true"' | safe
+            ) }}
         </div>
     </div>
     <div class="college-costs__tool-section-buttons block block--mid">

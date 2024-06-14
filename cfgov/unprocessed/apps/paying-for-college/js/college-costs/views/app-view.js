@@ -92,9 +92,6 @@ const appView = {
   },
 
   updateUI: () => {
-    appView._includeParentPlusBtn.checked = getStateValue('includeParentPlus')
-      ? true
-      : false;
   },
 
   /**
@@ -150,10 +147,6 @@ function _addButtonListeners() {
     elem.addEventListener('click', appView._handleCopyLinkBtn);
     elem.addEventListener('keyup', appView._handleCopyLinkBtnKeypress);
   });
-  appView._includeParentPlusBtn.addEventListener(
-    'click',
-    appView._handleIncludeParentPlusBtn,
-  );
 }
 
 /**
