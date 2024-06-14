@@ -14,6 +14,15 @@
   }
 }
 
+// This is needed because the base DS styles set ul:last-child to have a
+// bottom margin of zero, which then gets overridden by the mega menu.
+// However, CCDB also imports the DS into it's cold, so it overrides the
+// mega menu override and brings the ul:last-child back to having no bottom
+// margin. This causes the mega menu to lose a gap between featured menu items.
+.o-mega-menu__content-2-list--featured ul {
+  margin-bottom: unit(30px / @base-font-size-px, em);
+}
+
 .ccdb-search {
   width: 100vw !important;
   max-width: 100vw;
