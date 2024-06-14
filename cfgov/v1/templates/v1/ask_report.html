@@ -33,6 +33,9 @@
                         Live
                     </th>
                     <th>
+                        First published
+                    </th>
+                    <th>
                         Last edited
                     </th>
                     <th>
@@ -46,6 +49,9 @@
                     </th>
                     <th>
                         Related questions
+                    </th>
+                    <th>
+                        Schema
                     </th>
                     <th>
                         Language
@@ -83,6 +89,9 @@
                             {{ page.live }}
                         </td>
                         <td>
+                            {{ page.first_published_at }}
+                        </td>
+                        <td>
                             {{ page.last_edited }}
                         </td>
                         <td>
@@ -105,6 +114,9 @@
                                 {{ question.id }}
                                 <br>
                             {% endfor %}
+                        </td>
+                        <td>
+                            {{ page.schema }}
                         </td>
                         <td>
                             {{ page.language }}
