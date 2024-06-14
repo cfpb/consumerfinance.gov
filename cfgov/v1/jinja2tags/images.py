@@ -3,7 +3,7 @@ from wagtail.images.jinja2tags import images
 from wagtail.images.models import AbstractImage
 
 from v1.atomic_elements.atoms import ImageBasicStructValue
-from v1.models.images import CFGOVRendition
+from v1.models.images import CFGOVImage, CFGOVRendition
 
 
 def image_alt_value(image):
@@ -15,7 +15,7 @@ def image_alt_value(image):
 
     As a fallback, return the empty string.
     """
-    if isinstance(image, CFGOVRendition):
+    if isinstance(image, (CFGOVImage, CFGOVRendition)):
         return image.alt or ""
     elif isinstance(image, ImageBasicStructValue):
         return image.alt_text or ""

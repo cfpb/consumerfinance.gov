@@ -34,38 +34,39 @@ except ImportError:
 
 
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
-    def setUp(self):
-        self.blog1 = BlogPage(title="test page")
-        self.blog1.categories.add(CFGOVPageCategory(name="foo"))
-        self.blog1.categories.add(CFGOVPageCategory(name="bar"))
-        self.blog1.tags.add("foo")
-        self.blog1.language = "es"
-        self.blog2 = BlogPage(title="another test page")
-        self.blog2.categories.add(CFGOVPageCategory(name="bar"))
-        self.blog2.tags.add("blah")
-        self.category_blog = BlogPage(title="Category Test")
-        self.category_blog.categories.add(
+    @classmethod
+    def setUpTestData(cls):
+        cls.blog1 = BlogPage(title="test page")
+        cls.blog1.categories.add(CFGOVPageCategory(name="foo"))
+        cls.blog1.categories.add(CFGOVPageCategory(name="bar"))
+        cls.blog1.tags.add("foo")
+        cls.blog1.language = "es"
+        cls.blog2 = BlogPage(title="another test page")
+        cls.blog2.categories.add(CFGOVPageCategory(name="bar"))
+        cls.blog2.tags.add("blah")
+        cls.category_blog = BlogPage(title="Category Test")
+        cls.category_blog.categories.add(
             CFGOVPageCategory(name="info-for-consumers")
         )
-        self.event1 = EventPage(
+        cls.event1 = EventPage(
             title="test page 2",
             start_dt=datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
-        self.event1.tags.add("bar")
-        self.cool_event = EventPage(
+        cls.event1.tags.add("bar")
+        cls.cool_event = EventPage(
             title="Cool Event", start_dt=datetime.now(zoneinfo.ZoneInfo("UTC"))
         )
-        self.awesome_event = EventPage(
+        cls.awesome_event = EventPage(
             title="Awesome Event",
             start_dt=datetime.now(zoneinfo.ZoneInfo("UTC")),
         )
-        publish_page(self.blog1)
-        publish_page(self.blog2)
-        publish_page(self.event1)
-        publish_page(self.cool_event)
-        publish_page(self.awesome_event)
-        publish_page(self.category_blog)
-        self.rebuild_elasticsearch_index(
+        publish_page(cls.blog1)
+        publish_page(cls.blog2)
+        publish_page(cls.event1)
+        publish_page(cls.cool_event)
+        publish_page(cls.awesome_event)
+        publish_page(cls.category_blog)
+        cls.rebuild_elasticsearch_index(
             FilterablePagesDocument.Index.name, stdout=StringIO()
         )
 
@@ -81,20 +82,20 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
     def test_filter_by_category(self):
         form = self.setUpFilterableForm(data={"categories": ["foo"]})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.blog1)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.blog1)
 
     def test_filter_by_nonexisting_category(self):
         form = self.setUpFilterableForm(data={"categories": ["test filter"]})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 0)
+        self.assertFalse(page_set.count())
 
     def test_filter_by_tags(self):
         form = self.setUpFilterableForm(data={"topics": ["foo", "bar"]})
-        page_set_pks = form.get_page_set().values_list("pk", flat=True)
-        self.assertEqual(len(page_set_pks), 2)
-        self.assertIn(self.blog1.pk, page_set_pks)
-        self.assertIn(self.event1.pk, page_set_pks)
+        qs = form.get_page_set().to_queryset().specific()
+        self.assertEqual(qs.count(), 2)
+        self.assertIn(self.blog1, qs)
+        self.assertIn(self.event1, qs)
 
     def test_filter_doesnt_return_drafts(self):
         page2 = BlogPage(title="test page 2")
@@ -102,8 +103,8 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         # Don't publish new page
         form = self.setUpFilterableForm(data={"topics": ["foo"]})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.blog1)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.blog1)
 
     def test_form_language_choices(self):
         form = self.setUpFilterableForm()
@@ -118,14 +119,14 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
     def test_filter_by_language(self):
         form = self.setUpFilterableForm(data={"language": ["es"]})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.blog1)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.blog1)
 
     def test_filter_by_title(self):
         form = self.setUpFilterableForm(data={"title": "Cool"})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.cool_event)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.cool_event)
 
     def test_validate_date_after_1900_can_pass(self):
         form = self.setUpFilterableForm()
@@ -217,8 +218,8 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         form.is_bound = True
         form.cleaned_data = {"categories": []}
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.event)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.event)
 
 
 class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
@@ -242,5 +243,5 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
         form.is_bound = True
         form.cleaned_data = {"categories": [], "statuses": [], "products": []}
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.enforcement)
+        self.assertEqual(page_set.count(), 1)
+        self.assertEqual(page_set.to_queryset()[0].specific, self.enforcement)

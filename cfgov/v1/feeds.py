@@ -17,46 +17,38 @@ eastern = zoneinfo.ZoneInfo("US/Eastern")
 class FilterableFeed(Feed):
     item_guid_is_permalink = False
 
-    def __init__(self, page, context):
+    def __init__(self, request, page, items):
+        self.request = request
         self.page = page
-        self.context = context
-
-    def __call__(self, request, *args, **kwargs):
-        response = super().__call__(request, *args, **kwargs)
-
-        # Tell Akamai that the feed should have a maximum age of 10 minutes
-        response["Edge-Control"] = "cache-maxage=10m"
-
-        return response
+        self.items = items
 
     def link(self):
-        return self.page.full_url
+        return self.page.get_full_url(self.request)
 
     def title(self):
         return f"{self.page.title} | Consumer Financial Protection Bureau"
 
-    def items(self):
-        return self.context["results_page"]
-
     def item_link(self, item):
-        return item.full_url
+        return item["full_url"]
 
     def item_pubdate(self, item):
-        # this seems to require a datetime
-        item_date = item.date_published
+        item_date = item["date_published"]
         naive = datetime.combine(item_date, datetime.min.time())
         return make_aware(naive, eastern)
 
+    def item_title(self, item):
+        return item["title"]
+
     def item_description(self, item):
-        return item.search_description
+        return item["search_description"]
 
     def item_categories(self, item):
-        categories = [cat.get_name_display() for cat in item.categories.all()]
-        tags = [tag.name for tag in item.tags.all()]
-        return categories + tags
+        return [category["name"] for category in item["categories"]] + [
+            tag["text"] for tag in item["tags"]
+        ]
 
     def item_guid(self, item):
-        return f"{item.page_ptr_id}<>consumerfinance.gov"
+        return f'{item["page_id"]}<>consumerfinance.gov'
 
 
 def get_appropriate_rss_feed_url_for_page(page, request=None):

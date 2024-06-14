@@ -190,7 +190,6 @@ TEMPLATES = [
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
-                "v1.jinja2tags.fragment_cache_extension",
                 "v1.jinja2tags.images_extension",
                 "v1.jinja2tags.v1_extension",
             ],
@@ -695,11 +694,6 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
         "LOCATION": "cfgov_default_cache",
-        "TIMEOUT": None,
-    },
-    "post_preview": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "post_preview_cache",
         "TIMEOUT": None,
     },
 }
