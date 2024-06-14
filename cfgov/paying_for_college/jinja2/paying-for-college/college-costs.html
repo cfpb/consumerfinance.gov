@@ -7,6 +7,7 @@
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
 {% import 'college-cost-blocks/macros/financial-item-text.html' as text_item with context %}
 {% import 'college-cost-blocks/macros/number-callout.html' as number_callout with context %}
+{% import 'college-cost-blocks/macros/tooltip.html' as tooltip %}
 
 {% block css -%}
     {{ super() }}
@@ -34,6 +35,7 @@
                     <div class="app-container">
                         <div class="app">
                             <div id="react-stepper"></div>
+                            <div id="react-tooltip"></div>
                             {%- include 'college-cost-blocks/01.2-school-info.html' with context -%}
                             {%- include 'college-cost-blocks/01.2.5-school-costs.html' with context -%}
                             {%- include 'college-cost-blocks/01.2.7-estimate-debt.html' with context -%}
@@ -53,7 +55,7 @@
                             {%- include 'college-cost-blocks/07-other-resources.html' with context -%}
                             {%- include 'college-cost-blocks/08-loan-counseling.html' with context -%}
                             {%- include 'college-cost-blocks/09-make-a-plan.html' with context -%}
-                            {%- include 'college-cost-blocks/10-max-debt-guideline.html' with context -%} 
+                            {%- include 'college-cost-blocks/10-max-debt-guideline.html' with context -%}
                             {%- include 'college-cost-blocks/11-cost-of-borrowing.html' with context -%}
                             {%- include 'college-cost-blocks/12-affording-your-loan.html' with context -%}
                             {%- include 'college-cost-blocks/13-school-results.html' with context -%}

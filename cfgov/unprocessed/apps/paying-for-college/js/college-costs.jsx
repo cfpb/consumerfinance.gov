@@ -13,6 +13,7 @@ import { schoolView } from './college-costs/views/school-view.js';
 import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
 
 import { createRoot } from 'react-dom/client';
+import { Tooltip } from 'react-tooltip';
 import Stepper from './Stepper.jsx';
 
 /**
@@ -41,7 +42,7 @@ function init() {
 
 window.addEventListener('load', init);
 
-// Set up Stepper 
+// Set up Stepper
 
 // const headings = Array.from(
 //       document.querySelectorAll('.o-secondary-nav__link')
@@ -90,3 +91,6 @@ function Wrapper(){
 
 const root = createRoot(document.getElementById('react-stepper'));
 root.render(<Wrapper/>);
+
+const tooltipRoot = createRoot(document.getElementById('react-tooltip'));
+tooltipRoot.render(<Tooltip id="a-tooltip" border='1px solid var(--gray-40)' opacity='1' clickable={true}/>)
