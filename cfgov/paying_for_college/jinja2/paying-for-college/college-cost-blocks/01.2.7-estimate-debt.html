@@ -35,10 +35,10 @@
             }}
             {{
                 input.render({
-                    'label': 'College savings plan (like 529 plans) per year of your program',
+                    'label': 'College savings plan' ~ tooltip.render('529 college savings plans are tax-advantaged savings plans that help families save for higher education so they can be less reliant on student loans. <a href="https://studentaid.gov/resources/tax-benefits#529-plans" target="_blank" rel="noreferrer noopener">Learn more here.</a>') | safe,
                     'id': 'estimate__collegeSavings',
+                    'helper_text': '(like 529 plans) per year of your program',
                     'value': '0',
-                    'helper_text': '529 college savings plans are tax-advantaged savings plans that help families save for higher education so they can be less reliant on student loans. <a href="https://studentaid.gov/resources/tax-benefits#529-plans" target="_blank" rel="noreferrer noopener">Learn more here.</a>',
                     'data_attribute': 'data-financial-item="savings_collegeSavings"'
                 })
             }}

@@ -170,13 +170,14 @@
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_fedLoans"'
             } %}
+
             {% call() flyout(flyout_settings) %}
+            {% set tt = tooltip.render('Interest starts accumulating 6 months after you leave school.') %}
                 <div class="block block--mid block--flush-top financial-item-group undergrad-content">
                     {{
                         input.render({
-                            'label': 'Direct Subsidized Loan',
+                            'label': 'Direct Subsidized Loan' ~ tt,
                             'id': 'plan__directSubsidized',
-                            'help_text': 'Interest starts accumulating 6 months after you leave school',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fedLoan_directSub"'
                         })
@@ -201,9 +202,8 @@
                 <div class="block block--mid block--flush-bottom financial-item-group">
                     {{
                         input.render({
-                            'label': 'Direct Unsubsidized Loans',
+                            'label': 'Direct Unsubsidized Loans' ~ tt,
                             'id': 'plan__directUnsub',
-                            'helper_text': 'Interest starts accumulating 6 months after you leave school',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fedLoan_directUnsub"'
                         })
@@ -332,10 +332,9 @@
                             }}
                             {{
                                 text_item.render({
-                                    'label': 'Interest rate (%)',
+                                    'label': 'Interest rate (%)' ~ tooltip.render('Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'),
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_parentPlus"',
-                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
                                 })
                             }}
                             {{
@@ -420,7 +419,7 @@
                         '',
                         '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
                         'data-state_uncovered_costs="true"' | safe
-                    ) }}                    
+                    ) }}
                 </div>
             </div>
 

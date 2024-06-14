@@ -222,8 +222,7 @@
         </div>
 
         <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
-            <h3 class="h4">Are you considered a dependent or independent student?</h3>
-            <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
+          <h3 class="h4">Are you considered a dependent or independent student?{{tooltip.render('Check out <a href="https://studentaid.gov/apply-for-aid/fafsa/filling-out/dependency" target="_blank" rel="noreferrer noopener">studentaid.gov</a> for help determining your status.')}}</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
