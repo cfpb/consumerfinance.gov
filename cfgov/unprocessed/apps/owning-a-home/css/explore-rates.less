@@ -52,11 +52,6 @@
   /*
         layout
         --------------------------- */
-  .rc-results {
-    .grid__column( 8 );
-    .grid__pull( 4 );
-  }
-
   #credit-score-container,
   .loan-amt-total,
   .state-col,
@@ -68,9 +63,6 @@
         Sidebar with all the user input
        --------------------------- */
   .calculator {
-    .grid__column( 4 );
-    .grid__push( 8 );
-
     background: var(--gray-5);
 
     p:last-child,
@@ -503,13 +495,28 @@
   /*
         Media queries
         --------------------------- */
-  .respond-to-max(720px, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
+    display: grid;
+    grid-template-areas:
+      'page-intro'
+      'calculator'
+      'rc-results';
 
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
+    .page-intro {
+      grid-area: page-intro
     }
+
+    .rc-results {
+      grid-area: rc-results;
+    }
+
+    .calculator {
+      grid-area: calculator;
+    }
+  });
+
+  .respond-to-max(720px, {
 
     .rc-home-illu {
       display: none;
@@ -578,12 +585,6 @@
   @media print {
     .rc-illu-inner {
       display: none;
-    }
-
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
     }
 
     .calculator section {
