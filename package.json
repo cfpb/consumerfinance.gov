@@ -82,5 +82,9 @@
     "singleQuote": true
   },
   "snyk": true,
-  "type": "module"
+  "type": "module",
+  "workspaces": [
+    "cfgov/unprocessed/apps/*"
+  ],
+  "packageManager": "yarn@4.3.0"
 }

@@ -28,6 +28,7 @@ cfgov/static_built/*
 !cfgov/agreements/tests/UTF_agreements.zip
 !cfgov/legacy/static/foia/quarterly/*.zip
 !cfgov/paying_for_college/data_sources/ipeds/test.txt.zip
+!npm-packages-offline-cache/*.zip
 
 # Desired minified CSS #
 ########################

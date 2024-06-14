@@ -1,6 +1,7 @@
 {
   "name": "cfpb-filing-instruction-guide",
   "description": "CFPB's filing instruction guide",
+  "private": true,
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
@@ -10,7 +11,6 @@
     "type": "git",
     "url": "https://github.com/cfpb/consumerfinance.gov.git"
   },
-  "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
     "ctrl-f": "1.4.2"
