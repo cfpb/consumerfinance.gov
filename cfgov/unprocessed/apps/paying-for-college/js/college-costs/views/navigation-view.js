@@ -258,7 +258,7 @@ function _handleNavButtonClick(event) {
         ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
         ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
       ];
-      const destination = event.target.dataset.destination;
+      const destination = event.target.dataset.destination; 
       console.log( destination );
       const elem = document.querySelector('section[data-tool-section="' + destination + '"]');
       console.log( destination, elem );

@@ -521,7 +521,7 @@ const chartView = {
     chartView.makePlanElem = body.querySelector('[data-chart_id="make-a-plan"]');
     chartView.maxDebtElems = body.querySelectorAll('[data-chart_id="max-debt-guideline_chart"]');
     chartView.affordingElem = body.querySelector('[data-chart_id="affording-your-loans"]');
-    chartView.gradMeterElems = body.querySelectorAll('[data-chart_id="school-results_grad-meter"]');
+    chartView.gradMeterElems = body.querySelectorAll('[data-chart_id="grad-meter"]');
     chartView.repaymentMeterElem = body.querySelector('#school-results_repayment-meter');
 
     _addRadioListeners();
