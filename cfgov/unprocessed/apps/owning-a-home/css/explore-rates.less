@@ -63,6 +63,7 @@
         Sidebar with all the user input
        --------------------------- */
   .calculator {
+    padding-left: unit(10px / @base-font-size-px, rem);
     background: var(--gray-5);
 
     p:last-child,
@@ -93,7 +94,7 @@
     }
 
     section:first-child {
-      padding: unit(30px / @base-font-size-px, em) 0 0;
+      padding: 0;
     }
 
     .calc-footer {
@@ -160,7 +161,7 @@
         Main section with output
         --------------------------- */
   .rate-checker-heading {
-    margin-top: unit(20px / @base-font-size-px, em);
+    margin-right: unit(10px / @base-font-size-px, em);
     margin-bottom: unit(16px / @base-font-size-px, em);
     font-size: 1.375em;
   }
@@ -169,11 +170,22 @@
         Middle section with chart
         --------------------------- */
 
-  // this is shameful, but this is needed to force
-  // highcharts to display overflowing tooltips
+  // This is shameful, but this is needed to force
+  // highcharts to display overflowing tooltips.
   .chart-area,
   .highcharts-container {
     overflow: visible !important;
+  }
+
+  .chart-area {
+    // This matches the height of the highcharts chart.
+    min-height: 400px;
+  }
+
+  // This ensures the chart resizes when the page is resized.
+  .highcharts-container {
+    position: absolute !important;
+    width: 100% !important;
   }
 
   .highcharts-tooltip > span {
