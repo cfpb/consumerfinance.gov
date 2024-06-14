@@ -318,23 +318,15 @@ function _handleResultButtonClick(event) {
  * @param {MouseEvent} event - click event object.
  */
 function _handleProgramRadioClick(event) {
-  const container = event.target.closest('.m-form-field');
-  const input = container.querySelector('input');
-  const recalcProps = [
-    'programLength',
-    'programType',
-  ];
+  const target = event.target;
+  if ( target.tagName !== 'INPUT' ) return;
 
   // Update the model with program info
-  const prop = input.getAttribute('name');
-  const value = input.value;
+  const prop = target.getAttribute('name');
+  const value = target.value;
   updateState.byProperty(prop, value);
   if (prop === 'programType') {
     schoolView._updateProgramList();
-  }
-  if (recalcProps.indexOf(prop) !== -1) {
-    recalculateFinancials();
-    updateFinancialViewAndFinancialCharts();
   }
 }
 

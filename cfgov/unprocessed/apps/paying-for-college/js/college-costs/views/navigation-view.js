@@ -5,7 +5,15 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
-import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
+import {
+  updateFinancialView,
+  updateCostOfBorrowingChart,
+  updateMakePlanChart,
+  updateMaxDebtChart,
+  updateAffordingChart,
+  updateGradMeterChart,
+  updateRepaymentMeterChart
+} from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
@@ -243,7 +251,25 @@ function _handleNavButtonClick(event) {
   } else {
     const target = event.target;
     if (event.target.dataset.hasOwnProperty('destination')) {
+      const updateHooks = [
+        ['[data-financial-item]', updateFinancialView],
+        ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
+        ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
+        ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
+        ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
+      ];
       const destination = event.target.dataset.destination;
+      console.log( destination );
+      const elem = document.querySelector('section[data-tool-section="' + destination + '"]');
+      console.log( destination, elem );
+
+      // Check for what updates should be performed
+      updateHooks.forEach( hook => {
+        if ( elem.querySelectorAll( hook[0] ).length > 0 ) {
+          hook[1].call();
+        }
+      })
+
       sendAnalyticsEvent(
         'Navigation Button from ' +
           getStateValue('activeSection') +
@@ -251,9 +277,7 @@ function _handleNavButtonClick(event) {
           destination,
         'time-to-click',
       );
-      if (destination === 'debt-at-grad') {
-        updateFinancialViewAndFinancialCharts();
-      }
+
       updateState.navigateTo(destination);
       window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
       document.querySelector('.college-costs__tool-section.active h2').focus();
