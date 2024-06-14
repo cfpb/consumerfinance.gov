@@ -68,6 +68,12 @@ main.college-costs {
     .no-program-selected {
       display: none;
     }
+    [data-state-based-visibility='program-is-selected'] {
+      display: block;
+    }
+    span[data-state-based-visibility='program-is-selected'] {
+      display: inline;
+    }
   }
 
   &[data-state_programlevel='graduate'] {
@@ -177,14 +183,6 @@ main.college-costs {
     }
   }
 
-  &[data-state_pid] {
-    [data-state-based-visibility='program-is-selected'] {
-      display: block;
-    }
-    span[data-state-based-visibility='program-is-selected'] {
-      display: inline;
-    }
-  }
   &:not([data-state_pid]) {
     [data-state-based-visibility='no-program-selected'] {
       display: block;
