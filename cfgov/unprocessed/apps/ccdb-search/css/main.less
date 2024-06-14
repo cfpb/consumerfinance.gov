@@ -1,7 +1,13 @@
 @import url('../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css');
 @import (reference) 'cfpb-core.less';
 
-// TODO: !important's are added for styles that are overriding ccdb5-ui styles.
+// TODO: CCDB requires a number of undesirable overrides here, since it imports
+//       the DS into its codebase independent of the import that happens for the
+//       rest of the site. In the future we should explore better encapsulation
+//       approaches for injecting the CCDB app into a page,
+//       such as making it a web component.
+
+// !important's are added for styles that are overriding ccdb5-ui styles.
 .wrapper {
   max-width: 1200px !important;
 }
