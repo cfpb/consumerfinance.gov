@@ -28,12 +28,23 @@
     }
   }
 
+  .m-full-width-text {
+    margin-top: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
+  }
+
   .m-full-width-text + .m-call-to-action {
     margin-top: unit(30px / @base-font-size-px, em);
   }
 
   // Tablet and above.
   .respond-to-min(@bp-sm-min, {
+
+    .m-full-width-text {
+      margin-top: unit(45px / @base-font-size-px, em);
+      margin-bottom: unit(45px / @base-font-size-px, em);
+    }
+
     .m-inset {
       margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
 
