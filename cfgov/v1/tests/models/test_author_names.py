@@ -9,6 +9,11 @@ class TestAuthorNames(TestCase):
         page.authors.add(*authors)
         self.assertEqual(page.get_authors(), expected)
 
+    def test_author_names_with_no_space(self):
+        self.check_authors(
+            ["Wyatt Pearsall", "CFPB"], ["CFPB", "Wyatt Pearsall"]
+        )
+
     def test_alphabetize_authors_by_last_name(self):
         self.check_authors(
             ["Ross Karchner", "Richa Agarwal", "Andy Chosak", "Will Barton"],

@@ -198,7 +198,7 @@ class CFGOVPage(Page):
 
         def sorting(name):
             parts = name.rsplit(" ", 1)
-            return parts[1], parts[0]
+            return parts[0] if len(parts) == 1 else parts[1], parts[0]
 
         return sorted(
             [author.name for author in self.authors.all()], key=sorting
