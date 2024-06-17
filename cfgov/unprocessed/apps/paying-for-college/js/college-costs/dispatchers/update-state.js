@@ -16,13 +16,6 @@ const updateState = {
    */
   activeSection: (value, popState) => {
     stateModel.setActiveSection(value, popState);
-    if (value === 'make-a-plan') {
-      updateMakePlanChart();
-    } else if (value === 'debt-at-grad') {
-      updateMaxDebtChart();
-    } else if (value === 'cost-of-borrowing') {
-      updateCostOfBorrowingChart();
-    }
   },
 
   /**

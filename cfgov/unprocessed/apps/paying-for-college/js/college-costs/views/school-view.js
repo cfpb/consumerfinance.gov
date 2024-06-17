@@ -11,6 +11,7 @@ import {
   refreshExpenses,
   updateFinancial,
   updateSchoolData,
+  updateFinancialsFromSchool
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
@@ -325,6 +326,7 @@ function _handleProgramRadioClick(event) {
   const prop = target.getAttribute('name');
   const value = target.value;
   updateState.byProperty(prop, value);
+  updateFinancialsFromSchool();
   if (prop === 'programType') {
     schoolView._updateProgramList();
   }

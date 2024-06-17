@@ -167,6 +167,27 @@ const navigationView = {
 };
 
 /**
+ * Check the destination page to see if we should update charts, etc, before navigating there
+ */
+function _updateBeforeNavigation(destination) {
+    const updateHooks = [
+      ['[data-financial-item]', updateFinancialView],
+      ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
+      ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
+      ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
+      ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
+    ];
+    const elem = document.querySelector('section[data-tool-section="' + destination + '"]');
+
+    // Check for what updates should be performed
+    updateHooks.forEach( hook => {
+      if ( elem.querySelectorAll( hook[0] ).length > 0 ) {
+        hook[1].call();
+      }
+    });
+}
+
+/**
  * _addButtonListeners - Add event listeners for nav buttons
  * @param { string } iped - String representing the chosen school.
  */
@@ -227,6 +248,7 @@ function _handleSecondaryNavButtonClick(event) {
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
     if ( typeof target.dataset.nav_section !== 'undefined' ) {
+      _updateBeforeNavigation(destination);
       updateState.activeSection( target.dataset.nav_section );
     }
 
@@ -251,24 +273,8 @@ function _handleNavButtonClick(event) {
   } else {
     const target = event.target;
     if (event.target.dataset.hasOwnProperty('destination')) {
-      const updateHooks = [
-        ['[data-financial-item]', updateFinancialView],
-        ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
-        ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
-        ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
-        ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
-      ];
-      const destination = event.target.dataset.destination; 
-      console.log( destination );
-      const elem = document.querySelector('section[data-tool-section="' + destination + '"]');
-      console.log( destination, elem );
-
-      // Check for what updates should be performed
-      updateHooks.forEach( hook => {
-        if ( elem.querySelectorAll( hook[0] ).length > 0 ) {
-          hook[1].call();
-        }
-      })
+      const destination = event.target.dataset.destination;
+      _updateBeforeNavigation(destination);
 
       sendAnalyticsEvent(
         'Navigation Button from ' +
