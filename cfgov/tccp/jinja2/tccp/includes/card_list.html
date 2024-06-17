@@ -41,8 +41,8 @@
         Use the ratings to compare your results:
     </p>
     <dl>
-        {% for rating, rating_count in purchase_apr_rating_counts.items() %}
-            {{ apr_rating(rating, count=rating_count) }}
+        {% for rating, (apr_min, apr_max) in purchase_apr_rating_ranges.items() %}
+            {{ apr_rating(rating, apr_min=apr_min, apr_max=apr_max) }}
         {% endfor %}
     </dl>
 </div>

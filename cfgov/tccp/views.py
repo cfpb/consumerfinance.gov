@@ -1,4 +1,4 @@
-from operator import attrgetter
+from operator import attrgetter, itemgetter
 from urllib.parse import urlencode
 
 from django.shortcuts import redirect, reverse
@@ -146,7 +146,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             form = filter_backend.used_filterset.form
             situations = form.cleaned_data["situations"]
 
-            purchase_apr_rating_counts = self.get_purchase_apr_rating_counts(
+            purchase_apr_rating_ranges = self.get_purchase_apr_rating_ranges(
                 cards
             )
 
@@ -159,7 +159,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "situations": situations,
                     "situation_features": SituationFeatures(situations),
                     "speed_bumps": SituationSpeedBumps(situations),
-                    "purchase_apr_rating_counts": purchase_apr_rating_counts,
+                    "purchase_apr_rating_ranges": purchase_apr_rating_ranges,
                     "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
                     "rewards_lookup": dict(enums.RewardsChoices),
                 }
@@ -168,23 +168,29 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         return response
 
     @classmethod
-    def get_purchase_apr_rating_counts(cls, cards):
-        # We want to aggregate the counts of cards in each of the {less
-        # than average, average, more than average} purchase APR ratings.
-        # We do this so we can display a results summary like "50 cards
-        # with less than average interest". We could do this with another
-        # database query but the size of the data is small enough that we
-        # can just as easily do it in Python.
-        return {
-            rating_score: len(
-                [
-                    card
-                    for card in cards
-                    if card["purchase_apr_for_tier_rating"] == rating_score
-                ]
+    def get_purchase_apr_rating_ranges(cls, cards):
+        # In the ratings key we want to display a summary line like "Lower than
+        # average (4.9% - 7.9%)". We've already computed the percentile cutoffs
+        # for each rating but don't have the exact card APRs at the ends of
+        # each rating. We could do this with another database query but the
+        # size of the data is small enough to do it efficiently in Python.
+        rating_ranges = {}
+
+        for rating_score, _ in enums.PurchaseAPRRatings:
+            # We use maximum APR here because that is what is used to assign
+            # cards to rating groups.
+            rating_maxes = [
+                card["purchase_apr_for_tier_max"]
+                for card in cards
+                if card["purchase_apr_for_tier_rating"] == rating_score
+            ]
+
+            rating_ranges[rating_score] = (
+                min(rating_maxes) if rating_maxes else None,
+                max(rating_maxes) if rating_maxes else None,
             )
-            for rating_score, _ in enums.PurchaseAPRRatings
-        }
+
+        return rating_ranges
 
 
 class CardDetailView(FlaggedViewMixin, RetrieveAPIView):

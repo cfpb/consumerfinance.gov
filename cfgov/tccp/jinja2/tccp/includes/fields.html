@@ -4,7 +4,7 @@
     {%- elif value == 0 -%}
         0%
     {%- else -%}
-        {{ ('%.2f%%' | format(value * 100)) }}
+        {{ ('%g%%' | format(value * 100)) }}
     {%- endif %}
 {%- endmacro -%}
 
