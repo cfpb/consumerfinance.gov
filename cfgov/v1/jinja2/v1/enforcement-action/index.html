@@ -6,15 +6,9 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if block.block_type == 'item_introduction' %}
-            {% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
-            {{ item_introduction.render(block.value) }}
-        {% else %}
-            <div class="block
-                        block--flush-top">
-                {% include_block block %}
-            </div>
-        {% endif %}
+        <div class="block block--flush-top">
+            {% include_block block %}
+        </div>
     {%- endfor %}
 
     {% for block in page.content -%}

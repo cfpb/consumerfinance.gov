@@ -24,7 +24,6 @@
 
    ========================================================================== #}
 
-{% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
 {%- import 'v1/includes/templates/render_block.html' as render_block with context -%}
 {%- import 'v1/includes/tags.html' as tags -%}
 
@@ -38,8 +37,7 @@
 
 <article>
     <header>
-        {% set data = {
-            'category': page.categories.all(),
+        {% set item_intro_data = {
             'heading': page.title,
             'date': page.date_published,
             'has_social': True,
@@ -48,11 +46,13 @@
 
         {% for block in page.header -%}
             {% if block.block_type == 'article_subheader' %}
-                {% do data.update({'paragraph': block.value}) %}
+                {% do item_intro_data.update({'paragraph': block.value}) %}
             {% endif %}
         {% endfor %}
 
-        {{ item_introduction.render(data) }}
+        {% with value = item_intro_data -%}
+            {% include 'v1/includes/organisms/item-introduction.html' %}
+        {%- endwith %}
     </header>
 
     <div>
