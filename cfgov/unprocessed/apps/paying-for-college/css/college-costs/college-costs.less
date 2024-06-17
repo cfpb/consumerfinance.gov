@@ -236,15 +236,26 @@
   }
 
   &__tool-section-buttons {
-    & > button {
-      margin-bottom: unit(15px / @base-font-size-px, em);
-      width: 100%
-    }
-    .a-btn--prev {
-      background-color: var(--white);
-      color: var(--pacific);
-      border: 1px solid;
-      border-color: var(--pacific);
+    .nav-button-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      margin-bottom: unit( 30px / @base-font-size-px, em );
+
+      & > button {
+        width: 45%;
+      }
+
+      .a-btn--prev {
+        background-color: var(--white);
+        color: var(--pacific);
+        border: 1px solid;
+        border-color: var(--pacific);
+      }
+
+      .a-btn-next {
+      }
     }
   }
 }

@@ -67,6 +67,7 @@ const stepMap = {
   'estimate-debt': 1,
   'debt-at-grad': 1,
   'customize-estimate': 2,
+  'debt-guideline': 2,
   'cost-of-borrowing': 3,
   'affording-payments': 3,
   'compare-school': 4,

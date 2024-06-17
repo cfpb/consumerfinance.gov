@@ -248,7 +248,7 @@ function _handleSecondaryNavButtonClick(event) {
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
     if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      _updateBeforeNavigation(destination);
+      _updateBeforeNavigation( target.dataset.nav_section );
       updateState.activeSection( target.dataset.nav_section );
     }
 

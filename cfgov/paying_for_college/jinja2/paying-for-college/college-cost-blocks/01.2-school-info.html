@@ -1,6 +1,6 @@
 <section class="college-costs__tool-section college-costs__tool-section--school-search" id="college-costs_school-search" data-tool-section="school-info">
     <div class="school-search__start" id="school-search_what-school">
-        <h2 tabindex="-1">Estimate how much your program costs</h2>
+        <h2 tabindex="-1">Estimate how much you’ll owe in student loans</h2>
         <label class="a-label a-label--heading u-mb15" for="search__school-input">
             Enter the name of your school.
         </label>
@@ -84,60 +84,8 @@
           </div>
         </div>
 
-        <div class="block block--sub program-question" id="school-search_program-progress" style="display: none">
-          <h3 class="h4">How much progress have you made towards this degree, excluding credits from AP/IB exams?</h3>
-          <div class="a-form-alert a-form-alert--error" data-state-based-visibility="progress-required" role="alert">
-              {{ svg_icon('warning-round') }}
-              <span class="a-form-alert__text">
-                  Please select how much progress you have made towards this degree.
-              </span>
-          </div>
-
-          {{
-              radio.render({
-                'name':  "programProgress",
-                'label': '<strong>None.</strong> I have no credits or only credits from AP/IB exams.',
-                'value': 'n',
-                'id': 'program-years-spent-radio_n'
-              })
-          }}
-          {{
-              radio.render({
-                'name':  "programProgress",
-                'label': '<strong>I will be a first-year student.</strong> I have completed 1 - 29 credits, or less than 1 year.',
-                'value': '0',
-                'id': 'program-years-spent-radio_0'
-              })
-          }}
-          {{
-              radio.render({
-                'name':  "programProgress",
-                'label': '<strong>I will be a second-year student.</strong> I have completed 30 - 59 credits, or less than 2 years.',
-                'value': '1',
-                'id': 'program-years-spent-radio_1'
-              })
-          }}
-          {{
-              radio.render({
-                'name':  "programProgress",
-                'label': '<strong>I have an associate\'s degree.</strong> I will be a third-year student.',
-                'value': 'a',
-                'id': 'program-years-spent-radio_a'
-              })
-          }}
-          {{
-              radio.render({
-                'name':  "programProgress",
-                'label': '<strong>I will be a third-year student, or beyond.</strong> I have completed 60+ credits, or 2+ years.',
-                'value': '2',
-                'id': 'program-years-spent-radio_2'
-              })
-          }}
-        </div>
-
         <div class="block block--sub program-question" id="school-search_program-length">
-            <h3 class="h4" data-state-based-visibility="is_first_year-false">How much longer do you expect your program to take, including the coming school year?</h3>
-            <h3 class="h4" data-state-based-visibility="is_first_year-true">How long do you expect your program to take, including the coming school year?{{tooltip.render('Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.')}}</h3>
+            <h3 class="h4">How long do you expect your program to take, including the coming school year?{{tooltip.render('Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.')}}</h3>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="length-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">

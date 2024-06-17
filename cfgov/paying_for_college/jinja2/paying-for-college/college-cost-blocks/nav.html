@@ -7,17 +7,12 @@
               o-college-costs-nav">
     {% set nav_items = [
         {
-            'title': 'School Information',
+            'title': 'Estimate debt',
             'data': 'school-info',
             'current': True
         },
         {
-            'title': 'Debt at Graduation',
-            'data': 'debt-at-grad',
-            'current': False
-        },
-        {
-            'title': 'Customize your estimate',
+            'title': 'Customize estimate',
             'data': 'customize-estimate',
             'current': False
         },
@@ -27,7 +22,7 @@
             'current': False
         },
         {
-            'title': 'Compare schools',
+            'title': 'School comparison',
             'data': 'compare-school',
             'current': False
         },
@@ -35,12 +30,7 @@
             'title': 'Review your plan',
             'data': 'review-plan',
             'current': False
-        },
-        {
-            'title': 'Save & finish',
-            'data': 'save-finish',
-            'current': False
-        },
+        }
     ]%}
     {{secondary_nav.render(nav_items)}}
 </aside>

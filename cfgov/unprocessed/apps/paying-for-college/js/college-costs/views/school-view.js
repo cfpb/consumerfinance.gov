@@ -44,6 +44,9 @@ const schoolView = {
     schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
+    document.querySelectorAll('.scorecard-school').forEach( elem => {
+      elem.setAttribute('href', 'https://collegescorecard.ed.gov/school/?' + getSchoolValue('schoolID'))
+    })
   },
 
   setProgramDefaults: () => {

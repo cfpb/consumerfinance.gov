@@ -171,7 +171,7 @@ const financialModel = {
         vals[totals[prefix]] += val;
       }
     }
-
+    
     // Calculate more totals
     vals.total_borrowing =
       vals.total_fedLoans +
@@ -187,14 +187,16 @@ const financialModel = {
       vals.total_workStudyFellowAssist;
     vals.total_costs =
       vals.total_directCosts +
-      vals.total_indirectCosts +
-      vals.otherCost_additional;
+      vals.total_indirectCosts;
     vals.total_costOfProgram = vals.total_costs * vals.other_programLength
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
       vals.total_funding - vals.total_costs 
     );
+
+    vals.total_initialEstimateContrib = vals.grant_general + vals.scholarship_general +
+      vals.savings_personal + vals.savings_collegeSavings;
 
     if (vals.total_gap < 0) {
       vals.total_gap = 0;

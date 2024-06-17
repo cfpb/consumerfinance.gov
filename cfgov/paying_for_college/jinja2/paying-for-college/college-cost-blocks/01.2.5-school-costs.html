@@ -1,11 +1,11 @@
 <section class="college-costs__tool-section college-costs__tool-section--school-costs" data-tool-section="school-costs">
-    <h2><strong><span data-school-item="school"></span>'s costs after <span data-state-item="programLengthText">X</span>: <span data-financial-item="total_costOfProgram"></strong></h2>
-    <p>Your actual expenses will depend on your situation&mdash;any financial aid you receive, your personal budgeting, and other factors.</p>
+    <h2><strong>Average cost for <span data-state-item="programLengthText">X</span> at <span data-school-item="school"></span>: <span data-financial-item="total_costOfProgram"></strong></h2>
+    <p>Your actual expenses will depend on your situation&mdash;any financial aid you receive, your personal budgeting, rising costs, and other factors.</p>
     <ul>
         <li>Estimated time frame: <span data-state-item="programLengthText"></span></li>
-        <li>Total yearly costs: <span data-number-display="currency" data-financial-item="total_costs"></span></li>
-        <li>This estimate includes tuition, books, housing and is based on data from the U.S. Department of Education, but is at least one year old.</li>
-        <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="compare-school">See how this school compares to others like it</button></li>
+        <li>Estimated yearly costs: <span data-number-display="currency" data-financial-item="total_costs"></span></li>
+        <li>This estimate includes tuition, books, housing and is based on the most recent data from the U.S. Department of Education.</li>
+        <li>Costs may vary based on family income. See <a class="scorecard-school" href="https://collegescorecard.ed.gov/school/?" target="__blank" rel="noopener noreferrer">College Score Card</a> for costs based on family income.</li>
     </ul>
 
     <div class="block block--mid comparison-section comparison-section--grad-rate">
@@ -52,9 +52,10 @@
     <p><span data-school-item="school"></span>'s graduation rate falls in the <strong><span data-state-item="gradMeterThird"></span></strong> of all <span data-state-item="gradMeterCohortName"></span> schools granting <span class="community-college">2</span><span class="four-year-college">4</span>-year degrees.</p>
 
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn a-btn--prev btn__nav" data-destination="school-info">
-        Previous: Your school and living situation</button>
-        <button class="a-btn a-btn--next btn__nav" data-destination="estimate-debt">Next: Estimate how much you'll owe</button>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="school-info">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="estimate-debt">Next</button>
+        </div>
         <ul>
             <li>
                 <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="compare-school">See how this school compares to others like it</button>
