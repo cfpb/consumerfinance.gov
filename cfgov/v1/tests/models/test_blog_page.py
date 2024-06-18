@@ -22,3 +22,18 @@ class BlogPageTests(TestCase):
 
         response = self.client.get("/test/test/")
         self.assertContains(response, 'href="/test/feed/')
+
+    def test_preview_modes(self):
+        page = BlogPage(title="test")
+        self.assertIn("list_view", dict(page.preview_modes))
+
+    def render_preview(self, mode_name=None):
+        page = BlogPage(title="test")
+        request = RequestFactory().get("/")
+        return page.serve_preview(request, mode_name=mode_name)
+
+    def test_render_preview(self):
+        self.assertNotContains(self.render_preview(), "o-post-preview")
+
+    def test_render_preview_list_view(self):
+        self.assertContains(self.render_preview("list_view"), "o-post-preview")

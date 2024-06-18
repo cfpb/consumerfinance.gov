@@ -5,7 +5,9 @@
 {% block content %}
 <div class="wrapper content_wrapper">
     <div class="content_main">
-        {{ preview.render( post ) }}
+        <div class="block block--sub">
+            {{ preview.render( post ) }}
+        </div>
     </div>
 </div>
 {% endblock %}

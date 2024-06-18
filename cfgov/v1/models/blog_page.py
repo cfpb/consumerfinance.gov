@@ -51,11 +51,15 @@ class BlogPage(AbstractFilterPage):
         if mode_name != "list_view":
             return super().serve_preview(request, mode_name)
 
+        from v1.serializers import FilterPageSerializer
+
+        serializer = FilterPageSerializer(self, context={"request": request})
+
         return TemplateResponse(
             request,
             "v1/blog/blog_page_list_preview.html",
             {
-                "post": self,
+                "post": serializer.data,
             },
         )
 
