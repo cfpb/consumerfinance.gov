@@ -3,9 +3,8 @@
 {%- macro data_published(date, verbose=false) -%}
 
 <p class="u-small-text u-small-text--subtle">
-    Data reported
-    {{- ' directly by the company ' if verbose else ' ' -}}
-    on {{ time.render(
+    Data as of
+    {{ time.render(
         ensure_date(date), {"date": true}, text_format=true
     ) }}
     ({{- 'credit card terms may have changed since then, double-check with the company

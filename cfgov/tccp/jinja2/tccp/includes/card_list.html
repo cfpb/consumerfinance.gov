@@ -4,22 +4,6 @@
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
-{% if situation_features -%}
-<div class="block block--sub">
-    <h2>Cards you're looking for have these features:</h2>
-
-    <ul>
-        {% for feature in situation_features -%}
-        <li>{{ feature.results_html }}</li>
-        {%- endfor %}
-    </ul>
-
-    <p>
-        <a href="{{ url('tccp:landing_page') }}">Change what you're looking for in a card</a>
-    </p>
-</div>
-{%- endif %}
-
 <div class="u-cap-width">
 {% if count -%}
 {{- notification.render(
@@ -70,7 +54,7 @@
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a href="{{ card.url }}">
                 <div class="m-card__heading-group">
-                    <h3 class="m-card__heading">{{ card.institution_name }}</h3>
+                    <h2 class="h3 m-card__heading">{{ card.institution_name }}</h2>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
                 </div>
                 <dl>

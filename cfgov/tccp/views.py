@@ -1,4 +1,4 @@
-from operator import attrgetter, itemgetter
+from operator import attrgetter
 from urllib.parse import urlencode
 
 from django.shortcuts import redirect, reverse
@@ -19,7 +19,7 @@ from .forms import LandingPageForm
 from .jinja2tags import render_contact_info
 from .models import CardSurveyData
 from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
-from .situations import Situation, SituationFeatures, SituationSpeedBumps
+from .situations import Situation, SituationSpeedBumps
 
 
 class LandingPageView(FlaggedTemplateView):
@@ -157,7 +157,6 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "breadcrumb_items": self.breadcrumb_items,
                     "form": form,
                     "situations": situations,
-                    "situation_features": SituationFeatures(situations),
                     "speed_bumps": SituationSpeedBumps(situations),
                     "purchase_apr_rating_ranges": purchase_apr_rating_ranges,
                     "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
