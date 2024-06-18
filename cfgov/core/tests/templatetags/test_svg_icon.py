@@ -68,6 +68,11 @@ class SvgIconTests(TestCase):
         template = Template('{% load svg_icon %}{% svg_icon "test" %}')
         self.assertEqual(template.render(Context()), VALID_SVG)
 
+    @patch("core.templatetags.svg_icon._SVG_ICON_CACHE", {"test": "cached"})
+    def test_caching(self):
+        template = Template('{% load svg_icon %}{% svg_icon "test" %}')
+        self.assertEqual(template.render(Context()), "cached")
+
     @patch("core.templatetags.svg_icon.FALLBACK_ICON_NAME", "test")
     def test_template_tag_fallback(self):
         """
