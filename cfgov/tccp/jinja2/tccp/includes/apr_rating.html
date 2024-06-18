@@ -16,7 +16,7 @@
             Pay {{ label }} interest
 
             {% if apr_min is not none and apr_max is not none -%}
-                ({{- apr_range(apr_min, apr_max) -}})
+                ({{- apr_range(apr_min, apr_max, spaceless=true) -}})
             {%- endif %}
         </dd>
     </div>

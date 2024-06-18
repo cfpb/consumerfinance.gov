@@ -8,11 +8,15 @@
     {%- endif %}
 {%- endmacro -%}
 
-{%- macro apr_range(min, max) -%}
+{%- macro apr_range(min, max, spaceless=false) -%}
     {% if min == max -%}
         {{ apr(min) }}
     {%- else -%}
-        {{ apr(min) }} - {{ apr(max) }}
+        {{ apr(min) }}
+        {{- ' ' if not spaceless -}}
+        &ndash;
+        {{- ' ' if not spaceless }}
+        {{- apr(max) }}
     {%- endif %}
 {%- endmacro -%}
 
