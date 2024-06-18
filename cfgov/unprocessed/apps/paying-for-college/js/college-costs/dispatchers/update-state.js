@@ -1,11 +1,6 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-import {
-  updateCostOfBorrowingChart,
-  updateMakePlanChart,
-  updateMaxDebtChart,
-} from '../dispatchers/update-view.js';
 import { stateModel } from '../models/state-model.js';
 
 const updateState = {
@@ -32,8 +27,8 @@ const updateState = {
    * navigateTo - Advance to application state to the next section
    * @param {string} destination - the name of the section to advance to
    */
-  navigateTo: ( destination ) => {
-    updateState.activeSection( destination );
+  navigateTo: (destination) => {
+    updateState.activeSection(destination);
   },
 
   /**

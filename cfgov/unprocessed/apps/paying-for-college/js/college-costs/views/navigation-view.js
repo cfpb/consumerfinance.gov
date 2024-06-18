@@ -7,12 +7,12 @@ import {
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import {
   updateFinancialView,
-  updateCostOfBorrowingChart,
+  // updateCostOfBorrowingChart,
   updateMakePlanChart,
   updateMaxDebtChart,
   updateAffordingChart,
   updateGradMeterChart,
-  updateRepaymentMeterChart
+  updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -141,7 +141,7 @@ const navigationView = {
     this._navMenu = body.querySelector('.o-secondary-nav');
     this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
-    this._navItems = body.querySelectorAll('[data-nav_item]'); 
+    this._navItems = body.querySelectorAll('[data-nav_item]');
     this._navButtons = body.querySelectorAll(
       '.college-costs__tool-section-buttons .btn__nav',
     );
@@ -168,23 +168,26 @@ const navigationView = {
 
 /**
  * Check the destination page to see if we should update charts, etc, before navigating there
+ * @param destination
  */
 function _updateBeforeNavigation(destination) {
-    const updateHooks = [
-      ['[data-financial-item]', updateFinancialView],
-      ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
-      ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
-      ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
-      ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
-    ];
-    const elem = document.querySelector('section[data-tool-section="' + destination + '"]');
+  const updateHooks = [
+    ['[data-financial-item]', updateFinancialView],
+    ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
+    ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
+    ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
+    ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
+  ];
+  const elem = document.querySelector(
+    'section[data-tool-section="' + destination + '"]',
+  );
 
-    // Check for what updates should be performed
-    updateHooks.forEach( hook => {
-      if ( elem.querySelectorAll( hook[0] ).length > 0 ) {
-        hook[1].call();
-      }
-    });
+  // Check for what updates should be performed
+  updateHooks.forEach((hook) => {
+    if (elem.querySelectorAll(hook[0]).length > 0) {
+      hook[1].call();
+    }
+  });
 }
 
 /**
@@ -247,9 +250,9 @@ function _handleSecondaryNavButtonClick(event) {
     const target = event.target;
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
-    if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      _updateBeforeNavigation( target.dataset.nav_section );
-      updateState.activeSection( target.dataset.nav_section );
+    if (typeof target.dataset.nav_section !== 'undefined') {
+      _updateBeforeNavigation(target.dataset.nav_section);
+      updateState.activeSection(target.dataset.nav_section);
     }
 
     // if (typeof target.dataset.nav_item !== 'undefined') {

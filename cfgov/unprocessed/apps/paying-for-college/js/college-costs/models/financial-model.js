@@ -31,7 +31,7 @@ const financialModel = {
      Note: The list of 'values' properties is scraped from the HTML, except gapLoan values. */
   values: {
     rate_gapLoan: 0.01,
-    fee_gapLoan: 0.01
+    fee_gapLoan: 0.01,
   },
 
   createFinancialProperty: function (name) {
@@ -62,7 +62,7 @@ const financialModel = {
     financialModel._updateRates();
     financialModel._calculateTotals();
     // Fill any remaining gap with a theoretical gap loan
-    if ( financialModel.values.total_gap > 0 ) {
+    if (financialModel.values.total_gap > 0) {
       financialModel.values.gapLoan_gapLoan = financialModel.values.total_gap;
     } else {
       financialModel.values.gapLoan_gapLoan = 0;
@@ -102,12 +102,14 @@ const financialModel = {
       financialModel.values[name] = convertStringToNumber(value);
 
       // handle the different savings fields
-      if ( name === "initial_savingsTotal" ) {
+      if (name === 'initial_savingsTotal') {
         financialModel.values.savings_personal =
-            financialModel.values[name] / financialModel.values.other_programLength;
-      } else if ( name === "savings_personal" ) {
+          financialModel.values[name] /
+          financialModel.values.other_programLength;
+      } else if (name === 'savings_personal') {
         financialModel.values.initial_savingsTotal =
-            financialModel.values[name] * financialModel.values.other_programLength;
+          financialModel.values[name] *
+          financialModel.values.other_programLength;
       }
 
       financialModel.recalculate();
@@ -171,12 +173,10 @@ const financialModel = {
         vals[totals[prefix]] += val;
       }
     }
-    
+
     // Calculate more totals
     vals.total_borrowing =
-      vals.total_fedLoans +
-      vals.total_privLoans +
-      vals.total_plusLoans;
+      vals.total_fedLoans + vals.total_privLoans + vals.total_plusLoans;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
     vals.total_workStudyFellowAssist =
@@ -185,18 +185,19 @@ const financialModel = {
       vals.total_grantsScholarships +
       vals.total_otherResources +
       vals.total_workStudyFellowAssist;
-    vals.total_costs =
-      vals.total_directCosts +
-      vals.total_indirectCosts;
-    vals.total_costOfProgram = vals.total_costs * vals.other_programLength
+    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts;
+    vals.total_costOfProgram = vals.total_costs * vals.other_programLength;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
-      vals.total_funding - vals.total_costs 
+      vals.total_funding - vals.total_costs,
     );
 
-    vals.total_initialEstimateContrib = vals.grant_general + vals.scholarship_general +
-      vals.savings_personal + vals.savings_collegeSavings;
+    vals.total_initialEstimateContrib =
+      vals.grant_general +
+      vals.scholarship_general +
+      vals.savings_personal +
+      vals.savings_collegeSavings;
 
     if (vals.total_gap < 0) {
       vals.total_gap = 0;

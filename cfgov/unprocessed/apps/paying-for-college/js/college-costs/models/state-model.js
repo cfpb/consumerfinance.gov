@@ -258,7 +258,7 @@ const stateModel = {
     } else if (name === 'programLength') {
       updateFinancial('other_programLength', value, true);
     } else if (name === 'programRate') {
-      updateFinancial('dirCost_tuition', 'refactor')
+      updateFinancial('dirCost_tuition', 'refactor');
     }
     stateModel.values[name] = value;
     updateStateInDom(name, value);

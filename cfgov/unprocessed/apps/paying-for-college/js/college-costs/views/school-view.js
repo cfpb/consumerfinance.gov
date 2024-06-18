@@ -11,7 +11,7 @@ import {
   refreshExpenses,
   updateFinancial,
   updateSchoolData,
-  updateFinancialsFromSchool
+  updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
@@ -44,19 +44,22 @@ const schoolView = {
     schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
-    document.querySelectorAll('.scorecard-school').forEach( elem => {
-      elem.setAttribute('href', 'https://collegescorecard.ed.gov/school/?' + getSchoolValue('schoolID'))
-    })
+    document.querySelectorAll('.scorecard-school').forEach((elem) => {
+      elem.setAttribute(
+        'href',
+        'https://collegescorecard.ed.gov/school/?' + getSchoolValue('schoolID'),
+      );
+    });
   },
 
   setProgramDefaults: () => {
     // Set default program values
-    updateState.byProperty( 'programProgress', '0'); // Not shown or used currently
-    updateState.byProperty( 'programType', 'bachelors');
-    updateState.byProperty( 'programLength', '4');
-    updateState.byProperty( 'programDependency', 'dependent');
-    updateState.byProperty( 'programRate', 'inState');
-    updateState.byProperty( 'programHousing', 'onCampus');
+    updateState.byProperty('programProgress', '0'); // Not shown or used currently
+    updateState.byProperty('programType', 'bachelors');
+    updateState.byProperty('programLength', '4');
+    updateState.byProperty('programDependency', 'dependent');
+    updateState.byProperty('programRate', 'inState');
+    updateState.byProperty('programHousing', 'onCampus');
     schoolView._updateSchoolRadioButtons();
   },
 
@@ -70,7 +73,7 @@ const schoolView = {
       }
 
       if (elem.dataset.numberDisplay === 'currency') {
-        val = formatUSD({ amount: val});
+        val = formatUSD({ amount: val });
       }
 
       if (elem.dataset.numberDisplay === 'percentage') {
@@ -127,7 +130,7 @@ const schoolView = {
     const school = getSchoolValue('school');
 
     schoolView._searchResults.classList.remove('active');
-    if ( school ) schoolView._searchBox.value = school;
+    if (school) schoolView._searchBox.value = school;
     schoolView._schoolInfo.classList.add('active');
   },
 
@@ -154,7 +157,7 @@ const schoolView = {
       const input = document.querySelector(
         'INPUT[name="' + name + '"][value="' + value + '"]',
       );
-      if ( input ) input.checked = true;
+      if (input) input.checked = true;
     }
   },
 
@@ -314,7 +317,6 @@ function _handleResultButtonClick(event) {
       updateSchoolData(iped, true);
     }
   }
-
 }
 
 /**
@@ -323,7 +325,7 @@ function _handleResultButtonClick(event) {
  */
 function _handleProgramRadioClick(event) {
   const target = event.target;
-  if ( target.tagName !== 'INPUT' ) return;
+  if (target.tagName !== 'INPUT') return;
 
   // Update the model with program info
   const prop = target.getAttribute('name');

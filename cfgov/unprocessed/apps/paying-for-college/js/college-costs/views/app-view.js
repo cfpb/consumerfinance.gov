@@ -6,7 +6,6 @@ import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getStateValue } from '../dispatchers/get-model-values.js';
 import { CostsGroup } from '../CostsGroup.js';
 
 const HIDDEN_CLASS = 'u-hidden';
@@ -91,8 +90,7 @@ const appView = {
     appView._updateSaveLink();
   },
 
-  updateUI: () => {
-  },
+  updateUI: () => {},
 
   /**
    * Replaces current state, adding the formatted querystring as the URL

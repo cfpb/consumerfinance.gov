@@ -189,7 +189,7 @@ function debtCalculator() {
   });
 
   //gap loan calc
-  gapLoan.forEach( key => {
+  gapLoan.forEach((key) => {
     const principal = fin['gapLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
       fin['gapLoan_' + key],
@@ -204,7 +204,7 @@ function debtCalculator() {
     totalBorrowing += principal;
     debts[key] = int + principal;
     interest[key] = int;
-  })
+  });
 
   newLoans.forEach((key) => {
     interest.totalAtGrad += interest[key];
@@ -273,9 +273,8 @@ function debtCalculator() {
 
   // Calculate totals
   debts.totalInterestAtGrad = interest.totalAtGrad;
-  debts.tenYearInterest =
-    debts.tenYearTotal - debts.totalAtGrad;
-    // - existingDebtInterest;
+  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
+  // - existingDebtInterest;
 
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;

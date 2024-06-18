@@ -21,7 +21,7 @@ const financialView = {
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
-  _costsOfferButton: null,
+  // _costsOfferButton: null,
   _gradProgramContent: null,
   _undergradProgramContent: null,
 
@@ -86,9 +86,9 @@ const financialView = {
     this._financialSpans = document.querySelectorAll(
       'span[data-financial-item]',
     );
-    this._costsOfferButton = document.querySelector(
-      '.costs__button-section button',
-    );
+    // this._costsOfferButton = document.querySelector(
+    //   '.costs__button-section button',
+    // );
     _addInputListeners();
     _addButtonListeners();
   },
@@ -159,28 +159,28 @@ function _handleInputClick(event) {
 /**
  * Event handling for button choice - "Does your offer include costs?".
  */
-function _handleCostsButtonClick() {
-  const checkedButton = document.querySelector(
-    'input[name="costs-offer-radio"]:checked',
-  );
-  let answer = '';
+// function _handleCostsButtonClick() {
+//   const checkedButton = document.querySelector(
+//     'input[name="costs-offer-radio"]:checked',
+//   );
+//   let answer = '';
 
-  if (checkedButton !== null) {
-    answer = checkedButton.value;
+//   if (checkedButton !== null) {
+//     answer = checkedButton.value;
 
-    // When the button is clicked, bring in school data if 'No'
-    if (getStateValue('costsQuestion') === false) {
-      updateState.byProperty('costsQuestion', answer);
-      // If their offer does not have costs, use the Department of Ed data
-      if (answer === 'n') {
-        updateFinancialsFromSchool();
-      } else {
-        recalculateFinancials();
-      }
-    }
+//     // When the button is clicked, bring in school data if 'No'
+//     if (getStateValue('costsQuestion') === false) {
+//       updateState.byProperty('costsQuestion', answer);
+//       // If their offer does not have costs, use the Department of Ed data
+//       if (answer === 'n') {
+//         updateFinancialsFromSchool();
+//       } else {
+//         recalculateFinancials();
+//       }
+//     }
 
-    updateUrlQueryString();
-  }
-}
+//     updateUrlQueryString();
+//   }
+// }
 
 export { financialView };

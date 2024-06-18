@@ -58,8 +58,8 @@ const headings = [
   'Customize estimate',
   'Affording your loans',
   'School Comparison',
-  'Review'
-]
+  'Review',
+];
 
 const stepMap = {
   'school-info': 1,
@@ -72,26 +72,33 @@ const stepMap = {
   'affording-payments': 3,
   'compare-school': 4,
   'review-plan': 5,
-}
+};
 
+let getAndSetCallback;
 
+function Wrapper() {
+  const [step, setStep] = useState(1);
 
-let getAndSetCallback
-
-function Wrapper(){
-  const [step, setStep] = useState(1)
-
-  function getAndSetStep(activeName){
-    return setStep(stepMap[activeName])
+  function getAndSetStep(activeName) {
+    return setStep(stepMap[activeName]);
   }
 
   getAndSetCallback = getAndSetStep;
 
-  return step ? <Stepper steps={headings.length} step={step} headings={headings}/> : null
+  return step ? (
+    <Stepper steps={headings.length} step={step} headings={headings} />
+  ) : null;
 }
 
 const root = createRoot(document.getElementById('react-stepper'));
-root.render(<Wrapper/>);
+root.render(<Wrapper />);
 
 const tooltipRoot = createRoot(document.getElementById('react-tooltip'));
-tooltipRoot.render(<Tooltip id="a-tooltip" border='1px solid var(--gray-40)' opacity='1' clickable={true}/>)
+tooltipRoot.render(
+  <Tooltip
+    id="a-tooltip"
+    border="1px solid var(--gray-40)"
+    opacity="1"
+    clickable={true}
+  />,
+);

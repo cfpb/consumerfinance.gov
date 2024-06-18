@@ -193,13 +193,13 @@ function updateSchoolData(iped, assumptions) {
 
       // We make some assumptions about your situation:
       // TODO - This is just temporary code, remove it and handle this elsewhere
-      updateState.byProperty( 'programProgress', '0');
-      updateState.byProperty( 'programRate', 'outOfState');
-      updateState.byProperty( 'programHousing', 'onCampus');
-      updateState.byProperty( 'programDependency', 'dependent');
+      updateState.byProperty('programProgress', '0');
+      updateState.byProperty('programRate', 'outOfState');
+      updateState.byProperty('programHousing', 'onCampus');
+      updateState.byProperty('programDependency', 'dependent');
 
       // Make assumptions for initial data
-      if ( assumptions === true ) {
+      if (assumptions === true) {
         updateState.byProperty('costsQuestion', 'y');
         updateFinancialsFromSchool();
       }
@@ -265,8 +265,9 @@ function parseQueryParameters(queryObj) {
   });
 
   // Set the initial savings fields
-  financialModel.values.initial_savingsTotal = financialModel.values.savings_personal
-      * financialModel.values.other_programLength;
+  financialModel.values.initial_savingsTotal =
+    financialModel.values.savings_personal *
+    financialModel.values.other_programLength;
 
   stateModel._setProgramLevel();
   stateModel._setSalaryAvailable();
@@ -304,7 +305,7 @@ function updateModelsFromQueryString(queryObj) {
   parseQueryParameters(queryObj);
 
   if ({}.hasOwnProperty.call(queryObj, 'iped')) {
-    updateSchoolData(queryObj.iped, true );
+    updateSchoolData(queryObj.iped, true);
   }
 }
 

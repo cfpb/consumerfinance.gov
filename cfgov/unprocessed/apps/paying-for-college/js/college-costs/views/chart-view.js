@@ -15,68 +15,68 @@ import { updateState } from '../dispatchers/update-state.js';
 more(Highcharts);
 patternFill(Highcharts);
 
-const columnChartOpts = {
-  _meterChartBtns: null,
+// const columnChartOpts = {
+//   _meterChartBtns: null,
 
-  chart: {
-    type: 'column',
-    marginRight: 250,
-  },
-  legend: {
-    layout: 'vertical',
-    backgroundColor: '#FFFFFF',
-    floating: true,
-    align: 'right',
-    itemMarginTop: 10,
-    itemStyle: {
-      fontSize: '1.2em',
-      lineHeight: '3em',
-    },
-    verticalAlign: 'middle',
-    x: -90,
-    y: -45,
-    labelFormatter: function () {
-      return this.name;
-    },
-  },
-  title: false,
-  tooltip: false,
-  xAxis: {
-    categories: ['10 year period', '25 year period'],
-  },
-  yAxis: {
-    min: 0,
-    max: 60000,
-    title: '',
-    stackLabels: {
-      enabled: true,
-      format: '${total:,.0f}',
-    },
-  },
-  series: [
-    {
-      name: 'Interest',
-      data: [0, 0],
-      color: '#ffe1b9',
-    },
-    {
-      name: 'Principal',
-      data: [0, 0],
-      color: '#ff9e1b',
-    },
-  ],
-  plotOptions: {
-    series: {
-      pointPadding: 0.1,
-      dataLabels: {
-        enabled: false,
-      },
-    },
-    column: {
-      stacking: 'normal',
-    },
-  },
-};
+//   chart: {
+//     type: 'column',
+//     marginRight: 250,
+//   },
+//   legend: {
+//     layout: 'vertical',
+//     backgroundColor: '#FFFFFF',
+//     floating: true,
+//     align: 'right',
+//     itemMarginTop: 10,
+//     itemStyle: {
+//       fontSize: '1.2em',
+//       lineHeight: '3em',
+//     },
+//     verticalAlign: 'middle',
+//     x: -90,
+//     y: -45,
+//     labelFormatter: function () {
+//       return this.name;
+//     },
+//   },
+//   title: false,
+//   tooltip: false,
+//   xAxis: {
+//     categories: ['10 year period', '25 year period'],
+//   },
+//   yAxis: {
+//     min: 0,
+//     max: 60000,
+//     title: '',
+//     stackLabels: {
+//       enabled: true,
+//       format: '${total:,.0f}',
+//     },
+//   },
+//   series: [
+//     {
+//       name: 'Interest',
+//       data: [0, 0],
+//       color: '#ffe1b9',
+//     },
+//     {
+//       name: 'Principal',
+//       data: [0, 0],
+//       color: '#ff9e1b',
+//     },
+//   ],
+//   plotOptions: {
+//     series: {
+//       pointPadding: 0.1,
+//       dataLabels: {
+//         enabled: false,
+//       },
+//     },
+//     column: {
+//       stacking: 'normal',
+//     },
+//   },
+// };
 
 const meterOpts = {
   chart: {
@@ -186,98 +186,98 @@ const meterOpts = {
   ],
 };
 
-const horizontalBarOpts = {
-  chart: {
-    type: 'bar',
-    marginTop: 75,
-    height: 250,
-  },
-  title: false,
-  subtitle: false,
-  xAxis: {
-    categories: [],
-    title: {
-      text: null,
-    },
-  },
-  yAxis: {
-    min: 0,
-    max: 45000,
-    stackLabels: {
-      enabled: true,
-      format: 'Your funding<br>${total:,.0f}',
-      align: 'right',
-    },
-    plotLines: [
-      {
-        color: 'red',
-        width: 2,
-        value: 25896,
-        zIndex: 4,
-        label: {
-          align: 'center',
-          text: 'Cost of Attendance<br>$25,896',
-          rotation: 0,
-          x: 0,
-          y: -25,
-        },
-      },
-    ],
-    title: false,
-    labels: {
-      overflow: 'justify',
-    },
-  },
-  tooltip: false,
-  plotOptions: {
-    bar: {
-      dataLabels: {
-        enabled: false,
-      },
-    },
-    series: {
-      stacking: 'normal',
-    },
-  },
-  legend: {
-    enabled: false,
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'top',
-    x: -40,
-    y: 80,
-    floating: true,
-    borderWidth: 1,
-    backgroundColor: '#FFFFFF',
-    shadow: true,
-  },
-  credits: {
-    enabled: false,
-  },
-  series: [
-    {
-      data: [10000],
-    },
-  ],
-};
+// const horizontalBarOpts = {
+//   chart: {
+//     type: 'bar',
+//     marginTop: 75,
+//     height: 250,
+//   },
+//   title: false,
+//   subtitle: false,
+//   xAxis: {
+//     categories: [],
+//     title: {
+//       text: null,
+//     },
+//   },
+//   yAxis: {
+//     min: 0,
+//     max: 45000,
+//     stackLabels: {
+//       enabled: true,
+//       format: 'Your funding<br>${total:,.0f}',
+//       align: 'right',
+//     },
+//     plotLines: [
+//       {
+//         color: 'red',
+//         width: 2,
+//         value: 25896,
+//         zIndex: 4,
+//         label: {
+//           align: 'center',
+//           text: 'Cost of Attendance<br>$25,896',
+//           rotation: 0,
+//           x: 0,
+//           y: -25,
+//         },
+//       },
+//     ],
+//     title: false,
+//     labels: {
+//       overflow: 'justify',
+//     },
+//   },
+//   tooltip: false,
+//   plotOptions: {
+//     bar: {
+//       dataLabels: {
+//         enabled: false,
+//       },
+//     },
+//     series: {
+//       stacking: 'normal',
+//     },
+//   },
+//   legend: {
+//     enabled: false,
+//     layout: 'vertical',
+//     align: 'right',
+//     verticalAlign: 'top',
+//     x: -40,
+//     y: 80,
+//     floating: true,
+//     borderWidth: 1,
+//     backgroundColor: '#FFFFFF',
+//     shadow: true,
+//   },
+//   credits: {
+//     enabled: false,
+//   },
+//   series: [
+//     {
+//       data: [10000],
+//     },
+//   ],
+// };
 
-const compareCostOfBorrowingOpts = {
-  yAxis: {
-    max: 60000,
-  },
-  series: [
-    {
-      name: 'Interest',
-      data: [6448, 17506],
-      color: '#ffe1b9',
-    },
-    {
-      name: 'Principal',
-      data: [30000, 30000],
-      color: '#ff9e1b',
-    },
-  ],
-};
+// const compareCostOfBorrowingOpts = {
+//   yAxis: {
+//     max: 60000,
+//   },
+//   series: [
+//     {
+//       name: 'Interest',
+//       data: [6448, 17506],
+//       color: '#ffe1b9',
+//     },
+//     {
+//       name: 'Principal',
+//       data: [30000, 30000],
+//       color: '#ff9e1b',
+//     },
+//   ],
+// };
 
 const costOfBorrowingOpts = {
   chart: {
@@ -518,11 +518,21 @@ const chartView = {
     chartView.compareCostElem = body.querySelector(
       '#compare-cost-of-borrowing_chart',
     );
-    chartView.makePlanElem = body.querySelector('[data-chart_id="make-a-plan"]');
-    chartView.maxDebtElems = body.querySelectorAll('[data-chart_id="max-debt-guideline_chart"]');
-    chartView.affordingElem = body.querySelector('[data-chart_id="affording-your-loans"]');
-    chartView.gradMeterElems = body.querySelectorAll('[data-chart_id="grad-meter"]');
-    chartView.repaymentMeterElem = body.querySelector('#school-results_repayment-meter');
+    chartView.makePlanElem = body.querySelector(
+      '[data-chart_id="make-a-plan"]',
+    );
+    chartView.maxDebtElems = body.querySelectorAll(
+      '[data-chart_id="max-debt-guideline_chart"]',
+    );
+    chartView.affordingElem = body.querySelector(
+      '[data-chart_id="affording-your-loans"]',
+    );
+    chartView.gradMeterElems = body.querySelectorAll(
+      '[data-chart_id="grad-meter"]',
+    );
+    chartView.repaymentMeterElem = body.querySelector(
+      '#school-results_repayment-meter',
+    );
 
     _addRadioListeners();
 
@@ -539,7 +549,6 @@ const chartView = {
       },
     });
 
-
     chartView.costOfBorrowingChart = Highcharts.chart(
       chartView.costOfBorrowingElem,
       { ...costOfBorrowingOpts },
@@ -555,11 +564,11 @@ const chartView = {
     //   ...makePlanOpts,
     // });
 
-    chartView.maxDebtElems.forEach( elem => {
-      chartView.maxDebtCharts.push( Highcharts.chart( elem, { ...maxDebtOpts, } ) );
+    chartView.maxDebtElems.forEach((elem) => {
+      chartView.maxDebtCharts.push(Highcharts.chart(elem, { ...maxDebtOpts }));
     });
 
-    chartView.maxDebtCharts.forEach( chart => {
+    chartView.maxDebtCharts.forEach((chart) => {
       chart.debtText = chart.renderer
         .text('Estimated total debt at graduation: ', 60, 90)
         .attr({
@@ -584,11 +593,12 @@ const chartView = {
       ...affordingOpts,
     });
 
-    chartView.gradMeterElems.forEach( elem => {
-      chartView.gradMeterCharts.push( Highcharts.chart( elem, {
+    chartView.gradMeterElems.forEach((elem) => {
+      chartView.gradMeterCharts.push(
+        Highcharts.chart(elem, {
           ...meterOpts,
           ...gradMeterOpts,
-        })
+        }),
       );
     });
 
@@ -634,7 +644,6 @@ const chartView = {
     //     amount: totalCosts,
     //     decimalPlaces: 0,
     //   });
-
     // chartView.makePlanChart.yAxis[0].update({
     //   max: max,
     //   plotLines: [
@@ -663,7 +672,7 @@ const chartView = {
     const salaryString = formatUSD({ amount: salary, decimalPlaces: 0 });
     const max = Math.max(totalDebt * 1.1, salary * 1.1);
 
-    chartView.maxDebtCharts.forEach( chart => {
+    chartView.maxDebtCharts.forEach((chart) => {
       chart.yAxis[0].update({
         min: 0,
         max: max,
@@ -694,7 +703,9 @@ const chartView = {
 
       chart.salaryText = chart.renderer
         .text(
-          'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
+          'Estimated salary at graduation: <strong>' +
+            salaryString +
+            '</strong>',
           13,
           160,
         )
@@ -773,7 +784,7 @@ const chartView = {
 
       // Percentile works along a 180-degree axis:
       percentile = (percentile / 100) * 180;
-      chartView.gradMeterCharts.forEach( chart => {
+      chartView.gradMeterCharts.forEach((chart) => {
         chart.series[0].setData([percentile]);
       });
     } else {
