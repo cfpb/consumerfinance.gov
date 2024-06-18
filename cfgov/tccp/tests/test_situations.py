@@ -1,5 +1,3 @@
-from itertools import product
-
 from django.test import SimpleTestCase
 
 from tccp.situations import (
