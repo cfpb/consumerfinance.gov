@@ -1,10 +1,16 @@
 {% import "v1/includes/atoms/checkbox.html" as checkbox with context %}
 
 <section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="customize-estimate">
-    <h2 tabindex="-1">Customize your estimate</h2>
+    <h2 tabindex="-1">Customize your estimadssaate</h2>
 
     <p>This page will let you customize your estimate and help you determine whether you can cover the cost of attending this particular school.</p>
 
+   {{ notification.render(
+        'information',
+        true,
+        'Don&apos;t have a financial aid offer letter yet?' | safe,
+        'If you don&apos;t have an offer letter from a school you&apos;re considering, we recommend you <button class="a-btn a-btn--link btn__nav" data-customize-trigger="netPrice" data-destination="debt-guideline">skip this page for now</button>. We&apos;ll continue to use the estimated costs and debt that you&apos;ve made so far. (You can always come back once you have an offer.)<p style="margin-top:15px"><button class="a-btn a-btn--link btn__nav" data-destination="debt-guideline" data-customize-trigger="netPrice">Skip ahead and see if this amount of debt is too much to repay</button></p>' | safe
+    ) }}
 
     <h3>Enter information from your financial aid offer</h3>
     <p>Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.</p>
@@ -15,7 +21,7 @@
                 'value': '$0',
                 'is_editable': 'True', 
                 'status': 'warning',
-                'note': 'Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
+                'note': 'Type in the costs listed in your financial aid offer, adding additional costs as needed. These fields default to the values reported by the Department of Education.',
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() flyout(flyout_settings) %}
@@ -462,7 +468,7 @@
         <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">See your customized estimate</span></h3>
         <div class=nav-button-container>
             <button class="a-btn a-btn--prev btn__nav" data-destination="debt-at-grad">Previous</button>
-            <button class="a-btn a-btn--next btn__nav" data-destination="debt-guideline">Next</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="debt-guideline" data-customize-trigger="fullEstimate">Next</button>
         </div>
         <p>
             <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>        

@@ -441,4 +441,16 @@ main.college-costs {
       display: block;
     }
   }
+
+  &[data-state_showschoolerrors='yes'][data-state_incomeselected='required'] {
+    [data-state-based-visibility='income-required'] {
+      display: block;
+    }
+  }
+
+  &[data-state_programrate='outOfState'] {
+    span[data-state-based-visibility='out-of-state'] {
+      display: inline;
+    }
+  }
 }

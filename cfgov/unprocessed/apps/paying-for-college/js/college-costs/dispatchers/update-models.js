@@ -164,9 +164,11 @@ function updateSchoolData(iped, assumptions) {
 
       // Rename the net price averages
       if (data.netPriceAvgSlices) {
-        const slices = [ '0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus'];
-        slices.forEach( income => {
-          schoolModel.values['netPrice_' + income ] = data.netPriceAvgSlices[income];
+        const slices = ['0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus'];
+        slices.forEach((income) => {
+          // We replace the underscore with a dash
+          schoolModel.values['netPrice_' + income.replace('_', '-')] =
+            data.netPriceAvgSlices[income];
         });
       }
 
@@ -198,13 +200,6 @@ function updateSchoolData(iped, assumptions) {
           schoolModel.values.region;
         updateRegion(schoolModel.values.region);
       }
-
-      // We make some assumptions about your situation:
-      // TODO - This is just temporary code, remove it and handle this elsewhere
-      // updateState.byProperty('programProgress', '0');
-      // updateState.byProperty('programRate', 'outOfState');
-      // updateState.byProperty('programHousing', 'onCampus');
-      // updateState.byProperty('programDependency', 'dependent');
 
       // Make assumptions for initial data
       if (assumptions === true) {
@@ -271,11 +266,6 @@ function parseQueryParameters(queryObj) {
   Object.keys(modelMatch).forEach((key) => {
     modelMatch[key](modelArrays[key]);
   });
-
-  // Set the initial savings fields
-  financialModel.values.initial_savingsTotal =
-    financialModel.values.savings_personal *
-    financialModel.values.other_programLength;
 
   stateModel._setProgramLevel();
   stateModel._setSalaryAvailable();

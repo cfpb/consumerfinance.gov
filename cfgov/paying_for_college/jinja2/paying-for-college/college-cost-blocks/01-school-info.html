@@ -236,6 +236,21 @@
         </div>
     </div>
 
+    <div class="block block--sub program-income">
+      <h3 class="h4">How much money does your family make each year?</h3>
+      <div class="a-select">
+        <select id="program-income">
+            <option selected="selected" value="not-selected">Select...</option>
+            <option value="0-30k">$0 to $30,000</option>
+            <option value="30k-48k">$30,000 to $48,000</option>
+            <option value="48k-75k">$48,000 to $75,000</option>
+            <option value="75k-110k">$75,000 to $110,000</option>
+            <option value="110k-plus">$110,000 or more</option>
+            <option value="110k-plus">I don't know / I prefer not to say</option>
+        </select>
+      </div>
+    </div>
+
     <div data-state-based-visibility="school-fields-errors">
         {{ notification.render(
             'error',
@@ -250,6 +265,7 @@
             <div data-state-based-visibility="rate-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></li></div>
             <div data-state-based-visibility="housing-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></li></div>
             <div data-state-based-visibility="dependency-required"><li class="m-list__item"><a class="a-link m-list__link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></li></div>
+            <div data-state-based-visibility="income-required"><li class="m-list__item"><a class="a-link m-list__link" href="#program-income" data-gtm_ignore="true">How much money does your family make each year?</a></li></div>
             </ul>' | safe
         ) }}
     </div>

@@ -30,6 +30,7 @@ const financialModel = {
      housing situation, etc) is stored in the stateModel, schoolModel.
      Note: The list of 'values' properties is scraped from the HTML, except gapLoan values. */
   values: {
+    netPrice: 0,
     rate_gapLoan: 0.01,
     fee_gapLoan: 0.01,
   },
@@ -101,17 +102,6 @@ const financialModel = {
     if ({}.hasOwnProperty.call(financialModel.values, name)) {
       financialModel.values[name] = convertStringToNumber(value);
 
-      // handle the different savings fields
-      if (name === 'initial_savingsTotal') {
-        financialModel.values.savings_personal =
-          financialModel.values[name] /
-          financialModel.values.other_programLength;
-      } else if (name === 'savings_personal') {
-        financialModel.values.initial_savingsTotal =
-          financialModel.values[name] *
-          financialModel.values.other_programLength;
-      }
-
       financialModel.recalculate();
 
       if (updateView !== false) {
@@ -149,13 +139,14 @@ const financialModel = {
       plusLoan: 'total_plusLoans',
       privLoan: 'total_privLoans',
     };
+    const usingNetPrice = getStateValue('usingNetPrice');
 
     // Reset all totals to 0
     for (const key in totals) {
       vals[totals[key]] = 0;
     }
 
-    // Enforce the limits if constants are loaded
+    // Enforce the limits if constants are loaded™
     if (getStateValue('constantsLoaded') === true) {
       financialModel._enforceLimits();
     }
@@ -174,6 +165,10 @@ const financialModel = {
       }
     }
 
+    vals.netPrice = getSchoolValue(
+      'netPrice_' + getStateValue('programIncome'),
+    );
+
     // Calculate more totals
     vals.total_borrowing =
       vals.total_fedLoans + vals.total_privLoans + vals.total_plusLoans;
@@ -186,18 +181,22 @@ const financialModel = {
       vals.total_otherResources +
       vals.total_workStudyFellowAssist;
     vals.total_costs = vals.total_directCosts + vals.total_indirectCosts;
-    vals.total_costOfProgram = vals.total_costs * vals.other_programLength;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
+
+    // If we're using net price, we calculate things differently
+    if (usingNetPrice === 'yes') {
+      vals.total_costs = vals.netPrice;
+      vals.total_funding = vals.total_contributions;
+    }
+
+    vals.total_costOfProgram = vals.total_costs * vals.other_programLength;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
       vals.total_funding - vals.total_costs,
     );
 
     vals.total_initialEstimateContrib =
-      vals.grant_general +
-      vals.scholarship_general +
-      vals.savings_personal +
-      vals.savings_collegeSavings;
+      vals.savings_personal + vals.savings_collegeSavings;
 
     if (vals.total_gap < 0) {
       vals.total_gap = 0;

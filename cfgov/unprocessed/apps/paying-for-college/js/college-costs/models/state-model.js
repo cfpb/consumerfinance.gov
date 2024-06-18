@@ -54,10 +54,12 @@ const stateModel = {
     programHousing: 'onCampus',
     programDependency: 'dependent',
     programProgress: '0',
+    programIncome: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
     repayMeterCohortName: 'U.S.',
     schoolID: false,
     initialQuery: null,
+    usingNetPrice: 'yes',
   },
   textVersions: {
     programType: {
@@ -84,6 +86,13 @@ const stateModel = {
       outOfState: 'Out of state',
       inDistrict: 'In district',
     },
+    programIncome: {
+      '0-30k': '$0 to $30,000',
+      '30k-48k': '$30,000 to $48,000',
+      '48k-75k': '$48,000 to $75,000',
+      '75k-110k': '$75,000 to $110,000',
+      '110k-plus': '$110,000 or more',
+    },
   },
 
   /**
@@ -97,7 +106,7 @@ const stateModel = {
     }
     const smv = stateModel.values;
     const control = getSchoolValue('control');
-    stateModel.values.schoolErrors = 'no';
+    smv.schoolErrors = 'no';
     updateStateInDom('schoolErrors', 'no');
 
     const displayErrors = {
@@ -113,6 +122,7 @@ const stateModel = {
       dependencySelected:
         smv.programLevel === 'undergrad' &&
         smv.programDependency === 'not-selected',
+      incomeSelected: smv.programIncome === 'not-selected',
     };
 
     // Change values to "required" which triggers error notification CSS rules
@@ -258,6 +268,13 @@ const stateModel = {
       updateFinancial('other_programLength', value, true);
     } else if (name === 'programRate') {
       updateFinancial('dirCost_tuition', 'refactor');
+    } else if (
+      name === 'usingNetPrice' &&
+      value !== stateModel.values.usingNetPrice
+    ) {
+      stateModel.values[name] = value;
+      recalculateFinancials();
+      updateFinancialViewAndFinancialCharts();
     }
     stateModel.values[name] = value;
     updateStateInDom(name, value);

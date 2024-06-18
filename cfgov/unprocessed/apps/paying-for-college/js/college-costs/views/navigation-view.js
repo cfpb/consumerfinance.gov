@@ -141,9 +141,7 @@ const navigationView = {
     this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
-    this._navButtons = body.querySelectorAll(
-      '.college-costs__tool-section-buttons .btn__nav',
-    );
+    this._navButtons = body.querySelectorAll('.btn__nav[data-destination]');
     this._contentSidebar = body.querySelector('.content__sidebar');
     this._introduction = body.querySelector('.college-costs__intro-segment');
     this._getStartedBtn = body.querySelector(
@@ -184,9 +182,14 @@ function _updateBeforeNavigation(destination) {
   // Check for what updates should be performed
   updateHooks.forEach((hook) => {
     if (elem.querySelectorAll(hook[0]).length > 0) {
-      hook[1].call();
+      hook[1]();
     }
   });
+
+  // Switch to using offer values on the customize estimate page
+  if (destination === 'customize-estimate') {
+    updateState.byProperty('usingNetPrice', 'no');
+  }
 }
 
 /**
@@ -276,6 +279,15 @@ function _handleNavButtonClick(event) {
     if (event.target.dataset['destination']) {
       const destination = event.target.dataset.destination;
       _updateBeforeNavigation(destination);
+
+      if ({}.hasOwnProperty.call(event.target.dataset, 'customizeTrigger')) {
+        const trigger = event.target.dataset.customizeTrigger;
+        if (trigger === 'netPrice') {
+          updateState.byProperty('usingNetPrice', 'yes');
+        } else if (trigger == 'fullEstimate') {
+          updateState.byProperty('usingNetPrice', 'no');
+        }
+      }
 
       sendAnalyticsEvent(
         'Navigation Button from ' +

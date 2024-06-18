@@ -59,7 +59,7 @@
     max-width: unit(570px / @base-font-size-px, rem);
 
     h3 {
-        margin-top: unit(30px / @base-font-size-px, em);
+      margin-top: unit(30px / @base-font-size-px, em);
     }
 
     .equation-row {
@@ -243,7 +243,8 @@
     }
   }
 
-  &__tool-section-buttons {
+  &__tool-section-buttons,
+  .cf-notification {
     h3.up-next {
       .up-next--desc {
         display: list-item;
@@ -275,15 +276,22 @@
   }
 
   .estimate--total-costs {
-      margin-bottom: 1.875em;
-      margin-top: 1.875em;
-      position: relative;
-      padding: unit(15px / @base-font-size-px, em);
-      background: var(--gray-5);
-      border: 1px solid var(--gray-40);
+    margin-bottom: 1.875em;
+    margin-top: 1.875em;
+    position: relative;
+    padding: unit(15px / @base-font-size-px, em);
+    background: var(--gray-5);
+    border: 1px solid var(--gray-40);
 
-      & > .financial-item:first-child {
-          margin-top: 0;
-      }
+    & > .financial-item:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .customize-choice-buttons {
+    padding-top: unit(30px / @base-font-size-px, em);
+    button {
+      margin-bottom: unit(30px / @base-font-size-px, em);
+    }
   }
 }

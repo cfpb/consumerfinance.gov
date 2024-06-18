@@ -14,6 +14,7 @@ const urlParameters = {
   lenp: 'stateModel.programLength',
   ratp: 'stateModel.programRate',
   depp: 'stateModel.programDependency',
+  prin: 'stateModel.programIncome',
   cobs: 'stateModel.costsQuestion',
   regs: 'stateModel.expensesRegion',
   iqof: 'stateModel.impactOffer',

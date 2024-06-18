@@ -4,26 +4,7 @@
     <h2 tabindex="-1">Estimate how much you'll owe in student loans</h2>
 
     <div class="block block--mid financial-items">
-        <h3>How much do you expect to receive for any of the following?</h3>
-            {{
-                input.render({
-                    'label': 'Grants',
-                    'id': 'estimate__grants',
-                    'helper_text': 'per year of your program',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="grant_general"'
-                })
-            }}
-
-            {{
-                input.render({
-                    'label': 'Scholarships',
-                    'id': 'estimate__scholarships',
-                    'helper_text': 'per year of your program',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="scholarship_general"'
-                })
-            }}
+        <h3>How much do you expect to contribute this year?</h3>
             {{
                 input.render({
                     'label': 'Personal funds',

@@ -33,6 +33,7 @@ const schoolView = {
   _schoolItems: [],
   _stateItems: [],
   _programSelect: null,
+  _programIncome: null,
 
   updateSchoolView: () => {
     updateFinancialView();
@@ -42,6 +43,8 @@ const schoolView = {
     schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
+    document.querySelector('#program-income').value =
+      getStateValue('programIncome');
     document.querySelectorAll('.scorecard-school').forEach((elem) => {
       elem.setAttribute(
         'href',
@@ -112,10 +115,12 @@ const schoolView = {
       // If there's a program id in the state, select that program
       if (getStateValue('pid')) {
         schoolView._programSelect.value = getStateValue('pid');
+        schoolView._programSelect.parentNode.parentNode.style.display = 'block';
+      } else {
+        schoolView._programSelect.parentNode.parentNode.style.display = 'none';
       }
-      schoolView._programSelect.parentNode.parentNode.style.display = 'block';
-    } else {
-      schoolView._programSelect.parentNode.parentNode.style.display = 'none';
+
+      document.querySelector('#program-income').value = getStateValue('programIncome');
     }
   },
 
@@ -173,6 +178,7 @@ const schoolView = {
     );
     schoolView._schoolItems = document.querySelectorAll('[data-school-item]');
     schoolView._stateItems = document.querySelectorAll('[data-state-item]');
+    schoolView._programIncome = document.querySelector('#program-income');
 
     // Initialize listeners
     _addListeners();
@@ -197,6 +203,11 @@ function _addListeners() {
   schoolView._programSelect.addEventListener(
     'change',
     _handleProgramSelectChange,
+  );
+
+  schoolView._programIncome.addEventListener(
+    'change',
+    _handleIncomeSelectChange,
   );
 }
 
@@ -249,6 +260,15 @@ function _handleInputChange() {
       );
     }
   }, 500);
+}
+
+/**
+ * The income dropdown has been selected
+ */
+function _handleIncomeSelectChange() {
+  const selected = schoolView._programIncome.value;
+  updateState.byProperty('programIncome', selected);
+  updateFinancial('netPrice', getSchoolValue('netPrice_' + selected));
 }
 
 /**
