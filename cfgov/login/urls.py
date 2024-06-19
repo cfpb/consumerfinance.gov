@@ -2,53 +2,32 @@ from django.conf import settings
 from django.urls import include, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
+from login.views import LoginView
 
-if settings.SAML_AUTH:  # pragma: no cover
-    urlpatterns = [
-        # If SAML2 auth is enabled, /login will redirect to /saml2/login,
-        # which in turn will redirect to the configured identity provider.
-        re_path(r"saml2/", include("djangosaml2.urls")),
-        # Redirect the Wagtail login/logout views to djangosaml2.
-        # For admin authentication, /django-admin/login is preserved when SSO
-        # is enabled.
-        re_path(
-            r"^/admin/login/$",
-            RedirectView.as_view(
-                url=reverse_lazy("saml2_login"), query_string=True
-            ),
-        ),
-        re_path(
-            r"^/admin/logout/$",
-            RedirectView.as_view(
-                url=reverse_lazy("saml2_logout"),
-                query_string=True,
-            ),
-        ),
-    ]
-else:
-    urlpatterns = [
-        # When SSO is not enabled, the Django login should redirect to Wagtail
-        re_path(
-            r"^django-admin/login/$",
-            RedirectView.as_view(
-                url=reverse_lazy("wagtailadmin_login"), query_string=True
-            ),
-        ),
-    ]
 
-urlpatterns = urlpatterns + [
-    # Redirect root-level /login and /logout to Wagtail.
-    # If SSO is enabled, these will redirect from there to djangosaml2.
+urlpatterns = [
+    # Include OIDC URLs
+    re_path(r"^oidc/", include("mozilla_django_oidc.urls")),
+    # Override Wagtail's login URL with our subclass
+    re_path(r"^admin/login/", LoginView.as_view(), name="cfgov_login"),
+    # Redirect root-level /login and /logout
     re_path(
         r"^login/$",
         RedirectView.as_view(
-            url=reverse_lazy("wagtailadmin_login"), query_string=True
+            url=reverse_lazy("cfgov_login"), query_string=True
         ),
     ),
     re_path(
         r"^logout/$",
         RedirectView.as_view(
-            url=reverse_lazy("wagtailadmin_logout"), query_string=True
+            url=reverse_lazy("cfgov_login"), query_string=True
+        ),
+    ),
+    # Redirect the Django admin login to Wagtail
+    re_path(
+        r"^django-admin/login/$",
+        RedirectView.as_view(
+            url=reverse_lazy("cfgov_login"), query_string=True
         ),
     ),
     # Redirect Django's password change view to Wagtail's
@@ -59,3 +38,16 @@ urlpatterns = urlpatterns + [
         ),
     ),
 ]
+
+if settings.ENABLE_SSO:  # pragma: no cover
+    urlpatterns = urlpatterns + [
+        # Redirect logout to the OIDC logout to make sure we clear our OIDC
+        # session information
+        re_path(
+            r"^admin/logout/$",
+            RedirectView.as_view(
+                url=reverse_lazy("oidc_logout"),
+                query_string=True,
+            ),
+        ),
+    ]

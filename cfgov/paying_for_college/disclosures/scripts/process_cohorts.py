@@ -15,7 +15,7 @@ STATES = sorted(
     + [tup[0] for tup in localflavor.us.us_states.NON_CONTIGUOUS_STATES]
     + ["PR"]
 )
-DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES.keys()}
+DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES}
 logger = logging.getLogger(__name__)
 
 
@@ -83,7 +83,7 @@ def run(single_school=None):
         by_control = {}
         count += 1
         if count % 500 == 0:  # pragma: no cover
-            logger.info("{} schools processed".format(count))
+            logger.info(f"{count} schools processed")
         # degree_cohort is the default, national base cohort
         # base query weeds out schools without state or degrees_highest values
         degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
@@ -131,7 +131,6 @@ def run(single_school=None):
         school.cohort_ranking_by_highest_degree = by_degree
         school.save()
     logger.info(
-        "\nCohort script took {} to process {} schools".format(
-            datetime.datetime.now() - starter, count
-        )
+        f"\nCohort script took {datetime.datetime.now() - starter} to "
+        f"process {count} schools"
     )

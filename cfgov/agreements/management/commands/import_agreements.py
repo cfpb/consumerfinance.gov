@@ -1,4 +1,5 @@
 import os
+from contextlib import nullcontext
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -71,11 +72,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        if options["verbosity"] >= 1:
-            output_file = self.stdout
-        else:
-            output_file = open(os.devnull, "a")
-
         # maybe this should be replaced with a CLI options:
         do_upload = os.environ.get("AGREEMENTS_S3_UPLOAD_ENABLED", False)
 
@@ -93,7 +89,12 @@ class Command(BaseCommand):
         Agreement.objects.all().delete()
         Issuer.objects.all().delete()
 
-        for pdf_path in all_pdfs:
-            _util.save_agreement(
-                agreements_zip, pdf_path, output_file, upload=do_upload
-            )
+        with (
+            nullcontext(self.stdout)
+            if options["verbosity"] >= 1
+            else open(os.devnull, "a")
+        ) as output_file:
+            for pdf_path in all_pdfs:
+                _util.save_agreement(
+                    agreements_zip, pdf_path, output_file, upload=do_upload
+                )

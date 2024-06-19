@@ -11,11 +11,11 @@ import requests
 # bake_to_s3 functions require S3 secrets to be stored in the env
 BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-PUBLIC_ACCESS_BASE = "https://s3.amazonaws.com/{}/{}".format(
-    BASE_BUCKET, MORTGAGE_SUB_BUCKET
+PUBLIC_ACCESS_BASE = (
+    f"https://s3.amazonaws.com/{BASE_BUCKET}/{MORTGAGE_SUB_BUCKET}"
 )
-S3_MORTGAGE_DOWNLOADS_BASE = "{}/downloads".format(PUBLIC_ACCESS_BASE)
-S3_SOURCE_BUCKET = "{}/source".format(PUBLIC_ACCESS_BASE)
+S3_MORTGAGE_DOWNLOADS_BASE = f"{PUBLIC_ACCESS_BASE}/downloads"
+S3_SOURCE_BUCKET = f"{PUBLIC_ACCESS_BASE}/source"
 S3_SOURCE_FILE = "latest_county_delinquency.csv"
 
 
@@ -44,7 +44,7 @@ def bake_csv_to_s3(slug, csv_file_obj, sub_bucket=None):
     s3 = boto3.client("s3")
     s3.put_object(
         Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-        Key="{}/{}.csv".format(sub_bucket, slug),
+        Key=f"{sub_bucket}/{slug}.csv",
         ACL="public-read",
         ContentType="text/csv",
         Body=csv_file_obj.getvalue(),

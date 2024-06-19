@@ -54,7 +54,7 @@ def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
     """If flag is set, serve page from Wagtail, otherwise raise 404."""
 
     def this_view_always_raises_http404(request, *args, **kwargs):
-        raise Http404("flag {} not set".format(flag_name))
+        raise Http404(f"flag {flag_name} not set")
 
     return flagged_re_path(
         flag_name,
@@ -247,6 +247,10 @@ urlpatterns = [
         r"^consumer-tools/retirement/",
         include("retirement_api.urls", namespace="retirement_api"),
     ),
+    re_path(
+        r"^es/herramientas-del-consumidor/jubilacion/",
+        include("retirement_api.es_urls", namespace="retirement_api_es"),
+    ),
     # CCDB5-API
     re_path(
         r"^data-research/consumer-complaints/search/api/v1/",
@@ -295,7 +299,7 @@ urlpatterns = [
     re_path(
         r"^empowerment/$",
         RedirectView.as_view(
-            url="/consumer-tools/educator-tools/economically-vulnerable/",
+            url="/consumer-tools/educator-tools/your-money-your-goals/",
             permanent=True,
         ),
     ),
@@ -303,7 +307,7 @@ urlpatterns = [
     re_path(
         r"^students/(?P<path>.*)$",
         RedirectView.as_view(
-            url="/consumer-tools/educator-tools/students/%(path)s",
+            url="/paying-for-college/",
             permanent=True,
         ),
     ),
@@ -369,6 +373,10 @@ urlpatterns = [
     ),
     re_path(
         r"^consumer-tools/financial-well-being/", include("wellbeing.urls")
+    ),
+    re_path(
+        r"^es/herramientas-del-consumidor/bienestar-financiero/",
+        include("wellbeing.es_urls"),
     ),
     re_path(
         r"^about-us/diversity-and-inclusion/",
@@ -604,7 +612,7 @@ def handle_error(code, request, exception=None):
     try:
         return render(
             request,
-            "v1/layouts/%s.html" % code,
+            f"v1/layouts/{code}.html",
             context={"request": request},
             status=code,
         )
@@ -614,8 +622,7 @@ def handle_error(code, request, exception=None):
         # the results of a security scan, or a malformed static file reference.
 
         return HttpResponse(
-            "This request could not be processed, "
-            "HTTP Error %s." % str(code),
+            "This request could not be processed, " f"HTTP Error {str(code)}.",
             status=code,
         )
 

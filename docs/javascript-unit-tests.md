@@ -30,29 +30,6 @@ it would be a good idea to peruse their docs before diving in here.
 
 ## Running unit tests
 
-### Run a single test file
-
-To run a single test file, pass the name (or path) of the spec:
-
-```bash
-yarn jest Notification-spec.js
-# Equivalent to:
-yarn jest test/unit_tests/js/molecules/Notification-spec.js
-# The name argument would technically would match all Notification-spec.js files
-# This usually isn't a problem in our codebase (and you can always get more specific if needed)
-```
-
-### Run a directory of unit tests
-
-A directory of unit tests can be run by passing its name or path:
-
-```bash
-yarn jest organisms
-yarn jest test/unit_tests/js/organisms
-```
-
-### Run all unit tests
-
 To run all of the unit tests:
 
 ```bash
@@ -64,6 +41,23 @@ To first lint all files and then run tests:
 ```bash
 yarn test
 ```
+
+!!! note
+
+    To run a single test, or a directory of tests, you can run, for example:
+
+    ```bash
+    # Single test file:
+    yarn jest Notification-spec.js
+    # Equivalent to:
+    yarn jest test/unit_tests/js/molecules/Notification-spec.js
+
+    # Directory:
+    yarn jest organisms
+    # Equivalent to:
+    yarn jest test/unit_tests/js/organisms
+
+    ```
 
 Because we invoke jest directly, you can pass any command-line args it accepts
 to filter your output or to target specific tests [see the docs for more](https://jestjs.io/docs/cli).
@@ -430,56 +424,6 @@ how the function should respond to various kinds of input.
 Inside each `it`, invoke the function
 with the input described in the `it` statement
 and use `expect` to check that you receive the desired result.
-
-Here is a simple example from our
-[array helpers module](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js)
-(`cfgov/unprocessed/js/modules/util/array-helpers.js`):
-
-```js
-function indexOfObject(array, key, val) {
-  let match = -1;
-
-  if (!array.length > 0) {
-    return match;
-  }
-
-  array.forEach(function (item, index) {
-    if (item[key] === val) {
-      match = index;
-    }
-  });
-
-  return match;
-}
-```
-
-Tests for that function, from
-[test/unit_tests/js/modules/util/array-helpers-spec.js](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js):
-
-```js
-describe('indexOfObject()', () => {
-  it('should return -1 if the array is empty', () => {
-    array = [];
-    index = arrayHelpers.indexOfObject(array, 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return -1 if there is no match', () => {
-    array = [{ value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(-1);
-  });
-
-  it('should return the matched index', () => {
-    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
-
-    expect(index).toBe(0);
-  });
-});
-```
 
 ### Testing DOM manipulation
 

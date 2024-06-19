@@ -1,3 +1,4 @@
+from datetime import date
 from io import StringIO
 from unittest import mock
 
@@ -5,9 +6,10 @@ from django.test import RequestFactory, TestCase
 
 from wagtail.models import Page, Site
 
+from core.testutils.test_cases import WagtailPageTreeTestCase
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
-from v1.models import BlogPage, BrowseFilterablePage
+from v1.models import BlogPage, BrowseFilterablePage, SublandingFilterablePage
 from v1.models.filterable_page import AbstractFilterablePage
 
 
@@ -32,15 +34,6 @@ class TestAbstractFilterablePage(TestCase):
         data = self.page.get_form_data(self.factory.get(request_string).GET)
         assert data[0]["categories"] == ["test1", "test2"]
 
-    @mock.patch("v1.models.filterable_page.Paginator")
-    def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
-        mock_request = mock.Mock()
-        mock_request.GET = self.factory.get("/").GET
-        mock_form = mock.Mock()
-        self.page.process_form(mock_request, mock_form)
-        assert mock_form.is_valid.called
-
-    # AbstractFilterablePage.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
         assert self.page.do_not_index is False
 
@@ -72,9 +65,12 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         self.root.add_child(instance=self.filterable_page)
 
         self.page = BlogPage(
+            pk=123,
             title="Test",
             slug="one",
             live=True,
+            search_description="A blog post",
+            date_published=date(2024, 1, 1),
         )
         self.filterable_page.add_child(instance=self.page)
 
@@ -84,9 +80,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def test_index_route(self):
         response = self.client.get("/test/")
-        self.assertEqual(
-            response.context_data["results_page"][0].title, "Test"
-        )
+        self.assertEqual(response.context_data["results"][0]["title"], "Test")
 
     def test_feed_route(self):
         response = self.client.get("/test/feed/")
@@ -94,6 +88,34 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
             response["content-type"], "application/rss+xml; charset=utf-8"
         )
         self.assertEqual(response["Edge-Control"], "cache-maxage=10m")
+
+        self.assertContains(
+            response,
+            (
+                '<?xml version="1.0" encoding="utf-8"?>\n'
+                '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
+                "<channel>"
+                "<title>Blog | Consumer Financial Protection Bureau</title>"
+                "<link>http://localhost/test/</link>"
+                "<description/>"
+                '<atom:link href="http://testserver/test/feed/" rel="self"/>'
+                "<language>en-us</language>"
+                "<lastBuildDate>"
+                "Mon, 01 Jan 2024 00:00:00 -0500"
+                "</lastBuildDate>"
+                "<item>"
+                "<title>Test</title>"
+                "<link>http://localhost/test/one/</link>"
+                "<description>A blog post</description>"
+                "<pubDate>Mon, 01 Jan 2024 00:00:00 -0500</pubDate>"
+                '<guid isPermaLink="false">'
+                "123&lt;&gt;consumerfinance.gov"
+                "</guid>"
+                "</item>"
+                "</channel>"
+                "</rss>"
+            ),
+        )
 
     def test_cache_tag_applied(self):
         response = self.client.get(self.filterable_page.url)
@@ -188,3 +210,64 @@ class FilterableListSearchTestCase(TestCase):
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
         self.assertEqual(search.ordering, "title")
+
+
+class FilterableResultsRenderingTests(
+    ElasticsearchTestsMixin, WagtailPageTreeTestCase
+):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
+
+    @classmethod
+    def get_page_tree(cls):
+        return [
+            (
+                SublandingFilterablePage(title="search"),
+                [
+                    BlogPage(title="child1"),
+                    BlogPage(title="child2"),
+                ],
+            )
+        ]
+
+    def test_render(self):
+        page = self.page_tree[0]
+        request = RequestFactory().get("/")
+
+        # Page rendering requires 8 database queries in total.
+        #
+        # 2 are needed for Wagtail page URL generation:
+        #
+        #   1. Fetching Wagtail Site root paths.
+        #   2. Fetching the root page of the default Wagtail Site.
+        #
+        # 1 is needed to render our filterable form:
+        #
+        #   3. Retrieving the list of page tags to populate the form topic
+        #      choices.
+        #
+        # 2 are needed to fetch page results from the database:
+        #
+        #   4. Fetching Page content types based on search result IDs.
+        #   5. Fetching specific Page model instances.
+        #
+        # 3 are needed for efficient page rendering:
+        #
+        #   6. Prefetching all authors for all result pages.
+        #   7. Prefecthing all categories for all result pages.
+        #   8. Prefetching all topic tags for all result pages.
+        with self.assertNumQueries(8):
+            response = page.render(request)
+
+        # All data is fetched as part of the response context. No additional
+        # queries are needed to render the results themselves, but there are
+        # 2 additional queries for all pages:
+        #
+        #   1. Fetching the mega menu.
+        #   2. Fetching any banners associated with the page.
+        with self.assertNumQueries(2):
+            response.render()

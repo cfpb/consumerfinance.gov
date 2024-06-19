@@ -76,32 +76,34 @@
    ========================================================================== #}
 
 {% macro render( value ) %}
-<div class="m-related-posts">
-    <header class="m-slug-header">
-        <h2 class="m-slug-header__heading">
-            {{ value.header_title }}
-        </h2>
-    </header>
-    {% for subposts in value.posts %}
-        <div class="m-related-posts__list-container">
-            {% if value.show_heading %}
-                <h3 class="h4">
-                    {% if subposts.icon %}{{ svg_icon( subposts.icon ) }}{% endif %}
-                    {{ subposts.title }}
-                </h3>
-            {% endif %}
-            {{ _related_posts_list( subposts.posts, value.limit ) }}
-        </div>
-    {% endfor %}
+{% if value.posts | length > 0 %}
+  <div class="m-related-posts">
+      <header class="m-slug-header">
+          <h2 class="m-slug-header__heading">
+              {{ value.header_title }}
+          </h2>
+      </header>
+      {% for subposts in value.posts %}
+          <div class="m-related-posts__list-container">
+              {% if value.show_heading %}
+                  <h3 class="h4">
+                      {% if subposts.icon %}{{ svg_icon( subposts.icon ) }}{% endif %}
+                      {{ subposts.title }}
+                  </h3>
+              {% endif %}
+              {{ _related_posts_list( subposts.posts, value.limit ) }}
+          </div>
+      {% endfor %}
 
-    <a class="a-link a-link--jump"
-       href="{{ value.view_more_url }}"
-       aria-label="{{ _('View more related posts') }}">
-        <span class="a-link__text">
-            {{ _('View more') }}
-        </span>
-    </a>
-</div>
+      <a class="a-link a-link--jump"
+         href="{{ value.view_more_url }}"
+         aria-label="{{ _('View more related posts') }}">
+          <span class="a-link__text">
+              {{ _('View more') }}
+          </span>
+      </a>
+  </div>
+{% endif %}
 {% endmacro %}
 
 {%- if value %}

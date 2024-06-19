@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 import matplotlib.pyplot as plt
 
-from tccp.enums import CreditTierColumns
+from tccp.enums import CreditTierColumns, PurchaseAPRRatings
 from tccp.filterset import CardSurveyDataFilterSet
 from tccp.models import CardSurveyData
 from tccp.situations import SITUATIONS
@@ -48,6 +48,8 @@ class Command(BaseCommand):
             summary_stats=summary_stats
         )
 
+        apr_rating_lookup = dict(PurchaseAPRRatings)
+
         for tier_name, tier_column in CreditTierColumns:
             self.stdout.write(tier_name.upper())
             self.stdout.write("-" * len(tier_name))
@@ -76,10 +78,12 @@ class Command(BaseCommand):
 
             # Write out counts for each rating label.
             for (
-                rating_label,
+                rating,
                 rating_count,
             ) in purchase_apr_rating_counts.items():
-                self.stdout.write(f"{rating_label}: {rating_count}")
+                self.stdout.write(
+                    f"{apr_rating_lookup[rating]}: {rating_count}"
+                )
 
             self.stdout.write()
 

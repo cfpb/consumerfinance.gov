@@ -71,8 +71,8 @@ class NewRelicAlertViolations:
         )
         incidents_link = (
             "https://alerts.newrelic.com/accounts/"
-            "{account_number}/incidents"
-        ).format(account_number=self.account_number)
+            f"{self.account_number}/incidents"
+        )
         body = (
             "New Relic {product}, {name}, {label} "
             "({priority}, opened {opened}, incident ID {incident_id})."
@@ -86,5 +86,5 @@ class NewRelicAlertViolations:
             opened=opened_str,
             link=incidents_link,
         )
-        message_body = "{title} - {body}".format(title=title, body=body)
+        message_body = f"{title} - {body}"
         return message_body

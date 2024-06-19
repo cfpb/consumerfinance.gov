@@ -120,7 +120,8 @@ class ElasticsearchTestsMixin:
             raise SkipTest("Cannot connect to local Elasticsearch") from e
 
         # Patch the Elasticsearch bulk API call to ensure that reindexes and
-        # individual document updates are immediately available in search results.
+        # individual document updates are immediately available in search
+        # results.
         #
         # See the Elasticsearch documentation on refresh:
         # https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-refresh.html
@@ -180,22 +181,28 @@ class WagtailSignalProcessor(BaseSignalProcessor):
     Wagtail events and calls the appropriate signals to update the search
     index.
 
-    It also translates the `instance` object that gets passed by Wagtail
-    signal handlers into its `instance.specific` equivalent for any
-    downstream logic that depends on the specific page type.
+    It also translates the `instance` Page object that gets passed by Wagtail
+    signal handlers into its AbstractFilterPage equivalent (if it so inherits)
+    to ensure that the filterable page search index is properly updated.
     """
 
-    def handle_delete(self, sender, instance, **kwargs):
-        if isinstance(instance, Page):
-            instance = instance.specific
+    def check_afp(self, instance):
+        # If the provided instance is a Wagtail page instance that inherits
+        # from AbstractFilterPage, convert it to an AFP instance.
+        from v1.models import AbstractFilterPage
 
-        super().handle_delete(sender, instance, **kwargs)
+        if isinstance(instance, Page) and issubclass(
+            instance.specific_class, AbstractFilterPage
+        ):
+            instance = AbstractFilterPage.objects.get(pk=instance.pk)
+
+        return instance
+
+    def handle_delete(self, sender, instance, **kwargs):
+        super().handle_delete(sender, self.check_afp(instance), **kwargs)
 
     def handle_save(self, sender, instance, **kwargs):
-        if isinstance(instance, Page):
-            instance = instance.specific
-
-        super().handle_save(sender, instance, **kwargs)
+        super().handle_save(sender, self.check_afp(instance), **kwargs)
 
     def setup(self):
         page_published.connect(self.handle_save)

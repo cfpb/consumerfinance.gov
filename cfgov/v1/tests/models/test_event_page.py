@@ -2,7 +2,7 @@ import datetime
 import re
 
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.test.utils import override_settings
 
 import responses
@@ -174,6 +174,8 @@ class EventPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("Expires", response)
 
+
+class EventPageNoDBTests(SimpleTestCase):
     def assertValidationFails(self, expected_msg, **kwargs):
         page = EventPage(
             title="test",
@@ -182,7 +184,7 @@ class EventPageTests(TestCase):
         )
 
         with self.assertRaisesRegex(ValidationError, expected_msg):
-            save_new_page(page)
+            page.clean()
 
     def test_failing_validation_venue_image(self):
         self.assertValidationFails(
@@ -204,4 +206,24 @@ class EventPageTests(TestCase):
             live_stream_availability=True,
             live_stream_date=datetime.datetime.now(datetime.timezone.utc)
             + datetime.timedelta(hours=2),
+        )
+
+    def test_location_str(self):
+        self.assertEqual(EventPage().location_str, "")
+        self.assertEqual(
+            EventPage(
+                venue_city="Washington",
+                venue_state="DC",
+                venue_name="CFPB HQ",
+                live_video_id="abcde",
+            ).location_str,
+            "Washington, DC, CFPB HQ, Livecast",
+        )
+        self.assertEqual(
+            EventPage(live_video_id="abcde").location_str,
+            "Livecast",
+        )
+        self.assertEqual(
+            EventPage(venue_name="CFPB HQ").location_str,
+            "CFPB HQ",
         )

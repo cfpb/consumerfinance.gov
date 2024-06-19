@@ -28,7 +28,7 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
         )
         call_command(
             "update_data_snapshot_values",
-            "--snapshot_file={}".format(filename),
+            f"--snapshot_file={filename}",
         )
         response = self.client.get("/browse/")
 
@@ -69,7 +69,7 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
         )
         call_command(
             "update_data_snapshot_values",
-            "--snapshot_file={}".format(filename),
+            f"--snapshot_file={filename}",
         )
         # July 2018
         response = self.client.get("/browse/")

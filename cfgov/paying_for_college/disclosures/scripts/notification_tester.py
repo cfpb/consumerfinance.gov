@@ -33,10 +33,7 @@ def send_test_notifications(url=None, oid=OID, errors=ERRORS):
         "su": Contact.objects.get(name="South University").endpoint,
         "ai": Contact.objects.get(name="Art Institutes").endpoint,
     }
-    if not url:
-        urls = list(prod_endpoints.values())
-    else:
-        urls = [url]
+    urls = list(prod_endpoints.values()) if not url else [url]
     payload = {
         "oid": oid,
         "time": f"{datetime.datetime.now().isoformat()}+00:00",  # noqa

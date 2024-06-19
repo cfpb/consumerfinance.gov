@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from opensearchpy import RequestsHttpConnection
@@ -73,7 +74,6 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "axes",
     "wagtail.search",
     "storages",
     "data_research",
@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     "django_filters",
     "django_htmx",
     "wagtail_content_audit",
+    "mozilla_django_oidc",
 )
 
 MIDDLEWARE = (
@@ -132,9 +133,6 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # AxesMiddleware should be the last middleware in the MIDDLEWARE list
-    # that touches authentication.
-    "axes.middleware.AxesMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -192,7 +190,6 @@ TEMPLATES = [
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
-                "v1.jinja2tags.fragment_cache_extension",
                 "v1.jinja2tags.images_extension",
                 "v1.jinja2tags.v1_extension",
             ],
@@ -289,8 +286,6 @@ WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
-
-WAGTAILADMIN_USER_LOGIN_FORM = "login.forms.LoginForm"
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
@@ -390,6 +385,8 @@ WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
+AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
+
 # Password Policies
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -435,36 +432,7 @@ AUTH_PASSWORD_VALIDATORS = [
             "message": "Password must include at least one special character (@#$%&!).",
         },
     },
-    {
-        "NAME": "login.password_validation.HistoryValidator",
-        "OPTIONS": {
-            "count": 10,
-        },
-    },
-    {
-        "NAME": "login.password_validation.AgeValidator",
-        "OPTIONS": {
-            "hours": 24,
-        },
-    },
 ]
-
-# Login lockout rules using django-axes
-AUTHENTICATION_BACKENDS = (
-    "axes.backends.AxesStandaloneBackend",
-    "django.contrib.auth.backends.ModelBackend",
-)
-AXES_ENABLED = True
-AXES_VERBOSE = False
-AXES_FAILURE_LIMIT = 5
-AXES_COOLOFF_TIME = 2  # Hours
-AXES_LOCKOUT_PARAMETERS = ["username"]
-AXES_LOCKOUT_CALLABLE = "login.views.lockout"
-LOGOUT_REDIRECT_URL = "wagtailadmin_login"
-
-# Initialize our SAML_AUTH variable as false. Our production settings will
-# override this based on the SAML_AUTH environment variable.
-SAML_AUTH = False
 
 DATE_FORMAT = "n/j/Y"
 
@@ -536,6 +504,7 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
+    "*.googletagmanager.com",
     "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
@@ -727,11 +696,6 @@ CACHES = {
         "LOCATION": "cfgov_default_cache",
         "TIMEOUT": None,
     },
-    "post_preview": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "post_preview_cache",
-        "TIMEOUT": None,
-    },
 }
 
 # Set our CORS allowed origins based on a JSON list in the
@@ -752,3 +716,73 @@ WAGTAILADMIN_BASE_URL = os.getenv(
 )
 
 DRAFTAIL_ANCHORS_RENDERER = "wagtail_draftail_anchors.rich_text.render_span"
+
+# Two abbreviations to note:
+# - OP indicates the OIDC identity provider
+# - RP indicates the OIDC relying party, the client, this application
+#
+# Requires the following environment variables to be defined:
+#
+# - ENABLE_SSO: Enables SSO authentication if defined.
+# - OIDC_RP_CLIENT_ID: OIDC client identifier provided by the OP
+# - OIDC_RP_CLIENT_SECRET: OIDC client secret provided by the OP
+# - OIDC_RP_SIGN_ALGO: The algorithm used to sign ID tokens
+#
+# Endpoints on the OIDC provider (with typical last path components):
+# - OIDC_OP_AUTHORIZATION_ENDPOINT: authorization endpoint (/authorize)
+# - OIDC_OP_TOKEN_ENDPOINT: token endpoint (/token)
+# - OIDC_OP_USER_ENDPOINT: userinfo endpoint (/userinfo)
+# - OIDC_OP_JWKS_ENDPOINT: JWKS endpoint (alternative to OIDC_RP_IDP_SIGN_KEY)
+#
+# Optional environment variables:
+# - OIDC_RP_IDP_SIGN_KEY: The key (PEM) to sign ID tokens when
+#                         OIDC_RP_SIGN_ALGO is RS256 (default: None)
+# - OIDC_ADMIN_GROUP: The group claim for admins
+#
+# See the mozilla-django-oidc documentation for more details about the
+# settings below:
+# https://mozilla-django-oidc.readthedocs.io/en/stable/settings.html
+ENABLE_SSO = bool(os.environ.get("ENABLE_SSO"))
+if ENABLE_SSO:
+    # Add our OIDC authentication backend, a subclass of
+    # mozilla_django_oidc.auth.OIDCAuthenticationBackend
+    AUTHENTICATION_BACKENDS += ("login.auth.CFPBOIDCAuthenticationBackend",)
+
+    # Add OIDC middleware that refreshes sessions from the provider
+    MIDDLEWARE += ("mozilla_django_oidc.middleware.SessionRefresh",)
+
+    # Configure login/out URLs for OIDC
+    LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
+    LOGOUT_REDIRECT_URL = reverse_lazy("cfgov_login")
+    ALLOW_LOGOUT_GET_METHOD = True
+
+    # Disable Wagtail password reset
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+
+    # This OIDC client's id and secret
+    OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
+    OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
+
+    # The OIDC provider's signing algorithms and key/key endpoint
+    OIDC_RP_SIGN_ALGO = os.environ["OIDC_RP_SIGN_ALGO"]
+
+    # Because only one of these two values is required if
+    # OIDC_RP_SIGN_ALGO="RS256", we allow them to be None, and the OIDC
+    # library will raise an error if neither are defined.
+    OIDC_RP_IDP_SIGN_KEY = os.environ.get("OIDC_RP_IDP_SIGN_KEY")
+    OIDC_OP_JWKS_ENDPOINT = os.environ.get("OIDC_OP_JWKS_ENDPOINT")
+
+    # OIDC provider endpoints
+    OIDC_OP_AUTHORIZATION_ENDPOINT = os.environ[
+        "OIDC_OP_AUTHORIZATION_ENDPOINT"
+    ]
+    OIDC_OP_TOKEN_ENDPOINT = os.environ["OIDC_OP_TOKEN_ENDPOINT"]
+    OIDC_OP_USER_ENDPOINT = os.environ["OIDC_OP_USER_ENDPOINT"]
+
+    # For users created just-in-time, assign a username based on the
+    # username portion of their email address.
+    OIDC_USERNAME_ALGO = "login.auth.username_from_email"
+
+    # Now we do some role/group-mapping for admins and regular users
+    # Upstream "role" for users who get is_superuser
+    OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")

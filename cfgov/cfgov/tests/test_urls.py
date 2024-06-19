@@ -24,6 +24,7 @@ ADMIN_URL_ALLOWLIST = [
     "^django-admin/",
     "^login",
     "^logout",
+    "^oidc/",
     "^password/",
     "^tasks/",
 ]
@@ -58,7 +59,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=""):
                     )
                 )
         else:
-            raise TypeError("%s does not appear to be a urlpattern object" % p)
+            raise TypeError(f"{p} does not appear to be a urlpattern object")
     return regexes
 
 

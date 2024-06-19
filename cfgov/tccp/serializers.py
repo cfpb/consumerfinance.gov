@@ -16,6 +16,8 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
     purchase_apr_poor_rating = serializers.IntegerField()
     purchase_apr_data_incomplete = serializers.BooleanField()
     issued_by_credit_union = serializers.BooleanField()
+    has_only_variable_late_fees = serializers.BooleanField()
+    has_only_variable_over_limit_fees = serializers.BooleanField()
 
     class Meta:
         model = CardSurveyData
@@ -34,7 +36,7 @@ class CardSurveyDataSerializer(serializers.HyperlinkedModelSerializer):
         # django-rest-framework. This code is needed to ensure that
         # JSONListFields are serialized properly as JSON.
         if isinstance(model_field, JSONListField):
-            field_kwargs.pop("encoder"),
+            field_kwargs.pop("encoder")
             field_kwargs.pop("decoder")
 
         return field_class, field_kwargs

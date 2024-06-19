@@ -30,7 +30,7 @@ EXPECTED_ERROR_MESSAGES = [
     "none",
     "INVALID: student indicated the offer information is wrong",
 ]
-EXPENSE_FILE = "{}/fixtures/bls_data.json".format(BASEDIR)
+EXPENSE_FILE = f"{BASEDIR}/fixtures/bls_data.json"
 IPED_ERROR = "noSchool"
 OID_ERROR = "noOffer"
 PID_ERROR = "noProgram"
@@ -38,7 +38,7 @@ PID_ERROR = "noProgram"
 
 def get_json_file(filename):
     try:
-        with open(filename, "r") as f:
+        with open(filename) as f:
             return f.read()
     except Exception:
         return ""
@@ -55,19 +55,13 @@ def validate_oid(oid):
     if find_illegal:
         return False
     else:
-        if len(oid) >= 40 and len(oid) <= 128:
-            return True
-        else:
-            return False
+        return bool(len(oid) >= 40 and len(oid) <= 128)
 
 
 def validate_pid(pid):
     if not pid:
         return False
-    for char in [";", "<", ">", "{", "}", "_"]:
-        if char in pid:
-            return False
-    return True
+    return all(char not in pid for char in [";", "<", ">", "{", "}", "_"])
 
 
 def url_is_safe(url):
@@ -277,9 +271,9 @@ class ConstantsRepresentation(View):
         for ccap in ConstantCap.objects.order_by("slug"):
             constants[ccap.slug] = ccap.value
         for crate in ConstantRate.objects.order_by("slug"):
-            constants[crate.slug] = "{0}".format(crate.value)
+            constants[crate.slug] = f"{crate.value}"
         cy = constants["constantsYear"]
-        constants["constantsYear"] = "{}-{}".format(cy, str(cy + 1)[2:])
+        constants["constantsYear"] = f"{cy}-{str(cy + 1)[2:]}"
         return json.dumps(constants)
 
     def get(self, request):

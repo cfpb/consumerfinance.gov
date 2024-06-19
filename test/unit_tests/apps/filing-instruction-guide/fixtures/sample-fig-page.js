@@ -164,7 +164,7 @@ export default `
             <h1>Filing instructions guide for small business lending data collected in 2024</h1>
             <div class="lead-paragraph"></div>
             <div class="block block--border-top u-fig-print-link">
-                <a class="a-link a-link--icon" href="javascript:window.print()">
+                <a class="a-link a-link--jump" href="javascript:window.print()">
                     <span class="a-link__text">Print this guide</span>
                     <svg class="cf-icon-svg cf-icon-svg__print" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -270,7 +270,7 @@ export default `
                 </p>
                 <p data-block-key="cqkhf">Data fields are presented below in the order they are recorded in the register. For a machine-readable view of the data specification, see the following link:</p>
                 <p data-block-key="cvu2g">
-                    <a class="a-link a-link--icon"
+                    <a class="a-link a-link--jump"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/file-spec/2024-data-points.csv">
                         <span class="a-link__text">Data spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">
@@ -454,22 +454,22 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_credit_product"> Field 5: Credit product </a>
+                            <a href="#ct_credit_product"> Field 5: Credit product </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
+                            <a href="#ct_credit_product_ff"> Field 6: Free-form text field for other credit products </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_guarantee"> Field 7: Type of guarantee </a>
+                            <a href="#ct_guarantee"> Field 7: Type of guarantee </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
+                            <a href="#ct_guarantee_ff"> Field 8: Free-form text field for other guarantee </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
+                            <a href="#ct_loan_term_flag"> Field 9: Loan term: NA/NP flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#ct_loan_term"> Field 10: Loan term </a>
+                            <a href="#ct_loan_term"> Field 10: Loan term </a>
                         </li>
                     </ul>
                 </div>
@@ -1234,46 +1234,46 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
+                            <a href="#pricing_interest_rate_type"> Field 20: Interest rate type </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
+                            <a href="#pricing_init_rate_period"> Field 21: Initial rate period </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
+                            <a href="#pricing_fixed_rate"> Field 22: Fixed rate: interest rate </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
+                            <a href="#pricing_var_margin"> Field 23: Variable rate transaction: margin </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
+                            <a href="#pricing_var_index_name"> Field 24: Variable rate transaction: index name </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
+                            <a href="#pricing_var_index_name_ff"> Field 25: Variable rate transaction: index name: other </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
+                            <a href="#pricing_var_index_value"> Field 26: Variable rate transaction: index value </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_origination_charges"> Field 27: Total origination charges </a>
+                            <a href="#pricing_origination_charges"> Field 27: Total origination charges </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
+                            <a href="#pricing_broker_fees"> Field 28: Amount of total broker fees </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
+                            <a href="#pricing_initial_charges"> Field 29: Initial annual charges </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
+                            <a href="#pricing_mca_addcost_flag"> Field 30: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing: NA flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
+                            <a href="#pricing_mca_addcost"> Field 31: MCA/sales-based: additional cost for merchant cash advances or other sales-based financing </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
+                            <a href="#pricing_prepenalty_allowed"> Field 32: Prepayment penalty could be imposed </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
+                            <a href="#pricing_prepenalty_exists"> Field 33: Prepayment penalty exists </a>
                         </li>
                     </ul>
                 </div>
@@ -2356,31 +2356,31 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
+                            <a href="#po_1_ethnicity"> Field 46: Ethnicity of principal owner 1 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
+                            <a href="#po_1_ethnicity_ff"> Field 47: Ethnicity of principal owner 1: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_race"> Field 48: Race of principal owner 1 </a>
+                            <a href="#po_1_race"> Field 48: Race of principal owner 1 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                            <a href="#po_1_race_anai_ff"> Field 49: Race of principal owner 1: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
+                            <a href="#po_1_race_asian_ff"> Field 50: Race of principal owner 1: free-form text field for other Asian race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
+                            <a href="#po_1_race_baa_ff"> Field 51: Race of principal owner 1: free-form text field for other Black or African American race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
+                            <a href="#po_1_race_pi_ff"> Field 52: Race of principal owner 1: free-form text field for other Pacific Islander race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
+                            <a href="#po_1_gender_flag"> Field 53: Sex/gender of principal owner 1: NP flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
+                            <a href="#po_1_gender_ff"> Field 54: Sex/gender of principal owner 1: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -2847,31 +2847,31 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
+                            <a href="#po_2_ethnicity"> Field 55: Ethnicity of principal owner 2 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
+                            <a href="#po_2_ethnicity_ff"> Field 56: Ethnicity of principal owner 2: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_race"> Field 57: Race of principal owner 2 </a>
+                            <a href="#po_2_race"> Field 57: Race of principal owner 2 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                            <a href="#po_2_race_anai_ff"> Field 58: Race of principal owner 2: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
+                            <a href="#po_2_race_asian_ff"> Field 59: Race of principal owner 2: free-form text field for other Asian race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
+                            <a href="#po_2_race_baa_ff"> Field 60: Race of principal owner 2: free-form text field for other Black or African American race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
+                            <a href="#po_2_race_pi_ff"> Field 61: Race of principal owner 2: free-form text field for other Pacific Islander race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
+                            <a href="#po_2_gender_flag"> Field 62: Sex/gender of principal owner 2: NP flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
+                            <a href="#po_2_gender_ff"> Field 63: Sex/gender of principal owner 2: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3027,31 +3027,31 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
+                            <a href="#po_3_ethnicity"> Field 64: Ethnicity of principal owner 3 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
+                            <a href="#po_3_ethnicity_ff"> Field 65: Ethnicity of principal owner 3: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_race"> Field 66: Race of principal owner 3 </a>
+                            <a href="#po_3_race"> Field 66: Race of principal owner 3 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                            <a href="#po_3_race_anai_ff"> Field 67: Race of principal owner 3: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
+                            <a href="#po_3_race_asian_ff"> Field 68: Race of principal owner 3: free-form text field for other Asian race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
+                            <a href="#po_3_race_baa_ff"> Field 69: Race of principal owner 3: free-form text field for other Black or African American race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
+                            <a href="#po_3_race_pi_ff"> Field 70: Race of principal owner 3: free-form text field for other Pacific Islander race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
+                            <a href="#po_3_gender_flag"> Field 71: Sex/gender of principal owner 3: NP flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
+                            <a href="#po_3_gender_ff"> Field 72: Sex/gender of principal owner 3: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3207,31 +3207,31 @@ export default `
                     <p></p>
                     <ul class="m-list m-list--links">
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
+                            <a href="#po_4_ethnicity"> Field 73: Ethnicity of principal owner 4 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
+                            <a href="#po_4_ethnicity_ff"> Field 74: Ethnicity of principal owner 4: free-form text field for other Hispanic or Latino ethnicity </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_race"> Field 75: Race of principal owner 4 </a>
+                            <a href="#po_4_race"> Field 75: Race of principal owner 4 </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
+                            <a href="#po_4_race_anai_ff"> Field 76: Race of principal owner 4: free-form text field for American Indian or Alaska Native Enrolled or Principal Tribe </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
+                            <a href="#po_4_race_asian_ff"> Field 77: Race of principal owner 4: free-form text field for other Asian race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
+                            <a href="#po_4_race_baa_ff"> Field 78: Race of principal owner 4: free-form text field for other Black or African American race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
+                            <a href="#po_4_race_pi_ff"> Field 79: Race of principal owner 4: free-form text field for other Pacific Islander race </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
+                            <a href="#po_4_gender_flag"> Field 80: Sex/gender of principal owner 4: NP flag </a>
                         </li>
                         <li class="m-list__item">
-                            <a class="m-list__link" href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
+                            <a href="#po_4_gender_ff"> Field 81: Sex/gender of principal owner 4: free-form text field for self-identified sex/gender </a>
                         </li>
                     </ul>
                 </div>
@@ -3424,7 +3424,7 @@ export default `
                     specification in CSV file format, see the following link:
                 </p>
                 <p data-block-key="abnhl">
-                    <a class="a-link a-link--icon"
+                    <a class="a-link a-link--jump"
                        href="https://raw.githubusercontent.com/cfpb/sbl-content/2024-v1/fig-files/validation-spec/2024-validations.csv">
                         <span class="a-link__text">Validation spec (CSV)</span>
                         <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg">

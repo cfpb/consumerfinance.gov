@@ -14,7 +14,11 @@
 
    has_active_filters: Whether the form had any filters applied.
 
-   results_page: Paginated page of results.
+   results: List of filtered results (see post-preview.html for format).
+
+   paginator: Paginator used to paginate results, if there were any results.
+
+   page_number: Results page number, if there were any results.
 
    ========================================================================== #}
 
@@ -43,8 +47,8 @@
             {% endif %}
         {% endfor %}
 
-        {% if form.is_valid() %}
-            {% set count = results_page.paginator.count %}
+        {% if form_valid %}
+            {% set count = paginator.count %}
             {% if count == 0 %}
                 {% do notification_opts.update({
                     'type': 'warning',
@@ -78,7 +82,7 @@
 
         {# ADD THE FILTER RESULTS, IF THERE ARE ANY. #}
 
-        {% if results_page.paginator.count %}
+        {% if form_valid and results %}
             <section class="block
                             block--sub
                             {%- if has_active_filters %}
@@ -87,10 +91,10 @@
                      data-cy="filterable-list-results">
                 {% if page.filterable_results_compact %}
                     {% import 'v1/activity-log/_activity-list.html' as activity_list with context %}
-                    {{ activity_list.render( results_page ) }}
+                    {{ activity_list.render( results ) }}
                 {% else %}
-                    {% import 'v1/includes/organisms/post-preview.html' as post_preview %}
-                    {% for post in results_page %}
+                    {% import 'v1/includes/organisms/post-preview.html' as post_preview with context %}
+                    {% for post in results %}
                         {{ post_preview.render(
                             post,
                             show_categories=page.show_filtered_categories,
@@ -103,12 +107,12 @@
 
                 {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
 
-                {% if results_page.paginator.num_pages > 1 %}
+                {% if paginator.num_pages > 1 %}
                     <div class="block block--flush-top block--flush-bottom block--padded-top">
                         {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
                         {{ pagination.render(
-                            results_page.paginator.num_pages,
-                            results_page.number
+                            paginator.num_pages,
+                            page_number
                         ) }}
                     </div>
                 {% endif %}

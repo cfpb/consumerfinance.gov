@@ -1,7 +1,7 @@
+{% from 'tccp/includes/apr_rating.html' import apr_rating with context %}
 {% from 'tccp/includes/data_published.html' import data_published %}
 {% from 'tccp/includes/fields.html' import apr, apr_range, currency %}
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
-{% import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
 {% if situation_features -%}
@@ -41,19 +41,8 @@
         Use the ratings to compare your results:
     </p>
     <dl>
-        {% for label, label_count in purchase_apr_rating_counts.items() %}
-        <div class="m-apr-rating m-apr-rating--{{ label }}">
-            <dt>
-                {%- for i in range(loop.index) -%}
-                    {{ svg_icon("dollar-round") }}
-                {%- endfor -%}
-            </dt>
-            <dd>
-                Pay {{ label }} interest (
-                    {{- label_count ~ ' card' ~ label_count | pluralize() -}}
-                )
-            </dd>
-        </div>
+        {% for rating, rating_count in purchase_apr_rating_counts.items() %}
+            {{ apr_rating(rating, count=rating_count) }}
         {% endfor %}
     </dl>
 </div>
@@ -63,18 +52,6 @@
 {% if stats_all.first_report_date -%}
 {{ data_published(stats_all.first_report_date) }}
 {%- endif %}
-
-{%- macro card_rating(card) -%}
-    {%- set label = purchase_apr_rating_labels[card.purchase_apr_for_tier_rating] -%}
-
-    <div class="m-apr-rating m-apr-rating--{{ label }}">
-        {%- for i in range(card.purchase_apr_for_tier_rating + 1) %}
-            {{ svg_icon("dollar-round") }}
-        {% endfor -%}
-
-        Pay {{ label }} interest
-    </div>
-{%- endmacro -%}
 
 {%- macro card_rewards(card) -%}
     {%- set rewards = [] -%}
@@ -96,7 +73,9 @@
                     <h3 class="m-card__heading">{{ card.institution_name }}</h3>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
                 </div>
-                {{ card_rating(card) | safe }}
+                <dl>
+                    {{ apr_rating(card.purchase_apr_for_tier_rating) }}
+                </dl>
                 <dl class="m-data-specs">
                     <div class="m-data-spec m-data-spec--apr">
                         <dt><strong>Purchase APR</strong></dt>
@@ -131,7 +110,7 @@
                     <div class="m-data-spec m-data-spec--rewards">
                         <dt>Rewards</dt>
                         <dd>
-                            {{ card_rewards(card) | safe }}
+                            {{ card_rewards(card) }}
                         </dd>
                     </div>
                     {%- if

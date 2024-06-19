@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from unittest import mock
 
 from django.http import HttpResponse
@@ -229,9 +228,9 @@ class TestParseLinks(TestCase):
     def test_multiline_external_gov_link(self):
         s = """
         <body>
-            <a class="m-list__link a-link"
+            <a class="a-link a-link--jump"
                href="https://usa.gov/">
-                <span>USA
+                <span class="a-link__text">USA
                 .gov</span>
             </a>
         </body>

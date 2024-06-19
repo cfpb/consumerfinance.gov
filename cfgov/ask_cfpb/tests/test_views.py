@@ -51,7 +51,7 @@ class AnswerPagePreviewTestCase(TestCase):
         self.english_answer_page = AnswerPage(
             answer_base=self.test_answer,
             language="en",
-            slug="test-question1-en-{}".format(self.test_answer.pk),
+            slug=f"test-question1-en-{self.test_answer.pk}",
             title="Test question1",
             answer_content=json.dumps(
                 [
@@ -71,7 +71,7 @@ class AnswerPagePreviewTestCase(TestCase):
         self.english_answer_page2 = AnswerPage(
             answer_base=self.test_answer2,
             language="en",
-            slug="test-question2-en-{}".format(self.test_answer2.pk),
+            slug=f"test-question2-en-{self.test_answer2.pk}",
             title="Test question2",
             answer_content=json.dumps(
                 [

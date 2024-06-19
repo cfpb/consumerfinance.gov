@@ -114,7 +114,7 @@ class SchoolModelsTest(TestCase):
         self.assertTrue(isinstance(a, Alias))
         self.assertIn(a.alias, a.__str__())
         self.assertEqual(s.primary_alias, a.alias)
-        self.assertEqual(s.__str__(), a.alias + " ({})".format(s.school_id))
+        self.assertEqual(s.__str__(), a.alias + f" ({s.school_id})")
         c = self.create_contact()
         self.assertTrue(isinstance(c, Contact))
         self.assertIn(c.contacts, c.__str__())

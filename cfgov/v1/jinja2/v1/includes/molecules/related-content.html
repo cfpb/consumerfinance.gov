@@ -45,12 +45,12 @@
         {% for link in value.links %}
             <li class="m-list__item">
                 <a href="{{ link.url }}"
-                  class="m-list__link"
+                  class="a-link a-link--jump"
                   {%- if link.aria_label -%}
                     aria-label="{{ link.aria_label }}"
                   {% endif -%}>
                   {% if link.is_link_boldface %}<strong>{% endif %}
-                  {{ link.text }}
+                  <span class="a-link__text">{{ link.text }}</span>
                   {% if link.is_link_boldface %}</strong>{% endif %}
                 </a>
             </li>

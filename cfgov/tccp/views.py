@@ -149,9 +149,6 @@ class CardListView(FlaggedViewMixin, ListAPIView):
             purchase_apr_rating_counts = self.get_purchase_apr_rating_counts(
                 cards
             )
-            purchase_apr_rating_labels = list(
-                purchase_apr_rating_counts.keys()
-            )
 
             response.data.update(
                 {
@@ -162,8 +159,8 @@ class CardListView(FlaggedViewMixin, ListAPIView):
                     "situations": situations,
                     "situation_features": SituationFeatures(situations),
                     "speed_bumps": SituationSpeedBumps(situations),
-                    "purchase_apr_rating_labels": purchase_apr_rating_labels,
                     "purchase_apr_rating_counts": purchase_apr_rating_counts,
+                    "apr_rating_lookup": dict(enums.PurchaseAPRRatings),
                     "rewards_lookup": dict(enums.RewardsChoices),
                 }
             )
@@ -179,14 +176,14 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         # database query but the size of the data is small enough that we
         # can just as easily do it in Python.
         return {
-            rating_label: len(
+            rating_score: len(
                 [
                     card
                     for card in cards
                     if card["purchase_apr_for_tier_rating"] == rating_score
                 ]
             )
-            for rating_score, rating_label in enums.PurchaseAPRRatings
+            for rating_score, _ in enums.PurchaseAPRRatings
         }
 
 

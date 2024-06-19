@@ -116,6 +116,31 @@
   }
 }
 
+.m-apr-rating {
+  &--less .cf-icon-svg {
+    color: var(--green);
+  }
+
+  &--average .cf-icon-svg {
+    color: var(--gold);
+  }
+
+  &--more .cf-icon-svg {
+    color: var(--red);
+  }
+}
+
+.u-heading-4-size-only() {
+  font-size: @size-iv;
+  line-height: 1.25;
+
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
+    font-size: unit(16px / @base-font-size-px, rem);
+    line-height: unit(18px /  @base-font-size-px);
+  });
+}
+
 .m-card.m-card--tabular {
   padding: 0;
   border: 0;
@@ -136,6 +161,11 @@
       padding-bottom: unit((20px / @base-font-size-px), rem);
     });
   }
+
+  dl {
+    margin-bottom: 0;
+  }
+
   &:hover {
     > a {
       box-shadow:
@@ -169,6 +199,7 @@
     color: var(--gray);
     font-size: unit((16px / @base-font-size-px), rem);
     font-weight: 400;
+    text-transform: uppercase;
   }
 
   .m-card__subtitle {
@@ -179,6 +210,22 @@
 
   .m-card__footer {
     margin-top: unit((5px / @base-font-size-px), rem);
+
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
+      margin-top: unit((20px / @base-font-size-px), rem);
+    });
+  }
+
+  .m-apr-rating {
+    .u-heading-4-size-only();
+    margin-bottom: unit(20px / @base-font-size-px, rem);
+    font-weight: 600;
+
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      margin-bottom: unit(10px / @base-font-size-px, rem);
+    });
   }
 }
 
@@ -188,13 +235,16 @@
   }
 
   .m-apr-rating {
-    margin-bottom: unit((5px / @base-font-size-px), rem);
+    margin-bottom: unit(5px / @base-font-size-px, rem);
     display: grid;
     grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
     align-items: baseline;
     gap: unit(5px / @base-font-size-px, em);
     font-weight: 500;
 
+    .u-heading-4-size-only();
+
+    // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       margin-bottom: 0;
     });
@@ -202,24 +252,6 @@
 
   dt {
     justify-self: right;
-  }
-}
-
-.m-apr-rating {
-  .h4();
-  margin-bottom: unit((20px / @base-font-size-px), rem);
-  font-weight: 600;
-
-  &--less .cf-icon-svg {
-    color: var(--green);
-  }
-
-  &--average .cf-icon-svg {
-    color: var(--gold);
-  }
-
-  &--more .cf-icon-svg {
-    color: var(--red);
   }
 }
 
@@ -232,12 +264,10 @@
   grid-template-columns: 2fr 3fr;
   column-gap: 20px;
   row-gap: 15px;
-  margin-bottom: 0;
 
   .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
-    margin-bottom: unit((15px / @base-font-size-px), rem);
   });
 }
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 import json
 import smtplib
@@ -211,7 +210,7 @@ class ConstantRate(models.Model):
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return "{} ({}), updated {}".format(self.name, self.slug, self.updated)
+        return f"{self.name} ({self.slug}), updated {self.updated}"
 
     class Meta:
         ordering = ["slug"]
@@ -229,7 +228,7 @@ class ConstantCap(models.Model):
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return "{} ({}), updated {}".format(self.name, self.slug, self.updated)
+        return f"{self.name} ({self.slug}), updated {self.updated}"
 
     class Meta:
         ordering = ["slug"]
@@ -303,7 +302,7 @@ def format_for_null(value):
     if value is None:
         return value
     else:
-        return "{}".format(value)
+        return f"{value}"
 
 
 class School(models.Model):
@@ -492,7 +491,7 @@ class School(models.Model):
         return json.dumps(ordered_out)
 
     def __str__(self):
-        return self.primary_alias + " ({})".format(self.school_id)
+        return self.primary_alias + f" ({self.school_id})"
 
     @property
     def program_codes(self):
@@ -584,9 +583,7 @@ class Notification(models.Model):
     log = models.TextField(blank=True)
 
     def __str__(self):
-        return "{0} {1} ({2})".format(
-            self.oid, self.institution.primary_alias, self.institution.pk
-        )
+        return f"{self.oid} {self.institution.primary_alias} ({self.institution.pk})"  # noqa: E501
 
     def notify_school(self):
         school = self.institution
@@ -600,8 +597,7 @@ class Notification(models.Model):
         }
         now = datetime.datetime.now()
         no_contact_msg = (
-            "School notification failed: "
-            "No endpoint or email info {}".format(now)
+            "School notification failed: " f"No endpoint or email info {now}"
         )
         # we prefer to use endpount notification, so use it first if existing
         if school.contact:
@@ -612,35 +608,26 @@ class Notification(models.Model):
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
                 except requests.exceptions.ConnectionError as e:
-                    exmsg = (
-                        "Error: connection error at school "
-                        "{} {}\n".format(now, e)
-                    )
+                    exmsg = "Error: connection error at school " f"{now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.Timeout:
                     exmsg = (
-                        "Error: connection with school "
-                        "timed out {}\n".format(now)
+                        "Error: connection with school " f"timed out {now}\n"
                     )
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.RequestException as e:
-                    exmsg = (
-                        "Error: request error at school: "
-                        "{} {}\n".format(now, e)
-                    )
+                    exmsg = "Error: request error at school: " f"{now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 else:
                     if resp.ok:
                         self.sent = True
-                        self.log = "School notified " "via endpoint {}".format(
-                            now
-                        )
+                        self.log = "School notified " f"via endpoint {now}"
                         self.save()
                         return self.log
                     else:
@@ -657,7 +644,7 @@ class Notification(models.Model):
                         )
                         self.log = self.log + msg
                         self.save()
-                        return "Notification failed: {}".format(msg)
+                        return f"Notification failed: {msg}"
             elif school.contact.contacts:
                 try:
                     send_mail(
@@ -672,16 +659,14 @@ class Notification(models.Model):
                     )
                     self.sent = True
                     self.emails = school.contact.contacts
-                    self.log = "School notified via email " "at {}".format(
-                        self.emails
-                    )
+                    self.log = "School notified via email " f"at {self.emails}"
                     self.save()
                     return self.log
                 except smtplib.SMTPException as e:
                     email_fail_msg = (
                         "School email notification "
-                        "failed on {}\n"
-                        "Error: {}".format(now, e)
+                        f"failed on {now}\n"
+                        f"Error: {e}"
                     )
                     self.log = self.log + email_fail_msg
                     self.save()
@@ -772,7 +757,7 @@ class Program(models.Model):
     test = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} ({})".format(self.program_name, self.institution)
+        return f"{self.program_name} ({self.institution})"
 
     def get_level(self):
         level = ""
@@ -787,10 +772,10 @@ class Program(models.Model):
             "books": self.books,
             "campus": self.campus,
             "cipCode": self.cip_code,
-            "completionRate": "{0}".format(self.completion_rate),
+            "completionRate": f"{self.completion_rate}",
             "completionCohort": self.completion_cohort,
             "completers": self.completers,
-            "defaultRate": "{0}".format(self.default_rate),
+            "defaultRate": f"{self.default_rate}",
             "fees": self.fees,
             "housing": self.housing,
             "institution": self.institution.primary_alias,
@@ -865,11 +850,11 @@ class Program(models.Model):
                     self.books,
                     self.campus,
                     self.cip_code,
-                    "{}".format(self.completion_rate),
+                    f"{self.completion_rate}",
                     self.completion_cohort,
                     self.completers,
-                    "{0}".format(self.default_rate),
-                    "{0}".format(self.job_rate),
+                    f"{self.default_rate}",
+                    f"{self.job_rate}",
                     self.job_note,
                     self.mean_student_loan_completers,
                     self.median_student_loan_completers,
@@ -891,7 +876,7 @@ class Alias(models.Model):
     is_primary = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} (alias for {})".format(self.alias, self.institution)
+        return f"{self.alias} (alias for {self.institution})"
 
     class Meta:
         verbose_name_plural = "Aliases"
@@ -907,7 +892,7 @@ class Nickname(models.Model):
     is_female = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} (nickname for {})".format(self.nickname, self.institution)
+        return f"{self.nickname} (nickname for {self.institution})"
 
     class Meta:
         ordering = ["nickname"]

@@ -48,10 +48,10 @@ class ViewTests(TestCase):
     return_keys = ["data", "error"]
 
     def test_base_view(self):
-        url = reverse("retirement_api:claiming_en")
+        url = reverse("retirement_api_en:claiming")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
-        url = reverse("retirement_api:claiming_es")
+        url = reverse("retirement_api_en:claiming")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
 
@@ -85,7 +85,7 @@ class ViewTests(TestCase):
         self.assertIsInstance(response.content, bytes)
         rdata = json.loads(response.content)
         for each in self.return_keys:
-            self.assertTrue(each in rdata.keys())
+            self.assertTrue(each in rdata)
 
     def test_estimator_url_data_bad_income(self):
         request = self.req_blank
@@ -104,7 +104,7 @@ class ViewTests(TestCase):
         self.assertIsInstance(response.content, bytes)
         rdata = json.loads(response.content)
         for each in self.return_keys:
-            self.assertTrue(each in rdata.keys())
+            self.assertTrue(each in rdata)
 
     def test_estimator_query_data_blank(self):
         request = self.req_blank
@@ -127,9 +127,9 @@ class ViewTests(TestCase):
         self.assertTrue(response.status_code == 400)
 
     def test_about_pages(self):
-        url = reverse("retirement_api:retirement_about_en")
+        url = reverse("retirement_api_en:about")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
-        url = reverse("retirement_api:retirement_about_es")
+        url = reverse("retirement_api_es:about")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)

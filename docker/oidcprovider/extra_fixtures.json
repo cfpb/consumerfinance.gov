@@ -1,0 +1,52 @@
+[
+{
+    "model": "oidc_provider.client",
+    "pk": 3,
+    "fields": {
+        "name": "Wagtail (Local RS256)",
+        "owner": null,
+        "client_type": "confidential",
+        "client_id": "3",
+        "client_secret": "itsasecret",
+        "jwt_alg": "RS256",
+        "date_created": "2024-05-14",
+        "website_url": "",
+        "terms_url": "",
+        "contact_email": "",
+        "logo": "",
+        "reuse_consent": true,
+        "require_consent": true,
+        "_redirect_uris": "http://localhost:8000/oidc/callback/",
+        "_post_logout_redirect_uris": "",
+        "_scope": "",
+        "response_types": [
+            1
+        ]
+    }
+},
+{
+    "model": "oidc_provider.client",
+    "pk": 4,
+    "fields": {
+        "name": "Wagtail (Local HS256)",
+        "owner": null,
+        "client_type": "confidential",
+        "client_id": "4",
+        "client_secret": "itsasecret",
+        "jwt_alg": "HS256",
+        "date_created": "2024-05-14",
+        "website_url": "",
+        "terms_url": "",
+        "contact_email": "",
+        "logo": "",
+        "reuse_consent": true,
+        "require_consent": true,
+        "_redirect_uris": "http://localhost:8000/oidc/callback/",
+        "_post_logout_redirect_uris": "",
+        "_scope": "",
+        "response_types": [
+            1
+        ]
+    }
+}
+]

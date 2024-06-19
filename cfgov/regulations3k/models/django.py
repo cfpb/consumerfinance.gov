@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 from datetime import date
 
@@ -147,8 +146,8 @@ class EffectiveVersion(models.Model):
             raise ValidationError(
                 {
                     "effective_date": [
-                        "The part selected below already has an effective version "
-                        "with this date."
+                        "The part selected below already has an effective "
+                        "version with this date."
                     ]
                 }
             )
@@ -210,9 +209,7 @@ class Subpart(models.Model):
             return ""
 
         sections = self.sections.all()
-        return "{}–{}".format(
-            sections[0].numeric_label, sections.reverse()[0].numeric_label
-        )
+        return f"{sections[0].numeric_label}–{sections.reverse()[0].numeric_label}"  # noqa: E501
 
     class Meta:
         ordering = ["subpart_type", "label"]
@@ -256,7 +253,7 @@ class Section(models.Model):
     def extract_graphs(self):
         """Break out and store a section's paragraphs for indexing."""
         part = self.subpart.version.part
-        section_tag = "{}-{}".format(part.part_number, self.label)
+        section_tag = f"{part.part_number}-{self.label}"
         extractor = regdown.extract_labeled_paragraph
         paragraph_ids = re.findall(r"[^{]*{(?P<label>[\w\-]+)}", self.contents)
         created = 0
@@ -269,7 +266,7 @@ class Section(models.Model):
             raw_graph = extractor(pid, self.contents, exact=True)
             markup_graph = regdown.regdown(raw_graph)
             index_graph = strip_tags(markup_graph).strip()
-            full_id = "{}-{}".format(section_tag, pid)
+            full_id = f"{section_tag}-{pid}"
             graph, cr = SectionParagraph.objects.get_or_create(
                 paragraph=index_graph, paragraph_id=pid, section=self
             )
@@ -324,7 +321,7 @@ class Section(models.Model):
     @property
     def numeric_label(self):
         if self.label.isdigit():
-            return "\xa7\xa0{}.{}".format(self.part, int(self.label))
+            return f"\xa7\xa0{self.part}.{int(self.label)}"
         else:
             return ""
 
@@ -346,9 +343,7 @@ class SectionParagraph(models.Model):
     )
 
     def __str__(self):
-        return "Section {}-{} paragraph {}".format(
-            self.section.part, self.section.label, self.paragraph_id
-        )
+        return f"Section {self.section.part}-{self.section.label} paragraph {self.paragraph_id}"  # noqa: E501
 
 
 @receiver(post_save, sender=EffectiveVersion)

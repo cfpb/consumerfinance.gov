@@ -256,7 +256,7 @@ class RSSFeedTests(TestCase):
 
     def assertHTMLContainsLinkToPageFeed(self, html, page):
         feed = page.url + "feed/"
-        self.assertIn('<a class="a-btn" href="{}">'.format(feed), html)
+        self.assertIn(f'<a class="a-btn" href="{feed}">', html)
 
     def test_render_no_page_in_context_renders_nothing(self):
         html = self.render(context={})

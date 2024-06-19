@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import logging
 import re
 
@@ -30,7 +28,7 @@ def get_url(section_reference):
         return section_url
     paragraph_id = "-".join(ID_RE.findall(parts.get("ids")))
     if paragraph_id:
-        return "{}#{}".format(section_url, paragraph_id)
+        return f"{section_url}#{paragraph_id}"
     else:
         return section_url
 
@@ -44,7 +42,7 @@ def insert_section_links(regdown):
     for i, ref in enumerate(section_refs):
         url = get_url(ref)
         if url:
-            link = '<a href="{}" data-linktag="{}">{}</a> '.format(url, i, ref)
+            link = f'<a href="{url}" data-linktag="{i}">{ref}</a> '
             regdown = regdown[:index_head] + regdown[index_head:].replace(
                 ref, link, 1
             )
@@ -63,16 +61,14 @@ def insert_links(reg=None):
     ).exclude(subpart__title__contains="Supplement I")
     for section in live_sections:
         if "data-linktag" in section.contents:
-            logger.info("Section {} already has links applied".format(section))
+            logger.info(f"Section {section} already has links applied")
             continue
         linked_regdown = insert_section_links(section.contents)
         if not linked_regdown:
-            logger.info(
-                "No section references found in section {}".format(section)
-            )
+            logger.info(f"No section references found in section {section}")
             continue
         else:
-            logger.info("Links added to section {}".format(section))
+            logger.info(f"Links added to section {section}")
             section.contents = linked_regdown
             section.save()
 

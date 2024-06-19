@@ -24,7 +24,7 @@ describe('Planning your Social Security', () => {
   //*******************************************/
   //**********Language Selection***************/
   it('should have a spanish view', () => {
-    cy.intercept('/consumer-tools/retirement/before-you-claim/es').as(
+    cy.intercept('/es/herramientas-del-consumidor/jubilacion/antes-de-solicitar/').as(
       'getSpanish',
     );
     claim.setLanguageToSpanish();

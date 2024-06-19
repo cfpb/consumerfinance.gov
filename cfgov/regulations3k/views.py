@@ -153,10 +153,7 @@ def redirect_eregs(request, **kwargs):
     if search_base:
         part = search_base.group(1)
         search_form = SearchForm(request.GET)
-        if search_form.is_valid():
-            query = search_form.cleaned_data["q"]
-        else:
-            query = ""
+        query = search_form.cleaned_data["q"] if search_form.is_valid() else ""
         return redirect(
             f"{new_base}search-regulations/results/?regs={part}&q={query}",
             permanent=True,

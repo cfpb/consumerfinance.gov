@@ -14,7 +14,7 @@
    value.show_category:    Whether to show the category or not.
    value.heading:          Heading text.
    value.paragraph.source: Body introduction text.
-   value.authors:          Array of author names and associated URLs.
+   value.authors:          Array of author names
 
    value.date:             A datetime for the post.
    value.has_social:       Whether to show the share icons or not.
@@ -59,7 +59,7 @@
             <span class="byline">
             {%- for author in page.get_authors() -%}
                 {% if loop.first %}By {% elif loop.last %}and {% endif %}
-                {{ author.name }}
+                {{ author }}
                 {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
             {% endfor %}
                 &ndash;

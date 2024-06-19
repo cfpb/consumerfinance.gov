@@ -1,34 +1,3 @@
-[tool.black]
-line-length = 79
-target-version = ['py38']
-include = '\.pyi?$'
-extend-exclude = '''
-(
-  /(
-      migrations
-  )/
-)
-'''
-
-[tool.isort]
-profile = "black"
-line_length = 79
-lines_after_imports = 2
-skip = ["f", ".tox", "migrations", ".venv", "venv"]
-known_django = ["django"]
-known_wagtail = ["wagtail"]
-src_paths = ["cfgov"]
-# Necessary due to the conflicting cfgov/jinja2 top-level template directory.
-known_third_party = ["jinja2"]
-sections = [
-    "STDLIB",
-    "DJANGO",
-    "WAGTAIL",
-    "THIRDPARTY",
-    "FIRSTPARTY",
-    "LOCALFOLDER"
-]
-
 [tool.bandit]
 exclude_dirs = [
     "*/tests/*",
@@ -45,6 +14,11 @@ skips = [
 ]
 
 [tool.ruff]
+# Use PEP8 line-length
+line-length = 79
+# Target Python 3.8
+target-version = "py38"
+# Exclude common paths
 exclude = [
     # These are directories that it's a waste of time to traverse
     ".git",
@@ -75,6 +49,8 @@ exclude = [
     # standards
     "cfgov/cfgov/settings",
 ]
+src = ["cfgov/"]
+
 
 [tool.ruff.lint]
 ignore = [
@@ -86,8 +62,33 @@ ignore = [
     "B905"
 ]
 select = [
+    # pycodestyle
     "E",
+    # pyflakes
     "F",
-    "W",
+    # flake8-bugbear
     "B",
+    # pyupgrade
+    "UP",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff.lint.isort.sections]
+"django" = ["django"]
+"wagtail" = ["wagtail"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-third-party = ["jinja2"]
+section-order = [
+    "future",
+    "standard-library",
+    "django",
+    "wagtail",
+    "third-party",
+    "first-party",
+    "local-folder",
 ]

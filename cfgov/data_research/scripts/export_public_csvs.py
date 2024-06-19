@@ -51,7 +51,7 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = datetime.date.today().strftime("%B %Y")
     thru_month_formatted = parser.parse(thru_month).strftime("%B %Y")
-    csv_url = "{}/{}.csv".format(S3_MORTGAGE_DOWNLOADS_BASE, slug)
+    csv_url = f"{S3_MORTGAGE_DOWNLOADS_BASE}/{slug}.csv"
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name="download_files"
     )
@@ -66,8 +66,8 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
         }
     else:
         current = download_meta_file.json_value
-        if thru_month in current.keys():
-            if days_late in current[thru_month].keys():
+        if thru_month in current:
+            if days_late in current[thru_month]:
                 current[thru_month][days_late].update(new_posting)
             else:
                 current[thru_month][days_late] = new_posting
@@ -83,7 +83,7 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
             )
         download_meta_file.json_value = current
     download_meta_file.save()
-    logger.info("Saved metadata for {}".format(slug))
+    logger.info(f"Saved metadata for {slug}")
 
 
 def round_pct(value):
@@ -91,17 +91,19 @@ def round_pct(value):
 
 
 def row_starter(geo_type, obj):
-    if geo_type == "County":
+    # flake8-simplify flags this with SIM116, and wants it to be a
+    # dict-lookup. That would make the logic here less readable.
+    if geo_type == "County":  # noqa: SIM116
         return [
             geo_type,
             obj.county.state.abbr,
             obj.county.name,
-            "'{}'".format(obj.fips),
+            f"'{obj.fips}'",
         ]
     elif geo_type == "MetroArea":
         return [geo_type, obj.msa.name, obj.fips]
     elif geo_type == "State":
-        return [geo_type, obj.state.name, "'{}'".format(obj.fips)]
+        return [geo_type, obj.state.name, f"'{obj.fips}'"]
     else:
         return [geo_type, obj.state.name, obj.fips]
 
@@ -163,7 +165,7 @@ def export_downloadable_csv(geo_type, late_value):
             "headings": ["RegionType", "Name", "CBSACode"],
             "fips_list": sorted(
                 [
-                    "{}-non".format(state.fips)
+                    f"{state.fips}-non"
                     for state in State.objects.filter(non_msa_valid=True)
                 ]
             ),
@@ -181,9 +183,7 @@ def export_downloadable_csv(geo_type, late_value):
             ),
         },
     }
-    slug = "{}Mortgages{}DaysLate-thru-{}".format(
-        geo_type, LATE_VALUE_TITLE[late_value], thru_month
-    )
+    slug = f"{geo_type}Mortgages{LATE_VALUE_TITLE[late_value]}DaysLate-thru-{thru_month}"  # noqa: E501
     _map = geo_dict.get(geo_type)
     fips_list = _map["fips_list"]
     csvfile = StringIO()
@@ -209,9 +209,9 @@ def export_downloadable_csv(geo_type, late_value):
             ]
             writer.writerow(record_starter + record_ender)
     bake_csv_to_s3(
-        slug, csvfile, sub_bucket="{}/downloads".format(MORTGAGE_SUB_BUCKET)
+        slug, csvfile, sub_bucket=f"{MORTGAGE_SUB_BUCKET}/downloads"
     )
-    logger.info("Baked {} to S3".format(slug))
+    logger.info(f"Baked {slug} to S3")
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_file_size(bytecount)
@@ -227,6 +227,6 @@ def run(prep_only=False):
         logger.info("Exporting public CSVs to S3 ...")
         for geo in ["County", "MetroArea", "State"]:
             export_downloadable_csv(geo, "percent_30_60")
-            logger.info("Exported 30-89-day {} CSV".format(geo))
+            logger.info(f"Exported 30-89-day {geo} CSV")
             export_downloadable_csv(geo, "percent_90")
-            logger.info("Exported 90-day {} CSV".format(geo))
+            logger.info(f"Exported 90-day {geo} CSV")

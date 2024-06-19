@@ -10,30 +10,21 @@
 
    value:                        Object defined from a StreamField block.
 
-   value.modifier:               A modifier CSS class used to alternate
-                                 the info unit from stacked to inline layouts.
-
    value.image:                  (Optional) An object containing:
 
-   value.image.is_decorative:    Whether the image is a bg image or not.
-                                 Default is false.
-
-   value.image.is_square:        Whether the image is square or not.
-                                 Default is false.
-
-   value.image.url:              String for the image URL.
+   value.image.upload:           A CFGovRendition object.
 
    value.image.alt:              String for image alt text.
 
-   value.heading:                A string containing title of module.
+   value.heading:                (Optional) A heading object.
+                                 See v1/includes/blocks/heading.html.
 
-   value.sub_heading:            A string containing the subtitle of module.
+   value.body:                   (Optional) A string containing the content
+                                 to display below the heading (typically a
+                                 paragraph).
 
-   value.body:                   A string containing the content to display
-                                 below the heading (typically a paragraph).
-
-   value.links:                  A tuple of items to create a list of links,
-                                 containing:
+   value.links:                  (Optional) A tuple of items to create a list
+                                 of links, containing:
 
    value.links[i].url:           A string for the URL of the link.
 
@@ -41,80 +32,110 @@
 
    value.links[i].aria_label:    (Optional) An aria-label for the link.
 
-   value.link_image_and_heading: Boolean for whether the image and heading
+   value.links[i].is_link_boldface: (Optional) Sets bold formatting for the link.
+
+   format:                       Code for the layout of the parent Info Unit
+                                 Group, used to determine whether to add the
+                                 `__inline` modifier to the main div.
+
+   link_image_and_heading:       Boolean for whether the image and heading
                                  should be linked to the value.links[0].url.
+
+    border_radius_image:         Value determining whether an image should
+                                 have a rounded or circular mask.
 
    ========================================================================== #}
 
-{% macro info_unit(value) %}
-{# TODO: If value.modifier is just to switch between two layouts,
-         change to a boolean parameter. #}
-{% set link_image_and_heading = value.link_image_and_heading
-                                and value.links
-                                and value.links[0]
-                                and value.links[0].url %}
+{%- from 'v1/includes/blocks/heading.html' import heading without context %}
+
+{%- macro info_unit(value, format, link_image_and_heading, border_radius_image) -%}
+
+{# Confirm that not only is link_image_and_heading set, but that this
+   particular info unit has a link in its list and there's either an
+   image or heading to wrap in a link. #}
+{%- set has_heading = value.heading and value.heading.text %}
+{%- set has_image = value.image and value.image.upload %}
+{%- set has_link = value.links and value.links[0] and value.links[0].url %}
+{%- set link_image_and_heading = link_image_and_heading
+                                 and has_link
+                                 and ( has_heading or has_image ) %}
 
 <div class="m-info-unit
-            {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
-    {% if value.image %}
-        {% if link_image_and_heading %}
-            <a href="{{ value.links[0].url }}">
-        {% endif %}
-        {% if value.image.is_decorative %}
-        <div class="m-info-unit__image
-                    {{ 'm-info-unit__image--square' if value.image.is_square else '' }}"
-             style="background-image: url( {{ value.image.url }} );">
-        </div>
-        {% else %}
-        <img src="{{ value.image.url }}"
-             alt="{{ value.image.alt if value.image.alt else '' }}"
-             class="m-info-unit__image
-                    {{ 'm-info-unit__image--square' if value.image.is_square else '' }}">
-        {% endif %}
-        {% if link_image_and_heading %}
-            </a>
-        {% endif %}
+            {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
+
+    {% if link_image_and_heading %}
+        <a class="m-info-unit__heading-link"
+           href="{{ value.links[0].url | safe }}">
     {% endif %}
+
+    {%- if has_image %}
+        {%- set img = image( value.image.upload, 'original' ) %}
+        {%- set border_radius_image = border_radius_image %}
+
+        {%- if not link_image_and_heading %}
+            {# If the image isn't being linked, include its alt text. #}
+            {% set img_alt_text = image_alt_value( value.image ) %}
+        {% elif has_heading %}
+            {# If the image is being linked, and there's a heading, set
+               empty alt text to avoid having duplicate text in the link. #}
+            {% set img_alt_text = '' %}
+        {% else %}
+            {# If the image is being linked, but there's no heading, use
+               the text from the link. #}
+            {% set img_alt_text = value.links[0].text %}
+        {% endif -%}
+
+        <img class="m-info-unit__image
+                    {{- ' m-info-unit__image--square' if img.is_square }}
+                    {{- ' u-image__border-circle' if border_radius_image == 'circle' }}
+                    {{- ' u-image__border-rounded' if border_radius_image == 'rounded' }}"
+            src="{{ img.url }}"
+            alt="{{ img_alt_text }}">
+    {%- endif %}
+
+    {%- if has_heading %}
+        <div class="m-info-unit__heading-text">
+            {{ heading( value.heading ) }}
+        </div>
+    {%- endif %}
+
+    {%- if link_image_and_heading %}
+        </a>
+    {%- endif -%}
 
     <div class="m-info-unit__content">
-    {% if link_image_and_heading %}
-        <a class="m-info-unit__heading-link" href="{{ value.links[0].url }}">
-    {% endif %}
-            {{ value.heading | safe if value.heading else '' }}
-            {{ value.sub_heading | safe if value.sub_heading else '' }}
-    {% if link_image_and_heading %}
-        </a>
-    {% endif %}
-
         {{ value.body | safe }}
 
         {% if value.links %}
-            <ul class="m-list m-list--links">
-            {% for link in value.links %}
+            <ul class="m-list m-list--links u-mt15">
+            {%- for link in value.links %}
                 <li class="m-list__item">
-                    {% if link.text is defined and link.text.find('@') > -1 %}
-                        {% if not value.emails is defined %}
-                            {% do value.update({'emails':[{'url':link.text}]}) %}
-                        {% endif %}
-                        {% include 'contact-email.html' with context %}
-                    {% else %}
-                        {% set link_text = link.text if link.text
-                            else 'Learn More' %}
+                {%- if link.text is not none and link.text.find('@') > -1 -%}
+                    {%- if not value.emails is defined -%}
+                        {%- do value.update({'emails':[{'url':link.text}]}) -%}
+                    {%- endif -%}
+                    {% include 'contact-email.html' with context %}
+                {%- else -%}
+                    {%- set link_text = link.text if link.text
+                        else 'Learn More' -%}
 
-                        {%- set link -%}
-                            <a class="m-list__link"
-                                href="{{ link.url }}"
-                                {%- if link.aria_label -%}
-                                    aria-label="{{ link.aria_label }}"
-                                {%- endif %}>{{ link_text }}</a>
-                        {%- endset -%}
-                        {{ link | safe }}
-                    {% endif %}
+                    {%- set link -%}
+                        <a class="a-link a-link--jump"
+                            href="{{ link.url }}"
+                            {%- if link.aria_label -%}
+                                aria-label="{{ link.aria_label }}"
+                            {%- endif %}>
+                            {% if link.is_link_boldface %}<strong>{% endif %}
+                            <span class="a-link__text">{{ link.text }}</span>
+                            {% if link.is_link_boldface %}</strong>{% endif %}
+                        </a>
+                    {%- endset -%}
+                    {{ link | safe }}
+                {%- endif %}
                 </li>
-            {% endfor %}
+            {%- endfor %}
             </ul>
-        {% endif %}
+        {%- endif %}
     </div>
-
 </div>
 {% endmacro %}

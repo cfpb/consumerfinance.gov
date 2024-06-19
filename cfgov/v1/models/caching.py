@@ -68,10 +68,8 @@ class AkamaiBackend(BaseBackend):
             auth=self.auth,
         )
         logger.info(
-            "Attempted to {action} content provider {obj}, "
-            "got back response {message}".format(
-                action=action, obj=obj, message=resp.text
-            )
+            f"Attempted to {action} content provider {obj}, "
+            f"got back response {resp.text}"
         )
         resp.raise_for_status()
 
@@ -83,10 +81,8 @@ class AkamaiBackend(BaseBackend):
             auth=self.auth,
         )
         logger.info(
-            "Attempted to {action} cache for page {url}, "
-            "got back response {message}".format(
-                action=action, url=url, message=resp.text
-            )
+            f"Attempted to {action} cache for page {url}, "
+            f"got back response {resp.text}"
         )
         resp.raise_for_status()
 
@@ -147,7 +143,7 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
 
     url = instance.file.url
 
-    logger.info('Purging {} from "files" cache'.format(url))
+    logger.info(f'Purging {url} from "files" cache')
 
     batch = PurgeBatch()
     batch.add_url(url)

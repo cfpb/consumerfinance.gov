@@ -90,7 +90,7 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
                 StreamBlock(
                     content_block_options,
                     required=False,
-                    help_text="Content that will appear above the first FIG section",
+                    help_text="Content that will appear above the first FIG section",  # noqa: E501
                 ),
             )
         ],
@@ -176,8 +176,8 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
                     y.block_type == "data_points_block"
                     for y in section.value["content"]
                 ):
-                    # If a data_points_block is part of this section's contents,
-                    # add the data points to the headers collection
+                    # If a data_points_block is part of this section's
+                    # contents, add the data points to the headers collection
                     for p in self.data_points.order_by("number"):
                         parent["children"].append(
                             {

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 import json
 import unittest
@@ -35,15 +34,15 @@ class ImporterTestCase(DjangoTestCase):
 
     fixtures = ["test_parts.json"]
     # xml_fixture has partial XML for regs 1002 and 1005
-    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
-        settings.PROJECT_ROOT
+    xml_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
     )
-    interp_fixture = "{}/regulations3k/fixtures/interptest.xml".format(
-        settings.PROJECT_ROOT
+    interp_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/interptest.xml"
     )
-    with open(xml_fixture, "r") as f:
+    with open(xml_fixture) as f:
         test_xml = f.read()
-    with open(interp_fixture, "r") as f:
+    with open(interp_fixture) as f:
         interp_xml = f.read()
 
     def test_appendix_id_type_sniffer(self):
@@ -81,7 +80,7 @@ class ImporterTestCase(DjangoTestCase):
         PAYLOAD.parse_version(part_soup, part)
         version = PAYLOAD.version
         interp_subpart = Subpart(
-            title="Supplement I to Part {}".format(part.part_number),
+            title=f"Supplement I to Part {part.part_number}",
             label="Official Interpretations",
             version=version,
         )
@@ -140,7 +139,7 @@ class ImporterTestCase(DjangoTestCase):
         table_label = "{table-test-label}"
         regtable = RegTable(table_label)
         msg = regtable.parse_xml_table(table_soup)
-        self.assertEqual(msg, "Table is set for {}!".format(table_label))
+        self.assertEqual(msg, f"Table is set for {table_label}!")
         self.assertNotIn("<thead>", regtable.table())
 
     @mock.patch("regulations3k.scripts.ecfr_importer.requests.get")
@@ -234,7 +233,7 @@ class ImporterTestCase(DjangoTestCase):
         PAYLOAD.parse_version(part_soup, part)
         version = PAYLOAD.version
         interp_subpart = Subpart(
-            title="Supplement I to Part {}".format(part.part_number),
+            title=f"Supplement I to Part {part.part_number}",
             label="Official Interpretations",
             version=version,
         )
@@ -252,10 +251,10 @@ class AppendixCreationTestCase(DjangoTestCase):
     """Checks that parse_appendices() creates objects as expected."""
 
     fixtures = ["tree_limb.json"]
-    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
-        settings.PROJECT_ROOT
+    xml_fixture = (
+        f"{settings.PROJECT_ROOT}/regulations3k/fixtures/graftest.xml"
     )
-    with open(xml_fixture, "r") as f:
+    with open(xml_fixture) as f:
         test_xml = f.read()
 
     def test_parse_appendices_no_appendix(self):
@@ -351,12 +350,10 @@ class ImporterRunTestCase(unittest.TestCase):
 
 
 class ParagraphParsingTestCase(unittest.TestCase):
-    fixtures_dir = "{}/regulations3k/fixtures".format(settings.PROJECT_ROOT)
+    fixtures_dir = f"{settings.PROJECT_ROOT}/regulations3k/fixtures"
     # test paragraphs are from reg DD, section 1030.4
-    test_paragraph_xml_path = "{}/test_graphs_with_multi_ids.xml".format(
-        fixtures_dir
-    )
-    with open(test_paragraph_xml_path, "r") as f:
+    test_paragraph_xml_path = f"{fixtures_dir}/test_graphs_with_multi_ids.xml"
+    with open(test_paragraph_xml_path) as f:
         test_xml = f.read()
     LEVEL_STATE = IdLevelState()
 

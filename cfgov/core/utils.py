@@ -2,7 +2,7 @@ import re
 
 from django.template.defaultfilters import slugify
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 from core.templatetags.svg_icon import svg_icon
 
@@ -24,7 +24,7 @@ ASK_CFPB_LINKS = re.compile(
     r"(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$"  # noqa: E501
 )
 
-LINK_ICON_CLASSES = ["a-link", "a-link--icon"]
+LINK_ICON_CLASSES = ["a-link"]
 
 LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 
@@ -64,7 +64,7 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 def ask_short_url(url):
     match = ASK_CFPB_LINKS.search(url)
     ask_id = match.groupdict().get("ask_id")
-    return "cfpb.gov/askcfpb/{}".format(ask_id)
+    return f"cfpb.gov/askcfpb/{ask_id}"
 
 
 def extract_answers_from_request(request):
@@ -80,7 +80,7 @@ def format_file_size(bytecount, suffix="B"):
     """Convert a byte count into a rounded human-friendly file size."""
     for unit in ["", "K", "M", "G"]:
         if abs(bytecount) < 1024.0:
-            return "{:1.0f} {}{}".format(bytecount, unit, suffix)
+            return f"{bytecount:1.0f} {unit}{suffix}"
         bytecount /= 1024.0
     return "{:.0f} {}{}".format(bytecount, "T", suffix)
 
@@ -180,7 +180,7 @@ def add_link_markup(tag, request_path):
     # it has the proper non-button link classes, and then add the icon after
     # the span.
     else:
-        # Since we're adding an icon, also add class="a-link a-link_icon" to
+        # Since we're adding an icon, also add class="a-link" to
         # the <a> tag. We don't do this if the link is a button.
         for cls in LINK_ICON_CLASSES:
             if cls not in class_attrs:
@@ -194,6 +194,19 @@ def add_link_markup(tag, request_path):
 
             tag.clear()
             tag.append(span)
+
+        # Whether we used an existing text span with a-link__text or added a
+        # new one, we want to make sure that the link text doesn't include any
+        # wrapping whitespace, otherwise it'll be incorrectly underlined.
+        #
+        # This fixes tags like <a> text with surrounding whitespace </a> or
+        # tags like <a> text with <strong>other</strong> tag </a> but not tags
+        # like <a> text with <strong>other tag with whitespace </strong></a>.
+        if span.contents:
+            if isinstance(span.contents[0], NavigableString):
+                span.contents[0] = NavigableString(span.contents[0].lstrip())
+            if isinstance(span.contents[-1], NavigableString):
+                span.contents[-1] = NavigableString(span.contents[-1].rstrip())
 
         tag.append(" ")
         tag.append(icon_soup)

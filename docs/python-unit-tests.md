@@ -117,18 +117,22 @@ If you would like to skip running Django migrations when testing, set the
 
 ### Formatting
 
-We use `black` to autoformat our Python code. `black` is invoked by Tox using
-the `lint` environment (this will also run `ruff` and `isort`):
+We use `ruff` to do `black`-compatible formatting of our Python code. `ruff` is invoked by Tox using the `lint` environment (this will also run `bandit` to do Python-specific static security analysis).
 
 ```sh
 tox -e lint
 ```
 
-**It is highly recommended to only invoke black via tox**
+This will run `ruff` in check-only mode. To automatically fix any formatting issues it flags, run:
+
+
+```sh
+ruff format
+```
 
 ### Linting
 
-We use the `ruff` and `isort` tools to ensure compliance with
+We also use `ruff` to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/stable/internals/contributing/writing-code/coding-style/),
 and the
@@ -137,18 +141,16 @@ and the
 We also use [Bandit](https://bandit.readthedocs.io/) to find any common
 security issues in our Python code.
 
-`ruff`, `isort`, and `bandit` can all be run using the Tox `lint` environment
-(this will also run `black`):
+`ruff` and `bandit` can all be run using the Tox `lint` environment:
 
 ```sh
 tox -e lint
 ```
 
-This will run `isort` in check-only mode and it will print diffs for imports
-that need to be fixed. To automatically fix import sort issues, run:
+This will run `ruff` in check-only mode. To automatically (try to) fix any linting issues it flags, run:
 
 ```sh
-isort --recursive cfgov/
+ruff check --fix
 ```
 
 From the root of `consumerfinance.gov`.

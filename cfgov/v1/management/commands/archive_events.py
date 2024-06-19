@@ -38,23 +38,19 @@ class Command(BaseCommand):
             for event in live_event_pages:
                 event = event.specific
 
-                if event.end_dt:
-                    end_dt = event.end_dt
-                else:
-                    end_dt = event.start_dt
+                end_dt = event.end_dt if event.end_dt else event.start_dt
 
-                if end_dt < timezone.now():
-                    if event.can_move_to(archive):
-                        try:
-                            event.move(archive, pos="last-child")
-                        except ValidationError:
-                            iso_date = event.start_dt.date().isoformat()
-                            event.slug = event.slug + "-" + iso_date
-                            event.save()
-                            event.move(archive, pos="last-child")
-                        # Not logging here because event.move writes its
-                        # own log to stdout.
-                        events_archived = True
+                if end_dt < timezone.now() and event.can_move_to(archive):
+                    try:
+                        event.move(archive, pos="last-child")
+                    except ValidationError:
+                        iso_date = event.start_dt.date().isoformat()
+                        event.slug = event.slug + "-" + iso_date
+                        event.save()
+                        event.move(archive, pos="last-child")
+                    # Not logging here because event.move writes its
+                    # own log to stdout.
+                    events_archived = True
 
             if not events_archived:
                 self.stdout.write("No past events found to be archived.")

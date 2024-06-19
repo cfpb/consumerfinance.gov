@@ -57,17 +57,6 @@
       border-left-width: 2px;
     }
   });
-
-  // There is a chrome bug that causes `position: relative` elements
-  // to have a greater z-index than sticky elements, causing them to
-  // float over the sticky TOC as users scroll.
-  // Tablet and below.
-  .respond-to-max(@bp-sm-max, {
-    .content-l,
-    .a-link--jump {
-      z-index: -1;
-    }
-  });
 }
 
 .o-fig__heading {
