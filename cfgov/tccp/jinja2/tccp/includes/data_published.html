@@ -1,12 +1,9 @@
-{%- import 'v1/includes/macros/time.html' as time -%}
+{% from 'tccp/includes/fields.html' import date %}
 
-{%- macro data_published(date, verbose=false) -%}
+{%- macro data_published(value, verbose=false) -%}
 
 <p class="u-small-text u-small-text--subtle">
-    Data as of
-    {{ time.render(
-        ensure_date(date), {"date": true}, text_format=true
-    ) }}
+    Data as of {{ date(value) }}
     ({{- 'credit card terms may have changed since then, double-check with the company
           for the most current terms or ' if verbose -}}
     <a href="{{ url('tccp:about') }}">{{ 'l' if verbose else 'L' }}earn about the data</a>)
