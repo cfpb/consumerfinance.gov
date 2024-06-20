@@ -236,11 +236,21 @@
   }
 
   &__tool-section-buttons {
+    h3.up-next {
+      .up-next--desc {
+        display: list-item;
+        font-size: 0.875em;
+        margin-top: unit(15px / @base-font-size-px, em);
+        margin-left: unit(30px / @base-font-size-px, em);
+      }
+    }
+
     .nav-button-container {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: space-between;
+      margin-top: unit(45px / @base-font-size-px, em);
       margin-bottom: unit(30px / @base-font-size-px, em);
 
       & > button {
@@ -252,9 +262,6 @@
         color: var(--pacific);
         border: 1px solid;
         border-color: var(--pacific);
-      }
-
-      .a-btn-next {
       }
     }
   }

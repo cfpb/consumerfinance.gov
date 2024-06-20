@@ -396,23 +396,75 @@
             {% endcall %}
         </div>
 
+        <div class="costs-not-covered">
+            <h3>Costs not covered</h3>
+            <p>You still have uncovered costs. The application assumes you will need loans to cover these costs, and that debt is reflected below. You can lower this assumed debt by adding more resources above.</p>
+            <div class="financial-item-group">
+                {% set flyout_settings = {
+                    'label': 'Loan for uncovered costs',
+                    'value': '$0',
+                    'class': 'uncovered-loan-flyout',
+                    'is_editable': 'False',
+                    'data_attribute': 'data-financial-item="gapLoan_gapLoan"'
+                } %}
+                {% call() flyout(flyout_settings) %}
+                    {{
+                        text_item.render({
+                            'label': 'Uncovered costs loan amount',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="gapLoan_gapLoan"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Interest rate (%)',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_gapLoan"',
+                            'helper_text': ''
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loan fee (%)',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_gapLoan"',
+                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                        })
+                    }}
+                {% endcall %}
+            </div>
+        </div>
+
         <div class="estimate--total-costs">
-            {{ notification.render(
-                'information',
-                true,
-                '',
-                '<p>Estimated total costs of loans (including interest): <span class="" data-financial-item="debt_tenYearTotal">$XX,XXX</span><br>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly"></span>' | safe,
-                'data-state_uncovered_costs="true"' | safe
-            ) }}
+            {{
+                text_item.render({
+                    'label': 'Estimated debt at graduation: ',
+                    'value': '0',
+                    'type': 'subtotal',
+                    'helper_text': 'including interest accrued during school',
+                    'data_attribute': 'data-financial-item="debt_tenYearTotal"'
+                })
+            }}
+
+            {{
+                text_item.render({
+                    'label': 'Your estimated monthly payment:',
+                    'value': '0',
+                    'type': 'subtotal',
+                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                })
+            }}
         </div>
     </div>
     <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">See your customized estimate</span></h3>
         <div class=nav-button-container>
             <button class="a-btn a-btn--prev btn__nav" data-destination="debt-at-grad">Previous</button>
             <button class="a-btn a-btn--next btn__nav" data-destination="debt-guideline">Next</button>
         </div>
-        <ul>
-            <li><button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Customize this estimate for your situation</button></li>
-        </ul>
+        <p>
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>        
+        </p>
+
     </div>
 </section>

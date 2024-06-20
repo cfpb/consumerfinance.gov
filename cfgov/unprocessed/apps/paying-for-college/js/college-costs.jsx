@@ -36,7 +36,6 @@ function init() {
 
   financialView.updateFinancialItems();
   appView.updateUI();
-  schoolView.setProgramDefaults();
   updateModelsFromQueryString(query);
 }
 
@@ -54,24 +53,25 @@ window.addEventListener('load', init);
 //       .map( (obj, i) => [ obj.dataset.nav_section , i + 1 ] ) );
 
 const headings = [
-  'Estimate Debt',
-  'Customize estimate',
+  'Calculating school costs',
+  'Estimating your debt',
+  'Customizing your estimate ',
   'Affording your loans',
-  'School Comparison',
-  'Review',
+  'Comparing your school',
+  'Reviewing your plan',
 ];
 
 const stepMap = {
   'school-info': 1,
   'school-costs': 1,
-  'estimate-debt': 1,
-  'debt-at-grad': 1,
-  'customize-estimate': 2,
-  'debt-guideline': 2,
-  'cost-of-borrowing': 3,
-  'affording-payments': 3,
-  'compare-school': 4,
-  'review-plan': 5,
+  'estimate-debt': 2,
+  'debt-at-grad': 2,
+  'customize-estimate': 3,
+  'debt-guideline': 3,
+  'cost-of-borrowing': 4,
+  'affording-payments': 4,
+  'compare-school': 5,
+  'review-plan': 6,
 };
 
 let getAndSetCallback;

@@ -53,7 +53,8 @@
                   'name':  "programType",
                   'label': 'Bachelor\'s degree',
                   'value': 'bachelors',
-                  'id': 'program-type-radio_bachelors'
+                  'id': 'program-type-radio_bachelors',
+                  'selected': true
                 })
             }}
             {{
@@ -121,7 +122,8 @@
                   'name':  "programLength",
                   'label': '4 years',
                   'value': '4',
-                  'id': 'program-length-radio_4'
+                  'id': 'program-length-radio_4',
+                  'selected': true
                 })
             }}
             {{
@@ -155,7 +157,8 @@
                   'name':  "programRate",
                   'label': 'In-state',
                   'value': 'inState',
-                  'id': 'program-rate-radio_in-state'
+                  'id': 'program-rate-radio_in-state',
+                  'selected': true
                 })
             }}
             {{
@@ -183,7 +186,8 @@
                   'name':  "programDependency",
                   'label': 'Dependent',
                   'value': 'dependent',
-                  'id': 'program-dependency-radio_dependent'
+                  'id': 'program-dependency-radio_dependent',
+                  'selected': true
                 })
             }}
             {{
@@ -209,7 +213,8 @@
                   'name':  "programHousing",
                   'label': 'On campus',
                   'value': 'onCampus',
-                  'id': 'program-housing-radio_on-campus'
+                  'id': 'program-housing-radio_on-campus',
+                  'selected': true
                 })
             }}
             {{
@@ -250,6 +255,11 @@
     </div>
 
     <div class="college-costs__tool-section-buttons block block--mid">
-        <button class="a-btn college-costs__buttons--next btn__nav" data-destination="school-costs">Estimate how much you'll owe</button>
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">See how much this school costs</span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--next btn__nav" data-destination="school-costs">Next</button>
+        </div>
+    </div>
     </div>
 </section>

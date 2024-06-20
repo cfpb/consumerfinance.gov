@@ -12,7 +12,6 @@ import {
   updateMaxDebtChart,
   updateAffordingChart,
   updateGradMeterChart,
-  updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -274,8 +273,7 @@ function _handleNavButtonClick(event) {
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
   } else {
-    const target = event.target;
-    if (event.target.dataset.hasOwnProperty('destination')) {
+    if (event.target.dataset['destination']) {
       const destination = event.target.dataset.destination;
       _updateBeforeNavigation(destination);
 

@@ -335,13 +335,13 @@ const costOfBorrowingOpts = {
   ],
 };
 
-const makePlanOpts = {
-  series: [
-    {
-      color: '#addc91',
-    },
-  ],
-};
+// const makePlanOpts = {
+//   series: [
+//     {
+//       color: '#addc91',
+//     },
+//   ],
+// };
 
 const maxDebtOpts = {
   chart: {

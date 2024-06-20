@@ -7,7 +7,6 @@ import {
 } from '../dispatchers/get-model-values.js';
 import {
   clearFinancialCosts,
-  recalculateFinancials,
   refreshExpenses,
   updateFinancial,
   updateSchoolData,
@@ -15,7 +14,6 @@ import {
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
-  updateFinancialViewAndFinancialCharts,
   updateGradMeterChart,
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
@@ -52,17 +50,6 @@ const schoolView = {
     });
   },
 
-  setProgramDefaults: () => {
-    // Set default program values
-    updateState.byProperty('programProgress', '0'); // Not shown or used currently
-    updateState.byProperty('programType', 'bachelors');
-    updateState.byProperty('programLength', '4');
-    updateState.byProperty('programDependency', 'dependent');
-    updateState.byProperty('programRate', 'inState');
-    updateState.byProperty('programHousing', 'onCampus');
-    schoolView._updateSchoolRadioButtons();
-  },
-
   updateSchoolItems: function () {
     this._schoolItems.forEach((elem) => {
       const prop = elem.dataset.schoolItem;
@@ -95,6 +82,7 @@ const schoolView = {
   },
 
   _updateProgramList: () => {
+    if (getSchoolValue('schoolID') === null) return;
     let level = 'undergrad';
     if (getStateValue('programType') === 'graduate') {
       level = 'graduate';
