@@ -4,12 +4,21 @@ import tempfile
 from io import StringIO
 
 from django.core.management import CommandError, call_command
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from tccp.enums import CreditTierColumns
+from tccp.management.commands.validate_tccp import fmt_range
 from tccp.models import CardSurveyData
 
 from .baker import baker
+
+
+class TestValidationFormatting(SimpleTestCase):
+    def test_fmt_single_value(self):
+        self.assertEqual(fmt_range(0.1235, 0.1235), "12.35%")
+
+    def test_fmt_range(self):
+        self.assertEqual(fmt_range(0.1235, 0.5), "12.35% - 50%")
 
 
 class TestValidation(TestCase):
@@ -75,14 +84,14 @@ class TestValidation(TestCase):
 CREDIT SCORE 619 OR LESS
 ------------------------
 Count: 1
-Minimum: 10.00%
-Maximum: 10.00%
-25th percentile: 10.00%
-75th percentile: 10.00%
+Minimum: 10%
+Maximum: 10%
+25th percentile: 10%
+75th percentile: 10%
 
-less: 0
-average: 0
-more: 1
+less: None
+average: None
+more: 10%
 
 Pay less interest: 1
 Transfer a balance: 1
@@ -94,14 +103,14 @@ Earn rewards: 1
 CREDIT SCORES FROM 620 TO 719
 -----------------------------
 Count: 3
-Minimum: 10.00%
-Maximum: 30.00%
-25th percentile: 15.00%
-75th percentile: 25.00%
+Minimum: 10%
+Maximum: 30%
+25th percentile: 15%
+75th percentile: 25%
 
-less: 1
-average: 1
-more: 1
+less: 10%
+average: 20%
+more: 30%
 
 Pay less interest: 3
 Transfer a balance: 3
@@ -113,14 +122,14 @@ Earn rewards: 3
 CREDIT SCORE OF 720 OR GREATER
 ------------------------------
 Count: 3
-Minimum: 10.00%
-Maximum: 30.00%
-25th percentile: 15.00%
-75th percentile: 25.00%
+Minimum: 10%
+Maximum: 30%
+25th percentile: 15%
+75th percentile: 25%
 
-less: 1
-average: 1
-more: 1
+less: 10%
+average: 20%
+more: 30%
 
 Pay less interest: 3
 Transfer a balance: 3
