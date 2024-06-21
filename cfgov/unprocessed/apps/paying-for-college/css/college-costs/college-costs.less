@@ -31,6 +31,10 @@
     }
   });
 
+  .cf-icon-svg--help-round {
+    color: var(--pacific);
+  }
+
   .u-border-bottom {
     border-bottom: 1px solid @block--border-bottom;
   }
@@ -53,6 +57,10 @@
     display: none;
 
     max-width: unit(570px / @base-font-size-px, rem);
+
+    h3 {
+        margin-top: unit(30px / @base-font-size-px, em);
+    }
 
     .equation-row {
       .financial-item {
@@ -264,5 +272,18 @@
         border-color: var(--pacific);
       }
     }
+  }
+
+  .estimate--total-costs {
+      margin-bottom: 1.875em;
+      margin-top: 1.875em;
+      position: relative;
+      padding: unit(15px / @base-font-size-px, em);
+      background: var(--gray-5);
+      border: 1px solid var(--gray-40);
+
+      & > .financial-item:first-child {
+          margin-top: 0;
+      }
   }
 }

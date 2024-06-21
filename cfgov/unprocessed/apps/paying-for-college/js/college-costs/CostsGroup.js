@@ -1,4 +1,4 @@
-import {
+    import {
   add as addDataHook,
   checkDom,
   instantiateAll,

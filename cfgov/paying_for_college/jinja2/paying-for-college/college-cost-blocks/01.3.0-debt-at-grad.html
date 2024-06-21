@@ -1,9 +1,13 @@
 <section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
-    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad"></strong></h2>
+    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad">$XX,XXX</span></strong></h2>
 
-    <p>Based on your situation, you’ll likely need to take out student loans. School costs can increase, so be prepared in case you need to borrow more.</p>
+    <p>This total represents <strong><span data-financial-item="total_borrowingWithGapLoan"></span></strong> of borrowing each year for <span data-state-item="programLengthText">X</span>, plus <strong><span data-financial-item="interest_totalAtGrad"></span></strong> of interest accumulated during your program. This is an assumption based on your data so far, but you can customize your estimate on the next page.</p>
 
-    <h2><strong>Is this too much to repay?</strong></h2>
+    <div class="costs-not-covered">
+        <p>Based on your data so far, you’ll likely need to take out student loans. School costs can increase, so be prepared in case you need to borrow more.</p>
+    </div>
+
+    <h3><strong>How much debt is too much debt?</strong></h3>
 
     <p>One way to see if this is too much to repay is to compare the amount you’ll owe at graduation to the median salary of recent graduates.</p>
 
@@ -12,7 +16,7 @@
     <div class="college-costs__chart block block--sub" data-chart_id="max-debt-guideline_chart"></div>
 
 
-    <h2><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h2>
+    <h3><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h3>
 
     <p>Your payment estimate is based on making payments over 10 years on the standard repayment plan. Other plans may be available with lower monthly payments, but the total cost of borrowing will be higher.</p>
 

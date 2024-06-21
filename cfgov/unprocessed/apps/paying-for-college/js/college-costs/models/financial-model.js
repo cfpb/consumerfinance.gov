@@ -202,6 +202,8 @@ const financialModel = {
     if (vals.total_gap < 0) {
       vals.total_gap = 0;
     }
+
+    vals.total_borrowingWithGapLoan = vals.total_borrowing + vals.total_gap;
   },
 
   /**

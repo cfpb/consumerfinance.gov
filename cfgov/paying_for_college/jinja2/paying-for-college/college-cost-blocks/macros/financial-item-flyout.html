@@ -29,7 +29,7 @@
    ========================================================================== #}
 
 {% macro flyout(value) %}
-<div class="o-costs-group {{value.class | safe if value.class else ''}}">
+<div class="o-costs-group">
     <button class="o-costs-group__header
                    o-costs-group__header--collapsed
                    financial-item
@@ -45,10 +45,10 @@
                {{ value.value }}
             </span>
             <span class="o-costs-group__cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
-                {{ svg_icon('plus-round') }}
+                {{ svg_icon('edit-round') if value.is_editable else svg_icon('plus-round') }}
             </span>
             <span class="o-costs-group__cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
-                {{ svg_icon('minus-round') }}
+                {{ svg_icon('save-round') if value.is_editable else svg_icon('minus-round') }}
             </span>
         </span>
         </span>
