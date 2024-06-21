@@ -628,3 +628,40 @@ html.js form[hx-boost] {
 .u-cap-width {
   max-width: unit((700px / @base-font-size-px), em);
 }
+
+[data-tooltip-target] {
+  cursor: pointer;
+  color: black;
+}
+
+[role='tooltip'] {
+  visibility: hidden;
+  padding: 15px;
+  position: absolute;
+  z-index: 3000;
+  background: black;
+  color: white;
+}
+
+.tooltip--content {
+  width: unit((240px / @base-font-size-px), em);
+}
+
+.tooltip--heading {
+  font-weight: 500;
+  font-size: unit((18px / @base-font-size-px), rem);
+}
+
+.tooltip--body {
+  font-size: unit((16px / @base-font-size-px), rem);
+}
+
+[aria-describedby]:hover,
+[aria-describedby]:focus {
+  position: relative;
+}
+
+[aria-describedby]:hover + [role='tooltip'],
+[aria-describedby]:focus + [role='tooltip'] {
+  visibility: visible;
+}

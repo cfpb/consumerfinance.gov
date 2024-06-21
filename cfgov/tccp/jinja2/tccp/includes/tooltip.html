@@ -1,0 +1,13 @@
+{% macro tooltip(name, heading=none, body=none, icon="help-round") -%}
+
+<span data-tooltip-target="{{ name }}" aria-describedby="{{ name }}-tooltip">
+    {{ svg_icon(icon) }}
+</span>
+<div role="tooltip" id="{{ name }}-tooltip">
+    <div class="tooltip--content">
+        <div class="tooltip--heading">{{ heading }}</div>
+        <div class="tooltip--body">{{ body }}</div>
+    </div>
+</div>
+
+{%- endmacro %}

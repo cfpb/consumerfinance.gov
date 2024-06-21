@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models import Case, Count, F, Max, Min, Q, Value, When
 from django.db.models.functions import Coalesce
 
+from dateutil.relativedelta import relativedelta
 from tailslide import Percentile
 
 from . import enums
@@ -231,7 +232,22 @@ class CardSurveyDataQuerySet(models.QuerySet):
             }
         )
 
-        return self.aggregate(**dict(aggregates))
+        stats = self.aggregate(**dict(aggregates))
+
+        # Manually add a statistic for the start of the reporting period,
+        # which is assumed to be six months before the first report date.
+        # Report dates are always at the end of the month.
+        report_period_start = None
+        if first_report_date := stats["first_report_date"]:
+            report_period_start = (
+                first_report_date
+                + relativedelta(days=1)
+                - relativedelta(months=6)
+            )
+
+        stats["report_period_start"] = report_period_start
+
+        return stats
 
     def with_ratings(self, summary_stats=None):
         # Assign each card with a numeric rating based on its purchase APR."""
