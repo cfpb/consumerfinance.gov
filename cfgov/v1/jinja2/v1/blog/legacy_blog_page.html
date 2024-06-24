@@ -16,6 +16,36 @@
 {%- endblock %}
 
 {% block content_main %}
+
+<div class="o-banner o-banner--dark">
+    <div class="wrapper wrapper--match-content">
+        <div class="m-notification
+                    m-notification--warning
+                    m-notification--visible">
+            {{ svg_icon('warning-round') }}
+            <div class="m-notification__content">
+                <div class="m-notification__message">
+                    Archived content
+                </div>
+                <p class="m-notification__explanation">
+                    This content has been archived, and its original formatting has been removed.
+                </p>
+                <ul class="m-list m-list--links">
+                    <li class="m-list__item">
+                        {%- block canonical -%}
+                        {% set canonical = request.build_absolute_uri(request.path) | lower %}
+                            <a class="a-link a-link--jump" href="https://wayback.archive-it.org/cfpb_num/*/{{ canonical }}">
+                        {%- endblock -%}
+                        View this page as it was originally published
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
     {% include 'v1/includes/article.html' %}
     {% block post_article_content %}
 
@@ -23,7 +53,6 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <p>archived content</p>
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {% if rss_feed %}
         <div class="block">
