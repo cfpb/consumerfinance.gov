@@ -280,6 +280,15 @@
     grid-area: apr;
   }
 
+  &--apr-disclaimer {
+    font-size: unit((14px / @base-font-size-px), rem);
+
+    .respond-to-min(@bp-sm-min, {
+      font-size: unit((16px / @base-font-size-px), rem);
+      line-height: unit((22px / @base-font-size-px), rem);
+    });
+  }
+
   &--fee {
     grid-area: fee;
   }

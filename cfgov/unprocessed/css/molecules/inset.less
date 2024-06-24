@@ -78,12 +78,18 @@
   }
 
   &--email {
+    // This originally was a block,
+    // so we override the 30px margin added by .full-width-text-group .m-inset.
+    margin-bottom: unit(
+      @grid_gutter-width * 2 / @base-font-size-px,
+      em
+    ) !important;
+
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       box-sizing: border-box;
       width: 50%;
       padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
-      float: right;
     });
   }
 }

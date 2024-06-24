@@ -43,24 +43,26 @@
 
 <h1 class="u-mb45">{{ heading }}</h1>
 
-<div id="o-filterable-list-controls" class="o-filterable-list-controls u-cap-width">
-    {% call() expandable({
-        "label": "Customize card features",
-        "is_bordered": true,
-        "is_expanded": not situations or not cards,
-        "is_midtone": true
-    }) %}
-        {{ filter_form(form) }}
-    {% endcall %}
-</div>
-
-{% if not situations %}
 <div class="block block--sub">
     <p>
-        <a href="{{ url('tccp:landing_page') }}">Choose what you're looking for in a card</a>
+        <a href="{{ url('tccp:landing_page') }}">
+            Change what you're looking for in a card
+        </a>
     </p>
 </div>
-{% endif %}
+
+<div class="block block--sub">
+    <div id="o-filterable-list-controls" class="o-filterable-list-controls u-cap-width">
+        {% call() expandable({
+            "label": "Customize card features",
+            "is_bordered": true,
+            "is_expanded": not situations or not cards,
+            "is_midtone": true
+        }) %}
+            {{ filter_form(form) }}
+        {% endcall %}
+    </div>
+</div>
 
 <div class="block block--flush-top">
     <div class="o-filterable-list-results o-filterable-list-results--partial" id="htmx-results" aria-live="polite" aria-busy="false">

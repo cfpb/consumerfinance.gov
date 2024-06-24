@@ -1,4 +1,6 @@
-{%- macro apr_rating(rating, count=none) -%}
+{% from 'tccp/includes/fields.html' import apr_range %}
+
+{%- macro apr_rating(rating, apr_min=none, apr_max=none) -%}
     {%- set label = apr_rating_lookup[rating] -%}
 
     <div class="m-apr-rating m-apr-rating--{{ label }}">
@@ -12,15 +14,10 @@
         </dt>
         <dd>
             Pay {{ label }} interest
-            {{-
-                (
-                    ' ('
-                    ~ count
-                    ~ ' card'
-                    ~ count | pluralize()
-                    ~ ')'
-                ) if count is not none
-            }}
+
+            {% if apr_min is not none and apr_max is not none -%}
+                ({{- apr_range(apr_min, apr_max, spaceless=true) -}})
+            {%- endif %}
         </dd>
     </div>
 {%- endmacro -%}

@@ -3,6 +3,9 @@
 //       our atomic rules.
 
 .o-prefooter {
+  // Clear any floating m-inset that may be above this.
+  clear: both;
+
   margin-top: unit(((@grid_gutter-width * 2) / @base-font-size-px), em);
   margin-bottom: 0;
 
