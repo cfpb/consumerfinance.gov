@@ -659,6 +659,16 @@
                 </dl>
             {% endcall %}
         </div>
+        {% if card.rewards %}
+            <div class="u-mt30">
+                {{ speed_bump( {
+                    'content': 'If you carry a balance on your credit card, interest and
+                        fees typically exceed the value of any rewards earned.',
+                    'link': 'Learn why rewards may not be as beneficial as they seem.',
+                    'url': '/about-us/newsroom/cfpb-report-highlights-consumer-frustrations-with-credit-card-rewards-programs/'
+                } ) }}
+            </div>
+        {% endif %}
     </div>
 
     <div class="o-card-details-section">
