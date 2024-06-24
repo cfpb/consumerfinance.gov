@@ -13,7 +13,7 @@
             {% set flyout_settings = {
                 'label': 'Costs',
                 'value': '$0',
-                'is_editable': 'True',
+                'is_editable': 'True', 
                 'status': 'warning',
                 'note': 'Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
                 'data_attribute': 'data-financial-item="total_costs"'
@@ -405,6 +405,7 @@
                     'value': '$0',
                     'class': 'uncovered-loan-flyout',
                     'is_editable': 'False',
+                    'status': 'warning',
                     'data_attribute': 'data-financial-item="gapLoan_gapLoan"'
                 } %}
                 {% call() flyout(flyout_settings) %}
