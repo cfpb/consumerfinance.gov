@@ -272,10 +272,17 @@
                 }}
             {% endcall %}
 
+        </div>
+
+        <div class="financial-item-group">
+            <h4 style="margin-top: 30px">Other Loans</h4>
+
+            <p>If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider:</p>
+
             {% set flyout_settings = {
                 'label': 'Direct PLUS (Grad PLUS) loan' | safe,
                 'value': '$0',
-                'class': 'graduate-content',
+                'class': 'graduate-content o-costs-group--first',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_plusLoans"'
             } %}
@@ -307,17 +314,11 @@
                     }}
                 </div>
             {% endcall %}
-        </div>
-
-        <div class="financial-item-group">
-            <h4 style="margin-top: 30px">Other Loans</h4>
-
-            <p>If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider:</p>
 
             {% set flyout_settings = {
                 'label': 'Parent PLUS loan' | safe,
                 'value': '$0',
-                'class': 'dependent-content',
+                'class': 'dependent-content o-costs-group--first',
                 'note': '',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_plusLoans"'
@@ -396,7 +397,7 @@
             {% endcall %}
         </div>
 
-        <div class="costs-not-covered">
+        <div class="costs-not-covered" data-state-visibility="uncovered-costs">
             <h3>Costs not covered</h3>
             <p>You still have uncovered costs. The application assumes you will need loans to cover these costs, and that debt is reflected below. You can lower this assumed debt by adding more resources above.</p>
             <div class="financial-item-group">

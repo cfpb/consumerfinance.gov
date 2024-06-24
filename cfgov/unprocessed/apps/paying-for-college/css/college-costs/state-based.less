@@ -138,13 +138,7 @@ main.college-costs {
 
   // Section visibility by application state
 
-  &[data-state_activesection='grants-scholarships'],
-  &[data-state_activesection='work-study'],
-  &[data-state_activesection='federal-loans'],
-  &[data-state_activesection='school-loans'],
-  &[data-state_activesection='other-resources'],
-  &[data-state_activesection='loan-counseling'],
-  &[data-state_activesection='make-a-plan'] {
+  &[data-state_activesection='customize-estimate'] {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       @supports (position: sticky) {
