@@ -1,0 +1,30 @@
+{# ==========================================================================
+
+    APR disclaimer
+
+    ==========================================================================
+
+    Description:
+
+    A disclaimer that is shown with all APRs in the card details.
+
+    published_date:     Date the data was published.
+
+    apr_type:           Text of the kind of APR: purchase, balance transfer,
+                        or cash advance.
+
+    is_risk_based:      Boolean telling if the APR varies by credit score.
+
+    ========================================================================== #}
+
+{% from 'tccp/includes/fields.html' import date %}
+
+{%- macro apr_disclaimer(published_date, apr_type, is_risk_based) -%}
+
+<p class="m-apr-disclaimer">
+    *As of {{ date(published_date) -}}.
+    Advertised {{ apr_type }} APRs change over time {{- ' and are specific to the applicant, based on your credit score' if is_risk_based -}}.
+    Check rates before applying.
+</p>
+
+{%- endmacro -%}
