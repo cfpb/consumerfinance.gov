@@ -464,6 +464,21 @@
                     {% endcall %}
                 </div>
             {% endif %}
+            {% if not card.annual_fee
+                and not card.monthly_fee
+                and not card.weekly_fee
+                and not card.other_periodic_fee_amount
+            %}
+                <div class="m-payment-calculation__part">
+                    {% call data_section(
+                        'Annual fee',
+                        heading_classes="h2 u-mb0 u-mt0",
+                        subheading_classes="h4 u-mt0 u-mb0"
+                    ) %}
+                        {{ currency(0) }}
+                    {% endcall %}
+                </div>
+            {% endif %}
         </div>
         {% if card.fee_explanation is not none %}
             <p>{{ card.fee_explanation }}</p>
