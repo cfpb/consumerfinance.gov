@@ -193,10 +193,10 @@ function updateSchoolData(iped, assumptions) {
 
       // We make some assumptions about your situation:
       // TODO - This is just temporary code, remove it and handle this elsewhere
-      updateState.byProperty('programProgress', '0');
-      updateState.byProperty('programRate', 'outOfState');
-      updateState.byProperty('programHousing', 'onCampus');
-      updateState.byProperty('programDependency', 'dependent');
+      // updateState.byProperty('programProgress', '0');
+      // updateState.byProperty('programRate', 'outOfState');
+      // updateState.byProperty('programHousing', 'onCampus');
+      // updateState.byProperty('programDependency', 'dependent');
 
       // Make assumptions for initial data
       if (assumptions === true) {
