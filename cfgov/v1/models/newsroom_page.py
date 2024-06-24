@@ -6,4 +6,4 @@ class NewsroomPage(BlogPage):
 
 
 class LegacyNewsroomPage(LegacyBlogPage):
-    template = "v1/newsroom/newsroom-page.html"
+    template = "v1/newsroom/legacy_blog_page.html"

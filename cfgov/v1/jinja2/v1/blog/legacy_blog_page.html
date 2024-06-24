@@ -1,0 +1,34 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
+{%- endblock %}
+
+{% block content_main %}
+    {% include 'v1/includes/article.html' %}
+    {% block post_article_content %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block content_sidebar %}
+    <p>archived content</p>
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    {% if rss_feed %}
+        <div class="block">
+            {% import 'v1/includes/molecules/rss-feed.html' as rss %}
+            {{ rss.render(rss_feed) }}
+        </div>
+    {% endif %}
+{% endblock %}
