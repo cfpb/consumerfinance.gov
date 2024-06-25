@@ -152,6 +152,8 @@
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
+    // Disable iOS link highlighting for our large cards
+    -webkit-tap-highlight-color: transparent;
 
     &:visited .m-card__subtitle {
       border-color: @link-underline-visited;

@@ -53,7 +53,7 @@
         {%- for card in cards %}
         {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
-            <a href="{{ card.url }}">
+            <a href="{{ card.url }}" data-js-hook="behavior_ignore-link-targets" data-ignore-link-targets="[data-tooltip]">
                 <div class="m-card__heading-group">
                     <h2 class="h3 m-card__heading">{{ card.institution_name }}</h2>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
