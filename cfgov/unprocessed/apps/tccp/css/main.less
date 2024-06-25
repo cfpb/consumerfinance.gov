@@ -1,5 +1,6 @@
 @import (reference) 'cfpb-core.less';
 @import (reference) 'cfpb-buttons.less';
+@import 'tooltip.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form__group {
@@ -151,6 +152,8 @@
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
+    // Disable iOS link highlighting for our large cards
+    -webkit-tap-highlight-color: transparent;
 
     &:visited .m-card__subtitle {
       border-color: @link-underline-visited;
@@ -261,8 +264,8 @@
     'apr transfer'
     'fee rewards'
     '. requirements';
-  grid-template-columns: 2fr 3fr;
-  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
   row-gap: 15px;
 
   .respond-to-min(@bp-sm-min, {
