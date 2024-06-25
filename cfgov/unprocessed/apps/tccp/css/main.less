@@ -458,7 +458,7 @@ html.js .o-filterable-list-results--partial {
     });
   }
 
-  h2 {
+  &:not(.o-card-details-section--introduction) > h2 {
     .respond-to-max(@bp-sm-min, {
       font-weight: 600;
     });
@@ -500,6 +500,11 @@ html.js .o-filterable-list-results--partial {
   dd .o-table {
     margin-top: unit((10px / @base-font-size-px), rem);
   }
+}
+
+.m-apr-disclaimer {
+  // Hang the asterisk at the beginning of the content
+  text-indent: -0.7ch;
 }
 
 .m-payment-calculation {
