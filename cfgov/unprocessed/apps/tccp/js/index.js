@@ -31,7 +31,7 @@ function init() {
  * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
  */
 function initializeTooltips() {
-  const tips = tippy('[data-tooltip]', {
+  tippy('[data-tooltip]', {
     theme: 'cfpb',
     maxWidth: 500,
     content: function (reference) {

@@ -66,27 +66,30 @@
                         <dt>
                             <strong>Purchase APR</strong>
                             <div class="m-data-spec--apr-disclaimer">
-                                *As of {{ date(stats_all.first_report_date) }}
-                                {{ tooltip(
-                                    name='apr-disclaimer',
-                                    heading=(
-                                        'Published rates are from '
-                                        ~ (
-                                            stats_all.report_period_start
-                                            | date('%B')
+                                *As of
+                                <span class="u-nowrap">
+                                    {{ date(stats_all.first_report_date) }}
+                                    {{ tooltip(
+                                        name='apr-disclaimer',
+                                        heading=(
+                                            'Published rates are from '
+                                            ~ (
+                                                stats_all.report_period_start
+                                                | date('%B')
+                                            )
+                                            ~ ' &ndash; ' | safe
+                                            ~ (
+                                                stats_all.first_report_date
+                                                | date('%B %Y')
+                                            )
+                                        ),
+                                        body=(
+                                            'APRs change over time and are '
+                                            ~ 'specific to the applicant. '
+                                            ~ 'Check rates before applying.'
                                         )
-                                        ~ ' &ndash; ' | safe
-                                        ~ (
-                                            stats_all.first_report_date
-                                            | date('%B %Y')
-                                        )
-                                    ),
-                                    body=(
-                                        'APRs change over time and are '
-                                        ~ 'specific to the applicant. '
-                                        ~ 'Check rates before applying.'
-                                    )
-                                ) }}
+                                    ) }}
+                                </span>
                             </div>
                         </dt>
                         <dd>
@@ -132,13 +135,16 @@
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have requirements?</dt>
                         <dd>
-                            Eligibility requirements
-                            {{ tooltip(
-                                name='apr-disclaimer',
-                                heading=(
-                                    'Check with the company for eligibility requirements.'
-                                )
-                            ) }}
+                            Eligibility
+                            <span class="u-nowrap">
+                                requirements
+                                {{ tooltip(
+                                    name='apr-disclaimer',
+                                    heading=(
+                                        'Check with the company for eligibility requirements.'
+                                    )
+                                ) }}
+                            </span>
                         </dd>
                     </div>
                     {%- endif -%}
