@@ -6,11 +6,11 @@
     "email": "tech@cfpb.gov",
     "url": "https://cfpb.github.io/"
   },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/cfpb/consumerfinance.gov.git"
   },
-  "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "type": "module",
   "dependencies": {

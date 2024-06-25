@@ -21,7 +21,7 @@ jobs:
             node-version: '20.x'
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --immutable --immutable-cache
 
       - name: Build frontend
         run: yarn run build

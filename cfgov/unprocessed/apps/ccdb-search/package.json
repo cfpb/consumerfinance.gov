@@ -1,7 +1,7 @@
 {
   "name": "ccdb5-ui",
   "version": "2.6.0",
-  "private": "true",
+  "private": true,
   "description": "Consumer Complaint Database (CCDB-UI) application that appears at https://www.consumerfinance.gov/data-research/consumer-complaints/search/.",
   "author": {
     "name": "Consumer Financial Protection Bureau",

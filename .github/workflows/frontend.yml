@@ -7,9 +7,14 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    env:
+      YARN_ENABLE_NETWORK: 'false'
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -17,7 +22,7 @@ jobs:
             node-version: '20.x'
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --immutable --immutable-cache
 
       - name: Test Javascript
         run: yarn run test
