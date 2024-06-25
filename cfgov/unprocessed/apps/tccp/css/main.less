@@ -1,5 +1,6 @@
 @import (reference) 'cfpb-core.less';
 @import (reference) 'cfpb-buttons.less';
+@import 'tooltip.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form__group {
@@ -627,42 +628,4 @@ html.js form[hx-boost] {
 // than our standard cf.gov line length.
 .u-cap-width {
   max-width: unit((700px / @base-font-size-px), em);
-}
-
-[data-tooltip-target] {
-  cursor: pointer;
-  color: black;
-}
-
-[role='tooltip'] {
-  visibility: hidden;
-  padding: 15px;
-  position: absolute;
-  z-index: 3000;
-  background: var(--gray-5);
-  border: 1px solid var(--gray-40);
-  color: black;
-}
-
-.tooltip--content {
-  width: unit((240px / @base-font-size-px), em);
-}
-
-.tooltip--heading {
-  font-weight: 500;
-  font-size: unit((18px / @base-font-size-px), rem);
-}
-
-.tooltip--body {
-  font-size: unit((16px / @base-font-size-px), rem);
-}
-
-[aria-describedby]:hover,
-[aria-describedby]:focus {
-  position: relative;
-}
-
-[aria-describedby]:hover + [role='tooltip'],
-[aria-describedby]:focus + [role='tooltip'] {
-  visibility: visible;
 }

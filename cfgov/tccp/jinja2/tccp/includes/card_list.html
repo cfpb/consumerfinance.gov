@@ -132,7 +132,13 @@
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have requirements?</dt>
                         <dd>
-                            {{ svg_icon("flag-round") }} Eligibility requirements
+                            Eligibility requirements
+                            {{ tooltip(
+                                name='apr-disclaimer',
+                                heading=(
+                                    'Check with the company for eligibility requirements.'
+                                )
+                            ) }}
                         </dd>
                     </div>
                     {%- endif -%}

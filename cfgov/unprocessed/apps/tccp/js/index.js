@@ -1,3 +1,4 @@
+import tippy from 'tippy.js';
 import { attach } from '@cfpb/cfpb-atomic-component';
 
 import orderingDropdown from './ordering';
@@ -19,6 +20,26 @@ function init() {
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
   orderingDropdown.move();
+  // Initialize any tooltips on the page
+  initializeTooltips();
+}
+
+/**
+ * Set up Tippy.js tooltips
+ * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
+ */
+function initializeTooltips() {
+  const tips = tippy('[data-tooltip]', {
+    theme: 'cfpb',
+    maxWidth: 500,
+    content: function (reference) {
+      const template = reference.nextElementSibling;
+      const container = document.createElement('div');
+      const node = document.importNode(template.content, true);
+      container.appendChild(node);
+      return container;
+    },
+  });
 }
 
 /**
