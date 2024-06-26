@@ -318,11 +318,13 @@ function _handleProgramRadioClick(event) {
   // Update the model with program info
   const prop = target.getAttribute('name');
   const value = target.value;
-  updateState.byProperty(prop, value);
-  updateFinancialsFromSchool();
-  if (prop === 'programType') {
-    schoolView._updateProgramList();
-  }
+  setTimeout(() => {
+    updateState.byProperty(prop, value);
+    updateFinancialsFromSchool();
+    if (prop === 'programType') {
+      schoolView._updateProgramList();
+    }
+  }, 0);
 }
 
 export { schoolView };
