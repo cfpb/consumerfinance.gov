@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "fastdom": "1.0.10"
+    "fastdom": "1.0.12"
   },
   "type": "module"
 }

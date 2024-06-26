@@ -42,6 +42,16 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
+  it.only('should not follow card links when tooltips are clicked', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().click();
+
+    cy.get('h1').contains('Explore credit cards').should('exist');
+    cy.get('h2')
+      .contains('Purchase interest rate and fees')
+      .should('not.exist');
+  });
   it('should show additional results when "Show more" button is clicked', () => {
     exploreCards.openResultsPage();
 

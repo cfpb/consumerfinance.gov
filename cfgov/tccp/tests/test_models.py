@@ -1,7 +1,7 @@
+from datetime import date
 from itertools import product
 
 from django.test import SimpleTestCase, TestCase
-from django.utils import timezone
 
 from tccp.enums import (
     CreditTierColumns,
@@ -91,7 +91,7 @@ class CardSurveyDataQuerySetTests(TestCase):
         )
 
     def test_get_summary_statistics(self):
-        today = timezone.now().date()
+        today = date(2024, 12, 31)
 
         baker.make(
             CardSurveyData,
@@ -134,7 +134,8 @@ class CardSurveyDataQuerySetTests(TestCase):
             CardSurveyData.objects.get_summary_statistics(),
             {
                 "count": 3,
-                "first_report_date": today,
+                "first_report_date": date(2024, 12, 31),
+                "report_period_start": date(2024, 7, 1),
                 # Poor APRs: 3, 9
                 "purchase_apr_poor_count": 2,
                 "purchase_apr_poor_min": 3,

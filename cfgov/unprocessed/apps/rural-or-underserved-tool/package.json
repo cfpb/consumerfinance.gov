@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "fastdom": "^1.0.6",
+    "fastdom": "1.0.12",
     "jsonp-p": "2.0.0",
     "papaparse": "5.3.2"
   },

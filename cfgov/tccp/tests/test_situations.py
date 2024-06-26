@@ -1,11 +1,8 @@
-from itertools import product
-
 from django.test import SimpleTestCase
 
 from tccp.situations import (
     SITUATIONS,
     Situation,
-    SituationFeatures,
     SituationSpeedBumps,
     get_situation_by_title,
 )
@@ -49,34 +46,9 @@ class SituationTests(SimpleTestCase):
 
 class SituationContentTests(SimpleTestCase):
     def test_situation_content(self):
-        for situation, content in product(SITUATIONS, ["select", "results"]):
-            with self.subTest(title=situation.title, content=content):
-                self.assertTrue(getattr(situation, f"{content}_html"))
-
-
-class SituationFeatureTests(SimpleTestCase):
-    def test_no_combinations(self):
-        features = SituationFeatures(
-            [
-                Situation("Pay less interest"),
-                Situation("Foo"),
-            ]
-        )
-        self.assertSequenceEqual(
-            [s.title for s in features], ["Pay less interest", "Foo"]
-        )
-
-    def test_combination(self):
-        features = SituationFeatures(
-            [
-                Situation("Pay less interest"),
-                Situation("Make a big purchase"),
-            ]
-        )
-        self.assertSequenceEqual(
-            [s.title for s in features],
-            ["Pay less interest Make a big purchase"],
-        )
+        for situation in SITUATIONS:
+            with self.subTest(title=situation.title):
+                self.assertTrue(situation.select_html)
 
 
 class SituationSpeedBumpTests(SimpleTestCase):

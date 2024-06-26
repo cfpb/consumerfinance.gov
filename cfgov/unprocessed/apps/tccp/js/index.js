@@ -1,3 +1,4 @@
+import tippy from 'tippy.js';
 import { attach } from '@cfpb/cfpb-atomic-component';
 
 import orderingDropdown from './ordering';
@@ -15,10 +16,46 @@ function init() {
   attach('select-location', 'change', handleFormValidation);
   // Attach landing page form validation handler
   attach('submit-situations', 'click', handleFormValidation);
+  // Attach handler for conditional link targets
+  attach('ignore-link-targets', 'click', handleIgnoreLinkTargets);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
   orderingDropdown.move();
+  // Initialize any tooltips on the page
+  initializeTooltips();
+}
+
+/**
+ * Set up Tippy.js tooltips
+ * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
+ */
+function initializeTooltips() {
+  tippy('[data-tooltip]', {
+    theme: 'cfpb',
+    maxWidth: 500,
+    content: function (reference) {
+      const template = reference.nextElementSibling;
+      const container = document.createElement('div');
+      const node = document.importNode(template.content, true);
+      container.appendChild(node);
+      return container;
+    },
+  });
+}
+
+/**
+ * Handle links that shouldn't be followed when
+ * specified children elements are targeted.
+ * @param {Event} event - Touch/click event.
+ */
+function handleIgnoreLinkTargets(event) {
+  const ignoredTargets = event.currentTarget?.getAttribute(
+    'data-ignore-link-targets',
+  );
+  if (event.target.closest(ignoredTargets)) {
+    event.preventDefault();
+  }
 }
 
 /**

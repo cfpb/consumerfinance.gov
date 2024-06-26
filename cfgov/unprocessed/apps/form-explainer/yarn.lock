@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-fastdom@1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/fastdom/-/fastdom-1.0.10.tgz#4f2c7c9b24e7e249fc70c63131842b859b92bf09"
-  integrity sha512-sbL4h358IlZn8VsTvA5TYnKVLYif46XhPEll+HTSxVtDSpqZEO/17D/QqlxE9V2K7AQ82GXeYeQLU2HWwKgk1A==
+fastdom@1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/fastdom/-/fastdom-1.0.12.tgz#ae43d55af017252ae499b2e186511ab97412de39"
+  integrity sha512-LB+xjSTEbjHE1cWsxu+tN2Xqr1kpi+V9aADI7sVM5ZMaXyYGPHULQMzpJMYqOTULK/73pUkWVzzObFRBkPr+hg==
   dependencies:
     strictdom "^1.0.1"
 

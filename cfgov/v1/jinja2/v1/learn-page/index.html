@@ -1,16 +1,11 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
-{% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if block.block_type == 'item_introduction' %}
-            {{ item_introduction.render(block.value) }}
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
     {% for block in page.content -%}

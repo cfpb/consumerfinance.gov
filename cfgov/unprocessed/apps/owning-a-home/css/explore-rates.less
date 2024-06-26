@@ -52,11 +52,6 @@
   /*
         layout
         --------------------------- */
-  .rc-results {
-    .grid__column( 8 );
-    .grid__pull( 4 );
-  }
-
   #credit-score-container,
   .loan-amt-total,
   .state-col,
@@ -68,9 +63,7 @@
         Sidebar with all the user input
        --------------------------- */
   .calculator {
-    .grid__column( 4 );
-    .grid__push( 8 );
-
+    padding-left: unit(10px / @base-font-size-px, rem);
     background: var(--gray-5);
 
     p:last-child,
@@ -101,7 +94,7 @@
     }
 
     section:first-child {
-      padding: unit(30px / @base-font-size-px, em) 0 0;
+      padding: 0;
     }
 
     .calc-footer {
@@ -168,7 +161,7 @@
         Main section with output
         --------------------------- */
   .rate-checker-heading {
-    margin-top: unit(20px / @base-font-size-px, em);
+    margin-right: unit(10px / @base-font-size-px, em);
     margin-bottom: unit(16px / @base-font-size-px, em);
     font-size: 1.375em;
   }
@@ -177,11 +170,22 @@
         Middle section with chart
         --------------------------- */
 
-  // this is shameful, but this is needed to force
-  // highcharts to display overflowing tooltips
+  // This is shameful, but this is needed to force
+  // highcharts to display overflowing tooltips.
   .chart-area,
   .highcharts-container {
     overflow: visible !important;
+  }
+
+  .chart-area {
+    // This matches the height of the highcharts chart.
+    min-height: 400px;
+  }
+
+  // This ensures the chart resizes when the page is resized.
+  .highcharts-container {
+    position: absolute !important;
+    width: 100% !important;
   }
 
   .highcharts-tooltip > span {
@@ -503,13 +507,28 @@
   /*
         Media queries
         --------------------------- */
-  .respond-to-max(720px, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
+    display: grid;
+    grid-template-areas:
+      'page-intro'
+      'calculator'
+      'rc-results';
 
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
+    .page-intro {
+      grid-area: page-intro
     }
+
+    .rc-results {
+      grid-area: rc-results;
+    }
+
+    .calculator {
+      grid-area: calculator;
+    }
+  });
+
+  .respond-to-max(720px, {
 
     .rc-home-illu {
       display: none;
@@ -578,12 +597,6 @@
   @media print {
     .rc-illu-inner {
       display: none;
-    }
-
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
     }
 
     .calculator section {

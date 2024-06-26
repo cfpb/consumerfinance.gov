@@ -1,0 +1,11 @@
+{% macro tooltip(name, heading=none, body=none, icon="help-round") -%}
+
+<span data-tooltip>
+    {{ svg_icon(icon) }}
+</span>
+<template>
+    {% if heading %}<div class="tippy-heading">{{ heading }}</div>{% endif %}
+    {% if body %}<div class="tippy-body">{{ body }}</div>{% endif %}
+</template>
+
+{%- endmacro %}
