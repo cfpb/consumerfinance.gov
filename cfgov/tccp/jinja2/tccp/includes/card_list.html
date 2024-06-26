@@ -73,6 +73,7 @@
                                         name='apr-disclaimer',
                                         heading=(
                                             'Published rates are from '
+                                            ~ '<span class="u-nowrap">' | safe
                                             ~ (
                                                 stats_all.report_period_start
                                                 | date('%B')
@@ -82,6 +83,7 @@
                                                 stats_all.first_report_date
                                                 | date('%B %Y')
                                             )
+                                            ~ '</span>' | safe
                                         ),
                                         body=(
                                             'APRs change over time and are '
