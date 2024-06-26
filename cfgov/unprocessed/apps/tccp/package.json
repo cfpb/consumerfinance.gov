@@ -14,6 +14,7 @@
   "license": "SEE LICENSE IN TERMS.md",
   "type": "module",
   "dependencies": {
-    "htmx.org": "1.9.10"
+    "htmx.org": "1.9.10",
+    "tippy.js": "6.3.7"
   }
 }

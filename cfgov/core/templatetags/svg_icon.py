@@ -23,7 +23,7 @@ SVG_REGEX = re.compile(
 )
 
 
-def load_svg(name: str) -> str:
+def load_svg_from_file(name: str) -> str:
     relative_path = f"icons/{name}.svg"
     if not (static_filename := finders.find(relative_path)):
         raise FileNotFoundError(f"{relative_path} not found in staticfiles.")
@@ -32,7 +32,22 @@ def load_svg(name: str) -> str:
         content = f.read()
         if not SVG_REGEX.match(content):
             raise ValueError(f"{static_filename} not a valid SVG.")
+
     return content
+
+
+_SVG_ICON_CACHE = {}
+
+
+def load_svg(name: str) -> str:
+    try:
+        return _SVG_ICON_CACHE[name]
+    except KeyError:
+        pass
+
+    svg = load_svg_from_file(name)
+    _SVG_ICON_CACHE[name] = svg
+    return svg
 
 
 @register.simple_tag()
