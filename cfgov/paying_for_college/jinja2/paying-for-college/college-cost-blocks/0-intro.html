@@ -1,6 +1,6 @@
 <div class="college-costs__intro-segment u-js-only">
     {% if return_user %}
-        <div class="content__wrapper">
+        <div class="wrapper">
             <div class="content__main">
                 <div class="m-notification
                             m-notification--visible">
@@ -17,7 +17,7 @@
                 {% include_block block %}
             {% endif %}
         {%- endfor %}
-        <div class="content__wrapper">
+        <div class="wrapper">
             <div class="content__main">
                {% for block in page.header -%}
                     {% if block.block_type != 'hero' %}
