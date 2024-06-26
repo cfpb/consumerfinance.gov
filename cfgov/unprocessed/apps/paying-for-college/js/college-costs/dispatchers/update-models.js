@@ -162,6 +162,14 @@ function updateSchoolData(iped, assumptions) {
         stateModel.setValue('pid', false);
       }
 
+      // Rename the net price averages
+      if (data.netPriceAvgSlices) {
+        const slices = [ '0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus'];
+        slices.forEach( income => {
+          schoolModel.values['netPrice_' + income ] = data.netPriceAvgSlices[income];
+        });
+      }
+
       // Take only the top 3 programs
       schoolModel.values.programsTopThree = getTopThreePrograms(
         schoolModel.values.programsPopular,

@@ -1,11 +1,49 @@
 <section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
-    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad">$XX,XXX</span></strong></h2>
+    <h2><strong>Estimate what you'll owe at graduation.</strong></h2>
 
-    <p>This total represents <strong><span data-financial-item="total_borrowingWithGapLoan"></span></strong> of borrowing each year for <span data-state-item="programLengthText">X</span>, plus <strong><span data-financial-item="interest_totalAtGrad"></span></strong> of interest accumulated during your program. This is an assumption based on your data so far, but you can customize your estimate on the next page.</p>
+    <p>This estimate is based on the data you've provided so far, but you can customize your estimate on the next page. School costs can increase, so be prepared in case you need to borrow more.</p>
 
-    <div class="costs-not-covered" data-state-visibility="uncovered-costs">
-        <p>Based on your data so far, you’ll likely need to take out student loans. School costs can increase, so be prepared in case you need to borrow more.</p>
-    </div>
+    <h3>Estimate based on the information you provided</h3>
+
+    {{
+        text_item.render({
+            'label': 'Estimated yearly costs',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_costs"',
+            'type': 'subtotal',
+            'decor': '..'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': 'Total you expect to receive this year',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_funding"',
+            'type': 'subtotal',
+            'decor': '&mdash;'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': 'Estimated amount you may need to borrow each year',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_borrowingWithGapLoan"',
+            'type': 'total',
+            'decor': '..'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': '<strong>Estimated amount owed after <span data-school-item="programLengthText">X years</span> of program</strong> (including interest  accumulated while in school)',
+            'value': '0',
+            'data_attribute': 'data-financial-item="debt_totalAtGrad"',
+            'type': 'subtotal'
+        })
+    }}
+    
 
     <h3><strong>How much debt is too much debt?</strong></h3>
 
