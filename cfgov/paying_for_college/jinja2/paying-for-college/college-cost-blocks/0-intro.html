@@ -1,0 +1,36 @@
+<div class="college-costs__intro-segment u-js-only">
+    {% if return_user %}
+        <div class="content__wrapper">
+            <div class="content__main">
+                <div class="m-notification
+                            m-notification--visible">
+                    {{ svg_icon('updating') }}
+                    <div class="m-notification__content">
+                        <div class="m-notification__message">The page is loading…</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {% for block in page.header -%}
+            {% if 'hero' in block.block_type %}
+                {% include_block block %}
+            {% endif %}
+        {%- endfor %}
+        <div class="content__wrapper">
+            <div class="content__main">
+               {% for block in page.header -%}
+                    {% if block.block_type != 'hero' %}
+                        {{ render_block.render(block, loop.index) }}
+                    {% endif %}
+                {%- endfor %}
+                {% for block in page.content -%}
+                    {{ render_block.render(block, loop.index) }}
+                {%- endfor %}
+                <div class="college-costs__tool-section-buttons">
+                    <button class="a-btn college-costs__buttons--start btn__get-started">Get started</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
