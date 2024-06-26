@@ -59,10 +59,10 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-fetch-mock": "3.0.3",
     "postcss-less": "6.0.0",
-    "prettier": "3.2.5",
-    "snyk": "1.1291.0",
-    "stylelint": "16.5.0",
-    "stylelint-config-standard": "36.0.0",
+    "prettier": "3.3.2",
+    "snyk": "1.1292.0",
+    "stylelint": "16.6.1",
+    "stylelint-config-standard": "36.0.1",
     "stylelint-less": "3.0.1"
   },
   "scripts": {

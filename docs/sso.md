@@ -22,7 +22,6 @@ For consumerfinance.gov, our compose file adds another set of fixture data that 
 
 ### Run the test OIDC provider
 
-
 fasdfoasdfo
 The test OIDC provider can be run with:
 
