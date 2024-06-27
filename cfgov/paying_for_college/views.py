@@ -67,9 +67,7 @@ def validate_pid(pid):
 def url_is_safe(url):
     """Only save disclosure URLs with expected values."""
     find_illegal = re.search("[^0-9a-zA-Z-/?&=:.#]+", url)
-    if find_illegal:
-        return False
-    return True
+    return find_illegal is None
 
 
 def get_program_length(program, school):
