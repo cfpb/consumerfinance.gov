@@ -1,0 +1,63 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
+{%- endblock %}
+
+{% block content_main %}
+
+<div class="o-banner o-banner--dark">
+    <div class="wrapper wrapper--match-content">
+        <div class="m-notification
+                    m-notification--warning
+                    m-notification--visible">
+            {{ svg_icon('warning-round') }}
+            <div class="m-notification__content">
+                <div class="m-notification__message">
+                    Archived content
+                </div>
+                <p class="m-notification__explanation">
+                    This content has been archived, and its original formatting has been removed.
+                </p>
+                <ul class="m-list m-list--links">
+                    <li class="m-list__item">
+                        {%- block canonical -%}
+                        {% set canonical = request.build_absolute_uri(request.path) | lower %}
+                            <a class="a-link a-link--jump" href="https://wayback.archive-it.org/cfpb_num/*/{{ canonical }}">
+                        {%- endblock -%}
+                        View this page as it was originally published
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+    {% include 'v1/includes/article.html' %}
+    {% block post_article_content %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    {% if rss_feed %}
+        <div class="block">
+            {% import 'v1/includes/molecules/rss-feed.html' as rss %}
+            {{ rss.render(rss_feed) }}
+        </div>
+    {% endif %}
+{% endblock %}
