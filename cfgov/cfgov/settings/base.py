@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     "django_htmx",
     "wagtail_content_audit",
     "mozilla_django_oidc",
+    "draftail_icons",
 )
 
 MIDDLEWARE = (
@@ -669,6 +670,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "link",
                 "document-link",
                 "image",
+                "icon",
             ]
         },
     },
