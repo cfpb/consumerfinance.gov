@@ -1,4 +1,4 @@
-    import {
+import {
   add as addDataHook,
   checkDom,
   instantiateAll,
@@ -56,6 +56,16 @@ function CostsGroup(element) {
       _transition.maxHeightDefault,
     );
     _flyout.init();
+
+    _flyout.addEventListener('expandbegin', () => {
+      _targetDom.classList.remove('o-costs-group__header--collapsed');
+      _targetDom.classList.add('o-costs-group__header--expanded');
+    });
+
+    _flyout.addEventListener('collapsebegin', () => {
+      _targetDom.classList.remove('o-costs-group__header--expanded');
+      _targetDom.classList.add('o-costs-group__header--collapsed');
+    });
   }
 
   // Attach public events.
