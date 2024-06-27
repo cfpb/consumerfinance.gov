@@ -317,6 +317,7 @@ const costOfBorrowingOpts = {
   plotOptions: {
     series: {
       stacking: 'normal',
+      enableMouseTracking: false,
     },
   },
   series: [
@@ -375,6 +376,9 @@ const maxDebtOpts = {
         enabled: false,
       },
       groupPadding: 0.001,
+    },
+    series: {
+      enableMouseTracking: false,
     },
   },
   legend: {
@@ -446,6 +450,7 @@ const affordingOpts = {
   plotOptions: {
     series: {
       stacking: 'normal',
+      enableMouseTracking: false,
     },
   },
   series: [
