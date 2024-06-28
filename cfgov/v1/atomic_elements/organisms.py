@@ -27,7 +27,7 @@ from v1.util import ref
 
 
 class Well(blocks.StructBlock):
-    content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
+    content = blocks.RichTextBlock(required=False, label="Well")
 
     class Meta:
         icon = "placeholder"
@@ -524,7 +524,7 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = v1_blocks.UnescapedRichTextBlock(icon="edit")
+    content = blocks.RichTextBlock(icon="edit")
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
