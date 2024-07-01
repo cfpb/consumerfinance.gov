@@ -1,8 +1,15 @@
+import json
+import uuid
 from unittest import mock
 
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
-from v1.blocks import AnchorLink
+from wagtail.models import Site
+
+from wagtail_footnotes.models import Footnote
+
+from v1.blocks import AnchorLink, RichTextBlockWithFootnotes
+from v1.models import DocumentDetailPage
 
 
 class TestAnchorLink(TestCase):
@@ -43,3 +50,67 @@ class TestAnchorLink(TestCase):
 
         assert "anchor_" in result["link_id"]
         assert self.stringContainsNumbers(result["link_id"])
+
+
+class RichTextBlockWithFootnotesTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.root_page = Site.objects.get(is_default_site=True).root_page
+
+        footnote_uuid = uuid.uuid4()
+        self.page = DocumentDetailPage(
+            title="Test page",
+            content=json.dumps(
+                [
+                    {
+                        "type": "full_width_text",
+                        "value": [
+                            {
+                                "type": "content_with_footnotes",
+                                "value": (
+                                    "<p>Test with note<footnote "
+                                    f'id="{footnote_uuid}">1</footnote></p>'
+                                ),
+                            }
+                        ],
+                    }
+                ]
+            ),
+        )
+        self.root_page.add_child(instance=self.page)
+        self.page.save_revision().publish()
+        self.footnote = Footnote.objects.create(
+            uuid=footnote_uuid,
+            page=self.page,
+            text="Test footnote",
+        )
+
+    def test_render_footnote_tag(self):
+        block = RichTextBlockWithFootnotes()
+        html = block.render_footnote_tag(2)
+        self.assertHTMLEqual(
+            html,
+            '<a aria-labelledby="footnotes" href="#footnote-2" '
+            'id="footnote-source-2"><sup>2</sup></a>',
+        )
+
+    def test_block_replace_footnote_tags_no_notes(self):
+        block = RichTextBlockWithFootnotes()
+        html = block.replace_footnote_tags(None, "foo")
+        self.assertEqual(html, "foo")
+
+    def test_block_replace_footnote_tags(self):
+        rich_text_with_footnotes = self.page.content.stream_block.child_blocks[
+            "full_width_text"
+        ].child_blocks["content_with_footnotes"]
+        value = rich_text_with_footnotes.get_prep_value(
+            self.page.content[0].value[0].value
+        )
+        request = self.factory.get("/test-page/")
+        context = self.page.get_context(request)
+        result = rich_text_with_footnotes.render(value, context=context)
+        self.assertEqual(
+            result,
+            '<p>Test with note<a aria-labelledby="footnotes" '
+            'href="#footnote-1" id="footnote-source-1"><sup>1</sup></a></p>',
+        )

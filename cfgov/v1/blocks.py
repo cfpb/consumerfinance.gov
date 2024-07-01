@@ -1,8 +1,19 @@
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from wagtail import blocks
+from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
+
+from wagtail_footnotes.blocks import (
+    FIND_FOOTNOTE_TAG,
+)
+from wagtail_footnotes.blocks import (
+    RichTextBlockWithFootnotes as WagtailFootnotesRichTextBlockWithFootnotes,
+)
 
 from v1.util.util import get_unique_id
 
@@ -85,3 +96,49 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
 
     class Media:
         js = ["email-signup.js"]
+
+
+class RichTextBlockWithFootnotes(WagtailFootnotesRichTextBlockWithFootnotes):
+    def render_footnote_tag(self, index):
+        template = get_template(settings.WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE)
+        return template.render({"index": index})
+
+    def replace_footnote_tags(self, value, html, context=None):
+        # This is a wholesale copy of the replace_footnote_tags() method in
+        # wagtail-footnotes's RichTextBlockWithFootnotes. It modifies the
+        # embedded replace_tag() function to call our own
+        # render_footnote_tag() method. This is a change that should be
+        # contributed back upstream to allow straight-forward modification of
+        # footnote link rendering.
+        #
+        # There is an alternative implementation proposed in a PR in 2022:
+        #   https://github.com/torchbox/wagtail-footnotes/pull/27
+        # But I think I prefer providing a new method to a new embedded func.
+        if context is None:
+            new_context = self.get_context(value)
+        else:
+            new_context = self.get_context(value, parent_context=dict(context))
+
+        if not isinstance(new_context.get("page"), Page):
+            return html
+
+        page = new_context["page"]
+        if not hasattr(page, "footnotes_list"):
+            page.footnotes_list = []
+        self.footnotes = {
+            str(footnote.uuid): footnote for footnote in page.footnotes.all()
+        }
+
+        def replace_tag(match):
+            try:
+                index = self.process_footnote(match.group(1), page)
+            except (KeyError, ValidationError):  # pragma: no cover
+                return ""
+            else:
+                # This line is the only change to wagtail-footnote's
+                # replace_footnote_tags(), providing a separate method that
+                # can be overriden for rendering the footnote reference link.
+                return self.render_footnote_tag(index)
+
+        # note: we return safe html
+        return mark_safe(FIND_FOOTNOTE_TAG.sub(replace_tag, html))  # noqa: S308

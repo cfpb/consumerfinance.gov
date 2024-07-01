@@ -15,6 +15,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from flags.urls import flagged_re_path
 from flags.views import FlaggedTemplateView
+from wagtail_footnotes import urls as footnotes_urls
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls,
 )
@@ -417,6 +418,8 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     # Health check
     re_path(r"^ht/", include("health_check.urls")),
+    # wagtail-footnotes
+    re_path(r"^footnotes/", include(footnotes_urls)),
 ]
 
 # Ask CFPB category and subcategory redirects

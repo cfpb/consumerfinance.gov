@@ -21,6 +21,7 @@
                 {# content__main_modifiers block is only used by the homepage #}
                 <div class="u-layout-grid__main {% block content_main_modifiers -%}{%- endblock %}">
                     {% block content_main scoped -%}{%- endblock %}
+                    {% include 'v1/layouts/_footnotes.html' %}
                 </div>
             {% endblock %}
         </div>
