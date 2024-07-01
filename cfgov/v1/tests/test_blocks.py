@@ -1,8 +1,8 @@
 from unittest import mock
 
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
-from v1.blocks import AnchorLink
+from v1.blocks import AnchorLink, RichTextBlockWithFootnotes
 
 
 class TestAnchorLink(TestCase):
@@ -43,3 +43,13 @@ class TestAnchorLink(TestCase):
 
         assert "anchor_" in result["link_id"]
         assert self.stringContainsNumbers(result["link_id"])
+
+
+class RichTextBlockWithFootnotesTestCase(SimpleTestCase):
+    def test_render_footnote_tag(self):
+        block = RichTextBlockWithFootnotes()
+        html = block.render_footnote_tag(2)
+        self.assertHTMLEqual(
+            html,
+            '<a href="#footnote-2" id="footnote-source-2"><sup>2</sup></a>',
+        )

@@ -35,6 +35,7 @@ wagtail-autocomplete==0.11.0
 wagtail-content-audit==0.1
 wagtail_draftail_anchors==0.6.0
 wagtail-flags==5.3.1
+wagtail-footnotes==0.11
 wagtail-inventory==2.6
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.12.1

@@ -224,7 +224,11 @@ class EnforcementActionPage(AbstractFilterPage):
         blank=True,
     )
 
-    content_panels = [FieldPanel("header"), FieldPanel("content")]
+    content_panels = [
+        FieldPanel("header"),
+        FieldPanel("content"),
+        InlinePanel("footnotes", label="Footnotes"),
+    ]
 
     metadata_panels = [
         FieldPanel("public_enforcement_action"),
