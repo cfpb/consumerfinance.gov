@@ -126,6 +126,7 @@ nosetests.xml
 coverage.xml
 .snyk
 test/cypress/screenshots/
+test/cypress/cypress.config.mjs
 
 # Temp data backups #
 ###############
