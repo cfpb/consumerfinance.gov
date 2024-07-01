@@ -543,6 +543,7 @@ const chartView = {
 
     // Set initial buttons
     document.querySelector('#graduation-rate_us').checked = true;
+    document.querySelector('#compare-graduation-rate_us').checked = true;
     document.querySelector('#repayment-rate_us').checked = true;
 
     accessibility(Highcharts);
@@ -851,6 +852,11 @@ function _handleRadioClicks(event) {
       stateProp: 'gradMeterCohort',
       cohortName: 'gradMeterCohortName',
     },
+    graduationratemeterselectorcostspage: {
+      function: chartView.updateGradMeterChart,
+      stateProp: 'gradMeterCohort',
+      cohortName: 'gradMeterCohortName',
+    }
   };
   const names = {
     cohortRankByHighestDegree: 'U.S.',
