@@ -89,6 +89,7 @@ const schoolView = {
     }
 
     const list = getProgramList(level);
+
     if (list.length > 0) {
       updateState.byProperty('schoolHasPrograms', 'yes');
     } else {
@@ -105,12 +106,16 @@ const schoolView = {
       });
       html +=
         '\n<option value="null">My program is not listed here/I am undecided.</option>';
+
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program
       if (getStateValue('pid')) {
-        document.querySelector('#program-select').value = getStateValue('pid');
+        schoolView._programSelect.value = getStateValue('pid');
       }
+      schoolView._programSelect.parentNode.parentNode.style.display = 'block';
+    } else {
+      schoolView._programSelect.parentNode.parentNode.style.display = 'none';
     }
   },
 
