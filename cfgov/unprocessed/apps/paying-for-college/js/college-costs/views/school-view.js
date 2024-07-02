@@ -43,8 +43,7 @@ const schoolView = {
     schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
-    document.querySelector('#program-income').value =
-      getStateValue('programIncome');
+    schoolView._programIncome.value = getStateValue('programIncome');
     document.querySelectorAll('.scorecard-school').forEach((elem) => {
       elem.setAttribute(
         'href',
@@ -115,12 +114,12 @@ const schoolView = {
       // If there's a program id in the state, select that program
       if (getStateValue('pid')) {
         schoolView._programSelect.value = getStateValue('pid');
-        schoolView._programSelect.parentNode.parentNode.style.display = 'block';
-      } else {
-        schoolView._programSelect.parentNode.parentNode.style.display = 'none';
       }
 
-      document.querySelector('#program-income').value = getStateValue('programIncome');
+      schoolView._programIncome.value = getStateValue('programIncome');
+      schoolView._programSelect.parentNode.parentNode.style.display = 'block';
+    } else {
+      schoolView._programSelect.parentNode.parentNode.style.display = 'none';
     }
   },
 
