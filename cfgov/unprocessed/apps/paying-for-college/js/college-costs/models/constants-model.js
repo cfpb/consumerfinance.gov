@@ -35,6 +35,8 @@ const constantsModel = {
     rate_parentPlus: 'parentplusRate',
     fee_parentPlus: 'plusOriginationFee',
     rate_existingDebt: 'existingDebtRate',
+    rate_gapLoan: 'unsubsidizedRate',
+    fee_gapLoan: 'DLOriginationFee',
   },
 
   init: function () {

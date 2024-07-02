@@ -1,11 +1,6 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-import {
-  updateCostOfBorrowingChart,
-  updateMakePlanChart,
-  updateMaxDebtChart,
-} from '../dispatchers/update-view.js';
 import { stateModel } from '../models/state-model.js';
 
 const updateState = {
@@ -16,13 +11,6 @@ const updateState = {
    */
   activeSection: (value, popState) => {
     stateModel.setActiveSection(value, popState);
-    if (value === 'make-a-plan') {
-      updateMakePlanChart();
-    } else if (value === 'max-debt-guideline') {
-      updateMaxDebtChart();
-    } else if (value === 'cost-of-borrowing') {
-      updateCostOfBorrowingChart();
-    }
   },
 
   /**
@@ -36,15 +24,11 @@ const updateState = {
   },
 
   /**
-   * nextSection - Advance to application state to the next section
+   * navigateTo - Advance to application state to the next section
+   * @param {string} destination - the name of the section to advance to
    */
-  nextSection: () => {
-    const activeSection = stateModel.values.activeSection;
-    const i = stateModel.sectionOrder.indexOf(activeSection);
-    if (i !== -1) {
-      const nextSection = stateModel.sectionOrder[i + 1];
-      updateState.activeSection(nextSection);
-    }
+  navigateTo: (destination) => {
+    updateState.activeSection(destination);
   },
 
   /**

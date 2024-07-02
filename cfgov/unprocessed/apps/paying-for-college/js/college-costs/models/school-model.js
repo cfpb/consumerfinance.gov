@@ -4,6 +4,12 @@ import { getStateValue } from '../dispatchers/get-model-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 
+const programMap = {
+  associates: 'Associate degree',
+  bachelors: "Bachelor's degree",
+  certificate: 'Certificate',
+};
+
 const schoolModel = {
   values: {},
 
@@ -74,28 +80,31 @@ const schoolModel = {
    * Returns an array of Objects which is alphabetized
    * by program name
    * @param {string} level - program level - 'undergrad' or 'graduate'
+   * @param {string} programType - The specific program type
    * @returns {Array} an array of objects containing program data
    */
-  getAlphabeticalProgramList: function (level) {
-    let list = [];
-    if (!{}.hasOwnProperty.call(schoolModel.values, 'programCodes'))
-      return list;
-    if (!{}.hasOwnProperty.call(schoolModel.values.programCodes, level))
-      return list;
+  getAlphabeticalProgramList: function (level, programType) {
+    if (!schoolModel.values?.programCodes?.[level]) return [];
 
-    list = schoolModel.values.programCodes[level].sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      } else if (a.name > b.name) {
-        return 1;
-      } else if (b.name === a.name) {
+    const programs = schoolModel.values.programCodes[level];
+
+    if (level === 'graduate') {
+      return programs.sort((a, b) => {
         if (a.level < b.level) return -1;
         else if (a.level > b.level) return 1;
-      }
-      return 0;
-    });
+        else {
+          if (a.name < b.name) return -1;
+          else return 1;
+        }
+      });
+    }
 
-    return list;
+    return programs
+      .filter((v) => v.level === programMap[programType])
+      .sort((a, b) => {
+        if (a.name < b.name) return -1;
+        return 1;
+      });
   },
 
   /**

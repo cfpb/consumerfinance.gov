@@ -7,56 +7,35 @@
               o-college-costs-nav">
     {% set nav_items = [
         {
-            'title': 'Your financial aid offer',
-            'data': 'offer-letter',
-            'current': True,
-            'children': [
-                {'title': 'School & living situation', 'data': 'school-info', 'current': True},
-                {'title': 'Costs', 'data': 'costs'},
-                {'title': 'Grants & scholarships', 'data': 'grants-scholarships'},
-                {'title': 'Work-study', 'data': 'work-study'},
-                {'title': 'Federal loans', 'data': 'federal-loans'},
-                {'title': 'Other loans', 'data': 'school-loans'},
-                {'title': 'Other sources', 'data': 'other-resources'},
-            ]
+            'title': 'Calculating school costs',
+            'data': 'school-info',
+            'current': True
         },
         {
-            'title': 'Covering your costs',
-            'data': 'covering-costs',
-            'current': False,
-            'children': [
-                {'title': 'Borrowing strategically', 'data': 'loan-counseling'},
-                {'title': 'Make a plan', 'data': 'make-a-plan'},
-            ]
+            'title': 'Estimating your debt',
+            'data': 'estimate-debt',
+            'current': False
+        },
+        {
+            'title': 'Customizing your estimate ',
+            'data': 'customize-estimate',
+            'current': False
         },
         {
             'title': 'Affording your loans',
-            'data': 'affording-loans',
-            'current': False,
-            'children': [
-                {'title': 'Is this too much debt?', 'data': 'max-debt-guideline'},
-                {'title': 'What will interest cost me?', 'data': 'cost-of-borrowing'},
-                {'title': 'Can I afford my payment?', 'data': 'affording-your-loans'},
-            ]
+            'data': 'affording-payments',
+            'current': False
         },
         {
-            'title': 'Worth your investment',
-            'data': 'worth-investment',
-            'current': False,
-            'children': [
-                {'title': 'Compare this school to others', 'data': 'school-results'},
-                {'title': 'Review your financing plan', 'data': 'summary'},
-                {'title': 'What to do next', 'data': 'action-plan'},
-            ]
+            'title': 'Comparing your school',
+            'data': 'compare-school',
+            'current': False
         },
         {
-            'title': 'Save & finish',
-            'data': 'save-and-finish',
-            'current': False,
-            'children': [
-                {'title': 'Save & finish', 'data': 'save-and-finish'},
-            ]
-        },
+            'title': 'Reviewing your plan',
+            'data': 'review-plan',
+            'current': False
+        }
     ]%}
     {{secondary_nav.render(nav_items)}}
 </aside>

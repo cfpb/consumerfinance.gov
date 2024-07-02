@@ -5,6 +5,14 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import {
+  updateFinancialView,
+  // updateCostOfBorrowingChart,
+  updateMakePlanChart,
+  updateMaxDebtChart,
+  updateAffordingChart,
+  updateGradMeterChart,
+} from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
@@ -14,8 +22,8 @@ const navigationView = {
   _navMenu: null,
   _navListItems: null,
   _navItems: null,
+  _SecondaryNavButtons: null,
   _navButtons: null,
-  _nextButton: null,
   _appSegment: null,
   _stateDomElem: null,
   _affordingChoices: null,
@@ -48,12 +56,13 @@ const navigationView = {
     });
 
     const navItem = document.querySelector(
-      '[data-nav_item="' + activeName + '"]',
+      '[data-nav_section="' + activeName + '"]',
     );
+    if (navItem === null) return;
     const activeElem = navItem.closest('li');
-    const activeParent = activeElem.closest(
-      '.o-secondary-nav__list-item--parent',
-    );
+    // const activeParent = activeElem.closest(
+    //   '.o-secondary-nav__list-item--parent',
+    // );
 
     this._navListItems.forEach((elem) => {
       elem.setAttribute('data-nav-is-active', 'False');
@@ -62,14 +71,14 @@ const navigationView = {
 
     activeElem.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
-    activeParent.setAttribute('data-nav-is-open', 'True');
-    activeParent.setAttribute('data-nav-is-active', 'True');
-    activeElem.setAttribute('aria-selected', true);
-    activeParent
-      .querySelectorAll('.o-secondary-nav__list--children li')
-      .forEach((elem) => {
-        elem.setAttribute('data-nav-is-active', 'True');
-      });
+    // activeParent.setAttribute('data-nav-is-open', 'True');
+    // activeParent.setAttribute('data-nav-is-active', 'True');
+    // activeElem.setAttribute('aria-selected', true);
+    // activeParent
+    //   .querySelectorAll('.o-secondary-nav__list--children li')
+    //   .forEach((elem) => {
+    //     elem.setAttribute('data-nav-is-active', 'True');
+    //   });
 
     navItem.classList.add('active-section');
   },
@@ -99,6 +108,7 @@ const navigationView = {
     if (started && activeName) {
       this._updateSideNav(activeName);
       this._showAndHideSections(activeName);
+      this._updateViewCallback(activeName);
     }
   },
 
@@ -124,15 +134,14 @@ const navigationView = {
    * init - Initialize the navigation view
    * @param {object} body - The body element of the page
    * @param { string } iped - String representing the chosen school.
+   * @param {Function} updateViewCallback - = A function called when the view updates
    */
-  init: function (body, iped) {
+  init: function (body, iped, updateViewCallback) {
     this._navMenu = body.querySelector('.o-secondary-nav');
-    this._navButtons = body.querySelectorAll('.o-secondary-nav a');
+    this._SecondaryNavButtons = body.querySelectorAll('.o-secondary-nav a');
     this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
-    this._nextButton = body.querySelector(
-      '.college-costs__tool-section-buttons .btn__next-step',
-    );
+    this._navButtons = body.querySelectorAll('.btn__nav[data-destination]');
     this._contentSidebar = body.querySelector('.content__sidebar');
     this._introduction = body.querySelector('.college-costs__intro-segment');
     this._getStartedBtn = body.querySelector(
@@ -144,6 +153,7 @@ const navigationView = {
     this._affordingChoices = document.querySelectorAll(
       '.affording-loans-choices .m-form-field',
     );
+    this._updateViewCallback = updateViewCallback;
 
     _addButtonListeners(iped);
     this.updateView();
@@ -154,27 +164,58 @@ const navigationView = {
 };
 
 /**
+ * Check the destination page to see if we should update charts, etc, before navigating there
+ * @param destination
+ */
+function _updateBeforeNavigation(destination) {
+  const updateHooks = [
+    ['[data-financial-item]', updateFinancialView],
+    ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
+    ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
+    ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
+    ['[data-chart_id="school-results_grad-meter"]', updateGradMeterChart],
+  ];
+  const elem = document.querySelector(
+    'section[data-tool-section="' + destination + '"]',
+  );
+
+  // Check for what updates should be performed
+  updateHooks.forEach((hook) => {
+    if (elem.querySelectorAll(hook[0]).length > 0) {
+      hook[1]();
+    }
+  });
+
+  // Switch to using offer values on the customize estimate page
+  if (destination === 'customize-estimate') {
+    updateState.byProperty('usingNetPrice', 'no');
+  }
+}
+
+/**
  * _addButtonListeners - Add event listeners for nav buttons
  * @param { string } iped - String representing the chosen school.
  */
 function _addButtonListeners(iped) {
-  navigationView._navButtons.forEach((elem) => {
-    elem.addEventListener('click', _handleNavButtonClick);
+  navigationView._SecondaryNavButtons.forEach((elem) => {
+    elem.addEventListener('click', _handleSecondaryNavButtonClick);
   });
 
   navigationView._affordingChoices.forEach((elem) => {
     elem.addEventListener('click', _handleAffordingChoicesClick);
   });
 
-  navigationView._nextButton.addEventListener('click', _handleNextButtonClick);
-  if (iped) {
-    _handleGetStartedBtnClick();
-  } else {
-    navigationView._getStartedBtn.addEventListener(
-      'click',
-      _handleGetStartedBtnClick,
-    );
-  }
+  navigationView._navButtons.forEach((elem) => {
+    elem.addEventListener('click', _handleNavButtonClick);
+    if (iped) {
+      _handleGetStartedBtnClick();
+    } else {
+      navigationView._getStartedBtn.addEventListener(
+        'click',
+        _handleGetStartedBtnClick,
+      );
+    }
+  });
 }
 
 /**
@@ -199,10 +240,10 @@ function _handleGetStartedBtnClick() {
 }
 
 /**
- * _handleNavButtonClick - Handle click event for secondary nav.
+ * _handleSecondaryNavButtonClick - Handle click event for secondary nav.
  * @param {MouseEvent} event - click event object.
  */
-function _handleNavButtonClick(event) {
+function _handleSecondaryNavButtonClick(event) {
   event.preventDefault();
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
@@ -211,31 +252,55 @@ function _handleNavButtonClick(event) {
     const target = event.target;
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
-    if (typeof target.dataset.nav_item !== 'undefined') {
-      updateState.activeSection(target.dataset.nav_item);
-    } else if (typeof target.dataset.nav_section !== 'undefined') {
-      target
-        .closest('[data-nav-is-open]')
-        .setAttribute('data-nav-is-open', 'True');
+    if (typeof target.dataset.nav_section !== 'undefined') {
+      _updateBeforeNavigation(target.dataset.nav_section);
+      updateState.activeSection(target.dataset.nav_section);
     }
+
+    // if (typeof target.dataset.nav_item !== 'undefined') {
+    //   updateState.activeSection(target.dataset.nav_item);
+    // } else if (typeof target.dataset.nav_section !== 'undefined') {
+    //   target
+    //     .closest('[data-nav-is-open]')
+    //     .setAttribute('data-nav-is-open', 'True');
+    // }
   }
 }
 
 /**
- * _handleNextButtonClick - handle the click event for the "Next" button.
+ * _handleNavButtonClick - handle the click event for a nav button.
+ * @param event
  */
-function _handleNextButtonClick() {
+function _handleNavButtonClick(event) {
   // Check if there are missing form fields
   if (getStateValue('schoolErrors') === 'yes') {
     updateState.byProperty('showSchoolErrors', 'yes');
   } else {
-    sendAnalyticsEvent(
-      'next step - ' + getStateValue('activeSection'),
-      'time-to-click',
-    );
-    updateState.nextSection();
-    window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
-    document.querySelector('.college-costs__tool-section.active h2').focus();
+    if (event.target.dataset['destination']) {
+      const destination = event.target.dataset.destination;
+      _updateBeforeNavigation(destination);
+
+      if ({}.hasOwnProperty.call(event.target.dataset, 'customizeTrigger')) {
+        const trigger = event.target.dataset.customizeTrigger;
+        if (trigger === 'netPrice') {
+          updateState.byProperty('usingNetPrice', 'yes');
+        } else if (trigger == 'fullEstimate') {
+          updateState.byProperty('usingNetPrice', 'no');
+        }
+      }
+
+      sendAnalyticsEvent(
+        'Navigation Button from ' +
+          getStateValue('activeSection') +
+          ' to ' +
+          destination,
+        'time-to-click',
+      );
+
+      updateState.navigateTo(destination);
+      window.scrollTo(0, document.querySelector('.college-costs').offsetTop);
+      document.querySelector('.college-costs__tool-section.active h2').focus();
+    }
   }
 }
 

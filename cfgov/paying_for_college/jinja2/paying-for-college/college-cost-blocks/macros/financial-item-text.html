@@ -16,6 +16,8 @@
 
    value.value:           Value text.
 
+   value.decor:           Decorative characters placed before the value
+
    value.type:            Item type. Options include 'subtotal' and 'total'.
 
    value.status:          Item status. Options include 'warning'
@@ -36,6 +38,7 @@
         {%- endif -%}
     </div>
     <div class="financial-item__value">
+        {% if value.decor %}{{ value.decor | safe }}{% endif %}
         <span {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
             {{ value.value | safe }}
         </span>
