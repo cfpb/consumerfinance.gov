@@ -85,12 +85,14 @@ const schoolView = {
 
   _updateProgramList: () => {
     if (getSchoolValue('schoolID') === null) return;
+    const programType = getStateValue('programType');
     let level = 'undergrad';
-    if (getStateValue('programType') === 'graduate') {
+
+    if (programType === 'graduate') {
       level = 'graduate';
     }
 
-    const list = getProgramList(level);
+    const list = getProgramList(level, programType);
 
     if (list.length > 0) {
       updateState.byProperty('schoolHasPrograms', 'yes');
