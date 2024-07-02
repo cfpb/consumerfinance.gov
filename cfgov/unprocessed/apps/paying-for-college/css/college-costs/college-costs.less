@@ -58,7 +58,8 @@
 
     max-width: unit(570px / @base-font-size-px, rem);
 
-    h3 {
+    h3,
+    .h4 {
       margin-top: unit(30px / @base-font-size-px, em);
     }
 
@@ -293,5 +294,9 @@
     button {
       margin-bottom: unit(30px / @base-font-size-px, em);
     }
+  }
+
+  .o-form__fieldset > .m-form-field--radio:nth-child(3) {
+    margin-top: 0;
   }
 }

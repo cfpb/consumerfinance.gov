@@ -25,46 +25,48 @@
 
     <div class="school-search__additional-info">
         <div class="block block--sub program-question" id="school-search_program-type">
-            <h3 class="h4">Select your program type{{tooltip.render('If you are entering or continuing an accelerated degree program (a bachelor’s followed by a master’s in the same subject), choose the program type covered by this financial aid offer.')}}</h3>
-            <div class="a-form-alert a-form-alert--error" data-state-based-visibility="type-required" role="alert">
-              {{ svg_icon('warning-round') }}
-              <span class="a-form-alert__text">
-                  Please select your program type.
-              </span>
-            </div>  
-            {{
-                radio.render({
-                  'name':  "programType",
-                  'label': 'Certificate',
-                  'value': 'certificate',
-                  'id': 'program-type-radio_certificate'
-                })
-            }}
-            {{
-                radio.render({
-                  'name':  "programType",
-                  'label': 'Associate\'s degree',
-                  'value': 'associates',
-                  'id': 'program-type-radio_associates'
-                })
-            }}
-            {{
-                radio.render({
-                  'name':  "programType",
-                  'label': 'Bachelor\'s degree',
-                  'value': 'bachelors',
-                  'id': 'program-type-radio_bachelors',
-                  'selected': true
-                })
-            }}
-            {{
-                radio.render({
-                  'name':  "programType",
-                  'label': 'Graduate degree (master\'s or doctorate)',
-                  'value': 'graduate',
-                  'id': 'program-type-radio_graduate'
-                })
-            }}
+            <fieldset class="o-form__fieldset">
+              <legend class="h4">Select your program type{{tooltip.render('If you are entering or continuing an accelerated degree program (a bachelor’s followed by a master’s in the same subject), choose the program type covered by this financial aid offer.')}}</legend>
+              <div class="a-form-alert a-form-alert--error" data-state-based-visibility="type-required" role="alert">
+                {{ svg_icon('warning-round') }}
+                <span class="a-form-alert__text">
+                    Please select your program type.
+                </span>
+              </div>
+              {{
+                  radio.render({
+                    'name':  "programType",
+                    'label': 'Certificate',
+                    'value': 'certificate',
+                    'id': 'program-type-radio_certificate'
+                  })
+              }}
+              {{
+                  radio.render({
+                    'name':  "programType",
+                    'label': 'Associate\'s degree',
+                    'value': 'associates',
+                    'id': 'program-type-radio_associates'
+                  })
+              }}
+              {{
+                  radio.render({
+                    'name':  "programType",
+                    'label': 'Bachelor\'s degree',
+                    'value': 'bachelors',
+                    'id': 'program-type-radio_bachelors',
+                    'selected': true
+                  })
+              }}
+              {{
+                  radio.render({
+                    'name':  "programType",
+                    'label': 'Graduate degree (master\'s or doctorate)',
+                    'value': 'graduate',
+                    'id': 'program-type-radio_graduate'
+                  })
+              }}
+            </fieldset>
         </div>
 
         <div data-state-based-visibility="school-no-programs">
