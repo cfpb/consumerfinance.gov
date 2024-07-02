@@ -1,13 +1,4 @@
 {% if page and page.footnotes_list %}
-  <div class="m-full-width-text">
-    <h2>Footnotes</h2>
-    <ol>
-        {% for footnote in page.footnotes_list %}
-        <li id="footnote-{{ loop.index }}">
-          {{ footnote.text | richtext }}
-          <a href="#footnote-source-{{ loop.index }}" aria-label="Back to content">↩</a>
-        </li>
-        {% endfor %}
-    </ol>
-  </div>
+    {%- import 'v1/includes/molecules/footnotes.html' as footnotes with context -%}
+    {{ footnotes.render(page.footnotes_list) }}
 {% endif %}
