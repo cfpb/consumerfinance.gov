@@ -1,6 +1,4 @@
-const React = window.React;
-
-class EntityIconSource extends React.Component {
+class EntityIconSource extends window.React.Component {
   componentDidMount() {
     const { editorState, entityType, onComplete } = this.props;
     const icon_name = window.prompt("Icon identifier:");
@@ -54,7 +52,7 @@ const Icon = (props) => {
   // the editor.
   var icon_name = data["icon-name"];
   var icon_url = `/static/icons/${icon_name}.svg`;
-  return React.createElement(
+  return window.React.createElement(
     'img',
     {
       "src": icon_url,

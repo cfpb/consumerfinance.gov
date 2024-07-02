@@ -1,0 +1,4 @@
+{% if page and page.footnotes_list %}
+    {%- import 'v1/includes/molecules/footnotes.html' as footnotes with context -%}
+    {{ footnotes.render(page.footnotes_list) }}
+{% endif %}

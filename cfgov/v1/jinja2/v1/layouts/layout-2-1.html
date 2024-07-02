@@ -20,6 +20,7 @@
             {% block body_content scoped %}
                 <div class="u-layout-grid__main">
                     {% block content_main scoped -%}{%- endblock %}
+                    {% include 'v1/layouts/_footnotes.html' %}
                 </div>
                 <aside class="u-layout-grid__sidebar">
                     {% block content_sidebar scoped -%}{%- endblock %}
