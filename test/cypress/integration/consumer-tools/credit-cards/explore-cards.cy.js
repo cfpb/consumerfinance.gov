@@ -42,6 +42,37 @@ describe('Explore credit cards results page', () => {
       });
     });
   });
+  it('should not follow card links when tooltips are clicked', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().click();
+
+    cy.get('h1').contains('Explore credit cards').should('exist');
+    cy.get('h2')
+      .contains('Purchase interest rate and fees')
+      .should('not.exist');
+  });
+  it('should not follow card links when tooltips are open', () => {
+    exploreCards.openResultsPage();
+
+    // Open a tooltip
+    cy.get('.m-card--tabular [data-tooltip]').first().click();
+    // Click away to close the tooltip
+    cy.get('.m-card--tabular .m-card__heading-group').first().click();
+
+    // The link should not have been followed
+    cy.get('h1').contains('Explore credit cards').should('exist');
+    cy.get('h2')
+      .contains('Purchase interest rate and fees')
+      .should('not.exist');
+
+    cy.wait(1000);
+    // Click a second time now that the tooltip is closed
+    cy.get('.m-card--tabular .m-card__heading-group').first().click();
+    // The link should now have been followed
+    cy.get('h1').contains('Explore credit cards').should('not.exist');
+    cy.get('h2').contains('Purchase interest rate and fees').should('exist');
+  });
   it('should show additional results when "Show more" button is clicked', () => {
     exploreCards.openResultsPage();
 

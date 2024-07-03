@@ -270,13 +270,11 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
 
     def can_serve_draft_versions(self, request):
         perms = request.user.get_all_permissions()
-        if (
+        return (
             request.user.is_superuser
             or getattr(request, "served_by_wagtail_sharing", False)
             or "regulations3k.change_section" in perms
-        ):
-            return True
-        return False
+        )
 
     def get_versions_query(self, request):
         versions = self.regulation.versions

@@ -356,8 +356,9 @@ class EnforcementActionFilterableSearchFilteringTests(
         self.assertEqual(results.count(), 2)
 
         # Results should be ordered by most recent initial filing date.
-        self.assertEqual(results[0].title, "child2")
-        self.assertEqual(results[1].title, "child1")
+        qs = results.to_queryset()
+        self.assertEqual(qs[0].title, "child2")
+        self.assertEqual(qs[1].title, "child1")
 
     def test_filter_by_status(self):
         search = EnforcementActionFilterablePagesDocumentSearch(

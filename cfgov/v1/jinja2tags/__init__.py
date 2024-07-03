@@ -7,7 +7,6 @@ from v1.util import ref
 from v1.util.util import get_unique_id
 
 from .datetimes import DatetimesExtension
-from .fragment_cache import FragmentCacheExtension
 from .images import ImagesExtension
 
 
@@ -82,8 +81,6 @@ class V1Extension(Extension):
                 "choices_for_page_type": ref.choices_for_page_type,
                 "get_category_icon": ref.get_category_icon,
                 "get_unique_id": get_unique_id,
-                "is_blog": ref.is_blog,
-                "is_report": ref.is_report,
                 "is_filter_selected": pass_context(is_filter_selected),
                 "unique_id_in_context": pass_context(unique_id_in_context),
                 "app_url": app_url,
@@ -95,6 +92,5 @@ class V1Extension(Extension):
 
 # Nicer import names
 datetimes_extension = DatetimesExtension
-fragment_cache_extension = FragmentCacheExtension
 images_extension = ImagesExtension
 v1_extension = V1Extension

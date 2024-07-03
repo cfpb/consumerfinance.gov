@@ -1,5 +1,4 @@
 import json
-from unittest import mock
 
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -18,34 +17,11 @@ from v1.models.banners import Banner
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
-class TestCFGOVPage(TestCase):
-    def setUp(self):
-        self.page = CFGOVPage(title="Test", slug="test")
-        self.factory = RequestFactory()
-        self.request = self.factory.get("/")
-
-    def test_post_preview_cache_key_contains_page_id(self):
-        save_new_page(self.page)
-        key = self.page.post_preview_cache_key
-        self.assertIn(str(self.page.id), key)
-
-    @mock.patch("builtins.super")
-    def test_serve_calls_super_on_non_ajax_request(self, mock_super):
-        self.page.serve(self.request)
-        mock_super.assert_called_once()
-        mock_super().serve.assert_called_with(self.request)
-
-
 class TestCFGOVPageContext(TestCase):
     def setUp(self):
         self.page = CFGOVPage(title="Test", slug="test")
         self.factory = RequestFactory()
         self.request = self.factory.get("/")
-
-    def test_post_preview_cache_key_contains_page_id(self):
-        save_new_page(self.page)
-        key = self.page.post_preview_cache_key
-        self.assertIn(str(self.page.id), key)
 
     def test_get_context_no_banners(self):
         test_context = self.page.get_context(self.request)
