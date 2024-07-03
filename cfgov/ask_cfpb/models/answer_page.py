@@ -7,6 +7,7 @@ from django.utils.text import Truncator
 
 from wagtail.admin.panels import (
     FieldPanel,
+    InlinePanel,
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
@@ -234,6 +235,7 @@ class AnswerPage(CFGOVPage):
             heading="Consumer Tools topics",
             classname="collapsible collapsed",
         ),
+        InlinePanel("footnotes", label="Footnotes"),
     ]
 
     sidebar = StreamField(

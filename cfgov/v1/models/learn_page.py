@@ -66,6 +66,7 @@ class AbstractFilterPage(CFGOVPage):
         content_panels = [
             FieldPanel("header"),
             content_panel,
+            InlinePanel("footnotes", label="Footnotes"),
         ]
         return TabbedInterface(
             [

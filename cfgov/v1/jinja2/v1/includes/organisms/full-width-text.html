@@ -20,7 +20,7 @@
             {% include_block block %}
         {% elif 'content' in block_type %}
             <div class="m-full-width-text">
-                {{ block.value | safe }}
+                {% include_block block %}
             </div>
         {% elif block_type == 'table_block' %}
             <div class="m-full-width-text">
