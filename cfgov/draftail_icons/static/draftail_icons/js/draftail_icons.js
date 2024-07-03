@@ -1,7 +1,9 @@
 class EntityIconSource extends window.React.Component {
   componentDidMount() {
     const { editorState, entityType, onComplete } = this.props;
-    const icon_name = window.prompt("Icon identifier:");
+    const icon_name = window.prompt(
+      'Canonical icon name (refer to the Iconography page in the CFPB Design System):',
+    );
 
     if (icon_name) {
       const content = editorState.getCurrentContent();
@@ -9,12 +11,12 @@ class EntityIconSource extends window.React.Component {
 
       const contentWithEntity = content.createEntity(
         entityType.type,
-        "SEGMENTED",
+        'SEGMENTED',
         {
-          "icon-name": icon_name,
-        }
+          'icon-name': icon_name,
+        },
       );
-      const entityKey = contentWithEntity.getLastCreatedEntityKey()
+      const entityKey = contentWithEntity.getLastCreatedEntityKey();
 
       // Attach the new entity to a space, since it has to have a range of
       // some length > 0. This will get rendered out in the decorator below
@@ -22,14 +24,14 @@ class EntityIconSource extends window.React.Component {
       const newContent = window.DraftJS.Modifier.replaceText(
         content,
         selection,
-        " ",
+        ' ',
         null,
-        entityKey
+        entityKey,
       );
       const nextState = window.DraftJS.EditorState.push(
         editorState,
         newContent,
-        "insert-characters"
+        'insert-characters',
       );
 
       onComplete(nextState);
@@ -50,19 +52,16 @@ const Icon = (props) => {
   // Get the icon name, then add an img tag that loads the icon from our
   // static files path. This will render the ICON "entity" with the svg in
   // the editor.
-  var icon_name = data["icon-name"];
+  var icon_name = data['icon-name'];
   var icon_url = `/static/icons/${icon_name}.svg`;
-  return window.React.createElement(
-    'img',
-    {
-      "src": icon_url,
-      "data-icon-name": icon_name,
-    },
-  );
+  return window.React.createElement('img', {
+    src: icon_url,
+    'data-icon-name': icon_name,
+  });
 };
 
 window.draftail.registerPlugin({
-  type: "ICON",
+  type: 'ICON',
   source: EntityIconSource,
-  decorator: Icon
+  decorator: Icon,
 });
