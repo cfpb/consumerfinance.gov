@@ -3,29 +3,30 @@
 
     <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
 
-    <p>Do you want to put this plan into action or consider other options?</p>
+    <fieldset class="o-form__fieldset">
+      <legend class="h4">Do you want to put this plan into action or consider other options?</legend>
 
-    <div class="action-plan__choices block block--sub">
-        {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'How to put this plan into action',
-              'value': 'action',
-              'id': 'action-plan_put-into-action',
-              'class': 'm-form-field--lg-target'
-            })
-        }}
-         {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'Consider other options',
-              'value': 'consider',
-              'id': 'action-plan_consider',
-              'class': 'm-form-field--lg-target'
-            })
-        }}
-    </div>
-
+      <div class="action-plan__choices block block--sub">
+          {{
+              radio.render({
+                'name':  "action-plan-radio",
+                'label': 'Put this plan into action',
+                'value': 'action',
+                'id': 'action-plan_put-into-action',
+                'class': 'm-form-field--lg-target'
+              })
+          }}
+           {{
+              radio.render({
+                'name':  "action-plan-radio",
+                'label': 'Consider other options',
+                'value': 'consider',
+                'id': 'action-plan_consider',
+                'class': 'm-form-field--lg-target'
+              })
+          }}
+      </div>
+    </fieldset>
     <div class="block block--sub action-plan__steps" data-state-based-visibility="put-into-action">
         <h3>How to put this plan into action</h3>
         <div data-state-based-visibility="none">
