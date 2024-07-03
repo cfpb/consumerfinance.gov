@@ -13,5 +13,5 @@
    ========================================================================== #}
 
 {% macro render( html ) -%}
-<button class="a-tooltip" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}<span class="u-visually-hidden">{{html}}</span></button>
+<button class="a-tooltip" aria-label="tooltip" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}<span class="u-visually-hidden">{{html}}</span></button>
 {%- endmacro %}

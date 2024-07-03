@@ -20,7 +20,7 @@ export default function Stepper({ steps, step, headings }) {
         <span>
           <CurrentStep step={step} /> of {steps}
         </span>
-        {headings ? <h4>{headings[step - 1]}</h4> : null}
+        {headings ? <span class="h4">{headings[step - 1]}</span> : null}
       </div>
     </div>
   );
