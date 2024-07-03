@@ -87,7 +87,8 @@
         </div>
 
         <div class="block block--sub program-question" id="school-search_program-length">
-            <h3 class="h4">How long do you expect your program to take, including the coming school year?{{tooltip.render('Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.')}}</h3>
+          <fieldset class="o-form__fieldset">
+            <legend class="h4">How long do you expect your program to take, including the coming school year?{{tooltip.render('Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.')}}</legend>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="length-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
@@ -143,10 +144,12 @@
                   'id': 'program-length-radio_6'
                 })
             }}
+          </fieldset>
         </div>
 
         <div class="block block--sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
-            <h3 class="h4">Which tuition rate will apply to you?</h3>
+          <fieldset class="o-form__fieldset">
+            <legend class="h4">Which tuition rate will apply to you?</legend>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="rate-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
@@ -171,10 +174,12 @@
                 })
             }}
             <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
+          </fieldset>
         </div>
 
         <div class="block block--sub program-question undergrad-content" id="school-search_program-dependency">
-          <h3 class="h4">Are you considered a dependent or independent student?{{tooltip.render('Check out <a href="https://studentaid.gov/apply-for-aid/fafsa/filling-out/dependency" target="_blank" rel="noreferrer noopener">studentaid.gov</a> for help determining your status.')}}</h3>
+          <fieldset class="o-form__fieldset">
+            <legend class="h4">Are you considered a dependent or independent student?{{tooltip.render('Check out <a href="https://studentaid.gov/apply-for-aid/fafsa/filling-out/dependency" target="_blank" rel="noreferrer noopener">studentaid.gov</a> for help determining your status.')}}</legend>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="dependency-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
@@ -199,10 +204,12 @@
                   'id': 'program-dependency-radio_independent'
                 })
             }}
+          </fieldset>
         </div>
 
         <div class="block block--sub program-question undergrad-content" id="school-search_program-housing">
-            <h3 class="h4">Where do you plan to live while in school?</h3>
+          <fieldset class="o-form__fieldset">
+            <legend class="h4">Where do you plan to live while in school?</legend>
             <div class="a-form-alert a-form-alert--error" data-state-based-visibility="housing-required" role="alert">
               {{ svg_icon('warning-round') }}
               <span class="a-form-alert__text">
@@ -234,6 +241,7 @@
                   'id': 'program-housing-radio_with-family'
                 })
             }}
+          </fieldset>
         </div>
     </div>
 
