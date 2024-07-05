@@ -1,16 +1,15 @@
 <section class="college-costs__tool-section college-costs__tool-section--school-costs" data-tool-section="school-costs">
     <h2><strong>Your estimated costs for <span data-state-item="programLengthText">X</span> at <span data-school-item="school"></span>: <span data-financial-item="total_costOfProgram"></strong></h2>
-    <p>Your actual expenses will depend on your situation&mdash;any financial aid you receive, your personal budgeting, rising costs, and other factors.</p>
+    <p>This estimate includes tuition, books, housing and is based on the most recent data from the U.S. Department of Education.</p>
     <ul>
-        <li>This estimate is based on the net price for in-state students at your family income level. <span data-state-based-visibility="out-of-state"><strong>As an out-of-state student, your rates may be higher.</strong></span></li>
-        <li>Estimated time frame: <span data-state-item="programLengthText"></span></li>
-        <li>Estimated yearly costs: <span data-number-display="currency" data-financial-item="total_costs"></span> (for in-state students with family incomes of <span data-state-item="programIncomeText">$X</span>)</li>
-        <li>This estimate includes tuition, books, housing and is based on the most recent data from the U.S. Department of Education.</li>
-        <li>Costs may vary based on family income. See <a class="scorecard-school" href="https://collegescorecard.ed.gov/school/?" target="__blank" rel="noopener noreferrer">College Score Card</a> for costs based on family income.</li>
+        <li>Estimated time frame: <span data-state-item="programLengthText">X years</span></li>
+        <li>Estimated yearly costs: <span data-number-display="currency" data-financial-item="total_costs">$X</span></li>
+        <li>=This estimate is based on the net price paid by in-state students with family incomes between <span data-state-item="programIncomeText">$X</span>.</li>
+        <li>Your actual expenses will depend on your situation—any financial aid you receive, your personal budgeting, rising costs, and other factors.{{tooltip.render('Net price is the school’s cost of attendance minus any grants and scholarships received. For public schools, this is only the average costs for in-state students. See <a href="" class="scorecard-school">College Score Card</a> for more information.')}}</li>
     </ul>
 
     <div class="block block--mid comparison-section comparison-section--grad-rate">
-        <h3 class="h4"><strong><span data-school-item="school"></span>'s graduation rate</strong></h3>
+        <h3 class="h4"><strong><span data-schoo l-item="school"></span>'s graduation rate</strong></h3>
         <div class="school-results__rank-display">
             <div class="big-percentile"><span data-school-item="rateGraduation" data-number-display="percentage"></span></div>
             <div><span data-school-item="school"></span>'s graduation rate is <strong><span data-school-item="rateGraduation" data-number-display="percentage"></span></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>

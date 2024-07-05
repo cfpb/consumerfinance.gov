@@ -1,24 +1,23 @@
      {% import "v1/includes/atoms/checkbox.html" as checkbox with context %}
 
 <section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="estimate-debt">
-    <h2 tabindex="-1">Estimate how much you'll owe in student loans</h2>
+    <h2 tabindex="-1">How much do you expect to contribute this year?</h2>
 
     <div class="block block--mid financial-items">
-        <h3>How much do you expect to contribute this year?</h3>
             {{
                 input.render({
-                    'label': 'Personal funds',
+                    'label': 'Personal funds' ~ tooltip.render('Money you and your family have on hand to put towards school.'),
                     'id': 'estimate__savings',
-                    'helper_text': 'Money you and your family have on hand to put towards school per year of your program',
+                    'helper_text': 'per year of your program',
                     'value': '0',
                     'data_attribute': 'data-financial-item="savings_personal"'
                 })
             }}
             {{
                 input.render({  
-                    'label': 'College savings plan' ~ tooltip.render('529 college savings plans are tax-advantaged savings plans that help families save for higher education so they can be less reliant on student loans. <a href="https://studentaid.gov/resources/tax-benefits#529-plans" target="_blank" rel="noreferrer noopener">Learn more here.</a>') | safe,
+                    'label': 'College savings plan (like 529 plans)' ~ tooltip.render('529 college savings plans are tax-advantaged savings plans that help families save for higher education so they can be less reliant on student loans. <a href="https://studentaid.gov/resources/tax-benefits#529-plans" target="_blank" rel="noreferrer noopener">Learn more here.</a>') | safe,
                     'id': 'estimate__collegeSavings',
-                    'helper_text': '(like 529 plans) per year of your program',
+                    'helper_text': 'per year of your program',
                     'value': '0',
                     'data_attribute': 'data-financial-item="savings_collegeSavings"'
                 })

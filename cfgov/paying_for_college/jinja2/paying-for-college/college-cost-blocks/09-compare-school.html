@@ -58,8 +58,7 @@
 
         <div class="undergrad-content">
             <div class="block block--mid comparison-section comparison-section--grad-rate">
-                <h4>Graduation rate</h4>
-                <p>The proportion of full-time, first-time, degree/certificate-seeking undergraduates who completed a degree or certificate within 150% of normal time. For bachelor's degrees, 150% of normal time is typically 6 years. For associate's degrees, 150% of normal time is 3 years. For certificate programs it varies by length; for example, 150% of a typically 6-month program is 9 months.</p>
+                <h4>Graduation rate {{ tooltip.render('The proportion of full-time, first-time, degree/certificate-seeking undergraduates who completed a degree or certificate within 150% of normal time. For bachelor&apos;s degrees, 150% of normal time is typically 6 years. For associate&apos;s degrees, 150% of normal time is 3 years. For certificate programs it varies by length; for example, 150% of a typically 6-month program is 9 months.' | safe ) }}</h4>
                 <div class="school-results__rank-display">
                     <div class="big-percentile"><span data-school-item="rateGraduation" data-number-display="percentage"></span></div>
                     <div><span data-school-item="school"></span>'s graduation rate is <strong><span data-school-item="rateGraduation" data-number-display="percentage"></span></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
@@ -135,8 +134,7 @@
             </div>
 
             <div class="block block--mid comparison-section comparison-section--default-rate">
-                <h4>Loan default rate</h4>
-                <p>The 3-year default rate is the proportion of student borrowers who defaulted on their federal loans within 3 years of starting to repay them, as a result of missing several monthly payments in a row (typically 9 for federal loans). It does not include defaults on private student loans.</p>
+                <h4>Loan default rate {{ tooltip.render('The 3-year default rate is the proportion of student borrowers who defaulted on their federal loans within 3 years of starting to repay them, as a result of missing several monthly payments in a row (typically 9 for federal loans). It does not include defaults on private student loans.') }}</h4>
                 <div class="school-results__rank-display">
                     <div class="big-percentile"><span data-school-item="defaultRate" data-number-display="percentage"></span></div>
                     <div><span data-school-item="school"></span>'s default rate is <strong><span data-school-item="defaultRate" data-number-display="percentage"></span></strong>. This is a sign of how many student borrowers experienced financial distress while repaying their student debt.</div>
@@ -144,8 +142,7 @@
             </div>
 
             <div class="block block--mid comparison-section comparison-section--repayment-rate" data-status="min">
-                <h4>Loan repayment rate</h4>
-                <p>The repayment rate is the proportion of student borrowers who have reduced the original principal balance of their federal student debt by at least $1 within 3 years of entering repayment. </p>
+                <h4>Loan repayment rate {{ tooltip.render('The repayment rate is the proportion of student borrowers who have reduced the original principal balance of their federal student debt by at least $1 within 3 years of entering repayment.');</h4>
                 <div class="school-results__rank-display">
                     <div class="big-percentile"><span data-school-item="repay3yr" data-number-display="percentage"></span></div>
                     <div><span data-school-item="school"></span>'s repayment rate is <strong><span data-school-item="repay3yr" data-number-display="percentage"></span></strong>. This tells you how many student borrowers have earned enough money to start paying down their debt.</div>

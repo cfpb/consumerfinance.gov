@@ -12,7 +12,7 @@
         <div class="equation-row">
             {{
                 text_item.render({
-                    'label': 'Estimated debt at graduation' ~ tooltip.render('Includes any current debt from previous schooling, if you entered it on the previous page'),
+                    'label': 'Estimated debt at graduation',
                     'value': '$0',
                     'type': 'text',
                     'helper_text': 'Includes interest accrued in school',
@@ -23,7 +23,7 @@
         <div class="equation-row equation-row--bottom-line">
             {{
                 text_item.render({
-                    'label': 'Estimated interest over a 10-year repayment plan' ~ tooltip.render('Assumes approximate interest rate of 5.00%'),
+                    'label': 'Estimated interest over a 10-year repayment plan',
                     'value': '$0',
                     'type': 'text',
                     'data_attribute': 'data-financial-item="debt_tenYearInterest"'
@@ -33,7 +33,7 @@
         <div class="equation-row">
             {{
                 text_item.render({
-                    'label': 'Total cost of borrowing' ~ tooltip.render('Assumes approximate interest rate of 5.00% on any current debt from previous schooling, based on recent rate'),
+                    'label': 'Total cost of borrowing',
                     'value': '$0',
                     'type': 'subtotal',
                     'status': 'warning',

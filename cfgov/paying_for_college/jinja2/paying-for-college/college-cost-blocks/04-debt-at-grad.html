@@ -1,7 +1,7 @@
 <section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
-    <h2><strong>Estimate what you'll owe at graduation.</strong></h2>
+    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad">$XX,XXX</strong></h2>
 
-    <p>This estimate is based on the data you've provided so far, but you can customize your estimate on the next page. School costs can increase, so be prepared in case you need to borrow more.</p>
+    <p>This estimate is based on the data you’ve provided so far, but you can customize your estimate on the next page. School costs can increase, so be prepared in case you need to borrow more.</p>
 
     <h3>Estimate based on the information you provided</h3>
 
@@ -35,7 +35,7 @@
 
     {{
         text_item.render({
-            'label': '<strong>Estimated amount owed after <span data-school-item="programLengthText">X years</span> of program</strong> (including interest  accumulated while in school)',
+            'label': '<strong>Estimated amount owed after <span data-state-item="programLengthText">X years</span> of program</strong> (including interest  accumulated while in school)',
             'value': '0',
             'data_attribute': 'data-financial-item="debt_totalAtGrad"',
             'type': 'subtotal'
@@ -44,7 +44,7 @@
 
     <h3><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h3>
 
-    <p>Your payment estimate is based on making payments over 10 years on the standard repayment plan. Other plans may be available with lower monthly payments, but the total cost of borrowing will be higher.</p>
+    <p>Your payment estimate is based on making payments over 10 years on the standard repayment plan.Other plans, like Income Driven Repayment (IDR) Plans, may be available with lower monthly payments, but the total cost of borrowing may be higher. IDR payments are based on income and family size. For some people, payments on an IDR can be as low as $0 a month.</p>
 
     <div class="college-costs__tool-section-buttons block block--mid">
         <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">Customize your estimate for a better idea of how much you'll owe </span></h3>

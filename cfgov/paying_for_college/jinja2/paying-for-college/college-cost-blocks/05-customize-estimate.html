@@ -3,7 +3,7 @@
 <section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="customize-estimate">
     <h2 tabindex="-1">Customize your estimate</h2>
 
-    <p>This page will let you customize your estimate and help you determine whether you can cover the cost of attending this particular school.</p>
+    <p>This page will let you customize your estimate and help you determine whether you can cover the cost of attending this school.</p>
 
    {{ notification.render(
         'information',
@@ -13,7 +13,6 @@
     ) }}
 
     <h3>Enter information from your financial aid offer</h3>
-    <p>Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.</p>
     <div class="block block--mid">
         <div class="financial-item-group">
             {% set flyout_settings = {
@@ -21,7 +20,7 @@
                 'value': '$0',
                 'is_editable': 'True', 
                 'status': 'warning',
-                'note': 'Type in the costs listed in your financial aid offer, adding additional costs as needed. These fields default to the values reported by the Department of Education.',
+                'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll now getting into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() flyout(flyout_settings) %}
@@ -49,25 +48,28 @@
                         'data_attribute': 'data-financial-item="dirCost_other"'
                     })
                 }}
+                {% set tt = tooltip.render('If your school will charge you directly for all books and supplies, put a zero and add these costs to "Other direct costs" above.') %}
                 {{
                     input.render({
-                        'label': 'Books and supplies',
+                        'label': 'Books and supplies' ~ tt,
                         'id': 'plan__books',
                         'value': '0',
                         'data_attribute': 'data-financial-item="indiCost_books"'
                     })
                 }}
+                {% set tt = tooltip.render('Public transit and personal vehicle costs (gas, tolls, maintenance) but not the purchase of a personal vehicle.') %}
                 {{
                     input.render({
-                        'label': 'Transportation',
+                        'label': 'Transportation' ~ tt,
                         'id': 'plan__transportation',
                         'value': '0',
                         'data_attribute': 'data-financial-item="indiCost_transportation"'
                     })
                 }}
+                {% set tt = tooltip.render('Everything else! Ask the financial aid office what they include in this number and then check if it is realistic for you. Typically includes laundry and entertainment.') %}
                 {{
                     input.render({
-                        'label': 'Personal/other/miscellaneous expenses',
+                        'label': 'Personal/other/miscellaneous expenses' ~ tt,
                         'id': 'plan__other',
                         'value': '0',
                         'data_attribute': 'data-financial-item="indiCost_other"'
@@ -172,7 +174,7 @@
                 'label': 'Federal loans (minus loan fees)',
                 'value': '$99,999',
                 'is_editable': 'True',
-                'note': 'Federal loans include some borrower protections and repayment options (including, under some circumstances, loan forgiveness) that are not typically offered by private and other non-federal loans.',
+                'note': 'Federal loans include some borrower protections and repayment options like income driven repayment plans which base your monthly payment on your income and family size, not your loan balance (including, under some circumstances, loan forgiveness).  These options are not typically offered by private and other non-federal loans.',
                 'data_attribute': 'data-financial-item="total_fedLoans"'
             } %}
 
@@ -184,20 +186,23 @@
                             'label': 'Direct Subsidized Loan' ~ tt,
                             'id': 'plan__directSubsidized',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="fedLoan_directSub"'
+                            'data_attribute': 'data-financial-item="fedLoan_directSub"',
+                            'note': 'Cheaper than unsubsidized loans because the government pays your interest until 6 months after you leave school (or drop below half-time)'
                         })
                     }}
+                    {% set tt = 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.' %}
                     {{
                         text_item.render({
-                            'label': 'Interest rate (%)',
+                            'label': 'Interest rate (%)' ~ tt,
                             'value': '4.53%',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="rate_directSub"'
                         })
                     }}
+                    {% set tt = 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.' %}
                     {{
                         text_item.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tt,
                             'value': '1.062%',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="fee_directSub"'
@@ -210,20 +215,23 @@
                             'label': 'Direct Unsubsidized Loans' ~ tt,
                             'id': 'plan__directUnsub',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="fedLoan_directUnsub"'
+                            'data_attribute': 'data-financial-item="fedLoan_directUnsub"',
+                            'note': 'You start accruing interest as soon as you receive your first loan.'
                         })
                     }}
+                    {% set tt = 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.' %}
                     {{
                         text_item.render({
-                            'label': 'Interest rate (%)',
+                            'label': 'Interest rate (%)' ~ tt,
                             'value': '9.99%',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="rate_directUnsub"'
                         })
                     }}
+                    {% set tt = 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.' %}
                     {{
                         text_item.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tt,
                             'value': '9.99%',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="fee_directUnsub"'
@@ -260,9 +268,10 @@
                         'data_attribute': 'data-financial-item="savings_collegeSavings"'
                     })
                 }}
+                {% set tt = 'This is the student’s income either from an on- or off-campus job (not work-study).' %}
                 {{
                     input.render({
-                        'label': 'Income',
+                        'label': 'Student income' ~ tt,
                         'id': 'plan__income',
                         'value': '0',
                         'data_attribute': 'data-financial-item="income_general"'
@@ -299,7 +308,8 @@
                             'label': 'Loan amount',
                             'id': 'plan__gradPlus',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
+                            'data_attribute': 'data-financial-item="plusLoan_gradPlus"',
+                            'note': 'For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at Federal Student Aid website.'
                         })
                     }}
                     {{
@@ -312,7 +322,7 @@
                     }}
                     {{
                         text_item.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.'),
                             'value': '0',
                             'data_attribute': 'data-financial-item="fee_gradPlus"',
                             'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
@@ -336,7 +346,8 @@
                             'label': 'Loan amount',
                             'id': 'plan__parentPlus',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
+                            'data_attribute': 'data-financial-item="plusLoan_parentPlus"',
+                            'note': 'These loans are generally not eligible for income-driven repayment plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the Federal Student Aid website.'
                         })
                     }}
                     {{
@@ -348,10 +359,9 @@
                     }}
                     {{
                         text_item.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.'),
                             'value': '0',
                             'data_attribute': 'data-financial-item="fee_parentPlus"',
-                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                         })
                     }}
                 </div>
@@ -378,25 +388,24 @@
                             'label': 'Loan amount',
                             'id': 'plan__privLoan1',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="privLoan_privLoan1"'
+                            'data_attribute': 'data-financial-item="privLoan_privLoan1"',
+                            'note': 'You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.'
                         })
                     }}
                     {{
                         input.render({
-                            'label': 'Interest rate (%)',
+                            'label': 'Interest rate (%)' ~ tooltip.render('If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'),
                             'id': 'plan__privLoan1Rate',
                             'value': '0',
                             'data_attribute': 'data-financial-item="rate_privLoan1"',
-                            'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
                         })
                     }}
                     {{
                         input.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive.'),
                             'id': 'plan__privLoan1Fee',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fee_privLoan1"',
-                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                         })
                     }}
                 </div>
@@ -405,7 +414,7 @@
 
         <div class="costs-not-covered" data-state-visibility="uncovered-costs">
             <h3>Costs not covered</h3>
-            <p>You still have uncovered costs. The application assumes you will need loans to cover these costs, and that debt is reflected below. You can lower this assumed debt by adding more resources above.</p>
+            <p>The information you entered above did not cover all your expected costs. Since you may need to borrow more money to cover this amount, we're showing what it would cost to borrow this additional amount. Make a plan to get these uncovered costs down to zero by adjusting your costs and adding more resources above.</p>
             <div class="financial-item-group">
                 {% set flyout_settings = {
                     'label': 'Loan for uncovered costs',
@@ -433,10 +442,9 @@
                     }}
                     {{
                         text_item.render({
-                            'label': 'Loan fee (%)',
+                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive.'),
                             'value': '0',
                             'data_attribute': 'data-financial-item="fee_gapLoan"',
-                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                         })
                     }}
                 {% endcall %}
