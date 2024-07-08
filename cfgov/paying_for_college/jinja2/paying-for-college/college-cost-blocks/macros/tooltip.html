@@ -12,6 +12,5 @@
 
    ========================================================================== #}
 {% macro render( html ) -%}
-{% set id=html|truncate(20, True, '')|replace(' ', '')%}
-<button class="a-tooltip" aria-label="tooltip" aria-describedby="tooltip_id{{id}}" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}<span id = "tooltip_id{{id}}" class="u-visually-hidden">{{html}}</span></button>
+<button class="a-tooltip" aria-label="tooltip" aria-describedby="react-tooltip" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}</button>
 {%- endmacro %}
