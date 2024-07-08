@@ -11,7 +11,7 @@
    html:            Tooltip contents
 
    ========================================================================== #}
-
 {% macro render( html ) -%}
-<button class="a-tooltip" aria-label="tooltip" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}<span class="u-visually-hidden">{{html}}</span></button>
+{% set id=html|truncate(20, True, '')|replace(' ', '')%}
+<button class="a-tooltip" aria-label="tooltip" aria-describedby="tooltip_id{{id}}" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}<span id = "tooltip_id{{id}}" class="u-visually-hidden">{{html}}</span></button>
 {%- endmacro %}
