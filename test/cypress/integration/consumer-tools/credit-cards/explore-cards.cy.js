@@ -13,6 +13,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.openFilterExpandable();
 
     cy.get('#id_rewards input').should('be.checked');
+    exploreCards.checkA11y();
   });
 
   it("should show an error message if a location isn't selected", () => {
@@ -24,6 +25,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.clickSubmitButton();
 
     cy.get('.a-form-alert__text').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectLocation('NY');
 
@@ -46,6 +48,7 @@ describe('Explore credit cards results page', () => {
     exploreCards.openResultsPage();
 
     cy.get('.m-card--tabular [data-tooltip]').first().click();
+    exploreCards.checkA11y();
 
     cy.get('h1').contains('Explore credit cards').should('exist');
     cy.get('h2')
@@ -92,6 +95,7 @@ describe('Explore credit cards results page', () => {
     exploreCards.selectOrdering('Purchase APR');
     cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectOrdering('Card name');
     cy.get('.htmx-container.htmx-request').should('not.exist');
@@ -159,6 +163,7 @@ describe('Explore credit card details page', () => {
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
       .and('contain', 'location=NY')
       .and('contain', 'situations=Earn+rewards');
+    exploreCards.checkA11y();
   });
   it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();
