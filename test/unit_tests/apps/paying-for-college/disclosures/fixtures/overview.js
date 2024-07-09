@@ -18,7 +18,7 @@ export default `
             </div>
         </section>
         <div class="content__line"></div>
-        <section class="verify step content__wrapper">
+        <section class="verify step wrapper">
             <div class="content__main">
 
                 <div class="m-notification m-notification--error verify__content" data-missing-data-error="noSchool">
@@ -177,7 +177,7 @@ export default `
             </div>
         </section>
         <section id="info-right" class="information-right" tabindex="-1">
-            <section class="instructions step content__wrapper">
+            <section class="instructions step wrapper">
                 <div class="content__main">
                     <div class="instructions__wrapper">
                         <div class="instructions__content
@@ -224,7 +224,7 @@ export default `
                     <div class="content__line"></div>
                 </div>
             </section>
-            <section class="review step content__wrapper" data-section="review">
+            <section class="review step wrapper" data-section="review">
                 <div class="content__main">
                     <div class="review__wrapper">
                         <div class="review__intro">
@@ -1416,7 +1416,7 @@ export default `
                 </div>
             </section>
             <section class="continue step">
-                <div class="content__wrapper">
+                <div class="wrapper">
                     <div class="content__main">
                         <div class="continue__wrapper">
                             <div class="continue__content">
@@ -1444,7 +1444,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="evaluate step content__wrapper" data-section="evaluate">
+            <section class="evaluate step wrapper" data-section="evaluate">
                 <div class="content__main">
                     <div class="evaluate__wrapper">
                         <div class="evaluate__intro">
@@ -2224,7 +2224,7 @@ export default `
                 </div>
             </section>
             <section class="question step">
-                <div class="content__wrapper">
+                <div class="wrapper">
                     <div class="content__main">
                         <div class="question__wrapper">
                             <div class="question__content">
@@ -2262,7 +2262,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="get-options step content__wrapper
+            <section class="get-options step wrapper
             column-well__wrapper">
                 <div class="content__main">
                     <div class="get-options__wrapper">
@@ -2433,7 +2433,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="next-steps step content__wrapper">
+            <section class="next-steps step wrapper">
                 <div class="content__main">
                     <div class="content__line"></div>
                     <div class="next-steps__wrapper">
@@ -2494,7 +2494,7 @@ export default `
             </section>
         </section>
         <section id="info-wrong" class="information-wrong" tabindex="-1">
-            <section class="instructions step content__wrapper">
+            <section class="instructions step wrapper">
                 <div class="content__main">
                     <div class="instructions__wrapper">
                         <div class="instructions__content

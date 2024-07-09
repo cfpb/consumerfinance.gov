@@ -512,6 +512,9 @@ class CardSurveyData(models.Model):
         choices=enums.IndexTypeChoices, null=True, blank=True
     )
     purchase_apr_vary_by_credit_tier = YesNoBooleanField(null=True, blank=True)
+    purchase_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
+    )
     purchase_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     purchase_apr_good = models.FloatField(null=True, blank=True, db_index=True)
     purchase_apr_great = models.FloatField(
@@ -523,6 +526,9 @@ class CardSurveyData(models.Model):
     introductory_apr_offered = YesNoBooleanField()
     introductory_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    intro_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     intro_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     intro_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -536,6 +542,9 @@ class CardSurveyData(models.Model):
     balance_transfer_offered = YesNoBooleanField()
     balance_transfer_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    transfer_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     transfer_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     transfer_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -552,6 +561,9 @@ class CardSurveyData(models.Model):
     cash_advance_apr_offered = YesNoBooleanField()
     cash_advance_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    advance_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     advance_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     advance_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -691,10 +703,9 @@ class CardSurveyData(models.Model):
     website_for_consumer = models.TextField(null=True, blank=True)
     telephone_number_for_consumers = models.TextField(null=True, blank=True)
 
-    # This field doesn't currently exist in the TCCP dataset.
-    # See tccp.management.commands.patch_tccp.
-    # Once this is added to the dataset, the default=False can be removed.
-    top_25_institution = YesNoBooleanField(default=False, db_index=True)
+    issued_by_top_25_institution = YesNoBooleanField(
+        default=False, db_index=True
+    )
 
     class Meta:
         indexes = [

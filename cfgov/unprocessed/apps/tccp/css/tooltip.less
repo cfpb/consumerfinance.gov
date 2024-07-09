@@ -1,4 +1,4 @@
-@import '../node_modules/tippy.js/dist/tippy.css';
+@import (css) '../node_modules/tippy.js/dist/tippy.css';
 
 // Custom theme, see https://kabbouchi.github.io/tippyjs-v4-docs/themes/
 .tippy-box[data-theme='cfpb'] {
@@ -14,7 +14,7 @@
       border-top-color: var(--white);
     }
     &::after {
-      border-top-color: rgba(0, 8, 16, 0.2);
+      border-top-color: rgba(0, 8, 16, 20%);
       border-width: 7px 7px 0;
       top: 17px;
       left: 1px;
@@ -48,7 +48,7 @@
   > .tippy-svg-arrow {
     fill: var(--white);
     &::after {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA2czEuNzk2LS4wMTMgNC42Ny0zLjYxNUM1Ljg1MS45IDYuOTMuMDA2IDggMGMxLjA3LS4wMDYgMi4xNDguODg3IDMuMzQzIDIuMzg1QzE0LjIzMyA2LjAwNSAxNiA2IDE2IDZIMHoiIGZpbGw9InJnYmEoMCwgOCwgMTYsIDAuMikiLz48L3N2Zz4=);
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA2czEuNzk2LS4wMTMgNC42Ny0zLjYxNUM1Ljg1MS45IDYuOTMuMDA2IDggMGMxLjA3LS4wMDYgMi4xNDguODg3IDMuMzQzIDIuMzg1QzE0LjIzMyA2LjAwNSAxNiA2IDE2IDZIMHoiIGZpbGw9InJnYmEoMCwgOCwgMTYsIDAuMikiLz48L3N2Zz4=');
       background-size: 16px 6px;
       width: 16px;
       height: 6px;

@@ -294,10 +294,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
 
     def get_glossary_terms(self):
-        if self.language == "es":
-            terms = self.portal_topic.glossary_terms.order_by("name_es")
-        else:
-            terms = self.portal_topic.glossary_terms.order_by("name_en")
+        terms = self.portal_topic.glossary_terms.order_by("name_en")
         for term in terms:
             if term.name(self.language) and term.definition(self.language):
                 yield term

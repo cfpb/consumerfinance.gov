@@ -4,6 +4,8 @@ import { attach } from '@cfpb/cfpb-atomic-component';
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
 
+let tooltips;
+
 /**
  * Initialize some things.
  */
@@ -31,9 +33,9 @@ function init() {
  * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
  */
 function initializeTooltips() {
-  tippy('[data-tooltip]', {
+  tooltips = tippy('[data-tooltip]', {
     theme: 'cfpb',
-    maxWidth: 500,
+    maxWidth: 450,
     content: function (reference) {
       const template = reference.nextElementSibling;
       const container = document.createElement('div');
@@ -46,14 +48,16 @@ function initializeTooltips() {
 
 /**
  * Handle links that shouldn't be followed when
- * specified children elements are targeted.
+ * specified children elements are targeted
+ * or a tooltip is open.
  * @param {Event} event - Touch/click event.
  */
 function handleIgnoreLinkTargets(event) {
   const ignoredTargets = event.currentTarget?.getAttribute(
     'data-ignore-link-targets',
   );
-  if (event.target.closest(ignoredTargets)) {
+  const tooltipIsOpen = tooltips.some((tip) => tip.state.isMounted);
+  if (event.target.closest(ignoredTargets) || tooltipIsOpen) {
     event.preventDefault();
   }
 }

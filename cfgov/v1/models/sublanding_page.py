@@ -1,7 +1,12 @@
 from django.db import models
 
 from wagtail import blocks
-from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.admin.panels import (
+    FieldPanel,
+    InlinePanel,
+    ObjectList,
+    TabbedInterface,
+)
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -93,6 +98,7 @@ class SublandingPage(CFGOVPage):
         FieldPanel("header"),
         FieldPanel("content"),
         FieldPanel("portal_topic"),
+        InlinePanel("footnotes", label="Footnotes"),
     ]
 
     sidebar_panels = [

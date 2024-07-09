@@ -1,9 +1,15 @@
+import json
+import uuid
 from unittest import mock
 
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
-from v1.blocks import AnchorLink, EscapedHTMLValidator, UnescapedRichTextBlock
+from wagtail.models import Site
+
+from wagtail_footnotes.models import Footnote
+
+from v1.blocks import AnchorLink, RichTextBlockWithFootnotes
+from v1.models import DocumentDetailPage
 
 
 class TestAnchorLink(TestCase):
@@ -46,41 +52,65 @@ class TestAnchorLink(TestCase):
         assert self.stringContainsNumbers(result["link_id"])
 
 
-class EscapedHTMLValidatorTestCase(TestCase):
-    def test_disallowed_elements(self):
-        validator = EscapedHTMLValidator(
-            allowed_elements=(
-                "svg",
-                "path",
-            )
+class RichTextBlockWithFootnotesTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.root_page = Site.objects.get(is_default_site=True).root_page
+
+        footnote_uuid = uuid.uuid4()
+        self.page = DocumentDetailPage(
+            title="Test page",
+            content=json.dumps(
+                [
+                    {
+                        "type": "full_width_text",
+                        "value": [
+                            {
+                                "type": "content_with_footnotes",
+                                "value": (
+                                    "<p>Test with note<footnote "
+                                    f'id="{footnote_uuid}">1</footnote></p>'
+                                ),
+                            }
+                        ],
+                    }
+                ]
+            ),
         )
-        value = (
-            "Velit doloremque modi dolorum ducimus nesciunt harum. "
-            "Enim voluptatum animi dolorem aspernatur consequuntur &lt;br&gt;"
-            "&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; "
-            "viewBox=&quot;0 0 100 100&quot;&gt;"
-            "&lt;path d=&quot;M 50,50&quot;&gt;&lt;/path&gt;&lt;/svg&gt;"
-            "&lt;h2&gt;Asperiores nesciunt fugit sint qui ut culpa.&lt;/h2&gt;"
+        self.root_page.add_child(instance=self.page)
+        self.page.save_revision().publish()
+        self.footnote = Footnote.objects.create(
+            uuid=footnote_uuid,
+            page=self.page,
+            text="Test footnote",
         )
 
-        with self.assertRaises(ValidationError) as cm:
-            validator(value)
-
-        self.assertIn(
-            "Invalid HTML element(s) found: br, h2", cm.exception.message
-        )
-        self.assertIn(
-            "The only HTML elements allowed are svg, path.",
-            cm.exception.message,
+    def test_render_footnote_tag(self):
+        block = RichTextBlockWithFootnotes()
+        html = block.render_footnote_tag(2)
+        self.assertHTMLEqual(
+            html,
+            '<a aria-labelledby="footnotes" href="#footnote-2" '
+            'id="footnote-source-2"><sup>2</sup></a>',
         )
 
+    def test_block_replace_footnote_tags_no_notes(self):
+        block = RichTextBlockWithFootnotes()
+        html = block.replace_footnote_tags(None, "foo")
+        self.assertEqual(html, "foo")
 
-class UnescapedRichTextBlockTestCase(TestCase):
-    def test_to_python_with_entities(self):
-        block = UnescapedRichTextBlock()
-        value = "Neque porro &lt;i&gt;quisquam&lt;/i&gt; est qui dolorem ipsum"
-        rich_text = block.to_python(value)
+    def test_block_replace_footnote_tags(self):
+        rich_text_with_footnotes = self.page.content.stream_block.child_blocks[
+            "full_width_text"
+        ].child_blocks["content_with_footnotes"]
+        value = rich_text_with_footnotes.get_prep_value(
+            self.page.content[0].value[0].value
+        )
+        request = self.factory.get("/test-page/")
+        context = self.page.get_context(request)
+        result = rich_text_with_footnotes.render(value, context=context)
         self.assertEqual(
-            rich_text.source,
-            "Neque porro <i>quisquam</i> est qui dolorem ipsum",
+            result,
+            '<p>Test with note<a aria-labelledby="footnotes" '
+            'href="#footnote-1" id="footnote-source-1"><sup>1</sup></a></p>',
         )

@@ -115,6 +115,8 @@ INSTALLED_APPS = (
     "django_htmx",
     "wagtail_content_audit",
     "mozilla_django_oidc",
+    "draftail_icons",
+    "wagtail_footnotes",
 )
 
 MIDDLEWARE = (
@@ -288,7 +290,6 @@ WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
-
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # This is used for easy autocomplete search behavior in the Wagtail admin.
@@ -297,6 +298,10 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.database.fallback",
     }
 }
+
+# This is the name of the template that will render a footnote citaiton
+# inline in rich text.
+WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -669,6 +674,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "link",
                 "document-link",
                 "image",
+                "icon",
             ]
         },
     },
