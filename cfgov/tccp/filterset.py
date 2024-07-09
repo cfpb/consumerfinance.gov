@@ -37,7 +37,7 @@ class CardSurveyDataFilterSet(filters.FilterSet):
         widget=forms.MultipleHiddenInput,
     )
     small_institution = CheckboxFilter(
-        "top_25_institution", label="Small institution", exclude=True
+        "issued_by_top_25_institution", label="Small institution", exclude=True
     )
     no_account_fee = CheckboxFilter(
         "periodic_fee_type",
