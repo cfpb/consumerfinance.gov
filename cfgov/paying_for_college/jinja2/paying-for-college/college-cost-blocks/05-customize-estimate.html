@@ -18,7 +18,7 @@
             {% set flyout_settings = {
                 'label': 'Costs',
                 'value': '$0',
-                'is_editable': 'True', 
+                'is_editable': 'True',
                 'status': 'warning',
                 'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll now getting into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
                 'data_attribute': 'data-financial-item="total_costs"'
@@ -190,7 +190,7 @@
                             'note': 'Cheaper than unsubsidized loans because the government pays your interest until 6 months after you leave school (or drop below half-time)'
                         })
                     }}
-                    {% set tt = 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.' %}
+                    {% set tt = tooltip.render('The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
                     {{
                         text_item.render({
                             'label': 'Interest rate (%)' ~ tt,
@@ -199,7 +199,7 @@
                             'data_attribute': 'data-financial-item="rate_directSub"'
                         })
                     }}
-                    {% set tt = 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.' %}
+                    {% set tt = tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.') %}
                     {{
                         text_item.render({
                             'label': 'Loan fee (%)' ~ tt,
@@ -219,7 +219,7 @@
                             'note': 'You start accruing interest as soon as you receive your first loan.'
                         })
                     }}
-                    {% set tt = 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.' %}
+                    {% set tt = tooltip.render('The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
                     {{
                         text_item.render({
                             'label': 'Interest rate (%)' ~ tt,
@@ -228,7 +228,7 @@
                             'data_attribute': 'data-financial-item="rate_directUnsub"'
                         })
                     }}
-                    {% set tt = 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.' %}
+                    {% set tt = tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.') %}
                     {{
                         text_item.render({
                             'label': 'Loan fee (%)' ~ tt,
@@ -479,7 +479,7 @@
             <button class="a-btn a-btn--next btn__nav" data-destination="debt-guideline" data-customize-trigger="fullEstimate">Next</button>
         </div>
         <p>
-            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>        
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>
         </p>
 
     </div>
