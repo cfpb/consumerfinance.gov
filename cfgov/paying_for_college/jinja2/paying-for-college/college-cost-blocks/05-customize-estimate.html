@@ -268,7 +268,7 @@
                         'data_attribute': 'data-financial-item="savings_collegeSavings"'
                     })
                 }}
-                {% set tt = 'This is the student’s income either from an on- or off-campus job (not work-study).' %}
+                {% set tt = tooltip.render('This is the student’s income either from an on- or off-campus job (not work-study).') %}
                 {{
                     input.render({
                         'label': 'Student income' ~ tt,
