@@ -310,10 +310,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/browserslist-config@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/browserslist-config/-/browserslist-config-0.0.2.tgz#d9a5c67512d6c870c15d499c97ccf4f64abf80d0"
-  integrity sha512-qmKdBMzVEHcw7CGmkJmIbszRkRckDaz6w7matCjnO/DkfE4nB5ZiUEBVYxyA6c5aCS0+IO7e0/5iDSGIn2aNHQ==
+"@cfpb/browserslist-config@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/browserslist-config/-/browserslist-config-0.0.3.tgz#c12a9eede0d33820b2770241b4513d753dbe9bf9"
+  integrity sha512-MplL75XVXKJEJbmPnrQ2FOglRxYR0+M04mPeoEMqQGeHnpzEdlZXmIVIm1/9/mAhOCfMt6ei4h+dS+sbi22k+g==
 
 "@cfpb/cfpb-analytics@0.3.1":
   version "0.3.1"
@@ -1673,10 +1673,15 @@ camelcase@^6.2.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
+caniuse-lite@1.0.30001640:
+  version "1.0.30001640"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001640.tgz#32c467d4bf1f1a0faa63fc793c2ba81169e7652f"
+  integrity sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==
+
 caniuse-lite@^1.0.30001587, caniuse-lite@^1.0.30001599:
-  version "1.0.30001611"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001611.tgz#4dbe78935b65851c2d2df1868af39f709a93a96e"
-  integrity sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==
+  version "1.0.30001640"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001640.tgz"
+  integrity sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==
 
 caseless@~0.12.0:
   version "0.12.0"

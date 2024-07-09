@@ -46,15 +46,19 @@ of 1%. The current 1% cutoff list is:
 
 ```
 and_chr 123
+chrome 126
+chrome 125
 chrome 124
 chrome 123
 chrome 122
 chrome 121
 chrome 120
+edge 124
 edge 123
 edge 122
 edge 121
 edge 120
+ios_saf 17.5
 ios_saf 17.4
 ios_saf 17.3
 ios_saf 17.2
