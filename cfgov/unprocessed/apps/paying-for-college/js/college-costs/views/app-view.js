@@ -134,6 +134,7 @@ function _addButtonListeners() {
 
   appView._actionPlanChoices.forEach((elem) => {
     elem.addEventListener('click', _handleActionPlanClick);
+    elem.addEventListener('focus', _handleActionPlanClick);
   });
 
   appView._restartBtn.addEventListener('click', appView._handleRestartBtn);
@@ -166,6 +167,7 @@ function _handleDidThisHelpClick(event) {
  */
 function _handleActionPlanClick(event) {
   const target = event.target;
+  target.setAttribute('checked', 'checked');
   updateState.byProperty('actionPlan', target.value);
 }
 
