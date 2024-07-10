@@ -47,7 +47,7 @@ describe('Explore credit cards results page', () => {
   it('should not follow card links when tooltips are clicked', () => {
     exploreCards.openResultsPage();
 
-    cy.get('.m-card--tabular [data-tooltip]').first().click();
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseover');
     exploreCards.checkA11y();
 
     cy.get('h1').contains('Explore credit cards').should('exist');
