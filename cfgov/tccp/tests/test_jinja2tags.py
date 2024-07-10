@@ -75,7 +75,7 @@ class TestRenderContactInfo(SimpleTestCase):
         html = render_contact_info(
             {
                 "website_for_consumer": "https://example.com foo.com",
-                "telephone_number_for_consumers": "212-555-1234",
+                "telephone_number_for_consumers": "1 212-555-1234",
             }
         )
 
@@ -83,3 +83,4 @@ class TestRenderContactInfo(SimpleTestCase):
         self.assertIn('<a href="https://example.com">', html)
         self.assertNotIn('<a href="foo.com">', html)
         self.assertEqual(len(re.findall("m-contact-phone", html)), 1)
+        self.assertIn("2125551234", html)

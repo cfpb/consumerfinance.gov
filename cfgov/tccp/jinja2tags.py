@@ -45,9 +45,8 @@ def _format_contact_info(card):
         "urls": fmt_list(
             _format_contact_website, card["website_for_consumer"]
         ),
-        "phone_numbers": fmt_list(
-            _format_contact_phone_number,
-            card["telephone_number_for_consumers"],
+        "phone_number": _format_contact_phone_number(
+            card["telephone_number_for_consumers"] or ""
         ),
     }
 
