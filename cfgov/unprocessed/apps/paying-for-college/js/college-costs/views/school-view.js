@@ -238,9 +238,24 @@ function _formatSearchResults(responseText) {
 let _keyupDelay;
 
 /**
+ * Show search indicator
+ */
+function startSearching() {
+  schoolView._searchBox.parentNode.className = 'searching';
+}
+
+/**
+ * Hide search indicator
+ */
+function stopSearching() {
+  schoolView._searchBox.parentNode.className = '';
+}
+
+/**
  * Text has been entered in the school search input.
  */
 function _handleInputChange() {
+  startSearching();
   clearTimeout(_keyupDelay);
   _keyupDelay = setTimeout(function () {
     const searchTerm = schoolView._searchBox.value.trim();
@@ -250,17 +265,20 @@ function _handleInputChange() {
        we represent that visually by hiding the search results DIV */
     if (searchTerm.length < 3) {
       schoolView._searchResults.classList.remove('active');
+      stopSearching();
     } else {
       schoolSearch(searchTerm).then(
         (resp) => {
+          stopSearching();
           _formatSearchResults(resp.responseText);
         },
         (error) => {
+          stopSearching();
           console.log(error);
         },
       );
     }
-  }, 500);
+  }, 300);
 }
 
 /**
@@ -327,8 +345,9 @@ function _handleResultButtonClick(event) {
   if (typeof button.dataset.school_id !== 'undefined') {
     const iped = button.dataset.school_id;
     if (iped !== null && typeof iped !== 'undefined') {
+      startSearching();
       // Add schoolData to schoolModel
-      updateSchoolData(iped, true);
+      updateSchoolData(iped, true).then(() => stopSearching());
     }
   }
 }

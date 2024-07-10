@@ -4,12 +4,14 @@
         <label class="a-label a-label--heading u-mb15" for="search__school-input">
             Enter the name of your school.
         </label>
-        <p>
+        <p style="position: relative">
             <input type="text"
                    id="search__school-input"
                    name="search__school-input"
                    class="a-text-input"
                    autocomplete="off">
+
+            <span id="spinner">{{ svg_icon('updating') }}</span>
         </p>
         <div class="a-form-alert a-form-alert--error" data-state-based-visibility="school-required" role="alert">
           {{ svg_icon('warning-round') }}
