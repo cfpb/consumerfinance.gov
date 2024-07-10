@@ -12,6 +12,8 @@
         'If you don&apos;t have an offer letter from a school you&apos;re considering, we recommend you <button class="a-btn a-btn--link btn__nav" data-customize-trigger="netPrice" data-destination="debt-guideline">skip this page for now</button>. We&apos;ll continue to use the estimated costs and debt that you&apos;ve made so far. (You can always come back once you have an offer.)<p style="margin-top:15px"><button class="a-btn a-btn--link btn__nav" data-destination="debt-guideline" data-customize-trigger="netPrice">Skip ahead and see if this amount of debt is too much to repay</button></p>' | safe
     ) }}
 
+    <p>Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll now getting into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.</p>
+
     <h3>Enter information from your financial aid offer</h3>
     <div class="block block--mid">
         <div class="financial-item-group">
@@ -20,7 +22,6 @@
                 'value': '$0',
                 'is_editable': 'True',
                 'status': 'warning',
-                'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll now getting into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() flyout(flyout_settings) %}
