@@ -112,7 +112,7 @@ const appView = {
     );
     appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
-      '[data-app-button="save-and-finish-later"]',
+      '.a-btn--link[data-destination="save-finish"]',
     );
     appView._saveLinks = document.querySelectorAll('[data-app-save-link]');
     appView._copyLinkBtn = document.querySelectorAll('.copy-your-link');

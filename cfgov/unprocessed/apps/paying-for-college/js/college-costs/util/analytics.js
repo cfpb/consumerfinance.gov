@@ -2,15 +2,21 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Sends an event to the dataLayer for Google Tag Manager
- * @param {string} action - The type of event or action taken
+ * @param {string|object} action - The type of event or action taken, OR a payload Object
  * @param {string} label - A value or label for the action
  */
 function sendAnalyticsEvent(action, label) {
-  analyticsSendEvent({
-    action,
-    label,
-    event: 'P4C Financial Path Interaction',
-  });
+  if ( typeof action === 'object' ) {
+    analyticsSendEvent(payload);
+    return payload;
+  } else {
+    analyticsSendEvent({
+      action,
+      label,
+      event: 'P4C Financial Path Interaction',
+    });    
+  }
+
 }
 
 export { sendAnalyticsEvent };
