@@ -40,6 +40,7 @@
                 'label': 'Estimated monthly loan payment' ~ tooltip.render('Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.'),
                 'value': '$0',
                 'type': 'text',
+                'decor': '&mdash;',
                 'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
             })
         }}
@@ -48,6 +49,7 @@
         {% set flyout_settings = {
             'label': 'Average monthly expenses',
             'value': '$0',
+            'decor': '&mdash;',
             'is_editable': 'True',
             'data_attribute': 'data-expenses-item="total_expenses"'
         } %}

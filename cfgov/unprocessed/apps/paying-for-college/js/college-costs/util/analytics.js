@@ -6,17 +6,16 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
  * @param {string} label - A value or label for the action
  */
 function sendAnalyticsEvent(action, label) {
-  if ( typeof action === 'object' ) {
-    analyticsSendEvent(payload);
-    return payload;
+  if (typeof action === 'object') {
+    analyticsSendEvent(action);
+    return action;
   } else {
     analyticsSendEvent({
       action,
       label,
       event: 'P4C Financial Path Interaction',
-    });    
+    });
   }
-
 }
 
 export { sendAnalyticsEvent };

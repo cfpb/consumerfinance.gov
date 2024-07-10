@@ -856,7 +856,7 @@ function _handleRadioClicks(event) {
       function: chartView.updateGradMeterChart,
       stateProp: 'gradMeterCohort',
       cohortName: 'gradMeterCohortName',
-    }
+    },
   };
   const names = {
     cohortRankByHighestDegree: 'U.S.',

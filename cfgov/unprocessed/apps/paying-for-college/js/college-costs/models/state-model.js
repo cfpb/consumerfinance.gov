@@ -59,6 +59,7 @@ const stateModel = {
     repayMeterCohortName: 'U.S.',
     schoolID: false,
     initialQuery: null,
+    navDestination: null,
     usingNetPrice: 'yes',
   },
   textVersions: {
@@ -319,6 +320,34 @@ const stateModel = {
       stateModel.pushStateToHistory();
     }
     updateNavigationView();
+  },
+
+  /**
+   * useNetPrice - Uses various state items to determine whether netPrice should be used
+   * by the financial-model in calculations
+   */
+  useNetPrice: function () {
+    const earlyPages = [
+      'school-info',
+      'school-costs',
+      'estimate-debt',
+      'debt-at-grad',
+    ];
+    const vals = stateModel.values;
+    // If we are before the customize page, always use netPrice
+    const section =
+      vals.navDestination !== null ? vals.navDestination : vals.activeSection;
+    if (earlyPages.indexOf(section) > -1) {
+      return true;
+      // If the user already set the value to "yes" or we're on the customize estimate page, don't use netPrice
+    } else if (
+      vals.usingNetPrice === 'no' ||
+      section === 'customize-estimate'
+    ) {
+      return false;
+    }
+    // Assume "yes" otherwise
+    return true;
   },
 };
 

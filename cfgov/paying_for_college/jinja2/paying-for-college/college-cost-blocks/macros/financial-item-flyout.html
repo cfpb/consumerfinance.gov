@@ -1,4 +1,4 @@
-{# ==========================================================================
+ˇ{# ==========================================================================
 
    Costs Group (organism using flyout code)
 
@@ -21,6 +21,8 @@
 
    value.note:              Additional text for costs group header.
 
+   value.decor:             Decorative characters placed before the value
+
    value.data_attribute:    Data attribute for value element.
 
    value.status:            Status descriptor for financial item value.
@@ -41,6 +43,7 @@
             {{ value.label }}
         </span>
         <span class="o-costs-group__link">
+            {% if value.decor %}{{ value.decor | safe }}{% endif %}
             <span class="financial-item__value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>

@@ -5,6 +5,7 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { recalculateFinancials } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
   // updateCostOfBorrowingChart,
@@ -168,8 +169,8 @@ const navigationView = {
  * @param destination
  */
 function _updateBeforeNavigation(destination) {
-  const updateHooks = [
-    ['[data-financial-item]', updateFinancialView],
+  updateState.byProperty('navDestination', destination);
+  const chartHooks = [
     ['[data-chart_id="make-a-plan"]', updateMakePlanChart],
     ['[data-chart_id="max-debt-guideline_chart"]', updateMaxDebtChart],
     ['[data-chart_id="#affording-your-loans"]', updateAffordingChart],
@@ -179,17 +180,21 @@ function _updateBeforeNavigation(destination) {
     'section[data-tool-section="' + destination + '"]',
   );
 
+  if (
+    elem.querySelectorAll('[data-financial-item],[data-chart_id]').length > 0
+  ) {
+    recalculateFinancials();
+    updateFinancialView();
+  }
+
   // Check for what updates should be performed
-  updateHooks.forEach((hook) => {
+  chartHooks.forEach((hook) => {
     if (elem.querySelectorAll(hook[0]).length > 0) {
       hook[1]();
     }
   });
 
-  // Switch to using offer values on the customize estimate page
-  if (destination === 'customize-estimate') {
-    updateState.byProperty('usingNetPrice', 'no');
-  }
+  updateState.byProperty('navDestination', null);
 }
 
 /**
@@ -253,17 +258,9 @@ function _handleSecondaryNavButtonClick(event) {
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
 
     if (typeof target.dataset.nav_section !== 'undefined') {
-      _updateBeforeNavigation(target.dataset.nav_section);
       updateState.activeSection(target.dataset.nav_section);
+      _updateBeforeNavigation(target.dataset.nav_section);
     }
-
-    // if (typeof target.dataset.nav_item !== 'undefined') {
-    //   updateState.activeSection(target.dataset.nav_item);
-    // } else if (typeof target.dataset.nav_section !== 'undefined') {
-    //   target
-    //     .closest('[data-nav-is-open]')
-    //     .setAttribute('data-nav-is-open', 'True');
-    // }
   }
 }
 
@@ -278,9 +275,8 @@ function _handleNavButtonClick(event) {
   } else {
     if (event.target.dataset['destination']) {
       const destination = event.target.dataset.destination;
-      _updateBeforeNavigation(destination);
 
-      if ({}.hasOwnProperty.call(event.target.dataset, 'customizeTrigger')) {
+      if (event.target.dataset['customizeTrigger']) {
         const trigger = event.target.dataset.customizeTrigger;
         if (trigger === 'netPrice') {
           updateState.byProperty('usingNetPrice', 'yes');
@@ -288,6 +284,7 @@ function _handleNavButtonClick(event) {
           updateState.byProperty('usingNetPrice', 'no');
         }
       }
+      _updateBeforeNavigation(destination);
 
       sendAnalyticsEvent(
         'Navigation Button from ' +

@@ -8,6 +8,7 @@ import {
   getConstantsValue,
   getSchoolValue,
   getStateValue,
+  useNetPrice,
 } from '../dispatchers/get-model-values.js';
 import {
   initializeFinancialValues,
@@ -139,7 +140,7 @@ const financialModel = {
       plusLoan: 'total_plusLoans',
       privLoan: 'total_privLoans',
     };
-    const usingNetPrice = getStateValue('usingNetPrice');
+    const netPriceCalc = useNetPrice();
 
     // Reset all totals to 0
     for (const key in totals) {
@@ -184,7 +185,7 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
 
     // If we're using net price, we calculate things differently
-    if (usingNetPrice === 'yes') {
+    if (netPriceCalc === true) {
       vals.total_costs = vals.netPrice;
       vals.total_funding = vals.total_contributions;
     }
@@ -446,9 +447,6 @@ const financialModel = {
     initializeFinancialValues();
     // A few properties must be created manually here
     financialModel.createFinancialProperty('other_programLength');
-
-    // These are test values used only for development purposes.
-
     financialModel._calculateTotals();
   },
 };

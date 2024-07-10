@@ -112,6 +112,19 @@ function getStateValue(prop) {
   return false;
 }
 
+/**
+ * useNetPrice - a passthrough so that additional checks in the state can be done before
+ * returning whether the financial-model should use netPrice or not
+ * @returns {boolean} true if the netPrice should be used
+ */
+
+/**
+ *
+ */
+function useNetPrice() {
+  return stateModel.useNetPrice();
+}
+
 export {
   getAllStateValues,
   getConstantsValue,
@@ -122,4 +135,5 @@ export {
   getSchoolCohortValue,
   getSchoolValue,
   getStateValue,
+  useNetPrice,
 };

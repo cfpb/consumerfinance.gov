@@ -2,9 +2,7 @@
 
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import { decimalToPercentString } from '../util/number-utils.js';
-import {
-  getFinancialValue,
-} from '../dispatchers/get-model-values.js';
+import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { updateFinancial } from '../dispatchers/update-models.js';
 import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
