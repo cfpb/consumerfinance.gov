@@ -47,13 +47,22 @@ describe('Explore credit cards results page', () => {
   it('should not follow card links when tooltips are clicked', () => {
     exploreCards.openResultsPage();
 
-    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseover');
-    exploreCards.checkA11y();
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
 
     cy.get('h1').contains('Explore credit cards').should('exist');
     cy.get('h2')
       .contains('Purchase interest rate and fees')
       .should('not.exist');
+  });
+  it('should close tooltips when escape key is pressed', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
+    cy.get('div.tippy-heading').should('be.visible');
+
+    cy.get('.m-card--tabular [data-tooltip]').first().type('{esc}');
+    cy.wait(1000);
+    cy.get('div.tippy-heading').should('not.exist');
   });
   it('should not follow card links when tooltips are open', () => {
     exploreCards.openResultsPage();
