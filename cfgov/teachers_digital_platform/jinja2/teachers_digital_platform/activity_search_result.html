@@ -1,10 +1,10 @@
 <div class="activity">
-    <h3><a class="activity_title-link" href="{{ result.url }}">{{ result.title }}</a></h3>
+    <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
     <p class="meta">
         <span class="a-date">
             Updated
             <span class="datetime">
-                <time class="datetime_date" datetime="{{ result.date_attr }}">
+                <time datetime="{{ result.date_attr }}">
                     {{ result.date }}
                 </time>
             </span>
@@ -14,10 +14,10 @@
         <span class="a-icon a-icon--large a-icon--gold a-icon--space-after">
             {{ svg_icon('favorite-round') }}
         </span>
-        <span class="activity_for">Ideal for: {{ result.grade_level | join(', ') }}</span>
+        <span class="activity__for">Ideal for: {{ result.grade_level | join(', ') }}</span>
     </p>
     <p class="lead-paragraph u-mb30">{{ result.summary }}</p>
-    <div class="activity_meta-wrapper">
+    <div class="activity__meta-wrapper">
         <div>
             <h4 class="h5">Key information</h4>
             <div class="layout-row u-mb15">
@@ -25,7 +25,7 @@
                 {{ result.topic }}
             </div>
             <div class="layout-row">
-                <h5 class="activity_meta-key">Activity duration:</h5>
+                <h5 class="activity__meta-key">Activity duration:</h5>
                 {{ result.activity_duration }}
             </div>
             {% if result.available_in_spanish %}
