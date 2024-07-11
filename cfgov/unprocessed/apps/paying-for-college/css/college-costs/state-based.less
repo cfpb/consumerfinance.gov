@@ -170,6 +170,14 @@ main.college-costs {
       display: inline;
     }
   }
+  &[data-state_schoolselected='required'] {
+    [data-state-based-visibility='school-no-programs'] {
+      display: none;
+    }
+    span[data-state-based-visibility='school-no-programs'] {
+      display: none;
+    }  
+  }
 
   &:not([data-state_pid]) {
     [data-state-based-visibility='no-program-selected'] {
