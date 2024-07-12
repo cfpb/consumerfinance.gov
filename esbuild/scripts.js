@@ -24,6 +24,7 @@ const jsPaths = [
   `${apps}/ask-cfpb/js/main.js`,
   `${apps}/careers/js/main.js`,
   `${apps}/ccdb-search/js/main.js`,
+  `${apps}/cfpb-chart-builder/js/index.js`,
   `${apps}/financial-well-being/js/home.js`,
   `${apps}/financial-well-being/js/results.js`,
   `${apps}/find-a-housing-counselor/js/common.js`,

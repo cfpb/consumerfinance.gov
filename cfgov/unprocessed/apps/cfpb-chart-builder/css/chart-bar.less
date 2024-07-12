@@ -1,0 +1,38 @@
+.cfpb-chart[data-chart-type='bar'] {
+
+  // Position horizontal rule.
+  .cfpb-chart__small:after {
+    top: 24px;
+  }
+
+  // The "Values after … are projected" label.
+  .highcharts-plot-line-label {
+    white-space: normal !important;
+    left: 45% !important;
+    width: 55% !important;
+  }
+
+  // Small screen size.
+  .cfpb-chart__small {
+    .highcharts-plot-line-label {
+      left: 0% !important;
+      width: 100% !important;
+    }
+  }
+
+  &[data-chart-color='blue'] {
+    .u-chart-colorizer-bar( @chart-blue-primary, @chart-blue-secondary );
+  }
+
+  &[data-chart-color='green'] {
+    .u-chart-colorizer-bar( @chart-green-primary, @chart-green-secondary );
+  }
+
+  &[data-chart-color='teal'] {
+    .u-chart-colorizer-bar( @chart-teal-primary, @chart-teal-secondary );
+  }
+
+  &[data-chart-color='navy'] {
+    .u-chart-colorizer-bar( @chart-navy-primary, @chart-navy-secondary );
+  }
+}

@@ -3,4 +3,4 @@
    ========================================================================== */
 
 // See https://github.com/cfpb/cfpb-chart-builder
-import 'cfpb-chart-builder';
+import '../../../apps/cfpb-chart-builder/js';

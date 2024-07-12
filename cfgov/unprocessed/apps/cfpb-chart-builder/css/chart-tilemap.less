@@ -1,0 +1,81 @@
+/* TODO: Investigate whether responsive styles can be remove here and handled
+         via class set in JS, like how the other chart types work. */
+.cfpb-chart[data-chart-type="tile_map"] {
+  height: 630px;
+
+  // Ignore mouse events on text on labels so hover on square tile works.
+  .highcharts-label {
+    pointer-events: none;
+  }
+
+  .highcharts-label__tile-map {
+    .u-chart-label();
+    color: var(--black);
+    font-weight: 600;
+    span {
+      position: relative !important;
+      white-space: normal !important;
+    }
+  }
+
+  .highcharts-legend__tile-map {
+    transform: translateY( 15px );
+
+    .respond-to-min( 500px, {
+      transform: translateY( 0 );
+    } );
+  }
+
+  // Utility for setting the hover/focus state of a tile.
+  .u-point-hover-state {
+    stroke: var(--black);
+    cursor: default;
+    stroke-width: 4px !important;
+    stroke-linecap: square;
+  }
+
+  .highcharts-map-series .highcharts-point {
+    stroke: var(--gray-80);
+    &:hover,
+    &:focus {
+      .u-point-hover-state();
+    }
+  }
+
+  // Provide this for Firefox.
+  .highcharts-map-series .highcharts-point-hover {
+    .u-point-hover-state();
+  }
+
+  .highcharts-data-label {
+    font-weight: 600;
+    color: var(--black);
+    font-size: @size-v;
+    line-height: 1.3;
+
+    .respond-to-max( 600px, {
+      margin-top: 2px;
+      font-size: 10px;
+      line-height: 1;
+    } );
+
+    .highcharts-data-label-state-abbr {
+      text-align: center;
+      cursor: default;
+    }
+
+    .highcharts-data-label-state-value {
+      .respond-to-max( 600px, {
+        display: block;
+        margin-top: -2px;
+        font-size: 9px;
+      } );
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .cfpb-chart[data-chart-type="tile_map"] {
+    height: 400px;
+  }
+}

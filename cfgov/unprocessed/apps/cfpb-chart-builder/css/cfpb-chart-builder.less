@@ -1,0 +1,296 @@
+@import (less) 'highcharts/css/highcharts.css';
+
+// cf-core is included for cf-brand-colors and media queries.
+@import (reference) '@cfpb/cfpb-core/src/cfpb-core.less';
+
+// Chart colors.
+@chart-blue-primary: var(--pacific);
+@chart-blue-secondary: var(--pacific-60);
+@chart-gold-primary: var(--gold-dark);
+@chart-gold-secondary: var(--gold-80);
+@chart-green-primary: var(--green);
+@chart-green-secondary: var(--green-60);
+@chart-navy-primary: var(--navy);
+@chart-navy-secondary: var(--navy-60);
+@chart-neutral-primary: var(--neutral);
+@chart-neutral-secondary: var(--neutral-60);
+@chart-purple-primary: var(--purple);
+@chart-purple-secondary: var(--purple-60);
+@chart-teal-primary: var(--teal);
+@chart-teal-secondary: var(--teal-60);
+
+/*
+Updating the charts:
+1. Set the positioning of the chart UI elements using the JavaScript API.
+2. Add in styles below that aren't possible through the API.
+This appears to handle responsive changes the best, since the JS sets
+x/y positioning on the SVG elements.
+*/
+
+@import (less) './mixins.less';
+
+.cfpb-chart {
+  position: relative;
+  max-width: 650px;
+  min-width: 320px;
+  height: 500px;
+  margin-bottom: 25px;
+
+  // Set default base label appearance.
+  .highcharts-root,
+  .highcharts-container,
+  .highcharts-legend-box,
+  .highcharts-axis-labels,
+  .highcharts-tooltip text {
+    .u-chart-label();
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='bar'] {
+
+    // Create a horizontal rule.
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 80px;
+      width: 100%;
+      height: 0;
+      border-top: 2px solid var(--gray-10);
+    }
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='bar'] .highcharts-navigator-series {
+
+    // Hide markers on line charts.
+    .highcharts-point {
+      display: none;
+    }
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='bar'] {
+
+    /* Set the layering of the chart relative to the components that have
+       `useHTML: true` set in the JavaScript. We need to bring the SVG chart
+       in front of everything else, and then hide the background fill so the
+       HTML labels show through, and then move the tooltip labels to the top.
+     */
+    .highcharts-root {
+      position: relative;
+      z-index: 2000;
+    }
+
+    .highcharts-background {
+      opacity: 0;
+    }
+
+    .highcharts-tooltip {
+      z-index: 3000;
+    }
+
+    /*********
+     * X AXIS
+     ********/
+
+    .highcharts-xaxis-labels {
+      text-align: center;
+    }
+
+    // Center "Select time range" label.
+    .cfpb-chart__small {
+      .highcharts-range-selector-label {
+        .h6();
+        transform: translateY( 370px );
+        left: calc( 50% - 64px ) !important;
+      }
+
+      .highcharts-axis-title {
+        /* The y-axis title will be positioned to the left edge of the
+           y-axis label width. This overrides that auto-layout so that
+           independent of the y-axis label width the title will always
+           be the same distance from the left-hand edge of the chart,
+           which aligns it with the legend in the upper-left.
+        */
+        left: 0 !important;
+        text-align: left;
+      }
+    }
+
+    .cfpb-chart__large {
+      position: relative;
+
+      .highcharts-range-selector-label {
+        // Shift "Select time range" text to align with legend label y position.
+        transform: translateY( -2px );
+      }
+
+      .highcharts-axis-title {
+        transform-origin: 0 !important;
+        left: 10px !important;
+        top: 400px !important;
+        text-align: center;
+      }
+    }
+
+    .highcharts-axis-title {
+      // Sets the mininum width so that the y-axis title doesn't wrap.
+      min-width: 320px;
+    }
+
+    /*****************
+     * RANGE SELECTOR
+     ****************/
+
+    // Small screen size.
+    .cfpb-chart__small {
+      .highcharts-button text {
+        /*
+        This vertically aligns the button text, but in IE11 the y value will
+        not be overridden. https://github.com/highcharts/highcharts/issues/1285
+        */
+        transform: translateY( 13px );
+      }
+    }
+
+    // Large screen size.
+    .cfpb-chart__large {
+      .highcharts-button text {
+        /*
+        This vertically aligns the button text, but in IE11 the y value will
+        not be overridden. https://github.com/highcharts/highcharts/issues/1285
+        */
+        transform: translateY( 4px );
+      }
+    }
+
+    .highcharts-button {
+      fill: var(--pacific-20);
+      font-size: @size-v;
+
+      &:hover {
+        cursor: pointer;
+        .highcharts-button-box {
+          fill: var(--pacific-60);
+        }
+      }
+    }
+
+    .highcharts-button-pressed,
+    .highcharts-button-hover {
+      fill: var(--pacific-60);
+      font-weight: 600;
+    }
+
+    /*****************
+     * NAVIGATOR
+     ****************/
+
+    /* Setting `navigator { enabled: false }` in JavaScript
+       also disables the pressed state of the range selector buttons,
+       so instead we hide the navigator via CSS. */
+    .highcharts-navigator,
+    .highcharts-navigator-series,
+    .highcharts-navigator-xaxis,
+    .highcharts-navigator-yaxis,
+    .highcharts-scrollbar {
+      display: none;
+      visibility: hidden;
+    }
+
+    .cfpb-chart__large {
+      .highcharts-navigator,
+      .highcharts-navigator-series,
+      .highcharts-navigator-xaxis,
+      .highcharts-navigator-yaxis,
+      .highcharts-scrollbar {
+        display: block;
+        visibility: visible;
+      }
+
+      .highcharts-navigator {
+        // The border around the navigator.
+        stroke: var(--gray-40);
+      }
+
+      .highcharts-navigator-mask-inside {
+        fill: var(--gray-10);
+        fill-opacity: 0.25;
+      }
+
+      .highcharts-navigator-handle {
+        fill: var(--white);
+        stroke: var(--black);
+      }
+
+      .highcharts-navigator-xaxis {
+        font-size: 11px;
+      }
+
+      .highcharts-navigator-series .highcharts-graph {
+        stroke-width: 2px;
+      }
+    }
+
+    /*****************
+     * TOOLTIP
+     ****************/
+
+     // Set default label settings.
+    .highcharts-tooltip,
+    .highcharts-tooltip .highcharts-header {
+      .u-chart-label();
+    }
+
+    // Set colors.
+    &[data-chart-color='blue'] {
+      .u-chart-colorizer-navigator( @chart-blue-primary, @chart-blue-secondary );
+    }
+
+    &[data-chart-color='gold'] {
+      .u-chart-colorizer-navigator( @chart-gold-primary, @chart-gold-secondary );
+    }
+
+    &[data-chart-color='green'] {
+      .u-chart-colorizer-navigator( @chart-green-primary, @chart-green-secondary );
+    }
+
+    &[data-chart-color='neutral'] {
+      .u-chart-colorizer-navigator( @chart-neutral-primary, @chart-neutral-secondary );
+    }
+
+    &[data-chart-color='purple'] {
+      .u-chart-colorizer-navigator( @chart-purple-primary, @chart-purple-secondary );
+    }
+
+    &[data-chart-color='teal'] {
+      .u-chart-colorizer-navigator( @chart-teal-primary, @chart-teal-secondary );
+    }
+
+    &[data-chart-color='navy'] {
+      .u-chart-colorizer-navigator( @chart-navy-primary, @chart-navy-secondary );
+    }
+  }
+}
+
+// Import chart-type specific styling.
+@import (less) './chart-line.less';
+@import (less) './chart-bar.less';
+@import (less) './chart-tilemap.less';
+@import (less) './chart-geomap.less';
+
+// Collapse chart containers when JS is disabled
+.no-js {
+  .cfpb-chart {
+    height: inherit;
+    &:after {
+      border: 0;
+    }
+  }
+}

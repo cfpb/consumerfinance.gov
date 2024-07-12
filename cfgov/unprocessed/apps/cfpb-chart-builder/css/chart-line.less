@@ -1,0 +1,148 @@
+/*********
+* LEGEND
+*********/
+
+// Comparison line chart has a horizontal legend, unlike other two line charts.
+.cfpb-chart[data-chart-type='line-comparison'] {
+
+  // SVG legend lines.
+  .highcharts-root {
+
+    .highcharts-legend {
+      // Seasonally adjusted legend line.
+      .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
+        stroke-width: 3px;
+      }
+
+      // Unadjusted legend line.
+      .highcharts-legend-item.highcharts-color-1 .highcharts-graph {
+        stroke-width: 1px;
+      }
+    }
+
+    .highcharts-tracker,
+    .highcharts-graph {
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+    }
+
+  }
+}
+
+// Line and line index charts have vertical legends.
+.cfpb-chart[data-chart-type='line'],
+.cfpb-chart[data-chart-type='line-index'] {
+
+  // "Seasonally adjusted" and "Unadjusted" labels.
+  div.highcharts-legend {
+    // "Unadjusted" label.
+    .highcharts-color-1 span {
+      transform: translateY( 10px );
+    }
+  }
+
+  // SVG legend lines.
+  .highcharts-root {
+
+    .highcharts-legend {
+      // Seasonally adjusted legend line.
+      .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
+        stroke-width: 3px;
+      }
+
+      // Unadjusted legend line.
+      .highcharts-legend-item.highcharts-color-1 .highcharts-graph {
+        stroke-width: 1px;
+        transform: translateY( 10px );
+      }
+    }
+
+    .highcharts-tracker,
+    .highcharts-graph {
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+    }
+
+  }
+}
+
+.cfpb-chart[data-chart-type='line'],
+.cfpb-chart[data-chart-type='line-comparison'],
+.cfpb-chart[data-chart-type='line-index'] {
+
+  // The "Values after … are projected" label.
+  .highcharts-plot-line-label {
+    white-space: normal !important;
+    left: 45% !important;
+    width: 55% !important;
+  }
+
+  // Small screen size.
+  .cfpb-chart__small {
+    .highcharts-plot-line-label {
+      /* Position slightly so the right
+         so that we don't have to wrap "Seasonally adjusted" legend label. */
+      left: 55% !important;
+      width: 45% !important;
+    }
+  }
+
+  /********
+   * CHART
+   ********/
+
+  // Seasonally adjusted
+  .highcharts-series-0 {
+    .highcharts-graph {
+      stroke-width: 3px;
+    }
+  }
+
+  // Unadjusted
+  .highcharts-series-1 {
+    .highcharts-graph {
+      stroke-width: 1px;
+    }
+  }
+
+  // Projected data for last six months.
+  .highcharts-zone-graph-1 {
+    stroke-dasharray: 5, 5;
+  }
+
+  .highcharts-color-1 .highcharts-zone-graph-1 {
+    stroke-dasharray: 3, 3;
+  }
+
+  /**************
+   * COLOR THEME
+   **************/
+
+  &[data-chart-color='blue'] {
+    .u-chart-colorizer-line( @chart-blue-primary );
+  }
+
+  &[data-chart-color='gold'] {
+    .u-chart-colorizer-line( @chart-gold-primary );
+  }
+
+  &[data-chart-color='green'] {
+    .u-chart-colorizer-line( @chart-green-primary );
+  }
+
+  &[data-chart-color='neutral'] {
+    .u-chart-colorizer-line( @chart-neutral-primary );
+  }
+
+  &[data-chart-color='purple'] {
+    .u-chart-colorizer-line( @chart-purple-primary );
+  }
+
+  &[data-chart-color='teal'] {
+    .u-chart-colorizer-line( @chart-teal-primary );
+  }
+
+  &[data-chart-color='navy'] {
+    .u-chart-colorizer-line( @chart-navy-primary );
+  }
+}
