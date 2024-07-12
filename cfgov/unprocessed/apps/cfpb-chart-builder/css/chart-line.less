@@ -4,10 +4,8 @@
 
 // Comparison line chart has a horizontal legend, unlike other two line charts.
 .cfpb-chart[data-chart-type='line-comparison'] {
-
   // SVG legend lines.
   .highcharts-root {
-
     .highcharts-legend {
       // Seasonally adjusted legend line.
       .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
@@ -25,25 +23,22 @@
       stroke-linejoin: miter;
       stroke-linecap: butt;
     }
-
   }
 }
 
 // Line and line index charts have vertical legends.
 .cfpb-chart[data-chart-type='line'],
 .cfpb-chart[data-chart-type='line-index'] {
-
   // "Seasonally adjusted" and "Unadjusted" labels.
   div.highcharts-legend {
     // "Unadjusted" label.
     .highcharts-color-1 span {
-      transform: translateY( 10px );
+      transform: translateY(10px);
     }
   }
 
   // SVG legend lines.
   .highcharts-root {
-
     .highcharts-legend {
       // Seasonally adjusted legend line.
       .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
@@ -53,7 +48,7 @@
       // Unadjusted legend line.
       .highcharts-legend-item.highcharts-color-1 .highcharts-graph {
         stroke-width: 1px;
-        transform: translateY( 10px );
+        transform: translateY(10px);
       }
     }
 
@@ -62,14 +57,12 @@
       stroke-linejoin: miter;
       stroke-linecap: butt;
     }
-
   }
 }
 
 .cfpb-chart[data-chart-type='line'],
 .cfpb-chart[data-chart-type='line-comparison'],
 .cfpb-chart[data-chart-type='line-index'] {
-
   // The "Values after … are projected" label.
   .highcharts-plot-line-label {
     white-space: normal !important;

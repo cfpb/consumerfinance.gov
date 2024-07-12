@@ -1,6 +1,6 @@
 /* TODO: Investigate whether responsive styles can be remove here and handled
          via class set in JS, like how the other chart types work. */
-.cfpb-chart[data-chart-type="tile_map"] {
+.cfpb-chart[data-chart-type='tile_map'] {
   height: 630px;
 
   // Ignore mouse events on text on labels so hover on square tile works.
@@ -19,7 +19,7 @@
   }
 
   .highcharts-legend__tile-map {
-    transform: translateY( 15px );
+    transform: translateY(15px);
 
     .respond-to-min( 500px, {
       transform: translateY( 0 );
@@ -75,7 +75,7 @@
 }
 
 @media (max-width: 600px) {
-  .cfpb-chart[data-chart-type="tile_map"] {
+  .cfpb-chart[data-chart-type='tile_map'] {
     height: 400px;
   }
 }

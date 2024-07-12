@@ -34,10 +34,10 @@ let readyEventHandlersInstalled = false;
  * This function protects itself against being called more than once.
  */
 function docReady() {
-  if ( !readyFired ) {
+  if (!readyFired) {
     // This must be set to true before we start calling callbacks.
     readyFired = true;
-    for ( let i = 0, len = readyList.length; i < len; i++ ) {
+    for (let i = 0, len = readyList.length; i < len; i++) {
       /* If a callback here happens to add new ready handlers,
          the ready() function will see that it already fired
          and will schedule the callback to run right after
@@ -55,7 +55,7 @@ function docReady() {
  * Event handler function for when the load state changes.
  */
 function readyStateChange() {
-  if ( document.readyState === 'complete' ) {
+  if (document.readyState === 'complete') {
     docReady();
   }
 }
@@ -68,37 +68,39 @@ function readyStateChange() {
  * Call a callback function when the document is ready.
  * @param {Function} callback - A function to call when the document is loaded.
  */
-function ready( callback ) {
-  if ( typeof callback !== 'function' ) {
-    throw new TypeError( 'callback for ready(fn) must be a function' );
+function ready(callback) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('callback for ready(fn) must be a function');
   }
 
   /* If ready has already fired, then just schedule the callback
      to fire asynchronously, but right away. */
-  if ( readyFired ) {
-    setTimeout( () => callback(), 1 );
+  if (readyFired) {
+    setTimeout(() => callback(), 1);
     return;
   }
   // Add the function to the list.
-  readyList.push( callback );
+  readyList.push(callback);
 
   /* If document is already ready to go, schedule the ready function to run.
      IE is only safe when readyState is "complete",
      others are safe when readyState is "interactive". */
-  if ( document.readyState === 'complete' ||
-       ( !document.attachEvent && document.readyState === 'interactive' ) ) {
-    setTimeout( docReady, 1 );
-  } else if ( !readyEventHandlersInstalled ) {
+  if (
+    document.readyState === 'complete' ||
+    (!document.attachEvent && document.readyState === 'interactive')
+  ) {
+    setTimeout(docReady, 1);
+  } else if (!readyEventHandlersInstalled) {
     // Otherwise if we don't have event handlers installed, install them.
-    if ( document.addEventListener ) {
+    if (document.addEventListener) {
       // First choice is DOMContentLoaded event.
-      document.addEventListener( 'DOMContentLoaded', docReady, false );
+      document.addEventListener('DOMContentLoaded', docReady, false);
       // Backup is window load event.
-      window.addEventListener( 'load', docReady, false );
+      window.addEventListener('load', docReady, false);
     } else {
       // Must be IE.
-      document.attachEvent( 'onreadystatechange', readyStateChange );
-      window.attachEvent( 'onload', docReady );
+      document.attachEvent('onreadystatechange', readyStateChange);
+      window.attachEvent('onload', docReady);
     }
     readyEventHandlersInstalled = true;
   }

@@ -9,24 +9,23 @@
    to keep the fuctionality of the API, but will not be saved across sessions.
    ========================================================================= */
 
-
 // Default storage type.
 let _storage;
 
 /**
  * Set an item value specified by the key in web storage.
- * @param {string} key The key for the value.
- * @param {string} value The value to store.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {string} value - The value to store.
+ * @param {object} storage - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {string} The value set in web storage.
  */
-function setItem( key, value, storage ) {
-  value = JSON.stringify( value );
-  storage = _getStorageType( storage );
-  if ( storage.setItem ) {
-    storage.setItem( key, value );
+function setItem(key, value, storage) {
+  value = JSON.stringify(value);
+  storage = _getStorageType(storage);
+  if (storage.setItem) {
+    storage.setItem(key, value);
   } else {
     storage[key] = value;
   }
@@ -36,40 +35,40 @@ function setItem( key, value, storage ) {
 
 /**
  * Get an item value specified by the key in web storage.
- * @param {string} key The key for the value.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {object} storage - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {string} The value set in web storage.
  */
-function getItem( key, storage ) {
-  storage = _getStorageType( storage );
-  if ( storage.getItem ) {
-    return JSON.parse( storage.getItem( key ) );
+function getItem(key, storage) {
+  storage = _getStorageType(storage);
+  if (storage.getItem) {
+    return JSON.parse(storage.getItem(key));
   }
-  return JSON.parse( storage[key] );
+  return JSON.parse(storage[key]);
 }
 
 /**
  * Remove an item specified by the key.
- * @param {string} key The key for the value.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {object} storage - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {boolean} Returns true if the item existed and it was
  *   removed. Returns false if the item didn't exist to begin with.
  */
-function removeItem( key, storage ) {
-  storage = _getStorageType( storage );
+function removeItem(key, storage) {
+  storage = _getStorageType(storage);
   let returnVal = true;
 
-  if ( !getItem( key, storage ) ) {
+  if (!getItem(key, storage)) {
     returnVal = false;
   }
 
-  if ( returnVal ) {
-    if ( storage.removeItem ) {
-      storage.removeItem( key );
+  if (returnVal) {
+    if (storage.removeItem) {
+      storage.removeItem(key);
     } else {
       delete storage[key];
     }
@@ -80,18 +79,19 @@ function removeItem( key, storage ) {
 
 /**
  * Internal function for whether to use local or session storage.
- * @param {Object} storage
+ * @param {object} storage- -
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
- * @returns {Object} A local storage or session storage instance.
+ * @param storage
+ * @returns {object} A local storage or session storage instance.
  */
-function _getStorageType( storage ) {
+function _getStorageType(storage) {
   // Use default setting if none is provided.
-  if ( typeof storage !== 'object' ) {
-    if ( typeof _storage === 'undefined' ) {
+  if (typeof storage !== 'object') {
+    if (typeof _storage === 'undefined') {
       try {
         storage = window.sessionStorage;
-      } catch ( err ) {
+      } catch (err) {
         // SecurityError was thrown if cookies are off.
         storage = {};
       }
@@ -107,5 +107,5 @@ function _getStorageType( storage ) {
 export default {
   setItem,
   getItem,
-  removeItem
+  removeItem,
 };

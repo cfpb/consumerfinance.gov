@@ -2,6 +2,13 @@
 
 // cf-core is included for cf-brand-colors and media queries.
 @import (reference) '@cfpb/cfpb-core/src/cfpb-core.less';
+@import (less) './mixins.less';
+
+// Import chart-type specific styling.
+@import (less) './chart-line.less';
+@import (less) './chart-bar.less';
+@import (less) './chart-tilemap.less';
+@import (less) './chart-geomap.less';
 
 // Chart colors.
 @chart-blue-primary: var(--pacific);
@@ -27,8 +34,6 @@ This appears to handle responsive changes the best, since the JS sets
 x/y positioning on the SVG elements.
 */
 
-@import (less) './mixins.less';
-
 .cfpb-chart {
   position: relative;
   max-width: 650px;
@@ -48,9 +53,8 @@ x/y positioning on the SVG elements.
   &[data-chart-type='line'],
   &[data-chart-type='line-index'],
   &[data-chart-type='bar'] {
-
     // Create a horizontal rule.
-    &:after {
+    &::after {
       content: '';
       display: block;
       position: absolute;
@@ -65,7 +69,6 @@ x/y positioning on the SVG elements.
   &[data-chart-type='line-index'],
   &[data-chart-type='line-comparison'],
   &[data-chart-type='bar'] .highcharts-navigator-series {
-
     // Hide markers on line charts.
     .highcharts-point {
       display: none;
@@ -76,7 +79,6 @@ x/y positioning on the SVG elements.
   &[data-chart-type='line-index'],
   &[data-chart-type='line-comparison'],
   &[data-chart-type='bar'] {
-
     /* Set the layering of the chart relative to the components that have
        `useHTML: true` set in the JavaScript. We need to bring the SVG chart
        in front of everything else, and then hide the background fill so the
@@ -107,8 +109,8 @@ x/y positioning on the SVG elements.
     .cfpb-chart__small {
       .highcharts-range-selector-label {
         .h6();
-        transform: translateY( 370px );
-        left: calc( 50% - 64px ) !important;
+        transform: translateY(370px);
+        left: calc(50% - 64px) !important;
       }
 
       .highcharts-axis-title {
@@ -128,7 +130,7 @@ x/y positioning on the SVG elements.
 
       .highcharts-range-selector-label {
         // Shift "Select time range" text to align with legend label y position.
-        transform: translateY( -2px );
+        transform: translateY(-2px);
       }
 
       .highcharts-axis-title {
@@ -155,7 +157,7 @@ x/y positioning on the SVG elements.
         This vertically aligns the button text, but in IE11 the y value will
         not be overridden. https://github.com/highcharts/highcharts/issues/1285
         */
-        transform: translateY( 13px );
+        transform: translateY(13px);
       }
     }
 
@@ -166,7 +168,7 @@ x/y positioning on the SVG elements.
         This vertically aligns the button text, but in IE11 the y value will
         not be overridden. https://github.com/highcharts/highcharts/issues/1285
         */
-        transform: translateY( 4px );
+        transform: translateY(4px);
       }
     }
 
@@ -195,6 +197,7 @@ x/y positioning on the SVG elements.
     /* Setting `navigator { enabled: false }` in JavaScript
        also disables the pressed state of the range selector buttons,
        so instead we hide the navigator via CSS. */
+
     .highcharts-navigator,
     .highcharts-navigator-series,
     .highcharts-navigator-xaxis,
@@ -204,7 +207,9 @@ x/y positioning on the SVG elements.
       visibility: hidden;
     }
 
+    /* stylelint-disable no-duplicate-selectors */
     .cfpb-chart__large {
+      /* stylelint-enable */
       .highcharts-navigator,
       .highcharts-navigator-series,
       .highcharts-navigator-xaxis,
@@ -242,7 +247,7 @@ x/y positioning on the SVG elements.
      * TOOLTIP
      ****************/
 
-     // Set default label settings.
+    // Set default label settings.
     .highcharts-tooltip,
     .highcharts-tooltip .highcharts-header {
       .u-chart-label();
@@ -279,17 +284,11 @@ x/y positioning on the SVG elements.
   }
 }
 
-// Import chart-type specific styling.
-@import (less) './chart-line.less';
-@import (less) './chart-bar.less';
-@import (less) './chart-tilemap.less';
-@import (less) './chart-geomap.less';
-
 // Collapse chart containers when JS is disabled
 .no-js {
   .cfpb-chart {
     height: inherit;
-    &:after {
+    &::after {
       border: 0;
     }
   }

@@ -7,21 +7,20 @@ const pacific50 = '#96c4ed';
 
 /**
  * Returns color given a data value.
- * @param   {number} value A numerical data value.
- * @returns {string}       A color hex string.
+ * @param {number} value - A numerical data value.
+ * @returns {string} A color hex string.
  */
-function getColorByValue( value ) {
-
-  if ( value < -15 ) {
+function getColorByValue(value) {
+  if (value < -15) {
     return pacific50;
   }
-  if ( value < -5 ) {
+  if (value < -5) {
     return pacific20;
   }
-  if ( value < 6 ) {
+  if (value < 6) {
     return gray5;
   }
-  if ( value < 16 ) {
+  if (value < 16) {
     return green20;
   }
   return green50;
@@ -34,5 +33,5 @@ export default {
   gray80: gray80,
   gray5: gray5,
   pacific20: pacific20,
-  pacific50: pacific50
+  pacific50: pacific50,
 };

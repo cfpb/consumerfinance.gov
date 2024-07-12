@@ -3,36 +3,35 @@ import accessibility from 'highcharts/modules/accessibility';
 import { getFirstNumber } from '../utils/calculation';
 import { processNumOriginationsData } from '../utils/process-json';
 
-accessibility( Highcharts );
+accessibility(Highcharts);
 
-Highcharts.setOptions( {
+Highcharts.setOptions({
   lang: {
     rangeSelectorZoom: '',
-    thousandsSep: ','
-  }
-} );
+    thousandsSep: ',',
+  },
+});
 
 /**
  * _getYAxisLabel - Get the text of the y-axis title.
- *
  * @param {Array} chartData - An array of values to check.
  * @param {sting} yAxisLabel - A string to use for the y-axis label.
  * @returns {string} Appropriate y-axis title.
  */
-function _getYAxisLabel( chartData, yAxisLabel ) {
-  if ( yAxisLabel ) {
+function _getYAxisLabel(chartData, yAxisLabel) {
+  if (yAxisLabel) {
     return yAxisLabel;
   }
 
   let term = 'Number';
   let unit = 'millions';
-  const firstChartNumber = getFirstNumber( chartData );
+  const firstChartNumber = getFirstNumber(chartData);
 
-  if ( !firstChartNumber ) {
+  if (!firstChartNumber) {
     return firstChartNumber;
   }
 
-  if ( firstChartNumber % 1000000000 < firstChartNumber ) {
+  if (firstChartNumber % 1000000000 < firstChartNumber) {
     term = 'Volume';
     unit = 'billions';
   }
@@ -42,28 +41,27 @@ function _getYAxisLabel( chartData, yAxisLabel ) {
 
 /**
  * _getTickValue - Convert the data point's unit to M or B.
- *
  * @param {number} value - Data point's value
  * @returns {number} Data point's value over million or billion.
  */
-function _getTickValue( value ) {
+function _getTickValue(value) {
   // If it's 0 or borked data gets passed in, return it.
-  if ( !value ) {
+  if (!value) {
     return value;
   }
 
-  if ( value % 1000000000 < value ) {
-    return ( value / 1000000000 ) + 'B';
-  } else if ( value % 10000 < value ) {
-    return ( value / 1000000 ) + 'M';
+  if (value % 1000000000 < value) {
+    return value / 1000000000 + 'B';
+  } else if (value % 10000 < value) {
+    return value / 1000000 + 'M';
   }
 
   return value;
 }
 
 class LineChart {
-  constructor( { el, description, data, metadata, yAxisLabel } ) {
-    data = processNumOriginationsData( data[0], metadata );
+  constructor({ el, description, data, metadata, yAxisLabel }) {
+    data = processNumOriginationsData(data[0], metadata);
 
     const options = {
       chart: {
@@ -73,7 +71,7 @@ class LineChart {
         marginLeft: 60,
         marginRight: 20,
         styledMode: true,
-        zoomType: 'none'
+        zoomType: 'none',
       },
       description: description,
       credits: false,
@@ -85,36 +83,36 @@ class LineChart {
         verticalAlign: 'bottom',
         buttonPosition: {
           align: 'center',
-          x: -64
+          x: -64,
         },
         buttonSpacing: 30,
         buttonTheme: {
           // border radius.
           r: 5,
           width: 45,
-          height: 45
+          height: 45,
         },
         buttons: [
           {
             type: 'year',
             count: 1,
-            text: '1y'
+            text: '1y',
           },
           {
             type: 'year',
             count: 3,
-            text: '3y'
+            text: '3y',
           },
           {
             type: 'year',
             count: 5,
-            text: '5y'
+            text: '5y',
           },
           {
             type: 'all',
-            text: 'All'
-          }
-        ]
+            text: 'All',
+          },
+        ],
       },
       legend: {
         align: 'left',
@@ -124,25 +122,25 @@ class LineChart {
         verticalAlign: 'top',
         useHTML: true,
         x: -16,
-        y: -16
+        y: -16,
       },
       plotOptions: {
         series: {
           states: {
             hover: {
-              enabled: false
-            }
-          }
-        }
+              enabled: false,
+            },
+          },
+        },
       },
       scrollbar: {
-        enabled: false
+        enabled: false,
       },
       navigator: {
         maskFill: 'rgba(0, 0, 0, 0.05)',
         series: {
-          lineWidth: 2
-        }
+          lineWidth: 2,
+        },
       },
       xAxis: {
         startOnTick: true,
@@ -150,27 +148,30 @@ class LineChart {
         type: 'datetime',
         dateTimeLabelFormats: {
           month: '%b<br/>%Y',
-          year: '%b<br/>%Y'
+          year: '%b<br/>%Y',
         },
         labels: {
-          useHTML: true
+          useHTML: true,
         },
-        plotLines: [ {
-          value: data.projectedDate.timestamp,
-          label: {
-            text: 'Values after ' + data.projectedDate.label + ' are projected',
-            rotation: 0,
-            useHTML: true,
-            x: -300,
-            y: -126
-          }
-        } ]
+        plotLines: [
+          {
+            value: data.projectedDate.timestamp,
+            label: {
+              text:
+                'Values after ' + data.projectedDate.label + ' are projected',
+              rotation: 0,
+              useHTML: true,
+              x: -300,
+              y: -126,
+            },
+          },
+        ],
       },
       yAxis: {
         showLastLabel: true,
         opposite: false,
         title: {
-          text: _getYAxisLabel( data.adjusted, yAxisLabel ),
+          text: _getYAxisLabel(data.adjusted, yAxisLabel),
           align: 'high',
           // useHTML true value is needed to set width beyond chart marginTop.
           useHTML: true,
@@ -178,14 +179,14 @@ class LineChart {
           offset: 0,
           reserveSpace: false,
           x: 300,
-          y: -33
+          y: -33,
         },
         labels: {
-          formatter: function() {
-            return _getTickValue( this.value );
+          formatter: function () {
+            return _getTickValue(this.value);
           },
-          y: 4
-        }
+          y: 4,
+        },
       },
       tooltip: {
         animation: false,
@@ -193,7 +194,7 @@ class LineChart {
         shape: 'square',
         shared: true,
         split: false,
-        padding: 10
+        padding: 10,
       },
       series: [
         {
@@ -201,32 +202,36 @@ class LineChart {
           data: data.adjusted,
           legendIndex: 1,
           tooltip: {
-            valueDecimals: 0
+            valueDecimals: 0,
           },
           zoneAxis: 'x',
-          zones: [ {
-            value: data.projectedDate.timestamp
-          } ]
+          zones: [
+            {
+              value: data.projectedDate.timestamp,
+            },
+          ],
         },
         {
           name: 'Unadjusted',
           data: data.unadjusted,
           legendIndex: 2,
           tooltip: {
-            valueDecimals: 0
+            valueDecimals: 0,
           },
           zoneAxis: 'x',
-          zones: [ {
-            value: data.projectedDate.timestamp
-          } ]
-        }
+          zones: [
+            {
+              value: data.projectedDate.timestamp,
+            },
+          ],
+        },
       ],
       responsive: {
         rules: [
           {
             condition: {
               // Chart width, not window width.
-              minWidth: 650
+              minWidth: 650,
             },
             // Add more left margin space for vertical label on large screens.
             chartOptions: {
@@ -234,73 +239,80 @@ class LineChart {
                 className: 'cfpb-chart__large',
                 marginTop: 135,
                 marginBottom: 60,
-                marginLeft: 80
+                marginLeft: 80,
               },
               xAxis: {
                 labels: {
-                  y: 26
+                  y: 26,
                 },
-                plotLines: [ {
-                  value: data.projectedDate.timestamp,
-                  label: {
-                    text: 'Values after ' + data.projectedDate.label + ' are projected',
-                    rotation: 0,
-                    useHTML: true,
-                    x: -300,
-                    y: -20
-                  }
-                } ]
+                plotLines: [
+                  {
+                    value: data.projectedDate.timestamp,
+                    label: {
+                      text:
+                        'Values after ' +
+                        data.projectedDate.label +
+                        ' are projected',
+                      rotation: 0,
+                      useHTML: true,
+                      x: -300,
+                      y: -20,
+                    },
+                  },
+                ],
               },
               yAxis: {
                 title: {
                   align: 'middle',
                   rotation: 270,
                   x: -40,
-                  y: 0
-                }
+                  y: 0,
+                },
               },
               rangeSelector: {
                 verticalAlign: 'top',
                 buttonPosition: {
                   align: 'left',
                   x: -40,
-                  y: -104
+                  y: -104,
                 },
                 buttonSpacing: 10,
                 buttonTheme: {
                   // border radius.
                   r: 5,
                   width: 45,
-                  height: 28
+                  height: 28,
                 },
                 x: 0,
-                y: 0
+                y: 0,
               },
               legend: {
                 align: 'center',
                 x: 200,
-                y: -16
-              }
-            }
-          }
-        ]
-      }
+                y: -16,
+              },
+            },
+          },
+        ],
+      },
     };
 
-    this.chart = Highcharts.stockChart( el, options, function( chart ) {
+    this.chart = Highcharts.stockChart(el, options, function (chart) {
       // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-      chart.renderer.label(
-        'Select time range',
-        null,
-        null,
-        null,
-        null,
-        null,
-        true,
-        null,
-        'range-selector-label'
-      ).add();
-    } );
+      chart.renderer
+        .label(
+          'Select time range',
+          null,
+          null,
+          null,
+          null,
+          null,
+          true,
+          null,
+          'range-selector-label',
+        )
+        .add();
+    });
 
     return this.chart;
   }
