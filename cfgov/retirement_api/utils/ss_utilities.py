@@ -73,7 +73,7 @@ with open(datafile) as f:
 
 def get_current_age(dob):
     today = datetime.date.today()
-    if type(dob) == datetime.date:
+    if type(dob) is datetime.date:
         DOB = dob
     else:
         try:
