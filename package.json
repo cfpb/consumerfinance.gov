@@ -34,7 +34,6 @@
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.19",
     "axe-core": "4.9.1",
-    "cfpb-chart-builder": "6.5.0",
     "cypress-axe": "1.5.0",
     "esbuild": "0.23.0",
     "fancy-log": "2.0.0",
