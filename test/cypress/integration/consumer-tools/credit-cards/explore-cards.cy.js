@@ -13,6 +13,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.openFilterExpandable();
 
     cy.get('#id_rewards input').should('be.checked');
+    exploreCards.checkA11y();
   });
 
   it("should show an error message if a location isn't selected", () => {
@@ -24,6 +25,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.clickSubmitButton();
 
     cy.get('.a-form-alert__text').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectLocation('NY');
 
@@ -45,12 +47,22 @@ describe('Explore credit cards results page', () => {
   it('should not follow card links when tooltips are clicked', () => {
     exploreCards.openResultsPage();
 
-    cy.get('.m-card--tabular [data-tooltip]').first().click();
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
 
     cy.get('h1').contains('Explore credit cards').should('exist');
     cy.get('h2')
       .contains('Purchase interest rate and fees')
       .should('not.exist');
+  });
+  it('should close tooltips when escape key is pressed', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
+    cy.get('div.tippy-heading').should('be.visible');
+
+    cy.get('.m-card--tabular [data-tooltip]').first().type('{esc}');
+    cy.wait(1000);
+    cy.get('div.tippy-heading').should('not.exist');
   });
   it('should not follow card links when tooltips are open', () => {
     exploreCards.openResultsPage();
@@ -92,6 +104,7 @@ describe('Explore credit cards results page', () => {
     exploreCards.selectOrdering('Purchase APR');
     cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectOrdering('Card name');
     cy.get('.htmx-container.htmx-request').should('not.exist');
@@ -159,6 +172,7 @@ describe('Explore credit card details page', () => {
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
       .and('contain', 'location=NY')
       .and('contain', 'situations=Earn+rewards');
+    exploreCards.checkA11y();
   });
   it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();

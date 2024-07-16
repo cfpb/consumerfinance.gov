@@ -51,9 +51,23 @@
 <div class="o-card-group">
     <div class="o-card-group__cards">
         {%- for card in cards %}
+        {%- set card_purchase_apr = apr_range(
+            card.purchase_apr_for_tier_min,
+            card.purchase_apr_for_tier_max,
+            asterisk=true
+        ) -%}
+        {%- set card_account_fee = currency(
+            card.annual_fee_estimated,
+            default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')
+        ) -%}
         {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
-            <a href="{{ card.url }}" data-js-hook="behavior_ignore-link-targets" data-ignore-link-targets="[data-tooltip]">
+            <a
+                href="{{ card.url }}"
+                data-js-hook="behavior_ignore-link-targets"
+                data-ignore-link-targets="[data-tooltip]"
+                aria-label="{{ card.product_name }} from {{ card.institution_name }} with {{ card_purchase_apr }} purchase APR, {{ card_account_fee }} account fee, {{ card_rewards(card) }} card rewards{%- if card.requirements_for_opening or card.issued_by_credit_union -%}, eligibility requirements{%- endif -%}"
+            >
                 <div class="m-card__heading-group">
                     <h2 class="h3 m-card__heading">{{ card.institution_name }}</h2>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
@@ -95,17 +109,13 @@
                             </div>
                         </dt>
                         <dd>
-                            <strong>{{ apr_range(
-                                card.purchase_apr_for_tier_min,
-                                card.purchase_apr_for_tier_max,
-                                asterisk=true
-                            ) }}</strong>
+                            <strong>{{ card_purchase_apr }}</strong>
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--fee">
                         <dt><strong>Account fee</strong></dt>
                         <dd>
-                            <strong>{{ currency(card.annual_fee_estimated, default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')) }}</strong>
+                            <strong>{{ card_account_fee }}</strong>
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--transfer">
