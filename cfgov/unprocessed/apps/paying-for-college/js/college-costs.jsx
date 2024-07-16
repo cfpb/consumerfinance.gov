@@ -100,5 +100,6 @@ tooltipRoot.render(
     border="1px solid var(--gray-40)"
     opacity="1"
     clickable={true}
+    globalCloseEvents={{ escape: true }}
   />,
 );
