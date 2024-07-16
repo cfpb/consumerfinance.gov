@@ -91,6 +91,7 @@
                         'label': 'Grants',
                         'id': 'plan__grant-general',
                         'value': '0',
+                        'helper_text': 'Include Federal grants, like Pell and SEOG grants, as well as school and state grants',
                         'data_attribute': 'data-financial-item="grant_general"'
                     })
                 }}
@@ -107,6 +108,7 @@
                         'label': 'Servicemember benefits',
                         'id': 'plan__grant-serviceMember',
                         'value': '0',
+                        'helper_text': 'Such as Military Tuition Assistance, GI Bill',
                         'data_attribute': 'data-financial-item="grant_servicemember"'
                     })
                 }}
@@ -115,23 +117,8 @@
                         'label': 'Scholarships',
                         'id': 'plan__general-cholarships',
                         'value': '0',
+                        'helper_text': 'Such as state or school scholarships',
                         'data_attribute': 'data-financial-item="scholarship_general"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'School scholarship(s)',
-                        'id': 'plan__schoolScholarships',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="scholarship_school"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'Other scholarship(s)',
-                        'id': 'plan__otherScholarships',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="scholarship_other"'
                     })
                 }}
             {% endcall %}
