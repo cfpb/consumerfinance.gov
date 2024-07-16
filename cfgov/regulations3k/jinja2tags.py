@@ -15,7 +15,7 @@ def ap_date(date):
     """Convert a date object or date string into an AP-styled date string."""
     if date is None:
         return None
-    if type(date) != datetime.date:
+    if type(date) is not datetime.date:
         try:
             date = parser.parse(date).date()
         except ValueError:

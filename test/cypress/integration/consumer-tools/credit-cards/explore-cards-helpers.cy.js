@@ -79,4 +79,9 @@ export class ExploreCreditCards {
   selectCheckboxFilter(name, value) {
     cy.get(`input[name=${name}]`).check(value, { force: true });
   }
+
+  checkA11y() {
+    cy.injectAxe();
+    cy.checkA11y();
+  }
 }

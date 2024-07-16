@@ -1,58 +1,16 @@
 @import (css) '../node_modules/tippy.js/dist/tippy.css';
+@import (css) '../node_modules/tippy.js/dist/border.css';
 
-// Custom theme, see https://kabbouchi.github.io/tippyjs-v4-docs/themes/
+// Custom theme, see https://atomiks.github.io/tippyjs/v6/themes/
 .tippy-box[data-theme='cfpb'] {
   background-color: var(--gray-5);
-  background-clip: padding-box;
   border: 1px solid var(--gray-40);
   border-radius: 0;
   color: var(--black);
   padding: unit((15px / @base-font-size-px), rem);
 
-  &[data-placement^='top'] > .tippy-arrow {
-    &::before {
-      border-top-color: var(--white);
-    }
-    &::after {
-      border-top-color: rgba(0, 8, 16, 20%);
-      border-width: 7px 7px 0;
-      top: 17px;
-      left: 1px;
-    }
-  }
-
-  &[data-placement^='top'] > .tippy-svg-arrow > svg {
-    top: 16px;
-  }
-
-  &[data-placement^='top'] > .tippy-svg-arrow::after {
-    top: 17px;
-  }
-
-  > .tippy-backdrop {
-    background-color: var(--white);
-  }
-
-  > .tippy-arrow::after,
-  > .tippy-svg-arrow::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-  }
-
-  > .tippy-arrow::after {
-    border-color: transparent;
-    border-style: solid;
-  }
-
-  > .tippy-svg-arrow {
-    fill: var(--white);
-    &::after {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA2czEuNzk2LS4wMTMgNC42Ny0zLjYxNUM1Ljg1MS45IDYuOTMuMDA2IDggMGMxLjA3LS4wMDYgMi4xNDguODg3IDMuMzQzIDIuMzg1QzE0LjIzMyA2LjAwNSAxNiA2IDE2IDZIMHoiIGZpbGw9InJnYmEoMCwgOCwgMTYsIDAuMikiLz48L3N2Zz4=');
-      background-size: 16px 6px;
-      width: 16px;
-      height: 6px;
-    }
+  .tippy-arrow {
+    color: var(--gray-5);
   }
 
   .tippy-heading {
