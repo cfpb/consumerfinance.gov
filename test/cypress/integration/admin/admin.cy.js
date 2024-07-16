@@ -19,7 +19,7 @@ describe('Admin', () => {
   it('should be able to open the Images library', () => {
     admin.openImageGallery();
     admin.getImages().should('be.visible');
-    admin.tags().should('be.visible');
+    admin.filters().should('be.visible');
   });
 
   it('should be able to open the Documents library', () => {
