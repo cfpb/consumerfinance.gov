@@ -3,8 +3,8 @@ export class PfcFinancialPathToGraduation {
     cy.get('.btn__get-started').click();
   }
 
-  clickNextStep() {
-    cy.get('.btn__next-step').click();
+  nextToSchoolCosts() {
+    cy.get('.a-btn--next[data-destination="school-costs"]').click();
   }
 
   enter(name) {
@@ -38,6 +38,10 @@ export class PfcFinancialPathToGraduation {
     cy.get(`#${name}`).type(value);
   }
 
+  setIncome(val) {
+    cy.get('#program-income').select(val);
+  }
+
   selectProgram(program, name) {
     cy.get(`#program-${program}-radio_${name} + label`).click();
   }
@@ -48,11 +52,6 @@ export class PfcFinancialPathToGraduation {
 
   actionPlan(name) {
     cy.get(`#action-plan_${name}`).check({ force: true });
-  }
-
-  costsQuestionChoice(name) {
-    cy.get(`label[for="costs-offer-radio_${name}"]`).click();
-    cy.get('#costs-offer-button').click();
   }
 
   enterProgramDetails() {
