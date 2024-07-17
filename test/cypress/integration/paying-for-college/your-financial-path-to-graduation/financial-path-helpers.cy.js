@@ -7,6 +7,22 @@ export class PfcFinancialPathToGraduation {
     cy.get('.a-btn--next[data-destination="school-costs"]').click();
   }
 
+  nextToSeeCustomized() {
+    cy.get('.a-btn--next[data-destination="debt-guideline"]').click();
+  }
+
+  skipToCustomized() {
+    cy.get(
+      '.college-costs__buttons--next[data-destination="customize-estimate"]',
+    ).click();
+  }
+
+  chooseAndSet() {
+    this.enter('Harvard University');
+    this.clickSearchResult('Harvard University');
+    this.setIncome('48k-75k');
+  }
+
   enter(name) {
     /* The following pastes the `name` value into the input and manually fires
        the keyup event. This is used so that the search-schools API is only
@@ -30,7 +46,7 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickLeftNav(name) {
-    cy.get(`[data-nav_item="${name}"]`).click();
+    cy.get(`[data-nav_section="${name}"]`).click();
   }
 
   setText(name, value) {
