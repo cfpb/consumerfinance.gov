@@ -115,6 +115,8 @@ INSTALLED_APPS = (
     "django_htmx",
     "wagtail_content_audit",
     "mozilla_django_oidc",
+    "draftail_icons",
+    "wagtail_footnotes",
 )
 
 MIDDLEWARE = (
@@ -190,7 +192,6 @@ TEMPLATES = [
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
-                "v1.jinja2tags.fragment_cache_extension",
                 "v1.jinja2tags.images_extension",
                 "v1.jinja2tags.v1_extension",
             ],
@@ -289,7 +290,6 @@ WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
-
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # This is used for easy autocomplete search behavior in the Wagtail admin.
@@ -298,6 +298,10 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.database.fallback",
     }
 }
+
+# This is the name of the template that will render a footnote citaiton
+# inline in rich text.
+WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -670,6 +674,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "link",
                 "document-link",
                 "image",
+                "icon",
             ]
         },
     },
@@ -695,11 +700,6 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
         "LOCATION": "cfgov_default_cache",
-        "TIMEOUT": None,
-    },
-    "post_preview": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "post_preview_cache",
         "TIMEOUT": None,
     },
 }
@@ -761,6 +761,9 @@ if ENABLE_SSO:
     LOGIN_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
     LOGOUT_REDIRECT_URL = reverse_lazy("cfgov_login")
     ALLOW_LOGOUT_GET_METHOD = True
+
+    # Disable Wagtail password reset
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
 
     # This OIDC client's id and secret
     OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]

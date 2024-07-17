@@ -23,11 +23,9 @@ LOGGING = {
 
 # Disable caching for testing
 CACHES = {
-    k: {
+    "default": {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-        "TIMEOUT": 0,
     }
-    for k in ("default", "post_preview")
 }
 
 ALLOW_ADMIN_URL = True

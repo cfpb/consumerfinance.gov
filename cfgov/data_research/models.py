@@ -230,7 +230,7 @@ class MortgageBase(models.Model):
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
-        elif type(self) == NonMSAMortgageData:
+        elif type(self) is NonMSAMortgageData:
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()

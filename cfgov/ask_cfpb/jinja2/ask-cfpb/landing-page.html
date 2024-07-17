@@ -25,7 +25,7 @@
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
         {{ translation_links.render(modifier_classes='block--flush-top') }}
 
-        <section class="ask-search block--sub block--flush-top">
+        <section class="ask-search block block--sub block--flush-top">
             {{ ask_search.render( language=page.language, is_subsection=False ) }}
         </section>
 

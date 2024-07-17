@@ -1,7 +1,13 @@
 @import url('../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css');
 @import (reference) 'cfpb-core.less';
 
-// TODO: !important's are added for styles that are overriding ccdb5-ui styles.
+// TODO: CCDB requires a number of undesirable overrides here, since it imports
+//       the DS into its codebase independent of the import that happens for the
+//       rest of the site. In the future we should explore better encapsulation
+//       approaches for injecting the CCDB app into a page,
+//       such as making it a web component.
+
+// !important's are added for styles that are overriding ccdb5-ui styles.
 .wrapper {
   max-width: 1200px !important;
 }
@@ -12,6 +18,15 @@
     padding-left: 30px !important;
     padding-right: 30px !important;
   }
+}
+
+// This is needed because the base DS styles set ul:last-child to have a
+// bottom margin of zero, which then gets overridden by the mega menu.
+// However, CCDB also imports the DS into it's cold, so it overrides the
+// mega menu override and brings the ul:last-child back to having no bottom
+// margin. This causes the mega menu to lose a gap between featured menu items.
+.o-mega-menu__content-2-list--featured ul {
+  margin-bottom: unit(30px / @base-font-size-px, em);
 }
 
 .ccdb-search {

@@ -1,5 +1,6 @@
 @import (reference) 'cfpb-core.less';
 @import (reference) 'cfpb-buttons.less';
+@import (less) 'tooltip.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form__group {
@@ -90,6 +91,11 @@
   padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
 
+  a {
+    border-color: var(--pacific-mid-dark);
+    color: var(--pacific-mid-dark);
+  }
+
   p {
     max-width: 100%;
   }
@@ -151,6 +157,8 @@
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
+    // Disable iOS link highlighting for our large cards
+    -webkit-tap-highlight-color: transparent;
 
     &:visited .m-card__subtitle {
       border-color: @link-underline-visited;
@@ -261,8 +269,8 @@
     'apr transfer'
     'fee rewards'
     '. requirements';
-  grid-template-columns: 2fr 3fr;
-  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
   row-gap: 15px;
 
   .respond-to-min(@bp-sm-min, {
@@ -278,6 +286,15 @@
 
   &--apr {
     grid-area: apr;
+  }
+
+  &--apr-disclaimer {
+    font-size: unit((14px / @base-font-size-px), rem);
+
+    .respond-to-min(@bp-sm-min, {
+      font-size: unit((16px / @base-font-size-px), rem);
+      line-height: unit((22px / @base-font-size-px), rem);
+    });
   }
 
   &--fee {
@@ -449,7 +466,7 @@ html.js .o-filterable-list-results--partial {
     });
   }
 
-  h2 {
+  &:not(.o-card-details-section--introduction) > h2 {
     .respond-to-max(@bp-sm-min, {
       font-weight: 600;
     });
@@ -491,6 +508,11 @@ html.js .o-filterable-list-results--partial {
   dd .o-table {
     margin-top: unit((10px / @base-font-size-px), rem);
   }
+}
+
+.m-apr-disclaimer {
+  // Hang the asterisk at the beginning of the content
+  text-indent: -0.7ch;
 }
 
 .m-payment-calculation {
