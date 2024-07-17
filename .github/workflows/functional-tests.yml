@@ -78,7 +78,6 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         build: yarn build
-        config-file: test/cypress/cypress.config.mjs
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'
 
