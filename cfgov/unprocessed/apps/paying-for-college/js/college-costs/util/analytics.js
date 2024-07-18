@@ -6,6 +6,7 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
  * @param {string} label - A value or label for the action
  */
 function sendAnalyticsEvent(action, label) {
+  // Handle payload-style events
   if (typeof action === 'object') {
     analyticsSendEvent(action);
     return action;
@@ -18,4 +19,17 @@ function sendAnalyticsEvent(action, label) {
   }
 }
 
-export { sendAnalyticsEvent };
+/**
+ * A simple function to track tooltip engagement
+ */
+function toolTipTracking() {
+  const tooltips = document.querySelectorAll('.a-tooltip');
+  tooltips.forEach( (elem) => {
+    const parentText = elem.parentElement.innerText;
+    elem.addEventListener( 'mouseenter', (event) => {
+      analyticsSendEvent( 'Tooltip Mouseenter', parentText)
+    })
+  });
+}
+
+export { sendAnalyticsEvent, toolTipTracking };

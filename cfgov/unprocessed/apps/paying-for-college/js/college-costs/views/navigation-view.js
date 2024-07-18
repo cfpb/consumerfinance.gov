@@ -28,6 +28,7 @@ const navigationView = {
   _appSegment: null,
   _stateDomElem: null,
   _affordingChoices: null,
+  _navTrack: [],
 
   /**
    * _handlePopState - handle popstate events
@@ -101,6 +102,50 @@ const navigationView = {
   },
 
   /**
+   *  _trackNavigation - create a "trail" of the user's navigation through the site for analytics
+   * @param {string} - the most recent section seen
+   */
+  _trackNavigation: function( section ) {
+    const codes = {
+      'school-info': '1a',
+      'school-costs': '1b',
+      'estimate-debt': '2a',
+      'debt-at-grad': '2b',
+      'customize-estimate': '3a',
+      'debt-guideline': '3b',
+      'cost-of-borrowing': '4a',
+      'affording-payments': '4b',
+      'compare-school': '5',
+      'review-plan': '6',
+      'action-plan': '7',
+      'save-finish': '8'
+    };
+    if ( {}.hasOwnProperty.call(codes, section) ) {
+      navigationView._navTrack += codes[section] + '-';
+    } else {
+      navigationView._navTrack += '??-';
+    }
+  },
+
+
+  /**
+   * _timedNavTracking - Fires events after various delays to help track users
+   */
+  _timedNavTracking: function() {
+    const intervals = [ 60 , 120, 180, 300, 600, 900];
+    intervals.forEach( ( int ) => {
+      setTimeout( () => {
+        const d = new Date().toTimeString();
+        sendAnalyticsEvent( {
+          event: 'GradPath Nav Tracking',
+          nav: navigationView._navTrack,
+          time: int + 's'
+        });
+      }, int * 1000 );
+    })
+  },
+
+  /**
    * updateView - Public method to run private update methods
    */
   updateView: function () {
@@ -155,6 +200,7 @@ const navigationView = {
       '.affording-loans-choices .m-form-field',
     );
     this._updateViewCallback = updateViewCallback;
+    this._timedNavTracking();
 
     _addButtonListeners(iped);
     this.updateView();
@@ -256,6 +302,7 @@ function _handleSecondaryNavButtonClick(event) {
   } else {
     const target = event.target;
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
+    navigationView._trackNavigation( target.dataset.nav_section );
 
     if (typeof target.dataset.nav_section !== 'undefined') {
       updateState.activeSection(target.dataset.nav_section);
@@ -275,6 +322,7 @@ function _handleNavButtonClick(event) {
   } else {
     if (event.target.dataset['destination']) {
       const destination = event.target.dataset.destination;
+      navigationView._trackNavigation( destination );
 
       if (event.target.dataset['customizeTrigger']) {
         const trigger = event.target.dataset.customizeTrigger;
