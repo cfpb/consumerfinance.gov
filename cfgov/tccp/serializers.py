@@ -53,11 +53,13 @@ class CardSurveyDataListSerializer(CardSurveyDataSerializer):
     class Meta(CardSurveyDataSerializer.Meta):
         fields = [
             "annual_fee_estimated",
+            "geographic_restrictions",
             "institution_name",
             "issued_by_credit_union",
             "issued_by_top_25_institution",
             "periodic_fee_type",
             "product_name",
+            "professional_affiliation",
             "purchase_apr_for_tier_max",
             "purchase_apr_for_tier_min",
             "purchase_apr_for_tier_rating",

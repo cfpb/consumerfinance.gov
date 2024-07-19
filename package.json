@@ -34,7 +34,6 @@
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.19",
     "axe-core": "4.9.1",
-    "cfpb-chart-builder": "6.5.0",
     "cypress-axe": "1.5.0",
     "esbuild": "0.23.0",
     "fancy-log": "2.0.0",
@@ -78,7 +77,9 @@
     "styles": "yarn build styles",
     "scripts": "yarn build scripts",
     "watch": "yarn build watch",
-    "build": "node ./esbuild/build.js"
+    "build": "node ./esbuild/build.js",
+    "cypress": "./node_modules/.bin/cypress run --config-file cypress.template.mjs",
+    "fast-cypress": "./test/cypress/run-specs.sh && ./node_modules/.bin/cypress run"
   },
   "prettier": {
     "singleQuote": true

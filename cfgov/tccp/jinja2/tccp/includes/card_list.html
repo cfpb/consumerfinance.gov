@@ -1,6 +1,6 @@
 {% from 'tccp/includes/apr_rating.html' import apr_rating with context %}
 {% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range, currency, date %}
+{% from 'tccp/includes/fields.html' import apr, apr_range, currency, date, oxfordize %}
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
 {% from 'tccp/includes/tooltip.html' import tooltip %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
@@ -150,10 +150,27 @@
                             Eligibility
                             <span class="u-nowrap">
                                 requirements
+                                {%- if card.requirements_for_opening -%}
+                                    {%- set requirement_types = [] -%}
+                                    {%- if card.geographic_restrictions is not none -%}
+                                        {%- do requirement_types.append('living in a certain area') -%}
+                                    {%- endif -%}
+                                    {%- if card.professional_affiliation is not none -%}
+                                        {%- do requirement_types.append('working for certain employers') -%}
+                                    {%- endif -%}
+                                {%- endif -%}
                                 {{ tooltip(
                                     name='apr-disclaimer',
                                     heading=(
-                                        'Check with the company for eligibility requirements.'
+                                        'You must '
+                                        ~ ('be a member of this credit union' if card.issued_by_credit_union else 'meet  requirements set by the bank')
+                                        ~ ' to apply for this card.'
+                                    ),
+                                    body=(
+                                        ('Requirements may include ' if card.geographic_restrictions or card.professional_affiliation)
+                                        ~ oxfordize(requirement_types)
+                                        ~ ('. ' if card.geographic_restrictions or card.professional_affiliation)
+                                        ~ 'See card details for more information.'
                                     )
                                 ) }}
                             </span>
