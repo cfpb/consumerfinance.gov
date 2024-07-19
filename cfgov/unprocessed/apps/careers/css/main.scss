@@ -1,0 +1,7 @@
+@use 'sass:math';
+@import 'cfpb-core';
+
+dl.vacancy-announcement dt {
+  margin-top: math.div(12px, $base-font-size-px) + em;
+  margin-bottom: 0;
+}

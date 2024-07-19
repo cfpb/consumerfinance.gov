@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+.m-call-to-action {
+  &__text {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+}

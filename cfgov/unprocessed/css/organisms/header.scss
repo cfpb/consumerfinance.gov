@@ -1,0 +1,131 @@
+@use 'sass:math';
+
+$margin-half-em: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+  em;
+$mobile-trigger-ht-px: 54px;
+$min-app-width-px: 320px;
+
+.o-header {
+  min-width: $min-app-width-px;
+  border-bottom: 5px solid var(--green);
+  position: relative;
+  z-index: 10;
+  background-color: var(--white);
+
+  @include respond-to-min($bp-lg-min) {
+    min-width: $bp-lg-min;
+  }
+
+  &__content {
+    position: relative;
+
+    > .wrapper {
+      // TODO: Remove when Capital Framework is updated to 3.x.x.
+      //       on outdated consumerfinance.gov projects.
+      position: initial;
+
+      > .m-global-search {
+        float: right;
+
+        // Mobile only.
+        @include respond-to-max($bp-xs-max) {
+          margin-right: -15px;
+        }
+
+        // Tablet only.
+        @include respond-to-range($bp-sm-min, $bp-sm-max) {
+          margin-right: -30px;
+        }
+      }
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+
+      > .wrapper {
+        > .m-global-header-cta {
+          float: right;
+        }
+
+        html.js & > .m-global-search {
+          // Width should visually be 370px, plus 3px to accommodate
+          // the focus state.
+          min-width: 373px;
+        }
+      }
+    }
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      // Hide Global Header Call to Action.
+      // Adjust Mobile Megamenu margin
+      > .wrapper {
+        > .m-global-header-cta {
+          display: none;
+        }
+      }
+
+      // Set the mobile hamburger mega menu next to the logo.
+      > .o-mega-menu {
+        .js & {
+          top: 0;
+          left: 0;
+          position: absolute;
+        }
+      }
+    }
+  }
+
+  &__logo {
+    &-img {
+      // Size is to fit 320px minimum width for older iPhones, etc.
+      height: $mobile-trigger-ht-px - 20px;
+      width: auto;
+
+      // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      // Removes typical inline vertical whitespace.
+      vertical-align: middle;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        margin: 0 0 (math.div(20px, $base-font-size-px) + em) 0;
+        height: 50px;
+      }
+    }
+  }
+
+  &--mega-menu {
+    // Setting the minimum height allocates room for the mega menu
+    // so the header height doesn't change when it loads in.
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      min-height: 167px;
+    }
+  }
+
+  &--mega-menu &__logo {
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      .js & {
+        // Offset logo by width of mega menu trigger + 15px gap.
+        // The margin-left starts inside the 15px padding of the page
+        // page already, so a value that matches the width of the trigger
+        // will give it the desired spacing to the right of the trigger.
+        margin-left: $mobile-trigger-ht-px;
+      }
+    }
+  }
+}
+
+// Move logo on print.
+@include respond-to-print {
+  .o-header__logo {
+    // Mega menu is hidden, so we need to remove logo offset.
+    margin-left: 15px !important;
+  }
+}

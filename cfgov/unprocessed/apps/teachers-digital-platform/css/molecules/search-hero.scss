@@ -1,0 +1,35 @@
+@use 'sass:math';
+
+//
+// Search hero
+//
+
+.m-search-hero {
+  overflow: auto;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    display: flex;
+  }
+}
+
+.m-search-hero__text {
+  box-sizing: border-box;
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    width: 60%;
+  }
+}
+
+.m-search-hero__image-wrapper {
+  box-sizing: border-box;
+  display: none;
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    display: block;
+    width: 40%;
+    padding-left: math.div(30px, $base-font-size-px) + em;
+  }
+}
