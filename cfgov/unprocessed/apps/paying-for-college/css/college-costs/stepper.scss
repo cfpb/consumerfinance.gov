@@ -1,0 +1,36 @@
+.m-stepper {
+  ol {
+    display: grid;
+    list-style-type: none;
+    padding: 0;
+    grid-auto-flow: column;
+    gap: 2px;
+  }
+
+  li {
+    display: block;
+    height: 0.5rem;
+    background: linear-gradient(to left, var(--gray-20) 50%, var(--green) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.3s;
+    &.active {
+      background-position: left bottom;
+    }
+  }
+
+  .current-step {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--white);
+    background-color: var(--green);
+    padding: 0.6rem 1rem;
+    border-radius: 50%;
+  }
+
+  .h4 {
+    display: inline;
+    margin-left: 1rem;
+  }
+}
