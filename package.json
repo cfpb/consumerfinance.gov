@@ -79,6 +79,7 @@
     "watch": "yarn build watch",
     "build": "node ./esbuild/build.js",
     "cypress": "./node_modules/.bin/cypress run --config-file cypress.template.mjs",
+    "open": "./node_modules/.bin/cypress open --config-file cypress.template.mjs",
     "fast-cypress": "./test/cypress/run-specs.sh && ./node_modules/.bin/cypress run"
   },
   "prettier": {
