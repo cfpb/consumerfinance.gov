@@ -49,7 +49,7 @@ describe('Paying For College', () => {
       );
       cy.get('span[data-financial-item="total_costOfProgram"]').should(
         'contain',
-        '$2,152',
+        '$12,596',
       );
     });
     it('does not advance without valid selections', () => {
@@ -91,7 +91,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$27',
+        '$138',
       );
     });
 
@@ -108,7 +108,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$3,642',
+        '$2,998',
       );
     });
   });

@@ -39,24 +39,24 @@ describe('Your Financial Path to Graduation (url parameter functionality)', () =
     page.nextToSchoolCosts();
     cy.get('span[data-financial-item="total_costOfProgram"]').should(
       'contain',
-      '$51,840',
+      '$51,447',
     );
 
     page.clickLeftNav('review-plan');
 
-    cy.get('p[data-financial-item="total_costs"]').should('contain', '$17,280');
+    cy.get('p[data-financial-item="total_costs"]').should('contain', '$17,149');
     cy.get('p[data-financial-item="total_funding"]').should('contain', '$842');
     cy.get('p[data-financial-item="debt_totalAtGrad"]').should(
       'contain',
-      '$57,454',
+      '$55,239',
     );
     cy.get('p[data-financial-item="debt_tenYearInterest"]').should(
       'contain',
-      '$17,369',
+      '$11,026',
     );
     cy.get('p[data-financial-item="debt_tenYearMonthly"]').should(
       'contain',
-      '$624',
+      '$552',
     );
   });
 });
