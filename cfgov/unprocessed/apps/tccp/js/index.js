@@ -49,8 +49,12 @@ function initializeTooltips() {
         name: 'hideOnEsc',
         defaultValue: true,
         fn({ hide }) {
+          /**
+           * Hide when the escape key is pressed.
+           * @param {KeyboardEvent} event - Key down event.
+           */
           function onKeyDown(event) {
-            if (event.keyCode === 27) {
+            if (event.key === 'Escape') {
               hide();
             }
           }
