@@ -27,7 +27,7 @@ function toolTipTracking() {
   tooltips.forEach( (elem) => {
     const parentText = elem.parentElement.innerText;
     elem.addEventListener( 'mouseenter', (event) => {
-      analyticsSendEvent( 'Tooltip Mouseenter', parentText)
+      sendAnalyticsEvent( 'Tooltip Mouseenter', parentText );
     })
   });
 }

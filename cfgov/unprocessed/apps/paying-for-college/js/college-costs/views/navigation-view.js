@@ -28,7 +28,7 @@ const navigationView = {
   _appSegment: null,
   _stateDomElem: null,
   _affordingChoices: null,
-  _navTrack: [],
+  _navTrack: '1a',
 
   /**
    * _handlePopState - handle popstate events
@@ -137,9 +137,9 @@ const navigationView = {
       setTimeout( () => {
         const d = new Date().toTimeString();
         sendAnalyticsEvent( {
-          event: 'GradPath Nav Tracking',
-          nav: navigationView._navTrack,
-          time: int + 's'
+          event: 'pfc_grad_path',
+          action: 'Nav Tracking - ' + int + 's', 
+          label: navigationView._navTrack,
         });
       }, int * 1000 );
     })
@@ -339,7 +339,7 @@ function _handleNavButtonClick(event) {
           getStateValue('activeSection') +
           ' to ' +
           destination,
-        'time-to-click',
+          event.target.innerText
       );
 
       updateState.navigateTo(destination);
