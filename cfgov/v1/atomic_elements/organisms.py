@@ -12,6 +12,7 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
+import wagtailcharts.blocks
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
@@ -523,6 +524,26 @@ class SimpleChart(blocks.StructBlock):
     class Media:
         js = ["simple-chart/simple-chart.js"]
         css = ["simple-chart.css"]
+
+
+class WagtailChartsChartBlock(wagtailcharts.blocks.ChartBlock):
+    class Meta:
+        label = "Wagtail Charts Chart"
+        icon = "image"
+
+    # Load wagtailcharts scripts when block is included on a page instead of
+    # by rendering a {% render_charts %} template tag.
+    # https://github.com/overcastsoftware/wagtailcharts/blob/v0.5/wagtailcharts/templates/wagtailcharts/tags/render_charts.html
+    class Media:
+        js = [
+            "wagtailcharts/js/accounting.js?staticroot",
+            "wagtailcharts/js/chart-types.js?staticroot",
+            "wagtailcharts/js/chart.js?staticroot",
+            "wagtailcharts/js/stacked-100.js?staticroot",
+            "wagtailcharts/js/chartjs-plugin-datalabels.min.js?staticroot",
+            "wagtail-charts-chart-block.js",
+            "wagtailcharts/js/wagtailcharts.js?staticroot",
+        ]
 
 
 class FullWidthText(blocks.StreamBlock):
