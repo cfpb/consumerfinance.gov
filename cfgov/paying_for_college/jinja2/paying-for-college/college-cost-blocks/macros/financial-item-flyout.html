@@ -40,7 +40,7 @@
             type="button">
       <span class="flex-container">
         <span class="h4 o-costs-group__label financial-item__label">
-            {{ value.label }}
+            {{ value.label | safe }}
         </span>
         <span class="o-costs-group__link">
             {% if value.decor %}{{ value.decor | safe }}{% endif %}

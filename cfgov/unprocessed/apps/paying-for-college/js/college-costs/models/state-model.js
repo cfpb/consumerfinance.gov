@@ -88,11 +88,11 @@ const stateModel = {
       inDistrict: 'In district',
     },
     programIncome: {
-      '0-30k': '$0 to $30,000',
-      '30k-48k': '$30,000 to $48,000',
-      '48k-75k': '$48,000 to $75,000',
-      '75k-110k': '$75,000 to $110,000',
-      '110k-plus': '$110,000 or more',
+      '0-30k': 'from $0 to $30,000',
+      '30k-48k': 'from $30,000 to $48,000',
+      '48k-75k': 'from $48,000 to $75,000',
+      '75k-110k': 'from $75,000 to $110,000',
+      '110k-plus': 'of $110,000 or more',
     },
   },
 
