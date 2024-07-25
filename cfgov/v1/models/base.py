@@ -354,7 +354,7 @@ class CFGOVPage(Page):
     # Returns the JS files required by this page and its StreamField blocks.
     @property
     def media_js(self):
-        return sorted(set(self.page_js + self.streamfield_media("js")))
+        return list(dict.fromkeys(self.page_js + self.streamfield_media("js")))
 
     # Returns the CSS files required by this page and its StreamField blocks.
     @property
