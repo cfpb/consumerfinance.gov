@@ -104,6 +104,27 @@ class AbstractBrowsePage(CFGOVPage):
         }
 
 
+COLORS = (
+    ("#addc91", "Green 60"),
+    ("#1fa040", "Mid Dark Green"),
+    ("#257675", "Teal"),
+    ("#89b6b5", "Teal 60"),
+    ("#d14124", "Red"),
+    ("#e79e8e", "Red 60"),
+    ("#0072ce", "Pacific"),
+    ("#7eb7e8", "Pacific 60"),
+    ("#254b87", "Navy"),
+    ("#9daecc", "Navy 50"),
+    ("#dc731c", "Dark Gold"),
+    ("#ffc372", "Gold 70"),
+    ("#745745", "Dark Neutral"),
+    ("#baa496", "Neutral 60"),
+    ("#a01b68", "Dark Purple"),
+    ("#dc9cbf", "Purple 50"),
+    ("#d2d3d5", "Gray 20"),
+)
+
+
 class BrowsePage(AbstractBrowsePage):
     header = StreamField(
         [
@@ -131,7 +152,10 @@ class BrowsePage(AbstractBrowsePage):
             ("table", organisms.Table()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("chart_block", organisms.ChartBlock()),
-            ("wagtailchart_block", organisms.WagtailChartsChartBlock()),
+            (
+                "wagtailchart_block",
+                organisms.WagtailChartsChartBlock(colors=COLORS),
+            ),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
             ("mortgage_map_block", organisms.MortgageMapBlock()),
             ("mortgage_downloads_block", MortgageDataDownloads()),
