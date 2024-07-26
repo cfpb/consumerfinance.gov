@@ -449,6 +449,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "CLIENT_TOKEN": os.environ.get("AKAMAI_CLIENT_TOKEN"),
         "CLIENT_SECRET": os.environ.get("AKAMAI_CLIENT_SECRET"),
         "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
+        "HOSTNAMES": ["www.consumerfinance.gov"],
     }
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
@@ -457,11 +458,8 @@ ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": {
-            "files.consumerfinance.gov": os.environ.get(
-                "CLOUDFRONT_DISTRIBUTION_ID_FILES"
-            )
-        },
+        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
+        "HOSTNAMES": ["files.consumerfinance.gov"],
     }
 
 # CSP Allowlists
