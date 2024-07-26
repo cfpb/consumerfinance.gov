@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
-    "wagtail.users",
     "wagtail.images",
     "wagtail.embeds",
     "wagtail.contrib.frontend_cache",
@@ -99,6 +98,7 @@ INSTALLED_APPS = (
     "django_opensearch_dsl",
     "corsheaders",
     "login",
+    "login.apps.LoginUsersAppConfig",
     "filing_instruction_guide",
     "health_check",
     "health_check.db",
@@ -288,8 +288,6 @@ WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
-WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # This is used for easy autocomplete search behavior in the Wagtail admin.
