@@ -16,7 +16,7 @@ from wagtail.signals import (
     pre_page_move,
 )
 
-from django_opensearch_dsl.signals import BaseSignalProcessor
+from django_opensearch_dsl.signals import RealTimeSignalProcessor
 from opensearchpy import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
@@ -173,7 +173,7 @@ class ElasticsearchTestsMixin:
         )
 
 
-class WagtailSignalProcessor(BaseSignalProcessor):
+class WagtailSignalProcessor(RealTimeSignalProcessor):
     """Signal processor that reflects Wagtail changes in Elasticsearch.
 
     When Wagtail pages are saved, deleted, or moved, we want to update the
@@ -198,20 +198,20 @@ class WagtailSignalProcessor(BaseSignalProcessor):
 
         return instance
 
-    def handle_delete(self, sender, instance, **kwargs):
-        super().handle_delete(sender, self.check_afp(instance), **kwargs)
+    def handle_pre_delete(self, sender, instance, **kwargs):
+        super().handle_pre_delete(sender, self.check_afp(instance), **kwargs)
 
     def handle_save(self, sender, instance, **kwargs):
         super().handle_save(sender, self.check_afp(instance), **kwargs)
 
     def setup(self):
         page_published.connect(self.handle_save)
-        page_unpublished.connect(self.handle_delete)
-        pre_page_move.connect(self.handle_delete)
+        page_unpublished.connect(self.handle_pre_delete)
+        pre_page_move.connect(self.handle_pre_delete)
         post_page_move.connect(self.handle_save)
 
     def teardown(self):
         page_published.disconnect(self.handle_save)
-        page_unpublished.disconnect(self.handle_delete)
-        pre_page_move.disconnect(self.handle_delete)
+        page_unpublished.disconnect(self.handle_pre_delete)
+        pre_page_move.disconnect(self.handle_pre_delete)
         post_page_move.disconnect(self.handle_save)
