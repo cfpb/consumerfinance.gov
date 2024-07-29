@@ -1,6 +1,8 @@
 <section class="college-costs__tool-section college-costs__tool-section--affording" data-tool-section="debt-guideline">
   <h2>Your total debt is <span data-financial-item="debt_totalAtGrad">X</span>.<span data-state-based-visibility="uncovered-costs">Is this too much debt?</span></h2>
 
+    <p>The cost of student loans may be a good investment in your future&mdash;if you can afford to repay them.</p>
+
     <div class="costs-not-covered" data-state-based-visibility="uncovered-costs">
         {{ notification.render(
                 'caution',
@@ -9,7 +11,6 @@
                 'You have <strong><span data-financial-item="total_gap">$X</span></strong> in uncovered costs. Since you may need to borrow more money to cover this amount, we&apos;ve included this amount as loans in your estimated loan debt. You can go back to <button class="a-btn a-btn--link btn__nav" data-destination="customize-estimate">Customize your estimate</button> to explore ways to lower this cost.'  | safe
         ) }}
     </div>
-    <p>The cost of student loans may be a good investment in your future&mdash;if you can afford to repay them.</p>
 
     <h3><strong>Check if the amount you’ll owe is more than your estimated salary</strong></h3>
 

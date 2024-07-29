@@ -9,10 +9,8 @@
         'information',
         true,
         'Don&apos;t have a financial aid offer letter yet?' | safe,
-        'If you don&apos;t have an offer letter from a school you&apos;re considering, we recommend you <button class="a-btn a-btn--link btn__nav" data-customize-trigger="netPrice" data-destination="debt-guideline">skip this page for now</button>. We&apos;ll continue to use the estimated costs and debt that you&apos;ve made so far. (You can always come back once you have an offer.)<p style="margin-top:15px"><button class="a-btn a-btn--link btn__nav" data-destination="debt-guideline" data-customize-trigger="netPrice">Skip ahead and see if this amount of debt is too much to repay</button></p>' | safe
+        'If you don&apos;t have an offer letter from a school you&apos;re considering, we recommend you skip this page for now. We&apos;ll continue to use the estimated costs and debt that you&apos;ve made so far. (You can always come back once you have an offer.)<p style="margin-top:15px"><button class="a-btn a-btn--link btn__nav" data-destination="debt-guideline" data-customize-trigger="netPrice">Skip ahead and see if this amount of debt is too much to repay</button></p>' | safe
     ) }}
-
-    <p>Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll now getting into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.</p>
 
     <h3>Enter information from your financial aid offer</h3>
     <div class="block block--mid">
@@ -22,6 +20,7 @@
                 'value': '$0',
                 'is_editable': 'True',
                 'status': 'warning',
+                'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll get into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() flyout(flyout_settings) %}
@@ -162,20 +161,20 @@
                 'label': 'Federal loans (minus loan fees)',
                 'value': '$99,999',
                 'is_editable': 'True',
-                'note': 'Federal loans include some borrower protections and repayment options like income driven repayment plans, which base your monthly payment on your income and family size, not your loan balance. For some people, payments on an IDR can be as low as $0 a month. Under some circumstances, loan forgiveness is available under IDR plans. These options are not typically offered by private and other non-federal loans.',
+                'note': 'Federal loans include some borrower protections and repayment options like income-driven repayment (IDR) plans, which base your monthly payment on your income and family size, not your loan balance. For some people, payments on an IDR can be as low as $0 a month. Under some circumstances, loan forgiveness is available under IDR plans. These options are not typically offered by private and other non-federal loans.',
                 'data_attribute': 'data-financial-item="total_fedLoans"'
             } %}
 
             {% call() flyout(flyout_settings) %}
-            {% set tt = tooltip.render('Interest starts accumulating 6 months after you leave school.') %}
                 <div class="block block--mid block--flush-top financial-item-group undergrad-content">
+                    {% set tt = tooltip.render('Cheaper than unsubsidized loans because the government pays your interest until 6 months after you leave school (or drop below half-time).') %}
                     {{
                         input.render({
                             'label': 'Direct Subsidized Loan' ~ tt,
                             'id': 'plan__directSubsidized',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fedLoan_directSub"',
-                            'note': 'Cheaper than unsubsidized loans because the government pays your interest until 6 months after you leave school (or drop below half-time)'
+                            'helper_text': ''
                         })
                     }}
                     {% set tt = tooltip.render('The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
@@ -198,13 +197,14 @@
                     }}
                 </div>
                 <div class="block block--mid block--flush-bottom financial-item-group">
+                    {% set tt = tooltip.render('You start accruing interest as soon as you receive your first loan.') %}
                     {{
                         input.render({
                             'label': 'Direct Unsubsidized Loans' ~ tt,
                             'id': 'plan__directUnsub',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fedLoan_directUnsub"',
-                            'note': 'You start accruing interest as soon as you receive your first loan.'
+                            'helper_text': ''
                         })
                     }}
                     {% set tt = tooltip.render('The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
@@ -284,7 +284,7 @@
 
             <ul>
                 <li>Grad PLUS loan: For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
-                <li>Parent PLUS loan: For parents of dependent students. These loans are generally not eligible for income-driven repayment plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
+                <li>Parent PLUS loan: For parents of dependent students. These loans are generally not eligible for income-driven repayment (IDR) plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
                 <li>Private student loan: You or a family member can apply for a private student loan from a bank or credit union. Students without a credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
             </ul>
 
@@ -391,7 +391,7 @@
                     }}
                     {{
                         input.render({
-                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive.'),
+                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.'),
                             'id': 'plan__privLoan1Fee',
                             'value': '0',
                             'data_attribute': 'data-financial-item="fee_privLoan1"',
@@ -443,7 +443,7 @@
         <div class="estimate--total-costs">
             {{
                 text_item.render({
-                    'label': 'Estimated debt at graduation: ',
+                    'label': 'Estimated amount you\'ll owe at graduation: ',
                     'value': '0',
                     'type': 'subtotal',
                     'helper_text': 'including interest accrued during school',
