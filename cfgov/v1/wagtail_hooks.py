@@ -2,7 +2,6 @@ import logging
 import re
 
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -346,13 +345,6 @@ def clean_up_report_menu_items(request, report_menu_items):
 
 
 register_snippet(BannerViewSet)
-
-
-@hooks.register("register_permissions")
-def add_export_feedback_permission_to_wagtail_admin_group_view():
-    return Permission.objects.filter(
-        content_type__app_label="v1", codename="export_feedback"
-    )
 
 
 register_template_debug(
