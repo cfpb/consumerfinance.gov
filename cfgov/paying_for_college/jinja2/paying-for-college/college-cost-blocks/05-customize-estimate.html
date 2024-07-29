@@ -3,7 +3,7 @@
 <section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="customize-estimate">
     <h2 tabindex="-1">Customize your estimate</h2>
 
-    <p>This page will let you customize your estimate and help you determine whether you can cover the cost of attending this school.</p>
+    <p>This page will let you customize your estimate and help you assess your ability to pay the cost of attending this school.</p>
 
    {{ notification.render(
         'information',
@@ -162,7 +162,7 @@
                 'label': 'Federal loans (minus loan fees)',
                 'value': '$99,999',
                 'is_editable': 'True',
-                'note': 'Federal loans include some borrower protections and repayment options like income driven repayment plans which base your monthly payment on your income and family size, not your loan balance (including, under some circumstances, loan forgiveness).  These options are not typically offered by private and other non-federal loans.',
+                'note': 'Federal loans include some borrower protections and repayment options like income driven repayment plans, which base your monthly payment on your income and family size, not your loan balance. For some people, payments on an IDR can be as low as $0 a month. Under some circumstances, loan forgiveness is available under IDR plans. These options are not typically offered by private and other non-federal loans.',
                 'data_attribute': 'data-financial-item="total_fedLoans"'
             } %}
 
@@ -234,7 +234,7 @@
         <div class="financial-item-group">
 
             {% set flyout_settings = {
-                'label': 'Other sources',
+                'label': 'Personal and family contributions',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_otherResources"'
@@ -282,8 +282,14 @@
 
             <p>If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider:</p>
 
+            <ul>
+                <li>Grad PLUS loan: For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
+                <li>Parent PLUS loan: For parents of dependent students. These loans are generally not eligible for income-driven repayment plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
+                <li>Private student loan: You or a family member can apply for a private student loan from a bank or credit union. Students without a credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
+            </ul>
+
             {% set flyout_settings = {
-                'label': 'Direct PLUS (Grad PLUS) loan' | safe,
+                'label': 'Grad PLUS loan' | safe,
                 'value': '$0',
                 'class': 'graduate-content o-costs-group--first',
                 'is_editable': 'True',
@@ -297,7 +303,7 @@
                             'id': 'plan__gradPlus',
                             'value': '0',
                             'data_attribute': 'data-financial-item="plusLoan_gradPlus"',
-                            'note': 'For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at Federal Student Aid website.'
+                            'note': ''
                         })
                     }}
                     {{
@@ -334,8 +340,9 @@
                             'label': 'Loan amount',
                             'id': 'plan__parentPlus',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="plusLoan_parentPlus"',
-                            'note': 'These loans are generally not eligible for income-driven repayment plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the Federal Student Aid website.'
+                            'data_attr
+                            ibute': 'data-financial-item="plusLoan_parentPlus"',
+                            'note': ''
                         })
                     }}
                     {{
@@ -353,16 +360,10 @@
                         })
                     }}
                 </div>
-               {{ notification.render(
-                    'information',
-                    true,
-                    '',
-                    'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
-                ) }}
             {% endcall %}
 
             {% set flyout_settings = {
-                'label': 'Private loans',
+                'label': 'Private student loans',
                 'value': '$0',
                 'class': 'private-loan-flyout',
                 'is_editable': 'True',
@@ -377,7 +378,7 @@
                             'id': 'plan__privLoan1',
                             'value': '0',
                             'data_attribute': 'data-financial-item="privLoan_privLoan1"',
-                            'note': 'You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.'
+                            'note': ''
                         })
                     }}
                     {{

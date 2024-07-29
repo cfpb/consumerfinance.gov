@@ -326,14 +326,14 @@ const costOfBorrowingOpts = {
       pointWidth: 60,
       data: [10000],
       color: '#ff9e1b',
-      legendIndex: 2
+      legendIndex: 1
     },
     {
       name: 'Estimated total borrowed: <strong>$55,000</strong>',
       pointWidth: 60,
       data: [40000],
       color: '#ffe1b9',
-      legendIndex: 1
+      legendIndex: 2
     },
   ],
 };

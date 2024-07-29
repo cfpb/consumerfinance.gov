@@ -12,7 +12,7 @@
         <h3 class="h4"><strong><span data-school-item="school"></span>'s graduation rate</strong></h3>
         <div class="school-results__rank-display">
             <div class="big-percentile"><span data-school-item="rateGraduation" data-number-display="percentage"></span></div>
-            <div><span data-school-item="school"></span>'s graduation rate is <strong><span data-school-item="rateGraduation" data-number-display="percentage"></span></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
+            <div><span data-school-item="school"></span>'s graduation rate is <strong><span data-school-item="rateGraduation" data-number-display="percentage"></span></strong>. Students who don’t graduate are less likely to see financial gains from education and may be unable to secure a job that requires a degree.</div>
         </div>
         <fieldset class="o-form__fieldset school-results__cohort-buttons">
             <legend>
@@ -21,7 +21,7 @@
             {{
                 radio.render({
                   'name':  "graduation-rate-meter-selector--costs-page",
-                  'label': 'in the U.S.',
+                  'label': 'In the U.S.',
                   'value': 'cohortRankByHighestDegree',
                   'id': 'graduation-rate_us',
                   'class': 'm-form-field--lg-target'
@@ -30,7 +30,7 @@
             {{
                 radio.render({
                   'name':  "graduation-rate-meter-selector--costs-page",
-                  'label': '<span>in <span data-school-item="stateName"></span></span>' | safe,
+                  'label': '<span>In <span data-school-item="stateName"></span></span>' | safe,
                   'value': 'cohortRankByState',
                   'id': 'graduation-rate_state',
                   'class': 'm-form-field--lg-target'
