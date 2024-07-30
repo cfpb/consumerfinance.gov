@@ -461,13 +461,15 @@ html.js .o-filterable-list-results--partial {
     margin-bottom: unit((10px / @base-font-size-px), rem);
     border-bottom: 1px solid var(--gray-40);
 
-    .respond-to-max(@bp-sm-min, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
       margin-top: unit((30px / @base-font-size-px), rem);
     });
   }
 
   &:not(.o-card-details-section--introduction) > h2 {
-    .respond-to-max(@bp-sm-min, {
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
       font-weight: 600;
     });
   }
