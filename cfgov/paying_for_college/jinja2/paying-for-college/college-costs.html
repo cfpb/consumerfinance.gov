@@ -7,6 +7,7 @@
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
 {% import 'college-cost-blocks/macros/financial-item-text.html' as text_item with context %}
 {% import 'college-cost-blocks/macros/number-callout.html' as number_callout with context %}
+{% import 'college-cost-blocks/macros/tooltip.html' as tooltip %}
 
 {% block css -%}
     {{ super() }}
@@ -33,30 +34,31 @@
                             content--flush-bottom">
                     <div class="app-container">
                         <div class="app">
-                            {%- include 'college-cost-blocks/01-school-search.html' with context -%}
-                            {%- include 'college-cost-blocks/02-costs.html' with context -%}
-                            {%- include 'college-cost-blocks/03-grants-and-scholarships.html' with context -%}
-                            {%- include 'college-cost-blocks/04-work-study.html' with context -%}
-                            {%- include 'college-cost-blocks/05-federal-loans.html' with context -%}
-                            {%- include 'college-cost-blocks/06-school-loans.html' with context -%}
-                            {%- include 'college-cost-blocks/07-other-resources.html' with context -%}
-                            {%- include 'college-cost-blocks/08-loan-counseling.html' with context -%}
-                            {%- include 'college-cost-blocks/09-make-a-plan.html' with context -%}
-                            {%- include 'college-cost-blocks/10-max-debt-guideline.html' with context -%}
-                            {%- include 'college-cost-blocks/11-cost-of-borrowing.html' with context -%}
-                            {%- include 'college-cost-blocks/12-affording-your-loan.html' with context -%}
-                            {%- include 'college-cost-blocks/13-school-results.html' with context -%}
-                            {%- include 'college-cost-blocks/14-summary.html' with context -%}
-                            {%- include 'college-cost-blocks/15-action-plan.html' with context -%}
-                            {%- include 'college-cost-blocks/16-save-and-finish.html' with context -%}
-                            <div class="college-costs__tool-section-buttons block block--mid">
+                            <div id="react-stepper"></div>
+                            <div id="react-tooltip"></div>
+                            <h1 style="display:none">Your financial path to graduation</h1>
+                            {%- include 'college-cost-blocks/01-school-info.html' with context -%}
+                            {%- include 'college-cost-blocks/02-school-costs.html' with context -%}
+                            {%- include 'college-cost-blocks/03-estimate-debt.html' with context -%}
+                            {%- include 'college-cost-blocks/04-debt-at-grad.html' with context -%}
+                            {%- include 'college-cost-blocks/05-customize-estimate.html' with context -%}
+                            {%- include 'college-cost-blocks/06-debt-guideline.html' with context -%}
+                            {%- include 'college-cost-blocks/07-cost-of-borrowing.html' with context -%}
+                            {%- include 'college-cost-blocks/08-affording-payments.html' with context -%}
+                            {%- include 'college-cost-blocks/09-compare-school.html' with context -%}
+                            {%- include 'college-cost-blocks/10-review-plan.html' with context -%}
+                            {%- include 'college-cost-blocks/11-action-plan.html' with context -%}
+                            {%- include 'college-cost-blocks/12-save-finish.html' with context -%}
+
+                            <div class="college-costs__tool-section-buttons block block--mid" style="display: none;">
                                 <button class="a-btn college-costs__buttons--next btn__next-step">Next step</button>
                                 <button class="a-btn a-btn--link btn__save" data-app-button="save-and-finish-later">Save and finish later</button>
                             </div>
-                            <div class="college-costs_save-for-later block block--mid" data-state-based-visibility="save-for-later">
+                            <div class="college-costs_save-for-later block block--mid" data-state-based-visibility="save-for-later" style="display: none;">
                                 <p>Copy and save this link so that you can come back and review your plan.</p>
                                 {% include 'college-cost-blocks/copy-link-form.html' %}
                             </div>
+
                         </div>
                         <div class="costs-not-covered costs-not-covered-sticky">
                             {{ number_callout.render({

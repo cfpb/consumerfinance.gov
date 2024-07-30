@@ -38,8 +38,8 @@ export class AdminPage {
     return cy.get('#listing-results').find('li');
   }
 
-  tags() {
-    return cy.get('.tagfilter');
+  filters() {
+    return cy.get('.w-filter-button');
   }
 
   openDocumentsLibrary() {
@@ -119,7 +119,7 @@ export class AdminPage {
   }
 
   cleanUpRegulations() {
-    cy.get('table tr').last().contains('Delete').click({ force: true });
+    cy.get('table.listing tr').last().contains('Delete').click({ force: true });
     this.submitForm();
   }
 

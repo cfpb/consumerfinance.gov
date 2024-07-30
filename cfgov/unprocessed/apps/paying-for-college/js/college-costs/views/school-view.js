@@ -7,18 +7,18 @@ import {
 } from '../dispatchers/get-model-values.js';
 import {
   clearFinancialCosts,
-  recalculateFinancials,
   refreshExpenses,
   updateFinancial,
   updateSchoolData,
+  updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
-  updateFinancialViewAndFinancialCharts,
   updateGradMeterChart,
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { decimalToPercentString } from '../util/number-utils.js';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
@@ -33,14 +33,23 @@ const schoolView = {
   _schoolItems: [],
   _stateItems: [],
   _programSelect: null,
+  _programIncome: null,
 
   updateSchoolView: () => {
     updateFinancialView();
     updateGradMeterChart();
     updateRepaymentMeterChart();
     schoolView._updateSchoolRadioButtons();
+    schoolView._updateSchoolName();
     schoolView.updateSchoolItems();
     schoolView._updateProgramList();
+    schoolView._programIncome.value = getStateValue('programIncome');
+    document.querySelectorAll('.scorecard-school').forEach((elem) => {
+      elem.setAttribute(
+        'href',
+        'https://collegescorecard.ed.gov/school/?' + getSchoolValue('schoolID'),
+      );
+    });
   },
 
   updateSchoolItems: function () {
@@ -50,6 +59,10 @@ const schoolView = {
       // Prevent improper values from being displayed on the page
       if (typeof val === 'undefined' || val === false || val === null) {
         val = '';
+      }
+
+      if (elem.dataset.numberDisplay === 'currency') {
+        val = formatUSD({ amount: val });
       }
 
       if (elem.dataset.numberDisplay === 'percentage') {
@@ -71,12 +84,16 @@ const schoolView = {
   },
 
   _updateProgramList: () => {
+    if (getSchoolValue('schoolID') === null) return;
+    const programType = getStateValue('programType');
     let level = 'undergrad';
-    if (getStateValue('programType') === 'graduate') {
+
+    if (programType === 'graduate') {
       level = 'graduate';
     }
 
-    const list = getProgramList(level);
+    const list = getProgramList(level, programType);
+
     if (list.length > 0) {
       updateState.byProperty('schoolHasPrograms', 'yes');
     } else {
@@ -93,13 +110,27 @@ const schoolView = {
       });
       html +=
         '\n<option value="null">My program is not listed here/I am undecided.</option>';
+
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program
       if (getStateValue('pid')) {
-        document.querySelector('#program-select').value = getStateValue('pid');
+        schoolView._programSelect.value = getStateValue('pid');
       }
+
+      schoolView._programIncome.value = getStateValue('programIncome');
+      schoolView._programSelect.parentNode.parentNode.style.display = 'block';
+    } else {
+      schoolView._programSelect.parentNode.parentNode.style.display = 'none';
     }
+  },
+
+  _updateSchoolName: () => {
+    const school = getSchoolValue('school');
+
+    schoolView._searchResults.classList.remove('active');
+    if (school) schoolView._searchBox.value = school;
+    schoolView._schoolInfo.classList.add('active');
   },
 
   _updateSchoolRadioButtons: () => {
@@ -111,10 +142,6 @@ const schoolView = {
       'programRate',
       'programDependency',
     ];
-
-    schoolView._searchResults.classList.remove('active');
-    schoolView._searchBox.value = getSchoolValue('school');
-    schoolView._schoolInfo.classList.add('active');
 
     buttons.forEach((name) => {
       const val = getStateValue(name);
@@ -129,7 +156,7 @@ const schoolView = {
       const input = document.querySelector(
         'INPUT[name="' + name + '"][value="' + value + '"]',
       );
-      input.checked = true;
+      if (input) input.checked = true;
     }
   },
 
@@ -152,6 +179,7 @@ const schoolView = {
     );
     schoolView._schoolItems = document.querySelectorAll('[data-school-item]');
     schoolView._stateItems = document.querySelectorAll('[data-state-item]');
+    schoolView._programIncome = document.querySelector('#program-income');
 
     // Initialize listeners
     _addListeners();
@@ -176,6 +204,11 @@ function _addListeners() {
   schoolView._programSelect.addEventListener(
     'change',
     _handleProgramSelectChange,
+  );
+
+  schoolView._programIncome.addEventListener(
+    'change',
+    _handleIncomeSelectChange,
   );
 }
 
@@ -205,9 +238,24 @@ function _formatSearchResults(responseText) {
 let _keyupDelay;
 
 /**
+ * Show search indicator
+ */
+function startSearching() {
+  schoolView._searchBox.parentNode.className = 'searching';
+}
+
+/**
+ * Hide search indicator
+ */
+function stopSearching() {
+  schoolView._searchBox.parentNode.className = '';
+}
+
+/**
  * Text has been entered in the school search input.
  */
 function _handleInputChange() {
+  startSearching();
   clearTimeout(_keyupDelay);
   _keyupDelay = setTimeout(function () {
     const searchTerm = schoolView._searchBox.value.trim();
@@ -217,17 +265,29 @@ function _handleInputChange() {
        we represent that visually by hiding the search results DIV */
     if (searchTerm.length < 3) {
       schoolView._searchResults.classList.remove('active');
+      stopSearching();
     } else {
       schoolSearch(searchTerm).then(
         (resp) => {
+          stopSearching();
           _formatSearchResults(resp.responseText);
         },
         (error) => {
+          stopSearching();
           console.log(error);
         },
       );
     }
-  }, 500);
+  }, 300);
+}
+
+/**
+ * The income dropdown has been selected
+ */
+function _handleIncomeSelectChange() {
+  const selected = schoolView._programIncome.value;
+  updateState.byProperty('programIncome', selected);
+  updateFinancial('netPrice', getSchoolValue('netPrice_' + selected));
 }
 
 /**
@@ -270,6 +330,8 @@ function _handleResultButtonClick(event) {
     button = target.closest('BUTTON');
   }
 
+  schoolView._searchResults.classList.remove('active');
+
   // Clear pid from state
   updateState.byProperty('pid', false);
 
@@ -283,8 +345,9 @@ function _handleResultButtonClick(event) {
   if (typeof button.dataset.school_id !== 'undefined') {
     const iped = button.dataset.school_id;
     if (iped !== null && typeof iped !== 'undefined') {
+      startSearching();
       // Add schoolData to schoolModel
-      updateSchoolData(iped);
+      updateSchoolData(iped, true).then(() => stopSearching());
     }
   }
 }
@@ -294,26 +357,19 @@ function _handleResultButtonClick(event) {
  * @param {MouseEvent} event - click event object.
  */
 function _handleProgramRadioClick(event) {
-  const container = event.target.closest('.m-form-field');
-  const input = container.querySelector('input');
-  const recalcProps = [
-    'programProgress',
-    'programLength',
-    'programType',
-    'programDependency',
-  ];
+  const target = event.target;
+  if (target.tagName !== 'INPUT') return;
 
   // Update the model with program info
-  const prop = input.getAttribute('name');
-  const value = input.value;
-  updateState.byProperty(prop, value);
-  if (prop === 'programType') {
-    schoolView._updateProgramList();
-  }
-  if (recalcProps.indexOf(prop) !== -1) {
-    recalculateFinancials();
-    updateFinancialViewAndFinancialCharts();
-  }
+  const prop = target.getAttribute('name');
+  const value = target.value;
+  setTimeout(() => {
+    updateState.byProperty(prop, value);
+    updateFinancialsFromSchool();
+    if (prop === 'programType') {
+      schoolView._updateProgramList();
+    }
+  }, 0);
 }
 
 export { schoolView };

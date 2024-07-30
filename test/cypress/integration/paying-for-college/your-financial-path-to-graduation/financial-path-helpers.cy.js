@@ -3,8 +3,24 @@ export class PfcFinancialPathToGraduation {
     cy.get('.btn__get-started').click();
   }
 
-  clickNextStep() {
-    cy.get('.btn__next-step').click();
+  nextToSchoolCosts() {
+    cy.get('.a-btn--next[data-destination="school-costs"]').click();
+  }
+
+  nextToSeeCustomized() {
+    cy.get('.a-btn--next[data-destination="debt-guideline"]').click();
+  }
+
+  skipToCustomized() {
+    cy.get(
+      '.college-costs__buttons--next[data-destination="customize-estimate"]',
+    ).click();
+  }
+
+  chooseAndSet() {
+    this.enter('Harvard University');
+    this.clickSearchResult('Harvard University');
+    this.setIncome('48k-75k');
   }
 
   enter(name) {
@@ -30,12 +46,16 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickLeftNav(name) {
-    cy.get(`[data-nav_item="${name}"]`).click();
+    cy.get(`[data-nav_section="${name}"]`).click();
   }
 
   setText(name, value) {
     cy.get(`#${name}`).clear();
     cy.get(`#${name}`).type(value);
+  }
+
+  setIncome(val) {
+    cy.get('#program-income').select(val);
   }
 
   selectProgram(program, name) {
@@ -48,11 +68,6 @@ export class PfcFinancialPathToGraduation {
 
   actionPlan(name) {
     cy.get(`#action-plan_${name}`).check({ force: true });
-  }
-
-  costsQuestionChoice(name) {
-    cy.get(`label[for="costs-offer-radio_${name}"]`).click();
-    cy.get('#costs-offer-button').click();
   }
 
   enterProgramDetails() {

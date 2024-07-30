@@ -1,0 +1,49 @@
+     {% import "v1/includes/atoms/checkbox.html" as checkbox with context %}
+
+<section class="college-costs__tool-section college-costs__tool-section--make-a-plan" data-tool-section="estimate-debt">
+    <h2 tabindex="-1">How much do you expect to contribute this year?</h2>
+
+    <div class="block block--mid financial-items">
+            {{
+                input.render({
+                    'label': 'Personal funds' ~ tooltip.render('Money you and your family have on hand to put towards school per year of your program.'),
+                    'id': 'estimate__savings',
+                    'helper_text': '<strong>per year</strong> of your program',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="savings_personal"'
+                })
+            }}
+            {{
+                input.render({  
+                    'label': 'College savings plan (like 529 plans)' ~ tooltip.render('529 college savings plans are tax-advantaged savings plans that help  families save for higher education so they can be less reliant on student loans. <a href="https://studentaid.gov/resources/tax-benefits#529-plans" target="_blank" rel="noreferrer noopener">Learn more here.</a>') | safe,
+                    'id': 'estimate__collegeSavings',
+                    'helper_text': '<strong>per year</strong> of your program',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="savings_collegeSavings"'
+                })
+            }}
+
+            {{
+                text_item.render({
+                    'label': 'Total money you expect to contribute',
+                    'value': '$0',
+                    'type': 'total',
+                    'helper_text': '',
+                    'data_attribute': 'data-financial-item="total_initialEstimateContrib"'
+                })
+            }}
+    </div>
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">Get a rough estimate of how much you'll owe at graduation</span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="school-costs">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="debt-at-grad">Next</button>
+        </div>
+
+        <p>Do you have a complete financial aid offer? <button class="a-btn a-btn--link college-costs__buttons--next btn__nav" data-destination="customize-estimate">Skip to Step 3 to customize your estimate</button></p>
+        <p>
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>        
+        </p>
+
+    </div>
+</section>

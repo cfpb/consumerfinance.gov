@@ -3,29 +3,30 @@
 
     <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
 
-    <p>Do you want to put this plan into action or consider other options?</p>
+    <fieldset class="o-form__fieldset">
+      <legend class="h4">Do you want to put this plan into action or consider other options?</legend>
 
-    <div class="action-plan__choices block block--sub">
-        {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'How to put this plan into action',
-              'value': 'action',
-              'id': 'action-plan_put-into-action',
-              'class': 'm-form-field--lg-target'
-            })
-        }}
-         {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'Consider other options',
-              'value': 'consider',
-              'id': 'action-plan_consider',
-              'class': 'm-form-field--lg-target'
-            })
-        }}
-    </div>
-
+      <div class="action-plan__choices block block--sub">
+          {{
+              radio.render({
+                'name':  "action-plan-radio",
+                'label': 'Put this plan into action',
+                'value': 'action',
+                'id': 'action-plan_put-into-action',
+                'class': 'm-form-field--lg-target'
+              })
+          }}
+           {{
+              radio.render({
+                'name':  "action-plan-radio",
+                'label': 'Consider other options',
+                'value': 'consider',
+                'id': 'action-plan_consider',
+                'class': 'm-form-field--lg-target'
+              })
+          }}
+      </div>
+    </fieldset>
     <div class="block block--sub action-plan__steps" data-state-based-visibility="put-into-action">
         <h3>How to put this plan into action</h3>
         <div data-state-based-visibility="none">
@@ -61,7 +62,7 @@
 
         <div class="block block--sub">
             <h4>Double check that you’ll have enough money when you need it.</h4>
-            <p>If you have uncovered upfront costs, talk to the financial aid office about options to reduce the amount due at the beginning of the school year, like tuition installment plans. Or can you (or your family) start saving for these now? </p>
+            <p>If you have uncovered upfront costs, talk to the financial aid office about options to reduce the amount due at the beginning of the school year. Or can you (or your family) start saving for these now? </p>
         </div>
 
         <div class="block block--sub">
@@ -121,7 +122,7 @@
 
         <div class="block block--sub">
             <h4>Look for more grants and scholarships.</h4>
-            <p>There are always more available, even if school starts soon! <a href="https://www.careeronestop.org/Toolkit/Training/find-scholarships.aspx" target="_blank" class="external-link" rel="noreferrer noopener">Scholarship Finder</a> is one place to look.</p>
+            <p>There are always more available, even if school starts soon! <a href="https://www.careeronestop.org/Toolkit/Training/find-scholarships.aspx" target="_blank" class="external-link" rel="noreferrer noopener">Scholarship Finder</a> is one place to look. If you already have a financial aid offer or currently enrolled in school, check with your school to find out their policy processing new scholarships.  Scholarship displacement can occur where a school reduces or "displaces" aid already offered to a student after that student receives a new outside scholarship."</p>
         </div>
 
         <div class="block block--sub associates-content">
@@ -131,7 +132,7 @@
 
         <div class="block block--sub undergrad-content graduate-content">
             <h4>Consider working.</h4>
-            <p>While working can reduce borrowing and provide enriching experiences, remember that over 20 hours a week is associated with lower grades.</p>
+            <p>While working can reduce borrowing and provide enriching experiences, remember that studies have shown that working over 20 hours a week can be associated with lower grades.</p>
         </div>
 
         <div class="block block--sub undergrad-content associates-content">
@@ -150,5 +151,11 @@
         </div>
 
     </div>
-
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">Save and get a URL for later </span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="affording-payments">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="save-finish">Next</button>
+        </div>
+    </div>
 </section>

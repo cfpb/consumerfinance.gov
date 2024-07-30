@@ -68,6 +68,12 @@ main.college-costs {
     .no-program-selected {
       display: none;
     }
+    [data-state-based-visibility='program-is-selected'] {
+      display: block;
+    }
+    span[data-state-based-visibility='program-is-selected'] {
+      display: inline;
+    }
   }
 
   &[data-state_programlevel='graduate'] {
@@ -100,12 +106,6 @@ main.college-costs {
     }
   }
 
-  &[data-state_programtype][data-state_schoolhasprograms='yes'] {
-    .program-select {
-      display: block;
-    }
-  }
-
   // App
 
   &[data-state_gotstarted='false'] .app-container {
@@ -132,13 +132,7 @@ main.college-costs {
 
   // Section visibility by application state
 
-  &[data-state_activesection='grants-scholarships'],
-  &[data-state_activesection='work-study'],
-  &[data-state_activesection='federal-loans'],
-  &[data-state_activesection='school-loans'],
-  &[data-state_activesection='other-resources'],
-  &[data-state_activesection='loan-counseling'],
-  &[data-state_activesection='make-a-plan'] {
+  &[data-state_activesection='customize-estimate'] {
     // Desktop and above.
     .respond-to-min(@bp-med-min, {
       @supports (position: sticky) {
@@ -155,22 +149,6 @@ main.college-costs {
   // Save and finish later section visibility
   &[data-state_save-for-later='active'] {
     [data-state-based-visibility='save-for-later'] {
-      display: block;
-    }
-  }
-
-  // Costs button content control
-  &:not([data-state_costsquestion]) {
-    // Don't show the Next button on Costs page until a costs choice is made
-    &[data-state_activesection='costs'] {
-      .college-costs__tool-section-buttons {
-        display: none;
-      }
-    }
-    #costs_inputs-section {
-      display: none;
-    }
-    [data-state-based-visibility='costs-question-hide'] {
       display: block;
     }
   }
@@ -192,15 +170,15 @@ main.college-costs {
       display: inline;
     }
   }
-
-  &[data-state_pid] {
-    [data-state-based-visibility='program-is-selected'] {
-      display: block;
+  &[data-state_schoolselected='required'] {
+    [data-state-based-visibility='school-no-programs'] {
+      display: none;
     }
-    span[data-state-based-visibility='program-is-selected'] {
-      display: inline;
-    }
+    span[data-state-based-visibility='school-no-programs'] {
+      display: none;
+    }  
   }
+
   &:not([data-state_pid]) {
     [data-state-based-visibility='no-program-selected'] {
       display: block;
@@ -347,78 +325,78 @@ main.college-costs {
     }
   }
 
-  .school-results__comparison-section--default-rate .big-percentile {
+  .comparison-section--default-rate .big-percentile {
     border-color: var(--gray-20);
   }
 
   &[data-state_rategraduationrange='high'] {
-    .school-results__comparison-section--grad-rate .big-percentile {
+    .comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_rategraduationrange='medium'] {
-    .school-results__comparison-section--grad-rate .big-percentile {
+    .comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_rategraduationrange='low'] {
-    .school-results__comparison-section--grad-rate .big-percentile {
+    .comparison-section--grad-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_raterepay3yrrange='high'] {
-    .school-results__comparison-section--repayment-rate .big-percentile {
+    .comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_raterepay3yrrange='medium'] {
-    .school-results__comparison-section--repayment-rate .big-percentile {
+    .comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_raterepay3yrrange='low'] {
-    .school-results__comparison-section--repayment-rate .big-percentile {
+    .comparison-section--repayment-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_defaultraterange='high'] {
-    .school-results__comparison-section--default-rate .big-percentile {
+    .comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-min;
     }
   }
 
   &[data-state_defaultraterange='medium'] {
-    .school-results__comparison-section--default-rate .big-percentile {
+    .comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-median;
     }
   }
 
   &[data-state_defaultraterange='low'] {
-    .school-results__comparison-section--default-rate .big-percentile {
+    .comparison-section--default-rate .big-percentile {
       border-color: @college-costs-chart-max;
     }
   }
 
   &[data-state_repay3yrmissing='true'] {
-    .school-results__comparison-section--repayment-rate {
+    .comparison-section--repayment-rate {
       display: none;
     }
   }
 
   &[data-state_gradratemissing='true'] {
-    .school-results__comparison-section--grad-rate {
+    .comparison-section--grad-rate {
       display: none;
     }
   }
 
   &[data-state_defaultratemissing='true'] {
-    .school-results__comparison-section--default-rate {
+    .comparison-section--default-rate {
       display: none;
     }
   }
@@ -471,4 +449,23 @@ main.college-costs {
       display: block;
     }
   }
+
+  &[data-state_showschoolerrors='yes'][data-state_incomeselected='required'] {
+    [data-state-based-visibility='income-required'] {
+      display: block;
+    }
+  }
+
+  &[data-state_programrate='outOfState'] {
+    span[data-state-based-visibility='out-of-state'] {
+      display: inline;
+    }
+  }
+
+  &[data-state_usingnetprice="no"] {
+    span[data-state-based-visibility='using-net-price'] {
+      display: inline;
+    }
+  }
+
 }

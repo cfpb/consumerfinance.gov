@@ -48,13 +48,12 @@ class RegionViewSet(SnippetViewSet):
     icon = "site"
     menu_label = "Regions"
 
-    def states_in_region(self):
-        return ", ".join(str(state) for state in self.states.all())
-
-    def major_cities(self):
-        return "; ".join(str(city) for city in self.major_cities.all())
-
-    list_display = ["abbreviation", "name", states_in_region, major_cities]
+    list_display = [
+        "abbreviation",
+        "name",
+        "states_in_region",
+        "major_city_names",
+    ]
 
 
 class ServiceTypeViewSet(SnippetViewSet):

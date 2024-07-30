@@ -54,10 +54,11 @@ function getFinancialValue(name) {
  * getProgramList - retrieve an alphabetical list of programs
  * from the schoolModel
  * @param {string} level - program level - 'undergrad' or 'graduate'
+ * @param {string} programType - The specific program type
  * @returns {Array} an arry of objects containing program data
  */
-function getProgramList(level) {
-  return schoolModel.getAlphabeticalProgramList(level);
+function getProgramList(level, programType) {
+  return schoolModel.getAlphabeticalProgramList(level, programType);
 }
 
 /**
@@ -111,6 +112,19 @@ function getStateValue(prop) {
   return false;
 }
 
+/**
+ * useNetPrice - a passthrough so that additional checks in the state can be done before
+ * returning whether the financial-model should use netPrice or not
+ * @returns {boolean} true if the netPrice should be used
+ */
+
+/**
+ *
+ */
+function useNetPrice() {
+  return stateModel.useNetPrice();
+}
+
 export {
   getAllStateValues,
   getConstantsValue,
@@ -121,4 +135,5 @@ export {
   getSchoolCohortValue,
   getSchoolValue,
   getStateValue,
+  useNetPrice,
 };

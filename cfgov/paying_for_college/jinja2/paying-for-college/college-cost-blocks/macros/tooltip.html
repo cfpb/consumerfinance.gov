@@ -1,0 +1,16 @@
+{# ==========================================================================
+
+   Tooltip
+
+   ==========================================================================
+
+   Description:
+
+   Outputs an accessible tooltip anchor for use with React Tooltip
+
+   html:            Tooltip contents
+
+   ========================================================================== #}
+{% macro render( html ) -%}
+<button class="a-tooltip" aria-label="tooltip" aria-describedby="react-tooltip" data-tooltip-id="a-tooltip" data-tooltip-html='{{html | safe}}'>{% include 'icons/help-round.svg' %}</button>
+{%- endmacro %}

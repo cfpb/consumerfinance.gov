@@ -1,11 +1,12 @@
-<section class="college-costs__tool-section college-costs__tool-section--summary" data-tool-section="summary">
+<section class="college-costs__tool-section college-costs__tool-section--summary" data-tool-section="review-plan">
     <div class="block block--flush-top">
         <h2 tabindex="-1">Review your plan and projected outcomes</h2>
 
-        <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
+        <p>As you look over these numbers again, think about whether you are confident about the benefits of going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
 
         <p class="u-right">
-            <a class="a-link"
+            <a class="a-link
+                      a-link--icon"
                href="javascript:window.print()">
                 {{ svg_icon('print') }}
                 <span class="a-link__text">Print</span>
@@ -38,12 +39,12 @@
 
     <div class="block block--mid m-full-width-text">
         <h3 class="summary__header">Covering your costs</h3>
-        <div class="costs-not-covered">
+        <div class="costs-not-covered" data-state-based-visibility="uncovered-costs">
             {{ notification.render(
                     'caution',
                     true,
                     '',
-                    '<b>Costs not covered yet:</b> <span data-financial-item="total_gap"></span>' | safe
+                    'You have <strong><span data-financial-item="total_gap">$X</span></strong> in uncovered costs. Since you may need to borrow more money to cover this amount, we&apos;ve included this amount as loans in your estimated loan debt. You can go back to <button class="a-btn a-btn--link btn__nav" data-destination="customize-estimate">Customize your estimate</button> to explore ways to lower this cost.'  | safe
             ) }}
         </div>
 
@@ -134,10 +135,6 @@
                 <tr class="indented-row">
                     <td><p>Federal Loans</p></td>
                     <td><p data-financial-item="total_fedLoans"></p></td>
-                </tr>
-                <tr class="indented-row">
-                    <td><p>Loans from your state, the school, or a non-profit</p></td>
-                    <td><p data-financial-item="total_publicLoans"></p></td>
                 </tr>
                 <tr class="indented-row">
                     <td><p>Private loans</p></td>
@@ -250,14 +247,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>How long will it take to earn my estimated payment?</td>
-                        <td>
-                            <p>
-                                It will take <span class="inline" data-financial-item="debt_repayHours" data-is-number="true"> 0</span> hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Can I afford my payment within a monthly budget?</td>
                         <td>
                             <p>
@@ -315,9 +304,7 @@
                     <th scope="col" class="u-w70pct">
                         <p>Graduation and repayment rates</p>
                     </th>
-                    <th scope="col">
-                        <p></p>
-                    </th>
+                    <td scope="col"></td>
                 </tr>
             </thead>
             <tbody>
@@ -362,4 +349,15 @@
         </table>
 
     </div>
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">Consider your next steps before starting school </span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="compare-school">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="action-plan">Next</button>
+        </div>
+        <p>
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>
+        </p>
+    </div>
+
 </section>

@@ -109,11 +109,12 @@ function calculateDirectLoanDebt(
  * Calculate debts based on financial values
  */
 function debtCalculator() {
+  // TODO: This code uses a pre-defined namespace. It'd be nice if it was dynamic.
   const fedLoans = ['directSub', 'directUnsub'];
   const plusLoans = ['gradPlus', 'parentPlus'];
-  const publicLoans = ['state', 'institutional', 'nonprofit'];
-  const privateLoans = ['privateLoan1'];
-  const newLoans = fedLoans.concat(plusLoans, publicLoans, privateLoans);
+  const privateLoans = ['privLoan1'];
+  const gapLoan = ['gapLoan'];
+  const newLoans = fedLoans.concat(plusLoans, privateLoans, gapLoan);
   const fin = financialModel.values;
   const debts = {
     totalAtGrad: 0,
@@ -170,10 +171,10 @@ function debtCalculator() {
 
   // calculate debts of other loans
 
-  publicLoans.forEach((key) => {
-    const principal = fin['publicLoan_' + key] * fin.other_programLength;
+  privateLoans.forEach((key) => {
+    const principal = fin['privLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
-      fin['publicLoan_' + key],
+      fin['privLoan_' + key],
       fin['rate_' + key],
       fin.other_programLength,
     );
@@ -187,10 +188,11 @@ function debtCalculator() {
     interest[key] = int;
   });
 
-  privateLoans.forEach((key) => {
-    const principal = fin['privLoan_' + key] * fin.other_programLength;
+  //gap loan calc
+  gapLoan.forEach((key) => {
+    const principal = fin['gapLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
-      fin['privLoan_' + key],
+      fin['gapLoan_' + key],
       fin['rate_' + key],
       fin.other_programLength,
     );
@@ -245,34 +247,34 @@ function debtCalculator() {
 
   // calculate existing loan debt interest during program
 
-  let existingDebtInterest =
-    fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
+  // let existingDebtInterest =
+  //   fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
 
-  if (isNaN(existingDebtInterest)) {
-    existingDebtInterest = 0;
-  }
+  // if (isNaN(existingDebtInterest)) {
+  //   existingDebtInterest = 0;
+  // }
 
-  const existingDebtTotalAtGrad =
-    fin.existingDebt_amount + existingDebtInterest;
-  const existingDebtMonthly = calcMonthlyPayment(
-    existingDebtTotalAtGrad,
-    fin.rate_existingDebt,
-    10,
-  );
+  // const existingDebtTotalAtGrad =
+  //   fin.existingDebt_amount + existingDebtInterest;
+  // const existingDebtMonthly = calcMonthlyPayment(
+  //   existingDebtTotalAtGrad,
+  //   fin.rate_existingDebt,
+  //   10,
+  // );
 
-  debts.existingDebtInterestAtGrad = existingDebtInterest;
+  // debts.existingDebtInterestAtGrad = existingDebtInterest;
 
-  totalBorrowing += fin.existingDebt_amount;
-  interest.totalAtGrad += existingDebtInterest;
-  debts.totalAtGrad += existingDebtTotalAtGrad;
+  // totalBorrowing += fin.existingDebt_amount;
+  // interest.totalAtGrad += existingDebtInterest;
+  // debts.totalAtGrad += existingDebtTotalAtGrad;
 
-  debts.tenYearMonthly += existingDebtMonthly;
-  debts.tenYearTotal += existingDebtMonthly * 120;
+  // debts.tenYearMonthly += existingDebtMonthly;
+  // debts.tenYearTotal += existingDebtMonthly * 120;
 
   // Calculate totals
   debts.totalInterestAtGrad = interest.totalAtGrad;
-  debts.tenYearInterest =
-    debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
+  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
+  // - existingDebtInterest;
 
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
@@ -281,6 +283,9 @@ function debtCalculator() {
   fin.total_borrowingAtGrad = totalBorrowing;
   for (const key in debts) {
     fin['debt_' + key] = debts[key];
+  }
+  for (const key in interest) {
+    fin['interest_' + key] = interest[key];
   }
 }
 

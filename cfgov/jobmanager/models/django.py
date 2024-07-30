@@ -92,6 +92,12 @@ class Region(ClusterableModel):
         InlinePanel("major_cities", label="Major cities"),
     ]
 
+    def states_in_region(self):
+        return ", ".join(str(state) for state in self.states.all())
+
+    def major_city_names(self):
+        return "; ".join(str(city) for city in self.major_cities.all())
+
 
 class State(models.Model):
     name = models.CharField(max_length=255)
