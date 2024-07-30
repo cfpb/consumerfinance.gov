@@ -19,6 +19,7 @@ import {
 } from '../dispatchers/get-model-values.js';
 import { updateSchoolView } from './update-view.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 /**
  * initializeExpenseValues - Create financial model values based on the input
@@ -141,9 +142,10 @@ function setSchoolValues(data) {
 /**
  * updateSchoolData - Fetch API data for school and update the model
  * @param {string} iped - The id of the school
+ * @param {boolean} assumptions - if true, make assumptions about data and loans
  * @returns {object} Promise of the XHR request
  */
-function updateSchoolData(iped) {
+function updateSchoolData(iped, assumptions) {
   stateModel.setValue('schoolID', iped);
   return getSchoolData(iped)
     .then((resp) => {
@@ -158,6 +160,16 @@ function updateSchoolData(iped) {
       // If we have a pid, validate it has info
       if (!programInfo) {
         stateModel.setValue('pid', false);
+      }
+
+      // Rename the net price averages
+      if (data.netPriceAvgSlices) {
+        const slices = ['0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus'];
+        slices.forEach((income) => {
+          // We replace the underscore with a dash
+          schoolModel.values['netPrice_' + income.replace('_', '-')] =
+            data.netPriceAvgSlices[income];
+        });
       }
 
       // Take only the top 3 programs
@@ -188,6 +200,13 @@ function updateSchoolData(iped) {
           schoolModel.values.region;
         updateRegion(schoolModel.values.region);
       }
+
+      // Make assumptions for initial data
+      if (assumptions === true) {
+        updateState.byProperty('costsQuestion', 'y');
+        updateFinancialsFromSchool();
+      }
+
       updateSchoolView();
     })
     .catch(function (error) {
@@ -284,7 +303,7 @@ function updateModelsFromQueryString(queryObj) {
   parseQueryParameters(queryObj);
 
   if ({}.hasOwnProperty.call(queryObj, 'iped')) {
-    updateSchoolData(queryObj.iped);
+    updateSchoolData(queryObj.iped, true);
   }
 }
 
