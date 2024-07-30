@@ -1,9 +1,5 @@
 {% extends 'v1/layouts/base.html' %}
 
-{% if page and page.get_breadcrumbs and not breadcrumb_items %}
-    {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}
-
 {% block content scoped %}
     {# content_modifiers block is only used by story_page.html, 404.html, and 500.html #}
     <main class="u-layout-grid {% block content_modifiers -%}{%- endblock %}"
@@ -25,6 +21,7 @@
                 {# content__main_modifiers block is only used by the homepage #}
                 <div class="u-layout-grid__main {% block content_main_modifiers -%}{%- endblock %}">
                     {% block content_main scoped -%}{%- endblock %}
+                    {% include 'v1/layouts/_footnotes.html' %}
                 </div>
             {% endblock %}
         </div>

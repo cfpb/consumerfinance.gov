@@ -34,9 +34,7 @@ def convert_http_image_match(match, url_mappings):
         if http_image_url.startswith(from_prefix):
             return re.sub(from_prefix, to_prefix, match.group(0))
 
-    raise ValueError(
-        "cannot convert HTTP image link {}".format(http_image_url)
-    )
+    raise ValueError(f"cannot convert HTTP image link {http_image_url}")
 
 
 class PageValidator:

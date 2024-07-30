@@ -18,11 +18,13 @@ nav:
       - Django and Wagtail Migrations: migrations.md
       - Wagtail Pages: wagtail-pages.md
   - Supporting Features:
+      - Browser Support: browser-support.md
       - Caching: caching.md
       - Feature Flags: feature-flags.md
       - Filterable Lists: filterable-lists.md
       - Page Search: page-search.md
       - Site Search: site-search.md
+      - Single Sign-On: sso.md
       - Translation: translation.md
   - Testing:
       - JavaScript Unit Testing: javascript-unit-tests.md

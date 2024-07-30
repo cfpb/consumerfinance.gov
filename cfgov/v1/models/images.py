@@ -73,7 +73,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
 
     @staticmethod
     def apply_size_operation(operation, width, height):
-        class MockResizableImage(object):
+        class MockResizableImage:
             def __init__(self, width, height):
                 self.width = width
                 self.height = height

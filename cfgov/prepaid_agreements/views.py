@@ -14,9 +14,12 @@ def get_available_filters(products):
 
     for product in products.all():
         prepaid_type = product.prepaid_type
-        if prepaid_type and prepaid_type != "":
-            if prepaid_type not in available_filters["prepaid_type"]:
-                available_filters["prepaid_type"].append(prepaid_type)
+        if (
+            prepaid_type
+            and prepaid_type != ""
+            and prepaid_type not in available_filters["prepaid_type"]
+        ):
+            available_filters["prepaid_type"].append(prepaid_type)
 
         status = product.status
         if status and status not in available_filters["status"]:
@@ -26,7 +29,7 @@ def get_available_filters(products):
         if issuer_name and issuer_name not in available_filters["issuer_name"]:
             available_filters["issuer_name"].append(issuer_name)
 
-    for filter_type in available_filters.keys():
+    for filter_type in available_filters:
         available_filters[filter_type] = sorted(available_filters[filter_type])
 
     return available_filters

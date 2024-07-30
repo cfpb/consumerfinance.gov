@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models import Case, Count, F, Max, Min, Q, Value, When
 from django.db.models.functions import Coalesce
 
+from dateutil.relativedelta import relativedelta
 from tailslide import Percentile
 
 from . import enums
@@ -78,9 +79,9 @@ class CardSurveyDataQuerySet(models.QuerySet):
 
         # These are the statistics we want to compute:
         # (
-        #   stat name,
-        #   computation function,
-        #   whether to include min/max-only cards in the computation (see below)
+        #  stat name,
+        #  computation function,
+        #  whether to include min/max-only cards in the computation (see below)
         # )
         stats = [
             ("count", Count, True),
@@ -231,7 +232,22 @@ class CardSurveyDataQuerySet(models.QuerySet):
             }
         )
 
-        return self.aggregate(**dict(aggregates))
+        stats = self.aggregate(**dict(aggregates))
+
+        # Manually add a statistic for the start of the reporting period,
+        # which is assumed to be six months before the first report date.
+        # Report dates are always at the end of the month.
+        report_period_start = None
+        if first_report_date := stats["first_report_date"]:
+            report_period_start = (
+                first_report_date
+                + relativedelta(days=1)
+                - relativedelta(months=6)
+            )
+
+        stats["report_period_start"] = report_period_start
+
+        return stats
 
     def with_ratings(self, summary_stats=None):
         # Assign each card with a numeric rating based on its purchase APR."""
@@ -371,7 +387,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
                 f"purchase_apr_{tier_suffix}_rating": Case(
                     When(
                         **{
-                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[  # noqa: E501
                                 f"purchase_apr_{tier_suffix}_pct25"
                             ]
                             or 0
@@ -380,7 +396,7 @@ class CardSurveyDataQuerySet(models.QuerySet):
                     ),
                     When(
                         **{
-                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[
+                            f"purchase_apr_{tier_suffix}_max__lt": summary_stats[  # noqa: E501
                                 f"purchase_apr_{tier_suffix}_pct75"
                             ]
                             or 0
@@ -440,6 +456,9 @@ class CardSurveyDataQuerySet(models.QuerySet):
 class CardSurveyData(models.Model):
     slug = models.SlugField(max_length=255, primary_key=True)
     institution_name = models.TextField()
+    institution_type = models.TextField(
+        choices=enums.InstitutionTypeChoices, null=True, blank=True
+    )
     product_name = models.TextField(db_index=True)
     report_date = models.DateField()
     availability_of_credit_card_plan = models.TextField(
@@ -493,6 +512,9 @@ class CardSurveyData(models.Model):
         choices=enums.IndexTypeChoices, null=True, blank=True
     )
     purchase_apr_vary_by_credit_tier = YesNoBooleanField(null=True, blank=True)
+    purchase_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
+    )
     purchase_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     purchase_apr_good = models.FloatField(null=True, blank=True, db_index=True)
     purchase_apr_great = models.FloatField(
@@ -504,6 +526,9 @@ class CardSurveyData(models.Model):
     introductory_apr_offered = YesNoBooleanField()
     introductory_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    intro_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     intro_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     intro_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -517,6 +542,9 @@ class CardSurveyData(models.Model):
     balance_transfer_offered = YesNoBooleanField()
     balance_transfer_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    transfer_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     transfer_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     transfer_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -533,6 +561,9 @@ class CardSurveyData(models.Model):
     cash_advance_apr_offered = YesNoBooleanField()
     cash_advance_apr_vary_by_credit_tier = YesNoBooleanField(
         null=True, blank=True
+    )
+    advance_apr_no_score = models.FloatField(
+        null=True, blank=True, db_index=True
     )
     advance_apr_poor = models.FloatField(null=True, blank=True, db_index=True)
     advance_apr_good = models.FloatField(null=True, blank=True, db_index=True)
@@ -672,10 +703,9 @@ class CardSurveyData(models.Model):
     website_for_consumer = models.TextField(null=True, blank=True)
     telephone_number_for_consumers = models.TextField(null=True, blank=True)
 
-    # This field doesn't currently exist in the TCCP dataset.
-    # See tccp.management.commands.patch_tccp.
-    # Once this is added to the dataset, the default=False can be removed.
-    top_25_institution = YesNoBooleanField(default=False, db_index=True)
+    issued_by_top_25_institution = YesNoBooleanField(
+        default=False, db_index=True
+    )
 
     class Meta:
         indexes = [
@@ -738,3 +768,17 @@ class CardSurveyData(models.Model):
                 ]
             )
         )
+
+    @property
+    def issued_by_credit_union(self):
+        return self.institution_type == "CU"
+
+    @property
+    def has_only_variable_late_fees(self):
+        return [enums.LateFeeTypeChoices[2][0]] == self.late_fee_types
+
+    @property
+    def has_only_variable_over_limit_fees(self):
+        return [
+            enums.OverlimitFeeTypeChoices[1][0]
+        ] == self.over_limit_fee_types

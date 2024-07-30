@@ -28,9 +28,7 @@ def run():
 
     # If specified in the environment, create or activate superuser.
     if admin_username and admin_password:
-        logger.info(
-            "Configuring superuser, username: {}".format(admin_username)
-        )
+        logger.info(f"Configuring superuser, username: {admin_username}")
 
         User.objects.update_or_create(
             username=admin_username,
@@ -75,7 +73,7 @@ def run():
         default_site.root_page_id = home_page.id
         default_site.port = http_port
         default_site.save()
-        logger.info("Configured default Wagtail Site: {}".format(default_site))
+        logger.info(f"Configured default Wagtail Site: {default_site}")
 
     # Setup a sharing site for the default Wagtail site if a sharing hostname
     # has been configured in the environment.
@@ -87,4 +85,4 @@ def run():
                 "port": http_port,
             },
         )
-        logger.info("Configured wagtail-sharing site: {}".format(sharing_site))
+        logger.info(f"Configured wagtail-sharing site: {sharing_site}")

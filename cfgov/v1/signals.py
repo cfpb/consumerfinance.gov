@@ -1,7 +1,7 @@
 from itertools import chain
 
 from django.conf import settings
-from django.core.cache import cache, caches
+from django.core.cache import cache
 from django.dispatch import receiver
 
 from wagtail.signals import page_published, page_unpublished
@@ -14,14 +14,6 @@ from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.caching import AkamaiBackend
 from v1.models.filterable_page import AbstractFilterablePage
 from v1.util.ref import get_category_children
-
-
-def invalidate_post_preview(sender, **kwargs):
-    instance = kwargs["instance"]
-    caches["post_preview"].delete(instance.post_preview_cache_key)
-
-
-page_published.connect(invalidate_post_preview)
 
 
 def invalidate_filterable_list_caches(sender, **kwargs):

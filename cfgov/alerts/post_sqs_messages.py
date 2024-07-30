@@ -64,7 +64,8 @@ def cleanup_message(message):
     return message.replace(
         "#", "# "
     ).replace(  # Avoids erroneous Github issue link
-        "[Open]", ""  # We want to expand the link
+        "[Open]",
+        "",  # We want to expand the link
     )
 
 
@@ -72,16 +73,14 @@ def process_sqs_message(message, github_alert, mattermost_alert):
     body = cleanup_message(message.get("Body"))
     title = body.split(" - ")[0]
 
-    logger.debug("Retrieved message {} from SQS".format(body))
+    logger.debug(f"Retrieved message {body} from SQS")
 
     issue = github_alert.post(title=title, body=body)
 
     if mattermost_alert:
         try:
             mattermost_alert.post(
-                text="Alert: {}. Github issue at {}".format(
-                    title, issue.html_url
-                )
+                text=f"Alert: {title}. Github issue at {issue.html_url}"
             )
         except Exception:
             # Mattermost failures should be considered non-fatal, as the alert

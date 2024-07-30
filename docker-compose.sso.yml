@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  oidcprovider:
+    image: mozilla/oidc-testprovider:oidc_testprovider-latest
+    ports:
+      - "8080:8080"
+    command: >
+      sh -c "
+      python manage.py migrate --noinput &&
+      python manage.py loaddata fixtures.json &&
+      python manage.py loaddata extra_fixtures.json &&
+      python manage.py runserver 0.0.0.0:8080
+      "
+    volumes:
+      - ${PWD}/docker/oidcprovider/extra_fixtures.json:/code/extra_fixtures.json
+

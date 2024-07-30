@@ -68,23 +68,21 @@ parser.add_argument(
 
 def cache_known_violations(known_violations_filename, known_violations):
     with open(known_violations_filename, "w") as known_violations_file:
-        known_violations_file.writelines(
-            ["{}\n".format(v) for v in known_violations]
-        )
+        known_violations_file.writelines([f"{v}\n" for v in known_violations])
 
-    logger.info("cached known violations {}".format(known_violations))
+    logger.info(f"cached known violations {known_violations}")
 
 
 def read_known_violations(known_violations_filename):
     try:
-        with open(known_violations_filename, "r") as known_violations_file:
+        with open(known_violations_filename) as known_violations_file:
             known_violations = [
                 int(v) for v in known_violations_file.readlines()
             ]
-    except IOError:
+    except OSError:
         logger.warning("Known violations file does not exist")
         known_violations = []
-    logger.info("read known violations {}".format(known_violations))
+    logger.info(f"read known violations {known_violations}")
     return known_violations
 
 
@@ -120,7 +118,7 @@ if __name__ == "__main__":
         response = sqs_queue.post(message)
         if response["ResponseMetadata"]["HTTPStatusCode"] != 200:
             sys.exit(1)
-        logger.info("Sent message '{}' to SQS".format(message))
+        logger.info(f"Sent message '{message}' to SQS")
 
     # Cache known violations
     cache_known_violations(

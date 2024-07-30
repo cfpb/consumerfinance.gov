@@ -145,7 +145,7 @@ class LinkUtilsTests(SimpleTestCase):
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
-            '<a class="a-link a-link--icon" '
+            '<a class="a-link" '
             f"{data_pretty_href}"
             f'href="{url}">'
             '<span class="a-link__text">foo</span> '
@@ -178,7 +178,7 @@ class LinkUtilsTests(SimpleTestCase):
 
     def test_content_cfgov(self):
         url = "http://content.cfpb.gov"
-        tag = "<a href='{}'>foo</a>".format(url)
+        tag = f"<a href='{url}'>foo</a>"
         path = "/"
         self.assertIsNone(add_link_markup(tag, path))
 
@@ -205,7 +205,7 @@ class LinkUtilsTests(SimpleTestCase):
         path = "/about-us/blog/"
 
         expected_html = (
-            '<a class="a-link a-link--icon" '
+            '<a class="a-link" '
             f'href="{url}">'
             "<svg></svg>"
             '<span class="a-link__text">foo</span> '
@@ -226,7 +226,7 @@ class LinkUtilsTests(SimpleTestCase):
         ]
         path = "/"
         for url in urls:
-            tag = "<a href='{}'>foo</a>".format(url)
+            tag = f"<a href='{url}'>foo</a>"
             self.assertIn(
                 'data-pretty-href="cfpb.gov/askcfpb/108"',
                 add_link_markup(tag, path),
@@ -240,7 +240,7 @@ class LinkUtilsTests(SimpleTestCase):
             "https://consumerfinance.gov/ask-cfpb-in-the-url/123",
         ]
         for url in urls:
-            tag = "<a href='{}'>foo</a>".format(url)
+            tag = f"<a href='{url}'>foo</a>"
             self.assertIsNone(add_link_markup(tag, path))
 
     def test_link_button(self):
@@ -260,4 +260,20 @@ class LinkUtilsTests(SimpleTestCase):
 
         expected_tag = BeautifulSoup(expected_html, "html.parser")
 
+        self.assertEqual(add_link_markup(tag, path), str(expected_tag))
+
+    def test_link_with_whitespace_in_text(self):
+        url = "https://example.com"
+        tag = f'<a href="{url}">\nClick <strong>here</strong> now! </a>'
+        path = "/about-us/blog/"
+
+        expected_html = (
+            f'<a class="a-link" href="{url}">'
+            '<span class="a-link__text">'
+            "Click <strong>here</strong> now!</span> "
+            f"{self.external_link_icon}"
+            "</a>"
+        )
+
+        expected_tag = BeautifulSoup(expected_html, "html.parser")
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))

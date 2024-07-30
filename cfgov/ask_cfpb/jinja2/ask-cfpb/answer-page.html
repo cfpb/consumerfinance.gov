@@ -1,7 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 {% import 'v1/includes/macros/util/format/datetime.html' as dt %}
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-{% import 'v1/includes/organisms/ask-search.html' as ask_search with context %}
+{% import 'ask-cfpb/_ask-search.html' as ask_search with context %}
 
 {% block title -%}
     {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
@@ -13,7 +13,7 @@
 
 {% block css -%}
     {{ super() }}
-    <link rel="stylesheet" href="{{ static('css/on-demand/ask.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/ask-cfpb/css/main.css') }}">
 {%- endblock css %}
 
 {% block content_modifiers -%}
@@ -70,18 +70,20 @@
                     <ul class="m-list m-list--unstyled m-list--links">
                         {% for question in related_questions %}
                         <li class="m-list__item">
-                            <a href="{{ question.url }}" class="m-list__link">
-                                {{ question.question | safe }}
+                            <a class="a-link a-link--jump"
+                               href="{{ question.url }}">
+                                <span class="a-link__text">{{ question.question | safe }}</span>
                             </a>
                         </li>
                         {% endfor %}
                         {% if portal_page %}
                         <li class="m-list__item m-list__item--last">
-                            <a href="{{ portal_page.url }}" class="m-list__link">
-                                <b>
+                            <a class="a-link a-link--jump"
+                               href="{{ portal_page.url }}">
+                                <span class="a-link__text"><b>
                                     {{ _('Learn more about') }}
                                     {{ portal_page.portal_topic.title(page.language) | lower }}
-                                </b>
+                                </b></span>
                             </a>
                         </li>
                         {% endif %}
@@ -114,3 +116,8 @@
         {% include '_disclaimer.html' %}
     {% endif %}
 {% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script src="{{ static('apps/ask-cfpb/js/main.js') }}"></script>
+{% endblock javascript %}

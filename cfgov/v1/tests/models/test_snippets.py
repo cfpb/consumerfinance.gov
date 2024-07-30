@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+import json
+
 from django.test import TestCase
 
 from wagtail.models import Site
@@ -13,11 +14,31 @@ from v1.models import (
 )
 
 
-class TestUnicodeCompatibility(TestCase):
+class ContactTests(TestCase):
     def test_unicode_contact_heading_unicode(self):
         contact = Contact(heading="Unicod\xeb")
         self.assertEqual(str(contact), "Unicod\xeb")
         self.assertIsInstance(str(contact), str)
+
+    def test_contact_preview(self):
+        contact = Contact(
+            heading="Contact name",
+            contact_info=json.dumps(
+                [
+                    {
+                        "type": "hyperlink",
+                        "value": {
+                            "url": "https://example.com",
+                            "text": "Example",
+                        },
+                    }
+                ]
+            ),
+        )
+
+        response = contact.make_preview_request()
+        self.assertContains(response, "<h3>Contact name</h3>")
+        self.assertContains(response, 'href="https://example.com"')
 
 
 class TestModelStrings(TestCase):
@@ -50,7 +71,7 @@ class TestReusableTextRendering(TestCase):
         default_site = Site.objects.get(is_default_site=True)
         default_site.root_page.add_child(instance=page)
 
-        html = '<a linktype="page" id="{}">Link</a>'.format(page.pk)
+        html = f'<a linktype="page" id="{page.pk}">Link</a>'
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn('<a href="/foo/">', block.render({"text": html}))
 

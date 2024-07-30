@@ -17,7 +17,7 @@ def create_job_link(control_number, applicant_type, page):
     job_link = USAJobsApplicationLink(
         announcement_number=control_number,
         applicant_type=applicant_type,
-        url="http://www.test.com/{}".format(control_number),
+        url=f"http://www.test.com/{control_number}",
         job_listing=page,
     )
     job_link.save()
@@ -198,7 +198,7 @@ class UnpublishClosedJobsTestCase(TestCase):
 
         self.page.refresh_from_db()
         logger_mock.assert_called_with(
-            'API check for job "{}" failed'.format(job_link.url)
+            f'API check for job "{job_link.url}" failed'
         )
         self.assertTrue(self.page.live)
 
@@ -213,6 +213,6 @@ class UnpublishClosedJobsTestCase(TestCase):
 
         self.page.refresh_from_db()
         logger_mock.assert_called_with(
-            'Check of USAJobs page "{}" failed'.format(job_link.url)
+            f'Check of USAJobs page "{job_link.url}" failed'
         )
         self.assertTrue(self.page.live)

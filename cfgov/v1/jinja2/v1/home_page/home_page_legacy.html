@@ -26,25 +26,13 @@
         {% include "v1/includes/molecules/hero.html" with context %}
     {% endwith %}
 
-    {% with value = hardcoded.features %}
-        <section class="wrapper
-                        wrapper--match-content
-                        block
-                        block--bg
-                        block--border
-                        block--flush-top
-                        u-mb0"
-        >
-            {% include "v1/includes/organisms/info-unit-group-2.html" with context %}
-        </section>
-    {% endwith %}
 {% endblock %}
 
 {% block content_main %}
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with value = hardcoded.info_units %}
-        {% include 'v1/includes/organisms/info-unit-group-2.html' %}
+        {% include 'v1/includes/organisms/info-unit-group.html' %}
     {% endwith %}
 
     <section class="block">

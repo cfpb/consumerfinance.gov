@@ -18,7 +18,7 @@ export default `
             </div>
         </section>
         <div class="content__line"></div>
-        <section class="verify step content__wrapper">
+        <section class="verify step wrapper">
             <div class="content__main">
 
                 <div class="m-notification m-notification--error verify__content" data-missing-data-error="noSchool">
@@ -177,7 +177,7 @@ export default `
             </div>
         </section>
         <section id="info-right" class="information-right" tabindex="-1">
-            <section class="instructions step content__wrapper">
+            <section class="instructions step wrapper">
                 <div class="content__main">
                     <div class="instructions__wrapper">
                         <div class="instructions__content
@@ -224,7 +224,7 @@ export default `
                     <div class="content__line"></div>
                 </div>
             </section>
-            <section class="review step content__wrapper" data-section="review">
+            <section class="review step wrapper" data-section="review">
                 <div class="content__main">
                     <div class="review__wrapper">
                         <div class="review__intro">
@@ -367,7 +367,7 @@ export default `
                                             </label>
                                             <p class="aid-form__definition">
                                                 Based on financial need,
-                                                <a class="a-link a-link--icon" href="https://studentaid.gov/understand-aid/types/grants/pell" rel="noopener noreferrer" target="__blank"><span class="a-link__text">see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                                <a class="a-link" href="https://studentaid.gov/understand-aid/types/grants/pell" rel="noopener noreferrer" target="__blank"><span class="a-link__text">see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
                                         <div class="aid-form__input-wrapper">
@@ -458,7 +458,7 @@ export default `
                                             <p class="aid-form__definition">
                                                 Money for service members or
                                                 veterans that you don’t have
-                                                to pay back; <a class="a-link a-link--icon" href="https://www.vets.gov/gi-bill-comparison-tool" rel="noopener noreferrer" target="__blank"><span class="a-link__text">see how much the
+                                                to pay back; <a class="a-link" href="https://www.vets.gov/gi-bill-comparison-tool" rel="noopener noreferrer" target="__blank"><span class="a-link__text">see how much the
                                                 GI Bill pays</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
@@ -803,7 +803,7 @@ export default `
                                                 Reserved for students most in
                                                 need; interest starts
                                                 accumulating 9 months after you
-                                                leave school; <a class="a-link a-link--icon" href="https://studentaid.ed.gov/sa/types/loans/perkins" rel="noopener noreferrer" target="__blank"><span class="a-link__text">
+                                                leave school; <a class="a-link" href="https://studentaid.ed.gov/sa/types/loans/perkins" rel="noopener noreferrer" target="__blank"><span class="a-link__text">
                                                 see how you qualify</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                             </p>
                                         </div>
@@ -1416,7 +1416,7 @@ export default `
                 </div>
             </section>
             <section class="continue step">
-                <div class="content__wrapper">
+                <div class="wrapper">
                     <div class="content__main">
                         <div class="continue__wrapper">
                             <div class="continue__content">
@@ -1444,7 +1444,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="evaluate step content__wrapper" data-section="evaluate">
+            <section class="evaluate step wrapper" data-section="evaluate">
                 <div class="content__main">
                     <div class="evaluate__wrapper">
                         <div class="evaluate__intro">
@@ -1556,7 +1556,7 @@ export default `
                                     <div class="metric__link">
                                         <p>
                                             Curious about the graduation rate
-                                            for the entire school? <a href="https://collegescorecard.ed.gov/school/?133465#graduation" target="__blank" rel="noopener noreferrer" class="graduation-link a-link a-link--icon">See
+                                            for the entire school? <a href="https://collegescorecard.ed.gov/school/?133465#graduation" target="__blank" rel="noopener noreferrer" class="graduation-link a-link">See
                                             how this school’s graduation rate
                                             compares to the national average </a>
                                         </p>
@@ -1672,7 +1672,7 @@ export default `
                                   payment is <span id="criteria__loan-monthly" data-financial="loanMonthly">$562</span>,
                                   based on standard loan terms of <span data-financial="repaymentTerm" data-currency="false">10</span> years. Once
                                   you leave school, you are able to choose one
-                                  of <a class="a-link a-link--icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="__blank"><span class="a-link__text">several
+                                  of <a class="a-link" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="__blank"><span class="a-link__text">several
                                   different repayment options for your federal
                                   loans</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a> that may help reduce your monthly
                                   student loan payment.
@@ -1683,7 +1683,7 @@ export default `
                                     qualify for a federal tax credit or
                                     deduction. As a result, when you start
                                     repaying your loans, you may be able to
-                                    <a class="a-link a-link--icon" href="https://www.irs.gov/newsroom/tax-benefits-for-education-information-center" rel="noopener noreferrer" target="__blank"><span class="a-link__text">reduce your
+                                    <a class="a-link" href="https://www.irs.gov/newsroom/tax-benefits-for-education-information-center" rel="noopener noreferrer" target="__blank"><span class="a-link__text">reduce your
                                     federal tax burden</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>. Please consult with
                                     your tax advisor.
                                 </p>
@@ -1768,7 +1768,7 @@ export default `
                                     </div>
                                     <div>
                                         <p>
-                                          <a class="a-link a-link--icon" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="__blank"><span class="a-link__text">
+                                          <a class="a-link" href="https://studentaid.gov/manage-loans/repayment/plans" rel="noopener noreferrer" target="__blank"><span class="a-link__text">
                                             Learn about other federal repayment options
                                           </span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                         </p>
@@ -1918,7 +1918,7 @@ export default `
                                             (the average national salary for all
                                             students who attended
                                             college)</span> in the region you
-                                            plan to live (Source: <a class="a-link a-link--icon" href="http://www.bls.gov/cex/" rel="noopener noreferrer" target="__blank"><span class="a-link__text">Bureau of Labor
+                                            plan to live (Source: <a class="a-link" href="http://www.bls.gov/cex/" rel="noopener noreferrer" target="__blank"><span class="a-link__text">Bureau of Labor
                                             Statistics</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>). Your expenses may
                                             be higher or lower.
                                         </p>
@@ -2212,7 +2212,7 @@ export default `
                                     </div>
                                     <div class="metric__link">
                                         <p>
-                                            <a href="http://nces.ed.gov/collegenavigator/?id=133465#fedloans" target="__blank" rel="noopener noreferrer" class="loan-default-link a-link a-link--icon">See
+                                            <a href="http://nces.ed.gov/collegenavigator/?id=133465#fedloans" target="__blank" rel="noopener noreferrer" class="loan-default-link a-link">See
                                             the loan default rates for the
                                             entire school </a>
                                         </p>
@@ -2224,7 +2224,7 @@ export default `
                 </div>
             </section>
             <section class="question step">
-                <div class="content__wrapper">
+                <div class="wrapper">
                     <div class="content__main">
                         <div class="question__wrapper">
                             <div class="question__content">
@@ -2262,7 +2262,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="get-options step content__wrapper
+            <section class="get-options step wrapper
             column-well__wrapper">
                 <div class="content__main">
                     <div class="get-options__wrapper">
@@ -2311,7 +2311,7 @@ export default `
                                     Maximize all available grants and scholarships.
                                 </h3>
                                 <p>
-                                    Consider applying for <a class="a-link a-link--icon" href="https://studentaid.gov/understand-aid/types/grants" rel="noopener noreferrer" target="__blank"><span class="a-link__text">additional
+                                    Consider applying for <a class="a-link" href="https://studentaid.gov/understand-aid/types/grants" rel="noopener noreferrer" target="__blank"><span class="a-link__text">additional
                                     scholarships and grants</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>,
                                     which provide money you don’t have to repay.
                                     By increasing the amount of this type of
@@ -2327,7 +2327,7 @@ export default `
                                 <p>
                                     Living at home or finding cheaper off-campus
                                     housing can
-                                    <a class="a-link a-link--icon" href="https://studentaid.gov/resources/prepare-for-college/students/choosing-schools/consider-costs#how-can-i" rel="noopener noreferrer" target="__blank"><span class="a-link__text">reduce the
+                                    <a class="a-link" href="https://studentaid.gov/resources/prepare-for-college/students/choosing-schools/consider-costs#how-can-i" rel="noopener noreferrer" target="__blank"><span class="a-link__text">reduce the
                                     cost of attendance</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>, meaning you can
                                     borrow less money overall.
                                 </p>
@@ -2364,7 +2364,7 @@ export default `
                                     can help reduce the amount of money you need
                                     to borrow to pay for school, resulting in
                                     long-term benefits of reducing overall debt.
-                                    Check out <a class="a-link a-link--icon" href="https://www.careeronestop.org/jobsearch/job-search.aspx" rel="noopener noreferrer" target="__blank"><span class="a-link__text">resources for finding a
+                                    Check out <a class="a-link" href="https://www.careeronestop.org/jobsearch/job-search.aspx" rel="noopener noreferrer" target="__blank"><span class="a-link__text">resources for finding a
                                     job</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>, including links to job search
                                     sites, tips for writing a
                                     résumé, and more.
@@ -2402,19 +2402,19 @@ export default `
                                     college students
                                 </h4>
                                 <div>
-                                    <a class="a-link a-link--icon" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="__blank"><span class="a-link__text">College
+                                    <a class="a-link" href="https://collegescorecard.ed.gov" rel="noopener noreferrer" target="__blank"><span class="a-link__text">College
                                     Scorecard</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
-                                    <p>Compare <a href="https://collegescorecard.ed.gov/school/?133465" target="__blank" rel="noopener noreferrer" class="scorecard-school a-link a-link--icon">your
+                                    <p>Compare <a href="https://collegescorecard.ed.gov/school/?133465" target="__blank" rel="noopener noreferrer" class="scorecard-school a-link">your
                                         school </a>’s annual costs,
                                         graduation rates, and post-college
                                         earnings.</p>
                                 </div>
                                 <p>
-                                    <a class="a-link a-link--icon" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="__blank"><span class="a-link__text">Questions to ask
+                                    <a class="a-link" href="https://www.consumer.ftc.gov/articles/0395-choosing-college-questions-ask" rel="noopener noreferrer" target="__blank"><span class="a-link__text">Questions to ask
                                         your college</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                 </p>
                                 <div>
-                                    <a class="a-link a-link--icon" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="__blank"><span class="a-link__text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
+                                    <a class="a-link" href="https://studentaid.gov/h/apply-for-aid/fafsa" rel="noopener noreferrer" target="__blank"><span class="a-link__text">FAFSA®</span> <svg class="cf-icon-svg cf-icon-svg--external-link" viewBox="0 0 14 19" xmlns="http://www.w3.org/2000/svg"><path d="M13.017 3.622v4.6a.554.554 0 0 1-1.108 0V4.96L9.747 7.122a1.65 1.65 0 0 1 .13.646v5.57A1.664 1.664 0 0 1 8.215 15h-5.57a1.664 1.664 0 0 1-1.662-1.663v-5.57a1.664 1.664 0 0 1 1.662-1.662h5.57A1.654 1.654 0 0 1 9 6.302l2.126-2.126H7.863a.554.554 0 1 1 0-1.108h4.6a.554.554 0 0 1 .554.554zM8.77 8.1l-2.844 2.844a.554.554 0 0 1-.784-.783l2.947-2.948H2.645a.555.555 0 0 0-.554.555v5.57a.555.555 0 0 0 .554.553h5.57a.555.555 0 0 0 .554-.554z"></path></svg></a>
                                     <p>Apply for federal, state, and school
                                         financial aid.</p>
                                 </div>
@@ -2433,7 +2433,7 @@ export default `
                     </div>
                 </div>
             </section>
-            <section class="next-steps step content__wrapper">
+            <section class="next-steps step wrapper">
                 <div class="content__main">
                     <div class="content__line"></div>
                     <div class="next-steps__wrapper">
@@ -2494,7 +2494,7 @@ export default `
             </section>
         </section>
         <section id="info-wrong" class="information-wrong" tabindex="-1">
-            <section class="instructions step content__wrapper">
+            <section class="instructions step wrapper">
                 <div class="content__main">
                     <div class="instructions__wrapper">
                         <div class="instructions__content

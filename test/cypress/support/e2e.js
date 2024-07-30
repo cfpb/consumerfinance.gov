@@ -27,3 +27,6 @@ require('@cypress/skip-test/support');
 
 // Fail Cypress tests fast on the first failure.
 import 'cypress-fail-fast';
+
+// Initialize a11y plugin https://github.com/component-driven/cypress-axe
+import 'cypress-axe';

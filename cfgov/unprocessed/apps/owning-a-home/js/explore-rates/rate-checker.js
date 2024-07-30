@@ -15,7 +15,6 @@ import {
 } from './util';
 import { getCounties, getData } from './data-loader';
 import { getSelection } from './dom-values';
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
 import jumbo from '@cfpb/jumbo-mortgage';
@@ -137,7 +136,7 @@ function updateView() {
           }
         }
 
-        sortedKeys.sort();
+        sortedKeys.sort((a, b) => a - b);
 
         const len = sortedKeys.length;
         for (let x = 0; x < len; x++) {
@@ -184,7 +183,7 @@ function updateView() {
           return;
         }
 
-        data.uniqueLabels = uniquePrimitives(data.labels.slice(0));
+        data.uniqueLabels = data.labels.slice(0);
 
         finishLoading();
         hideSummary();

@@ -112,9 +112,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 snippet = Markup("".join(hit.meta.highlight.text[0]))
             except TypeError as e:
                 logger.warning(
-                    "Query string {} produced a TypeError: {}".format(
-                        search_query, e
-                    )
+                    f"Query string {search_query} produced a TypeError: {e}"
                 )
                 continue
             hit_payload = {
@@ -123,12 +121,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 "reg": hit.short_name,
                 "label": hit.title,
                 "snippet": snippet,
-                "url": "{}{}/{}/#{}".format(
-                    self.get_parent().specific.url,
-                    hit.part,
-                    hit.section_label.lower(),
-                    hit.paragraph_id,
-                ),
+                "url": f"{self.get_parent().specific.url}{hit.part}/{hit.section_label.lower()}/#{hit.paragraph_id}",  # noqa: E501
             }
             payload["results"].append(hit_payload)
 
@@ -164,7 +157,6 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
-        use_json_field=True,
     )
     content = StreamField(
         [
@@ -172,7 +164,6 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
             ("full_width_text", RegulationsListingFullWidthText()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     # General content tab
@@ -236,7 +227,6 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     # notification
@@ -248,7 +238,6 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
         ],
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     regulation = models.ForeignKey(
@@ -281,13 +270,11 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
 
     def can_serve_draft_versions(self, request):
         perms = request.user.get_all_permissions()
-        if (
+        return (
             request.user.is_superuser
             or getattr(request, "served_by_wagtail_sharing", False)
             or "regulations3k.change_section" in perms
-        ):
-            return True
-        return False
+        )
 
     def get_versions_query(self, request):
         versions = self.regulation.versions

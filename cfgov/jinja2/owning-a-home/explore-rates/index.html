@@ -33,17 +33,17 @@ home price, down payment, and more can affect mortgage interest rates.
     </div>
 
     <div class="block block--flush-top u-js-only">
-        <div class="rate-checker content">
+        <div class="rate-checker content content--2-1">
             <section class="page-intro content-l">
                 <div class="content-l__col content-l__col-2-3">
                     <h1>Explore interest rates</h1>
                     <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                     <div class="page-intro__cols">
-                        <p class="page-intro__col-left u-mb30">
+                        <p class="page-intro__cols-first">
                             Keep in mind that the interest rate is important,
                             but not the only cost of a mortgage.  Fees, <a href="/ask-cfpb/what-are-discount-points-and-lender-credits-and-how-do-they-work-en-136/">points</a>, <a href="/ask-cfpb/what-is-mortgage-insurance-and-how-does-it-work-en-1953/">mortgage insurance</a>, and <a href="/ask-cfpb/what-fees-or-charges-are-paid-when-closing-on-a-mortgage-and-who-pays-them-en-1845/">closing costs</a> all add up.  Compare <a href="/ask-cfpb/what-is-a-loan-estimate-en-1995/">Loan Estimates</a> to get the best deal.
                         </p>
-                        <div class="page-intro__col-right u-right-on-desktop">
+                        <div>
                             {{ social_media.render( {
                                 "twitter_text": "Use the @CFPB\'s interest rates tool to explore the range of mortgage interest rates you can expect.",
                                 "email_title": "Wondering what interest rate you can expect on a mortgage?",
@@ -64,7 +64,157 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
                 <!-- /.content-l__col-1-3 -->
             </section>
-            <div class="calculator content-l" aria-controls="rate-results">
+
+            <div class="rc-results content__main" id="rate-results" aria-live="polite">
+                <h2 id="rc-summary" class="rate-checker-heading data-enabled clear">In <strong class="location"></strong>, most lenders in our data are offering rates at or below <strong class="rate" id="median-rate"></strong>.</h2>
+                <div id="accessible-data-results" class="u-visually-hidden">
+                    <h3>Data table</h3>
+                    <p>The following table will populate with our data results</p>
+                    <table id="accessible-data">
+                        <tr class="table-head">
+                            <th>Loan Rates</th>
+                        </tr>
+                        <tr class="table-body">
+                            <td>number of corresponding rates</td>
+                        </tr>
+                    </table>
+                </div>
+                <section id="chart-section" class="chart">
+                    <div class="chart-menu">
+                        <button class="chart-menu__btn">
+                            Download chart
+                            {{ svg_icon('download') }}
+                        </button>
+                        <ul class="chart-menu__options">
+                            <li>PNG</li>
+                            <li>SVG</li>
+                            <li>JPEG</li>
+                            <li>Print chart</li>
+                        </ul>
+                    </div>
+                    <figure class="data-enabled loading">
+                        <div id="chart" class="chart-area"></div>
+                        <figcaption class="chart-caption">
+                            <div class="caption-title">
+                                Interest rates for your situation
+                            </div>
+                            <div class="rc-data-link">
+                                <a href="#about" class="u-link-underline">Read about our data source</a>
+                            </div>
+                        </figcaption>
+                    </figure>
+
+                    {# Alert Shown when there are no results. #}
+                    {# TODO: Look into using the default notification macro #}
+                    <div id="chart-result-alert"
+                            class="result-alert
+                                m-notification
+                                m-notification--error"
+                            role="alert">
+                        {{ svg_icon('error-round') }}
+                        <div class="m-notification__content">
+                            <div class="m-notification__message">We're sorry!</div>
+                            <p class="m-notification__explanation">
+                                Based on the information you entered,
+                                we don't have enough data to display results.
+                                Change your settings or
+                                <a id="reload-link" class="defaults-link" href="">
+                                    revert to our default values.
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    {# Alert Shown when there was an API failure. #}
+                    <div id="chart-fail-alert"
+                            class="result-alert
+                                m-notification
+                                m-notification--error"
+                            role="alert">
+                        {{ svg_icon('error-round') }}
+                        <div class="m-notification__content">
+                            <div class="m-notification__message">We're sorry!</div>
+                            <p class="m-notification__explanation">
+                                <strong>We're sorry!</strong>
+                                We're having trouble connecting to our data.<br>
+                                Try again another time.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
+                <section class="compare data-enabled loading">
+                    <h3>
+                    Explore what a lower interest rate means for your wallet</h2>
+                    <div id="rate-selects">
+                        <label for="rate-compare-1">Rate 1</label>
+                        <div class="rc-comp-3">
+                            <div class="a-select">
+                                <select name="rate-compare-1"
+                                        id="rate-compare-1"
+                                        class="rate-compare">
+                                    <option value="1">1%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.select-content-->
+                        <div class="rc-comp-1 vs">
+                            vs.
+                        </div>
+                        <label for="rate-compare-2">Rate 2</label>
+                        <div class="rc-comp-3">
+                            <div class="a-select">
+                                <select name="rate-compare-2" id="rate-compare-2" class="rate-compare">
+                                    <option value="1">1%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.select-content-->
+                        <div class="rc-comp-5 mobi-no">
+                            <p>Interest is only one of many costs associated with getting a mortgage. <a href="/ask-cfpb/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan-en-153/" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
+                        </div>
+                    </div>
+                    <!-- /.rate-selects -->
+                    <div class="rc-comparison-section rc-comparison-short">
+                        <h4 class="rc-comparison-subhead">Interest costs over the first <span class="loan-years">5</span> years</h4>
+                        <div class="rc-comparison-subsection">
+                            <div class="interest-cost interest-cost-primary rc-comp-3">
+                                <span class="new-cost">$150,000</span>
+                            </div>
+                            <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                <span class="new-cost">$150,000</span>
+                            </div>
+                            <div class="interest-summary rc-comp-5" id="rc-comparison-summary-short">
+                                <p>Over the first <span class="comparison-term">5</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                            </div>
+                        </div>
+                        <!-- /.rc-comparison-subsection -->
+                    </div>
+                    <!-- /.rc-comparison-section -->
+                    <div class="rc-comparison-section rc-comparison-long">
+                        <h4 class="rc-comparison-subhead">
+                        Interest costs over <span class="loan-years">30</span> years</h5>
+                        <div class="rc-comparison-subsection">
+                            <div class="interest-cost interest-cost-primary rc-comp-3">
+                                <span class="new-cost no-arm">$150,000</span>
+                                <span class="arm-info u-hidden">Can change</span>
+                            </div>
+                            <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                <span class="new-cost no-arm">$150,000</span>
+                                <span class="arm-info u-hidden">Can change</span>
+                            </div>
+                            <div class="interest-summary rc-comp-5" id="rc-comparison-summary-long">
+                                <p class="no-arm">Over <span class="comparison-term">30</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                                <p class="arm-info u-hidden">With the <strong>adjustable-rate mortgage</strong> you've chosen, the rate is only fixed for the <strong>first <span class="arm-comparison-term">5</span> years.</strong> Your interest costs in the future can change.</p>
+                            </div>
+                        </div>
+                        <!-- /.rc-comparison-subsection -->
+                        <p class="mobi-yes u-mt30">Interest is only one of many costs associated with getting a mortgage. <a href="/ask-cfpb/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan-en-153/" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
+                    </div>
+                    <!-- /.rc-comparison-section -->
+                </section>
+            </div>
+            <!-- END .result -->
+            <div class="calculator content__sidebar" aria-controls="rate-results">
                 <section class="form-intro">
                     <h4>Explore rate options</h4>
                 </section>
@@ -313,159 +463,10 @@ home price, down payment, and more can affect mortgage interest rates.
                 </section>
             </div>
             <!-- END .calculator -->
-            <div class="rc-results" id="rate-results" aria-live="polite">
-                <h2 id="rc-summary" class="rate-checker-heading data-enabled clear">In <strong class="location"></strong>, most lenders in our data are offering rates at or below <strong class="rate" id="median-rate"></strong>.</h2>
-                <div id="accessible-data-results" class="u-visually-hidden">
-                    <h3>Data table</h3>
-                    <p>The following table will populate with our data results</p>
-                    <table id="accessible-data">
-                        <tr class="table-head">
-                            <th>Loan Rates</th>
-                        </tr>
-                        <tr class="table-body">
-                            <td>number of corresponding rates</td>
-                        </tr>
-                    </table>
-                </div>
-                <section id="chart-section" class="chart">
-                    <div class="chart-menu">
-                        <button class="chart-menu__btn">
-                            Download chart
-                            {{ svg_icon('download') }}
-                        </button>
-                        <ul class="chart-menu__options">
-                            <li>PNG</li>
-                            <li>SVG</li>
-                            <li>JPEG</li>
-                            <li>Print chart</li>
-                        </ul>
-                    </div>
-                    <figure class="data-enabled loading">
-                        <div id="chart" class="chart-area"></div>
-                        <figcaption class="chart-caption">
-                            <div class="caption-title">
-                                Interest rates for your situation
-                            </div>
-                            <div class="rc-data-link">
-                                <a href="#about" class="u-link-underline">Read about our data source</a>
-                            </div>
-                        </figcaption>
-                    </figure>
-
-                    {# Alert Shown when there are no results. #}
-                    {# TODO: Look into using the default notification macro #}
-                    <div id="chart-result-alert"
-                            class="result-alert
-                                m-notification
-                                m-notification--error"
-                            role="alert">
-                        {{ svg_icon('error-round') }}
-                        <div class="m-notification__content">
-                            <div class="m-notification__message">We're sorry!</div>
-                            <p class="m-notification__explanation">
-                                Based on the information you entered,
-                                we don't have enough data to display results.
-                                Change your settings or
-                                <a id="reload-link" class="defaults-link" href="">
-                                    revert to our default values.
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                    {# Alert Shown when there was an API failure. #}
-                    <div id="chart-fail-alert"
-                            class="result-alert
-                                m-notification
-                                m-notification--error"
-                            role="alert">
-                        {{ svg_icon('error-round') }}
-                        <div class="m-notification__content">
-                            <div class="m-notification__message">We're sorry!</div>
-                            <p class="m-notification__explanation">
-                                <strong>We're sorry!</strong>
-                                We're having trouble connecting to our data.<br>
-                                Try again another time.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
-                <section class="compare data-enabled loading">
-                    <h3>
-                    Explore what a lower interest rate means for your wallet</h2>
-                    <div id="rate-selects">
-                        <label for="rate-compare-1">Rate 1</label>
-                        <div class="rc-comp-3">
-                            <div class="a-select">
-                                <select name="rate-compare-1"
-                                        id="rate-compare-1"
-                                        class="rate-compare">
-                                    <option value="1">1%</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- /.select-content-->
-                        <div class="rc-comp-1 vs">
-                            vs.
-                        </div>
-                        <label for="rate-compare-2">Rate 2</label>
-                        <div class="rc-comp-3">
-                            <div class="a-select">
-                                <select name="rate-compare-2" id="rate-compare-2" class="rate-compare">
-                                    <option value="1">1%</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- /.select-content-->
-                        <div class="rc-comp-5 mobi-no">
-                            <p>Interest is only one of many costs associated with getting a mortgage. <a href="/ask-cfpb/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan-en-153/" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
-                        </div>
-                    </div>
-                    <!-- /.rate-selects -->
-                    <div class="rc-comparison-section rc-comparison-short">
-                        <h4 class="rc-comparison-subhead">Interest costs over the first <span class="loan-years">5</span> years</h4>
-                        <div class="rc-comparison-subsection">
-                            <div class="interest-cost interest-cost-primary rc-comp-3">
-                                <span class="new-cost">$150,000</span>
-                            </div>
-                            <div class="interest-cost interest-cost-secondary rc-comp-3-push">
-                                <span class="new-cost">$150,000</span>
-                            </div>
-                            <div class="interest-summary rc-comp-5" id="rc-comparison-summary-short">
-                                <p>Over the first <span class="comparison-term">5</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
-                            </div>
-                        </div>
-                        <!-- /.rc-comparison-subsection -->
-                    </div>
-                    <!-- /.rc-comparison-section -->
-                    <div class="rc-comparison-section rc-comparison-long">
-                        <h4 class="rc-comparison-subhead">
-                        Interest costs over <span class="loan-years">30</span> years</h5>
-                        <div class="rc-comparison-subsection">
-                            <div class="interest-cost interest-cost-primary rc-comp-3">
-                                <span class="new-cost no-arm">$150,000</span>
-                                <span class="arm-info u-hidden">Can change</span>
-                            </div>
-                            <div class="interest-cost interest-cost-secondary rc-comp-3-push">
-                                <span class="new-cost no-arm">$150,000</span>
-                                <span class="arm-info u-hidden">Can change</span>
-                            </div>
-                            <div class="interest-summary rc-comp-5" id="rc-comparison-summary-long">
-                                <p class="no-arm">Over <span class="comparison-term">30</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
-                                <p class="arm-info u-hidden">With the <strong>adjustable-rate mortgage</strong> you've chosen, the rate is only fixed for the <strong>first <span class="arm-comparison-term">5</span> years.</strong> Your interest costs in the future can change.</p>
-                            </div>
-                        </div>
-                        <!-- /.rc-comparison-subsection -->
-                        <p class="mobi-yes u-mt30">Interest is only one of many costs associated with getting a mortgage. <a href="/ask-cfpb/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan-en-153/" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
-                    </div>
-                    <!-- /.rc-comparison-section -->
-                </section>
-            </div>
-            <!-- END .result -->
             <section class="next-steps tabs-layout">
                 <h2><strong>Next steps:</strong> How to get the best interest rate on your mortgage</h2>
                 <!-- put into a container to prevent long line length -->
-                <p class="sans">
+                <p>
                     When you’re ready to get serious about buying, the best thing you can do to get a better interest rate on your mortgage is <strong>shop around</strong>. But if you don’t plan to buy for a few months, there are more things you can do to ensure you get a great rate on your mortgage.
                 </p>
                 <ul class="tabs">
@@ -506,7 +507,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-credit-score"
                                     class="a-link
-                                            a-link--jump"
+                                           a-link--jump"
                                     href="/ask-cfpb/what-is-a-credit-score-en-315/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -521,7 +522,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-good-credit"
                                     class="a-link
-                                            a-link--jump"
+                                           a-link--jump"
                                     href="/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -536,7 +537,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p>
                                 <a id="go-ask-down-payment-affect"
                                     class="a-link
-                                            a-link--jump"
+                                           a-link--jump"
                                     href="/ask-cfpb/what-kind-of-down-payment-do-i-need-how-does-the-amount-of-down-payment-i-make-affect-the-terms-of-my-mortgage-loan-en-120/"
                                     target="_blank"
                                     rel="noopener noreferrer">
@@ -549,33 +550,26 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </section>
             <!-- /.next-steps -->
-            <div class="block
-                        block--border-top
-                        block--flush-top
-                        block--padded-top
-                        credit-note-ctr">
-                {# TODO: Look into using the default notification macro #}
-                <div class="m-notification
-                            m-notification--borderless
-                            m-notification--warning
-                            m-notification--visible"
-                        role="alert">
-                    {{ svg_icon('warning-round') }}
-                    <div class="m-notification__content">
-                        <div class="m-notification__message">Check your credit</div>
-                        <p class="m-notification__explanation">
-                            If you haven’t checked your credit report recently,
-                            <a class="external-link"
-                                href="https://annualcreditreport.com"
-                                target="_blank"
-                                rel="noopener noreferrer">do so now</a>. If you find errors,
-                            <a href="/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/"
-                                target="_blank"
-                                rel="noopener noreferrer">get them corrected
-                            </a> before you apply for a mortgage.
-                        </p>
-                    </div>
-                </div>
+            <div class="block">
+                {% import 'v1/includes/molecules/notification.html' as notification %}
+                {{- notification.render(
+                    'warning',
+                    true,
+                    'Check your credit',
+                    'If you haven’t checked your credit report recently, do so now. ' ~
+                    'If you find errors, get them corrected before you apply for a mortgage.',
+                    [
+                       {
+                        'text': 'Check your credit report now',
+                        'url': 'https://annualcreditreport.com',
+                        'open_link_in_new_window': True
+                       },
+                       {
+                        'text': 'How do I dispute an error on my credit report?',
+                        'url': '/ask-cfpb/how-do-i-dispute-an-error-on-my-credit-report-en-314/'
+                       },
+                    ] ) }}
+
             </div>
             <section id="about" class="content-l">
                 <div class="content-l__col content-l__col-1">
@@ -588,12 +582,12 @@ home price, down payment, and more can affect mortgage interest rates.
         <!-- END .rate-checker -->
     </div>
 
-    <div class="rate-checker__links u-js-only">
+    <div class="u-js-only">
         {% import "_templates/brand-footer.html" as brand_footer %}
         {% set footer_links = [ {
             "img": static("apps/owning-a-home/img/footer_calculator.png"),
             "text": "Ready to begin the homebuying process?",
-            "label": "Get started now",
+            "label": "Prepare for the homebuying process",
             "url": "/owning-a-home/process/prepare/"
         }, {
             "img": static("apps/owning-a-home/img/footer_house.png"),
@@ -603,7 +597,7 @@ home price, down payment, and more can affect mortgage interest rates.
         }, {
             "img": static("apps/owning-a-home/img/footer_loan-estimate.png"),
             "text": "Have a Loan Estimate?",
-            "label": "Review it with our tool",
+            "label": "Review loan estimate",
             "url": "/owning-a-home/loan-estimate/"
         } ] %}
         {{ brand_footer.render(footer_links) }}

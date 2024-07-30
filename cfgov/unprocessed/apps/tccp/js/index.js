@@ -1,7 +1,10 @@
+import tippy from 'tippy.js';
 import { attach } from '@cfpb/cfpb-atomic-component';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
+
+let tooltips;
 
 /**
  * Initialize some things.
@@ -15,10 +18,74 @@ function init() {
   attach('select-location', 'change', handleFormValidation);
   // Attach landing page form validation handler
   attach('submit-situations', 'click', handleFormValidation);
+  // Attach handler for conditional link targets
+  attach('ignore-link-targets', 'click', handleIgnoreLinkTargets);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
   orderingDropdown.move();
+  // Initialize any tooltips on the page
+  initializeTooltips();
+}
+
+/**
+ * Set up Tippy.js tooltips
+ * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
+ */
+function initializeTooltips() {
+  tooltips = tippy('[data-tooltip]', {
+    theme: 'cfpb',
+    maxWidth: 450,
+    content: function (reference) {
+      const template = reference.nextElementSibling;
+      const container = document.createElement('div');
+      const node = document.importNode(template.content, true);
+      container.appendChild(node);
+      return container;
+    },
+    // See https://atomiks.github.io/tippyjs/v6/plugins/
+    plugins: [
+      {
+        name: 'hideOnEsc',
+        defaultValue: true,
+        fn({ hide }) {
+          /**
+           * Hide when the escape key is pressed.
+           * @param {KeyboardEvent} event - Key down event.
+           */
+          function onKeyDown(event) {
+            if (event.key === 'Escape') {
+              hide();
+            }
+          }
+          return {
+            onShow() {
+              document.addEventListener('keydown', onKeyDown);
+            },
+            onHide() {
+              document.removeEventListener('keydown', onKeyDown);
+            },
+          };
+        },
+      },
+    ],
+  });
+}
+
+/**
+ * Handle links that shouldn't be followed when
+ * specified children elements are targeted
+ * or a tooltip is open.
+ * @param {Event} event - Touch/click event.
+ */
+function handleIgnoreLinkTargets(event) {
+  const ignoredTargets = event.currentTarget?.getAttribute(
+    'data-ignore-link-targets',
+  );
+  const tooltipIsOpen = tooltips.some((tip) => tip.state.isMounted);
+  if (event.target.closest(ignoredTargets) || tooltipIsOpen) {
+    event.preventDefault();
+  }
 }
 
 /**

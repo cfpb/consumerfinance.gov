@@ -4,7 +4,7 @@
 
 {% block css -%}
   {{ super() }}
-  <link rel="stylesheet" href="{{ static('css/on-demand/job_listing_page.css') }}">
+  <link rel="stylesheet" href="{{ static('apps/careers/css/main.css') }}">
 {%- endblock css %}
 
 {% block content_main %}
@@ -29,8 +29,7 @@
 
     <section class="block
                     block--padded-top
-                    block--border-top
-                    vacancy-announcement_description">
+                    block--border-top">
 
         <div class="o-summary o-summary--mobile">
             <div id="job-description-expandable"
@@ -80,8 +79,7 @@
 
     <section class="block
                     block--padded-top
-                    block--border-top
-                    vacancy-announcement_apply">
+                    block--border-top">
         <h2 id="interested">What to know if you apply</h2>
         <div class="block block--sub">
             <div class="content-l">
@@ -155,12 +153,14 @@
 
         <ul class="m-list m-list--links">
             <li class="m-list__item">
-                <a href="/about-us/careers/working-at-cfpb" class="m-list__link">
+                <a class="a-link a-link--jump"
+                   href="/about-us/careers/working-at-cfpb">
                     Working at the CFPB
                 </a>
             </li>
             <li class="m-list__item">
-                <a href="/office-civil-rights/" class="m-list__link">
+                <a class="a-link a-link--jump"
+                   href="/office-civil-rights/">
                     Office of Civil Rights
                 </a>
             </li>
@@ -180,12 +180,14 @@
         </header>
         <ul class="m-list m-list--links u-mb0">
             <li class="m-list__item">
-                <a href="/about-us/blog" class="m-list__link">
+                <a class="a-link a-link--jump"
+                   href="/about-us/blog">
                     CFPB Blog
                 </a>
             </li>
             <li class="m-list__item">
-                <a href="/about-us/newsroom" class="m-list__link">
+                <a class="a-link a-link--jump"
+                   href="/about-us/newsroom">
                     Newsroom
                 </a>
             </li>
@@ -213,7 +215,6 @@
 
 {% block javascript %}
 {{ super() }}
-
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -268,4 +269,5 @@
     }
 </script>
 
+<script src="{{ static('apps/careers/js/main.js') }}"></script>
 {% endblock %}

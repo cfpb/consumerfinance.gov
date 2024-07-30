@@ -33,14 +33,16 @@ class JobListingList(blocks.StructBlock):
         template = "jobmanager/job_listing_list.html"
 
     class Media:
-        css = ["job_listing_list.css"]
+        css = ["job-listing-list.css"]
 
 
 class JobListingTable(blocks.StaticBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
 
-        jobs = JobListingPage.objects.open().prefetch_related("grades__grade")
+        jobs = JobListingPage.objects.open().prefetch_related(
+            "grades__grade", "offices", "regions"
+        )
 
         request = context.get("request")
 

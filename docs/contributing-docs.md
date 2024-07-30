@@ -43,16 +43,7 @@ nav:
 
 ## Running the docs locally
 
-With a
-[stand-alone Python virtualenv for consumerfinance.gov](installation.md#set-up-a-local-python-environment-optional):
-
-```bash
-pyenv activate consumerfinance.gov
-pip install -r requirements/docs.txt
-mkdocs serve -a :8888
-```
-
-Once running, they are accessible at http://localhost:8888.
+See [Running documentation site locally](running-docs.md).
 
 ## Deploying the docs to GitHub Pages
 
@@ -79,8 +70,12 @@ for more information.
 
 Some internal documentation is not suitable for inclusion in the public docs.
 
-Internal documentation can be linked from publicly-viewable documentation only
-if internal domain names and URLs are not shared publicly. To support such linking,
+!!! warning
+
+    Internal documentation can be linked from publicly-viewable documentation only
+    if internal domain names and URLs are not shared publicly.
+
+To support such linking,
 the consumerfinance.gov Wagtail admin has a custom "Internal documentation" setting
 that allows for dynamic linking to an internal URL without exposing that URL in
 public source code or documentation.

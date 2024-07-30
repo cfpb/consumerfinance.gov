@@ -56,7 +56,7 @@ class HmdaHistoricDataPage(LearnPage):
             return "Showing nationwide records"
         else:
             location_name = dict(HMDA_GEO_OPTIONS).get(geo, "State")
-            return "Showing records for {}".format(location_name)
+            return f"Showing records for {location_name}"
 
     def value_or_default(self, options, user_input):
         options_dict = dict(options)

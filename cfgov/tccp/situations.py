@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from itertools import chain
-from operator import attrgetter
 
 from django.template import loader
 from django.utils.safestring import mark_safe
@@ -29,10 +28,6 @@ class Situation:
     @property
     def select_html(self):
         return self.render("select")
-
-    @property
-    def results_html(self):
-        return self.render("results")
 
     @classmethod
     def get_nonconflicting_params(cls, situations):
@@ -116,8 +111,8 @@ SITUATIONS = [
             },
             {
                 "content": (
-                    "If a card has an introductory interest rate offer, ensure "
-                    "you're on track to pay off the balance within the "
+                    "If a card has an introductory interest rate offer, "
+                    "ensure you're on track to pay off the balance within the "
                     "promotional period, or you could end up owing more "
                     "interest than the original purchase amount."
                 ),
@@ -141,8 +136,13 @@ SITUATIONS = [
                     "for necessary purchases and pay your credit card balance "
                     "in full every month."
                 ),
-                "link": "Learn about ways to build credit and your credit score.",
-                "url": "/ask-cfpb/how-do-i-get-and-keep-a-good-credit-score-en-318/",
+                "link": (
+                    "Learn about ways to build credit and your credit score."
+                ),
+                "url": (
+                    "/ask-cfpb/"
+                    "how-do-i-get-and-keep-a-good-credit-score-en-318/"
+                ),
             }
         ],
     ),
@@ -158,8 +158,14 @@ SITUATIONS = [
                     "If you carry a balance on your credit card, interest and "
                     "fees typically exceed the value of any rewards earned."
                 ),
-                "link": "Learn why rewards may not be as beneficial as they seem.",
-                "url": "/",
+                "link": (
+                    "Learn why rewards may not be as beneficial as they seem."
+                ),
+                "url": (
+                    "/about-us/newsroom/"
+                    "cfpb-report-highlights-consumer-frustrations-with-credit-card-"
+                    "rewards-programs/"
+                ),
             }
         ],
     ),
@@ -171,31 +177,6 @@ SituationChoices = [(situation, situation.title) for situation in SITUATIONS]
 
 def get_situation_by_title(title):
     return {v: k for k, v in SituationChoices}[title]
-
-
-class SituationFeatures:
-    def __init__(self, situations):
-        # Each selected situation normally displays one feature to the user,
-        # but if multiple are selected we may want to combine them.
-        combos = [("Pay less interest", "Make a big purchase")]
-
-        for combo in combos:
-            if set(combo).issubset(set(map(attrgetter("title"), situations))):
-                situations = [
-                    # Create a fake situation identified by the concatenation
-                    # of the titles of the situations being combined.
-                    Situation(title=" ".join(combo)),
-                    # Remove the situations that were combined.
-                    *(s for s in situations if s.title not in combo),
-                ]
-
-        self.situations = situations
-
-    def __bool__(self):
-        return bool(self.situations)
-
-    def __iter__(self):
-        return self.situations.__iter__()
 
 
 class SituationSpeedBumps:

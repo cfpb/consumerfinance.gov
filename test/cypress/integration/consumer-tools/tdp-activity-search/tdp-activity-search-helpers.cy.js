@@ -26,7 +26,7 @@ export class ActivitySearch {
     cy.get('form[action="."]')
       .first()
       .within(() => {
-        cy.get('button').first().click();
+        cy.get('button[type="submit"]').click();
       });
   }
 }

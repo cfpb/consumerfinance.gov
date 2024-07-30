@@ -58,19 +58,8 @@ Feel free to delete this section if not applicable to this PR.
 
 #### Browser testing
 
-Visually tested in the following supported browsers:
-- [ ] Firefox
-- [ ] Chrome
-- [ ] Safari
-- [ ] Edge 18 (the last Edge prior to it switching to Chromium)
-- [ ] Internet Explorer 11 and 8 (via emulation in 11's dev tools)
-- [ ] Safari on iOS
-- [ ] Chrome on Android
-
-<!--
-Further guidance on browser support can be found at:
-https://github.com/cfpb/development/blob/main/guides/browser-support.md
--->
+Check the current browser support cutoff list](https://cfpb.github.io/consumerfinance.gov/browser-support#current-browser-support-metrics) for browsers that are advisable
+to prioritize for testing.
 
 #### Accessibility
 

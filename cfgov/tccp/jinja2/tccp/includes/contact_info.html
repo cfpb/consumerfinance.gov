@@ -1,0 +1,13 @@
+{% if urls or phone_number -%}
+<div class="o-contact-info">
+    {% for value in urls %}
+        {%- include "v1/includes/molecules/contact-hyperlink.html" -%}
+    {% endfor %}
+
+    {% if phone_number %}
+        {% with value = {"phones": [{"number": phone_number}]} %}
+            {%- include "v1/includes/molecules/contact-phone.html" -%}
+        {% endwith %}
+    {%- endif %}
+</div>
+{%- endif %}

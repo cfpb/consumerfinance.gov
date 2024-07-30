@@ -56,7 +56,7 @@
             Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
         </p>
     </div>
-    <div class="search__wrapper u-mt30">
+    <div class="search__wrapper u-mt30 u-mb15">
         {{ search_bar.render(
             [{ 'name': 'regs', 'value': page.results.regs | join(',') }],
             page.results.search_query
@@ -66,9 +66,14 @@
 {% if page.results.search_query %}
 <div class="search__results">
     <div class="block block--flush-top content content--1-3">
-        <aside class="content__sidebar content--flush-top-on-small content--flush-sides-on-small filters">
+        <aside class="content__sidebar
+                      content--flush-top-on-small
+                      content--flush-sides-on-small
+                      filters">
             <h3>Refine results</h3>
-            <form action="." method="get" data-js-hook="behavior_change-filter">
+            <form action="."
+                  method="get"
+                  data-js-hook="behavior_change-filter">
                 {% set expandable_settings = {
                     'label': 'Regulation',
                     'is_expanded': true,

@@ -37,7 +37,6 @@ class AbstractFilterPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
-        use_json_field=True,
     )
     date_published = models.DateField(default=date.today)
 
@@ -67,6 +66,7 @@ class AbstractFilterPage(CFGOVPage):
         content_panels = [
             FieldPanel("header"),
             content_panel,
+            InlinePanel("footnotes", label="Footnotes"),
         ]
         return TabbedInterface(
             [
@@ -101,7 +101,6 @@ class LearnPage(AbstractFilterPage):
             ("contact_us_table", organisms.ContactUsTable()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -125,7 +124,6 @@ class DocumentDetailPage(AbstractFilterPage):
             ("case_docket_table", organisms.CaseDocketTable()),
         ],
         blank=True,
-        use_json_field=True,
         block_counts={"case_docket_table": {"max_num": 1}},
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -173,7 +171,6 @@ class EventPage(AbstractFilterPage):
             ),
         ],
         blank=True,
-        use_json_field=True,
     )
     start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
@@ -271,7 +268,8 @@ class EventPage(AbstractFilterPage):
 
     # Agenda content fields
     agenda_items = StreamField(
-        [("item", AgendaItemBlock())], blank=True, use_json_field=True
+        [("item", AgendaItemBlock())],
+        blank=True,
     )
 
     # General content tab
@@ -371,6 +369,19 @@ class EventPage(AbstractFilterPage):
 
         return "future"
 
+    @cached_property
+    def location_str(self):
+        parts = []
+
+        if self.venue_city and self.venue_state:
+            parts.extend([self.venue_city, self.venue_state])
+        if self.venue_name:
+            parts.append(self.venue_name)
+        if self.live_video_id:
+            parts.append("Livecast")
+
+        return ", ".join(parts)
+
     @property
     def page_js(self):
         if (self.live_stream_date and self.event_state == "present") or (
@@ -386,12 +397,9 @@ class EventPage(AbstractFilterPage):
                 self.venue_city, self.venue_state
             )
         api_url = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static"
-        static_map_image_url = "{}/{},{}/{}?access_token={}".format(
-            api_url,
-            self.venue_coords,
-            zoom,
-            size,
-            settings.MAPBOX_ACCESS_TOKEN,
+        static_map_image_url = (
+            f"{api_url}/{self.venue_coords},{zoom}/{size}"
+            f"?access_token={settings.MAPBOX_ACCESS_TOKEN}"
         )
 
         return static_map_image_url
@@ -405,8 +413,9 @@ class EventPage(AbstractFilterPage):
         if self.post_event_image_type == "image" and not self.post_event_image:
             raise ValidationError(
                 {
-                    "post_event_image": 'Required if "Post-event image type" is '
-                    '"Image".'
+                    "post_event_image": (
+                        'Required if "Post-event image type" is "Image".'
+                    )
                 }
             )
         if self.live_stream_availability:

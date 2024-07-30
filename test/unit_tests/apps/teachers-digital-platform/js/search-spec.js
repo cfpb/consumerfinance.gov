@@ -6,18 +6,23 @@ import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teache
 
 const HTML_SNIPPET = `
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
-    <div class="input-contains-label">
-      <label for="search-text" class="input-contains-label__before input-contains-label__before--search">
-          <span class="u-visually-hidden">The term to search for</span>
-      </label>
-      <input id="search-text" type="text" autocomplete="off" class="a-text-input" name="q" placeholder="Enter your search term(s)" value="executive">
-      <label for="search-text" class="input-contains-label__after input-contains-label__after--clear u-hidden">Clear</label>
+    <div class="o-search-input">
+      <div class="o-search-input__input">
+          <label for="search-text" class="o-search-input__input-label" aria-label="Search for a term">
+            <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg--search" viewBox="0 0 15 19"><path d="M14.147 15.488a1.11 1.11 0 0 1-1.567 0l-3.395-3.395a5.575 5.575 0 1 1 1.568-1.568l3.394 3.395a1.11 1.11 0 0 1 0 1.568m-6.361-3.903a4.488 4.488 0 1 0-1.681.327 4.4 4.4 0 0 0 1.68-.327z"></path></svg>
+          </label>
+          <input type="search" id="search-text" name="q" value="executive" class="a-text-input a-text-input__full" placeholder="Enter your search term(s)" title="Enter your search term(s)" autocomplete="off" maxlength="75">
+          <button type="reset" onclick="document.getElementById('search-text').setAttribute('value','')" aria-label="Clear search" title="Clear search">
+            <svg xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg cf-icon-svg--error" viewBox="0 0 12 19"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></svg>
+          </button>
+      </div>
+      <button class="a-btn" type="submit" aria-label="Search for term(s)">
+          Search
+      </button>
     </div>
-    <button class="a-btn">Search</button>
   </form>
 
-
-  <div id="tdp-search-facets-and-results" style="opacity: 1;">
+  <div id="tdp-search-facets-and-results">
 
   <form id="filter-form" action="." method="get" data-js-hook="behavior_change-filter">
     <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">

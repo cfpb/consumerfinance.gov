@@ -1,0 +1,61 @@
+<section class="college-costs__tool-section college-costs__tool-section--debt-guideline" data-tool-section="debt-at-grad">
+    <h2><strong>Estimated amount you could owe at graduation: <span data-financial-item="debt_totalAtGrad">$XX,XXX</strong></h2>
+
+    <p>This estimate is based on the data you’ve provided so far, but you can customize your estimate on the next page. School costs can increase, so be prepared in case you need to borrow more.</p>
+
+    <h3>Estimate based on the information you provided</h3>
+
+    {{
+        text_item.render({
+            'label': 'Estimated yearly costs',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_costs"',
+            'type': 'subtotal'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': 'Your contributions per year',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_funding"',
+            'type': 'subtotal',
+            'decor': '&mdash;'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': 'Estimated amount you may need to borrow each year',
+            'value': '0',
+            'data_attribute': 'data-financial-item="total_borrowingWithGapLoan"',
+            'type': 'total'
+        })
+    }}
+
+    {{
+        text_item.render({
+            'label': '<strong>Estimated amount owed after <span data-state-item="programLengthText">X years</span> of program</strong> (including interest  accumulated while in school)',
+            'value': '0',
+            'data_attribute': 'data-financial-item="debt_totalAtGrad"',
+            'type': 'subtotal'
+        })
+    }}
+
+    <h3><strong>Estimated monthly payment: <span data-financial-item="debt_tenYearMonthly"></span></strong></h3>
+
+    <p>Your payment estimate is based on making payments over 10 years on the standard repayment plan. Other plans, like income-driven repayment (IDR) plans, may be available with lower monthly payments, but the total cost of borrowing may be higher. IDR payments are based on income and family size. For some people, payments on an IDR can be as low as $0 a month.</p>
+
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">Customize your estimate for a better idea of how much you'll owe </span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="estimate-debt">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="customize-estimate">Next</button>
+        </div>
+        <p>
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>        
+        </p>
+
+    </div>
+
+</section>

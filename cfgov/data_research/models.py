@@ -32,7 +32,7 @@ class MortgageDataConstant(models.Model):
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return "{} ({}), updated {}".format(self.name, self.slug, self.updated)
+        return f"{self.name} ({self.slug}), updated {self.updated}"
 
     @classmethod
     def get_thresholds(cls):
@@ -56,7 +56,7 @@ class MortgageMetaData(models.Model):
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return "{}, updated {}".format(self.name, self.updated)
+        return f"{self.name}, updated {self.updated}"
 
     class Meta:
         ordering = ["name"]
@@ -83,7 +83,7 @@ class State(models.Model):
     non_msa_valid = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.fips)
+        return f"{self.name} ({self.fips})"
 
     def validate_non_msas(self):
         """
@@ -144,7 +144,7 @@ class MetroArea(models.Model):
         self.save()
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.fips)
+        return f"{self.name} ({self.fips})"
 
     class Meta:
         ordering = ["name"]
@@ -181,7 +181,7 @@ class County(models.Model):
         self.save()
 
     def __str__(self):
-        return "{}, {} ({})".format(self.name, self.state.abbr, self.fips)
+        return f"{self.name}, {self.state.abbr} ({self.fips})"
 
 
 # mortgage data models for counts, aggregations and averages
@@ -230,7 +230,7 @@ class MortgageBase(models.Model):
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
-        elif type(self) == NonMSAMortgageData:
+        elif type(self) is NonMSAMortgageData:
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
@@ -376,7 +376,6 @@ def validate_counties():
     valid = County.objects.filter(valid=True).count()
     if total != 0:
         logger.info(
-            "{} counties of {} were found to be valid -- {}%)".format(
-                valid, total, round((valid * 100.0 / total), 1)
-            )
+            f"{valid} counties of {total} were found to be valid -- "
+            f"{round((valid * 100.0 / total), 1)}%)"
         )

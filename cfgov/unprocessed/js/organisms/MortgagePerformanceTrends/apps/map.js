@@ -1,4 +1,4 @@
-import * as ccb from 'cfpb-chart-builder';
+import * as ccb from '../../../../apps/cfpb-chart-builder/js';
 import MapStore from '../stores/map';
 import actions from '../actions/map';
 import utils from '../utils';

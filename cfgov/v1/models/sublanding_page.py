@@ -1,14 +1,22 @@
 from django.db import models
 
 from wagtail import blocks
-from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.admin.panels import (
+    FieldPanel,
+    InlinePanel,
+    ObjectList,
+    TabbedInterface,
+)
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
+
+from jinja2 import pass_context
 
 from jobmanager.blocks import JobListingList
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
+from v1.serializers import FilterPageSerializer
 
 
 class SublandingPage(CFGOVPage):
@@ -25,7 +33,6 @@ class SublandingPage(CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
-        use_json_field=True,
     )
     content = StreamField(
         [
@@ -42,7 +49,6 @@ class SublandingPage(CFGOVPage):
             ("expandable", organisms.Expandable()),
         ],
         blank=True,
-        use_json_field=True,
     )
     sidebar_breakout = StreamField(
         [
@@ -85,7 +91,6 @@ class SublandingPage(CFGOVPage):
             ("job_listing_list", JobListingList()),
         ],
         blank=True,
-        use_json_field=True,
     )
 
     # General content tab
@@ -93,6 +98,7 @@ class SublandingPage(CFGOVPage):
         FieldPanel("header"),
         FieldPanel("content"),
         FieldPanel("portal_topic"),
+        InlinePanel("footnotes", label="Footnotes"),
     ]
 
     sidebar_panels = [
@@ -110,7 +116,8 @@ class SublandingPage(CFGOVPage):
 
     template = "v1/sublanding-page/index.html"
 
-    def get_browsefilterable_posts(self, limit):
+    @pass_context
+    def get_browsefilterable_posts(self, context, limit):
         filter_pages = [
             p.specific
             for p in self.get_appropriate_descendants()
@@ -125,9 +132,12 @@ class SublandingPage(CFGOVPage):
                 )
             )
 
-        return sorted(
+        pages = sorted(
             posts_list, key=lambda p: p.date_published, reverse=True
         )[:limit]
+
+        serializer = FilterPageSerializer(pages, many=True, context=context)
+        return serializer.data
 
     @property
     def has_hero(self):

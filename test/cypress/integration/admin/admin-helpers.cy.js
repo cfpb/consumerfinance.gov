@@ -35,11 +35,11 @@ export class AdminPage {
   }
 
   getImages() {
-    return cy.get('#image-results').find('li');
+    return cy.get('#listing-results').find('li');
   }
 
-  tags() {
-    return cy.get('.tagfilter');
+  filters() {
+    return cy.get('.w-filter-button');
   }
 
   openDocumentsLibrary() {
@@ -47,7 +47,7 @@ export class AdminPage {
   }
 
   getFirstDocument() {
-    return cy.get('#document-results').find('tr').eq(1);
+    return cy.get('#listing-results').find('tr').eq(1);
   }
 
   openContacts() {
@@ -119,7 +119,7 @@ export class AdminPage {
   }
 
   cleanUpRegulations() {
-    cy.get('table tr').last().contains('Delete').click({ force: true });
+    cy.get('table.listing tr').last().contains('Delete').click({ force: true });
     this.submitForm();
   }
 

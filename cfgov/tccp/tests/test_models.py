@@ -1,9 +1,13 @@
+from datetime import date
 from itertools import product
 
 from django.test import SimpleTestCase, TestCase
-from django.utils import timezone
 
-from tccp.enums import CreditTierColumns
+from tccp.enums import (
+    CreditTierColumns,
+    LateFeeTypeChoices,
+    OverlimitFeeTypeChoices,
+)
 from tccp.models import CardSurveyData
 
 from .baker import baker
@@ -87,7 +91,7 @@ class CardSurveyDataQuerySetTests(TestCase):
         )
 
     def test_get_summary_statistics(self):
-        today = timezone.now().date()
+        today = date(2024, 12, 31)
 
         baker.make(
             CardSurveyData,
@@ -130,7 +134,8 @@ class CardSurveyDataQuerySetTests(TestCase):
             CardSurveyData.objects.get_summary_statistics(),
             {
                 "count": 3,
-                "first_report_date": today,
+                "first_report_date": date(2024, 12, 31),
+                "report_period_start": date(2024, 7, 1),
                 # Poor APRs: 3, 9
                 "purchase_apr_poor_count": 2,
                 "purchase_apr_poor_min": 3,
@@ -214,3 +219,41 @@ class CardSurveyDataTests(SimpleTestCase):
 
         card.purchase_apr_good_min = 0.99
         self.assertFalse(card.purchase_apr_data_incomplete)
+
+    def test_issued_by_credit_union(self):
+        self.assertTrue(
+            CardSurveyData(institution_type="CU").issued_by_credit_union
+        )
+        self.assertFalse(
+            CardSurveyData(institution_type="Bank").issued_by_credit_union
+        )
+
+    def test_has_only_variable_late_fees(self):
+        self.assertFalse(
+            CardSurveyData(
+                late_fee_types=[
+                    LateFeeTypeChoices[0][0],
+                    LateFeeTypeChoices[2][0],
+                ]
+            ).has_only_variable_late_fees
+        )
+        self.assertTrue(
+            CardSurveyData(
+                late_fee_types=[LateFeeTypeChoices[2][0]]
+            ).has_only_variable_late_fees
+        )
+
+    def test_has_only_variable_over_limit_fees(self):
+        self.assertFalse(
+            CardSurveyData(
+                over_limit_fee_types=[
+                    OverlimitFeeTypeChoices[0][0],
+                    OverlimitFeeTypeChoices[1][0],
+                ]
+            ).has_only_variable_over_limit_fees
+        )
+        self.assertTrue(
+            CardSurveyData(
+                over_limit_fee_types=[OverlimitFeeTypeChoices[1][0]]
+            ).has_only_variable_over_limit_fees
+        )

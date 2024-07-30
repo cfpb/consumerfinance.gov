@@ -61,7 +61,7 @@ function makeTilemapOptions(data, dataAttributes) {
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
   const legend = node.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend',
+    'o-simple-chart__tilemap-legend',
   )[0];
   legend.innerHTML = '';
   const colors = [];
@@ -161,7 +161,7 @@ function init(chartNode, target, data, dataAttributes) {
   const chart = Highmaps.mapChart(target, tilemapOptions);
 
   const legend = target.parentNode.getElementsByClassName(
-    'o-simple-chart_tilemap_legend',
+    'o-simple-chart__tilemap-legend',
   )[0];
   legend.style.display = 'block';
   updateTilemapLegend(target, tilemapOptions, yAxisLabel);

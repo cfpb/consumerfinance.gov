@@ -84,16 +84,8 @@ def raise_bulk_delete_error(
 @hooks.register("after_delete_page")
 def log_page_deletion(request, page):
     logger.warning(
-        (
-            "User {user} with ID {user_id} deleted page {title} "
-            "with ID {page_id} at URL {url}"
-        ).format(
-            user=request.user,
-            user_id=request.user.id,
-            title=page.title,
-            page_id=page.id,
-            url=page.url_path,
-        )
+        f"User {request.user} with ID {request.user.id} deleted page "
+        f"{page.title} with ID {page.id} at URL {page.url_path}"
     )
 
 

@@ -9,12 +9,12 @@ from ask_cfpb.models.answer_page import AnswerPage
 unicode_swaps = {
     "\x91": "\u2018",  # Left Single Quotation Mark
     "\x92": "\u2019",  # Right Single Quotation Mark
-    "\x93": "\u201C",  # Left Double Quotation Mark
-    "\x94": "\u201D",  # Right Double Quotation Mark
+    "\x93": "\u201c",  # Left Double Quotation Mark
+    "\x94": "\u201d",  # Right Double Quotation Mark
     "\x95": "\u2022",  # Bullet
     "\x96": "\u2013",  # En Dash
     "\x97": "\u2014",  # Em Dash
-    "\x98": "\u02DC",  # Small Tilde
+    "\x98": "\u02dc",  # Small Tilde
     "\x99": "\u2122",  # Trade Mark Sign
     "\xac": "-",  # Not Sign (a dash with a hook on end)
     "\u200b": "",  # Zero Width Space (We neve want this)

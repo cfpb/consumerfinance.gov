@@ -13,6 +13,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.openFilterExpandable();
 
     cy.get('#id_rewards input').should('be.checked');
+    exploreCards.checkA11y();
   });
 
   it("should show an error message if a location isn't selected", () => {
@@ -24,6 +25,7 @@ describe('Explore credit cards landing page', () => {
     exploreCards.clickSubmitButton();
 
     cy.get('.a-form-alert__text').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectLocation('NY');
 
@@ -41,6 +43,47 @@ describe('Explore credit cards results page', () => {
         expect(newNumResults).to.be.lt(oldNumResults);
       });
     });
+  });
+  it('should not follow card links when tooltips are clicked', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
+
+    cy.get('h1').contains('Explore credit cards').should('exist');
+    cy.get('h2')
+      .contains('Purchase interest rate and fees')
+      .should('not.exist');
+  });
+  it('should close tooltips when escape key is pressed', () => {
+    exploreCards.openResultsPage();
+
+    cy.get('.m-card--tabular [data-tooltip]').first().trigger('mouseenter');
+    cy.get('div.tippy-heading').should('be.visible');
+
+    cy.get('.m-card--tabular [data-tooltip]').first().type('{esc}');
+    cy.wait(1000);
+    cy.get('div.tippy-heading').should('not.exist');
+  });
+  it('should not follow card links when tooltips are open', () => {
+    exploreCards.openResultsPage();
+
+    // Open a tooltip
+    cy.get('.m-card--tabular [data-tooltip]').first().click();
+    // Click away to close the tooltip
+    cy.get('.m-card--tabular .m-card__heading-group').first().click();
+
+    // The link should not have been followed
+    cy.get('h1').contains('Explore credit cards').should('exist');
+    cy.get('h2')
+      .contains('Purchase interest rate and fees')
+      .should('not.exist');
+
+    cy.wait(1000);
+    // Click a second time now that the tooltip is closed
+    cy.get('.m-card--tabular .m-card__heading-group').first().click();
+    // The link should now have been followed
+    cy.get('h1').contains('Explore credit cards').should('not.exist');
+    cy.get('h2').contains('Purchase interest rate and fees').should('exist');
   });
   it('should show additional results when "Show more" button is clicked', () => {
     exploreCards.openResultsPage();
@@ -61,6 +104,7 @@ describe('Explore credit cards results page', () => {
     exploreCards.selectOrdering('Purchase APR');
     cy.get('.htmx-container.htmx-request').should('not.exist');
     cy.get('#u-show-more-fade').should('be.visible');
+    exploreCards.checkA11y();
 
     exploreCards.selectOrdering('Card name');
     cy.get('.htmx-container.htmx-request').should('not.exist');
@@ -86,6 +130,13 @@ describe('Explore credit cards results page', () => {
         expect(numSpeedBumps).to.be.gt(2);
       });
     });
+  });
+  it('should have an aria-busy=true attribute when an AJAX request is in-flight', () => {
+    exploreCards.openResultsPage('situations=Build%20credit');
+    cy.get('#htmx-results[aria-busy=true]').should('not.exist');
+
+    exploreCards.selectCheckboxFilter('rewards', 'Cashback rewards');
+    cy.get('#htmx-results[aria-busy=true]').should('exist');
   });
   it('should link to card detail pages', () => {
     exploreCards.openResultsPage();
@@ -121,6 +172,7 @@ describe('Explore credit card details page', () => {
       .and('contain', 'credit_tier=Credit+score+of+720+or+greater')
       .and('contain', 'location=NY')
       .and('contain', 'situations=Earn+rewards');
+    exploreCards.checkA11y();
   });
   it('should have a breadcrumb to full list if the user never filtered', () => {
     exploreCards.openResultsPage();

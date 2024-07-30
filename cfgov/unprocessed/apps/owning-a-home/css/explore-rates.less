@@ -12,14 +12,31 @@
 .rate-checker {
   position: relative;
 
-  /* lead paragraphs are typically the first paragraph in a content area */
+  // lead paragraphs are typically the first paragraph in a content area.
   .lead {
     margin-bottom: unit(30px / @base-font-size-px, em);
     font-size: 1.125em;
   }
 
+  // Page intros are content areas that are in place of a hero.
   .page-intro {
     border-bottom: 1px solid var(--gray-10);
+    padding-bottom: unit(36px / @base-font-size-px, rem);
+
+    &__cols {
+      display: flex;
+      gap: unit(15px / @base-font-size-px, rem);
+      flex-direction: column;
+
+      // Desktop and above.
+      .respond-to-min(@bp-med-min, {
+        flex-direction: row;
+      });
+    }
+
+    &__cols-first {
+      flex-basis: fit-content;
+    }
   }
 
   .rc-illu-inner {
@@ -35,11 +52,6 @@
   /*
         layout
         --------------------------- */
-  .rc-results {
-    .grid__column( 8 );
-    .grid__pull( 4 );
-  }
-
   #credit-score-container,
   .loan-amt-total,
   .state-col,
@@ -51,9 +63,7 @@
         Sidebar with all the user input
        --------------------------- */
   .calculator {
-    .grid__column( 4 );
-    .grid__push( 8 );
-
+    padding-left: unit(10px / @base-font-size-px, rem);
     background: var(--gray-5);
 
     p:last-child,
@@ -84,7 +94,7 @@
     }
 
     section:first-child {
-      padding: unit(30px / @base-font-size-px, em) 0 0;
+      padding: 0;
     }
 
     .calc-footer {
@@ -151,7 +161,7 @@
         Main section with output
         --------------------------- */
   .rate-checker-heading {
-    margin-top: unit(20px / @base-font-size-px, em);
+    margin-right: unit(10px / @base-font-size-px, em);
     margin-bottom: unit(16px / @base-font-size-px, em);
     font-size: 1.375em;
   }
@@ -160,11 +170,22 @@
         Middle section with chart
         --------------------------- */
 
-  // this is shameful, but this is needed to force
-  // highcharts to display overflowing tooltips
+  // This is shameful, but this is needed to force
+  // highcharts to display overflowing tooltips.
   .chart-area,
   .highcharts-container {
     overflow: visible !important;
+  }
+
+  .chart-area {
+    // This matches the height of the highcharts chart.
+    min-height: 400px;
+  }
+
+  // This ensures the chart resizes when the page is resized.
+  .highcharts-container {
+    position: absolute !important;
+    width: 100% !important;
   }
 
   .highcharts-tooltip > span {
@@ -244,7 +265,7 @@
   .rc-data-link {
     text-align: left;
     margin: unit(20px / @base-font-size-px, em) 0
-      unit(10px / @base-font-size-px, em) 0;
+      unit(10px / @base-font-size-px, em);
   }
 
   .chart-tooltip {
@@ -483,27 +504,31 @@
     margin-top: 2em;
   }
 
-  .credit-note-ctr {
-    border-top: 1px solid var(--gray-10);
-  }
-
-  .m-notification--borderless {
-    padding-top: 0;
-    padding-bottom: 0;
-    border: none;
-    background: none;
-  }
-
   /*
         Media queries
         --------------------------- */
-  .respond-to-max(720px, {
+  // Tablet and below.
+  .respond-to-max(@bp-sm-max, {
+    display: grid;
+    grid-template-areas:
+      'page-intro'
+      'calculator'
+      'rc-results';
 
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
+    .page-intro {
+      grid-area: page-intro
     }
+
+    .rc-results {
+      grid-area: rc-results;
+    }
+
+    .calculator {
+      grid-area: calculator;
+    }
+  });
+
+  .respond-to-max(720px, {
 
     .rc-home-illu {
       display: none;
@@ -552,26 +577,6 @@
     }
   });
 
-  .respond-to-min(@bp-sm-max, {
-
-    .m-notification--borderless {
-      .grid__column( 8 );
-    }
-
-    .page-intro__cols {
-      display: table;
-      .page-intro__col-left,
-      .page-intro__col-right {
-        display: table-cell;
-      }
-
-      .page-intro__col-right {
-        padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        white-space: nowrap;
-      }
-    }
-  });
-
   .respond-to-min(1000px, {
     .rate-checker-heading {
       width: 75%;
@@ -592,12 +597,6 @@
   @media print {
     .rc-illu-inner {
       display: none;
-    }
-
-    .calculator,
-    .rc-results {
-      .grid__column( 12 );
-      .grid__push( 0 );
     }
 
     .calculator section {

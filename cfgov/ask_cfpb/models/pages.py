@@ -1,6 +1,7 @@
 import re
 from collections import OrderedDict
 
+from django.conf import settings
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
@@ -244,7 +245,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         sorted_categories = [
             {
                 "title": category.title(self.language),
-                "url": "{}{}/".format(url, slug),
+                "url": f"{url}{slug}/",
                 "active": (
                     False
                     if not self.portal_category
@@ -258,7 +259,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
             {
                 "title": self.portal_topic.title(self.language),
                 "url": url,
-                "active": False if self.portal_category else True,
+                "active": not self.portal_category,
                 "expanded": True,
                 "children": sorted_categories,
             }
@@ -293,10 +294,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
 
     def get_glossary_terms(self):
-        if self.language == "es":
-            terms = self.portal_topic.glossary_terms.order_by("name_es")
-        else:
-            terms = self.portal_topic.glossary_terms.order_by("name_en")
+        terms = self.portal_topic.glossary_terms.order_by("name_en")
         for term in terms:
             if term.name(self.language) and term.definition(self.language):
                 yield term
@@ -315,10 +313,7 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         if self.category_slug not in self.category_map:
             raise Http404
         self.portal_category = self.category_map.get(self.category_slug)
-        self.title = "{} {}".format(
-            self.portal_topic.title(self.language),
-            self.portal_category.title(self.language).lower(),
-        )
+        self.title = f"{self.portal_topic.title(self.language)} {self.portal_category.title(self.language).lower()}"  # noqa: E501
         if self.portal_category.heading == "Key terms":
             self.glossary_terms = self.get_glossary_terms()
             return TemplateResponse(
@@ -330,6 +325,29 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
             .filter("match", portal_categories=self.portal_category.heading)
         )
         return self.get_results(request)
+
+    def get_translation_links(self, request, inclusive=True, live=True):
+        if self.portal_category:
+            language_names = dict(settings.LANGUAGES)
+
+            return [
+                {
+                    "href": translation.get_url(request=request)
+                    + {
+                        v.heading: k
+                        for k, v in translation.specific.category_map.items()
+                    }[self.portal_category.heading]
+                    + "/",
+                    "language": translation.language,
+                    "text": language_names[translation.language],
+                }
+                for translation in super().get_translations(
+                    inclusive=inclusive, live=live
+                )
+            ]
+        return super().get_translation_links(
+            request, inclusive=inclusive, live=live
+        )
 
 
 class AnswerResultsPage(CFGOVPage):
@@ -345,7 +363,7 @@ class AnswerResultsPage(CFGOVPage):
     template = "ask-cfpb/answer-search-results.html"
 
     def get_context(self, request, **kwargs):
-        context = super(AnswerResultsPage, self).get_context(request, **kwargs)
+        context = super().get_context(request, **kwargs)
         context.update(**kwargs)
         paginator = Paginator(self.answers, 25)
         page_number = validate_page_number(request, paginator)
@@ -372,9 +390,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             activate(self.language)
         else:
             deactivate_all()
-        context = super(TagResultsPage, self).get_context(
-            request, *args, **kwargs
-        )
+        context = super().get_context(request, *args, **kwargs)
         return context
 
     @route(r"^$")

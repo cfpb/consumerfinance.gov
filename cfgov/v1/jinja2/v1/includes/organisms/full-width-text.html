@@ -20,7 +20,7 @@
             {% include_block block %}
         {% elif 'content' in block_type %}
             <div class="m-full-width-text">
-                {{ block.value | safe }}
+                {% include_block block %}
             </div>
         {% elif block_type == 'table_block' %}
             <div class="m-full-width-text">
@@ -36,7 +36,7 @@
                 {{ block | safe }}
             </div>
         {% elif block_type in ['email_signup'] %}
-            <div class="block{{ " block--flush-top" if loop.first }} m-inset--email">
+            <div class="m-inset m-inset--email">
                 <div class="o-well">
                     {% include_block block %}
                 </div>

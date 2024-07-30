@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.files.base import ContentFile
@@ -9,16 +11,21 @@ from wagtail.models import Site
 
 from wagtailmedia.models import Media
 
+from core.templatetags.svg_icon import svg_icon
+from core.testutils.test_cases import WagtailPageTreeTestCase
 from scripts import _atomic_helpers as atomic
 from v1.atomic_elements.organisms import (
     AudioPlayer,
     FeaturedContent,
     InfoUnitGroup,
+    ItemIntroduction,
     VideoPlayer,
 )
 from v1.models import (
+    BrowseFilterablePage,
     BrowsePage,
     CFGOVImage,
+    CFGOVPageCategory,
     Contact,
     LandingPage,
     LearnPage,
@@ -299,9 +306,10 @@ class FeaturedContentTests(TestCase):
             ("/bar/", "Another link"),
         ):
             self.assertIn(
-                f'<a class="m-list__link"\n                       '
-                f'href="{url}"\n                       >\n'
-                f"                       {text}\n"
+                f'<a class="a-link a-link--jump"\n                       href='
+                f'"{url}"\n                       >\n                       \n'
+                f'                       <span class="a-link__text">'
+                f"{text}</span>\n                       \n"
                 f"                    </a>",
                 html,
             )
@@ -396,6 +404,66 @@ class TestInfoUnitGroup(TestCase):
 
         with self.assertRaises(ValidationError):
             self.block.clean(value)
+
+
+class ItemIntroductionTests(WagtailPageTreeTestCase):
+    @classmethod
+    def get_page_tree(cls):
+        return [
+            (
+                BrowseFilterablePage(title="landing"),
+                [LearnPage(title="intro")],
+            )
+        ]
+
+    def test_render(self):
+        # Related objects need to be added after page tree creation.
+        self.page_tree[1].authors.add("CFPB")
+        self.page_tree[1].categories.add(CFGOVPageCategory(name="at-the-cfpb"))
+
+        block = ItemIntroduction()
+        value = block.to_python(
+            {
+                "heading": "An item introduction",
+                "date": date(2024, 1, 1),
+                "show_category": True,
+            }
+        )
+
+        html = block.render(
+            value,
+            context={
+                "page": self.page_tree[1],
+                "request": RequestFactory().get("/intro/"),
+            },
+        )
+
+        self.assertHTMLEqual(
+            html,
+            f"""
+<div class="o-item-introduction">
+    <div class="o-item-introduction__intro">
+        <a class="h4" href="/landing/?categories=at-the-cfpb">
+            { svg_icon("bullhorn") }
+            <span class="u-visually-hidden">
+                Category:
+            </span>
+            At the CFPB
+        </a>
+    </div>
+    <h1>An item introduction</h1>
+    <div class="meta">
+        <span class="byline">By CFPB</span>
+        &ndash;
+        <span class="a-date">
+            <span class="datetime">
+                <time datetime="2024-01-01T00:00:00">JAN 01, 2024</time>
+            </span>
+        </span>
+    </div>
+</div>
+""",
+        )
 
 
 class VideoPlayerTests(SimpleTestCase):

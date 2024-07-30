@@ -106,7 +106,10 @@ class CardListViewTests(TestCase):
             json.loads(response.content),
             {
                 "credit_tier": [
-                    "Select a valid choice. foo is not one of the available choices."
+                    (
+                        "Select a valid choice. "
+                        "foo is not one of the available choices."
+                    )
                 ]
             },
         )

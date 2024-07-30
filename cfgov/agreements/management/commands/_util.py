@@ -59,7 +59,7 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
         issuer_name = Path(path).parts[-2]
     except ValueError:
         # too many slashes...
-        outfile.write("%s Does not match issuer/file.pdf pattern" % path)
+        outfile.write(f"{path} Does not match issuer/file.pdf pattern")
         return
 
     issuer = get_issuer(issuer_name)
@@ -68,7 +68,7 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
     agreement = issuer.agreement_set.create(
         file_name=filename,
         size=int(zipinfo.file_size),
-        uri="{}/{}".format(uri_hostname, s3_key),
+        uri=f"{uri_hostname}/{s3_key}",
         description=filename,
     )
     agreement.save()
@@ -76,10 +76,6 @@ def save_agreement(agreements_zip, pdf_path, outfile, upload=False):
     if upload:
         pdf_file = agreements_zip.open(zipinfo)
         upload_to_s3(pdf_file, s3_key)
-        outfile.write(
-            "{} uploaded".format(
-                repr(s3_key),
-            )
-        )
+        outfile.write(f"{repr(s3_key)} uploaded")
 
     return agreement

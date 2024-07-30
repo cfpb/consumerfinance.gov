@@ -30,16 +30,16 @@
     {% endif %}
 
     {% if value.title %}
-    <a class="chart-anchor" id="chart-{{value.title}}" href="#chart-{{ value.title}}"><h3 class="o-simple-chart_title">{{ value.title }}</h3></a>
+    <a class="chart-anchor" id="chart-{{value.title}}" href="#chart-{{ value.title}}"><h3 class="o-simple-chart__title">{{ value.title }}</h3></a>
     {% endif %}
 
     {% if value.subtitle %}
-    <p class="o-simple-chart_subtitle">{{ value.subtitle }}</p>
+    <p class="o-simple-chart__subtitle">{{ value.subtitle }}</p>
     {% endif %}
 
-    <div data-title="{{value.title}}" class="o-simple-chart_filters"></div>
+    <div data-title="{{value.title}}" class="o-simple-chart__filters"></div>
 
-    <div class="o-simple-chart_target"
+    <div class="o-simple-chart__target"
          data-projected-months="{{ value.projected_months }}"
          data-chart-type="{{ value.chart_type }}"
          data-source='{{ data_location }}'
@@ -58,17 +58,16 @@
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
          >
     </div>
-    <div class="o-simple-chart_tilemap_legend"></div>
-    <p class="m-chart-footnote block--sub block--border-top block short-desc">
+    <div class="o-simple-chart__tilemap-legend"></div>
+    <p class="m-chart-footnote block block--sub block--border-top short-desc">
         {% if value.source_credits %}<strong>Source:</strong> {{value.source_credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
         {% if value.download_text %}
           {% set href =  make_download_href(value.download_file, data_location) %}
           {% if href %}
             <strong>Download:</strong>
-            <a class="icon-link icon-link__download"
-               href="{{href}}">
-              <span class="icon-link_text">{{value.download_text}}</span></a><br>
+            <a href="{{href}}">
+              {{value.download_text}}</a><br>
           {% endif %}
         {% endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}

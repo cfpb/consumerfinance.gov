@@ -64,25 +64,18 @@
                             </optgroup>
                         </select>
                     </div>
+
                     <div class="flex-all">
-                        <div class="m-btn-inside-input input-contains-label">
-                            <label for="searchText"
-                                   class="input-contains-label__before input-contains-label__before--search"
-                                   aria-hidden="true">
-                                {{ svg_icon('search') }}
-                            </label>
-                            <input id="searchText"
-                                   type="text"
-                                   autocomplete="off"
-                                   class="a-text-input"
-                                   name="q"
-                                   placeholder="Enter search term"
-                                   value="{{ query }}"
-                                   aria-label="The term to search for">
-                            <a class="a-btn a-btn--link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('error') }} Clear</a>
-                        </div>
+                        {% import 'v1/includes/organisms/search-input.html' as search_input %}
+                        {{ search_input.render({
+                            "input_id": "searchText",
+                            "input_name": "q",
+                            "input_value": ask_query,
+                            "input_aria_label": "The term to search for",
+                            "placeholder": "Enter search term",
+                            "submit_aria_label": "The term to search for"
+                        }) }}
                     </div>
-                    <button class="a-btn flex-fixed">Search</button>
                 </div>
             </form>
         </div>
@@ -100,4 +93,3 @@
       jsl(['{{ static("apps/prepaid-agreements/js/common.js") }}']);
     </script>
 {% endblock javascript %}
-

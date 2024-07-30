@@ -288,7 +288,7 @@ function getTransformObject(rawTransform = '') {
  * @param {object} chartNode - The DOM node of the current chart
  */
 function buildChart(chartNode) {
-  const target = chartNode.getElementsByClassName('o-simple-chart_target')[0];
+  const target = chartNode.getElementsByClassName('o-simple-chart__target')[0];
   const dataAttributes = target.dataset;
   const { source, transform, chartType } = dataAttributes;
 

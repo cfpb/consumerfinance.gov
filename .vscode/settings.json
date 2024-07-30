@@ -3,6 +3,8 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "ruff.importStrategy": "useBundled",
+  "ruff.lint.run": "onSave"
 }

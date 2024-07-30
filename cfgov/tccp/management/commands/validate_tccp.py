@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 import matplotlib.pyplot as plt
 
-from tccp.enums import CreditTierColumns
+from tccp.enums import CreditTierColumns, PurchaseAPRRatings
 from tccp.filterset import CardSurveyDataFilterSet
 from tccp.models import CardSurveyData
 from tccp.situations import SITUATIONS
@@ -10,9 +10,14 @@ from tccp.views import CardListView
 
 
 def fmt(value):
-    return (
-        ("%.2f%%" % (100 * value)) if isinstance(value, float) else str(value)
-    )
+    return ("%g%%" % (100 * value)) if isinstance(value, float) else str(value)
+
+
+def fmt_range(min, max):
+    if min == max:
+        return fmt(min)
+    else:
+        return f"{fmt(min)} - {fmt(max)}"
 
 
 class Command(BaseCommand):
@@ -48,6 +53,8 @@ class Command(BaseCommand):
             summary_stats=summary_stats
         )
 
+        apr_rating_lookup = dict(PurchaseAPRRatings)
+
         for tier_name, tier_column in CreditTierColumns:
             self.stdout.write(tier_name.upper())
             self.stdout.write("-" * len(tier_name))
@@ -68,18 +75,24 @@ class Command(BaseCommand):
 
             cards_for_tier = cards.for_credit_tier(tier_name)
 
-            purchase_apr_rating_counts = (
-                CardListView.get_purchase_apr_rating_counts(
-                    cards_for_tier.values("purchase_apr_for_tier_rating")
+            purchase_apr_rating_ranges = (
+                CardListView.get_purchase_apr_rating_ranges(
+                    cards_for_tier.values(
+                        "purchase_apr_for_tier_max",
+                        "purchase_apr_for_tier_rating",
+                    )
                 )
             )
 
-            # Write out counts for each rating label.
+            # Write out ranges for each rating label.
             for (
-                rating_label,
-                rating_count,
-            ) in purchase_apr_rating_counts.items():
-                self.stdout.write(f"{rating_label}: {rating_count}")
+                rating,
+                (rating_apr_min, rating_apr_max),
+            ) in purchase_apr_rating_ranges.items():
+                self.stdout.write(
+                    f"{apr_rating_lookup[rating]}: "
+                    + fmt_range(rating_apr_min, rating_apr_max)
+                )
 
             self.stdout.write()
 

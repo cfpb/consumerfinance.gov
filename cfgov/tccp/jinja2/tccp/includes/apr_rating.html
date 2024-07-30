@@ -1,0 +1,23 @@
+{% from 'tccp/includes/fields.html' import apr_range %}
+
+{%- macro apr_rating(rating, apr_min=none, apr_max=none) -%}
+    {%- set label = apr_rating_lookup[rating] -%}
+
+    <div class="m-apr-rating m-apr-rating--{{ label }}">
+        <dt>
+            {% for i in range(rating + 1) -%}
+                {{ svg_icon("dollar-round") }}
+            {%- endfor %}
+            <span class="u-visually-hidden">
+                {{ rating + 1 }} dollar sign symbol{{ (rating + 1) | pluralize() }}
+            </span>
+        </dt>
+        <dd>
+            Pay {{ label }} interest
+
+            {% if apr_min is not none and apr_max is not none -%}
+                ({{- apr_range(apr_min, apr_max, spaceless=true) -}})
+            {%- endif %}
+        </dd>
+    </div>
+{%- endmacro -%}

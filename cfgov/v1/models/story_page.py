@@ -1,4 +1,9 @@
-from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.admin.panels import (
+    FieldPanel,
+    InlinePanel,
+    ObjectList,
+    TabbedInterface,
+)
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamField
 
@@ -29,12 +34,13 @@ class StoryContent(StreamBlock):
 
 
 class StoryPage(CFGOVPage):
-    header = StreamField(StoryHeader, blank=True, use_json_field=True)
-    content = StreamField(StoryContent, blank=True, use_json_field=True)
+    header = StreamField(StoryHeader, blank=True)
+    content = StreamField(StoryContent, blank=True)
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("header"),
         FieldPanel("content"),
+        InlinePanel("footnotes", label="Footnotes"),
     ]
 
     edit_handler = TabbedInterface(

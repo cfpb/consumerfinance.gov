@@ -64,7 +64,7 @@ class Command(BaseCommand):
             if (
                 not snapshot_data
             ):  # Market may not have been added to Wagtail yet  # noqa
-                logger.warning("Market key {} not found".format(key))
+                logger.warning(f"Market key {key} not found")
                 continue
 
             # Update snapshot fields with the provided values

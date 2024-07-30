@@ -26,15 +26,16 @@
      <ul class="u-show-on-mobile category__list m-list m-list--links u-mb0">
      {% for card in value.feature_cards %}
          <li class="m-list__item">
-             <a class="m-list__link a-link a-link--jump a-link--icon-after-text" href="{{ card.category.url }}">
-                 <span class="a-link__text">{{ card.category.text }}</span>
-                 {{ svg_icon( card.icon ) }}
-             </a>
+             <a class="a-link a-link--jump" href="{{ card.category.url }}">
+                {{ svg_icon( card.icon ) }}
+                <span class="a-link__text">{{ card.category.text }}</span>
+                {{ svg_icon( 'right' ) }}
+            </a>
          </li>
      {% endfor %}
      </ul>
 
-     <div class="u-hide-on-mobile question-categories u-mb30">
+     <div class="u-hide-on-mobile u-mb30">
          <div class="o-card-group o-card-group--column-2">
              <div class="o-card-group__cards">
 

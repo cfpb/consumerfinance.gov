@@ -31,6 +31,10 @@
     }
   });
 
+  .cf-icon-svg--help-round {
+    color: var(--pacific);
+  }
+
   .u-border-bottom {
     border-bottom: 1px solid @block--border-bottom;
   }
@@ -54,12 +58,29 @@
 
     max-width: unit(570px / @base-font-size-px, rem);
 
+    h3,
+    legend.h4 {
+      margin-top: unit(30px / @base-font-size-px, em);
+    }
+    legend.h4 {
+      margin-bottom: unit(4px / @base-font-size-px, em);
+    }
+
     .equation-row {
       .financial-item {
-        &__label div {
+        &__label div,
+        &__value span {
           .h3();
         }
-        &__value span {
+      }
+
+      .o-costs-group {
+        &__header {
+          margin-top: unit(30px / @base-font-size-px, em);
+        }
+
+        &__label.h4,
+        &__link span {
           .h3();
         }
       }
@@ -167,6 +188,7 @@
 
       .m-form-field {
         width: 50%;
+        margin-top: 0;
         box-sizing: border-box;
         &:first-child {
           padding-right: 7px;
@@ -185,9 +207,13 @@
     }
   }
 
-  .school-results__comparison-section {
+  .comparison-section {
     border: 2px solid var(--gray-20);
     padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+
+    .h4 {
+      margin-top: 0;
+    }
 
     legend {
       margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
@@ -233,5 +259,62 @@
     .subtotal-row {
       font-weight: 600;
     }
+  }
+
+  &__tool-section-buttons,
+  .cf-notification {
+    h3.up-next {
+      .up-next--desc {
+        display: list-item;
+        font-size: 0.875em;
+        margin-top: unit(15px / @base-font-size-px, em);
+        margin-left: unit(30px / @base-font-size-px, em);
+      }
+    }
+
+    .nav-button-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      margin-top: unit(45px / @base-font-size-px, em);
+      margin-bottom: unit(30px / @base-font-size-px, em);
+
+      & > button {
+        width: 45%;
+      }
+
+      .a-btn--prev {
+        background-color: var(--white);
+        color: var(--pacific);
+        border: 1px solid;
+        border-color: var(--pacific);
+      }
+    }
+  }
+
+  .estimate--total-costs {
+    margin-bottom: 1.875em;
+    margin-top: 1.875em;
+    position: relative;
+    padding: unit(15px / @base-font-size-px, em);
+    background: var(--gray-5);
+    border: 1px solid var(--gray-40);
+
+    & > .financial-item:first-child {
+      margin-top: 0;
+    }
+  }
+
+  #spinner {
+    display: none;
+    color: var(--green);
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+  }
+
+  .searching > #spinner {
+    display: block;
   }
 }

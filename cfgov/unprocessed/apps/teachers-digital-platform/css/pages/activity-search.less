@@ -103,22 +103,13 @@
     }
   }
 
-  .input-contains-label {
-    &__after:not(.u-hidden) {
-      // Tablet and above.
-      .respond-to-min(@bp-sm-min, {
-        display: initial;
-      });
-    }
-  }
-
   .results {
     padding-top: 0;
   }
 
   .results__count {
     padding: unit(15px / @base-font-size-px, em)
-      unit(15px / @base-font-size-px, em) 0 unit(15px / @base-font-size-px, em);
+      unit(15px / @base-font-size-px, em) 0;
     border: 1px solid var(--gray-40);
     background-color: var(--green-20);
 
@@ -239,7 +230,7 @@
   }
 
   .activity__meta-key {
-    font-size: unit(@base-font-size-px / 16 * 100, %);
+    font-size: 100%;
     margin: 0;
     text-transform: none;
   }

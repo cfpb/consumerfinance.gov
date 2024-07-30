@@ -7,7 +7,7 @@ from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
-from v1.blocks import AnchorLink, HeadingBlock, UnescapedRichTextBlock
+from v1.blocks import AnchorLink, HeadingBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
@@ -23,7 +23,6 @@ class InfoUnit(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "v1/includes/molecules/info-unit.html"
 
 
 class TextIntroduction(blocks.StructBlock):
@@ -37,7 +36,7 @@ class TextIntroduction(blocks.StructBlock):
     )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
-    body = UnescapedRichTextBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(
         required=False,
@@ -201,7 +200,9 @@ class Notification(blocks.StructBlock):
     )
     explanation = blocks.TextBlock(
         required=False,
-        help_text="Explanation text appears below the message in smaller type.",
+        help_text=(
+            "Explanation text appears below the message in smaller type."
+        ),
     )
     links = blocks.ListBlock(
         atoms.Hyperlink(required=False),
@@ -292,7 +293,10 @@ class ContactPhone(blocks.StructBlock):
                     "number",
                     blocks.CharBlock(
                         max_length=15,
-                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        help_text=(
+                            "Do not include spaces or dashes. "
+                            "Ex. 8554112372"
+                        ),
                         validators=[phone_number_format_validator()],
                     ),
                 ),
@@ -312,7 +316,10 @@ class ContactPhone(blocks.StructBlock):
                         max_length=15,
                         required=False,
                         label="TTY",
-                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        help_text=(
+                            "Do not include spaces or dashes. "
+                            "Ex. 8554112372"
+                        ),
                         validators=[phone_number_format_validator()],
                     ),
                 ),
@@ -566,3 +573,6 @@ class FeatureCard(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "v1/includes/molecules/feature-card.html"
+
+    class Media:
+        css = ["partially-styled-link.css"]

@@ -241,9 +241,8 @@ class UtilitiesTests(unittest.TestCase):
         ]:
             with self.subTest(
                 birthday=birthday, today=today, expected_age=expected_age
-            ):
-                with freeze_time(today):
-                    self.assertEqual(get_current_age(birthday), expected_age)
+            ), freeze_time(today):
+                self.assertEqual(get_current_age(birthday), expected_age)
 
     def test_interpolate_benefits(self):
         mock_results = copy.deepcopy(self.sample_results)
@@ -263,7 +262,7 @@ class UtilitiesTests(unittest.TestCase):
             expected_benefits["age 62"] = 1523
         # need to pass results, base, fra_tuple, current_age, DOB
         results = interpolate_benefits(mock_results, 2176, (67, 0), 44, dob)
-        for key in results["data"]["benefits"].keys():
+        for key in results["data"]["benefits"]:
             self.assertTrue(
                 results["data"]["benefits"][key] == expected_benefits[key]
             )
@@ -439,14 +438,12 @@ class UtilitiesTests(unittest.TestCase):
             self.assertEqual(get_retirement_age(year), sample_inputs[year])
 
     def test_past_fra_test(self):
-        one_one = "{0}".format(
-            date(1980, 1, 1).replace(year=self.today.year - 25)
-        )
-        way_old = "{0}".format(self.today - timedelta(days=80 * 365))
-        too_old = "{0}".format(self.today - timedelta(days=68 * 365))
-        ok = "{0}".format(self.today - timedelta(days=57 * 365))
-        too_young = "{0}".format(self.today - timedelta(days=21 * 365))
-        future = "{0}".format(self.today + timedelta(days=365))
+        one_one = f"{date(1980, 1, 1).replace(year=self.today.year - 25)}"
+        way_old = f"{self.today - timedelta(days=80 * 365)}"
+        too_old = f"{self.today - timedelta(days=68 * 365)}"
+        ok = f"{self.today - timedelta(days=57 * 365)}"
+        too_young = f"{self.today - timedelta(days=21 * 365)}"
+        future = f"{self.today + timedelta(days=365)}"
         # edge = "{0}".format(self.today - timedelta(days=67 * 365))
         invalid = "xx/xx/xxxx"
         self.assertFalse(past_fra_test(one_one, language="en"))
@@ -559,9 +556,9 @@ class UtilitiesTests(unittest.TestCase):
         data = self._get_retire_data()["data"]
         self.assertEqual(data["params"]["yob"], self.sample_year)
 
-        for each in data.keys():
+        for each in data:
             self.assertTrue(each in self.data_keys)
-        for each in data["benefits"].keys():
+        for each in data["benefits"]:
             self.assertTrue(each in self.benefit_keys)
 
     def test_get_retire_data_too_young(self):

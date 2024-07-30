@@ -26,6 +26,7 @@
                 <div class="u-layout-grid__main"
                         id="content__main">
                     {% block content_main scoped -%}{%- endblock %}
+                    {% include 'v1/layouts/_footnotes.html' %}
                 </div>
             {% endblock %}
         </div>

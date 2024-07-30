@@ -43,7 +43,7 @@ def extract_zipfile(zipfile_filename, extract_location):
             "virtualenv",
             "--never-download",
             "--no-wheel",
-            "--extra-search-dir=%s" % bootstrap_wheels,
+            f"--extra-search-dir={bootstrap_wheels}",
             virtualenv_dir,
         ]
     )
@@ -70,7 +70,7 @@ def extract_zipfile(zipfile_filename, extract_location):
 
     # Move .pth files into the virtual environment site-packages so that they
     # they get processed on Python startup.
-    for pth_file in glob("%s/*.pth" % extract_location):
+    for pth_file in glob(f"{extract_location}/*.pth"):
         shutil.move(pth_file, site_packages)
 
     # Also move the loadenv.py script to support automatic loading of

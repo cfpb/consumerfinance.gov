@@ -1,18 +1,23 @@
-{%- macro apr(value) -%}
+{%- macro apr(value, asterisk=asterisk) -%}
     {% if value is none -%}
         N/A
     {%- elif value == 0 -%}
         0%
     {%- else -%}
-        {{ ('%.2f%%' | format(value * 100)) }}
+        {{ ('%g%%' | format(value * 100)) }}
     {%- endif %}
+    {%- if asterisk and value is not none %}*{% endif %}
 {%- endmacro -%}
 
-{%- macro apr_range(min, max) -%}
+{%- macro apr_range(min, max, spaceless=false, asterisk=false) -%}
     {% if min == max -%}
-        {{ apr(min) }}
+        {{ apr(min, asterisk=asterisk) }}
     {%- else -%}
-        {{ apr(min) }} - {{ apr(max) }}
+        {{ apr(min) }}
+        {{- ' ' if not spaceless -}}
+        &ndash;
+        {{- ' ' if not spaceless }}
+        {{- apr(max, asterisk=asterisk) }}
     {%- endif %}
 {%- endmacro -%}
 
@@ -22,6 +27,13 @@
         if value is not none and (value or not boolean)
         else (default if default is not none else "None")
     }}
+{%- endmacro -%}
+
+{%- macro date(value) -%}
+{%- import 'v1/includes/macros/time.html' as time -%}
+    {{ time.render(
+        ensure_date(value), {"date": true}, text_format=true
+    ) }}
 {%- endmacro -%}
 
 {%- macro lower_first_letter(s) -%}

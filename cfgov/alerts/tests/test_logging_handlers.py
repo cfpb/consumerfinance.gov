@@ -38,7 +38,7 @@ class TestLoggingHandlers(TestCase):
                     "handlers": {
                         "cfgov": {
                             "level": "ERROR",
-                            "class": "alerts.logging_handlers.CFGovErrorHandler",
+                            "class": "alerts.logging_handlers.CFGovErrorHandler",  # noqa: E501
                         },
                     },
                     "loggers": {

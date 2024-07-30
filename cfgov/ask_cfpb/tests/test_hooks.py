@@ -32,7 +32,7 @@ class TestAskHooks(TestCase):
 
     def test_create_answer_id_english(self):
         """Test that English page creation generates an Ask ID and pages."""
-        request = HttpRequest
+        request = HttpRequest()
         request.user = self.user
         test_page = AnswerPage(slug="test-page", title="Test page")
         self.english_landing_page.add_child(instance=test_page)
@@ -48,7 +48,7 @@ class TestAskHooks(TestCase):
 
     def test_create_answer_id_spanish(self):
         """Test that Spanish page creation generates an Ask ID and pages."""
-        request = HttpRequest
+        request = HttpRequest()
         request.user = self.user
         test_page = AnswerPage(
             slug="spanish-page-1", title="Spanish page 1", language="es"

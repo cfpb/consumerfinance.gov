@@ -1,0 +1,88 @@
+{# ==========================================================================
+
+   ask_search.render()
+
+   ==========================================================================
+
+   Description:
+
+   Output an ask search bar when given:
+
+   ask_query:      The previous search query string.
+
+   language:       Page's language.
+
+   show_label:     Boolean; whether to show form label.
+
+   autocomplete:   Boolean; whether to allow autocomplete.
+
+   placeholder:    String; text to enter for the search input's placeholder
+                   value.
+
+   is_subsection:  Boolean; whether to mark up the form label with an h3 to fit
+                   into an exisitng section or with an h2 to be its own section
+
+   max_length:     Integer; the maximum length of a query string, in characters
+
+   ========================================================================== #}
+
+{% macro render(
+    ask_query='',
+    language='en',
+    show_label=True,
+    autocomplete=True,
+    placeholder='',
+    is_subsection=True,
+    max_length=autocomplete_max_chars
+) %}
+<div class="o-search-bar">
+    <form method="get"
+          action="{{ _('/ask-cfpb/search/') }}"
+          data-cy="ask-search-form">
+        {% if show_label %}
+        <{{ 'h3' if is_subsection else 'h2' }}>
+            {{ _('Search for your question') }}
+        </{{ 'h3' if is_subsection else 'h2' }}>
+        {% endif %}
+
+        <div>
+            {% import 'v1/includes/organisms/search-input.html' as search_input %}
+            {% set placeholder_value = _('Search Ask CFPB for your question') %}
+            {{ search_input.render({
+                "input_aria_describedby_id": "o-search-bar_error-message",
+                "input_id": "o-search-bar_query",
+                "input_name": "q",
+                "input_value": ask_query,
+                "input_aria_label": _('Search for your question'),
+                "has_autocomplete": autocomplete,
+                "placeholder": placeholder_value,
+                "submit_aria_label": placeholder_value,
+                "max_length": autocomplete_max_chars
+            }) }}
+
+            <div class="u-mt15 a-form-alert a-form-alert--error u-hidden"
+                 id="o-search-bar_error-message"
+                 role="alert">
+                {{ svg_icon('error-round') }}
+                <p class="a-form-alert__text">
+                    Searches are limited to {{ autocomplete_max_chars }}
+                    characters.
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endmacro %}
+
+{% if value %}
+  {{ render(
+      '',
+      value.language | default( 'en' ),
+      value.show_label | default( True ),
+      value.autocomplete | default( True ),
+      value.placeholder | default( '' ),
+      value.is_subsection | default( True ),
+      value.max_length | default( autocomplete_max_chars )
+    )
+  }}
+{% endif %}

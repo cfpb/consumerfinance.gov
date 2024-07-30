@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 
 from django.apps import apps
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -16,18 +17,19 @@ from wagtailmedia.blocks import AbstractMediaChooserBlock
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 
-# Bring tables into this module to maintain import structure across the project.
+# Bring tables into this module to maintain import structure across the project
 from v1.atomic_elements.tables import (  # noqa: F401
     CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
     Table,
 )
+from v1.blocks import RichTextBlockWithFootnotes
 from v1.util import ref
 
 
 class Well(blocks.StructBlock):
-    content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
+    content = blocks.RichTextBlock(required=False, label="Well")
 
     class Meta:
         icon = "placeholder"
@@ -106,9 +108,9 @@ class InfoUnitGroup(blocks.StructBlock):
                     raise StructBlockValidationError(
                         block_errors={
                             "format": ValidationError(
-                                "Info units must include images when using the "
-                                '25/75 format. Search for an "FPO" image if you '
-                                "need a temporary placeholder."
+                                "Info units must include images when using "
+                                'the 25/75 format. Search for an "FPO" image '
+                                "if you need a temporary placeholder."
                             )
                         }
                     )
@@ -117,7 +119,7 @@ class InfoUnitGroup(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "v1/includes/organisms/info-unit-group-2.html"
+        template = "v1/includes/organisms/info-unit-group.html"
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
@@ -252,6 +254,7 @@ class RelatedPosts(blocks.StructBlock):
         queryset = (
             AbstractFilterPage.objects.live()
             .exclude(id=page.id)
+            .filter(language=page.language)
             .order_by("-date_published")
             .distinct()
             .specific()
@@ -523,8 +526,14 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = v1_blocks.UnescapedRichTextBlock(icon="edit")
+    content = blocks.RichTextBlock(icon="edit")
     content_with_anchor = molecules.ContentWithAnchor()
+    content_with_footnotes = RichTextBlockWithFootnotes(
+        features=settings.WAGTAILADMIN_RICH_TEXT_EDITORS["default"]["OPTIONS"][
+            "features"
+        ]
+    )
+
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
     table = Table()
@@ -653,7 +662,9 @@ class FilterableList(BaseExpandable):
     )
     filter_by_topics = blocks.BooleanBlock(
         required=False,
-        help_text='Whether to include a "Topics" filter in the filter controls',
+        help_text=(
+            'Whether to include a "Topics" filter in the filter controls'
+        ),
     )
     filter_by_enforcement_statuses = blocks.BooleanBlock(
         default=False,
@@ -744,7 +755,8 @@ class VideoPlayer(blocks.StructBlock):
                 errors["video_id"] = ValidationError("This field is required.")
             elif cleaned["thumbnail_image"]:
                 errors["thumbnail_image"] = ValidationError(
-                    "This field should not be used if YouTube video ID is not set."
+                    "This field should not be used if YouTube video ID is "
+                    "not set."
                 )
 
         if errors:
@@ -806,8 +818,8 @@ class FeaturedContentStructValue(blocks.StructValue):
         if post and self.get("show_post_link"):
             links.append(
                 {
-                    # Unfortunately, we don't have access to the request context
-                    # here, so we can't do post.get_url(request).
+                    # Unfortunately, we don't have access to the request
+                    # context here, so we can't do post.get_url(request).
                     "url": post.url,
                     "text": self.get("post_link_text") or post.title,
                 }
@@ -962,7 +974,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
-        css = ["mortgage-performance-trends.css"]
+        css = ["mortgage-performance-trends.css", "chart.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
@@ -1040,7 +1052,7 @@ class DataSnapshot(blocks.StructBlock):
     tightness_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text="Descriptive sentence, e.g. In year-over-year credit tightness",  # noqa
+        help_text="Descriptive sentence, e.g. In year-over-year credit tightness",  # noqa: E501
     )
 
     # Select an image

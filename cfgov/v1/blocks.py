@@ -1,12 +1,19 @@
-import html
-import re
-
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from wagtail import blocks
+from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
+
+from wagtail_footnotes.blocks import (
+    FIND_FOOTNOTE_TAG,
+)
+from wagtail_footnotes.blocks import (
+    RichTextBlockWithFootnotes as WagtailFootnotesRichTextBlockWithFootnotes,
+)
 
 from v1.util.util import get_unique_id
 
@@ -91,56 +98,47 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
         js = ["email-signup.js"]
 
 
-class EscapedHTMLValidator:
-    """
-    Implicity used on all UnescapedRichTextBlocks to limit "raw" HTML elements
-    """
+class RichTextBlockWithFootnotes(WagtailFootnotesRichTextBlockWithFootnotes):
+    def render_footnote_tag(self, index):
+        template = get_template(settings.WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE)
+        return template.render({"index": index})
 
-    def __init__(self, allowed_elements=()):
-        # Regular expression to match a user-entered HTML tag, which shows up
-        # in the rich text value with HTML entities around the tag name and
-        # attributes (i.e. &lt;span id="foo"&gt;).
-        self.escaped_html_re = re.compile(
-            r"&lt;(?P<tag_name>\w+)(?:(?!&gt;).)*?&gt;"
-        )
-        self.allowed_elements = allowed_elements
+    def replace_footnote_tags(self, value, html, context=None):
+        # This is a wholesale copy of the replace_footnote_tags() method in
+        # wagtail-footnotes's RichTextBlockWithFootnotes. It modifies the
+        # embedded replace_tag() function to call our own
+        # render_footnote_tag() method. This is a change that should be
+        # contributed back upstream to allow straight-forward modification of
+        # footnote link rendering.
+        #
+        # There is an alternative implementation proposed in a PR in 2022:
+        #   https://github.com/torchbox/wagtail-footnotes/pull/27
+        # But I think I prefer providing a new method to a new embedded func.
+        if context is None:
+            new_context = self.get_context(value)
+        else:
+            new_context = self.get_context(value, parent_context=dict(context))
 
-    def __call__(self, value):
-        element_matches = self.escaped_html_re.findall(str(value))
-        invalid_elements = [
-            tag_name
-            for tag_name in element_matches
-            if tag_name not in self.allowed_elements
-        ]
-        if len(invalid_elements) > 0:
-            raise ValidationError(
-                "Invalid HTML element(s) found: "
-                f"{', '.join(invalid_elements)}. "
-                "The only HTML elements allowed are "
-                f"{', '.join(self.allowed_elements)}. "
-            )
+        if not isinstance(new_context.get("page"), Page):
+            return html
 
+        page = new_context["page"]
+        if not hasattr(page, "footnotes_list"):
+            page.footnotes_list = []
+        self.footnotes = {
+            str(footnote.uuid): footnote for footnote in page.footnotes.all()
+        }
 
-class UnescapedRichTextBlock(blocks.RichTextBlock):
-    """
-    Unescape any HTML entities within the rich text block to allow raw HTML.
+        def replace_tag(match):
+            try:
+                index = self.process_footnote(match.group(1), page)
+            except (KeyError, ValidationError):  # pragma: no cover
+                return ""
+            else:
+                # This line is the only change to wagtail-footnote's
+                # replace_footnote_tags(), providing a separate method that
+                # can be overriden for rendering the footnote reference link.
+                return self.render_footnote_tag(index)
 
-    THIS BLOCK EXISTS TEMPORARILY UNTIL EXISTING RAW HTML USAGE IS REMOVED.
-    DO NOT ADD THIS BLOCK TO ANY NEW FIELDS.
-    """
-
-    def __init__(self, validators=(), **kwargs):
-        validators = list(validators) + [
-            EscapedHTMLValidator(
-                allowed_elements=(
-                    "svg",
-                    "path",
-                )
-            )
-        ]
-
-        super().__init__(validators=validators, **kwargs)
-
-    def to_python(self, value):
-        value = html.unescape(value)
-        return super().to_python(value)
+        # note: we return safe html
+        return mark_safe(FIND_FOOTNOTE_TAG.sub(replace_tag, html))  # noqa: S308

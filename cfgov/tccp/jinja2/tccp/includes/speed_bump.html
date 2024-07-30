@@ -20,7 +20,7 @@
 
     ========================================================================== #}
 {%- macro speed_bump(value, large = false) -%}
-<article class="o-well o-well--speed-bump{% if large %} o-well--speed-bump-large{% endif %}">
+<div class="o-well o-well--speed-bump{% if large %} o-well--speed-bump-large{% endif %}">
     {% if large %}
     <p>
         {{ svg_icon("lightbulb-round") }} Did you know:
@@ -31,5 +31,5 @@
         {% if not large %}<strong>{{ svg_icon("lightbulb-round") }} Did you know:</strong>{% endif %}
         {{ value.content }}{% if value.link %} <a href="{{ value.url }}">{{ value.link }}</a>{% endif %}
     </p>
-</article>
+</div>
 {%- endmacro -%}

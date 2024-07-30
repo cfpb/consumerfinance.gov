@@ -1,6 +1,4 @@
-// Import external cfpb-chart-builder stylesheet
-// This is also imported by the chart block (in chart.less)
-@import url('cfpb-chart-builder.less');
+@import (reference) 'cfpb-core.less';
 
 .o-mp-map {
   border: 1px solid var(--gray-40);
@@ -157,10 +155,6 @@
 #mp-map-container {
   // Highcharts auto resizes the charts, causing odd overflow issues
   overflow: inherit;
-
-  .a-label h4 {
-    .u-mb15();
-  }
 
   // Fieldsets have silly default values. We should remove them at the CF level
   // but for now I'm removing them only within our app.

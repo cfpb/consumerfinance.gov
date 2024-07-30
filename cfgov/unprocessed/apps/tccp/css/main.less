@@ -1,5 +1,6 @@
 @import (reference) 'cfpb-core.less';
 @import (reference) 'cfpb-buttons.less';
+@import (less) 'tooltip.less';
 
 .respond-to-min(@bp-sm-min, {
   .o-form__group {
@@ -7,89 +8,79 @@
   }
 });
 
-// @TODO refactor and remove this override
-// See https://github.com/cfpb/consumerfinance.gov/pull/8247
-.o-form__fieldset {
-  ul {
-    list-style: none;
-    padding-left: 0;
+// A form fieldset with large block-level areas for
+// helper text under each form field
+.o-form__fieldset--helpers {
+  .a-checkbox:checked + .a-label {
+    border: 1px solid var(--pacific);
+    border-bottom: 0;
+    box-shadow: none;
   }
 
-  input[type='checkbox'],
-  input[type='radio'] {
-    margin-right: 4px;
-  }
-}
-
-.m-btn-group {
-  .u-btn-helper {
-    width: 100%;
-    margin-top: unit((15px / @base-font-size-px), rem);
-    text-align: center;
-    a {
-      border-bottom-width: 1px;
-    }
-    .respond-to-min(@bp-sm-min, {
-      display: inline-block;
-      width: auto;
-      margin-top: 0;
-      margin-left: unit((6px / @btn-font-size), rem);
-    });
-  }
-}
-
-.a-checkbox + .a-label > .a-label__helper {
-  display: none;
-}
-
-.a-checkbox:checked + .a-label > .a-label__helper {
-  display: grid;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.a-label__helper .m-list {
-  list-style: square;
-  padding-left: 1.125em;
-
-  .m-list__item {
-    margin-left: unit((15px / @base-font-size-px), rem);
-  }
-
-  .m-list__item--has-icon {
-    display: flex;
-    margin-left: 0;
-
-    .cf-icon-svg {
-      display: inline;
-      margin-right: 6px;
-      color: var(--green);
+  .m-form-field--checkbox {
+    &:has(.a-checkbox:focus) {
+      outline: 1px dotted var(--pacific);
+      outline-offset: 1px;
     }
 
-    span {
-      margin-top: unit((-1px / @base-font-size-px), rem);
+    .a-checkbox:focus + .a-label {
+      outline: none;
+    }
+
+    .a-checkbox ~ [data-helper-text] {
+      display: none;
+      box-sizing: border-box;
+      width: 100%;
+      padding: unit((15px / @base-font-size-px), rem);
+      padding-top: 0;
+      background-color: var(--pacific-20);
+      border: 1px solid var(--pacific);
+      border-top: 0;
+    }
+
+    .a-checkbox:checked ~ [data-helper-text] {
+      display: block;
+    }
+  }
+
+  [data-helper-text] > .m-list {
+    list-style: square;
+    padding-left: 1.125em;
+
+    .m-list__item {
+      margin-left: unit((15px / @base-font-size-px), rem);
+    }
+
+    .m-list__item--has-icon {
+      display: flex;
+      margin-left: 0;
+
+      .cf-icon-svg {
+        display: inline;
+        margin-right: 6px;
+        color: var(--green);
+      }
+
+      span {
+        margin-top: unit((-1px / @base-font-size-px), rem);
+      }
     }
   }
 }
 
-.tool-features {
-  .cf-icon-svg--credit-card-round {
-    color: var(--gold);
+.u-btn-helper {
+  width: 100%;
+  margin-top: unit((15px / @base-font-size-px), rem);
+  text-align: center;
+  a {
+    border-bottom-width: 1px;
   }
-
-  .cf-icon-svg--court-round {
-    color: var(--gray);
-  }
-
-  .cf-icon-svg--disabled-round {
-    color: var(--red);
-  }
-
-  .cf-icon-svg--dollar-round {
-    color: var(--green);
-  }
+  .respond-to-min(@bp-sm-min, {
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
+    margin-left: unit((6px / @btn-font-size), rem);
+  });
 }
 
 .u-small-text--subtle {
@@ -99,6 +90,11 @@
 .o-well.o-well--speed-bump {
   padding: unit((20px / @base-font-size-px), rem);
   background-color: var(--teal-10);
+
+  a {
+    border-color: var(--pacific-mid-dark);
+    color: var(--pacific-mid-dark);
+  }
 
   p {
     max-width: 100%;
@@ -126,6 +122,31 @@
   }
 }
 
+.m-apr-rating {
+  &--less .cf-icon-svg {
+    color: var(--green);
+  }
+
+  &--average .cf-icon-svg {
+    color: var(--gold);
+  }
+
+  &--more .cf-icon-svg {
+    color: var(--red);
+  }
+}
+
+.u-heading-4-size-only() {
+  font-size: @size-iv;
+  line-height: 1.25;
+
+  // Mobile only.
+  .respond-to-max(@bp-xs-max, {
+    font-size: unit(16px / @base-font-size-px, rem);
+    line-height: unit(18px /  @base-font-size-px);
+  });
+}
+
 .m-card.m-card--tabular {
   padding: 0;
   border: 0;
@@ -136,6 +157,8 @@
     border: 1px solid #d2d3d5;
     border-bottom-width: 3px;
     color: var(--black);
+    // Disable iOS link highlighting for our large cards
+    -webkit-tap-highlight-color: transparent;
 
     &:visited .m-card__subtitle {
       border-color: @link-underline-visited;
@@ -146,6 +169,11 @@
       padding-bottom: unit((20px / @base-font-size-px), rem);
     });
   }
+
+  dl {
+    margin-bottom: 0;
+  }
+
   &:hover {
     > a {
       box-shadow:
@@ -179,6 +207,7 @@
     color: var(--gray);
     font-size: unit((16px / @base-font-size-px), rem);
     font-weight: 400;
+    text-transform: uppercase;
   }
 
   .m-card__subtitle {
@@ -189,6 +218,22 @@
 
   .m-card__footer {
     margin-top: unit((5px / @base-font-size-px), rem);
+
+    // Tablet and above.
+    .respond-to-min(@bp-sm-min, {
+      margin-top: unit((20px / @base-font-size-px), rem);
+    });
+  }
+
+  .m-apr-rating {
+    .u-heading-4-size-only();
+    margin-bottom: unit(20px / @base-font-size-px, rem);
+    font-weight: 600;
+
+    // Mobile only.
+    .respond-to-max(@bp-xs-max, {
+      margin-bottom: unit(10px / @base-font-size-px, rem);
+    });
   }
 }
 
@@ -198,13 +243,16 @@
   }
 
   .m-apr-rating {
-    margin-bottom: unit((5px / @base-font-size-px), rem);
+    margin-bottom: unit(5px / @base-font-size-px, rem);
     display: grid;
     grid-template-columns: unit(45px / @base-font-size-px, em) 1fr;
     align-items: baseline;
     gap: unit(5px / @base-font-size-px, em);
     font-weight: 500;
 
+    .u-heading-4-size-only();
+
+    // Tablet and above.
     .respond-to-min(@bp-sm-min, {
       margin-bottom: 0;
     });
@@ -215,39 +263,19 @@
   }
 }
 
-.m-apr-rating {
-  .h4();
-  margin-bottom: unit((20px / @base-font-size-px), rem);
-  font-weight: 600;
-
-  &--less .cf-icon-svg {
-    color: var(--green);
-  }
-
-  &--average .cf-icon-svg {
-    color: var(--gold);
-  }
-
-  &--more .cf-icon-svg {
-    color: var(--red);
-  }
-}
-
 .m-data-specs {
   display: grid;
   grid-template-areas:
     'apr transfer'
     'fee rewards'
     '. requirements';
-  grid-template-columns: 2fr 3fr;
-  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
   row-gap: 15px;
-  margin-bottom: 0;
 
   .respond-to-min(@bp-sm-min, {
     grid-template-areas: 'apr fee transfer rewards requirements';
     grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
-    margin-bottom: unit((15px / @base-font-size-px), rem);
   });
 }
 
@@ -258,6 +286,15 @@
 
   &--apr {
     grid-area: apr;
+  }
+
+  &--apr-disclaimer {
+    font-size: unit((14px / @base-font-size-px), rem);
+
+    .respond-to-min(@bp-sm-min, {
+      font-size: unit((16px / @base-font-size-px), rem);
+      line-height: unit((22px / @base-font-size-px), rem);
+    });
   }
 
   &--fee {
@@ -337,11 +374,6 @@
 // Only show the first 10 results
 html.js .o-filterable-list-results--partial {
   .o-card-group__cards {
-    .m-card:nth-child(10) {
-      border-bottom: 1px solid @table-border;
-      margin-bottom: unit((10px / @base-font-size-px), rem);
-    }
-
     .u-show-more {
       display: none;
     }
@@ -358,10 +390,10 @@ html.js .o-filterable-list-results--partial {
   cursor: pointer;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.97),
-    rgba(255, 255, 255, 1)
+    rgba(255, 255, 255, 0%),
+    rgba(255, 255, 255, 70%),
+    rgba(255, 255, 255, 97%),
+    rgba(255, 255, 255, 100%)
   );
 }
 
@@ -388,10 +420,10 @@ html.js .o-filterable-list-results--partial {
         unit((20px / @base-font-size-px), rem);
     });
   }
-  &__tier:first-child {
+  &__tier:first-of-type {
     border-radius: 20px 0 0 20px;
   }
-  &__tier:last-child {
+  &__tier:last-of-type {
     border-radius: 0 20px 20px 0;
   }
   &__tier--selected {
@@ -434,7 +466,7 @@ html.js .o-filterable-list-results--partial {
     });
   }
 
-  h2 {
+  &:not(.o-card-details-section--introduction) > h2 {
     .respond-to-max(@bp-sm-min, {
       font-weight: 600;
     });
@@ -476,6 +508,11 @@ html.js .o-filterable-list-results--partial {
   dd .o-table {
     margin-top: unit((10px / @base-font-size-px), rem);
   }
+}
+
+.m-apr-disclaimer {
+  // Hang the asterisk at the beginning of the content
+  text-indent: -0.7ch;
 }
 
 .m-payment-calculation {
@@ -527,12 +564,13 @@ html.js .o-filterable-list-results--partial {
     }
     &::after {
       animation-name: indeterminate-short;
+      animation-delay: 1s;
     }
   }
 }
 
 // Dim search results while inflight
-.htmx-request .htmx-results {
+.htmx-request #htmx-results {
   opacity: 0.5;
 }
 

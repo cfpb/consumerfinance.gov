@@ -39,7 +39,7 @@ class TestRunner(DiscoverSlowestTestsRunner):
         # happen if e.g. we're only running tests that don't require one.
         if dbs:
             # Some required Wagtail data (like the default site) are created in
-            # Wagtail migrations. If we're skipping migrations when running
+            # data migrations. If we're skipping migrations when running
             # tests, we need to create this data ourselves.
             if settings.SKIP_DJANGO_MIGRATIONS:
                 self.initial_wagtail_data()
@@ -57,6 +57,7 @@ class TestRunner(DiscoverSlowestTestsRunner):
         - wagtailcore.0001_squashed_0016_change_page_url_path_to_text_field
         - wagtailcore.0025_collection_initial_data
         - wagtailcore.0054_initial_locale
+        - login.0005_add_default_user_group
         """
         # Create default Locale object.
         Locale.objects.create(
@@ -110,6 +111,7 @@ class TestRunner(DiscoverSlowestTestsRunner):
         # Create default groups.
         Group.objects.get_or_create(name="Editors")
         Group.objects.get_or_create(name="Moderators")
+        Group.objects.get_or_create(name="Wagtail Users")
 
 
 class StdoutCapturingTestRunner(TestRunner):
@@ -120,9 +122,8 @@ class StdoutCapturingTestRunner(TestRunner):
 
         if captured_stdout.getvalue():
             raise RuntimeError(
-                "unit tests should avoid writing to stdout: {}".format(
-                    captured_stdout.getvalue()
-                )
+                "unit tests should avoid writing to stdout: "
+                f"{captured_stdout.getvalue()}"
             )
 
         return return_value

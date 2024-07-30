@@ -1,3 +1,5 @@
+from django.template.response import TemplateResponse
+
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
@@ -23,7 +25,6 @@ class BlogContent(blocks.StreamBlock):
 class BlogPage(AbstractFilterPage):
     content = StreamField(
         BlogContent,
-        use_json_field=True,
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -40,6 +41,28 @@ class BlogPage(AbstractFilterPage):
 
         return context
 
+    @property
+    def preview_modes(self):
+        return super().preview_modes + [
+            ("list_view", "List view"),
+        ]
+
+    def serve_preview(self, request, mode_name):
+        if mode_name != "list_view":
+            return super().serve_preview(request, mode_name)
+
+        from v1.serializers import FilterPageSerializer
+
+        serializer = FilterPageSerializer(self, context={"request": request})
+
+        return TemplateResponse(
+            request,
+            "v1/blog/blog_page_list_preview.html",
+            {
+                "post": serializer.data,
+            },
+        )
+
 
 class LegacyBlogContent(BlogContent):
     content = blocks.RawHTMLBlock(
@@ -51,7 +74,6 @@ class LegacyBlogContent(BlogContent):
 class LegacyBlogPage(AbstractFilterPage):
     content = StreamField(
         LegacyBlogContent,
-        use_json_field=True,
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(

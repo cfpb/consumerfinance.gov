@@ -1,0 +1,6 @@
+/* Display an img that shows one of our SVG icons with similar styling as cf-icon-svg. */
+img[data-icon-name] {
+  height: 1.1875em;
+  vertical-align: text-top;
+  fill: currentcolor;
+}
