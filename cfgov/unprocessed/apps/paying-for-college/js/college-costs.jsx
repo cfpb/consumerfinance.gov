@@ -11,7 +11,7 @@ import { getQueryVariables } from './college-costs/util/url-parameter-utils.js';
 import { navigationView } from './college-costs/views/navigation-view.js';
 import { schoolView } from './college-costs/views/school-view.js';
 import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
-import { toolTipTracking } from './college-costs/util/analytics.js'
+import { toolTipTracking } from './college-costs/util/analytics.js';
 
 import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'react-tooltip';

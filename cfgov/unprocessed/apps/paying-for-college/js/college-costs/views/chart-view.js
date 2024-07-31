@@ -326,14 +326,14 @@ const costOfBorrowingOpts = {
       pointWidth: 60,
       data: [10000],
       color: '#ff9e1b',
-      legendIndex: 2
+      legendIndex: 2,
     },
     {
       name: 'Estimated total borrowed: <strong>$55,000</strong>',
       pointWidth: 60,
       data: [40000],
       color: '#ffe1b9',
-      legendIndex: 1
+      legendIndex: 1,
     },
   ],
 };
@@ -463,7 +463,7 @@ const affordingOpts = {
       data: [524],
       color: '#ffe1b9',
       stack: 'costs',
-      legendIndex: 2
+      legendIndex: 2,
     },
     {
       name: 'Average monthly expenses: <strong>$2,246</strong>',
@@ -472,7 +472,7 @@ const affordingOpts = {
       data: [2246],
       color: '#ff9e1b',
       stack: 'costs',
-      legendIndex: 1
+      legendIndex: 1,
     },
     {
       name: 'Monthly median salary: <strong>$4,357</strong>',
@@ -492,7 +492,7 @@ const affordingOpts = {
         },
       },
       stack: 'salary',
-      legendIndex: 3
+      legendIndex: 3,
     },
   ],
 };
