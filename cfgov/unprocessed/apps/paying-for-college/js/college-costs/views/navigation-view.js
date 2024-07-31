@@ -103,9 +103,10 @@ const navigationView = {
 
   /**
    *  _trackNavigation - create a "trail" of the user's navigation through the site for analytics
-   * @param {string} - the most recent section seen
+   * @param {string} - - the most recent section seen
+   * @param section
    */
-  _trackNavigation: function( section ) {
+  _trackNavigation: function (section) {
     const codes = {
       'school-info': '1a',
       'school-costs': '1b',
@@ -118,31 +119,30 @@ const navigationView = {
       'compare-school': '5',
       'review-plan': '6',
       'action-plan': '7',
-      'save-finish': '8'
+      'save-finish': '8',
     };
-    if ( {}.hasOwnProperty.call(codes, section) ) {
+    if ({}.hasOwnProperty.call(codes, section)) {
       navigationView._navTrack += codes[section] + '-';
     } else {
       navigationView._navTrack += '??-';
     }
   },
 
-
   /**
    * _timedNavTracking - Fires events after various delays to help track users
    */
-  _timedNavTracking: function() {
-    const intervals = [ 60 , 120, 180, 300, 600, 900];
-    intervals.forEach( ( int ) => {
-      setTimeout( () => {
+  _timedNavTracking: function () {
+    const intervals = [60, 120, 180, 300, 600, 900];
+    intervals.forEach((int) => {
+      setTimeout(() => {
         const d = new Date().toTimeString();
-        sendAnalyticsEvent( {
+        sendAnalyticsEvent({
           event: 'pfc_grad_path',
-          action: 'Nav Tracking - ' + int + 's', 
+          action: 'Nav Tracking - ' + int + 's',
           label: navigationView._navTrack,
         });
-      }, int * 1000 );
-    })
+      }, int * 1000);
+    });
   },
 
   /**
@@ -302,7 +302,7 @@ function _handleSecondaryNavButtonClick(event) {
   } else {
     const target = event.target;
     sendAnalyticsEvent('Secondary nav click', event.target.innerText);
-    navigationView._trackNavigation( target.dataset.nav_section );
+    navigationView._trackNavigation(target.dataset.nav_section);
 
     if (typeof target.dataset.nav_section !== 'undefined') {
       updateState.activeSection(target.dataset.nav_section);
@@ -322,7 +322,7 @@ function _handleNavButtonClick(event) {
   } else {
     if (event.target.dataset['destination']) {
       const destination = event.target.dataset.destination;
-      navigationView._trackNavigation( destination );
+      navigationView._trackNavigation(destination);
 
       if (event.target.dataset['customizeTrigger']) {
         const trigger = event.target.dataset.customizeTrigger;
@@ -339,7 +339,7 @@ function _handleNavButtonClick(event) {
           getStateValue('activeSection') +
           ' to ' +
           destination,
-          event.target.innerText
+        event.target.innerText,
       );
 
       updateState.navigateTo(destination);
