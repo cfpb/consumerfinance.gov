@@ -407,7 +407,7 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-3.1.1.tgz#63085d2995ca0f0e55aa8b8a07d69bfd48b844fe"
   integrity sha512-a7cxGcJ2wIlMFLlh8z2ONm+715QkPHiyJcxwQlKOz/03GPw1COpfhcmC9wm4xlZfp//jWHNNMwzjtqHXVWU9KA==
 
-"@cypress/request@^3.0.0":
+"@cypress/request@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@cypress/request/-/request-3.0.1.tgz#72d7d5425236a2413bd3d8bb66d02d9dc3168960"
   integrity sha512-TWivJlJi8ZDx2wGOw1dbLuHJKUYX7bWySw377nlnGOW3hP9/MUKIsEdXT/YngWxVdgNCHRBmFlBipE+5/2ZZlQ==
@@ -1894,12 +1894,12 @@ cypress-fail-fast@7.1.0:
   dependencies:
     chalk "4.1.2"
 
-cypress@13.13.1:
-  version "13.13.1"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.13.1.tgz#860c1142a6e58ea412a764f0ce6ad07567721129"
-  integrity sha512-8F9UjL5MDUdgC/S5hr8CGLHbS5gGht5UOV184qc2pFny43fnkoaKxlzH/U6//zmGu/xRTaKimNfjknLT8+UDFg==
+cypress@13.13.2:
+  version "13.13.2"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.13.2.tgz#c71f8d92056c430b1b879e5313f6de25ccce0eda"
+  integrity sha512-PvJQU33933NvS1StfzEb8/mu2kMy4dABwCF+yd5Bi7Qly1HOVf+Bufrygee/tlmty/6j5lX+KIi8j9Q3JUMbhA==
   dependencies:
-    "@cypress/request" "^3.0.0"
+    "@cypress/request" "^3.0.1"
     "@cypress/xvfb" "^1.2.4"
     "@types/sinonjs__fake-timers" "8.1.1"
     "@types/sizzle" "^2.3.2"
@@ -5094,10 +5094,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1292.1:
-  version "1.1292.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1292.1.tgz#f170ca0d7b05c6b6d67e50d1de51f0990a9737c6"
-  integrity sha512-wRJ6twqbr2KGf0Y8EmnuOKDawNbzNSGebEvmXVRIz0MZgvZhiK9FZQHiwfWr/XTXSx7mAp3zrsKcLsOGFkg6fQ==
+snyk@1.1292.2:
+  version "1.1292.2"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1292.2.tgz#68379b051e72989a458d0cea09cc5a4400121300"
+  integrity sha512-ALuJJkpjGTImQySOh5zOrZLjWgEGt5RPEHvxnCZh+z2dfyqSYmIB4Ke9gcdgN2FynQ3FVSqQ2WHrCnpPFrGkhA==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"
