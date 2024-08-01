@@ -88,11 +88,15 @@
     {% for link in list.links %}
     <li class="m-list__item">
         {% if link.url %}
-            <a href="{{ link.url }}" class="m-list__link">
-                {{ link.text }}
+            <a href="{{ link.url }}" class="a-link a-link--jump a-link--jump-gold">
+                •
+                <span class="a-link__text">{{ link.text }}</span>
             </a>
         {% else %}
-            <span class="m-list__link">{{ link.text }}</span>
+            <span class="a-link a-link--jump a-link--jump-gold">
+                •
+                <span class="a-link__text">{{ link.text }}</span>
+            </span>
         {% endif %}
     </li>
     {% endfor %}
