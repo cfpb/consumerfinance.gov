@@ -1,6 +1,36 @@
-@margin-half-em: unit(15px / @base-font-size-px, em);
+// Modifier for jump links to give them topic-tags style gold/gray styling.
+.a-link--jump-gold {
+  font-size: unit(12px / @base-font-size-px, rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold-80);
+  border-color: var(--gold-80);
+  letter-spacing: 1px;
 
-@bullet-font-size__em: unit(15px / @base-font-size-px, em);
+  .u-link--colors(var(--gold-80));
+
+  .a-link__text {
+    color: var(--gray-90);
+    border-bottom-color: var(--gold-80);
+  }
+
+  a&:hover .a-link__text {
+    color: var(--black);
+  }
+
+  a&:hover:before {
+    border-color: var(--gold-80);
+    color: var(--gold-80);
+  }
+
+  // If it's not a link, don't add a border.
+  // TODO: Make it so topic tag related metadata items are ALWAYS links.
+  span&:hover:before {
+    border-top-color: transparent !important;
+  }
+}
+
+@margin-half-em: unit(15px / @base-font-size-px, em);
 
 .m-related-metadata {
   .m-list__link {
@@ -37,34 +67,4 @@
 
 .m-related-metadata__topics {
   line-height: 1em;
-
-  .m-list__link {
-    .h6();
-    position: relative;
-    margin: 0 0 0 @bullet-font-size__em;
-    text-transform: uppercase;
-
-    .u-link--colors(var(--gray), var(--gray), var(--gray), var(--gray), var(--gray),
-    var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80), var(--gold-80));
-
-    &::before {
-      position: absolute;
-      left: -@bullet-font-size__em;
-      width: @bullet-font-size__em;
-
-      // Adding bullet.
-      content: '\2022';
-      color: var(--gold-80);
-    }
-  }
-
-  .respond-to-max(@bp-sm-min, {
-    .m-list__link {
-      margin-left: 0;
-
-      &:before {
-        position: static;
-      }
-    }
-  });
 }
