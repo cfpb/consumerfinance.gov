@@ -62,13 +62,13 @@
 
     .m-list__link {
       font-size: unit(18px / @base-font-size-px, em);
-      .u-link--colors( var(--black) );
+      .u-link-colors( var(--black) );
 
       // Tablet and above.
       .respond-to-min(@bp-sm-min, {
         margin-right: 1em;
 
-        .u-link--hover-border();
+        .u-link-hover-border();
       });
 
       // Desktop and above.
@@ -83,7 +83,7 @@
 
       // Desktop and above.
       .respond-to-min(@bp-med-min, {
-        .u-link--no-border();
+        .u-link-no-border();
       });
     }
   }
@@ -92,7 +92,7 @@
     .m-list--links();
 
     .m-list__link {
-      .u-link--colors( var(--gray-dark) );
+      .u-link-colors( var(--gray-dark) );
     }
   }
 
@@ -161,12 +161,12 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid__column(8);
+      .u-grid-column(8);
       border-right: 1px solid var(--gray-40);
       border-left: 0;
 
       .o-footer__col {
-        .grid__column(6);
+        .u-grid-column(6);
         border-left: 0;
         border-right: 0;
         padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -197,7 +197,7 @@
 
     // Tablet and above.
     .respond-to-min(@bp-sm-min, {
-      .grid__column(4);
+      .u-grid-column(4);
 
       .o-footer__list {
         padding-left: @grid_gutter-width;
