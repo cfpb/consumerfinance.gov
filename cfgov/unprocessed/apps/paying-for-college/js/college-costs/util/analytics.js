@@ -26,7 +26,7 @@ function toolTipTracking() {
   const tooltips = document.querySelectorAll('.a-tooltip');
   tooltips.forEach((elem) => {
     const parentText = elem.parentElement.innerText;
-    elem.addEventListener('mouseenter', (event) => {
+    elem.addEventListener('mouseenter', () => {
       sendAnalyticsEvent('Tooltip Mouseenter', parentText);
     });
   });

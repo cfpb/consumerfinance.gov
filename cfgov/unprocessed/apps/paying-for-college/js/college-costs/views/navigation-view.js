@@ -31,8 +31,8 @@ const navigationView = {
   _navTrack: '1a',
 
   /**
-   * _handlePopState - handle popstate events
-   * @param {object} event - the popstate event
+   * _handlePopState - handle popstate events.
+   * @param {object} event - the popstate event.
    */
   _handlePopState: function (event) {
     if (event.state) {
@@ -86,8 +86,8 @@ const navigationView = {
   },
 
   /**
-   * _showAndHideSections - Hide all app sections, then show appropriate ones
-   * @param {string} activeName - Name of the active section
+   * _showAndHideSections - Hide all app sections, then show appropriate ones.
+   * @param {string} activeName - Name of the active section.
    */
   _showAndHideSections: function (activeName) {
     const query =
@@ -102,9 +102,9 @@ const navigationView = {
   },
 
   /**
-   *  _trackNavigation - create a "trail" of the user's navigation through the site for analytics
-   * @param {string} - - the most recent section seen
-   * @param section
+   * _trackNavigation - create a "trail" of the user's navigation through
+   * the site for analytics.
+   * @param {string} section - the most recent section seen.
    */
   _trackNavigation: function (section) {
     const codes = {
@@ -129,13 +129,12 @@ const navigationView = {
   },
 
   /**
-   * _timedNavTracking - Fires events after various delays to help track users
+   * _timedNavTracking - Fires events after various delays to help track users.
    */
   _timedNavTracking: function () {
     const intervals = [60, 120, 180, 300, 600, 900];
     intervals.forEach((int) => {
       setTimeout(() => {
-        const d = new Date().toTimeString();
         sendAnalyticsEvent({
           event: 'pfc_grad_path',
           action: 'Nav Tracking - ' + int + 's',
@@ -146,7 +145,7 @@ const navigationView = {
   },
 
   /**
-   * updateView - Public method to run private update methods
+   * updateView - Public method to run private update methods.
    */
   updateView: function () {
     const started = getStateValue('gotStarted');
@@ -159,11 +158,13 @@ const navigationView = {
   },
 
   /**
-   * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
-   * properly
-   * @param {string} property - The state property to modify
-   * @param {string} value - The new value of the property
-   * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
+   * updateStateInDom - manages dataset for the MAIN element, which helps
+   * display UI elements properly.
+   *
+   * NOTE: if the value is null or the Boolean 'false',
+   * the data attribute will be removed.
+   * @param {string} property - The state property to modify.
+   * @param {string} value - The new value of the property.
    */
   updateStateInDom: function (property, value) {
     if (value === false || value === null) {
@@ -177,10 +178,11 @@ const navigationView = {
   },
 
   /**
-   * init - Initialize the navigation view
-   * @param {object} body - The body element of the page
+   * init - Initialize the navigation view.
+   * @param {object} body - The body element of the page.
    * @param { string } iped - String representing the chosen school.
-   * @param {Function} updateViewCallback - = A function called when the view updates
+   * @param {Function} updateViewCallback -
+   *   A function called when the view updates.
    */
   init: function (body, iped, updateViewCallback) {
     this._navMenu = body.querySelector('.o-secondary-nav');
@@ -211,8 +213,9 @@ const navigationView = {
 };
 
 /**
- * Check the destination page to see if we should update charts, etc, before navigating there
- * @param destination
+ * Check the destination page to see if we should update charts, etc,
+ * before navigating there.
+ * @param {string} destination - A page ID.
  */
 function _updateBeforeNavigation(destination) {
   updateState.byProperty('navDestination', destination);
@@ -244,8 +247,8 @@ function _updateBeforeNavigation(destination) {
 }
 
 /**
- * _addButtonListeners - Add event listeners for nav buttons
- * @param { string } iped - String representing the chosen school.
+ * _addButtonListeners - Add event listeners for nav buttons.
+ * @param {string} iped - String representing the chosen school.
  */
 function _addButtonListeners(iped) {
   navigationView._SecondaryNavButtons.forEach((elem) => {
@@ -313,7 +316,7 @@ function _handleSecondaryNavButtonClick(event) {
 
 /**
  * _handleNavButtonClick - handle the click event for a nav button.
- * @param event
+ * @param {MouseEvent} event - click event object.
  */
 function _handleNavButtonClick(event) {
   // Check if there are missing form fields
