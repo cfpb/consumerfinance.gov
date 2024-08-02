@@ -50,7 +50,7 @@ const HTML_SNIPPET = `
                     content-l__col-1-3">
             <div class="o-form__group">
                 <fieldset class="o-form__fieldset">
-                    <legend class="a-legend">
+                    <legend class="h4">
                         Category
                     </legend>
                     <ul class="m-list m-list--unstyled">
@@ -119,7 +119,7 @@ const HTML_SNIPPET = `
                                 content-l__col-1">
                         <div class="o-form__group">
                             <fieldset class="o-form__fieldset">
-                                <legend class="a-legend">
+                                <legend class="h4">
                                     Date range
                                 </legend>
                                 <div class="content-l">
