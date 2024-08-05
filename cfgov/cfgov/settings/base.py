@@ -794,5 +794,5 @@ if ENABLE_SSO:
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
 
 # Baking testing config
-INSTALLED_APPS += ("archival",)
+INSTALLED_APPS += ("archival", "portablepages")
 ARCHIVE_DIR = "/srv/cfgov/archive/"
