@@ -2,6 +2,7 @@ from urllib.parse import unquote
 
 from django.apps import apps
 from django.conf import settings
+from django.utils import timezone
 from django.utils.encoding import smart_str
 
 from wagtail import hooks
@@ -18,7 +19,9 @@ def archive_page_data(page):
     fs.exists(archive_path) or fs.makedirs(archive_path)
 
     page_json = export_page(page)
-    page_filename = f"{page.slug}.json"
+
+    now = timezone.now()
+    page_filename = f"{page.slug}-{now.isoformat()}.json"
     target_path = smart_str(path.join(archive_path, page_filename))
 
     fs.writetext(target_path, page_json, encoding="utf8")
