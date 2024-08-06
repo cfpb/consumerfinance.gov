@@ -193,7 +193,7 @@ export class AdminPage {
   }
 
   submitForm() {
-    cy.get('main form[method="POST"]').submit();
+    cy.get('main form[method="POST"]:not(.w-editing-sessions)').submit();
   }
 
   getFirstTableRow() {

@@ -2,10 +2,9 @@ import logging
 import re
 
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import path, re_path, reverse
 from django.utils.html import format_html_join
 
 from wagtail import hooks
@@ -44,12 +43,6 @@ from v1.views.reports import (
     TranslatedPagesReportView,
 )
 from v1.views.snippets import BannerViewSet
-
-
-try:
-    from django.urls import re_path
-except ImportError:
-    from django.conf.urls import url as re_path
 
 
 logger = logging.getLogger(__name__)
@@ -187,10 +180,15 @@ def register_page_metadata_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_page_metadata_report_url():
     return [
-        re_path(
-            r"^reports/page-metadata/$",
+        path(
+            "reports/page-metadata/",
             PageMetadataReportView.as_view(),
             name="page_metadata_report",
+        ),
+        path(
+            "reports/page-metadata/results/",
+            PageMetadataReportView.as_view(results_only=True),
+            name="page_metadata_report_results",
         ),
     ]
 
@@ -207,10 +205,15 @@ def register_page_drafts_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_page_drafts_report_url():
     return [
-        re_path(
-            r"^reports/page-drafts/$",
+        path(
+            "reports/page-drafts/",
             DraftReportView.as_view(),
             name="page_drafts_report",
+        ),
+        path(
+            "reports/page-drafts/results/",
+            DraftReportView.as_view(results_only=True),
+            name="page_drafts_report_results",
         ),
     ]
 
@@ -227,10 +230,15 @@ def register_documents_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_documents_report_url():
     return [
-        re_path(
-            r"^reports/documents/$",
+        path(
+            "reports/documents/",
             DocumentsReportView.as_view(),
             name="documents_report",
+        ),
+        path(
+            "reports/documents/results/",
+            DocumentsReportView.as_view(results_only=True),
+            name="documents_report_results",
         ),
     ]
 
@@ -247,10 +255,15 @@ def register_enforcements_actions_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_enforcements_actions_documents_report_url():
     return [
-        re_path(
-            r"^reports/enforcement-actions/$",
+        path(
+            "reports/enforcement-actions/",
             EnforcementActionsReportView.as_view(),
             name="enforcement_report",
+        ),
+        path(
+            "reports/enforcement-actions/results/",
+            EnforcementActionsReportView.as_view(results_only=True),
+            name="enforcement_report_results",
         ),
     ]
 
@@ -267,10 +280,15 @@ def register_images_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_images_report_url():
     return [
-        re_path(
-            r"^reports/images/$",
+        path(
+            "reports/images/",
             ImagesReportView.as_view(),
             name="images_report",
+        ),
+        path(
+            "reports/images/results/",
+            ImagesReportView.as_view(results_only=True),
+            name="images_report_results",
         ),
     ]
 
@@ -287,10 +305,15 @@ def register_ask_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_ask_report_url():
     return [
-        re_path(
-            r"^reports/ask-cfpb/$",
+        path(
+            "reports/ask-cfpb/",
             AskReportView.as_view(),
             name="ask_report",
+        ),
+        path(
+            "reports/ask-cfpb/results/",
+            AskReportView.as_view(results_only=True),
+            name="ask_report_results",
         ),
     ]
 
@@ -307,10 +330,15 @@ def register_category_icons_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_category_icons_report_url():
     return [
-        re_path(
-            r"^reports/category-icons/$",
+        path(
+            "reports/category-icons/",
             CategoryIconReportView.as_view(),
             name="category_icons_report",
+        ),
+        path(
+            "reports/category-icons/results/",
+            CategoryIconReportView.as_view(results_only=True),
+            name="category_icons_report_results",
         ),
     ]
 
@@ -327,10 +355,15 @@ def register_translated_pages_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_translated_pages_report_url():
     return [
-        re_path(
-            r"^reports/translated-pages/$",
+        path(
+            "reports/translated-pages/",
             TranslatedPagesReportView.as_view(),
             name="translated_pages_report",
+        ),
+        path(
+            "reports/translated-pages/results/",
+            TranslatedPagesReportView.as_view(results_only=True),
+            name="translated_pages_report_results",
         ),
     ]
 
@@ -347,10 +380,15 @@ def register_active_users_report_menu_item():
 @hooks.register("register_admin_urls")
 def register_active_users_report_url():
     return [
-        re_path(
-            r"^reports/active-users/$",
+        path(
+            "reports/active-users/",
             ActiveUsersReportView.as_view(),
             name="active_users_report",
+        ),
+        path(
+            "reports/active-users/results/",
+            ActiveUsersReportView.as_view(),
+            name="active_users_report_results",
         ),
     ]
 
@@ -370,13 +408,6 @@ def clean_up_report_menu_items(request, report_menu_items):
 
 
 register_snippet(BannerViewSet)
-
-
-@hooks.register("register_permissions")
-def add_export_feedback_permission_to_wagtail_admin_group_view():
-    return Permission.objects.filter(
-        content_type__app_label="v1", codename="export_feedback"
-    )
 
 
 register_template_debug(
