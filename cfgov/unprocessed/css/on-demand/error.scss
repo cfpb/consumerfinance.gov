@@ -1,0 +1,66 @@
+@use 'sass:math';
+@import '../main';
+
+/* ==========================================================================
+   consumerfinance.gov
+   Page-specific styles for the error pages.
+   ========================================================================== */
+
+.m-list--divider {
+  display: flex;
+  flex-direction: column;
+  gap: math.div(30px, $base-font-size-px) + rem;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    flex-direction: row;
+
+    .m-list__item + .m-list__item {
+      border-left: 1px solid var(--white);
+      padding-left: math.div(30px, $base-font-size-px) + rem;
+    }
+  }
+}
+
+.error-page {
+  background-color: var(--gray-dark);
+
+  &__main {
+    color: var(--white);
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      background-blend-mode: multiply;
+    }
+
+    // Large desktop and above.
+    @include respond-to-min($bp-lg-min) {
+      background-blend-mode: normal;
+    }
+
+    .a-link--jump {
+      color: var(--white);
+      border-color: var(--white);
+      margin-top: math.div(math.div($grid-gutter-width, 4), $base-font-size-px) +
+        em;
+    }
+  }
+
+  &__404 {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      background: var(--gray-dark) url('/static/img/plug-538x655.png') no-repeat
+        top right;
+      background-size: 269px 327px;
+    }
+  }
+
+  &__500 {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      background: var(--gray-dark) url('/static/img/server-706x619.png')
+        no-repeat center right;
+      background-size: 353px 310px;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Buying a House
+   Main Less file
+   ========================================================================== */
+
+// Image path
+$image-path: '/static/apps/owning-a-home/img/';
+
+@import '../../../css/main';
+@import './brand-header';
+@import './brand-footer';
+@import './explore-rates';
+@import './helpers';
+@import './tab';
+@import './a-range';
