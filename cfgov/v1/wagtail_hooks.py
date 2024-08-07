@@ -3,10 +3,12 @@ import re
 
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail import hooks
+from wagtail.admin import messages
 from wagtail.admin.menu import MenuItem
 from wagtail.snippets.models import register_snippet
 
@@ -455,3 +457,31 @@ def register_internal_docs_menu_item():
         attrs={"target": "_blank", "rel": "noreferrer"},
         name="internal_docs_menu",
     )
+
+
+@hooks.register("before_delete_page")
+def prevent_locked_page_deletion(request, page):
+    """Prevent deletion of locked pages"""
+    if page.locked:
+        messages.warning(
+            request, f"{page.title} is locked and cannot be deleted."
+        )
+        return redirect("wagtailadmin_explore", page.pk)
+
+
+@hooks.register("before_bulk_action")
+def prevent_locked_page_bulk_deletion(
+    request, action_type, objects, action_class_instance
+):
+    """Prevent deletion of locked pages when part of a bulk action"""
+    if action_type == "delete":
+        for obj in objects:
+            if hasattr(obj, "locked") and obj.locked:
+                messages.warning(
+                    request,
+                    f"{obj} is locked and cannot be deleted. "
+                    "Please remove it from the selection.",
+                )
+                if request.META.get("HTTP_REFERER"):
+                    return redirect(request.META.get("HTTP_REFERER"))
+                return redirect("wagtailadmin_home")
