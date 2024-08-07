@@ -47,3 +47,4 @@ https://github.com/cfpb/owning-a-home-api/releases/download/0.18.2/owning_a_home
 https://github.com/cfpb/ccdb5-api/releases/download/1.7.1/ccdb5_api-1.7.1-py3-none-any.whl
 
 git+https://github.com/cfpb/wagtail-portablepages@initial-work
+fs==2.4.16
