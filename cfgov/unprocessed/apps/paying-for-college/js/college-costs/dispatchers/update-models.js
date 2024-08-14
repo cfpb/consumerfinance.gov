@@ -162,6 +162,14 @@ function updateSchoolData(iped, assumptions) {
         stateModel.setValue('pid', false);
       }
 
+      // Check for investigation
+      console.log( 'underInvestigation', schoolModel.values.underInvestigation );
+      if ( schoolModel.values.underInvestigation === true ) {
+        stateModel.setValue( 'investigation', 'yes' );
+      } else {
+        stateModel.setValue( 'investigation', 'no' );
+      }
+
       // Rename the net price averages
       if (data.netPriceAvgSlices) {
         const slices = ['0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus'];
