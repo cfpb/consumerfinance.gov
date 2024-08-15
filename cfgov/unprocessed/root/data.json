@@ -440,7 +440,49 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "College deposit product marketing agreements and data"
+      "title": "College Banking Agreements and Related Data"
+     }, 
+      {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P3M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },       
+   
+	    "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
+                    "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
+                    "title": "Costs of Electronic Payments in K-12 Schools"
+                }
+            ],
+            "identifier": "CEPK12S",
+            "keyword": [
+            "cost",
+            "payment",
+            "electronic",
+            "schools",
+            "k12"
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
+      "modified": "2022-07-25",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "Costs of Electronic Payments in K-12 Schools"
      }
   ]
 }
