@@ -1,6 +1,6 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 @import '../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css';
-@import 'cfpb-core';
 
 // TODO: CCDB requires a number of undesirable overrides here, since it imports
 //       the DS into its codebase independent of the import that happens for the

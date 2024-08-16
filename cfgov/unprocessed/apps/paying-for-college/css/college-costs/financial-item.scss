@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .financial-item {
   margin-top: math.div(30px, $base-font-size-px) + em;

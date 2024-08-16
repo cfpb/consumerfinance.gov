@@ -1,6 +1,6 @@
 @use 'sass:math';
-@import '../../../css/main';
-@import '../node_modules/ctrl-f/dist/css/index.css';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '../node_modules/ctrl-f/dist/css/index.css';
 
 .o-fig__main {
   // Bump up all heading sizes to improve readability

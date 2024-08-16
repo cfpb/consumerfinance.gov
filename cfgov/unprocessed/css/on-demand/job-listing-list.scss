@@ -1,6 +1,6 @@
 @use 'sass:math';
-@import 'cfpb-core';
-@import 'cfpb-grid';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 .m-jobs-list .m-list--links {
   // Tablet and above.

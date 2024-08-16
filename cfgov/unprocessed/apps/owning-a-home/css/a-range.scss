@@ -1,4 +1,6 @@
 @use 'sass:math';
+@use './vars' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 /*
     Range slider for credit score
@@ -76,14 +78,14 @@
     width: 22px;
     height: 21px;
     border: 0;
-    background: transparent url('#{$image-path}/slider-handle$2x.png') no-repeat
+    background: transparent url('#{$image-path}/slider-handle@2x.png') no-repeat
       0 0;
     background-size: 100%;
 
     &.warning {
       width: 22px;
       height: 21px;
-      background: transparent url('#{$image-path}/slider-handle$2x.png')
+      background: transparent url('#{$image-path}/slider-handle@2x.png')
         no-repeat 0 100%;
       background-size: 100%;
     }

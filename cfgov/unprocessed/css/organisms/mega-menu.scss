@@ -1,10 +1,9 @@
 @use 'sass:math';
-
-// Import Design System's Atomic Component less file to get transition CSS.
-@import '@cfpb/cfpb-atomic-component/src/utilities/transition/transition';
+@use '../misc' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 // Each content level adds a depth-specific class, such as o-mega-menu__content-1, o-mega-menu__content-2, etc.
-
 $mobile-trigger-ht-px: 54px;
 
 // TODO: Reduce global scope and reign it in to the menu only if possible.

@@ -1,6 +1,6 @@
 @use 'sass:math';
-@import '../../../css/main';
-@import './autocomplete';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use './autocomplete';
 
 /* ==========================================================================
    consumerfinance.gov

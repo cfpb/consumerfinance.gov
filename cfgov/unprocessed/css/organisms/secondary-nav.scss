@@ -1,4 +1,6 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 .o-secondary-nav {
   //
@@ -68,7 +70,7 @@
     &::before {
       content: '';
       display: block;
-      border-top: 1px solid $expandable-border;
+      border-top: 1px solid var(--gray-40);
       padding-top: math.div(15px, $base-font-size-px) + em;
     }
 

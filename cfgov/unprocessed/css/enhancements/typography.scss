@@ -1,3 +1,5 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
 dt {
   @include h5;
   display: inline-block;

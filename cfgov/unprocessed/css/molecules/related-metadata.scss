@@ -1,4 +1,6 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 // Modifier for jump links to give them topic-tags style gold/gray styling.
 .a-link--jump-gold {
@@ -21,14 +23,14 @@ a.a-link--jump-gold:hover .a-link__text {
   color: var(--black);
 }
 
-a.a-link--jump-gold:hover:before {
+a.a-link--jump-gold:hover::before {
   border-color: var(--gold-80);
   color: var(--gold-80);
 }
 
 // If it's not a link, don't add a border.
 // TODO: Make it so topic tag related metadata items are ALWAYS links.
-span.a-link--jump-gold:hover:before {
+span.a-link--jump-gold:hover::before {
   border-top-color: transparent !important;
 }
 

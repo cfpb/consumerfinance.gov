@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 @layer layout-1-3 {
   // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.

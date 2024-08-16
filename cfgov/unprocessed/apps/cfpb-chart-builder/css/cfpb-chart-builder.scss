@@ -1,8 +1,7 @@
+// cf-core is included for cf-brand-colors and media queries.
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 @use './vars' as *;
 @import 'highcharts/css/highcharts.css';
-
-// cf-core is included for cf-brand-colors and media queries.
-@import '@cfpb/cfpb-core/src/cfpb-core';
 @import './mixins';
 
 // Import chart-type specific styling.

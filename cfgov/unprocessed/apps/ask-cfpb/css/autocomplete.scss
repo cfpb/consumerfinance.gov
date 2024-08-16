@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .m-autocomplete {
   position: relative;
@@ -30,7 +31,7 @@
 
     &:hover,
     &.m-autocomplete__selected {
-      background-color: $block-bg;
+      background-color: var(--gray-5);
     }
 
     &:last-child {

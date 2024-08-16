@@ -1,3 +1,5 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
 // Set up default label settings.
 @mixin u-chart-label() {
   font-size: $base-font-size-px;

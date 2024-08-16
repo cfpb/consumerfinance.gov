@@ -1,5 +1,5 @@
 @use 'sass:math';
-@import 'cfpb-core';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .o-mp-map {
   border: 1px solid var(--gray-40);
@@ -172,12 +172,8 @@
   // Helper text under some filter or zoom options
   .m-field-helper-text {
     color: var(--gray-80);
-<<<<<<< HEAD:cfgov/unprocessed/css/on-demand/mortgage-performance-trends.less
-    font-size: unit(12px / @base-font-size-px, em);
-=======
 
     font-size: math.div(12px, $base-font-size-px) + em;
->>>>>>> 0f63b25237 (Migrate less to sass):cfgov/unprocessed/css/on-demand/mortgage-performance-trends.scss
   }
 }
 
@@ -193,9 +189,5 @@
 
 #mp-map-month-container label,
 #mp-map-year-container label {
-<<<<<<< HEAD:cfgov/unprocessed/css/on-demand/mortgage-performance-trends.less
-  font-size: unit(14px / @base-font-size-px, em);
-=======
   font-size: math.div(14px, $base-font-size-px) + em;
->>>>>>> 0f63b25237 (Migrate less to sass):cfgov/unprocessed/css/on-demand/mortgage-performance-trends.scss
 }

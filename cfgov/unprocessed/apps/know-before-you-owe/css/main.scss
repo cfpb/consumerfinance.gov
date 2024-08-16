@@ -1,5 +1,5 @@
 @use 'sass:math';
-@import 'cfpb-core';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .kbyo-professional-resources,
 .kbyo-footer {

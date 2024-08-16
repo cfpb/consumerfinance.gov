@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 // Import external cfpb-chart-builder stylesheet
 @import '../../apps/cfpb-chart-builder/css/cfpb-chart-builder';

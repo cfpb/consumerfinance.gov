@@ -3,6 +3,7 @@
    Main Less file for Regulations pages
    ========================================================================== */
 
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 @import '../../../css/main';
 @import './reg-listing';
 @import './reg-landing-page';

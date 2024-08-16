@@ -1,4 +1,7 @@
 @use 'sass:math';
+@use '../misc' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 // TODO: Move the theme variables to /enhancements/ for CF.
 

@@ -1,4 +1,7 @@
 @use 'sass:math';
+@use './vars' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 /* ==========================================================================
    "Rate checker" custom styles
@@ -212,7 +215,7 @@
       (math.div(20px, $base-font-size-px) + em) 0;
 
     &.geolocating {
-      background: transparent url('#{$image-path}icon_spinner.gif') scroll
+      background: transparent url('#{$image-path}/icon_spinner.gif') scroll
         no-repeat center center;
       #chart {
         opacity: 0;

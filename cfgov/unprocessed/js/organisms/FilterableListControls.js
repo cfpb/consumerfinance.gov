@@ -3,11 +3,11 @@ import {
   setInitFlag,
   EventObserver,
   instantiateAll,
-} from '@cfpb/cfpb-atomic-component';
+  Expandable,
+  Multiselect,
+} from '@cfpb/cfpb-design-system/src/index.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
-import { Expandable } from '@cfpb/cfpb-expandables';
 import FormModel from '../modules/util/FormModel.js';
-import { Multiselect } from '@cfpb/cfpb-forms';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 

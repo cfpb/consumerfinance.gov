@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .search__wrapper {
   &.o-well {

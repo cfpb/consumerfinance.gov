@@ -18,7 +18,7 @@ const pluginProcessIcons = () => {
 
         const pathToSVG =
           __dirname +
-          '/../../node_modules/@cfpb/cfpb-icons/src/icons/' +
+          '/../../node_modules/@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/' +
           iconName +
           '.svg';
         const rawSVG = await readFileSync(pathToSVG, 'utf8', (err, data) => {

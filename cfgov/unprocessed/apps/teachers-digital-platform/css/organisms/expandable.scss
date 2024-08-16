@@ -1,19 +1,14 @@
 @use 'sass:math';
-
-// Import external dependencies
-@import '@cfpb/cfpb-core/src/cfpb-core';
-@import '@cfpb/cfpb-buttons/src/cfpb-buttons';
-@import '@cfpb/cfpb-icons/src/cfpb-icons';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 /* ==========================================================================
    Design System
    Expandable Styling
    ========================================================================== */
-
 //
 // Theme variables
 //
-
 // .o-expandable modifiers
 $expandable-background: var(--gray-5);
 

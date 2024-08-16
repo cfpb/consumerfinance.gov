@@ -2,21 +2,6 @@
    Teachers Digital Platform
    ========================================================================== */
 
-// Import Capital Framework by reference so that variables and mixins are
-// available, but the whole output doesn't duplicate what we're already getting
-// from consumerfinance.gov.
-@import 'cfpb-core';
-@import 'cfpb-icons';
-@import 'cfpb-buttons';
-@import 'cfpb-forms';
-@import 'cfpb-grid';
-@import 'cfpb-layout';
-@import 'cfpb-typography';
-@import 'cfpb-notifications';
-@import 'cfpb-pagination';
-@import 'cfpb-expandables';
-@import 'cfpb-tables';
-
 // Project specific Less goes here or you can break it up into discrete files.
 @import 'atoms/icon';
 @import 'molecules/form-fields';

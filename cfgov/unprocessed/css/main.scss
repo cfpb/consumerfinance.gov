@@ -7,101 +7,89 @@
    ========================================================================== */
 
 // Import required CF components.
-@import 'cfpb-core';
-@import 'cfpb-icons';
-@import 'cfpb-buttons';
-@import 'cfpb-forms';
-@import 'cfpb-grid';
-@import 'cfpb-layout';
-@import 'cfpb-typography';
-@import 'cfpb-notifications';
-@import 'cfpb-pagination';
-@import 'cfpb-expandables';
-@import 'cfpb-tables';
 
-// Webfont variables
-// This is the path for self-hosted fonts.
-$cf-fonts-path: '/static/fonts';
+@use '@cfpb/cfpb-design-system/src/' as *;
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
-@import 'enhancements/utilities';
+@use 'enhancements/utilities' as *;
 
 // CF Typography
-@import 'enhancements/typography';
+@use 'enhancements/typography' as *;
 
 // CF Layout
-@import 'enhancements/layout';
+@use 'enhancements/layout' as *;
 
 // CF Forms
-@import 'enhancements/forms';
+@use 'enhancements/forms' as *;
 
 // CF Tables
-@import 'enhancements/tables';
+@use 'enhancements/tables' as *;
 
 /* Base patterns
    ========================================================================== */
 
-@import 'images';
-@import 'misc';
-@import 'schema';
+@use 'images' as *;
+@use 'schema' as *;
 
 /* Amalgamated patterns
    ========================================================================== */
 
-@import 'calendar-icon';
+@use 'calendar-icon' as *;
 
 /* Atom pieces
    ========================================================================== */
 
-@import 'atoms/overlay';
-@import 'atoms/tag';
-@import 'atoms/rule-break';
+@use 'atoms/overlay' as *;
+@use 'atoms/tag' as *;
+@use 'atoms/rule-break' as *;
 
 /* Molecule pieces
    ========================================================================== */
 
-@import 'molecules/call-to-action';
-@import 'molecules/file-input';
-@import 'molecules/form-field-with-button';
-@import 'molecules/full-width-media';
-@import 'molecules/global-eyebrow';
-@import 'molecules/global-header-cta';
-@import 'molecules/global-search';
-@import 'molecules/info-unit';
-@import 'molecules/inset';
-@import 'molecules/translation-links';
-@import 'molecules/related-metadata';
-@import 'molecules/related-posts';
-@import 'molecules/social-media';
-@import 'molecules/tags';
+@use 'molecules/call-to-action' as *;
+@use 'molecules/file-input' as *;
+@use 'molecules/form-field-with-button' as *;
+@use 'molecules/full-width-media' as *;
+@use 'molecules/global-eyebrow' as *;
+@use 'molecules/global-header-cta' as *;
+@use 'molecules/global-search' as *;
+@use 'molecules/info-unit' as *;
+@use 'molecules/inset' as *;
+@use 'molecules/translation-links' as *;
+@use 'molecules/related-metadata' as *;
+@use 'molecules/related-posts' as *;
+@use 'molecules/social-media' as *;
+@use 'molecules/tags' as *;
 
 /* Organism pieces
    ========================================================================== */
-@import 'organisms/audio-player';
-@import 'organisms/footer';
-@import 'organisms/filterable-list-controls';
-@import 'organisms/full-width-text-group';
-@import 'organisms/header';
-@import 'organisms/info-unit-group';
-@import 'organisms/item-introduction';
-@import 'organisms/mega-menu';
-@import 'organisms/post-preview';
-@import 'organisms/prefooter';
-@import 'organisms/secondary-nav';
-@import 'organisms/sidebar-breakout';
-@import 'organisms/video-player';
+@use 'organisms/audio-player' as *;
+@use 'organisms/footer' as *;
+@use 'organisms/filterable-list-controls' as *;
+@use 'organisms/full-width-text-group' as *;
+@use 'organisms/header' as *;
+@use 'organisms/info-unit-group' as *;
+@use 'organisms/item-introduction' as *;
+@use 'organisms/mega-menu' as *;
+@use 'organisms/post-preview' as *;
+@use 'organisms/prefooter' as *;
+@use 'organisms/secondary-nav' as *;
+@use 'organisms/sidebar-breakout' as *;
+@use 'organisms/video-player' as *;
 
 /* Template pieces
    ========================================================================== */
 
-@import 'skip-nav';
-@import 'breadcrumbs';
+@use 'skip-nav' as *;
+@use 'breadcrumbs' as *;
 
 /* Print styles
    ========================================================================== */
 
-@import 'print';
+@use 'print' as *;
+@include define-custom-props;
+@include licensed-font('/static/fonts');
 
 // TODO: Move to Design System.
 .u-text-centered {
