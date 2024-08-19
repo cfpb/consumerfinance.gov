@@ -163,7 +163,6 @@ function updateSchoolData(iped, assumptions) {
       }
 
       // Check for investigation
-      console.log( 'underInvestigation', schoolModel.values.underInvestigation );
       if ( schoolModel.values.underInvestigation === true ) {
         stateModel.setValue( 'investigation', 'yes' );
       } else {
