@@ -34,14 +34,16 @@ function makeTilemapOptions(data, dataAttributes) {
     ...getMapConfig(formattedSeries),
   };
 
-  defaultObj.tooltip.formatter = function () {
-    const label = yAxisLabel ? yAxisLabel + ': ' : '';
-    return `<span style="font-weight:600">${
-      this.point.name
-    }</span><br/>${label}<span style="font-weight:600">${
-      Math.round(this.point.value * 10) / 10
-    }</span>`;
-  };
+  if (!defaultObj.tooltip.formatter) {
+    defaultObj.tooltip.formatter = function () {
+      const label = yAxisLabel ? yAxisLabel + ': ' : '';
+      return `<span style="font-weight:600">${
+        this.point.label
+      }</span><br/>${label}<span style="font-weight:600">${
+        Math.round(this.point.value * 10) / 10
+      }</span>`;
+    };
+  }
 
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
@@ -60,6 +62,7 @@ function makeTilemapOptions(data, dataAttributes) {
  */
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
+  console.log('c', classes);
   const legend = node.parentNode.getElementsByClassName(
     'o-simple-chart__tilemap-legend',
   )[0];
@@ -94,53 +97,100 @@ function updateTilemapLegend(node, data, legendTitle) {
 function getMapConfig(series) {
   let min = Infinity;
   let max = -Infinity;
+  let dataMin = Infinity;
   const data = series[0].data;
+
+  data.forEach((v) => {
+    if (v.value < dataMin) dataMin = v.value;
+  });
+  console.log(dataMin);
+  //get precision and round
+  // floor, to string length to get digits
+  // start of step one is  pow(10, digits -1)
+
   const added = data.map((v) => {
     const val = Math.round(Number(v.value) * 100) / 100;
     if (val <= min) min = val;
     if (val >= max) max = val;
     return {
       ...usLayout[v.name],
-      state: v.name,
+      ...v,
       value: val,
     };
   });
   min = Math.floor(min);
   max = Math.ceil(max);
-  const step = Math.round((max - min) / 5);
-  const step1 = min + step;
-  const step2 = step1 + step;
-  const step3 = step2 + step;
-  const step4 = step3 + step;
+
+  const precision = Math.floor(min).toString().length;
+  const divisor = Math.pow(10, precision - 1);
+
+  /**
+   *
+   * @param a
+   */
+  function r(a) {
+    return Math.round(a / divisor) * divisor;
+  }
+
   const trimTenth = (v) => Math.round((v - 0.1) * 10) / 10;
+
+  /**
+   *
+   * @param v
+   */
+  function mLabel(v) {
+    if (v >= 1e6) {
+      return [v / 1e6, 'M'];
+    }
+    return [v, ''];
+  }
+  /**
+   *
+   * @param s1
+   * @param s2
+   * @param isLast
+   */
+  function formatLegendValues(s1, s2, isLast) {
+    const f1 = mLabel(s1);
+    const f2 = mLabel(s2);
+    return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+  }
+
+  /**
+   *
+   * @param s1
+   * @param s2
+   * @param color
+   * @param isLast
+   */
+  function makeDataClass(s1, s2, color, isLast = 0) {
+    return {
+      from: s1,
+      to: s2,
+      color,
+      name: formatLegendValues(s1, s2, isLast),
+    };
+  }
+
+  min = r(min);
+  max = r(max);
+  const step = Math.round((max - min) / 5);
+
+  console.log(step, min, max);
+
+  const step1 = r(min + step);
+  const step2 = r(step1 + step);
+  const step3 = r(step2 + step);
+  const step4 = r(step3 + step);
+  console.log(step1, step2, step3, step4);
   return {
     colorAxis: {
       dataClasses: [
-        {
-          from: min,
-          to: step1,
-          color: '#addc91',
-          name: `${min} - ${trimTenth(step1)}`,
-        },
-        {
-          from: step1,
-          to: step2,
-          color: '#e2efd8',
-          name: `${step1} - ${trimTenth(step2)}`,
-        },
-        {
-          from: step2,
-          to: step3,
-          color: '#ffffff',
-          name: `${step2} - ${trimTenth(step3)}`,
-        },
-        {
-          from: step3,
-          to: step4,
-          color: '#d6e8fa',
-          name: `${step3} - ${trimTenth(step4)}`,
-        },
-        { from: step4, color: '#7eb7e8', name: `${step4} - ${max}` },
+        makeDataClass(min, step1, '#addc91'),
+        makeDataClass(step1, step2, '#e2efd8'),
+        makeDataClass(step2, step3, '#ffffff'),
+        makeDataClass(step3, step4, '#d6e8fa'),
+        makeDataClass(step4, max, '#7eb7e8', 1),
       ],
     },
     series: [{ clip: false, data: added }],

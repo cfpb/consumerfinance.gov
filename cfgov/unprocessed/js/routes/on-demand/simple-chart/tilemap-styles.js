@@ -20,7 +20,7 @@ const tilemap = {
         enabled: true,
         formatter: function () {
           return `<span style="font-weight:500">${
-            this.point.state
+            this.point.name
           }</span><br/><span style="font-weight:300">${Math.round(
             this.point.value,
           )}</span>`;
@@ -46,6 +46,7 @@ const tilemap = {
     style: {
       fontFamily: 'Avenir Next',
       fontSize: '16px',
+      lineHeight: '24px',
     },
   },
   legend: {

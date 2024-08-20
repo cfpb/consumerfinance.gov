@@ -7,6 +7,24 @@ const hooks = {
     }));
   },
 
+  cpf_formatter() {
+    return `<span style="font-weight:500">${
+      this.point.name
+    }</span><br/><span style="font-weight:300">${Math.round(
+      this.point.value / 1e6,
+    )}M</span>`;
+  },
+
+  cpf_labeller() {
+    return `<b style="font-size:18px; font-weight:600">${
+      this.point.label
+    }</b><br/>Payments to consumers: <b>$${Math.round(
+      this.point.value,
+    ).toLocaleString(
+      'en-US',
+    )}</b><br/>Number of consumers: <b>${this.point.consumers.toLocaleString('en-US')}</b>`;
+  },
+
   cct_yoy_transform(d) {
     return d['Number of Loans'].map((v, i) => {
       return {
