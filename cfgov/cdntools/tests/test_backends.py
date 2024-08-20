@@ -5,15 +5,12 @@ from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
 from wagtail.documents.models import Document
-from wagtail.images.tests.utils import get_test_image_file
 
-from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
-from v1.models.caching import (
+from cdntools.backends import (
     AkamaiBackend,
     AkamaiDeletingBackend,
-    cloudfront_cache_invalidation,
 )
-from v1.models.images import CFGOVImage
+from cdntools.signals import cloudfront_cache_invalidation
 
 
 class TestAkamaiBackend(TestCase):
@@ -158,10 +155,14 @@ class TestAkamaiDeletingBackend(TestCase):
             akamai_backend.purge_all()
 
 
+CACHED_FILES_URLS = []
+
+
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "files": {
-            "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "CACHED_URLS": CACHED_FILES_URLS,
         },
     },
 )
@@ -172,35 +173,21 @@ class CloudfrontInvalidationTest(TestCase):
         self.document.file.save(
             "example.txt", ContentFile("A boring example document")
         )
-        self.image = CFGOVImage.objects.create(
-            title="test", file=get_test_image_file()
-        )
-        self.rendition = self.image.get_rendition("original")
-
-        CACHE_PURGED_URLS[:] = []
+        CACHED_FILES_URLS[:] = []
 
     def tearDown(self):
         self.document.file.delete()
 
-    def test_rendition_saved_cache_purge_disabled(self):
-        cloudfront_cache_invalidation(None, self.rendition)
-        self.assertEqual(CACHE_PURGED_URLS, [])
-
     def test_document_saved_cache_purge_disabled(self):
         cloudfront_cache_invalidation(None, self.document)
-        self.assertEqual(CACHE_PURGED_URLS, [])
+        self.assertEqual(CACHED_FILES_URLS, [])
 
     @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
     def test_document_saved_cache_purge_without_file(self):
         cloudfront_cache_invalidation(None, self.document_without_file)
-        self.assertEqual(CACHE_PURGED_URLS, [])
-
-    @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
-    def test_rendition_saved_cache_invalidation(self):
-        cloudfront_cache_invalidation(None, self.rendition)
-        self.assertIn(self.rendition.file.url, CACHE_PURGED_URLS)
+        self.assertEqual(CACHED_FILES_URLS, [])
 
     @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
     def test_document_saved_cache_invalidation(self):
         cloudfront_cache_invalidation(None, self.document)
-        self.assertIn(self.document.file.url, CACHE_PURGED_URLS)
+        self.assertIn(self.document.file.url, CACHED_FILES_URLS)

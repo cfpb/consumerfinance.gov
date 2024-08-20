@@ -14,8 +14,6 @@ from wagtail.admin.menu import MenuItem
 from wagtail.snippets.models import register_snippet
 
 from v1.admin_views import (
-    cdn_is_configured,
-    manage_cdn,
     redirect_to_internal_docs,
 )
 from v1.models import InternalDocsSettings
@@ -151,28 +149,6 @@ def register_django_admin_menu_item():
         classname="icon icon-redirect",
         order=99999,
     )
-
-
-class IfCDNEnabledMenuItem(MenuItem):
-    def is_shown(self, request):
-        return cdn_is_configured()
-
-
-@hooks.register("register_admin_menu_item")
-def register_cdn_menu_item():
-    return IfCDNEnabledMenuItem(
-        "CDN Tools",
-        reverse("manage-cdn"),
-        classname="icon icon-cogs",
-        order=10000,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_cdn_url():
-    return [
-        re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
-    ]
 
 
 @hooks.register("register_reports_menu_item")

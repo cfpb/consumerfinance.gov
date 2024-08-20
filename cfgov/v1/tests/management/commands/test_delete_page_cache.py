@@ -9,7 +9,7 @@ class DeletePageCacheTestCase(TestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "akamai": {
-                "BACKEND": "v1.models.caching.AkamaiBackend",
+                "BACKEND": "cdntools.backends.AkamaiBackend",
                 "CLIENT_TOKEN": "fake",
                 "CLIENT_SECRET": "fake",
                 "ACCESS_TOKEN": "fake",
@@ -25,7 +25,7 @@ class DeletePageCacheTestCase(TestCase):
             "https://server/foo/bar",
             backend_settings={
                 "akamai_deleting": {
-                    "BACKEND": "v1.models.caching.AkamaiDeletingBackend",
+                    "BACKEND": "cdntools.backends.AkamaiDeletingBackend",
                     "CLIENT_TOKEN": "fake",
                     "CLIENT_SECRET": "fake",
                     "ACCESS_TOKEN": "fake",

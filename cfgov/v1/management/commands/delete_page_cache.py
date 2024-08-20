@@ -29,7 +29,7 @@ class Command(BaseCommand):
         # Create settings specific to our deletion backend
         delete_settings = {
             "akamai_deleting": {
-                "BACKEND": "v1.models.caching.AkamaiDeletingBackend",
+                "BACKEND": "cdntools.backends.AkamaiDeletingBackend",
                 "CLIENT_TOKEN": global_settings["akamai"]["CLIENT_TOKEN"],
                 "CLIENT_SECRET": global_settings["akamai"]["CLIENT_SECRET"],
                 "ACCESS_TOKEN": global_settings["akamai"]["ACCESS_TOKEN"],

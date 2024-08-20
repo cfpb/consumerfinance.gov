@@ -2,18 +2,24 @@ from itertools import chain
 
 from django.conf import settings
 from django.core.cache import cache
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from wagtail.signals import page_published, page_unpublished
 
+from cdntools.backends import AkamaiBackend
+from cdntools.signals import cloudfront_cache_invalidation
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage,
     ActivitySetUp,
 )
 from v1.models import AbstractFilterPage, CFGOVPage
-from v1.models.caching import AkamaiBackend
 from v1.models.filterable_page import AbstractFilterablePage
+from v1.models.images import CFGOVRendition
 from v1.util.ref import get_category_children
+
+
+post_save.connect(cloudfront_cache_invalidation, sender=CFGOVRendition)
 
 
 def invalidate_filterable_list_caches(sender, **kwargs):

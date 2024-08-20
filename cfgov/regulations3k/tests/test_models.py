@@ -13,7 +13,6 @@ from wagtail.models import Site
 
 from model_bakery import baker
 
-from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models.django import (
     EffectiveVersion,
@@ -39,6 +38,9 @@ from regulations3k.models.pages import (
     validate_page_number,
     validate_regs_list,
 )
+
+
+CACHE_PURGED_URLS = []
 
 
 class RegModelTests(DjangoTestCase):
@@ -633,7 +635,8 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
+                "BACKEND": "cdntools.backends.MockCacheBackend",
+                "CACHED_URLS": CACHE_PURGED_URLS,
             },
         }
     )
@@ -651,7 +654,8 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "core.testutils.mock_cache_backend.MockCacheBackend",  # noqa: E501
+                "BACKEND": "cdntools.backends.MockCacheBackend",
+                "CACHED_URLS": CACHE_PURGED_URLS,
             },
         }
     )

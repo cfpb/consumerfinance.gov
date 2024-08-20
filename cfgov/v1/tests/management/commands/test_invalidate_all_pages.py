@@ -7,7 +7,7 @@ from django.test import TestCase, override_settings
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
-            "BACKEND": "v1.models.caching.AkamaiBackend",
+            "BACKEND": "cdntools.backends.AkamaiBackend",
             "CLIENT_TOKEN": "fake",
             "CLIENT_SECRET": "fake",
             "ACCESS_TOKEN": "fake",
@@ -15,7 +15,7 @@ from django.test import TestCase, override_settings
     }
 )
 class InvalidateAllPagesTestCase(TestCase):
-    @mock.patch("v1.models.caching.AkamaiBackend.purge_all")
+    @mock.patch("cdntools.backends.AkamaiBackend.purge_all")
     def test_submission_with_url_akamai(self, mock_purge_all):
         call_command("invalidate_all_pages_cache")
         mock_purge_all.assert_any_call()

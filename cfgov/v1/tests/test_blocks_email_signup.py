@@ -46,6 +46,6 @@ class TestEmailSignup(TestCase):
     def test_learn_page_content(self):
         self.check_page_content(LearnPage, "content")
 
-    @mock.patch("v1.models.caching.AkamaiBackend.post_tags")
+    @mock.patch("cdntools.backends.AkamaiBackend.post_tags")
     def test_newsroom_page_content(self, mock_post_tags):
         self.check_page_content(NewsroomPage, "content")

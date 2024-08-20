@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     "storages",
     "data_research",
     "v1",
+    "cdntools",
     "core",
     "django_extensions",
     "jobmanager",
@@ -445,11 +446,11 @@ WAGTAILFRONTENDCACHE = {}
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get("ENABLE_AKAMAI_CACHE_PURGE", False)
 if ENABLE_AKAMAI_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["akamai"] = {
-        "BACKEND": "v1.models.caching.AkamaiBackend",
-        "CLIENT_TOKEN": os.environ.get("AKAMAI_CLIENT_TOKEN"),
-        "CLIENT_SECRET": os.environ.get("AKAMAI_CLIENT_SECRET"),
-        "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
-        "HOSTNAMES": ["www.consumerfinance.gov"],
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
@@ -459,7 +460,7 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
         "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
-        "HOSTNAMES": ["files.consumerfinance.gov"],
+        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists
