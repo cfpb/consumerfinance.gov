@@ -463,8 +463,21 @@ main.college-costs {
   }
 
   &[data-state_usingnetprice='no'] {
+    [data-state-based-visibility='using-net-price'] {
+      display: block;
+    }
+
     span[data-state-based-visibility='using-net-price'] {
       display: inline;
+    }
+  }
+
+  &[data-state_investigation='yes'] {
+    [data-state-based-visibility='investigation'] {
+      display: block;
+    }
+    li[data-state-based-visibility='investigation'] {
+      display: list-item;
     }
   }
 }

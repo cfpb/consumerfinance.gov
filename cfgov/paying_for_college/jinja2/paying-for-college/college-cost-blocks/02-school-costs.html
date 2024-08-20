@@ -1,6 +1,16 @@
 <section class="college-costs__tool-section college-costs__tool-section--school-costs" data-tool-section="school-costs">
     <h2><strong>Your estimated costs for <span data-state-item="programLengthText">X</span> at <span data-school-item="school"></span>: <span data-financial-item="total_costOfProgram"></strong></h2>
     <p>This estimate includes tuition, books, housing and is based on the most recent data from the U.S. Department of Education.</p>
+    
+    <div data-state-based-visibility="investigation">
+        {{ notification.render(
+            'warning',
+            true,
+            'School is under investigation: Heightened Cash Monitoring ',
+            'Due to potential regulatory violations, financial mismanagement, or failures to comply with other requirements, the Department of Education (ED) has placed this school on a Heightened Cash Monitoring (HCM) program. HCM is a tool that ED uses to increase compliance oversight of a school.<br><br>Potential students should consider this before enrolling in an educational program placed on a HCM program.' | safe,
+            [{'text': 'Learn more about Heightened Cash Monitoring.', 'link': 'https://studentaid.gov/data-center/school/hcm'}]
+        ) }}
+    </div>
     <ul>
         <li>Estimated time frame: <span data-state-item="programLengthText">X years</span></li>
         <li>Estimated yearly costs: <span data-number-display="currency" data-financial-item="total_costs">$X</span></li>
