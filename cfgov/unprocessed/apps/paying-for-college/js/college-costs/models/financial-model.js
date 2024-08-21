@@ -8,6 +8,7 @@ import {
   getConstantsValue,
   getSchoolValue,
   getStateValue,
+  useNetPrice,
 } from '../dispatchers/get-model-values.js';
 import {
   initializeFinancialValues,
@@ -27,8 +28,13 @@ import { convertStringToNumber } from '../../../../../js/modules/util/format.js'
 
 const financialModel = {
   /* Note: financialModel's values should all be numeric. Other information (degree type,
-     housing situation, etc) is stored in the stateModel, schoolModel */
-  values: {},
+     housing situation, etc) is stored in the stateModel, schoolModel.
+     Note: The list of 'values' properties is scraped from the HTML, except gapLoan values. */
+  values: {
+    netPrice: 0,
+    rate_gapLoan: 0.01,
+    fee_gapLoan: 0.01,
+  },
 
   createFinancialProperty: function (name) {
     if (!{}.hasOwnProperty.call(financialModel.values, name)) {
@@ -50,13 +56,19 @@ const financialModel = {
   },
 
   /**
-   * recalculate - Public method that runs private recalculation
+   * recalculate - Public method tha recalculates financial values
    * subfunctions
    */
   recalculate: () => {
     financialModel.rate_existingDebt = getConstantsValue('existingDebtRate');
     financialModel._updateRates();
     financialModel._calculateTotals();
+    // Fill any remaining gap with a theoretical gap loan
+    if (financialModel.values.total_gap > 0) {
+      financialModel.values.gapLoan_gapLoan = financialModel.values.total_gap;
+    } else {
+      financialModel.values.gapLoan_gapLoan = 0;
+    }
     debtCalculator();
 
     // set monthly salary value
@@ -90,6 +102,7 @@ const financialModel = {
   setValue: (name, value, updateView) => {
     if ({}.hasOwnProperty.call(financialModel.values, name)) {
       financialModel.values[name] = convertStringToNumber(value);
+
       financialModel.recalculate();
 
       if (updateView !== false) {
@@ -123,18 +136,18 @@ const financialModel = {
       fellowAssist: 'total_fellowAssist',
       income: 'total_income',
       fedLoan: 'total_fedLoans',
-      publicLoan: 'total_publicLoans',
       workStudy: 'total_workStudy',
       plusLoan: 'total_plusLoans',
-      privLoan: 'total_privateLoans',
+      privLoan: 'total_privLoans',
     };
+    const netPriceCalc = useNetPrice();
 
     // Reset all totals to 0
     for (const key in totals) {
       vals[totals[key]] = 0;
     }
 
-    // Enforce the limits if constants are loaded
+    // Enforce the limits if constants are loaded™
     if (getStateValue('constantsLoaded') === true) {
       financialModel._enforceLimits();
     }
@@ -153,12 +166,13 @@ const financialModel = {
       }
     }
 
+    vals.netPrice = getSchoolValue(
+      'netPrice_' + getStateValue('programIncome'),
+    );
+
     // Calculate more totals
     vals.total_borrowing =
-      vals.total_fedLoans +
-      vals.total_publicLoans +
-      vals.total_privateLoans +
-      vals.total_plusLoans;
+      vals.total_fedLoans + vals.total_privLoans + vals.total_plusLoans;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
     vals.total_workStudyFellowAssist =
@@ -167,19 +181,29 @@ const financialModel = {
       vals.total_grantsScholarships +
       vals.total_otherResources +
       vals.total_workStudyFellowAssist;
-    vals.total_costs =
-      vals.total_directCosts +
-      vals.total_indirectCosts +
-      vals.otherCost_additional;
+    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
+
+    // If we're using net price, we calculate things differently
+    if (netPriceCalc === true) {
+      vals.total_costs = vals.netPrice;
+      vals.total_funding = vals.total_contributions;
+    }
+
+    vals.total_costOfProgram = vals.total_costs * vals.other_programLength;
     vals.total_gap = Math.round(vals.total_costs - vals.total_funding);
     vals.total_excessFunding = Math.round(
       vals.total_funding - vals.total_costs,
     );
 
+    vals.total_initialEstimateContrib =
+      vals.savings_personal + vals.savings_collegeSavings;
+
     if (vals.total_gap < 0) {
       vals.total_gap = 0;
     }
+
+    vals.total_borrowingWithGapLoan = vals.total_borrowing + vals.total_gap;
   },
 
   /**
@@ -423,9 +447,6 @@ const financialModel = {
     initializeFinancialValues();
     // A few properties must be created manually here
     financialModel.createFinancialProperty('other_programLength');
-
-    // These are test values used only for development purposes.
-
     financialModel._calculateTotals();
   },
 };

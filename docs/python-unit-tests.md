@@ -125,7 +125,6 @@ tox -e lint
 
 This will run `ruff` in check-only mode. To automatically fix any formatting issues it flags, run:
 
-
 ```sh
 ruff format
 ```

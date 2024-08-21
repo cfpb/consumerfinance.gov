@@ -1,0 +1,194 @@
+    <section class="college-costs__tool-section college-costs__tool-section--affording" data-tool-section="affording-payments">
+
+    <h2>Can you afford a <span data-financial-item="debt_tenYearMonthly">$X</span> payment?</h2>
+
+    <p class="lead-paragraph">Making loan payments on time can help you avoid financial and legal problems. Default—missing too many payments—can negatively impact your credit score, add additional fees, result in involuntary deductions from your paycheck and Social Security payment, and make you ineligibile for further federal student aid until you can get your loans out of default.</p>
+
+    <h3>See if the monthly payment fits in an average monthly budget</h3>
+
+    <div class="m-form-field">
+        <label class="a-label a-label--heading" for="expenses__region">
+            What part of the US do you plan to live in after graduation?
+        </label>
+        <div class="a-select">
+            <select id="expenses__region">
+                <option value="MW">Midwest region</option>
+                <option value="NE">Northeast region</option>
+                <option value="SO">South region</option>
+                <option value="WE">West region</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="college-costs__chart" data-chart_id="affording-your-loans"></div>
+
+    <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&mdash;half of the students make more, but half make less.</p>
+
+    <div class="equation-row">
+        {{
+            text_item.render({
+                'label': 'Median monthly salary of this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>\'s students' | safe ~ tooltip.render('Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="external-link">Bureau of Labor Statistics Wage Data website</a>.'),
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="salary_monthly"'
+            })
+        }}
+    </div>
+    <div class="equation-row">
+        {{
+            text_item.render({
+                'label': 'Estimated monthly loan payment' ~ tooltip.render('Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.'),
+                'value': '$0',
+                'type': 'text',
+                'decor': '&mdash;',
+                'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+            })
+        }}
+    </div>
+    <div class="equation-row equation-row--bottom-line">
+        {% set flyout_settings = {
+            'label': 'Average monthly expenses for this salary and region',
+            'value': '$0',
+            'decor': '&mdash;',
+            'is_editable': 'True',
+            'data_attribute': 'data-expenses-item="total_expenses"',
+            'note': 'From the Bureau of Labor Statistics&apos; Consumer Expenditure Survey'
+        } %}
+        {% call() flyout(flyout_settings) %}
+        {{
+            input.render({
+                'label': 'Housing',
+                'id': 'expenses__housing',
+                'value': '$1,138',
+                'data_attribute': 'data-expenses-item="item_housing"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Food',
+                'id': 'expenses__food',
+                'value': '$486',
+                'data_attribute': 'data-expenses-item="item_food"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Clothing',
+                'id': 'expenses__clothing',
+                'value': '$118',
+                'data_attribute': 'data-expenses-item="item_clothing"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Transportation',
+                'id': 'expenses__transportation',
+                'value': '$636',
+                'data_attribute': 'data-expenses-item="item_transportation"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Healthcare',
+                'id': 'expenses__healthcare',
+                'value': '$280',
+                'data_attribute': 'data-expenses-item="item_healthcare"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Entertainment',
+                'id': 'expenses__entertainment',
+                'value': '$151',
+                'data_attribute': 'data-expenses-item="item_entertainment"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Retirement & savings',
+                'id': 'expenses__savings',
+                'value': '$278',
+                'data_attribute': 'data-expenses-item="item_retirement"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Taxes',
+                'id': 'expenses__taxes',
+                'value': '$147',
+                'data_attribute': 'data-expenses-item="item_taxes"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Childcare',
+                'id': 'expenses__childcare',
+                'value': '$0',
+                'data_attribute': 'data-expenses-item="item_childcare"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Current debt payments',
+                'id': 'expenses__currentDebts',
+                'value': '$0',
+                'data_attribute': 'data-expenses-item="item_currentDebts"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Other',
+                'id': 'expenses__other',
+                'value': '$300',
+                'data_attribute': 'data-expenses-item="item_other"'
+            })
+        }}
+
+        {{ number_callout.render({
+                'header': 'Total money left',
+                'data_attribute': 'data-expenses-item="total_remainder"',
+                'additional_classes': 'number-callout--large number-callout--border-top',
+                'value': '$373'
+            })
+        }}
+        {% endcall %}
+    </div>
+    <div class="equation-row">
+        {{
+            text_item.render({
+                'label': 'Total money left',
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-expenses-item="total_remainder"'
+            })
+        }}
+    </div>
+    <div data-state-based-visibility="expenses-shortage">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>.' | safe
+        ) }}
+    </div>
+    <div data-state-based-visibility='expenses-surplus'>
+        {{ notification.render(
+        'information',
+        true,
+        '',
+        'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>.' | safe
+    ) }}
+    </div>
+
+    <div class="college-costs__tool-section-buttons block block--mid">
+        <h3 class="up-next"><strong>Up next:</strong> <span class="up-next--desc">See how this school ranks</span></h3>
+        <div class=nav-button-container>
+            <button class="a-btn a-btn--prev btn__nav" data-destination="cost-of-borrowing">Previous</button>
+            <button class="a-btn a-btn--next btn__nav" data-destination="compare-school">Next</button>
+        </div>
+        <p>
+            <button class="a-btn a-btn--link btn__nav" data-destination="save-finish">Save and get a URL for later</button>
+        </p>
+    </div>
+
+</section>

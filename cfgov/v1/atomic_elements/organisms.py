@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 
 from django.apps import apps
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -11,6 +12,7 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
+from wagtail_footnotes.blocks import RichTextBlockWithFootnotes
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
@@ -27,7 +29,7 @@ from v1.util import ref
 
 
 class Well(blocks.StructBlock):
-    content = v1_blocks.UnescapedRichTextBlock(required=False, label="Well")
+    content = blocks.RichTextBlock(required=False, label="Well")
 
     class Meta:
         icon = "placeholder"
@@ -524,8 +526,14 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = v1_blocks.UnescapedRichTextBlock(icon="edit")
+    content = blocks.RichTextBlock(icon="edit")
     content_with_anchor = molecules.ContentWithAnchor()
+    content_with_footnotes = RichTextBlockWithFootnotes(
+        features=settings.WAGTAILADMIN_RICH_TEXT_EDITORS["default"]["OPTIONS"][
+            "features"
+        ]
+    )
+
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
     table = Table()

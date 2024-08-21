@@ -14,6 +14,7 @@ const urlParameters = {
   lenp: 'stateModel.programLength',
   ratp: 'stateModel.programRate',
   depp: 'stateModel.programDependency',
+  prin: 'stateModel.programIncome',
   cobs: 'stateModel.costsQuestion',
   regs: 'stateModel.expensesRegion',
   iqof: 'stateModel.impactOffer',
@@ -39,6 +40,7 @@ const urlParameters = {
   schg: 'financialModel.grant_school',
   tuig: 'financialModel.grant_tuition',
   othg: 'financialModel.grant_other',
+  geng: 'financialModel.grant_general',
 
   mta: 'financialModel.grant_mta',
   gi: 'financialModel.grant_gibill',
@@ -47,6 +49,7 @@ const urlParameters = {
   stas: 'financialModel.scholarship_state',
   schs: 'financialModel.scholarship_school',
   oths: 'financialModel.scholarship_other',
+  gens: 'financialModel.scholarship_general',
 
   wkst: 'financialModel.workStudy_workStudy',
 
@@ -56,19 +59,10 @@ const urlParameters = {
   subl: 'financialModel.fedLoan_directSub',
   unsl: 'financialModel.fedLoan_directUnsub',
 
-  insl: 'financialModel.publicLoan_institutional',
-  insr: 'financialModel.rate_institutional',
-  insf: 'financialModel.fee_institutional',
-  stal: 'financialModel.publicLoan_state',
-  star: 'financialModel.rate_state',
-  staf: 'financialModel.fee_state',
-  npol: 'financialModel.publicLoan_nonprofit',
-  npor: 'financialModel.rate_nonprofit',
-  npof: 'financialModel.fee_nonprofit',
-
   pers: 'financialModel.savings_personal',
   fams: 'financialModel.savings_family',
   '529p': 'financialModel.savings_collegeSavings',
+  gsav: 'financialModel.savings_general',
 
   offj: 'financialModel.income_jobOffCampus',
   onj: 'financialModel.income_jobOnCampus',

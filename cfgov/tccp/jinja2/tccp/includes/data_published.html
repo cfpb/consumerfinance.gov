@@ -1,12 +1,10 @@
 {% from 'tccp/includes/fields.html' import date %}
 
-{%- macro data_published(value, verbose=false) -%}
+{%- macro data_published(value) -%}
 
 <p class="u-small-text u-small-text--subtle">
     Data as of {{ date(value) }}
-    ({{- 'credit card terms may have changed since then, double-check with the company
-          for the most current terms or ' if verbose -}}
-    <a href="{{ url('tccp:about') }}">{{ 'l' if verbose else 'L' }}earn about the data</a>)
+    (<a href="{{ url('tccp:about') }}">Learn about the data</a>)
 </p>
 
 {%- endmacro %}

@@ -151,7 +151,10 @@
            m-related-metadata__topics">
     {% for item in list %}
     <li class="m-list__item">
-        <span class="m-list__link">{{item}}</span>
+        <span class="a-link a-link--jump a-link--jump-gold">
+          •
+          <span class="a-link__text">{{item}}</span>
+        </span>
     </li>
     {% endfor %}
 </ul>

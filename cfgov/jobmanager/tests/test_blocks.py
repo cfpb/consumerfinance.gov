@@ -119,19 +119,13 @@ class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
         for i in range(5):
             self.make_job(f"live{i}")
 
-        # We expect 13 database queries:
+        # We expect 5 database queries:
         #
         # 1. Wagtail has to look up the site root paths, which get cached on
         #    the request object.
         # 2. One query to retrieve all of the job listing pages.
         # 3. One query to prefetch all of the job grades.
-        # 5x2. Two additional queries per job to retrieve offices and
-        #      regions.
-        #
-        # This could be greatly optimized (reducing to only 2 additional
-        # location queries total) if django-modelcluster adds prefetch_related
-        # support to ParentalManyToManyField:
-        #
-        # https://github.com/wagtail/django-modelcluster/issues/101
-        with self.assertNumQueries(13):
+        # 4. One query to prefetch all of the job offices.
+        # 5. One query to prefetch all of the job regions.
+        with self.assertNumQueries(5):
             self.render_block()

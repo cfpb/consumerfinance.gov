@@ -1,0 +1,27 @@
+{# ==========================================================================
+
+    footnotes.render()
+
+    ==========================================================================
+
+    Description:
+
+    Create footnote markup when given:
+
+    footnotes: An array of Footnote objects
+
+    ========================================================================== #}
+
+{% macro render( footnotes ) %}
+  <div class="block m-footnotes">
+      <h2 id="footnotes">Endnotes</h2>
+      <ol>
+          {% for footnote in footnotes %}
+              <li id="footnote-{{ loop.index }}">
+                  {{ footnote.text | richtext }}
+                  <a href="#footnote-source-{{ loop.index }}" aria-label="Back to content">↩</a>
+              </li>
+          {% endfor %}
+      </ol>
+  </div>
+{% endmacro %}

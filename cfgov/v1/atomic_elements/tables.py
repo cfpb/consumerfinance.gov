@@ -7,6 +7,8 @@ from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.telepath import register
 
+from wagtail_footnotes.blocks import RichTextBlockWithFootnotes
+
 from v1.blocks import HeadingBlock
 
 
@@ -85,6 +87,20 @@ class Table(blocks.StructBlock):
             (
                 "rich_text",
                 blocks.RichTextBlock(
+                    features=[
+                        "bold",
+                        "italic",
+                        "ol",
+                        "ul",
+                        "link",
+                        "document-link",
+                        "superscript",
+                    ]
+                ),
+            ),
+            (
+                "rich_text_with_footnotes",
+                RichTextBlockWithFootnotes(
                     features=[
                         "bold",
                         "italic",

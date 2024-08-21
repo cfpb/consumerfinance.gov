@@ -232,13 +232,6 @@ body {
       font-weight: normal;
     }
 
-    // …however, show the icons in featured links.
-    &-item--has-icon {
-      .cf-icon-svg {
-        display: inline-block;
-      }
-    }
-
     // Ensure desktop up/down arrow link icons don't appear at mobile.
     &-link {
       width: 100%;
@@ -271,7 +264,7 @@ body {
   &__content-1 {
     &-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link--colors( var(--black) );
+      .u-link-colors( var(--black) );
 
       display: block;
     }
@@ -288,7 +281,7 @@ body {
     &-link,
     &-overview-link {
       // Colors for :link, :visited, :hover, :focus, :active.
-      .u-link--colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
+      .u-link-colors( var(--pacific), var(--pacific), var(--black), var(--pacific), var(--black) );
       &:hover:focus {
         color: var(--black);
       }
@@ -450,7 +443,7 @@ body {
       &-overview-link {
         position: relative;
         // Colors for :link, :visited, :hover, :focus, :active.
-        .u-link--colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
+        .u-link-colors( var(--pacific), var(--pacific), var(--pacific-60), var(--pacific), var(--navy-dark) );
 
         padding-top: unit( 15px / 18px, em );
         padding-bottom: unit( 15px / 18px, em );
@@ -846,39 +839,6 @@ body {
         .u-focus-link-desktop();
       }
 
-      // Featured item has a highlight box around it.
-      &-list--featured ul {
-        // Style the featured item box.
-        padding-right: unit( 13px / @base-font-size-px, em );
-        padding-top: unit( 30px / @base-font-size-px, em );
-        padding-bottom: unit( 30px / @base-font-size-px, em );
-        margin-bottom: unit( 30px / @base-font-size-px, em );
-        border: 1px solid var(--gray-40);
-        border-top: 6px solid var(--gold);
-        box-sizing: border-box;
-      }
-
-      &-list--featured &-link {
-        display: flex;
-        padding: 0;
-        left: 0;
-        border: none;
-
-        & .cf-icon-svg {
-          color: var(--gold);
-          width: 100%;
-          max-width: unit( 16px / @base-font-size-px, rem );
-        }
-      }
-
-      &-list--featured &-item {
-        margin-bottom: unit( 15px / @base-font-size-px, em );
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-
       &-item--has-icon {
         // Pad in featured items from their icons.
         padding-left: unit( 13px / @base-font-size-px, em );
@@ -894,10 +854,41 @@ body {
         }
       }
 
-      // Remove hover bar for featured item link.
+      // Featured item has a highlight box around it.
+      &-list--featured ul {
+        // Style the featured item box.
+        padding-right: unit( 13px / @base-font-size-px, em );
+        padding-top: unit( 30px / @base-font-size-px, em );
+        padding-bottom: unit( 30px / @base-font-size-px, em );
+        margin-bottom: unit( 30px / @base-font-size-px, em );
+        border: 1px solid var(--gray-40);
+        border-top: 6px solid var(--gold);
+        box-sizing: border-box;
+      }
+
+      &-list--featured &-item {
+        margin-bottom: unit( 15px / @base-font-size-px, em );
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
       &-list--featured &-link {
+        // Remove hover bar for featured item link.
         .u-hover-link-featured-desktop();
         .u-focus-link-featured-desktop();
+
+        display: flex;
+        padding: 0;
+        left: 0;
+        border: none;
+
+        & .cf-icon-svg {
+          color: var(--gold);
+          width: 100%;
+          max-width: unit( 16px / @base-font-size-px, rem );
+        }
       }
     }
 

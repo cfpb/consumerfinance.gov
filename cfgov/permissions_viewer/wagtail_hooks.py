@@ -36,7 +36,7 @@ def register_settings_menu_item():
 
 
 @hooks.register("register_user_listing_buttons")
-def user_listing_buttons(context, user):
+def user_listing_buttons(user, request_user):
     yield UserListingButton(
         "View Permissions",
         reverse("permissions:user", args=[user.pk]),

@@ -1,7 +1,8 @@
 {% from 'tccp/includes/apr_rating.html' import apr_rating with context %}
 {% from 'tccp/includes/data_published.html' import data_published %}
-{% from 'tccp/includes/fields.html' import apr, apr_range, currency, date %}
+{% from 'tccp/includes/fields.html' import apr, apr_range, currency, date, oxfordize %}
 {% from 'tccp/includes/speed_bump.html' import speed_bump %}
+{% from 'tccp/includes/tooltip.html' import tooltip %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 
 <div class="u-cap-width">
@@ -50,9 +51,23 @@
 <div class="o-card-group">
     <div class="o-card-group__cards">
         {%- for card in cards %}
+        {%- set card_purchase_apr = apr_range(
+            card.purchase_apr_for_tier_min,
+            card.purchase_apr_for_tier_max,
+            asterisk=true
+        ) -%}
+        {%- set card_account_fee = currency(
+            card.annual_fee_estimated,
+            default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')
+        ) -%}
         {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
-            <a href="{{ card.url }}">
+            <a
+                href="{{ card.url }}"
+                data-js-hook="behavior_ignore-link-targets"
+                data-ignore-link-targets="[data-tooltip]"
+                aria-label="{{ card.product_name }} from {{ card.institution_name }} with {{ card_purchase_apr }} purchase APR, {{ card_account_fee }} account fee, {{ card_rewards(card) }} card rewards{%- if card.requirements_for_opening or card.issued_by_credit_union -%}, eligibility requirements{%- endif -%}"
+            >
                 <div class="m-card__heading-group">
                     <h2 class="h3 m-card__heading">{{ card.institution_name }}</h2>
                     <p class="m-card__subtitle">{{ card.product_name }}</p>
@@ -65,21 +80,42 @@
                         <dt>
                             <strong>Purchase APR</strong>
                             <div class="m-data-spec--apr-disclaimer">
-                                *As of {{ date(stats_all.first_report_date) }}
+                                *As of
+                                <span class="u-nowrap">
+                                    {{ date(stats_all.first_report_date) }}
+                                    {{ tooltip(
+                                        name='apr-disclaimer',
+                                        heading=(
+                                            'Published rates are from '
+                                            ~ '<span class="u-nowrap">' | safe
+                                            ~ (
+                                                stats_all.report_period_start
+                                                | date('%B')
+                                            )
+                                            ~ ' &ndash; ' | safe
+                                            ~ (
+                                                stats_all.first_report_date
+                                                | date('%B %Y')
+                                            )
+                                            ~ '</span>' | safe
+                                        ),
+                                        body=(
+                                            'APRs change over time and are '
+                                            ~ 'specific to the applicant. '
+                                            ~ 'Check rates before applying.'
+                                        )
+                                    ) }}
+                                </span>
                             </div>
                         </dt>
                         <dd>
-                            <strong>{{ apr_range(
-                                card.purchase_apr_for_tier_min,
-                                card.purchase_apr_for_tier_max,
-                                asterisk=true
-                            ) }}</strong>
+                            <strong>{{ card_purchase_apr }}</strong>
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--fee">
                         <dt><strong>Account fee</strong></dt>
                         <dd>
-                            <strong>{{ currency(card.annual_fee_estimated, default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')) }}</strong>
+                            <strong>{{ card_account_fee }}</strong>
                         </dd>
                     </div>
                     <div class="m-data-spec m-data-spec--transfer">
@@ -111,7 +147,33 @@
                     <div class="m-data-spec m-data-spec--requirements">
                         <dt>Does this card have requirements?</dt>
                         <dd>
-                            {{ svg_icon("flag-round") }} Eligibility requirements
+                            Eligibility
+                            <span class="u-nowrap">
+                                requirements
+                                {%- if card.requirements_for_opening -%}
+                                    {%- set requirement_types = [] -%}
+                                    {%- if card.geographic_restrictions is not none -%}
+                                        {%- do requirement_types.append('living in a certain area') -%}
+                                    {%- endif -%}
+                                    {%- if card.professional_affiliation is not none -%}
+                                        {%- do requirement_types.append('working for certain employers') -%}
+                                    {%- endif -%}
+                                {%- endif -%}
+                                {{ tooltip(
+                                    name='apr-disclaimer',
+                                    heading=(
+                                        'You must '
+                                        ~ ('be a member of this credit union' if card.issued_by_credit_union else 'meet  requirements set by the bank')
+                                        ~ ' to apply for this card.'
+                                    ),
+                                    body=(
+                                        ('Requirements may include ' if card.geographic_restrictions or card.professional_affiliation)
+                                        ~ oxfordize(requirement_types)
+                                        ~ ('. ' if card.geographic_restrictions or card.professional_affiliation)
+                                        ~ 'See card details for more information.'
+                                    )
+                                ) }}
+                            </span>
                         </dd>
                     </div>
                     {%- endif -%}

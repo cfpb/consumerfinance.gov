@@ -6,7 +6,6 @@ import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getStateValue } from '../dispatchers/get-model-values.js';
 import { CostsGroup } from '../CostsGroup.js';
 
 const HIDDEN_CLASS = 'u-hidden';
@@ -91,11 +90,7 @@ const appView = {
     appView._updateSaveLink();
   },
 
-  updateUI: () => {
-    appView._includeParentPlusBtn.checked = getStateValue('includeParentPlus')
-      ? true
-      : false;
-  },
+  updateUI: () => {},
 
   /**
    * Replaces current state, adding the formatted querystring as the URL
@@ -117,7 +112,7 @@ const appView = {
     );
     appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
-      '[data-app-button="save-and-finish-later"]',
+      '.a-btn--link[data-destination="save-finish"]',
     );
     appView._saveLinks = document.querySelectorAll('[data-app-save-link]');
     appView._copyLinkBtn = document.querySelectorAll('.copy-your-link');
@@ -139,6 +134,7 @@ function _addButtonListeners() {
 
   appView._actionPlanChoices.forEach((elem) => {
     elem.addEventListener('click', _handleActionPlanClick);
+    elem.addEventListener('focus', _handleActionPlanClick);
   });
 
   appView._restartBtn.addEventListener('click', appView._handleRestartBtn);
@@ -150,10 +146,6 @@ function _addButtonListeners() {
     elem.addEventListener('click', appView._handleCopyLinkBtn);
     elem.addEventListener('keyup', appView._handleCopyLinkBtnKeypress);
   });
-  appView._includeParentPlusBtn.addEventListener(
-    'click',
-    appView._handleIncludeParentPlusBtn,
-  );
 }
 
 /**
@@ -175,6 +167,7 @@ function _handleDidThisHelpClick(event) {
  */
 function _handleActionPlanClick(event) {
   const target = event.target;
+  target.setAttribute('checked', 'checked');
   updateState.byProperty('actionPlan', target.value);
 }
 

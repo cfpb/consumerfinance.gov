@@ -2,18 +2,10 @@
 
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import { decimalToPercentString } from '../util/number-utils.js';
-import {
-  getFinancialValue,
-  getStateValue,
-} from '../dispatchers/get-model-values.js';
-import {
-  recalculateFinancials,
-  updateFinancial,
-  updateFinancialsFromSchool,
-} from '../dispatchers/update-models.js';
+import { getFinancialValue } from '../dispatchers/get-model-values.js';
+import { updateFinancial } from '../dispatchers/update-models.js';
 import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
-import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 
 const financialView = {
@@ -21,7 +13,7 @@ const financialView = {
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
-  _costsOfferButton: null,
+  // _costsOfferButton: null,
   _gradProgramContent: null,
   _undergradProgramContent: null,
 
@@ -86,9 +78,9 @@ const financialView = {
     this._financialSpans = document.querySelectorAll(
       'span[data-financial-item]',
     );
-    this._costsOfferButton = document.querySelector(
-      '.costs__button-section button',
-    );
+    // this._costsOfferButton = document.querySelector(
+    //   '.costs__button-section button',
+    // );
     _addInputListeners();
     _addButtonListeners();
   },
@@ -109,10 +101,11 @@ function _addInputListeners() {
  * Listeners for INPUT fields and radio buttons.
  */
 function _addButtonListeners() {
-  financialView._costsOfferButton.addEventListener(
-    'click',
-    _handleCostsButtonClick,
-  );
+  // TODO: Remove this, assumimg it is not going to be used
+  // financialView._costsOfferButton.addEventListener(
+  //   'click',
+  //   _handleCostsButtonClick,
+  // );
 }
 
 /**
@@ -158,28 +151,28 @@ function _handleInputClick(event) {
 /**
  * Event handling for button choice - "Does your offer include costs?".
  */
-function _handleCostsButtonClick() {
-  const checkedButton = document.querySelector(
-    'input[name="costs-offer-radio"]:checked',
-  );
-  let answer = '';
+// function _handleCostsButtonClick() {
+//   const checkedButton = document.querySelector(
+//     'input[name="costs-offer-radio"]:checked',
+//   );
+//   let answer = '';
 
-  if (checkedButton !== null) {
-    answer = checkedButton.value;
+//   if (checkedButton !== null) {
+//     answer = checkedButton.value;
 
-    // When the button is clicked, bring in school data if 'No'
-    if (getStateValue('costsQuestion') === false) {
-      updateState.byProperty('costsQuestion', answer);
-      // If their offer does not have costs, use the Department of Ed data
-      if (answer === 'n') {
-        updateFinancialsFromSchool();
-      } else {
-        recalculateFinancials();
-      }
-    }
+//     // When the button is clicked, bring in school data if 'No'
+//     if (getStateValue('costsQuestion') === false) {
+//       updateState.byProperty('costsQuestion', answer);
+//       // If their offer does not have costs, use the Department of Ed data
+//       if (answer === 'n') {
+//         updateFinancialsFromSchool();
+//       } else {
+//         recalculateFinancials();
+//       }
+//     }
 
-    updateUrlQueryString();
-  }
-}
+//     updateUrlQueryString();
+//   }
+// }
 
 export { financialView };

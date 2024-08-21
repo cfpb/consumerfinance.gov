@@ -1,4 +1,4 @@
-.u-grid__column--top-divider {
+.u-u-grid-column--top-divider {
   margin-top: unit(((@grid_gutter-width * 2) / @base-font-size-px), em);
   border-left-width: @grid_gutter-width / 2;
 
@@ -31,13 +31,13 @@
   .content-l__top-divider {
     .content-l__col-1 + .content-l__col-1 {
       // Adds top divider between single-column info units
-      .u-grid__column--top-divider();
+      .u-u-grid-column--top-divider();
     }
   }
 
   .content-l__top-divider + .content-l__top-divider {
     // Adds top divider between multi-column info unit rows
-    .u-grid__column--top-divider();
+    .u-u-grid-column--top-divider();
     margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
@@ -46,7 +46,7 @@
     // Adds top divider between info unit cols on small screens
     .content-l__top-divider {
       .content-l__col + .content-l__col {
-        .u-grid__column--top-divider();
+        .u-u-grid-column--top-divider();
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
       }
     }
@@ -57,7 +57,7 @@
     .content-l__top-divider + .content-l__top-divider {
       // Matches top divider width to cols on larger screens
       &:before {
-        // Overrides .u-grid__column--top-divider() margin-left !important rule
+        // Overrides .u-u-grid-column--top-divider() margin-left !important rule
         margin-left: 15px !important;
         margin-right: 15px;
         width: auto;
