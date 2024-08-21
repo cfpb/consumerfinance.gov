@@ -15,36 +15,21 @@
           content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
-{% block content_main %}
+{% block content_intro scoped -%}
+    {% import 'v1/includes/molecules/banner.html' as banner %}
+    {% set canonical_archive_url = 'https://wayback.archive-it.org/cfpb_num/*/' ~ request.build_absolute_uri(request.path) | lower %}
+    {{- banner.render(
+        true,
+        'Archived content',
+        'This content has been archived, and its original formatting has been removed.',
+        [ {
+            'text': 'View this page as it was originally published',
+            'url': canonical_archive_url
+        } ]
+    ) }}
+{%- endblock %}
 
-<div class="o-banner o-banner--dark">
-    <div class="wrapper wrapper--match-content">
-        <div class="m-notification
-                    m-notification--warning
-                    m-notification--visible">
-            {{ svg_icon('warning-round') }}
-            <div class="m-notification__content">
-                <div class="m-notification__message">
-                    Archived content
-                </div>
-                <p class="m-notification__explanation">
-                    This content has been archived, and its original formatting has been removed.
-                </p>
-                <ul class="m-list m-list--links">
-                    <li class="m-list__item">
-                        {%- block canonical -%}
-                        {% set canonical = request.build_absolute_uri(request.path) | lower %}
-                            <a class="a-link a-link--jump" href="https://wayback.archive-it.org/cfpb_num/*/{{ canonical }}">
-                        {%- endblock -%}
-                        View this page as it was originally published
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
+{% block content_main %}
 
     {% include 'v1/includes/article.html' %}
     {% block post_article_content %}

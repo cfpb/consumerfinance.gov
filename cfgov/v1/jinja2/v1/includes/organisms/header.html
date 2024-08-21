@@ -23,22 +23,17 @@
 <header class="o-header{% if mega_menu_content %} o-header--mega-menu{% endif %}">
 
     {% if flag_enabled('BETA_NOTICE') %}
-    {% import 'v1/includes/molecules/notification.html' as notification with context %}
-    <div class="o-banner">
-      <div class="wrapper
-                  wrapper--match-content">
-            {{ notification.render(
-                'warning',
-                true,
-                'This beta site is a work in progress. Our regular site continues to be
+    {% import 'v1/includes/molecules/banner.html' as banner %}
+    {{- banner.render(
+        false,
+        'This beta site is a work in progress. Our regular site continues to be
                 <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.' | safe
-            ) }}
-        </div>
-    </div>
+    ) }}
     {% endif %}
 
     {% if banners %}
         {% for banner in banners %}
+            {# TODO: Update this to use the banner.html template. #}
             <div class="o-banner">
                 <div class="wrapper
                             wrapper--match-content">
