@@ -52,8 +52,7 @@ function incrementTotal() {
 function updateCount(type) {
   let noun = 'addresses';
   let verb = 'are';
-
-  const countElements = getEls('.' + type + 'Cnt');
+  const countElements = getEls('.' + type + '-cnt');
   // add one to correct type
   let typeCount = types[type] || 0;
   types[type] = ++typeCount;
