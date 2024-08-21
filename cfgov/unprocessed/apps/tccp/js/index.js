@@ -26,6 +26,8 @@ function init() {
   orderingDropdown.move();
   // Initialize any tooltips on the page
   initializeTooltips();
+  //Reinitialize tooltips after an htmx request replaces DOM nodes
+  document.addEventListener('htmx:afterRequest', initializeTooltips);
 }
 
 /**
