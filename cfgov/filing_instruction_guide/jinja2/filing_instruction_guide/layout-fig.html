@@ -17,7 +17,6 @@
     {% if version_status %}
         {% set is_banner_dark = true if version_status == 'Archived' else false  %}
         {% import 'v1/includes/molecules/banner.html' as banner %}
-        {% set canonical_archive_url = 'https://wayback.archive-it.org/cfpb_num/*/' ~ request.build_absolute_uri(request.path) | lower %}
         {{- banner.render(
             is_banner_dark,
             version_message,
