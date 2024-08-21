@@ -24,7 +24,9 @@ lxml==5.1.0
 matplotlib==3.7.5
 mozilla-django-oidc==4.0.1
 opensearch-py==2.6.0
-psycopg2-binary==2.9.9
+# psycopg2 > 2.9.6 causes cf.gov to hang locally for people with on-network
+# Macs, so we'll pin to 2.9.6 for now. See PR 8203 for details.
+psycopg2-binary==2.9.6
 python-dateutil==2.9.0
 regdown==1.0.7
 requests-aws4auth==1.2.3
