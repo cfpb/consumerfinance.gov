@@ -34,15 +34,15 @@
     margin-left: 10px;
     pointer-events: none;
   }
+}
 
-  a & {
-    // Colors for :link, :visited, :hover, :focus, :active.
-    @include u-link-colors(
-      var(--black),
-      var(--black),
-      var(--black),
-      var(--black),
-      var(--black)
-    );
-  }
+a.a-tag {
+  // Colors for :link, :visited, :hover, :focus, :active.
+  @include u-link-colors(
+    var(--black),
+    var(--black),
+    var(--black),
+    var(--black),
+    var(--black)
+  );
 }

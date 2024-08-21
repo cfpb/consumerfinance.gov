@@ -130,9 +130,9 @@ $colors: gold, red, blue, teal;
 
     @each $value in $colors {
       $index: list.index($colors, $value);
-      $tint: #{$value}-bg;
-      $light: #{$value}-lt;
-      $med: #{$value}-md;
+      $tint: map.get($colors-map, #{$value}-bg);
+      $light: map.get($colors-map, #{$value}-lt);
+      $med: map.get($colors-map, #{$value}-md);
 
       &.o-expandable__form-explainer-category-#{$index} {
         background-color: $tint;
