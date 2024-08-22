@@ -1,0 +1,8 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.m-call-to-action {
+  &__text {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+}

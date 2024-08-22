@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // Required Modules
-import { isEmpty } from '@cfpb/cfpb-atomic-component';
+import { isEmpty } from '@cfpb/cfpb-design-system/src/index.js';
 
 const ERROR_MESSAGES = {
   EMAIL: {

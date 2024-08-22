@@ -1,0 +1,85 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// The code is borrowed, with some modifications, from
+// ccdb5-ui's App.scss, SearchBar.scss, and select.scss
+
+.layout-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-fixed {
+  flex: none;
+}
+
+.flex-all {
+  flex: 1 0 auto;
+}
+
+button.a-btn.flex-fixed {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+// Tablet and below.
+@include respond-to-max($bp-sm-max) {
+  .a-select {
+    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+    width: 100%;
+  }
+}
+
+// select
+$select-height: $size-ii;
+
+.a-select {
+  border: 1px solid var(--gray-40);
+  display: flex;
+  box-sizing: border-box;
+  background-color: var(--gray);
+  flex-direction: column;
+  justify-content: center;
+
+  select {
+    padding: (math.div(4px, $base-font-size-px) + em)
+      (math.div(6px, $base-font-size-px) + em);
+
+    // Save room for the drop-arrow
+    padding-right: math.div($select-height * 1.1, $base-font-size-px) + em;
+    background-color: var(--gray);
+    color: var(--white);
+
+    &:hover,
+    &.hover,
+    &:active,
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  select::-ms-expand {
+    display: none;
+  }
+
+  &::after {
+    height: 100%;
+    content: '\25BE';
+    width: math.div($select-height, $base-font-size-px) + em;
+    line-height: math.div($select-height, $base-font-size-px) + em;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    background-color: var(--gray);
+    color: var(--white);
+    border-width: 0;
+  }
+}

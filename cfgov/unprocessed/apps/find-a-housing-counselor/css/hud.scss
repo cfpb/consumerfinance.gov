@@ -1,0 +1,87 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.hud-search-container {
+  background: var(--gray-5);
+}
+
+.hud-search-container__text {
+  padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+}
+
+#hud-hca-api-map-canvas {
+  height: 320px;
+}
+
+#hud-hca-api-query {
+  max-width: math.div(480px, $base-font-size-px) + em;
+}
+
+// Desktop and above.
+@include respond-to-min($bp-med-min) {
+  .hud-search-container {
+    display: flex;
+  }
+
+  .hud-search-container__text {
+    flex: 1;
+
+    // Magic number of 270px below keeps full input placeholder in view.
+    min-width: math.div(270px, $base-font-size-px) + em;
+    padding: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+
+  .hud-search-container__map {
+    flex: 2;
+  }
+
+  #hud-hca-api-map-canvas {
+    height: 440px;
+  }
+}
+
+#hud-hca-api-map-container {
+  /* Prevent map controls from appearing on top of mega menu. */
+  z-index: 0;
+}
+
+#hud-hca-api-map-canvas img {
+  max-width: none;
+}
+
+.hud-hca-api-results-actions {
+  @include respond-to-min($bp-xs-max) {
+    & {
+      // Margin makes a gap between result header links and result text.
+      margin-left: 20px;
+      float: right;
+    }
+  }
+
+  // Remove underline from PDF abbreviation and icons in links.
+  & abbr,
+  & svg {
+    border-bottom: none;
+    text-decoration: none;
+  }
+}
+
+// Top-align entries in the table.
+.o-table tr {
+  vertical-align: top;
+}
+
+.no-js {
+  &.o-featured-content-module {
+    min-height: auto;
+
+    .o-featured-content-module__text {
+      width: auto;
+    }
+  }
+
+  .hud-search-container__map,
+  #hud_print-page-link {
+    display: none;
+  }
+}

@@ -1,0 +1,108 @@
+/* ==========================================================================
+   consumerfinance.gov
+   Main Less file
+   ========================================================================== */
+
+/* Base styles
+   ========================================================================== */
+
+// Import required CF components.
+
+@use '@cfpb/cfpb-design-system/src/' as *;
+
+// Enhancements that are on a migration path to being added to CF.
+// CF Core
+@use 'enhancements/utilities' as *;
+
+// CF Typography
+@use 'enhancements/typography' as *;
+
+// CF Layout
+@use 'enhancements/layout' as *;
+
+// CF Forms
+@use 'enhancements/forms' as *;
+
+// CF Tables
+@use 'enhancements/tables' as *;
+
+/* Base patterns
+   ========================================================================== */
+
+@use 'images' as *;
+@use 'schema' as *;
+
+/* Amalgamated patterns
+   ========================================================================== */
+
+@use 'calendar-icon' as *;
+
+/* Atom pieces
+   ========================================================================== */
+
+@use 'atoms/overlay' as *;
+@use 'atoms/tag' as *;
+@use 'atoms/rule-break' as *;
+
+/* Molecule pieces
+   ========================================================================== */
+
+@use 'molecules/call-to-action' as *;
+@use 'molecules/file-input' as *;
+@use 'molecules/form-field-with-button' as *;
+@use 'molecules/full-width-media' as *;
+@use 'molecules/global-eyebrow' as *;
+@use 'molecules/global-header-cta' as *;
+@use 'molecules/global-search' as *;
+@use 'molecules/info-unit' as *;
+@use 'molecules/inset' as *;
+@use 'molecules/translation-links' as *;
+@use 'molecules/related-metadata' as *;
+@use 'molecules/related-posts' as *;
+@use 'molecules/social-media' as *;
+@use 'molecules/tags' as *;
+
+/* Organism pieces
+   ========================================================================== */
+@use 'organisms/audio-player' as *;
+@use 'organisms/footer' as *;
+@use 'organisms/filterable-list-controls' as *;
+@use 'organisms/full-width-text-group' as *;
+@use 'organisms/header' as *;
+@use 'organisms/info-unit-group' as *;
+@use 'organisms/item-introduction' as *;
+@use 'organisms/mega-menu' as *;
+@use 'organisms/post-preview' as *;
+@use 'organisms/prefooter' as *;
+@use 'organisms/secondary-nav' as *;
+@use 'organisms/sidebar-breakout' as *;
+@use 'organisms/video-player' as *;
+
+/* Template pieces
+   ========================================================================== */
+
+@use 'skip-nav' as *;
+@use 'breadcrumbs' as *;
+
+/* Print styles
+   ========================================================================== */
+
+@use 'print' as *;
+@include define-custom-props;
+@include licensed-font('/static/fonts');
+
+// TODO: Move to Design System.
+.u-text-centered {
+  text-align: center;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+// Make Arial the first-line font in Vietnamese pages' main content area.
+// This is used because Avenir Next does not contain all Vietnamese diacritics.
+// See https://[GHE]/Design-Development/Design-and-Content-Team/issues/175
+html[lang='vi'] body main {
+  font-family: Arial, 'Avenir Next', sans-serif;
+}

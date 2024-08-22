@@ -1,0 +1,63 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@mixin u-divider() {
+  content: '';
+  display: block;
+  background: var(--gray);
+  width: 1px;
+  height: math.div(20px, $base-font-size-px) + em;
+}
+
+ul.m-translation-links {
+  padding: 0;
+  list-style: none;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 21px;
+  overflow: hidden;
+  font-weight: 500;
+
+  & > li {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  & > li + li {
+    position: relative;
+
+    // Vertical divider.
+    &::before {
+      position: absolute;
+      left: -11px;
+      top: 2px;
+
+      @include u-divider;
+    }
+  }
+}
+
+/*
+For right-to-left languages, we need to move the flex items to the end and
+move the divider to the right instead of the left.
+*/
+html[lang='ar'] ul.m-translation-links {
+  justify-content: flex-end;
+
+  & > li + li::before {
+    display: none;
+  }
+
+  & > li {
+    position: relative;
+
+    // Vertical divider
+    &::after {
+      position: absolute;
+      right: -11px;
+      top: 2px;
+
+      @include u-divider;
+    }
+  }
+}

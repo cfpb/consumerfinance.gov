@@ -1,7 +1,7 @@
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
-import SUCCESS_ICON from '@cfpb/cfpb-icons/src/icons/approved-round.svg';
-import WARNING_ICON from '@cfpb/cfpb-icons/src/icons/warning-round.svg';
-import ERROR_ICON from '@cfpb/cfpb-icons/src/icons/error-round.svg';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system/src/index.js';
+import SUCCESS_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/approved-round.svg';
+import WARNING_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/warning-round.svg';
+import ERROR_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/error-round.svg';
 
 /**
  * Constants for the state of this Notification.

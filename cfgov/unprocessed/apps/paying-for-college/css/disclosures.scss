@@ -1,0 +1,1838 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Global
+   ========================================================================== */
+
+$small-font-size-px: 14px;
+$x-small-font-size-px: 12px;
+
+// Minimum width that putting the + or - sign inline with values in two-column line items works
+$bp-inline-sign-min: 689px;
+
+// Minimum width that bar graphs work in two columns
+$bp-graph-cols-min: 740px;
+
+.understanding-financial-aid-offer {
+  // Hide the clear-input "helper" in IE10+; it throws off calculations
+  input::-ms-clear {
+    display: none;
+  }
+
+  .content {
+    &__main {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      button.a-btn.a-btn--link {
+        border: none;
+        background: none;
+        border-bottom: solid 1px var(--pacific);
+      }
+
+      // Overrides a style bleeding in from footer.css/header.css
+      p:last-child {
+        margin-bottom: 15px;
+      }
+    }
+
+    &__sidebar a {
+      border-bottom-width: 1px;
+    }
+  }
+
+  .information-right,
+  .information-wrong,
+  .offer-part__content-positive-cost,
+  .offer-part__content-negative-cost,
+  .evaluate,
+  .question,
+  .get-options,
+  .followup--no-not-sure,
+  .followup--yes,
+  .next-steps {
+    display: none;
+  }
+
+  #info-right:target,
+  #info-wrong:target {
+    display: block;
+    outline: none;
+  }
+}
+
+.step {
+  &__heading {
+    @include heading-2;
+  }
+
+  &__intro {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include heading-3;
+    }
+  }
+}
+
+// A bottom border for the sections in step 3 that use a special grid (11 columns plus bleeding into one gutter)
+.offer-part::after,
+.criteria__wrapper::after {
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    display: block;
+    height: 1px;
+    border-right: 0;
+    border-left: 0;
+    margin-right: 0;
+    position: absolute;
+    bottom: 0;
+    right: math.div($grid_gutter-width, 2);
+    left: math.div($grid_gutter-width, 2);
+    z-index: 10;
+    background-color: var(--gray-40);
+    content: ' ';
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    width: math.div(11, $grid_total-columns) * 100%;
+  }
+}
+
+/* ==========================================================================
+      Tool intro
+      ========================================================================== */
+
+.understanding-financial-aid-offer .m-hero__image {
+  background-image: url('/static/apps/paying-for-college/img/intro-195.png');
+}
+
+@media (min-resolution: 192dpi) {
+  .understanding-financial-aid-offer .m-hero__image {
+    background-image: url('/static/apps/paying-for-college/img/intro-390.png');
+  }
+}
+
+/* ==========================================================================
+      Verify offer
+      ========================================================================== */
+
+.verify {
+  margin-top: math.div(20px, $base-font-size-px) + em;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+  }
+
+  &__wrapper {
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+      margin-bottom: math.div(45px, $base-font-size-px) + em;
+    }
+  }
+
+  &__content {
+    dt,
+    dd {
+      display: block;
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(9);
+    }
+
+    @include respond-to-min($bp-lg-min) {
+      @include u-grid-column(7);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(6);
+    }
+  }
+
+  &__prompt {
+    @include heading-2;
+    margin-bottom: math.div(30px, $size-ii) + em;
+  }
+
+  &__school,
+  &__location {
+    @include heading-3;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-bottom: math.div(5px, $size-iii) + em;
+    }
+  }
+  &__school {
+    margin-bottom: 0;
+    font-weight: bold;
+  }
+
+  &__list {
+    margin-top: math.div(15px, $base-font-size-px) + em;
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-top: math.div(20px, $base-font-size-px) + em;
+    }
+  }
+
+  &__heading,
+  &__label {
+    @include heading-5;
+    margin-bottom: 0;
+  }
+
+  &__value {
+    margin-left: 0;
+  }
+
+  &__value + &__heading {
+    padding-top: math.div(15px, $x-small-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-top: math.div(20px, $x-small-font-size-px) + em;
+    }
+  }
+
+  &__estimate {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(8);
+      border: none;
+    }
+  }
+
+  &__controls {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    text-align: center;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      text-align: left;
+    }
+  }
+
+  &__wrong-info-btn {
+    font-size: 1em;
+  }
+
+  [data-missing-data-error] {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+      Instructions
+      ========================================================================== */
+
+.instructions {
+  margin-top: math.div(30px, $base-font-size-px) + em;
+
+  &__wrapper {
+    padding-bottom: math.div(5px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+      padding-bottom: math.div(20px, $base-font-size-px) + em;
+    }
+  }
+
+  &__content {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+  }
+
+  &__subheading {
+    @include heading-4;
+  }
+
+  &__about-wrapper {
+    padding-top: math.div(20px, $base-font-size-px) + em;
+    padding-bottom: math.div(20px, $base-font-size-px) + em;
+    margin-top: math.div(30px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(5);
+      @include u-grid-push(1);
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+    }
+  }
+
+  &__about-heading {
+    @include heading-5;
+  }
+}
+
+/* ==========================================================================
+      Offer and expenses forms
+      ========================================================================== */
+
+.aid-form {
+  $aid-form-left-inset: 40px;
+  margin-top: math.div(30px, $base-font-size-px) + em;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    margin-top: 0;
+  }
+
+  @include respond-to-min($bp-lg-min) {
+    padding-left: math.div($aid-form-left-inset, $base-font-size-px) + em;
+  }
+
+  &__heading {
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-bottom: math.div(5px, $base-font-size-px) + em;
+      border-bottom: 1px solid var(--gray-40);
+    }
+  }
+
+  &__title {
+    margin-bottom: math.div(5px, 18px) + em;
+  }
+
+  &__label-wrapper,
+  .form-label__text-wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(12);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(15, 24);
+    }
+
+    .aid-form__definition {
+      margin-bottom: math.div(5px, $small-font-size-px) + em;
+    }
+  }
+
+  &__input-wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(12);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(9, 24);
+    }
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      max-width: math.div(280px, $base-font-size-px) + em;
+    }
+
+    &--currency {
+      text-align: right;
+    }
+
+    &--percent {
+      width: math.div(65px, $base-font-size-px) + em;
+      text-align: right;
+    }
+
+    &[disabled] {
+      background-color: var(--gray-10);
+      color: var(--black);
+
+      // Need to set -webkit-text-fill-color to make disabled input text var(--black) in Safari/iOS
+      -webkit-text-fill-color: var(--black);
+      opacity: 1;
+    }
+
+    &--error {
+      border-color: var(--red-80);
+      border-width: math.div(2px, $base-font-size-px) + em;
+    }
+  }
+
+  &__calc-error {
+    font-size: math.div($small-font-size-px, $base-font-size-px) + em;
+    line-height: 1.5;
+    margin-top: math.div(5px, $base-font-size-px) + em;
+    display: none;
+
+    & > .cf-icon-svg {
+      color: var(--red-80);
+      margin-right: math.div(5px, $base-font-size-px) + em;
+    }
+  }
+
+  &__unit {
+    display: inline-block;
+    margin-top: math.div(6px, $base-font-size-px) + em;
+    margin-left: math.div(10px, $base-font-size-px) + em;
+  }
+
+  &__equals-line {
+    margin-top: math.div(15px, $base-font-size-px) + em;
+    margin-bottom: math.div(5px, $base-font-size-px) + em;
+    background-color: var(--black);
+  }
+
+  &__summary,
+  &__summary.column-well__content {
+    padding-top: math.div(20px, $base-font-size-px) + em;
+    padding-right: ($grid_gutter-width / 2);
+    padding-bottom: math.div(20px, $base-font-size-px) + em;
+    padding-left: ($grid_gutter-width / 2);
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    margin-right: -1 * math.div($grid_gutter-width, 2);
+    margin-left: -1 * math.div($grid_gutter-width, 2);
+    background-color: var(--gray-5);
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-top: 0;
+      padding-right: $grid_gutter-width;
+      padding-bottom: 0;
+      padding-left: $grid_gutter-width;
+      margin-top: 0;
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-right: -$grid_gutter-width;
+      margin-left: -$grid_gutter-width;
+    }
+  }
+
+  &__summary-heading {
+    padding-bottom: math.div(5px, $size-iv) + em;
+    border-bottom: 1px solid var(--black);
+
+    @include heading-4;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include heading-5;
+    }
+  }
+
+  &__definition {
+    font-size: math.div($small-font-size-px, $base-font-size-px) + em;
+  }
+
+  &__group-header {
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+
+    @include respond-to-min($bp-lg-min) {
+      margin-left: -1 * math.div($aid-form-left-inset, $base-font-size-px) + em;
+    }
+  }
+
+  &__inline-subtotal {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: none;
+    }
+  }
+
+  .form-group + .form-group {
+    margin-top: math.div(60px, $base-font-size-px) + em;
+  }
+
+  .form-group__item {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  .form-group__item + .form-group__item {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-top: math.div(20px, $base-font-size-px) + em;
+    }
+  }
+
+  .form-label {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-top: math.div(4px, $base-font-size-px) + em;
+    }
+  }
+
+  .form-label-header {
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 0.875em;
+    display: block;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-transform: uppercase;
+    margin-bottom: 0.71428571em;
+    padding-bottom: math.div(5px, $small-font-size-px) + em;
+    border-bottom: 1px solid var(--gray-40);
+
+    & + .aid-form__definition {
+      margin-top: math.div(-5px, $small-font-size-px) + em;
+    }
+  }
+
+  .form-label + .aid-form__definition {
+    margin-top: math.div(-5px, $small-font-size-px) + em;
+  }
+}
+
+.line-item {
+  $line-item-font-size: 18px;
+
+  @include u-grid-nested-col-group;
+  margin-bottom: math.div(15px, $size-iv) + em;
+
+  @include heading-4;
+
+  &__sign {
+    display: inline-block;
+    margin-right: math.div(5px, $line-item-font-size) + em;
+    font-size: math.div($line-item-font-size, $size-iv) + em;
+  }
+
+  &__currency {
+    position: absolute;
+    right: math.div(88px, $size-iv) + em;
+  }
+
+  &__explanation {
+    display: block;
+    margin-top: math.div(5px, $line-item-font-size) + em;
+    font-size: math.div(14px, $line-item-font-size) + em;
+  }
+
+  &__title {
+    @include u-grid-column(7);
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(7);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(8);
+    }
+  }
+
+  &__value {
+    @include u-grid-column(5);
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(5);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(4);
+    }
+  }
+
+  &__amount {
+    float: right;
+  }
+
+  &--total {
+    margin-bottom: 0;
+  }
+
+  & + p {
+    margin-top: math.div(20px, $base-font-size-px) + em;
+  }
+}
+
+/* ==========================================================================
+      Review your first year offer
+      ========================================================================== */
+
+.review {
+  margin-top: math.div(45px, $base-font-size-px) + em;
+
+  &__wrapper {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-nested-col-group;
+    }
+
+    & + .criteria {
+      margin-top: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  &__intro {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(7);
+    }
+  }
+}
+
+.offer-part {
+  /*
+  padding-top, z-index, and background color need to be set here to make
+  sticky sidebars work correctly.
+  */
+  padding-top: math.div(45px, $base-font-size-px) + em;
+  z-index: 200;
+  background-color: #fff;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    @include u-grid-nested-col-group;
+    padding-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+
+  &__intro {
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(12);
+    }
+  }
+
+  &__intro-wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  &__intro-content {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(12);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(6);
+    }
+
+    @include respond-to-min($bp-lg-min) {
+      @include u-grid-column(7);
+    }
+  }
+
+  &__heading {
+    @include heading-3;
+  }
+
+  &__form-wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+  }
+
+  &__summary-wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+      padding-top: math.div(30px, $base-font-size-px) + em;
+      margin-top: 0;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(4);
+      @include u-grid-push(1);
+
+      &.is__stuck {
+        @include u-grid-column(4);
+        @include u-grid-push(7);
+        margin-left: -20px;
+      }
+
+      &.is__stuck.is__bottomed {
+        margin-left: 0;
+      }
+    }
+
+    .line-item {
+      @include respond-to-range($bp-sm-min, $bp-inline-sign-min) {
+        font-size: math.div(16px, $base-font-size-px) + em;
+      }
+    }
+  }
+
+  &__terms {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(12);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(15, 24);
+      margin-top: math.div(-15px, $base-font-size-px) + em;
+    }
+  }
+
+  &__term {
+    margin-top: math.div(15px, $base-font-size-px) + em;
+    margin-bottom: math.div(5px, $base-font-size-px) + em;
+  }
+
+  &.cost-to-attend {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+  }
+}
+
+.contributions,
+.loans,
+.future {
+  .column-well {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .aid-form__summary {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-top: math.div(30px, $base-font-size-px) + em;
+      padding-bottom: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+}
+
+.contributions,
+.loans {
+  .big-picture {
+    display: none;
+    padding-bottom: 0;
+    background-color: transparent;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: block;
+    }
+  }
+
+  .column-well::after {
+    background-color: var(--gold-20);
+  }
+}
+
+.future {
+  .aid-form__summary.debt-summary {
+    margin-top: 0;
+    background-color: var(--gold-40);
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-bottom: 0;
+    }
+  }
+
+  .aid-form__summary.big-picture {
+    background-color: var(--gold-20);
+  }
+
+  .column-well::after {
+    background-color: var(--gold-40);
+  }
+}
+
+.loans {
+  &__line {
+    border-top: 1px dotted var(--gray-40);
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+    background-color: transparent;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-top: math.div(15px, $base-font-size-px) + em;
+    }
+  }
+}
+
+.private-loans {
+  border-bottom: 1px dotted var(--gray-40);
+  margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+  &__heading {
+    border-bottom: 1px solid var(--gray-40);
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+    position: relative;
+  }
+
+  &__heading-text {
+    @include heading-4;
+  }
+
+  &__remove-btn,
+  &__add-btn {
+    border-bottom: none;
+    font-size: 1em;
+
+    &:hover,
+    &:visited,
+    &:active {
+      border-bottom: none;
+    }
+  }
+
+  &__remove-btn {
+    position: absolute;
+    top: math.div(-8px, $base-font-size-px) + em;
+    right: 0;
+    font-size: 1em;
+  }
+
+  &__add-btn {
+    margin-top: math.div(20px, $base-font-size-px) + em;
+    margin-right: 0;
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  &__loan + &__loan {
+    margin-top: math.div(45px, $base-font-size-px) + em;
+  }
+}
+
+.debt-summary {
+  .aid-form__summary-heading {
+    @include heading-3;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include heading-5;
+    }
+  }
+}
+
+/* ==========================================================================
+      Evaluating your offer
+      ========================================================================== */
+
+.evaluate {
+  margin-top: math.div(45px, $base-font-size-px) + em;
+
+  &__wrapper {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-nested-col-group;
+    }
+
+    & + .criteria {
+      margin-top: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  &__intro {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(7);
+    }
+  }
+}
+
+.criteria {
+  margin-top: math.div(30px, $base-font-size-px) + em;
+
+  @include respond-to-min($bp-graph-cols-min) {
+    margin-top: math.div(45px, $base-font-size-px) + em;
+  }
+
+  &__heading {
+    @include heading-3;
+  }
+
+  &__wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+    }
+
+    &::after {
+      @include respond-to-range($bp-sm-min, $bp-graph-cols-min - 1) {
+        display: none;
+      }
+    }
+  }
+
+  &__intro {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-graph-cols-min) {
+      @include u-grid-column(6);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(5);
+    }
+  }
+
+  & + & {
+    padding-top: math.div(15px, $base-font-size-px) + em;
+    border-top: 1px solid var(--gray-20);
+
+    @include respond-to-min($bp-graph-cols-min) {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+}
+
+.metric {
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    @include u-grid-column(10);
+  }
+
+  @include respond-to-range($bp-sm-min, $bp-graph-cols-min - 1) {
+    padding-bottom: 0;
+  }
+
+  @include respond-to-min($bp-graph-cols-min) {
+    @include u-grid-column(6);
+    padding-top: math.div(30px, $base-font-size-px) + em;
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    @include u-grid-column(4);
+    @include u-grid-push(2);
+  }
+
+  &__heading {
+    @include heading-4;
+  }
+
+  &__explanation {
+    margin-bottom: math.div(15px, 14px) + em;
+    font-size: math.div(14px, $base-font-size-px) + em;
+  }
+
+  &__notification {
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+    .cf-notification__text,
+    .cf-notification__icon {
+      display: none;
+    }
+
+    &--no-you,
+    &--no-average,
+    &--no-data {
+      padding-left: 11px;
+    }
+
+    &--better .metric__notification-text-better,
+    &--same .metric__notification-text-same,
+    &--worse .metric__notification-text-worse,
+    &--no-you .metric__notification-text-no-you,
+    &--no-average .metric__notification-text-no-average,
+    &--no-data .metric__notification-text-no-data {
+      display: block;
+    }
+
+    &.cf-notification .cf-notification__icon {
+      display: inline-block;
+    }
+
+    p + .cf-notification__text {
+      margin-top: 0;
+    }
+  }
+
+  &__link {
+    border-top: 1px solid var(--gray-40);
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+
+  &.column-well--not-stacked {
+    @include respond-to-range($bp-sm-min, $bp-graph-cols-min - 1) {
+      padding-top: 0;
+    }
+  }
+
+  &.column-well--not-stacked::after {
+    @include respond-to-range($bp-sm-min, $bp-graph-cols-min - 1) {
+      display: none;
+    }
+  }
+
+  .column-well__content {
+    @include respond-to-range($bp-sm-min, $bp-graph-cols-min - 1) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+.salary-and-debt {
+  $salary-and-debt-font-size: 18px;
+
+  &__projection {
+    @include u-grid-nested-col-group;
+    max-width: math.div(380px, $base-font-size-px) + em;
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+  }
+
+  &__projection-name {
+    @include u-grid-column(7);
+    @include heading-4;
+  }
+
+  &__projection-value {
+    @include u-grid-column(5);
+    @include heading-4;
+    text-align: right;
+  }
+
+  &__explanation {
+    display: block;
+    margin-top: math.div(5px, $salary-and-debt-font-size) + em;
+    font-size: math.div(14px, $salary-and-debt-font-size) + em;
+  }
+
+  &__payment-term {
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+    label {
+      // Bug in Chrome and Safari
+      // Radio button w/ margin-left: 0 in an overflow: hidden container
+      // has clipping on the left side. Fix: set a tiny margin-left value.
+      margin-left: 1px;
+      line-height: 2;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        margin-left: 0;
+      }
+
+      @include respond-to-min($bp-lg-min) {
+        line-height: normal;
+      }
+    }
+  }
+}
+
+.debt-burden {
+  &__projection {
+    @include u-grid-nested-col-group;
+    max-width: math.div(380px, $base-font-size-px) + em;
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+  }
+
+  &__projection-name {
+    @include u-grid-column(7);
+  }
+
+  &__projection-value {
+    @include u-grid-column(5);
+    text-align: right;
+  }
+
+  &__payment-term {
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+    label {
+      // Bug in Chrome and Safari
+      // Radio button w/ margin-left: 0 in an overflow: hidden container
+      // has clipping on the left side. Fix: set a tiny margin-left value.
+      margin-left: 1px;
+      line-height: 2;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        margin-left: 0;
+      }
+
+      @include respond-to-min($bp-lg-min) {
+        line-height: normal;
+      }
+    }
+  }
+}
+
+.debt-equation {
+  max-width: math.div(380px, $base-font-size-px) + em;
+  padding-top: math.div(10px, $base-font-size-px) + em;
+  margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+  &__part {
+    float: left;
+  }
+
+  &__part--loan {
+    width: 25%;
+  }
+
+  &__part--income {
+    width: 25%;
+  }
+
+  &__part--percent {
+    width: 20%;
+  }
+
+  &__symbol {
+    $symbol-font-size-px: 36px;
+    margin-top: math.div(3px, $symbol-font-size-px) + em;
+    width: 15%;
+    float: left;
+    font-size: $symbol-font-size-px;
+    text-align: center;
+  }
+
+  &__number {
+    font-size: math.div(18px, $base-font-size-px) + em;
+  }
+}
+
+.bar-graph {
+  $bar-graph-container-max-width: 380px;
+  $bar-graph-width: 45px;
+  $bar-graph-width-sm: 25px;
+  $bar-graph-width-xs: 17px;
+  $bar-graph-height: 130px;
+  $bar-graph-label-width: 135px;
+  $bar-graph-value-min-width: 95px;
+  $bar-graph-you-font-size: 18px;
+  $bar-graph-average-font-size: 16px;
+  $bar-graph-line-overhang: 6px;
+  $bar-graph-top-label-width: 70px;
+  $bar-graph-top-label-height: 20px;
+
+  // A little cheat to make the line look vertically centered
+  $bar-graph-line-top-cheat: 3px;
+
+  height: $bar-graph-height;
+  max-width: math.div($bar-graph-container-max-width, $base-font-size-px) + em;
+  margin-bottom: math.div(10px, $base-font-size-px) + em;
+  position: relative;
+
+  &__point {
+    width: 100%;
+    position: absolute;
+  }
+
+  &__label,
+  &__value {
+    position: absolute;
+    top: 0;
+    background-color: var(--white);
+
+    @include respond-to-min($bp-graph-cols-min) {
+      background-color: var(--gray-5);
+    }
+  }
+
+  &__label {
+    width: $bar-graph-label-width;
+    left: 0;
+    z-index: 10;
+  }
+
+  &__value {
+    min-width: $bar-graph-value-min-width;
+    padding-left: 8px;
+    right: 0;
+  }
+
+  &__line {
+    width: 100%;
+    border-top-width: 3px;
+    position: absolute;
+  }
+
+  &__number {
+    display: inline-block;
+  }
+
+  &__bar {
+    width: $bar-graph-width;
+    height: $bar-graph-height;
+    margin-left: -$bar-graph-line-overhang;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background-color: var(--gray-10);
+
+    @include respond-to-range($bp-graph-cols-min, $bp-med-max) {
+      width: $bar-graph-width-sm;
+      border-right: math.div(($bar-graph-width - $bar-graph-width-sm), 2) solid
+        var(--gray-5);
+      border-left: math.div(($bar-graph-width - $bar-graph-width-sm), 2) solid
+        var(--gray-5);
+    }
+
+    // Graph bars need to get really skinny at some screen sizes
+    @include respond-to-range($bp-graph-cols-min, 759px) {
+      width: $bar-graph-width-xs;
+      border-right: math.div(($bar-graph-width - $bar-graph-width-xs), 2) solid
+        var(--gray-5);
+      border-left: math.div(($bar-graph-width - $bar-graph-width-xs), 2) solid
+        var(--gray-5);
+    }
+
+    @include respond-to-range(901px, 929px) {
+      width: $bar-graph-width-xs;
+      border-right: math.div(($bar-graph-width - $bar-graph-width-xs), 2) solid
+        var(--gray-5);
+      border-left: math.div(($bar-graph-width - $bar-graph-width-xs), 2) solid
+        var(--gray-5);
+    }
+  }
+
+  &__top-label {
+    width: $bar-graph-top-label-width;
+    margin-left: -($bar-graph-top-label-width - $bar-graph-width) / 2 - $bar-graph-line-overhang;
+    position: absolute;
+    top: math.div(-$bar-graph-top-label-height, $small-font-size-px) + em;
+    left: 50%;
+    z-index: 100;
+    font-size: math.div($small-font-size-px, $base-font-size-px) + em;
+    text-align: center;
+  }
+
+  &__point--you {
+    font-size: math.div($bar-graph-you-font-size, $base-font-size-px) + em;
+
+    .bar-graph__line {
+      border-top-color: var(--black);
+      border-top-style: solid;
+      top: math.div(($bar-graph-you-font-size + $bar-graph-line-top-cheat), 2) +
+        px;
+    }
+  }
+
+  &__point--average {
+    color: var(--gray-dark);
+
+    .bar-graph__line {
+      border-top-color: var(--gray-dark);
+      border-top-style: dotted;
+      top: math.div(
+          ($bar-graph-average-font-size + $bar-graph-line-top-cheat),
+          2
+        ) + px;
+    }
+  }
+
+  &--equal &__point--average {
+    display: none;
+  }
+
+  &--missing-you {
+    display: none;
+  }
+
+  &--missing-average &__point--average {
+    display: none;
+  }
+
+  &--high-point &__top-label {
+    display: none;
+  }
+
+  // Median salary and loan default graphs need room above for the top-label
+  &[data-metric='medianSalary'],
+  &[data-metric='defaultRate'] {
+    border-top: $bar-graph-top-label-height solid transparent;
+  }
+}
+
+#content__expenses-nat-salary {
+  display: none;
+}
+
+/* ==========================================================================
+      Estimated monthly expenses
+      ========================================================================== */
+
+.debt-burden .column-well__content {
+  @include respond-to-min($bp-graph-cols-min) {
+    position: absolute;
+  }
+}
+
+.estimated-expenses {
+  padding-top: math.div(10px, $base-font-size-px) + em;
+  padding-bottom: math.div(15px, $base-font-size-px) + em;
+  border-top: 1px solid var(--gray-40);
+  margin-top: math.div(30px, $base-font-size-px) + em;
+  margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    @include u-grid-column(10);
+    padding-bottom: 0;
+    border-top: 1px solid var(--gray-40);
+  }
+
+  @include respond-to-min($bp-graph-cols-min) {
+    @include u-grid-column(6);
+    padding-top: 0;
+    border-top: none;
+    margin-top: math.div(15px, $base-font-size-px) + em;
+    margin-bottom: math.div(45px, $base-font-size-px) + em;
+  }
+
+  &__region {
+    margin-bottom: math.div(20px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+      border-width: 0;
+    }
+  }
+
+  .aid-form {
+    margin-top: 0;
+
+    &__heading {
+      @include respond-to-range($bp-sm-min, $bp-graph-cols-min) {
+        border-bottom: none;
+      }
+    }
+
+    .form-label__text-wrapper {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        @include u-grid-column(12);
+      }
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        @include u-grid-column(12, 24);
+      }
+    }
+
+    &__input-wrapper {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        @include u-grid-column(12);
+      }
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        @include u-grid-column(12, 24);
+      }
+    }
+
+    &__sign {
+      @include u-grid-column(3, 24);
+      border-width: 0;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        @include u-grid-column(3);
+        border-width: 0;
+      }
+    }
+
+    &__input {
+      max-width: none;
+      width: 80%;
+
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        width: 85%;
+      }
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        width: 75%;
+      }
+    }
+
+    &__summary {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        padding-left: 0;
+        margin-top: math.div(30px, $base-font-size-px) + em;
+        margin-left: 0;
+        background-color: transparent;
+      }
+
+      // Tablet only.
+      @include respond-to-range($bp-sm-min, $bp-sm-max) {
+        padding-right: 0;
+      }
+
+      @include respond-to-min($bp-lg-min) {
+        padding-left: math.div(40px, $base-font-size-px) + em;
+      }
+    }
+
+    &__summary-heading {
+      @include heading-4;
+      margin-bottom: math.div(10px, $size-iv) + em;
+      text-transform: none;
+    }
+  }
+
+  .line-item {
+    &__title {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        @include u-grid-column(8);
+      }
+    }
+
+    &__value {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        @include u-grid-column(4);
+      }
+    }
+
+    &__sign {
+      position: absolute;
+      right: math.div(100px, $base-font-size-px) + em;
+    }
+  }
+}
+
+.recalculating-mobile {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background-color: var(--gold-20);
+  font-size: math.div(14px, $base-font-size-px) + em;
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    top: -100em;
+  }
+}
+
+/* ==========================================================================
+      Continue to step 2, and the big question
+      ========================================================================== */
+
+.continue,
+.question {
+  padding-top: math.div(25px, $base-font-size-px) + em;
+  padding-bottom: math.div(5px, $base-font-size-px) + em;
+  margin-top: math.div(30px, $base-font-size-px) + em;
+  background-color: var(--teal-20);
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    padding-top: math.div(30px, $base-font-size-px) + em;
+    padding-bottom: math.div(15px, $base-font-size-px) + em;
+    margin-top: math.div(45px, $base-font-size-px) + em;
+  }
+
+  &__wrapper {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  &__content {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(8);
+    }
+  }
+}
+
+.continue__controls,
+.question__answers {
+  margin-top: math.div(20px, $base-font-size-px) + em;
+  margin-bottom: math.div(20px, $base-font-size-px) + em;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+}
+
+/* ==========================================================================
+      You have options
+      ========================================================================== */
+
+.get-options {
+  margin-top: math.div(45px, $base-font-size-px) + em;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    padding-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+
+  &__wrapper {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  &__wrapper + &__wrapper {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  &__intro {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(8);
+    }
+  }
+
+  .step__intro {
+    margin-bottom: 0;
+  }
+
+  .step__intro + p {
+    margin-top: math.div(20px, $base-font-size-px) + em;
+  }
+
+  & + .content__line {
+    display: none;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: block;
+    }
+  }
+
+  &--settlement {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(8);
+    }
+  }
+
+  &--sidebar {
+    margin-top: math.div(60px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(6);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(4);
+    }
+  }
+}
+
+.option {
+  margin-top: math.div(45px, $base-font-size-px) + em;
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    @include u-grid-column(4);
+  }
+
+  &--maximize-grants,
+  &--reduce-costs,
+  &--different-program,
+  &--transfer-credits,
+  &--work-while-studying,
+  &--explore-schools {
+    background-position: center 30px;
+    background-size: 150px;
+    background-repeat: no-repeat;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      background-position: center 60px;
+    }
+  }
+
+  &--maximize-grants {
+    background-image: url('/static/apps/paying-for-college/img/maximize-grants_150.png');
+  }
+
+  &--reduce-costs {
+    background-image: url('/static/apps/paying-for-college/img/reduce-costs_150.png');
+  }
+
+  &--different-program {
+    background-image: url('/static/apps/paying-for-college/img/different-program_150.png');
+  }
+
+  &--transfer-credits {
+    background-image: url('/static/apps/paying-for-college/img/transfer-credits_150.png');
+  }
+
+  &--explore-schools {
+    background-image: url('/static/apps/paying-for-college/img/explore-schools_150.png');
+  }
+
+  &--work-while-studying {
+    background-image: url('/static/apps/paying-for-college/img/work-while-studying_150.png');
+  }
+
+  @media (min-resolution: 192dpi) {
+    &--maximize-grants {
+      background-image: url('/static/apps/paying-for-college/img/maximize-grants_300.png');
+    }
+
+    &--reduce-costs {
+      background-image: url('/static/apps/paying-for-college/img/reduce-costs_300.png');
+    }
+
+    &--different-program {
+      background-image: url('/static/apps/paying-for-college/img/different-program_300.png');
+    }
+
+    &--transfer-credits {
+      background-image: url('/static/apps/paying-for-college/img/transfer-credits_300.png');
+    }
+
+    &--explore-schools {
+      background-image: url('/static/apps/paying-for-college/img/explore-schools_300.png');
+    }
+
+    &--work-while-studying {
+      background-image: url('/static/apps/paying-for-college/img/work-while-studying_300.png');
+    }
+  }
+
+  // Add padding on top of the heading for the 150px illustration
+  // X-small and small screens: 150px + 30px padding above and below the image
+  // Meidum and larger screens: 150px + 60px padding above and below the image
+  &__heading {
+    padding-top: math.div(210px, $size-iv) + em;
+
+    @include heading-4;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding-top: math.div(270px, $size-iv) + em;
+    }
+  }
+
+  &--take-action-header {
+    @include heading-3;
+  }
+
+  // Top borders on all but the first option on small screens and only the second row of options on larger screens
+  & + & &__heading {
+    border-top: 1px solid var(--gray-40);
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      border-top: none;
+    }
+  }
+
+  & + & + & &__heading {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      border-top: 1px solid var(--gray-40);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      border-top: none;
+    }
+  }
+
+  & + & + & + & &__heading {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      border-top: 1px solid var(--gray-40);
+    }
+  }
+
+  // Settlement school modifications
+  &--settlement {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(1, 2);
+    }
+
+    // Top borders on all but the first option on small screens and only the second row of options on larger screens
+    & + & .option__heading {
+      border-top: 1px solid var(--gray-40);
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        border-top: none;
+      }
+    }
+
+    & + & + & .option__heading {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        border-top: 1px solid var(--gray-40);
+      }
+    }
+
+    & + & + & + & .option__heading {
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        border-top: 1px solid var(--gray-40);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+      Next steps
+      ========================================================================== */
+
+.next-steps {
+  padding-bottom: math.div(30px, $base-font-size-px) + em;
+
+  &__wrapper {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-top: math.div(45px, $base-font-size-px) + em;
+
+      @include u-grid-nested-col-group;
+    }
+  }
+
+  &__intro {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(10);
+    }
+
+    @include respond-to-min($bp-xl-min) {
+      @include u-grid-column(7);
+    }
+  }
+
+  &__list {
+    margin-top: math.div(45px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-nested-col-group;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-top: math.div(60px, $base-font-size-px) + em;
+    }
+  }
+
+  &__list-item {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-top: 0;
+
+      @include u-grid-column(9);
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include u-grid-column(4);
+    }
+  }
+
+  &__list-intro {
+    @include heading-4;
+  }
+
+  &__controls {
+    margin-top: math.div(20px, $base-font-size-px) + em;
+    margin-left: -2.5em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-left: 0;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-top: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  .content__line {
+    display: none;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: block;
+    }
+  }
+}
+
+/* ==========================================================================
+      Scripted Elements
+      ========================================================================== */
+
+[data-multi_year='false'] {
+  display: none;
+}

@@ -1,0 +1,182 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+/* ==========================================================================
+   Design System
+   Expandable Styling
+   ========================================================================== */
+//
+// Theme variables
+//
+// .o-expandable modifiers
+$expandable-background: var(--gray-5);
+
+// Timing variables
+
+// .o-expandable__content__transition
+$expandable-transition-speed: 0.25s;
+
+//
+// Recommended expandable pattern
+//
+
+.o-expandable {
+  position: relative;
+
+  &__target {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus {
+      outline: 1px dotted var(--black);
+      outline-offset: 1px;
+    }
+
+    .o-expandable__cue-close,
+    .o-expandable__cue-open {
+      display: none;
+    }
+
+    &--expanded .o-expandable__cue-close {
+      display: block;
+    }
+
+    &--collapsed .o-expandable__cue-open {
+      display: block;
+    }
+  }
+
+  &__content {
+    padding: 0 math.div(15px, $base-font-size-px) + em;
+
+    // The divider between _header and _content.
+    &::before {
+      content: '';
+      display: block;
+      border-top: 1px solid var(--gray-40);
+      padding-top: math.div(15px, $base-font-size-px) + em;
+    }
+
+    &::after {
+      padding-bottom: math.div(15px, $base-font-size-px) + em;
+      width: 100%;
+    }
+
+    // A clearfix prevents twitchy animations from occurring when margins
+    // collapse and extend past the bounds of the expandable.
+    @include u-clearfix;
+
+    &--transition {
+      transition: max-height $expandable-transition-speed ease-in-out;
+    }
+
+    &--collapsed {
+      max-height: 0;
+    }
+
+    &--expanded {
+      max-height: 1000px;
+    }
+
+    &.u-is-animating {
+      overflow: hidden;
+    }
+  }
+
+  //
+  // Expandable text elements
+  //
+
+  &__label {
+    // Remove default h4 margin style
+    margin-bottom: 0;
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  &__cues {
+    min-width: 60px;
+    text-align: right;
+    color: var(--pacific);
+    font-size: math.div($btn-font-size, $base-font-size-px) + em;
+    line-height: math.div($base-line-height-px, $btn-font-size);
+  }
+
+  //
+  // Header
+  //
+
+  &__header {
+    padding: (math.div(10px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em);
+    display: flex;
+    justify-content: space-between;
+
+    // Using the button element with .o-expandable__header requires setting
+    // an explicit width.
+    button & {
+      width: 100%;
+      text-align: left;
+    }
+
+    .o-expandable__label {
+      // Grow to available width.
+      flex-grow: 1;
+    }
+  }
+
+  //
+  // Expandable with a background color modifier
+  //
+
+  &--background {
+    background: $expandable-background;
+  }
+
+  //
+  // Expandable with a border modifier
+  //
+
+  &--border {
+    border: 1px solid var(--gray-40);
+  }
+
+  //
+  // Expandable groups
+  //
+
+  &-group {
+    .o-expandable {
+      border-bottom: 1px solid var(--gray-40);
+
+      &:first-child {
+        border-top: 1px solid var(--gray-40);
+      }
+    }
+  }
+
+  @include respond-to-print {
+    // Hide the interactive expandable cues when printing
+    &__target--expanded &__cue-close,
+    &__target--collapsed &__cue-open {
+      display: none;
+    }
+
+    // Ensure all expandables are expanded when printing.
+    // To accommodate print stylesheets that display the raw URL after links,
+    // set an enormous max height to accommodate expandables that have a lot of links.
+    &__content--collapsed {
+      display: block;
+      max-height: 99999px !important;
+    }
+  }
+}
+
+// Used when the set language reads right-to-left
+div[dir='rtl'] .o-expandable__header {
+  width: 100%;
+  text-align: right;
+}

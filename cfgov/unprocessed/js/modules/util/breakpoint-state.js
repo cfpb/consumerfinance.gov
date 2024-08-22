@@ -2,7 +2,7 @@
    Get Breakpoint State
    ========================================================================== */
 
-import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
+import { varsBreakpoints } from '@cfpb/cfpb-design-system/src/index.js';
 
 /**
  * @returns {number} The base font size set on the body element.

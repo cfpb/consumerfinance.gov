@@ -6,7 +6,7 @@ import {
   checkDom,
   setInitFlag,
   EventObserver,
-} from '@cfpb/cfpb-atomic-component';
+} from '@cfpb/cfpb-design-system/src/index.js';
 import { formatTimestamp } from '../modules/util/strings.js';
 import youTubeAPI from '../modules/youtube-api.js';
 

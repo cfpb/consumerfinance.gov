@@ -1,0 +1,42 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// TODO: Investigate where this fits in the organisms wiki.
+//       Remove margin from this file as it doesn't fit within
+//       our atomic rules.
+
+.o-prefooter {
+  // Clear any floating m-inset that may be above this.
+  clear: both;
+
+  margin-top: math.div($grid-gutter-width * 2, $base-font-size-px) + em;
+  margin-bottom: 0;
+
+  margin-right: math.div(math.div($grid-gutter-width, -2), $base-font-size-px) +
+    em;
+  margin-left: math.div(math.div($grid-gutter-width, -2), $base-font-size-px) +
+    em;
+
+  border-top: 1px solid var(--gray-40);
+
+  padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+  padding-left: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    em;
+  padding-right: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    em;
+
+  background: var(--gray-5);
+  overflow: auto;
+
+  @include respond-to-min($bp-sm-min) {
+    margin-right: math.div(-$grid-gutter-width, $base-font-size-px) + em;
+    margin-left: math.div(-$grid-gutter-width, $base-font-size-px) + em;
+
+    // Border for both LTR and RTL layouts.
+    border-right: 1px solid var(--gray-40);
+    border-left: 1px solid var(--gray-40);
+
+    padding-left: math.div($grid-gutter-width, $base-font-size-px) + em;
+    padding-right: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+}

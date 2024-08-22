@@ -1,0 +1,27 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.a-link--partially-styled {
+  border-bottom-width: 0;
+
+  .a-link__plain {
+    color: var(--black);
+    border-bottom: 1px dotted transparent;
+  }
+
+  .a-link__underlined {
+    border-bottom: 1px dotted $link-underline;
+  }
+
+  &:visited .a-link__underlined {
+    border-bottom: 1px dotted $link-underline-visited;
+  }
+
+  &:hover span,
+  &:focus span {
+    border-bottom: 1px solid $link-underline-hover !important;
+  }
+
+  &:active span {
+    border-bottom: 1px solid $link-underline-active !important;
+  }
+}

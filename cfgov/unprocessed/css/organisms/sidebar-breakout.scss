@@ -1,0 +1,85 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+$margin-em: math.div($grid-gutter-width, $base-font-size-px) + em;
+$sidebar-breakout-img-width: 300px;
+$sidebar-breakout-img-height: 170px;
+
+.o-sidebar-breakout {
+  &__img {
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    // Padding added to maintain 16/9 ratio.
+    padding-top: 56.25%;
+  }
+
+  &__img-container {
+    max-width: $sidebar-breakout-img-width;
+    max-height: $sidebar-breakout-img-height;
+  }
+
+  &__img-container--round {
+    width: auto;
+
+    .o-sidebar-breakout__img {
+      padding: 0;
+      height: $sidebar-breakout-img-height;
+      width: $sidebar-breakout-img-height;
+    }
+  }
+
+  &__text-body {
+    margin-bottom: $margin-em;
+  }
+
+  &__text-heading {
+    margin-top: $margin-em;
+    margin-bottom: $margin-em / 2;
+  }
+}
+
+@include respond-to-max($bp-xs-max) {
+  .o-sidebar-breakout {
+    margin-bottom: $margin-em;
+
+    &__col {
+      width: 100%;
+      &:last-child {
+        margin-top: math.div(($grid-gutter-width * 2), $base-font-size-px) + em;
+      }
+    }
+
+    &__img-container {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+}
+
+// Desktop and above.
+@include respond-to-min($bp-med-min) {
+  .o-sidebar-breakout__col:last-child {
+    padding-left: $margin-em;
+  }
+}
+
+// Tablet only.
+@include respond-to-range($bp-sm-min, $bp-sm-max) {
+  .o-sidebar-breakout {
+    &__img-container {
+      float: left;
+      width: math.div($sidebar-breakout-img-width, $bp-sm-max) * 100%;
+      margin-right: $margin-em;
+    }
+
+    &__text-container {
+      overflow: auto;
+    }
+
+    &__text-heading {
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.m-autocomplete {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+}
+
+.m-autocomplete__results {
+  box-sizing: border-box;
+  width: 100%;
+
+  // Restrict height of autocomplete suggestions
+  // 'dropdown' box to 200px.
+  max-height: 200px;
+  border: 1px solid var(--pacific);
+  border-top-width: 0;
+  padding-left: 0;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  list-style-type: none;
+
+  li {
+    border-bottom: 1px solid var(--gray-20);
+    margin-bottom: 0;
+
+    &:hover,
+    &.m-autocomplete__selected {
+      background-color: var(--gray-5);
+    }
+
+    &:last-child {
+      border-bottom-width: 0;
+    }
+  }
+
+  a {
+    display: block;
+    padding: math.div(math.div($grid-gutter-width, 4), $base-font-size-px) + em;
+    border-width: 0;
+    color: var(--black);
+  }
+}

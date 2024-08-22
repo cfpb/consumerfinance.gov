@@ -1,0 +1,71 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-college-costs-nav {
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    padding-left: 0;
+    padding-right: 0;
+    border-width: 0;
+  }
+
+  .o-secondary-nav__list--parents {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      border-top: 1px solid var(--gray-20);
+      border-left: 0;
+      padding-left: 0;
+
+      > .o-secondary-nav__list-item--parent {
+        border-bottom: 1px solid var(--gray-20);
+
+        & > .o-secondary-nav__link {
+          font-size: math.div(18px, $base-font-size-px) + em;
+        }
+      }
+
+      .o-secondary-nav__link {
+        border: none;
+        font-weight: normal;
+        color: var(--black);
+        padding: math.div(5px, $base-font-size-px) + em 0;
+        padding-left: math.div(10px, $base-font-size-px) + em;
+        text-align: left;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+
+        &:focus {
+          font-weight: 600;
+          outline: 0;
+        }
+      }
+
+      .o-secondary-nav__list--children {
+        margin-top: 0;
+        display: none;
+      }
+
+      li.o-secondary-nav__list-item--parent[data-nav-is-active='True'] > a {
+        font-weight: 600;
+      }
+
+      li[data-nav-is-active='True'],
+      li[data-nav-is-open='True'] {
+        .o-secondary-nav__list--children {
+          display: block;
+        }
+      }
+
+      .o-secondary-nav__list-item--parent li[data-nav-is-active='True'] {
+        .active-section {
+          border-left: 3px solid var(--green);
+
+          a {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

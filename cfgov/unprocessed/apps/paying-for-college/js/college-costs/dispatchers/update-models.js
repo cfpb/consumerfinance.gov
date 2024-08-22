@@ -163,10 +163,10 @@ function updateSchoolData(iped, assumptions) {
       }
 
       // Check for investigation
-      if ( schoolModel.values.underInvestigation === true ) {
-        stateModel.setValue( 'investigation', 'yes' );
+      if (schoolModel.values.underInvestigation === true) {
+        stateModel.setValue('investigation', 'yes');
       } else {
-        stateModel.setValue( 'investigation', 'no' );
+        stateModel.setValue('investigation', 'no');
       }
 
       // Rename the net price averages

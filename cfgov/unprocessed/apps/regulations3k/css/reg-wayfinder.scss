@@ -1,0 +1,84 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Regulations 3000
+   Wayfinder
+========================================================================== */
+
+$regs-wayfinder-padding-top: math.div(15px, $base-font-size-px) + rem;
+$regs-wayfinder-padding-top: math.div(15px, $base-font-size-px) + rem;
+
+.o-regulations-wayfinder {
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 2px solid var(--green);
+  position: fixed;
+  left: 0;
+  background-color: var(--white);
+  box-shadow: 0 3px 8px -6px var(--black);
+  transition: top 0.1s ease-in-out;
+  z-index: 100;
+  padding-left: math.div(15px, $base-font-size-px) + rem;
+  padding-right: math.div(15px, $base-font-size-px) + rem;
+  padding-top: $regs-wayfinder-padding-top;
+  padding-bottom: math.div(15px, $base-font-size-px) + rem;
+
+  &__link {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  &__link:visited {
+    border-color: $link-underline;
+    color: $link-text;
+  }
+
+  &__sidebar {
+    display: none;
+  }
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    padding-left: math.div(30px, $base-font-size-px) + rem;
+    padding-right: math.div(30px, $base-font-size-px) + rem;
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    &__wrapper {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      max-width: 1170px;
+      margin: 0 auto;
+    }
+
+    &__sidebar {
+      display: inline-block;
+      position: relative;
+
+      &::after {
+        border-right: 1px solid var(--gray-40);
+        content: '';
+        position: absolute;
+        right: -1px;
+        top: -$regs-wayfinder-padding-top;
+        height: calc(100% + ($regs-wayfinder-padding-top * 2));
+      }
+    }
+
+    &__content {
+      padding-left: math.div(30px, $base-font-size-px) + rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__version {
+      text-align: right;
+    }
+  }
+}
+
+.show-wayfinder .o-regulations-wayfinder {
+  top: 0;
+}
