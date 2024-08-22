@@ -1,0 +1,30 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+dt {
+  @include h5;
+  display: inline-block;
+
+  margin-bottom: 0.5em;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+dd {
+  display: inline;
+  margin-left: 0.2em;
+
+  &::after {
+    display: block;
+    content: '';
+  }
+}
+
+.eyebrow {
+  @include heading-5;
+}
+
+.a-link__text {
+  overflow-wrap: break-word;
+}

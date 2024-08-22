@@ -1,6 +1,6 @@
 import { scrollIntoView } from '../../../js/modules/util/scroll.js';
 import DT from './dom-tools.js';
-import { ExpandableGroup } from '@cfpb/cfpb-expandables';
+import { ExpandableGroup } from '@cfpb/cfpb-design-system/src/index.js';
 
 const CSS = {
   HAS_ATTENTION: 'has-attention',

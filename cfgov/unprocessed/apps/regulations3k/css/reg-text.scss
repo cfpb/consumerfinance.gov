@@ -1,0 +1,34 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Regulations 3000
+   Regulation section text styling and type hierarchy
+   ========================================================================== */
+
+// Generate six indentation levels for reg text
+@mixin generate-level($n, $i: 1) {
+  @if $i <= $n {
+    .level-#{$i} {
+      box-sizing: border-box;
+      padding-left: ($i * 2em);
+    }
+
+    @include generate-level($n, ($i + 1));
+  }
+}
+
+@include generate-level(6);
+
+.regdown-block {
+  overflow: hidden;
+}
+
+.regulation-meta {
+  margin-bottom: math.div(25px, $base-font-size-px) + rem;
+
+  .a-date {
+    margin-bottom: math.div(8px, $base-font-size-px) + rem;
+    white-space: normal;
+  }
+}

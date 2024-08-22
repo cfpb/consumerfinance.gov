@@ -1,0 +1,253 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+@import '../enhancements/typography';
+
+@mixin u-upper-hover-line() {
+  position: absolute;
+  top: -1px;
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  border-top: 1px solid currentcolor;
+}
+
+.o-footer {
+  font-weight: 500;
+
+  // Adding an extra 5px to the top to account for the absolute positioned
+  // social media icons.
+  padding-top: math.div(50px, $base-font-size-px) + em;
+
+  // There is a 10px margin-bottom on the  last .o-footer__list li's, plus the
+  // 50px bottom padding = 60px of total padding at the bottom of the footer.
+  padding-bottom: math.div(50px, $base-font-size-px) + em;
+  border-top: 5px solid var(--green);
+  background: var(--gray-5);
+
+  .m-list__link {
+    font-weight: 500;
+  }
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    .m-list__link {
+      display: block;
+      box-sizing: border-box;
+      padding-top: math.div(10px, $base-font-size-px) + em;
+      padding-bottom: math.div(10px, $base-font-size-px) + em;
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+
+      .a-link__text {
+        border-bottom: none;
+      }
+    }
+
+    // Handle the borders of jump links that are adjacent in a list.
+    .o-footer-middle-right .m-list__link:hover::before {
+      @include u-upper-hover-line;
+    }
+
+    li:has(.m-list__link) + li:has(.m-list__link) {
+      .m-list__link {
+        position: relative;
+        border-top: none;
+      }
+
+      .m-list__link:hover::before {
+        @include u-upper-hover-line;
+      }
+    }
+  }
+
+  &__nav-list {
+    padding-left: 0;
+    list-style-type: none;
+
+    .m-list__link {
+      margin-left: 0;
+      font-size: math.div(18px, $base-font-size-px) + em;
+
+      @include u-link-colors(var(--black));
+
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        margin-right: 1em;
+
+        @include u-link-hover-border;
+      }
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        margin-right: math.div($grid-gutter-width, 22px) + em;
+        font-size: math.div(20px, $base-font-size-px) + em;
+      }
+    }
+
+    .m-list__link.m-list__link--disabled {
+      border-bottom: 1px dotted;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        @include u-link-no-border;
+      }
+    }
+  }
+
+  &__list {
+    padding-left: 0;
+    list-style-type: none;
+
+    .m-list__link {
+      margin-left: 0;
+
+      @include u-link-colors(var(--gray-dark));
+    }
+  }
+
+  &__pre {
+    position: relative;
+    margin-bottom: math.div(45px, $base-font-size-px) + em;
+
+    .o-footer__top-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+
+      // There's a standard margin between the top
+      // of the footer and the links. The button comes between
+      // that margin in the wireframes.
+      margin: -2em auto 2em;
+    }
+
+    .o-footer__nav-list {
+      margin-bottom: 0;
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+      margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+      border-bottom: 1px solid var(--gray-40);
+
+      .o-footer__top-button {
+        display: none;
+      }
+
+      .o-footer__nav-list {
+        padding-left: 0;
+        list-style-type: none;
+
+        .m-list__item {
+          margin-left: 0;
+          display: inline-block;
+
+          // Assuming a natural space of 4px between inline block items
+          // then the space between would be 8px (4px natural + 4px added).
+          margin-right: math.div(4px, $base-font-size-px) + em;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    @include respond-to-print {
+      // !important used here to avoid being overriden by a much more specific
+      // selector that sets the display property for this element
+      // and to avoid using a selector that specific here.
+      display: none !important;
+    }
+  }
+
+  // TODO: Refactor to use Design System Layout package.
+  &-middle-left {
+    .o-footer__list {
+      margin: 0;
+    }
+
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      // Fix doubled border in mobile view.
+      .o-footer__col:nth-child(n + 2) {
+        .o-footer__list {
+          .m-list__item .m-list__link {
+            border-top-width: 0;
+          }
+        }
+      }
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(8);
+      border-right: 1px solid var(--gray-40);
+      border-left: 0;
+
+      .o-footer__col {
+        @include u-grid-column(6);
+        border-left: 0;
+        border-right: 0;
+        padding-right: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+    }
+
+    @include respond-to-print {
+      // !important used here to avoid being overriden by a much more specific
+      // selector that sets the display property for this element
+      // and to avoid using a selector that specific here.
+      display: none !important;
+    }
+  }
+
+  &-middle-right {
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      // Fix missing top line hover.
+      position: relative;
+
+      // Fix doubled border in mobile view.
+      .o-footer__list {
+        .m-list__item .m-list__link {
+          border-top-width: 0;
+        }
+      }
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      @include u-grid-column(4);
+
+      .o-footer__list {
+        padding-left: $grid-gutter-width;
+        padding-right: $grid-gutter-width;
+      }
+    }
+
+    @include respond-to-print {
+      // !important used here to avoid being overriden by a much more specific
+      // selector that sets the display property for this element
+      // and to avoid using a selector that specific here.
+      display: none !important;
+    }
+  }
+
+  &-post {
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+      border-top: 1px solid var(--gray-40);
+    }
+
+    @include respond-to-print {
+      padding: 0;
+      border: none;
+      margin: 0;
+    }
+  }
+}

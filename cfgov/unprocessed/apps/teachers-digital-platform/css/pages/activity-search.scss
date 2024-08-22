@@ -1,0 +1,240 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.tdp-activity-search {
+  .m-hero {
+    background-color: transparent;
+  }
+
+  .m-hero__wrapper {
+    margin: 0 -15px;
+    padding-top: 0;
+  }
+
+  .m-hero__image-wrapper {
+    display: none;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: inline-block;
+      margin-top: 0;
+    }
+  }
+
+  .m-pagination {
+    margin-bottom: math.div(45px, $base-font-size-px) + em;
+  }
+
+  .o-well {
+    max-width: 100%;
+  }
+
+  .skip-filters:focus {
+    clip: initial;
+    height: initial;
+    margin-top: math.div(-30px, $base-font-size-px) + em;
+    width: initial;
+  }
+
+  .skip-filters--hidden {
+    display: none;
+  }
+
+  .content__sidebar {
+    padding: (math.div(15px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em) 0;
+    border: 1px solid var(--gray-40);
+    background-color: var(--gray-5);
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      margin-bottom: 0;
+      padding-top: math.div(30px, $base-font-size-px) + em;
+    }
+
+    .o-expandable__header,
+    .o-expandable__content {
+      border: 0;
+      padding: 0;
+      overflow: hidden;
+
+      &::before,
+      &::after {
+        border: 0;
+      }
+
+      &::before {
+        padding: 0;
+      }
+    }
+
+    .o-expandable__header {
+      padding: (math.div(13px, $base-font-size-px) + em) 0;
+      margin-bottom: 2px;
+    }
+
+    .m-list--unstyled .m-list--unstyled {
+      margin-left: (math.div(27px, $base-font-size-px) + em);
+    }
+
+    .filter-section {
+      border-top: 1px solid var(--gray-40);
+    }
+
+    .filter-section:first-of-type {
+      // Tablet and below.
+      @include respond-to-max($bp-sm-max) {
+        border-top: 0;
+      }
+    }
+
+    .o-form__group {
+      margin-bottom: 0;
+    }
+
+    .m-form-field--checkbox .a-btn--link {
+      border: 0;
+    }
+  }
+
+  .content__main {
+    border: 0;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .results {
+    padding-top: 0;
+  }
+
+  .results__count {
+    padding: (math.div(15px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em) 0;
+    border: 1px solid var(--gray-40);
+    background-color: var(--green-20);
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      border-left: 0;
+      padding-left: math.div(30px, $base-font-size-px) + em;
+      padding-right: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  .results__count--empty {
+    background-color: var(--red-20);
+    border-left: 1px solid var(--gray-40);
+  }
+
+  .results__filters,
+  .results__filters-tags {
+    display: flex;
+    gap: 15px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .results__filters {
+    padding-top: math.div(15px, $base-font-size-px) + em;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      border-left: 0;
+      padding-left: math.div(30px, $base-font-size-px) + em;
+      padding-right: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  .results__filters-label {
+    flex-shrink: 0;
+    line-height: 2.25;
+    font-weight: 600;
+  }
+
+  .results__list {
+    padding: (math.div(15px, $base-font-size-px) + em) 0;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding-left: math.div(30px, $base-font-size-px) + em;
+    }
+
+    li {
+      max-width: 100%;
+    }
+  }
+
+  .results__footer {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding-left: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  .layout-row > * {
+    display: inline-block;
+  }
+
+  .activity {
+    background: var(--white);
+    border: 1px solid var(--gray-40);
+    box-sizing: border-box;
+    padding: (math.div(30px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em);
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding: math.div(30px, $base-font-size-px) + em;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    p {
+      max-width: 100%;
+    }
+  }
+
+  .activity__for {
+    font-weight: 500;
+  }
+
+  .activity__meta-wrapper {
+    justify-content: space-between;
+    overflow: auto;
+
+    div {
+      box-sizing: border-box;
+    }
+
+    > div:first-child {
+      margin-bottom: math.div(30px, $base-font-size-px) + em;
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      display: flex;
+
+      > div:first-child {
+        margin-bottom: 0;
+        padding-right: math.div(30px, $base-font-size-px) + em;
+        width: 66%;
+      }
+
+      > div:last-child {
+        width: 33%;
+      }
+    }
+  }
+
+  .activity__meta-key {
+    font-size: 100%;
+    margin: 0;
+    text-transform: none;
+  }
+}

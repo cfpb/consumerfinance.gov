@@ -1,0 +1,158 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Regulations 3000
+   Regulations search
+   ========================================================================== */
+
+/* Search page */
+
+.search__wrapper {
+  &.o-well {
+    max-width: 100%;
+  }
+}
+
+.filters__applied,
+.filters__tags {
+  display: flex;
+  gap: 15px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.filters__applied {
+  padding: 30px 15px;
+  border-bottom: 1px solid var(--gray-40);
+
+  &-label {
+    font-weight: 600;
+  }
+}
+
+.search__results {
+  .content__sidebar {
+    padding: 45px 15px 0;
+    border: 1px solid var(--gray-40);
+    background-color: var(--gray-5);
+
+    .o-expandable__content,
+    .o-expandable__header {
+      border: 0;
+      padding: 0;
+      &::before,
+      &::after {
+        border: 0;
+        padding: 0;
+      }
+    }
+
+    .reg-checkbox {
+      display: inline-block;
+    }
+    .num-results {
+      float: right;
+    }
+    .o-expandable {
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gray-40);
+      margin-bottom: 15px;
+      &:nth-child(3n) {
+        border-bottom: none;
+      }
+      &__label {
+        @include h4;
+        margin-bottom: 0;
+      }
+    }
+    .o-form__group {
+      margin-bottom: 0;
+    }
+  }
+  .content__main {
+    &::after {
+      border: 0;
+    }
+    border: 0;
+    border-top: 1px solid var(--gray-40);
+    padding-top: 0;
+  }
+  .results__count {
+    padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
+      math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em 0;
+    border-right: 1px solid var(--gray-40);
+    border-bottom: 1px solid var(--gray-40);
+    background-color: var(--green-20);
+    &.no-results {
+      background-color: var(--red-20);
+      padding-bottom: 15px;
+    }
+  }
+  .results__list {
+    padding: (math.div($grid-gutter-width, $base-font-size-px) + em)
+      (math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em);
+
+    li {
+      list-style-type: none;
+    }
+  }
+  .results__item {
+    margin: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+
+    & + .results__item {
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+      h4 {
+        padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+        border-top: 1px solid var(--gray-40);
+      }
+    }
+  }
+  .results__paginator {
+    margin: 0 math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+    padding: 0 math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+    max-width: 41.875rem;
+  }
+}
+
+// Tablet and below.
+@include respond-to-max($bp-sm-max) {
+  .search__results {
+    .content__sidebar {
+      padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+    .content__main {
+      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+    .results__count {
+      border-left: 1px solid var(--gray-40);
+    }
+  }
+}
+
+// We have an awkward state where text in the filters sidebar is too long on
+// mid-size screens but is fine on desktop and mobile
+.u-hide-on-tablet {
+  @include respond-to-range($bp-sm-max, 1100px) {
+    display: none;
+  }
+}
+
+/* PWA */
+
+.regs3k-js {
+  display: none;
+}
+
+.no-js {
+  .regs3k-js {
+    display: block;
+  }
+  .a-tag .cf-icon-svg,
+  .a-btn.filters__clear {
+    display: none;
+  }
+}

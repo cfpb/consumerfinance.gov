@@ -1,0 +1,103 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.m-inset {
+  width: 100%;
+  clear: right;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--bottom-rule {
+    padding-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) + em;
+    border-bottom: 1px solid var(--gray-40);
+  }
+
+  &__caption {
+    margin-top: math.div(15px, $base-font-size-px) + em;
+  }
+
+  &--bordered {
+    // Styling for "Tip" insets, most commonly used in Ask CFPB
+    border-top: 4px solid var(--teal-60);
+    border-bottom: 2px solid var(--teal-40);
+    padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
+      0;
+    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin: (math.div(3px, $base-font-size-px) + em) 0
+        (math.div($grid-gutter-width, $base-font-size-px) + em)
+        (math.div($grid-gutter-width, $base-font-size-px) + em);
+      padding: (math.div($grid-gutter-width, $base-font-size-px) + em) 0;
+    }
+  }
+
+  &.m-inset--170 {
+    // Ensure that 170px inset images are that same size on XS screens
+    width: math.div(170px, $base-font-size-px) + em;
+  }
+
+  &--270 {
+    // Ensure that 270px inset images are that same size on XS screens
+    width: math.div(270px, $base-font-size-px) + em;
+  }
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    // Default anything with just an .m-inset class to 270px floating right,
+    // e.g., quote and related links blocks.
+    float: right;
+    width: math.div(270px, $base-font-size-px) + em;
+
+    &--left {
+      float: left;
+      clear: left;
+    }
+
+    .m-call-to-action {
+      width: 100%;
+    }
+  }
+
+  @include respond-to-min($bp-xl-min) {
+    &--470 {
+      width: math.div(470px, $base-font-size-px) + em;
+    }
+  }
+
+  .m-call-to-action,
+  .m-related-links {
+    padding-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+    border-bottom: 1px solid var(--gray-40);
+  }
+
+  .m-full-width-text {
+    padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    padding-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) + em;
+    border-top: 1px solid var(--gray-40);
+    border-bottom: 1px solid var(--gray-40);
+    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+  }
+
+  &--email {
+    // This originally was a block,
+    // so we override the 30px margin added by .full-width-text-group .m-inset.
+    margin-bottom: math.div($grid-gutter-width * 2, $base-font-size-px) + em !important;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      box-sizing: border-box;
+      width: 50%;
+      padding-left: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+  }
+}

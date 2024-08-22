@@ -37,7 +37,7 @@ async function copy(baseConfig) {
 
   // Handle icons
   copyAll(
-    `${modules}/@cfpb/cfpb-icons/src/icons`,
+    `${modules}/@cfpb/cfpb-design-system/src/components/cfpb-icons/icons`,
     `${baseConfig.outdir}/icons`,
   );
 }

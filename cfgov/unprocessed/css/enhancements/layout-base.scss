@@ -1,0 +1,128 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@layer layout-base {
+  // Establish the wrapper inside the grid container as the grid element.
+  .u-layout-grid {
+    --layout-max-width: 1170px;
+
+    &__wrapper {
+      display: grid;
+      max-width: var(--layout-max-width);
+      margin: 0 auto;
+      padding-left: math.div(15px, $base-font-size-px) + rem;
+      padding-right: math.div(15px, $base-font-size-px) + rem;
+      grid-template-areas:
+        'c-breadcrumbs'
+        'c-secondary-nav'
+        'c-main'
+        'c-sidebar'
+        'c-prefooter';
+      grid-auto-columns: 100%;
+    }
+
+    // Name all possible content area elements (appearing inside <main>).
+    &__breadcrumbs {
+      grid-area: c-breadcrumbs;
+    }
+
+    &__main {
+      grid-area: c-main;
+      padding-top: math.div(30px, $base-font-size-px) + rem;
+    }
+
+    &__sidebar {
+      grid-area: c-sidebar;
+    }
+
+    &__secondary-nav {
+      grid-area: c-secondary-nav;
+    }
+
+    &__prefooter {
+      grid-area: c-prefooter;
+    }
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      &__breadcrumbs {
+        padding-left: math.div(30px, $base-font-size-px) + rem;
+        padding-right: math.div(30px, $base-font-size-px) + rem;
+        margin-left: math.div(-30px, $base-font-size-px) + rem;
+        margin-right: math.div(-30px, $base-font-size-px) + rem;
+        background: var(--gray-5);
+        border-bottom: 1px solid var(--gray-40);
+      }
+    }
+
+    // Tablet only.
+    @include respond-to-range($bp-sm-min, $bp-sm-max) {
+      &__breadcrumbs {
+        padding-left: math.div(15px, $base-font-size-px) + rem;
+        padding-right: math.div(15px, $base-font-size-px) + rem;
+      }
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      &__wrapper {
+        // This handles collapsing of the breadcrumbs space if they are absent.
+        grid-template-rows: min-content 1fr;
+        padding-left: math.div(30px, $base-font-size-px) + rem;
+        padding-right: math.div(30px, $base-font-size-px) + rem;
+      }
+
+      // If we do not have breadcrumbs, the gap above the content is larger…
+      &__main,
+      &__secondary-nav {
+        margin-top: math.div(15px, $base-font-size-px) + rem;
+      }
+
+      // …than if we do have breadcrumbs
+      &__breadcrumbs ~ &__main,
+      &__breadcrumbs ~ &__secondary-nav {
+        margin-top: 0;
+      }
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      &__secondary-nav {
+        padding-top: math.div(30px, $base-font-size-px) + rem;
+      }
+    }
+  }
+
+  // Modifier to remove max-width value. Used on CCDB, for example.
+  .u-layout-grid--full-width {
+    .u-layout-grid__wrapper {
+      max-width: initial;
+    }
+  }
+
+  // Set default line width.
+  .u-layout-grid__main,
+  .u-layout-grid__content-intro {
+    dd,
+    dt,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    p,
+    label {
+      max-width: 41.875rem;
+    }
+  }
+
+  // "Breakout" container that bleeds out of the grid to the screen edge.
+  .u-layout-grid__breakout {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+}

@@ -1,0 +1,27 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@import '../node_modules/tippy.js/dist/tippy.css';
+@import '../node_modules/tippy.js/dist/border.css';
+
+// Custom theme, see https://atomiks.github.io/tippyjs/v6/themes/
+.tippy-box[data-theme='cfpb'] {
+  background-color: var(--gray-5);
+  border: 1px solid var(--gray-40);
+  border-radius: 0;
+  color: var(--black);
+  padding: math.div(15px, $base-font-size-px) + rem;
+
+  .tippy-arrow {
+    color: var(--gray-5);
+  }
+
+  .tippy-heading {
+    font-weight: 500;
+    font-size: math.div(18px, $base-font-size-px) + rem;
+  }
+
+  .tippy-body {
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    margin-top: math.div(15px, $base-font-size-px) + rem;
+  }
+}

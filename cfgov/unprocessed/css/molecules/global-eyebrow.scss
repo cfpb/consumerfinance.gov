@@ -1,0 +1,132 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+.m-global-eyebrow {
+  font-size: math.div(12px, $base-font-size-px) + em;
+
+  &__actions {
+    text-align: right;
+  }
+
+  &__languages {
+    display: inline;
+
+    .m-list__item:not(:last-child) {
+      margin-right: math.div(7px, 12px) + em;
+      margin-bottom: 0;
+
+      @include respond-to-min($bp-lg-min) {
+        margin-right: math.div(10px, 12px) + em;
+      }
+    }
+
+    a {
+      @include u-link-no-border;
+    }
+  }
+
+  &__phone {
+    padding-left: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+  }
+
+  &--horizontal {
+    width: 100%;
+    display: inline-block;
+    padding-top: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+      em;
+    padding-bottom: math.div(
+        math.div($grid-gutter-width, 3),
+        $base-font-size-px
+      ) + em;
+    background: var(--gray-5);
+    border-bottom: 1px solid var(--gray-40);
+
+    /* This is to allow vertical overlap with the languages */
+    .a-tagline {
+      float: left;
+    }
+
+    .m-global-eyebrow__languages {
+      text-align: right;
+    }
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      .m-global-eyebrow__actions {
+        display: none;
+      }
+
+      /* Prevent spacing issues since the languages aren't displayed */
+      .a-tagline {
+        float: none;
+      }
+    }
+  }
+
+  &--list {
+    padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      rem;
+    padding-left: math.div($grid-gutter-width, $base-font-size-px) + rem;
+    padding-right: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      rem;
+    padding-bottom: math.div($grid-gutter-width, $base-font-size-px) + rem;
+
+    .m-global-eyebrow__actions {
+      padding: 0;
+      border: 0;
+      margin: 0;
+
+      text-align: left;
+    }
+
+    .m-global-eyebrow__phone,
+    .m-global-eyebrow__languages {
+      display: block;
+      padding-left: 0;
+    }
+
+    .m-global-eyebrow__phone {
+      border-top: 1px solid var(--gray-40);
+      padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        rem;
+
+      // Apply padding to the phone number to increase the touch area.
+      a {
+        padding-top: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + rem;
+        padding-bottom: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + rem;
+      }
+    }
+
+    .m-global-eyebrow__languages {
+      margin-bottom: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) + rem;
+
+      .m-list__item {
+        // Apply padding to the language links to increase their touch area.
+        a {
+          display: block;
+          text-align: center;
+          min-width: 48px;
+          padding-top: math.div(
+              math.div($grid-gutter-width, 2),
+              $base-font-size-px
+            ) + rem;
+          padding-bottom: math.div(
+              math.div($grid-gutter-width, 2),
+              $base-font-size-px
+            ) + rem;
+        }
+      }
+    }
+  }
+}

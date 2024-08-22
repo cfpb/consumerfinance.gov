@@ -1,0 +1,234 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@include respond-to-print {
+  body {
+    font-family: 'Avenir Next', Arial, sans-serif;
+    color: #000 !important;
+  }
+
+  .header {
+    display: none;
+  }
+
+  #header {
+    display: none;
+  }
+
+  .share {
+    display: none;
+  }
+
+  #footer {
+    display: none;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .hero h1 {
+    font-weight: 600;
+    line-height: 1em;
+    letter-spacing: 0.5px;
+    font-family: 'Avenir Next', Arial, sans-serif;
+    margin-bottom: 45px;
+  }
+
+  .label {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  .lead {
+    margin-bottom: 6px;
+  }
+
+  .uc {
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  a,
+  .lnk {
+    border-bottom: 1px dotted #004d6b;
+    text-decoration: none;
+    color: #3a7188;
+    font-weight: 500;
+  }
+
+  a.ec,
+  a.ec-blk {
+    font-weight: 500;
+    text-decoration: none;
+    padding-left: 0;
+    background-repeat: no-repeat;
+    background-position-x: 0;
+    background-position-y: 0;
+  }
+
+  a.collapse {
+    background-position-y: -14px;
+    color: #212121;
+  }
+
+  ul.m,
+  ol.m {
+    line-height: 18px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: normal;
+    color: #000 !important;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    padding-top: 0.67em;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 18px;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 0.4em;
+    margin-top: 1.4em;
+    text-transform: none;
+    border-bottom: 3px solid #212121;
+  }
+
+  h4 {
+    font-size: 1em;
+    text-transform: none;
+    font-weight: 500;
+    margin-bottom: -0.5em;
+    margin-top: 1em;
+  }
+
+  p,
+  p.body {
+    font-size: 12px;
+    font-family: Georgia, Arial, sans-serif;
+    margin-bottom: 10px;
+  }
+
+  th {
+    font-size: 1.5em;
+    line-height: 1em;
+    font-weight: 500;
+  }
+
+  td {
+    font-family: georgia, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: 500;
+    padding: 10px 0;
+  }
+
+  .lc {
+    text-transform: lowercase;
+  }
+
+  .nc {
+    text-transform: none;
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-bottom: -0.3em;
+  }
+
+  .s {
+    font-weight: normal !important;
+    font-style: italic;
+  }
+
+  .ss {
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+
+  table {
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 18px 0;
+    padding-bottom: 20px;
+  }
+
+  td,
+  th {
+    vertical-align: top;
+    padding: 10px 0;
+    text-align: left;
+  }
+
+  .rh {
+    text-align: left;
+  }
+
+  .rh .icon {
+    top: 9px;
+  }
+
+  ol,
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  ol li {
+    margin-bottom: 10px;
+    padding-left: 30px;
+    background-position-y: 2px;
+  }
+
+  /* Options Table */
+  table th {
+    background: transparent;
+    color: #212121;
+    border: 0;
+    text-align: left;
+  }
+
+  table td {
+    border: 0;
+  }
+
+  /* Modals */
+  .modal {
+    display: none;
+  }
+
+  /* Print Specific */
+
+  .bullet {
+    float: left;
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 1.5em;
+    border-radius: 100%;
+    margin-right: 5px;
+    font-weight: 600;
+    margin-top: -6px;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+}

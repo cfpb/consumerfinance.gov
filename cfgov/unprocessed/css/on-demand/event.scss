@@ -1,0 +1,167 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@import '../main';
+
+/* ==========================================================================
+   consumerfinance.gov
+   Page-specific styles for event post detail page.
+   These styles are only delivered to event pages
+   but are referenced from both event.html and _event-detail.html
+   ========================================================================== */
+
+/* Event template settings
+   ========================================================================== */
+.t-event__details {
+  margin-bottom: math.div(10px, $base-font-size-px) + rem;
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .modification-date {
+      float: right;
+    }
+  }
+}
+
+/* Event-Agenda Table
+   ========================================================================== */
+.event-agenda__table {
+  h2 + & td[data-label]::before {
+    margin-top: 0;
+  }
+
+  th,
+  td {
+    font-size: 16px;
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    th {
+      width: 25%;
+    }
+  }
+}
+
+/* Event-Media-Container
+   ========================================================================== */
+
+.event-media__container {
+  border: 1px solid var(--gray-10);
+}
+
+/* Event-Meta
+   ========================================================================== */
+
+.event-meta__description {
+  display: block;
+  text-transform: none;
+}
+
+.event-meta__address {
+  text-transform: capitalize;
+  display: inline-block;
+
+  .event-meta__street:not(:empty)::after,
+  .event-meta__suite:not(:empty)::after {
+    // Adding a linebreak after the street if it's contents
+    // aren't empty.
+    content: '\A';
+    white-space: pre;
+  }
+}
+
+.event-calendar__container .datetime {
+  letter-spacing: normal;
+}
+
+/* Event-Status
+   ========================================================================== */
+
+.event-status {
+  margin: 0 0 math.div(30px, $base-font-size-px) + em;
+  color: var(--black);
+  border-top: 1px solid var(--gray-20);
+  border-bottom: 1px solid var(--gray-20);
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    float: right;
+    width: math.div(250px, $base-font-size-px) + em;
+    margin-top: math.div(5px, $base-font-size-px) + em;
+    margin-left: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+
+  &__body {
+    margin: (math.div(26px, $base-font-size-px) + em) 0;
+  }
+
+  .event-meta {
+    color: var(--gray-90);
+  }
+}
+
+.event-status__livestream p:first-child {
+  line-height: 1;
+
+  // The margin is kept at 10px to accommodate the line-height
+  // of the text so that the gap appears to be 15px.
+  margin-bottom: math.div(10px, $base-font-size-px) + em;
+}
+
+/* Event-Venue
+   ========================================================================== */
+
+.event-venue {
+  background: var(--gray-10);
+  border-top: 5px solid var(--green);
+}
+
+.event-venue__details {
+  padding: 1.5em 1.5em 0.5em;
+
+  @include respond-to-max($bp-xs-max) {
+    padding: 1.5em;
+  }
+
+  .datetime {
+    @include h5;
+    text-transform: uppercase;
+  }
+
+  .event-meta__address {
+    @include respond-to-max($bp-xs-max) {
+      margin: 0;
+    }
+  }
+
+  .event-meta__venue {
+    display: block;
+  }
+}
+
+.event-venue__header {
+  margin-bottom: 10px;
+}
+
+.event-venue__live-btn {
+  margin-right: 10px;
+  background-color: var(--green);
+  color: var(--black);
+  text-transform: uppercase;
+  padding: 6px 15px 4px;
+}
+
+.event-venue__heading {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.modification-date {
+  @include h6;
+  background: var(--green-20);
+  color: var(--black);
+  letter-spacing: 0;
+  padding: math.div(9px, $base-font-size-px) + rem;
+  text-align: center;
+}
