@@ -303,17 +303,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/browserslist-config/-/browserslist-config-0.0.3.tgz#c12a9eede0d33820b2770241b4513d753dbe9bf9"
   integrity sha512-MplL75XVXKJEJbmPnrQ2FOglRxYR0+M04mPeoEMqQGeHnpzEdlZXmIVIm1/9/mAhOCfMt6ei4h+dS+sbi22k+g==
 
-"@cfpb/cfpb-analytics@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.1.tgz#ea155c005eeb0e9e3027d3b11d0661522426883b"
-  integrity sha512-XUTRwgzi48PLCvZpPq3BuCIbwclmIbG+iXRl+SO0xpkjhSoCIiVw/bVfIiskP3grkUQBS22oXzmsNnVQ9LDfOA==
-  dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.37.0"
-
-"@cfpb/cfpb-atomic-component@^0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.37.0.tgz#55e3e105ac4d8f9960508451c446a6a67a697e0f"
-  integrity sha512-iJX3epclbFNaplSYUgqOs0NLqic5Y56fE4zjIGxJ5jui7FSvuF2+YLq5/G5rv+OM3gxrl3H2qdEuvAKR3QuZOw==
+"@cfpb/cfpb-analytics@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
+  integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
 "@cfpb/cfpb-design-system@3.0.2":
   version "3.0.2"
@@ -1862,17 +1855,17 @@ cypress-axe@1.5.0:
   resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.5.0.tgz#95082734583da77b51ce9b7784e14a442016c7a1"
   integrity sha512-Hy/owCjfj+25KMsecvDgo4fC/781ccL+e8p+UUYoadGVM2ogZF9XIKbiM6KI8Y3cEaSreymdD6ZzccbI2bY0lQ==
 
-cypress-fail-fast@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/cypress-fail-fast/-/cypress-fail-fast-7.1.0.tgz#36e28e39fffaacf852b4866c8459e5274eb8326d"
-  integrity sha512-OnN5WqSP49yHKoitq+FmMG/+nUvat6NdFLNUQgVJYbmDdgyiiS1aI33S8+AuRb4zRZR5+5/eq53p/oL+a/m2Tw==
+cypress-fail-fast@7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/cypress-fail-fast/-/cypress-fail-fast-7.1.1.tgz#4be6ddbed8c284358faf488c73b6bd87f69cda49"
+  integrity sha512-9qPXikVY20OWdc97DO2++0AS4IF9kB+vuPhP8/0wXchcnFIsiCiwvQhOEBSdVHr1mZi87h0Z8jYEB4VLPzNkGg==
   dependencies:
     chalk "4.1.2"
 
-cypress@13.13.2:
-  version "13.13.2"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.13.2.tgz#c71f8d92056c430b1b879e5313f6de25ccce0eda"
-  integrity sha512-PvJQU33933NvS1StfzEb8/mu2kMy4dABwCF+yd5Bi7Qly1HOVf+Bufrygee/tlmty/6j5lX+KIi8j9Q3JUMbhA==
+cypress@13.13.3:
+  version "13.13.3"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.13.3.tgz#21ee054bb4e00b3858f2e33b4f8f4e69128470a9"
+  integrity sha512-hUxPrdbJXhUOTzuML+y9Av7CKoYznbD83pt8g3klgpioEha0emfx4WNIuVRx0C76r0xV2MIwAW9WYiXfVJYFQw==
   dependencies:
     "@cypress/request" "^3.0.1"
     "@cypress/xvfb" "^1.2.4"
