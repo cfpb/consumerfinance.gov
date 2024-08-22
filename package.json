@@ -18,7 +18,7 @@
   "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.3",
-    "@cfpb/cfpb-analytics": "0.3.1",
+    "@cfpb/cfpb-analytics": "0.3.2",
     "@cfpb/cfpb-design-system": "3.0.2",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.20",
@@ -38,8 +38,8 @@
   "devDependencies": {
     "@csstools/postcss-sass": "5.1.1",
     "@csstools/sass-import-resolve": "1.0.0",
-    "cypress": "13.13.2",
-    "cypress-fail-fast": "7.1.0",
+    "cypress": "13.13.3",
+    "cypress-fail-fast": "7.1.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
