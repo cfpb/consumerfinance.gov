@@ -1,0 +1,193 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-mp-map {
+  border: 1px solid var(--gray-40);
+  margin-top: math.div(30px, $base-font-size-px) + em;
+  padding: (math.div(30px, $base-font-size-px) + em)
+    (math.div(30px, $base-font-size-px) + em)
+    (math.div(15px, $base-font-size-px) + em);
+
+  h3 span {
+    font-weight: 600;
+  }
+
+  // Override some cfpb-chart-builder styles
+  .highcharts-map-series {
+    .highcharts-point-select,
+    .highcharts-point:hover {
+      stroke: var(--black) !important;
+      stroke-width: 3px !important;
+      transition:
+        fill 500ms,
+        fill-opacity 500ms,
+        stroke-width 0 !important;
+    }
+    .highcharts-point {
+      stroke: var(--black);
+      &.highcharts-null-point {
+        stroke-width: 0 !important;
+      }
+    }
+  }
+  .cfpb-chart-geo- {
+    &state-outline-states,
+    &state-outline-metros,
+    &state-outline-counties,
+    &map-separators {
+      .highcharts-point {
+        stroke: var(--black);
+      }
+    }
+    &data-outline-counties,
+    &data-outline-metros {
+      .highcharts-point {
+        stroke: #838588;
+      }
+    }
+  }
+  .highcharts-tooltip-box {
+    fill: var(--white);
+    fill-opacity: 1;
+    stroke: var(--black);
+  }
+}
+
+.m-mp-map-tooltip {
+  // Needed to override a Highcharts default
+  font-family: 'Avenir Next', Arial, sans-serif;
+
+  dt {
+    border-bottom: 1px solid var(--black);
+    font-size: $size-vi;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    text-transform: none;
+  }
+  dd {
+    display: block;
+    font-size: $size-vi;
+    padding: 2px 0;
+  }
+}
+
+.m-color-ramp {
+  margin-top: math.div(15px, $base-font-size-px) + em;
+  width: 100%;
+
+  &[data-chart-color='blue'] {
+    .a-ramp-value {
+      &-0 {
+        fill: var(--gray-5);
+      }
+      &-1 {
+        fill: var(--pacific-20);
+      }
+      &-2 {
+        fill: var(--pacific-40);
+      }
+      &-3 {
+        fill: var(--pacific-60);
+      }
+      &-4 {
+        fill: var(--pacific-80);
+      }
+      &-5 {
+        fill: var(--pacific);
+      }
+      &-6 {
+        fill: var(--pacific-dark);
+      }
+    }
+  }
+
+  &[data-chart-color='navy'] {
+    .a-ramp-value {
+      &-0 {
+        fill: var(--gray-5);
+      }
+      &-1 {
+        fill: var(--navy-20);
+      }
+      &-2 {
+        fill: var(--navy-40);
+      }
+      &-3 {
+        fill: var(--navy-60);
+      }
+      &-4 {
+        fill: var(--navy-80);
+      }
+      &-5 {
+        fill: var(--navy);
+      }
+      &-6 {
+        fill: var(--navy-dark);
+      }
+    }
+  }
+
+  rect {
+    font-size: math.div(12px, $base-font-size-px) + em;
+    height: 15px;
+    stroke: #838588;
+    stroke-miterlimit: 10;
+    stroke-width: 0.5;
+    width: 91.5px;
+  }
+
+  text {
+    font-size: math.div(12px, $base-font-size-px) + em;
+    text-anchor: start;
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    text {
+      font-size: math.div(16px, $base-font-size-px) + em;
+    }
+    tspan {
+      font-size: math.div(16px, $base-font-size-px) + em;
+    }
+  }
+}
+
+#mp-line-chart-container,
+#mp-map-container {
+  // Highcharts auto resizes the charts, causing odd overflow issues
+  overflow: inherit;
+
+  // Fieldsets have silly default values. We should remove them at the CF level
+  // but for now I'm removing them only within our app.
+  fieldset {
+    border: 0;
+    margin-left: 0;
+    padding: 0;
+  }
+  .content-l__col {
+    border-left-width: 0;
+  }
+
+  // Helper text under some filter or zoom options
+  .m-field-helper-text {
+    color: var(--gray-80);
+
+    font-size: math.div(12px, $base-font-size-px) + em;
+  }
+}
+
+#mp-line-chart-controls,
+#mp-map-controls {
+  margin-left: 0;
+}
+
+#mp-line-chart-geo,
+#mp-map-geo {
+  margin-left: 2px;
+}
+
+#mp-map-month-container label,
+#mp-map-year-container label {
+  font-size: math.div(14px, $base-font-size-px) + em;
+}

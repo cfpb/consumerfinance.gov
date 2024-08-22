@@ -6,7 +6,7 @@
    ========================================================================== */
 
 import AtomicComponent from './AtomicComponent.js';
-import { EventObserver } from '@cfpb/cfpb-atomic-component';
+import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
 import ExpandableTransition from './ExpandableTransition.js';
 
 const eventObserver = new EventObserver();

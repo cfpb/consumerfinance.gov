@@ -1,0 +1,14 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@import '../main';
+
+.o-sidebar-contact-info {
+  &__content {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+
+  .m-contact + .m-contact {
+    // Adds margin top to info contacts that follow another
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+}

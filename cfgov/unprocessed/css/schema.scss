@@ -1,0 +1,37 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.schema-block h2 {
+  margin-top: math.div($grid-gutter-width, $size-ii) + em;
+}
+
+.schema-block--how-to li,
+.schema-block--how-to > div p:first-child {
+  margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+}
+
+.schema-block--how-to {
+  h2,
+  h3,
+  h4 {
+    max-width: 41.875rem;
+  }
+
+  h2 {
+    margin-top: math.div($grid-gutter-width, $size-ii) + em;
+  }
+
+  h3 {
+    margin-top: math.div($grid-gutter-width, $size-iii) + em;
+  }
+
+  h4 {
+    margin-top: math.div($grid-gutter-width, $size-iv) + em;
+  }
+}
+
+@include respond-to-min($bp-lg-min) {
+  .schema-block h2 {
+    margin-top: math.div($grid-gutter-width * 1.5, $size-ii) + em;
+  }
+}

@@ -1,0 +1,20 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.m-full-width-media {
+  &--bottom-rule {
+    padding-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) + rem;
+    border-bottom: 1px solid var(--gray-40);
+  }
+
+  &__image {
+    display: block;
+  }
+
+  &__caption {
+    margin-top: math.div(15px, $base-font-size-px) + rem;
+  }
+}

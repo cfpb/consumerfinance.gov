@@ -1,0 +1,118 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@import '../../../css/main';
+@import './search';
+@import './search-bar';
+
+.u-readable-width {
+  // Magic number: matches max-width for content set in cf-layout
+  max-width: 41.875rem;
+}
+
+.u-break-word {
+  word-break: break-word;
+}
+
+.prepaid-agreements {
+  dt,
+  dd {
+    display: block;
+    margin-left: 0;
+  }
+
+  dt {
+    letter-spacing: 0;
+    font-weight: normal;
+    text-transform: none;
+    font-size: inherit;
+
+    @include heading-4;
+    margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
+      em;
+
+    &:last-of-type {
+      margin-bottom: math.div(
+          math.div($grid-gutter-width, 6),
+          $base-font-size-px
+        ) + em;
+    }
+  }
+
+  dd + dt {
+    margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+  }
+}
+
+.prepaid-agreements-search {
+  .o-multiselect__label {
+    word-break: break-word;
+  }
+
+  padding-top: 0 !important;
+
+  .filters {
+    &__applied {
+      padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+    .o-multiselect__choices {
+      display: none;
+    }
+  }
+
+  @include respond-to-min($bp-lg-min) {
+    .content__sidebar {
+      width: 33% !important;
+    }
+
+    .content__main {
+      width: 67% !important;
+    }
+  }
+
+  .search__wrapper {
+    label.h2 {
+      display: block;
+      max-width: none;
+      margin-bottom: math.div(
+          math.div($grid-gutter-width, 1.5),
+          $base-font-size-px
+        ) + em;
+    }
+  }
+
+  .search__results {
+    .content__sidebar {
+      .o-expandable:nth-child(4n) {
+        border-bottom: none;
+      }
+    }
+
+    .results__item {
+      h4 {
+        max-width: none;
+      }
+    }
+  }
+
+  .database-disclaimer {
+    padding: math.div($grid-gutter-width, $base-font-size-px) + em;
+    padding-bottom: 0;
+  }
+}
+
+.prepaid-agreements-detail {
+  dt h2 {
+    @include h4;
+    margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
+      em;
+  }
+
+  dd {
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 1.5),
+        $base-font-size-px
+      ) + em;
+  }
+}

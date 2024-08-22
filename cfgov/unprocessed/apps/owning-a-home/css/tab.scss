@@ -1,0 +1,96 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   "Tabs" custom styles
+   ========================================================================== */
+
+.tabs,
+.tab-list {
+  margin: 0;
+  padding: 0;
+}
+
+.tabs {
+  margin-top: 2em;
+
+  button,
+  a {
+    position: relative;
+    display: block;
+    padding: 28px 20px;
+    font-size: math.div(22px, $base-font-size-px) + em;
+    text-align: left;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  button,
+  a,
+  a:link,
+  a:visited {
+    border-bottom: 1px solid var(--gray-10);
+    border-top: 4px solid var(--gray-10);
+    border-left: 0;
+    border-right: 0;
+    background: var(--gray-5);
+    color: var(--gray);
+  }
+
+  button:hover,
+  button:focus,
+  a:hover,
+  a:active,
+  a:focus {
+    color: var(--black);
+    background: #fff;
+    z-index: 2;
+  }
+
+  button:focus,
+  a:focus {
+    outline: 1px dotted var(--black);
+    outline-offset: 1px;
+  }
+
+  .active-tab {
+    button,
+    button:hover,
+    button:focus,
+    a,
+    a:link,
+    a:visited,
+    a:hover,
+    a:active,
+    a:focus {
+      border-bottom: none;
+      border-top: 4px solid var(--green-60);
+      background: #fff;
+      color: var(--black);
+    }
+  }
+}
+
+.tab-list {
+  list-style: none;
+}
+
+.tab-list + .tab-list {
+  button,
+  a {
+    border-left: 1px solid var(--gray-10);
+  }
+}
+
+.next-steps {
+  .tab-list {
+    @include u-grid-column(6);
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+.tab-content {
+  margin-top: math.div(50px, $base-font-size-px) + em;
+}

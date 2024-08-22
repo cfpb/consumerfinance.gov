@@ -1,0 +1,1026 @@
+@use 'sass:math';
+@use '../misc' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+// Each content level adds a depth-specific class, such as o-mega-menu__content-1, o-mega-menu__content-2, etc.
+$mobile-trigger-ht-px: 54px;
+
+// TODO: Reduce global scope and reign it in to the menu only if possible.
+body {
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    overflow-x: hidden;
+  }
+}
+
+$menu-max-width-px: 1200px;
+$menu-link-hover-bar-px: 5px;
+
+//
+// ELEMENT STATES
+//
+// To finely control the focus, hover, and current states independent of element
+// padding and margin, we create a hover bar in the :before pseudo-element, and
+// a focus rectangle in the :after pseudo-element.
+//
+
+// Create a bar for hover purposes to the left of an item.
+// Ignore style linting on the name, because it's not smart enough for mixins.
+/* stylelint-disable selector-class-pattern */
+@mixin u-bar-left($color, $position: (-1 * $menu-link-hover-bar-px) - 10px) {
+  /* stylelint-enable */
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: $position;
+    top: 0;
+    content: '';
+    background: $color;
+    width: $menu-link-hover-bar-px;
+    height: 100%;
+  }
+}
+
+// Focus item appearance.
+@mixin u-focus-rectangle() {
+  // Position focus rectangle relative to parent container.
+  position: relative;
+
+  // Remove default focus outline.
+  &:focus {
+    outline: none;
+  }
+
+  // Make the pseudo-element have an outline.
+  &:focus::after {
+    outline: 1px dotted var(--pacific);
+  }
+
+  // Create the dimensions for the pseudo-element focus rectangle.
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+  }
+}
+
+//
+// HOVER STATES
+//
+// u-hover-link-desktop
+// u-hover-link-icon-desktop
+// u-hover-link-featured-desktop
+// u-hover-link-mobile
+//
+
+// Hover over item appearance.
+// Default link hover menu items.
+@mixin u-hover-link-desktop() {
+  &:hover {
+    @include u-bar-left(var(--green));
+  }
+}
+
+// Adjustments for links with icons, desktop.
+@mixin u-hover-link-icon-desktop() {
+  &:hover {
+    @include u-bar-left(var(--green), -$menu-link-hover-bar-px - 8px);
+
+    .cf-icon-svg {
+      fill: var(--black);
+    }
+  }
+}
+
+// Adjustments for featured link, desktop.
+@mixin u-hover-link-featured-desktop() {
+  &:hover {
+    @include u-bar-left(transparent);
+  }
+}
+
+// A default link on mobile.
+@mixin u-hover-link-mobile() {
+  &:hover {
+    color: var(--black);
+
+    @include u-bar-left(var(--green));
+
+    // This is for the link with icon, which is
+    // combined with this helper because the
+    // hover bar doesn't need separate treatment.
+    .cf-icon-svg {
+      fill: var(--black);
+    }
+  }
+}
+
+//
+// FOCUS STATES
+//
+// u-focus-link-desktop
+// u-focus-overview-link-desktop
+// u-focus-link-icon-desktop
+// u-focus-link-featured-desktop
+// u-focus-link-mobile
+//
+
+// Default link focus appearance, desktop.
+@mixin u-focus-link-desktop() {
+  @include u-focus-rectangle;
+
+  &::after {
+    left: -$menu-link-hover-bar-px - 9px;
+    width: calc(100% + $menu-link-hover-bar-px + 6px);
+  }
+}
+
+// Focus on overview links, desktop.
+@mixin u-focus-overview-link-desktop() {
+  @include u-focus-rectangle;
+
+  &::after {
+    left: -$menu-link-hover-bar-px - 9px;
+    width: calc(100% + $menu-link-hover-bar-px + 9px);
+  }
+}
+
+// Focus on links with icons, desktop.
+@mixin u-focus-link-icon-desktop() {
+  @include u-focus-rectangle;
+
+  &::after {
+    left: -$menu-link-hover-bar-px - 7px;
+    width: calc(100% + $menu-link-hover-bar-px + 6px);
+  }
+}
+
+// Focus on featured links, desktop.
+@mixin u-focus-link-featured-desktop() {
+  @include u-focus-rectangle;
+
+  &::after {
+    left: -$menu-link-hover-bar-px;
+    width: calc(100% + $menu-link-hover-bar-px + 5px);
+  }
+}
+
+// Default link on mobile.
+@mixin u-focus-link-mobile() {
+  @include u-focus-rectangle;
+
+  &::after {
+    left: -$menu-link-hover-bar-px - 9px;
+    width: calc(100% + $menu-link-hover-bar-px + 14px);
+  }
+}
+
+//
+// CURRENT STATES
+//
+// u-current-link-desktop
+// u-current-link-icon-desktop
+// u-current-link-mobile
+//
+
+// Default current link appearance, desktop.
+@mixin u-current-link-desktop() {
+  &,
+  &:hover {
+    @include u-bar-left(var(--black));
+  }
+}
+
+// Current link with an icon, desktop.
+@mixin u-current-link-icon-desktop() {
+  &,
+  &:hover {
+    @include u-bar-left(var(--black), -$menu-link-hover-bar-px - 8px);
+  }
+}
+
+// Default current link, mobile.
+@mixin u-current-link-mobile() {
+  &,
+  &:hover {
+    @include u-bar-left(var(--black));
+  }
+}
+
+.o-mega-menu {
+  // Reset default unordered list padding and margin.
+  ul {
+    padding-left: 0;
+    margin-top: 0;
+  }
+
+  // Reset default h2 heading styles.
+  h2 {
+    font-size: 1em;
+    line-height: 1.375;
+    margin-bottom: 0;
+  }
+
+  &__content {
+    &-overview-heading {
+      margin-bottom: 0;
+      font-size: math.div(18px, $base-font-size-px) + rem;
+      font-weight: normal;
+    }
+
+    // Ensure desktop up/down arrow link icons don't appear at mobile.
+    &-link {
+      width: 100%;
+      &-icon-closed .cf-icon-svg,
+      &-icon-open .cf-icon-svg {
+        display: none;
+      }
+    }
+
+    // Featured menu content is link items with icons.
+    &-item--has-icon {
+      // Align the icon and text.
+      display: flex;
+      align-items: baseline;
+
+      // Hide link bottom line from Design System link styles.
+      & .a-link__text {
+        border-bottom-width: 0;
+      }
+
+      // Show the icons in featured links.
+      & .cf-icon-svg {
+        display: inline;
+        color: var(--pacific);
+        margin-right: 6px;
+      }
+    }
+  }
+
+  // 1st-level menu.
+  &__content-1 {
+    &-link {
+      // Colors for :link, :visited, :hover, :focus, :active.
+      @include u-link-colors(var(--black));
+
+      display: block;
+    }
+  }
+
+  // 2nd and 3rd-level menus.
+  &__content-2,
+  &__content-3 {
+    &-overview {
+      display: block;
+      border-bottom: 1px solid var(--gray-40);
+    }
+
+    &-link,
+    &-overview-link {
+      // Colors for :link, :visited, :hover, :focus, :active.
+      @include u-link-colors(
+        var(--pacific),
+        var(--pacific),
+        var(--black),
+        var(--pacific),
+        var(--black)
+      );
+      &:hover:focus {
+        color: var(--black);
+      }
+
+      display: block;
+    }
+  }
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    &__trigger {
+      margin-left: -15px;
+    }
+  }
+
+  // Tablet only.
+  @include respond-to-range($bp-sm-min, $bp-sm-max) {
+    &__trigger {
+      margin-left: -30px;
+    }
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    &__trigger {
+      display: none;
+      height: $mobile-trigger-ht-px;
+      min-width: $mobile-trigger-ht-px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+
+      position: absolute;
+      top: 0;
+      z-index: 20;
+
+      background: var(--white);
+      border: none;
+      border-right: 1px solid var(--gray-40);
+      color: var(--black);
+      font-size: 18px;
+
+      .js & {
+        display: block;
+      }
+
+      &:focus {
+        outline: 1px dotted var(--black);
+      }
+
+      .o-mega-menu__trigger-close {
+        display: none;
+      }
+
+      .o-mega-menu__trigger-open {
+        display: block;
+      }
+
+      &[aria-expanded='true'] {
+        background: var(--gray-10);
+        border-left: 1px solid var(--gray-40);
+        border-right: 1px solid var(--gray-40);
+        color: var(--black);
+
+        .o-mega-menu__trigger-close {
+          display: block;
+        }
+
+        .o-mega-menu__trigger-open {
+          display: none;
+        }
+      }
+
+      // Hover state for (x) close button.
+      @media (hover: hover) {
+        &:hover {
+          background: var(--gray-20);
+        }
+      }
+    }
+
+    // Menu flyout.
+    // All menus - Tablet/Mobile.
+    &__content {
+      @include u-drop-shadow-after;
+
+      display: none;
+      box-sizing: border-box;
+      width: 100%;
+
+      background-color: var(--gray-5);
+      border-top: 1px solid var(--gray-40);
+      border-bottom: 1px solid var(--gray-40);
+
+      .js & {
+        position: absolute;
+        left: 0;
+        top: -1px;
+        z-index: 10;
+      }
+
+      &.u-is-animating,
+      &[data-open='true'] {
+        display: block;
+      }
+
+      &-alt-trigger {
+        display: block;
+        width: 100%;
+        padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+          em;
+        border: none;
+        border-bottom: 1px solid var(--gray-40);
+        position: relative;
+        background-color: var(--gray-10);
+        font-weight: 500;
+        text-align: left;
+        text-transform: uppercase;
+
+        &:focus {
+          outline: 1px dotted var(--pacific);
+        }
+
+        .cf-icon-svg {
+          margin-right: 0.6em;
+        }
+
+        // Hover state for back button.
+        &:hover {
+          background: var(--gray-20);
+        }
+      }
+
+      &-overview {
+        display: block;
+        border-bottom: 1px solid var(--gray-40);
+      }
+
+      &-wrapper {
+        padding-top: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + rem;
+        padding-left: math.div($grid-gutter-width, $base-font-size-px) + rem;
+      }
+
+      // Adjust padding and margin on unordered list menu items
+      // above the global eyebrow.
+      &-list-group {
+        margin-bottom: 0;
+      }
+
+      &-item {
+        border-bottom: 1px solid var(--gray-40);
+      }
+
+      &-overview-heading-text {
+        display: block;
+        padding-top: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+        padding-bottom: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+
+      &-link,
+      &-overview-link {
+        position: relative;
+
+        // Colors for :link, :visited, :hover, :focus, :active.
+        @include u-link-colors(
+          var(--pacific),
+          var(--pacific),
+          var(--pacific-60),
+          var(--pacific),
+          var(--navy-dark)
+        );
+
+        padding-top: math.div(15px, 18px) + em;
+        padding-bottom: math.div(15px, 18px) + em;
+
+        // Hide  >  icon when we do not have children.
+        &-icon-post {
+          display: none;
+        }
+
+        &--has-children &-icon-post {
+          display: block;
+
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+
+          .cf-icon-svg {
+            fill: var(--green);
+          }
+        }
+
+        @include u-hover-link-mobile;
+        @include u-focus-link-mobile;
+
+        &--current {
+          @include u-current-link-mobile;
+        }
+      }
+    }
+
+    // 1st-level menu - Tablet/Mobile.
+    &__content-1 {
+      display: block;
+
+      .js & {
+        // Offset for height of trigger button.
+        top: $mobile-trigger-ht-px;
+      }
+
+      &-list-group {
+        padding-right: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+    }
+
+    // 2nd-level menu - Tablet/Mobile.
+    &__content-2 {
+      // Remove final border line of last list item.
+      &-lists &-list-group:last-child &-list:last-child &-item:last-child {
+        border-bottom: none;
+      }
+    }
+
+    // 3rd-level menu - Tablet/Mobile.
+    &__content-3 {
+      // TODO: There is similar code set on all three menus.
+      //       Investigate if it can be combined.
+      // Remove final border line of last list item.
+      &-list-group:last-child {
+        .o-mega-menu__content-3-item:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+
+    // Submenus - Tablet/Mobile.
+    &__content-2,
+    &__content-3 {
+      // u-move-right
+      transform: translate3d(100%, 0, 0);
+      position: absolute;
+      left: 0;
+      top: -1px;
+      z-index: 10;
+
+      &-wrapper {
+        padding-right: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+        padding-bottom: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+    }
+
+    // Group heading - Tablet/Mobile
+    &__group-heading {
+      // !important is used to override a highly specific ul+.h5 rule in base.scss
+      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        rem !important;
+
+      &--hidden {
+        @include u-visually-hidden;
+      }
+
+      // add border between title and following list
+      &:not(&--hidden) + ul {
+        border-top: 1px solid var(--gray-40);
+      }
+    }
+  }
+
+  // Desktop sizes. 901px.
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    position: relative;
+    left: -1 * math.div($grid-gutter-width, 2);
+    width: calc(100% + $grid-gutter-width);
+
+    // Horizontal rule to overlay on top of header rule so that
+    // rule is not hidden when menu opens.
+    &::after {
+      position: absolute;
+      bottom: 0;
+      left: -1 * math.div($grid-gutter-width, 2);
+      right: -1 * math.div($grid-gutter-width, 2);
+      display: block;
+      z-index: 20;
+      height: 1px;
+      content: '';
+      box-shadow: 0 1px 0 0 var(--gray-40);
+    }
+
+    &__trigger {
+      display: none;
+    }
+
+    // Hide the  >  icon next to menu items on desktop…
+    &__content-link-icon-post {
+      display: none;
+    }
+
+    // 1st-level menu - Desktop.
+    &__content-1 {
+      &[data-open='true'] {
+        .o-mega-menu__content-1-wrapper {
+          display: block;
+          transform: translateY(0);
+        }
+      }
+
+      &-list ul {
+        display: table;
+        width: 100%;
+
+        // Constrain the menu spacing.
+        max-width: math.div(1000px, $base-font-size-px) + em;
+      }
+
+      &-list-group {
+        margin-bottom: 0;
+
+        // Truncate the expanded menu to this element.
+        position: relative;
+      }
+
+      &-item {
+        display: table-cell;
+
+        .no-js &:hover {
+          .o-mega-menu__content-2 {
+            display: block;
+          }
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &-link {
+        display: inline-block;
+
+        position: relative;
+        z-index: 30;
+        padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+          em;
+        border-top: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-left: 1px solid transparent;
+        font-size: math.div(16px, $base-font-size-px) + rem;
+
+        // Revert 100% width set globally within menu.
+        width: auto !important;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        // Override global link styling.
+        &:hover,
+        &:active,
+        &:focus,
+        &:visited {
+          border-color: transparent;
+          border-bottom: none;
+        }
+
+        // This creates the hover/selection line.
+        // We cannot use a border here as it will get a slant on
+        // the edges because there are transparent left/right
+        // borders.
+        &::after {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          content: '';
+          background: transparent;
+          width: 100%;
+          height: math.div(6px, $base-font-size-px) + em;
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          // Change hover border color.
+          &::after {
+            background: var(--gray-40);
+          }
+        }
+
+        // A main nav label has been selected and the menu is expanded.
+        &[aria-expanded='true'],
+        &:active {
+          position: relative;
+          top: 1px;
+          background-color: var(--gray-5);
+
+          // Important needed to override global link style override.
+          border: 1px solid var(--gray-40) !important;
+          border-bottom: none !important;
+        }
+
+        // Do not show hover when menu is expanded.
+        &[aria-expanded='true']:hover,
+        &:active:hover {
+          border-bottom: none;
+          padding-bottom: math.div(
+              math.div($grid-gutter-width, 2),
+              $base-font-size-px
+            ) + em;
+        }
+
+        &:focus {
+          outline-offset: 2px;
+        }
+
+        &[aria-expanded='true']:focus {
+          outline: none;
+          box-shadow:
+            0 -4px 5px 0 var(--pacific-40),
+            -5px -2px 5px 0 var(--pacific-40),
+            5px -2px 5px 0 var(--pacific-40);
+        }
+
+        &[aria-expanded='true']:hover,
+        &[aria-expanded='true']:focus {
+          &::after {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            display: block;
+            content: '';
+            width: 100%;
+            height: math.div(10px, $base-font-size-px) + em;
+            background: var(--gray-5);
+          }
+        }
+
+        &-icon-closed .cf-icon-svg,
+        &-icon-open .cf-icon-svg {
+          position: absolute;
+
+          // Adjusts position by 4px to accommodate longer titles.
+          right: math.div((15px - 4px), $base-font-size-px) + rem;
+          top: 19px;
+          font-size: math.div(10px, $base-font-size-px) + em;
+        }
+
+        &-icon-closed .cf-icon-svg {
+          display: inline-block;
+        }
+
+        &[aria-expanded='true'] &-icon-open .cf-icon-svg {
+          display: inline-block;
+        }
+
+        &[aria-expanded='true'] &-icon-closed .cf-icon-svg {
+          display: none;
+        }
+
+        // Add padding to accommodate caret.
+        &--has-children {
+          // Remove 4px to accommodate longer titles.
+          padding-right: math.div(
+              ($grid-gutter-width - 4px),
+              $base-font-size-px
+            ) + em;
+        }
+
+        &--current {
+          // Change the selection bar to black.
+          &::after {
+            background-color: var(--black);
+          }
+        }
+
+        &--current[aria-expanded='true']::after,
+        &--current:active::after {
+          background-color: transparent;
+        }
+      }
+    }
+
+    // Hide last columns headings at desktop sizes.
+    &__content-2-lists &__content-2-list-group:last-child &__group-heading {
+      display: none;
+    }
+
+    // 2nd-level menu - Desktop.
+    &__content-2 {
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      z-index: 10;
+
+      .no-js & {
+        display: none;
+      }
+
+      &[data-open='true'] {
+        overflow: visible;
+
+        .o-mega-menu__content-2-wrapper {
+          display: block;
+        }
+      }
+
+      &-wrapper {
+        background-color: var(--gray-5);
+        border: 1px solid var(--gray-40);
+        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 20%);
+
+        padding: math.div($grid-gutter-width, $base-font-size-px) + em;
+        padding-top: math.div(20px, $base-font-size-px) + em;
+        padding-left: math.div(($grid-gutter-width * 1.5), $base-font-size-px) +
+          em;
+        padding-right: math.div(($grid-gutter-width * 1.5), $base-font-size-px) +
+          em;
+      }
+
+      &-alt-trigger {
+        display: none;
+      }
+
+      &-overview {
+        padding-bottom: math.div($grid-gutter-width, 2);
+        margin-bottom: $grid-gutter-width;
+
+        &-heading {
+          padding-top: 0;
+        }
+      }
+
+      &-lists {
+        display: table;
+        margin-top: math.div(10px, $base-font-size-px) + em;
+      }
+
+      &-list-group {
+        display: table-cell;
+        width: 25%;
+        vertical-align: top;
+        padding-right: math.div(30px, $base-font-size-px) + em;
+      }
+
+      &-list-group:last-child {
+        padding-right: 0;
+      }
+
+      // Move the first link in each mega menu list group up a bit so that
+      // it aligns with the featured links box. We do this instead of
+      // removing the top padding to preserve the link hover state.
+      &-list:not(&-list--featured) &-item:first-child &-link {
+        margin-top: math.div(-12px, $base-font-size-px) + em;
+      }
+
+      &-overview-link,
+      &-link {
+        padding: math.div(10px, 18px) + em;
+        padding-left: 0;
+        padding-right: math.div(15px, 18px) + em;
+
+        @include u-hover-link-desktop;
+
+        &--current {
+          @include u-current-link-desktop;
+        }
+      }
+
+      &-overview-link {
+        display: inline-block;
+        font-size: math.div(18px, $base-font-size-px) + rem;
+
+        @include u-focus-overview-link-desktop;
+      }
+
+      &-link {
+        font-size: math.div(16px, $base-font-size-px) + em;
+
+        @include u-focus-link-desktop;
+      }
+
+      &-item--has-icon {
+        // Pad in featured items from their icons.
+        padding-left: math.div(13px, $base-font-size-px) + em;
+      }
+
+      // Set up hover state for link with an icon.
+      &-item--has-icon &-link {
+        @include u-hover-link-icon-desktop;
+        @include u-focus-link-icon-desktop;
+
+        &--current {
+          @include u-current-link-icon-desktop;
+        }
+      }
+
+      // Featured item has a highlight box around it.
+      &-list--featured ul {
+        // Style the featured item box.
+        padding-right: math.div(13px, $base-font-size-px) + em;
+        padding-top: math.div(30px, $base-font-size-px) + em;
+        padding-bottom: math.div(30px, $base-font-size-px) + em;
+        margin-bottom: math.div(30px, $base-font-size-px) + em;
+        border: 1px solid var(--gray-40);
+        border-top: 6px solid var(--gold);
+        box-sizing: border-box;
+      }
+
+      &-list--featured &-item {
+        margin-bottom: math.div(15px, $base-font-size-px) + em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      &-list--featured &-link {
+        // Remove hover bar for featured item link.
+        @include u-hover-link-featured-desktop;
+        @include u-focus-link-featured-desktop;
+
+        display: flex;
+        padding: 0;
+        left: 0;
+        border: none;
+
+        & .cf-icon-svg {
+          color: var(--gold);
+          width: 100%;
+          max-width: math.div(16px, $base-font-size-px) + rem;
+        }
+      }
+    }
+
+    // 3rd-level menu - Desktop.
+    &__content-3 {
+      display: none;
+    }
+
+    &__group-heading {
+      margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+      &--hidden {
+        visibility: hidden;
+      }
+    }
+
+    // Hide global header CTA container and eyebrow at desktop size.
+    &__content-1-item:first-child,
+    .m-global-eyebrow {
+      display: none;
+    }
+  }
+
+  // Large desktop size. 1021px. Not currently used.
+
+  /* @include respond-to-min($bp-lg-min, { }); */
+
+  // Xtra-Large desktop size. 1261px.
+  @include respond-to-min($bp-xl-min + $grid-gutter-width) {
+    width: $menu-max-width-px;
+
+    // Horizontal rule to overlay on top of header rule so that
+    // rule is not hidden when menu opens.
+    &::after {
+      left: -$grid-gutter-width;
+      width: $menu-max-width-px + ($grid-gutter-width * 2);
+    }
+
+    &__content-2 {
+      left: -$grid-gutter-width;
+      width: $menu-max-width-px + ($grid-gutter-width * 2);
+    }
+  }
+
+  // Normalize second level width between 901px and 1260px
+  @include respond-to-range($bp-med-min, $bp-lg-max + $grid-gutter-width) {
+    &__content-2 {
+      width: 100%;
+    }
+  }
+}
+
+.no-js .o-mega-menu {
+  // JS isn't available to remove u-hidden class, so override it.
+  &.u-hidden {
+    display: block !important;
+  }
+
+  // Hide the ">" arrow icon (used on mobile view).
+  .o-mega-menu__content-link-icon-post {
+    display: none !important;
+  }
+}
+
+// Hide on print.
+@include respond-to-print {
+  .o-mega-menu {
+    display: none;
+  }
+}
+
+// The following three rules prevent mega-menu linebreak shenanigans
+.o-mega-menu__content-2-item--has-icon .o-mega-menu__content-2-link {
+  padding-right: 0;
+}
+
+.o-mega-menu__content-2-item--has-icon {
+  .cf-icon-svg:nth-child(3) {
+    margin-left: -20px;
+    transform: translateX(25px);
+  }
+  .a-link__text:nth-last-child(2) {
+    display: inline-block;
+    margin-left: -5px;
+    transform: translateX(5px);
+  }
+}

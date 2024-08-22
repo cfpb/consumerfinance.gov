@@ -5,7 +5,7 @@ import {
   EventObserver,
   FlyoutMenu,
   MoveTransition,
-} from '@cfpb/cfpb-atomic-component';
+} from '@cfpb/cfpb-design-system/src/index.js';
 import { MegaMenuDesktop } from '../organisms/MegaMenuDesktop.js';
 import { MegaMenuMobile } from '../organisms/MegaMenuMobile.js';
 import { TabTrigger } from '../modules/TabTrigger.js';

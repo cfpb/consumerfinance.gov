@@ -1,0 +1,60 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Helper Classes & Styles
+   ========================================================================== */
+
+.a-form-alert {
+  color: var(--gray-dark);
+  font-size: 0.75em;
+}
+
+.clear {
+  opacity: 0;
+}
+
+.highlight-dropdown {
+  border-color: var(--gold);
+  border-width: 2px;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loaded {
+  animation: fadein 0.5s;
+}
+
+.loading {
+  opacity: 0.3;
+}
+
+.placeholder {
+  min-height: 200px;
+  background: var(--gray-10);
+  line-height: 200px;
+  text-align: center;
+}
+
+.u-link-underline {
+  border-bottom: 1px dotted;
+}
+
+@include respond-to-max(800px) {
+  .mobi-no {
+    display: none;
+  }
+}
+
+@include respond-to-min(800px) {
+  .mobi-yes {
+    display: none;
+  }
+}

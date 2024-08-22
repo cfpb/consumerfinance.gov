@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Regulations 3000
+   Main Less file for Regulations pages
+   ========================================================================== */
+
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+@import '../../../css/main';
+@import './reg-listing';
+@import './reg-landing-page';
+@import './reg-navigation';
+@import './reg-pagination';
+@import './reg-search';
+@import './reg-text';
+@import './reg-inline-interpretations';
+@import './reg-wayfinder';
+
+.section-nav {
+  @include u-clearfix;
+}

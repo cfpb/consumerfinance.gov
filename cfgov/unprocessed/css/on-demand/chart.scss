@@ -1,0 +1,14 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// Import external cfpb-chart-builder stylesheet
+@import '../../apps/cfpb-chart-builder/css/cfpb-chart-builder';
+
+// Footnote text below charts
+.m-chart-footnote {
+  padding-top: math.div(15px, $base-font-size-px) + em;
+  margin-top: math.div(30px, $base-font-size-px) + em;
+  color: var(--black);
+
+  font-size: math.div(12px, $base-font-size-px) + em;
+}
