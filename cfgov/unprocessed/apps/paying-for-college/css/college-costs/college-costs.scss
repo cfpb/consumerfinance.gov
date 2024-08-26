@@ -115,9 +115,9 @@
     &--school-search {
       .m-notification {
         margin-bottom: math.div(
-          $grid_gutter-width / 2 / $base-font-size-px,
-          em
-        );
+            math.div($grid_gutter-width, 2),
+            $base-font-size-px
+          ) + em;
         margin-top: math.div(
             math.div($grid_gutter-width, 2),
             $base-font-size-px
