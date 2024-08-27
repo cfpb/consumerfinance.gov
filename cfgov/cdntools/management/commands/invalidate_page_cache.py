@@ -19,5 +19,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         batch = PurgeBatch()
-        batch.add_urls(options["url"])
+        batch.add_urls(
+            [
+                options["url"],
+            ]
+        )
         batch.purge()

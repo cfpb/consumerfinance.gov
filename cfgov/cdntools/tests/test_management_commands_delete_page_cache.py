@@ -17,7 +17,7 @@ class DeletePageCacheTestCase(TestCase):
         }
     )
     @mock.patch(
-        "v1.management.commands.delete_page_cache.purge_urls_from_cache"
+        "cdntools.management.commands.delete_page_cache.purge_urls_from_cache"
     )
     def test_submission_with_url_akamai(self, mock_purge):
         call_command("delete_page_cache", url="https://server/foo/bar")
