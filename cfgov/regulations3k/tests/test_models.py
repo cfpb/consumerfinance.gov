@@ -13,6 +13,7 @@ from wagtail.models import Site
 
 from model_bakery import baker
 
+from cdntools.backends import MOCK_PURGED
 from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models.django import (
     EffectiveVersion,
@@ -38,9 +39,6 @@ from regulations3k.models.pages import (
     validate_page_number,
     validate_regs_list,
 )
-
-
-CACHE_PURGED_URLS = []
 
 
 class RegModelTests(DjangoTestCase):
@@ -208,7 +206,7 @@ class RegModelTests(DjangoTestCase):
         self.reg_page.save()
         self.reg_search_page.save()
 
-        CACHE_PURGED_URLS[:] = []
+        MOCK_PURGED[:] = []
 
     def get_request(self, path="", data=None):
         if not data:
@@ -636,34 +634,28 @@ class RegModelTests(DjangoTestCase):
         WAGTAILFRONTENDCACHE={
             "varnish": {
                 "BACKEND": "cdntools.backends.MockCacheBackend",
-                "CACHED_URLS": CACHE_PURGED_URLS,
             },
         }
     )
     def test_effective_version_saved(self):
         effective_version_saved(None, self.effective_version)
 
-        self.assertIn("http://localhost/reg-landing/1002/", CACHE_PURGED_URLS)
+        self.assertIn("http://localhost/reg-landing/1002/", MOCK_PURGED)
+        self.assertIn("http://localhost/reg-landing/1002/4/", MOCK_PURGED)
         self.assertIn(
-            "http://localhost/reg-landing/1002/4/", CACHE_PURGED_URLS
-        )
-        self.assertIn(
-            "http://localhost/reg-landing/1002/versions/", CACHE_PURGED_URLS
+            "http://localhost/reg-landing/1002/versions/", MOCK_PURGED
         )
 
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
                 "BACKEND": "cdntools.backends.MockCacheBackend",
-                "CACHED_URLS": CACHE_PURGED_URLS,
             },
         }
     )
     def test_section_saved(self):
         section_saved(None, self.section_num4)
-        self.assertEqual(
-            CACHE_PURGED_URLS, ["http://localhost/reg-landing/1002/4/"]
-        )
+        self.assertEqual(MOCK_PURGED, ["http://localhost/reg-landing/1002/4/"])
 
     def test_reg_page_can_serve_draft_versions(self):
         request = self.get_request()

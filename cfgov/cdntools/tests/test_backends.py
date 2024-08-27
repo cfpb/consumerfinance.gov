@@ -7,6 +7,7 @@ from django.test import TestCase, override_settings
 from wagtail.documents.models import Document
 
 from cdntools.backends import (
+    MOCK_PURGED,
     AkamaiBackend,
     AkamaiDeletingBackend,
 )
@@ -155,14 +156,10 @@ class TestAkamaiDeletingBackend(TestCase):
             akamai_backend.purge_all()
 
 
-CACHED_FILES_URLS = []
-
-
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "files": {
             "BACKEND": "cdntools.backends.MockCacheBackend",
-            "CACHED_URLS": CACHED_FILES_URLS,
         },
     },
 )
@@ -173,21 +170,21 @@ class CloudfrontInvalidationTest(TestCase):
         self.document.file.save(
             "example.txt", ContentFile("A boring example document")
         )
-        CACHED_FILES_URLS[:] = []
+        MOCK_PURGED[:] = []
 
     def tearDown(self):
         self.document.file.delete()
 
     def test_document_saved_cache_purge_disabled(self):
         cloudfront_cache_invalidation(None, self.document)
-        self.assertEqual(CACHED_FILES_URLS, [])
+        self.assertEqual(MOCK_PURGED, [])
 
     @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
     def test_document_saved_cache_purge_without_file(self):
         cloudfront_cache_invalidation(None, self.document_without_file)
-        self.assertEqual(CACHED_FILES_URLS, [])
+        self.assertEqual(MOCK_PURGED, [])
 
     @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
     def test_document_saved_cache_invalidation(self):
         cloudfront_cache_invalidation(None, self.document)
-        self.assertIn(self.document.file.url, CACHED_FILES_URLS)
+        self.assertIn(self.document.file.url, MOCK_PURGED)

@@ -7,6 +7,8 @@ from django.urls import reverse
 
 from requests.exceptions import HTTPError
 
+from cdntools.backends import MOCK_PURGED
+
 
 def create_admin_access_permissions():
     """
@@ -33,23 +35,16 @@ def create_admin_access_permissions():
         group.permissions.add(admin_permission)
 
 
-CACHED_AKAMAI_URLS = []
-CACHED_FILES_URLS = []
-PURGE_ALL_STATE = False
-
-
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
             "BACKEND": "cdntools.backends.MockCacheBackend",
-            "CACHED_URLS": CACHED_AKAMAI_URLS,
             "HOSTNAMES": [
                 "www.fake.gov",
             ],
         },
         "files": {
             "BACKEND": "cdntools.backends.MockCacheBackend",
-            "CACHED_URLS": CACHED_FILES_URLS,
             "HOSTNAMES": [
                 "files.fake.gov",
             ],
@@ -59,9 +54,7 @@ PURGE_ALL_STATE = False
 class TestCDNManagementView(TestCase):
     def setUp(self):
         # Reset cache purged URLs after each test
-        global CACHED_AKAMAI_URLS, CACHED_FILES_URLS, PURGE_ALL_STATE
-        CACHED_AKAMAI_URLS[:] = []
-        CACHED_FILES_URLS[:] = []
+        MOCK_PURGED[:] = []
 
         create_admin_access_permissions()
 
@@ -116,11 +109,7 @@ class TestCDNManagementView(TestCase):
         )
         self.assertIn(
             "http://www.fake.gov/about-us",
-            CACHED_AKAMAI_URLS,
-        )
-        self.assertNotIn(
-            "http://www.fake.gov/about-us",
-            CACHED_FILES_URLS,
+            MOCK_PURGED,
         )
 
     def test_submission_with_url_cloudfront(self):
@@ -131,11 +120,7 @@ class TestCDNManagementView(TestCase):
         )
         self.assertIn(
             "http://files.fake.gov/test.pdf",
-            CACHED_FILES_URLS,
-        )
-        self.assertNotIn(
-            "http://files.fake.gov/test.pdf",
-            CACHED_AKAMAI_URLS,
+            MOCK_PURGED,
         )
 
     def test_submission_without_url(self):
@@ -143,7 +128,7 @@ class TestCDNManagementView(TestCase):
         self.client.post(reverse("manage-cdn"))
         self.assertIn(
             "__all__",
-            CACHED_AKAMAI_URLS,
+            MOCK_PURGED,
         )
 
     def test_bad_submission(self):
