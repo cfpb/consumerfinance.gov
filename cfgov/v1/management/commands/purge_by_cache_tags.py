@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from v1.signals import configure_akamai_backend
+from wagtail.contrib.frontend_cache.utils import get_backends
 
 
 class Command(BaseCommand):
@@ -26,5 +26,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cache_tags = options["cache_tag"]
         action = options["action"]
-        backend = configure_akamai_backend()
-        backend.purge_by_tags(cache_tags, action=action)
+        akamai_backend = get_backends(backends="akamai")["akamai"]
+        akamai_backend.purge_by_tags(cache_tags, action=action)

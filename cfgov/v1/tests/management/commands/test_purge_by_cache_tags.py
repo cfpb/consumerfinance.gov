@@ -1,12 +1,18 @@
-from unittest import mock
-
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import TestCase, override_settings
+
+from cdntools.backends import MOCK_PURGED
 
 
+@override_settings(
+    WAGTAILFRONTENDCACHE={
+        "akamai": {
+            "BACKEND": "cdntools.backends.MockCacheBackend",
+        },
+    }
+)
 class CacheTagPurgeTestCase(TestCase):
-    @mock.patch("v1.signals.AkamaiBackend.purge_by_tags")
-    def test_submission_with_url_akamai(self, mock_purge_tags):
+    def test_submission_with_url_akamai(self):
         call_command(
             "purge_by_cache_tags",
             "--cache_tag",
@@ -14,6 +20,4 @@ class CacheTagPurgeTestCase(TestCase):
             "--action",
             "invalidate",
         )
-        self.assertTrue(
-            mock_purge_tags.called_with("complaints", action="invalidate")
-        )
+        self.assertIn("complaints", MOCK_PURGED)
