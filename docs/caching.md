@@ -2,7 +2,7 @@
 
 ### Akamai
 
-We use [Akamai](https://www.akamai.com/), a content delivery network, to cache the entirety of [www.consumerfinance.gov](https://www.consumerfinance.gov/) (but not our development servers). We invalidate any given page in Wagtail when it is published or unpublished (by hooking up the custom class [`AkamaiBackend`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cdntools/backends.py) to [Wagtail's frontend cache invalidator](http://docs.wagtail.io/en/v2.0.1/reference/contrib/frontendcache.html). By default, we clear the Akamai cache any time we deploy.
+We use [Akamai](https://www.akamai.com/), a content delivery network, to cache the entirety of [www.consumerfinance.gov](https://www.consumerfinance.gov/) (but not our development servers). We invalidate any given page in Wagtail when it is published or unpublished (by hooking up the custom class [`AkamaiBackend`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cdntools/backends.py) to [Wagtail's frontend cache invalidator](http://docs.wagtail.io/en/v2.0.1/reference/contrib/frontendcache.html).
 
 There are certain pages that do not live in Wagtail or are impacted by changes on another page (imagine our [newsroom page](https://www.consumerfinance.gov/about-us/newsroom/) that lists titles of other pages) or another process (imagine data from Socrata gets updated) and thus will display outdated content until the page's time to live (TTL) has expired, a deploy has happened, or if someone manually invalidates that page. Our default TTL is 24 hours.
 
