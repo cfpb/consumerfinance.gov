@@ -58,11 +58,10 @@ function makeTilemapOptions(data, dataAttributes) {
  * Makes a legend for the tilemap
  * @param {object} node - The chart node
  * @param {object} data - The data object
- * @param {string } legendTitle - The legend title
+ * @param {string} legendTitle - The legend title
  */
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
-  console.log('c', classes);
   const legend = node.parentNode.getElementsByClassName(
     'o-simple-chart__tilemap-legend',
   )[0];
@@ -90,6 +89,67 @@ function updateTilemapLegend(node, data, legendTitle) {
 }
 
 /**
+ *
+ * @param {number} v - A given step min or max
+ * @returns {Array} - An array with the step adjusted to label with a millions value or not
+ */
+function mLabel(v) {
+  if (v >= 1e6) {
+    return [v / 1e6, 'M'];
+  }
+  return [v, ''];
+}
+
+/**
+ *
+ * @param {number} v - Upper end of a given step
+ * @returns {number} - The step trimmed so the bins don't overlap
+ */
+function trimTenth(v) {
+  return Math.round((v - 0.1) * 10) / 10;
+}
+
+/**
+ *
+ * @param {number} s1 - step min
+ * @param {number} s2 - step max
+ * @param {boolean} isLast - whether we're operating on the last data class
+ * @returns {string} formatted legend label
+ */
+function formatLegendValues(s1, s2, isLast) {
+  const f1 = mLabel(s1);
+  const f2 = mLabel(s2);
+  return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+}
+
+/**
+ *
+ * @param {number} s1 - step min
+ * @param {number} s2 - step max
+ * @param {string} color - hex color for legend class
+ * @param {boolean} isLast - whether we're operating on the last data class
+ * @returns {object} - dataClass object for highcharts
+ */
+function makeDataClass(s1, s2, color, isLast = 0) {
+  return {
+    from: s1,
+    to: s2,
+    color,
+    name: formatLegendValues(s1, s2, isLast),
+  };
+}
+
+/**
+ *
+ * @param {number} v - The raw number to get the divisor for
+ * @returns {number} a divisor which can round the number to its largest digit
+ */
+function makeDivisor(v) {
+  const precision = Math.floor(v).toString().length;
+  return Math.pow(10, precision - 1);
+}
+
+/**
  * Generates a config object to be added to the chart config
  * @param {Array} series - The formatted series data
  * @returns {Array} series data with a geographic component added
@@ -103,10 +163,6 @@ function getMapConfig(series) {
   data.forEach((v) => {
     if (v.value < dataMin) dataMin = v.value;
   });
-  console.log(dataMin);
-  //get precision and round
-  // floor, to string length to get digits
-  // start of step one is  pow(10, digits -1)
 
   const added = data.map((v) => {
     const val = Math.round(Number(v.value) * 100) / 100;
@@ -118,79 +174,28 @@ function getMapConfig(series) {
       value: val,
     };
   });
-  min = Math.floor(min);
-  max = Math.ceil(max);
 
-  const precision = Math.floor(min).toString().length;
-  const divisor = Math.pow(10, precision - 1);
+  const divisor = makeDivisor(min);
+  min = Math.floor(min / divisor) * divisor;
+  max = Math.ceil(max / divisor) * divisor;
 
-  /**
-   *
-   * @param a
-   */
-  function r(a) {
-    return Math.round(a / divisor) * divisor;
-  }
+  let step = (max - min) / 5;
+  const stepDivisor = makeDivisor(step);
+  step = Math.round(step / stepDivisor) * stepDivisor;
 
-  const trimTenth = (v) => Math.round((v - 0.1) * 10) / 10;
+  const step1 = Math.round(min + step);
+  const step2 = Math.round(step1 + step);
+  const step3 = Math.round(step2 + step);
+  const step4 = Math.round(step3 + step);
 
-  /**
-   *
-   * @param v
-   */
-  function mLabel(v) {
-    if (v >= 1e6) {
-      return [v / 1e6, 'M'];
-    }
-    return [v, ''];
-  }
-  /**
-   *
-   * @param s1
-   * @param s2
-   * @param isLast
-   */
-  function formatLegendValues(s1, s2, isLast) {
-    const f1 = mLabel(s1);
-    const f2 = mLabel(s2);
-    return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
-  }
-
-  /**
-   *
-   * @param s1
-   * @param s2
-   * @param color
-   * @param isLast
-   */
-  function makeDataClass(s1, s2, color, isLast = 0) {
-    return {
-      from: s1,
-      to: s2,
-      color,
-      name: formatLegendValues(s1, s2, isLast),
-    };
-  }
-
-  min = r(min);
-  max = r(max);
-  const step = Math.round((max - min) / 5);
-
-  console.log(step, min, max);
-
-  const step1 = r(min + step);
-  const step2 = r(step1 + step);
-  const step3 = r(step2 + step);
-  const step4 = r(step3 + step);
-  console.log(step1, step2, step3, step4);
   return {
     colorAxis: {
       dataClasses: [
-        makeDataClass(min, step1, '#addc91'),
-        makeDataClass(step1, step2, '#e2efd8'),
-        makeDataClass(step2, step3, '#ffffff'),
-        makeDataClass(step3, step4, '#d6e8fa'),
-        makeDataClass(step4, max, '#7eb7e8', 1),
+        makeDataClass(min, step1, '#f1f9ed'),
+        makeDataClass(step1, step2, '#d4eac6'),
+        makeDataClass(step2, step3, '#addc91'),
+        makeDataClass(step3, step4, '#48b753'),
+        makeDataClass(step4, max, '#1e9642', 1),
       ],
     },
     series: [{ clip: false, data: added }],
