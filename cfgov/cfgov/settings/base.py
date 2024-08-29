@@ -616,6 +616,7 @@ FLAGS = {
     ],
     # Spanish homepage
     "SPANISH_HOMEPAGE": [
+        ("environment is", "dev5"),
         ("environment is", "local"),
         ("environment is", "test"),
     ],
