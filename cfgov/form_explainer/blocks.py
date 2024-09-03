@@ -60,7 +60,6 @@ class ExplainerNote(blocks.StructBlock):
         label="Expandable text",
     )
     coordinates = ImageMapCoordinates(
-        form_classname="coordinates",
         label="Image coordinates",
         help_text=mark_safe(
             "Enter percentage values for the highlighted "
@@ -80,7 +79,7 @@ class ExplainerCategory(blocks.StructBlock):
         "one type of note for this image.",
     )
     notes = blocks.ListBlock(
-        ExplainerNote(form_classname="explainer_notes", required=False),
+        ExplainerNote(required=False),
         default=[],
     )
 
