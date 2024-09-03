@@ -10,11 +10,13 @@
 
   h2 {
     @include h1;
+    // Override for h1 margin.
     margin-top: 60px;
   }
 
   h3 {
     @include h2;
+    // Override for h2 margin.
     margin-top: 45px;
   }
 
@@ -25,6 +27,7 @@
 
   h5 {
     @include h4;
+    // Override for h4 margin.
     margin-top: 30px;
   }
 

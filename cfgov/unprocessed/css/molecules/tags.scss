@@ -7,9 +7,10 @@ $bullet-font-size: 17px;
 .m-tags {
   // Mobile.
   &__heading {
-    @include h4;
     display: block;
     color: var(--black);
+
+    @include h4;
   }
 
   &__list {
@@ -22,15 +23,16 @@ $bullet-font-size: 17px;
   }
 
   &__tag {
-    @include h6;
-
-    // Override h6 margin.
-    margin: 0;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
-    line-height: $bullet-font-size;
     color: var(--gray);
+
+    @include h6;
+
+    // Override h6 margin and line-height.
+    margin: 0;
+    line-height: $bullet-font-size;
   }
 
   &__item {
@@ -46,7 +48,7 @@ $bullet-font-size: 17px;
     margin-left: $bullet-font-size;
   }
 
-  a.m-tags--tag {
+  a.m-tags__tag {
     @include u-link-colors(
       var(--gray),
       var(--gray),
@@ -63,7 +65,7 @@ $bullet-font-size: 17px;
 
   // Negate the border of the sibling when hovering.
   &__item:hover + &__item {
-    a.m-tags--tag {
+    a.m-tags__tag {
       border-top: none;
     }
   }

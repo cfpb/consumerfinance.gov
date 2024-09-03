@@ -1,9 +1,10 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 dt {
-  @include h5;
   display: inline-block;
 
+  @include h5;
+  // Override h5 margin.
   margin-bottom: 0.5em;
 
   &:last-of-type {

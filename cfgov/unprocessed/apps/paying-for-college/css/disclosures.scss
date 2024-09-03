@@ -399,9 +399,9 @@ $bp-graph-cols-min: 740px;
   &__summary,
   &__summary.column-well__content {
     padding-top: math.div(20px, $base-font-size-px) + em;
-    padding-right: ($grid_gutter-width / 2);
+    padding-right: math.div($grid_gutter-width, 2);
     padding-bottom: math.div(20px, $base-font-size-px) + em;
-    padding-left: ($grid_gutter-width / 2);
+    padding-left: math.div($grid_gutter-width, 2);
     margin-top: math.div(30px, $base-font-size-px) + em;
     margin-right: -1 * math.div($grid_gutter-width, 2);
     margin-left: -1 * math.div($grid_gutter-width, 2);
@@ -1232,7 +1232,9 @@ $bp-graph-cols-min: 740px;
 
   &__top-label {
     width: $bar-graph-top-label-width;
-    margin-left: -($bar-graph-top-label-width - $bar-graph-width) / 2 - $bar-graph-line-overhang;
+    margin-left: (
+        -1 * math.div(($bar-graph-top-label-width - $bar-graph-width), 2)
+      ) - $bar-graph-line-overhang;
     position: absolute;
     top: math.div(-$bar-graph-top-label-height, $small-font-size-px) + em;
     left: 50%;
