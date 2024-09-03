@@ -32,13 +32,13 @@
     "lodash.throttle": "4.1.1",
     "number-to-words": "1.2.4",
     "papaparse": "5.3.2",
-    "postcss": "8.4.41",
+    "postcss": "8.4.44",
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
     "@csstools/postcss-sass": "5.1.1",
     "@csstools/sass-import-resolve": "1.0.0",
-    "cypress": "13.13.3",
+    "cypress": "13.14.1",
     "cypress-fail-fast": "7.1.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -54,9 +54,9 @@
     "postcss-replace": "2.0.1",
     "postcss-scss": "4.0.9",
     "prettier": "3.3.3",
-    "snyk": "1.1292.4",
+    "snyk": "1.1293.0",
     "source-map": "0.7.4",
-    "stylelint": "16.8.2",
+    "stylelint": "16.9.0",
     "stylelint-config-standard-scss": "13.1.0"
   },
   "scripts": {
