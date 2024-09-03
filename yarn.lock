@@ -634,7 +634,7 @@
     jest-util "^29.7.0"
     jest-validate "^29.7.0"
     jest-watcher "^29.7.0"
-    micromatch "^4.0.4"
+    micromatch "^4.0.7"
     pretty-format "^29.7.0"
     slash "^3.0.0"
     strip-ansi "^6.0.0"
