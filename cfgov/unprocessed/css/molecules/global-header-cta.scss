@@ -10,6 +10,8 @@
   padding-bottom: 11px;
 
   a {
+    font-weight: 500;
+
     // Colors for :link, :visited, :hover, :focus, :active.
     @include u-link-colors(
       var(--pacific),
@@ -18,6 +20,5 @@
       var(--pacific),
       var(--navy-dark)
     );
-    font-weight: 500;
   }
 }

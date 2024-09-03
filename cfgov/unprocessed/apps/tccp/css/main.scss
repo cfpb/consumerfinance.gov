@@ -230,9 +230,10 @@
   }
 
   .m-apr-rating {
-    @include u-heading-4-size-only;
-    margin-bottom: math.div(20px, $base-font-size-px) + rem;
     font-weight: 600;
+    margin-bottom: math.div(20px, $base-font-size-px) + rem;
+
+    @include u-heading-4-size-only;
 
     // Mobile only.
     @include respond-to-max($bp-xs-max) {
@@ -543,10 +544,6 @@ html.js .o-filterable-list-results--partial {
 .htmx-progress {
   display: none;
 
-  .htmx-request & {
-    display: inline;
-  }
-
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -573,6 +570,10 @@ html.js .o-filterable-list-results--partial {
       animation-delay: 1s;
     }
   }
+}
+
+.htmx-request .htmx-progress {
+  display: inline;
 }
 
 // Dim search results while inflight
