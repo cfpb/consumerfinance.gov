@@ -19,7 +19,7 @@ export class BeforeYouClaim {
 
   enterAge(age) {
     const year = 2024;
-    this.setBirthDate('4', '1', String(year - age));
+    this.setBirthDate('5', '1', String(year - age));
     this.setHighestAnnualSalary('115000');
     this.getEstimate();
   }
