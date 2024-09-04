@@ -41,7 +41,7 @@ $m-info-unit-img-lg: 150px;
 /*
     Inline info-unit Helper Mixin -
     This mixin is used to modify an info-unit to an inline arrangement.
-    Most of the time the `.m-info-unit__inline` class will be sufficient,
+    Most of the time the `.m-info-unit--inline` class will be sufficient,
     but there are limited situations the inline arrangement needs to be conditioned.
     See /pages/home.scss L:103
  */
@@ -63,7 +63,7 @@ $m-info-unit-img-lg: 150px;
 .m-info-unit {
   @include u-info-unit-base;
 
-  &__inline {
+  &--inline {
     // Tablet only.
     @include respond-to-range($bp-sm-min, $bp-sm-max) {
       @include u-info-unit-base-inline($info-unit-img-sm);
