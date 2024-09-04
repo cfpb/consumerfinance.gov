@@ -502,6 +502,8 @@ CSP_SCRIPT_SRC = (
     "about:",
     "www.federalregister.gov",
     "*.qualtrics.com",
+    "www.ssa.gov/accessibility/andi/",
+    "ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js", # needed for ANDI accessibility tool
 )
 
 # These specify valid sources of CSS code
@@ -513,6 +515,7 @@ CSP_STYLE_SRC = (
     "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
+    "www.ssa.gov/accessibility/andi/",
 )
 
 # These specify valid image sources
@@ -533,6 +536,7 @@ CSP_IMG_SRC = (
     "*.qualtrics.com",
     "*.mouseflow.com",
     "i.ytimg.com",
+    "www.ssa.gov/accessibility/andi/",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
