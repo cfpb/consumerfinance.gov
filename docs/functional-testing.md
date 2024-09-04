@@ -10,11 +10,15 @@ We have included Cypress as a dependency of this project. The only installation 
 
 ### Cypress app
 
-To run the desktop Cypress app execute `yarn cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
+To run the desktop Cypress app execute `yarn cy open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
 
 ### Command line
 
-You can run functional tests from the command line with `yarn cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
+You can run functional tests from the command line with `yarn cy`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`.
+
+To run Cypress only on changed specs, run `yarn cy fast`.
+
+For a customized Cypress run, you might want to call Cypress directly with `npx cypress run` and pass in some common arguments:
 
 - `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
 - `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline

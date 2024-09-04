@@ -72,7 +72,7 @@ jobs:
     - name: Prepare config
       env:
         CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-      run: ./test/cypress/run-specs.sh
+      run: ./scripts/cypress-fast-specs.sh
 
     - name: Run Cypress
       uses: cypress-io/github-action@v6

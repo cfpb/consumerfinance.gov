@@ -50,7 +50,7 @@ for more information.
 
 #### Browser Testing
 
-We run automated browser tests in headless Chrome with `yarn cypress run`.
+We run automated browser tests in headless Chrome with `yarn cy`.
 See our [cross browser testing docs](https://cfpb.github.io/consumerfinance.gov/other-front-end-testing/#cross-browser-testing) for other testing methods.
 
 #### Satellite app assets
