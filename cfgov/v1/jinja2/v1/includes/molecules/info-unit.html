@@ -36,7 +36,7 @@
 
    format:                       Code for the layout of the parent Info Unit
                                  Group, used to determine whether to add the
-                                 `__inline` modifier to the main div.
+                                 `--inline` modifier to the main div.
 
    link_image_and_heading:       Boolean for whether the image and heading
                                  should be linked to the value.links[0].url.
@@ -61,7 +61,7 @@
                                  and ( has_heading or has_image ) %}
 
 <div class="m-info-unit
-            {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
+            {{- ' m-info-unit--inline' if format == '25-75' else '' }}">
 
     {% if link_image_and_heading %}
         <a class="m-info-unit__heading-link"
