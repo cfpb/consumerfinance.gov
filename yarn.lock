@@ -308,10 +308,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.0.3.tgz#5e4808ae5307c4e400d3aedbca733101103fc67f"
-  integrity sha512-YixhR9GRqfI2bP1Ek/q0iXbR83mZM+1TH2OquvCovUSCAdAH5LXUfqCwy/AEOMOWJCrP7q+v2pfTRPEKyKp0og==
+"@cfpb/cfpb-design-system@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.1.1.tgz#8e51be384c58bdb219a05b77350aaa6d1c4ffb11"
+  integrity sha512-zZh/JwrUd6J06SjK6ZoYfUTTjogYWqzwtV0qC6ktQLAZYxiv8NL6v3nBkg4TSqpJ40AUTY9eC6vbxB+4XZD20w==
 
 "@colors/colors@1.5.0":
   version "1.5.0"
