@@ -40,15 +40,11 @@ function isRural(fips, counties) {
 }
 
 /**
- * @param {Array} urbanClusters - Array from census API.
  * @param {Array} urbanAreas - Array from census API.
  * @returns {boolean} True if address is rural, false otherwise.
  */
-function isRuralCensus(urbanClusters, urbanAreas) {
-  return (
-    (urbanClusters === null || urbanClusters.length === 0) &&
-    (urbanAreas === null || urbanAreas.length === 0)
-  );
+function isRuralCensus(urbanAreas) {
+  return urbanAreas === null || urbanAreas.length === 0;
 }
 
 /**
