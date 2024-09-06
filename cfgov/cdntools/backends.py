@@ -15,6 +15,7 @@ class AkamaiBackend(BaseBackend):
     """Akamai backend that performs an 'invalidate' purge"""
 
     def __init__(self, params):
+        super().__init__(params)
         self.client_token = params.get("CLIENT_TOKEN")
         self.client_secret = params.get("CLIENT_SECRET")
         self.access_token = params.get("ACCESS_TOKEN")
