@@ -1,19 +1,24 @@
 from itertools import chain
 
-from django.conf import settings
 from django.core.cache import cache
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from wagtail.contrib.frontend_cache.utils import get_backends
 from wagtail.signals import page_published, page_unpublished
 
+from cdntools.signals import cloudfront_cache_invalidation
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage,
     ActivitySetUp,
 )
 from v1.models import AbstractFilterPage, CFGOVPage
-from v1.models.caching import AkamaiBackend
 from v1.models.filterable_page import AbstractFilterablePage
+from v1.models.images import CFGOVRendition
 from v1.util.ref import get_category_children
+
+
+post_save.connect(cloudfront_cache_invalidation, sender=CFGOVRendition)
 
 
 def invalidate_filterable_list_caches(sender, **kwargs):
@@ -72,8 +77,12 @@ def invalidate_filterable_list_caches(sender, **kwargs):
     # Get the cache backend and purge filterable list page cache tags if this
     # page belongs to any
     if len(cache_tags_to_purge) > 0:
-        cache_backend = configure_akamai_backend()
-        cache_backend.purge_by_tags(cache_tags_to_purge)
+        try:
+            akamai_backend = get_backends(backends=["akamai"])["akamai"]
+        except KeyError:
+            pass
+        else:
+            akamai_backend.purge_by_tags(cache_tags_to_purge)
 
 
 page_published.connect(invalidate_filterable_list_caches)
@@ -86,18 +95,6 @@ def refresh_tdp_activity_cache():
     if not activity_setup:
         activity_setup = ActivitySetUp()
     activity_setup.update_setups()
-
-
-def configure_akamai_backend():
-    global_settings = getattr(settings, "WAGTAILFRONTENDCACHE", {})
-    akamai_settings = global_settings.get("akamai", {})
-    akamai_params = {
-        "CLIENT_TOKEN": akamai_settings.get("CLIENT_TOKEN", "test_token"),
-        "CLIENT_SECRET": akamai_settings.get("CLIENT_SECRET", "test_secret"),
-        "ACCESS_TOKEN": akamai_settings.get("ACCESS_TOKEN", "test_access"),
-    }
-    backend = AkamaiBackend(akamai_params)
-    return backend
 
 
 @receiver(page_published, sender=ActivityPage)

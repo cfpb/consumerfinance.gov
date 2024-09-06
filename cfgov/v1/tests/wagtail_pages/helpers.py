@@ -2,7 +2,7 @@ import json
 from datetime import date
 
 from django.core.exceptions import ValidationError
-from django.http import Http404
+from django.http import Http404, HttpRequest
 
 from wagtail.models import Site
 
@@ -52,7 +52,7 @@ def get_parent_route(site, parent_path=None):
         ]
 
         try:
-            route = root.route(None, path_components)
+            route = root.route(HttpRequest(), path_components)
         except Http404:
             return
 

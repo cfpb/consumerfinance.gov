@@ -11,7 +11,7 @@ class UserCreationForm(wagtailforms.UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data["email"]
 
-        if User.objects.filter(email=email).exists():
+        if User.objects.filter(email__iexact=email).exists():
             raise ValidationError("This email is already in use.")
 
         return email
@@ -23,7 +23,7 @@ class UserEditForm(wagtailforms.UserEditForm):
 
         if (
             User.objects.exclude(pk=self.instance.pk)
-            .filter(email=email)
+            .filter(email__iexact=email)
             .exists()
         ):
             raise ValidationError("This email is already in use.")
