@@ -13,5 +13,10 @@ from cdntools.backends import MOCK_PURGED
 )
 class InvalidatePageTestCase(TestCase):
     def test_submission_with_url(self):
-        call_command("invalidate_page_cache", url="https://server/foo/bar")
+        call_command(
+            "invalidate_page_cache",
+            url=[
+                "https://server/foo/bar",
+            ],
+        )
         self.assertIn("https://server/foo/bar", MOCK_PURGED)
