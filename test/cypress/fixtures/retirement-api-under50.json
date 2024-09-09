@@ -15,9 +15,9 @@
             "age 70": 3705
         },
         "params": {
-            "dobmon": 12,
-            "dobday": 2,
-            "yob": 1979,
+            "dobmon": 1,
+            "dobday": 1,
+            "yob": 1981,
             "earnings": 115000,
             "lastYearEarn": "",
             "lastEarn": "",
