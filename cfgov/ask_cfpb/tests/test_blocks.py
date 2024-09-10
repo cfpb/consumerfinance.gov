@@ -94,15 +94,15 @@ class SchemaBlocksTestCase(TestCase):
             ],
         }
         expected_html = (
-            '<div itemscope="" itemtype="https://schema.org/FAQPage" '
+            '<div itemscope itemtype="https://schema.org/FAQPage" '
             'class="schema-block schema-block--faq">'
             '<div itemprop="description" class="schema-block_description">'
             "test description"
             "</div>"
-            '<div itemscope="" itemprop="mainEntity" '
+            '<div itemscope itemprop="mainEntity" '
             'itemtype="https://schema.org/Question" class="schema-block_item">'  # noqa
             '<h2 itemprop="name">Question one</h2>'
-            '<div itemprop="acceptedAnswer" itemscope="" '
+            '<div itemprop="acceptedAnswer" itemscope '
             'itemtype="https://schema.org/Answer">'
             '<div itemprop="text">Answer content</div>'
             "</div>"
