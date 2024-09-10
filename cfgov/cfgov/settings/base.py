@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
+    "archival",
 )
 
 MIDDLEWARE = (
@@ -793,3 +794,9 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
+
+
+# Deletion archival
+# If this is set then when Wagtail pages are deleted a JSON archive file will
+# be written to this path containing the deleted page's data.
+ARCHIVE_FILESYSTEM = os.environ.get("ARCHIVE_FILESYSTEM")
