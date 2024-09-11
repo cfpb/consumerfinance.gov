@@ -147,7 +147,7 @@
       {% do tags_list.append({'text': item}) %}
     {% endfor %}
     {% import "v1/includes/molecules/tags.html" as tags with context %}
-    {{ tags.render(tags_list, false, true) }}
+    {{ tags.render(tags_list | sort(attribute='text'), false, true) }}
 {% endmacro %}
 
 {# ==========================================================================

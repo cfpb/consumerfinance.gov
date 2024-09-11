@@ -79,7 +79,7 @@
 
 {% macro _list(list) %}
     {% import "v1/includes/molecules/tags.html" as tags with context %}
-    {{ tags.render(list.links, false, true) }}
+    {{ tags.render(list.links | sort(attribute='text'), false, true) }}
 {% endmacro %}
 
 {# ==========================================================================
@@ -98,7 +98,7 @@
 
  {% macro _topics(list) %}
     {% import "v1/includes/molecules/tags.html" as tags with context %}
-    {{ tags.render(page.related_metadata_tags().links, false, true) }}
+    {{ tags.render(page.related_metadata_tags().links | sort(attribute='text'), false, true) }}
  {% endmacro %}
 
 {# ==========================================================================
