@@ -126,7 +126,7 @@ const Expandable = AtomicComponent.extend({
     targetExpanded: 'o-expandable__target--expanded',
     targetCollapsed: 'o-expandable__target--collapsed',
     group: 'o-expandable-group',
-    groupAccordion: 'o-expandable-group__accordion',
+    groupAccordion: 'o-expandable-group--accordion',
   },
 
   events: {
