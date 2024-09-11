@@ -6,8 +6,8 @@
     'archived': 'Archived'
 } %}
 {% set version_status = version_statuses[page.version_status] %}
-{% set effective_start_date = page.effective_start_date.strftime('%B %d, %Y') if page.effective_start_date %}
-{% set effective_end_date = page.effective_end_date.strftime('%B %d, %Y') if page.effective_end_date %}
+{% set effective_start_date = page.effective_start_date.strftime('%B %d, %Y') if page.effective_start_date else None %}
+{% set effective_end_date = page.effective_end_date.strftime('%B %d, %Y') if page.effective_end_date else None %}
 {% set version_message = 'This version has been archived.' if version_status == 'Archived' else 'This version is not the current FIG.' %}
 {% set date_message = 'You are viewing a previous version of the FIG.' %}
 {% if effective_start_date and effective_end_date %}

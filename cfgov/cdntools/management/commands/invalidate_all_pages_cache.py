@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from v1.models.caching import AkamaiBackend
+from cdntools.backends import AkamaiBackend
 
 
 class Command(BaseCommand):

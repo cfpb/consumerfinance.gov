@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
-    "wagtail.users",
     "wagtail.images",
     "wagtail.embeds",
     "wagtail.contrib.frontend_cache",
@@ -78,6 +77,7 @@ INSTALLED_APPS = (
     "storages",
     "data_research",
     "v1",
+    "cdntools",
     "core",
     "django_extensions",
     "jobmanager",
@@ -99,6 +99,7 @@ INSTALLED_APPS = (
     "django_opensearch_dsl",
     "corsheaders",
     "login",
+    "login.apps.LoginUsersAppConfig",
     "filing_instruction_guide",
     "health_check",
     "health_check.db",
@@ -288,8 +289,6 @@ WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
-WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # This is used for easy autocomplete search behavior in the Wagtail admin.
@@ -447,10 +446,11 @@ WAGTAILFRONTENDCACHE = {}
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get("ENABLE_AKAMAI_CACHE_PURGE", False)
 if ENABLE_AKAMAI_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["akamai"] = {
-        "BACKEND": "v1.models.caching.AkamaiBackend",
-        "CLIENT_TOKEN": os.environ.get("AKAMAI_CLIENT_TOKEN"),
-        "CLIENT_SECRET": os.environ.get("AKAMAI_CLIENT_SECRET"),
-        "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
@@ -459,11 +459,8 @@ ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": {
-            "files.consumerfinance.gov": os.environ.get(
-                "CLOUDFRONT_DISTRIBUTION_ID_FILES"
-            )
-        },
+        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
+        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists

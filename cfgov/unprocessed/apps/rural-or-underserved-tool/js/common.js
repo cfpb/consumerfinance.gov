@@ -42,17 +42,15 @@ function censusAPI(data, ruralCounties) {
     result.y = data.result.addressMatches[0].coordinates.y;
 
     /*
-    In the 2019 tigerweb API the layer IDs/name mappings are as follows:
-    84 = Counties
-    64 = 2010 Census Urban Clusters
-    62 = 2010 Census Urbanized Areas
+    In the 2024 tigerweb API the layer IDs/name mappings are as follows:
+    82 = Counties
+    88 = 2020 Census Urban Areas
     */
     Promise.all([
-      callTiger(result.x, result.y, '84'),
-      callTiger(result.x, result.y, '64'),
-      callTiger(result.x, result.y, '62'),
+      callTiger(result.x, result.y, '82'),
+      callTiger(result.x, result.y, '88'),
     ])
-      .then(function ([censusCounty, censusUC, censusUA]) {
+      .then(function ([censusCounty, censusUA]) {
         result.input = data.result.input.address.address;
         result.address = data.result.addressMatches[0].matchedAddress;
         result.countyName = censusCounty.features[0].attributes.BASENAME;
@@ -63,9 +61,7 @@ function censusAPI(data, ruralCounties) {
 
         if (addressUtils.isRural(fips, ruralCounties)) {
           result.type = 'rural';
-        } else if (
-          addressUtils.isRuralCensus(censusUC.features, censusUA.features)
-        ) {
+        } else if (addressUtils.isRuralCensus(censusUA.features)) {
           result.type = 'rural';
         } else {
           result.type = 'notRural';

@@ -24,7 +24,7 @@
    ========================================================================== #}
 
 
-<div itemscope=""
+<div itemscope
      itemtype="https://schema.org/FAQPage"
      class="schema-block schema-block--faq">
     {% if value.description %}
@@ -33,14 +33,14 @@
   	</div>
     {% endif %}
   	{% for question in value.questions %}
-  		  <div itemscope=""
+  		  <div itemscope
              itemprop="mainEntity"
              itemtype="https://schema.org/Question"
              class="schema-block_item"
              {% if question.anchor_tag %}id="{{ question.anchor_tag }}"{% endif %}>
     		    <h2 itemprop="name">{{ question.question }}</h2>
     		    <div itemprop="acceptedAnswer"
-                 itemscope=""
+                 itemscope
                  itemtype="https://schema.org/Answer">
                 <div itemprop="text">
                   {% include_block question.answer_content %}
