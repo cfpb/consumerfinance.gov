@@ -68,11 +68,7 @@
     
         <ul>
         
-            <li><a class="toctree-l4" href="#atoms">Atoms</a></li>
-        
-            <li><a class="toctree-l4" href="#molecules">Molecules</a></li>
-        
-            <li><a class="toctree-l4" href="#organisms">Organisms</a></li>
+            <li><a class="toctree-l4" href="#css-class-name-prefixes">CSS class name prefixes</a></li>
         
             <li><a class="toctree-l4" href="#folder-structure">Folder structure</a></li>
         
@@ -174,131 +170,29 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="notes-on-atomic-design">Notes on Atomic Design<a class="headerlink" href="#notes-on-atomic-design" title="Permanent link">¶</a></h1>
-<p>Our components employ the concept of atomic design, meaning that
-we break them down into atoms, molecules, and organisms,
+<p>In general, our components employ the concept of atomic design,
+meaning that we break them down into atoms, molecules, and organisms,
 each successive level being more complex than the previous.
 (We do not currently use the template or page concepts as described in
 <a href="http://bradfrost.com/blog/post/atomic-web-design/">Brad Frost's seminal article introducing atomic design</a>).</p>
-<p>Our components are composed (on the front-end) of HTML, Less, and JavaScript.
+<p>Our components are composed (on the front-end) of HTML, SCSS (Sass), and JavaScript.
 If a component doesn’t have user interactions or require styling,
-then it won’t have an associated JS and/or Less file.
-Components that are available for adding to a Wagtail page also
-require some Python programming—see the
-<a href="../editing-components/">creating and editing components</a> page for details.</p>
-<p>We compose our atomic components as follows:</p>
-<h2 id="atoms">Atoms<a class="headerlink" href="#atoms" title="Permanent link">¶</a></h2>
-<p>The smallest kind of component.
-May not contain any other components.
-Prefixed with <code>a-</code> in class names.</p>
-<h3 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="a-tag"&gt;Tag label {{ svg_icon('error') }}&lt;/div&gt;</code></pre>
-<h3 id="less">Less<a class="headerlink" href="#less" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.a-tag {
-    cursor: default;
-    display: inline-block;
-    padding: 5px 10px;
-    …
-}</code></pre>
-<h3 id="javascript">JavaScript<a class="headerlink" href="#javascript" title="Permanent link">¶</a></h3>
-<p>None of our atoms require any JavaScript at this time.</p>
-<h2 id="molecules">Molecules<a class="headerlink" href="#molecules" title="Permanent link">¶</a></h2>
-<p>The medium-sized component.
-May contain atoms.
-Prefixed with <code>m-</code> in class names.</p>
-<h3 id="html_1">HTML<a class="headerlink" href="#html_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div
-  class="m-notification
-         m-notification--visible
-         m-notification--error"
-&gt;
-  {{ svg_icon('error') }}
-  &lt;div class="m-notification__content" role="alert"&gt;
-    &lt;div class="m-notification__message"&gt;Page not found.&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-<h3 id="less_1">Less<a class="headerlink" href="#less_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.m-notification {
-    display: none;
-    position: relative;
-    padding: @notification-padding-px;
-    …
-}</code></pre>
-<h3 id="javascript_1">JavaScript<a class="headerlink" href="#javascript_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-js">const BASE_CLASS = 'm-notification';
-function Notification( element ) {
-  // Constants for the state of this Notification.
-  const SUCCESS = 'success';
-  const WARNING = 'warning';
-  const ERROR = 'error';
-
-  // Constants for the Notification modifiers.
-  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}</code></pre>
-<p>The Notification molecule can be instantiated
-by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const notification = new Notification(_dom);
-notification.init();</code></pre>
-<h2 id="organisms">Organisms<a class="headerlink" href="#organisms" title="Permanent link">¶</a></h2>
-<p>The largest component.
-May contain atoms, molecules, or
-(if no other solution is viable) other organisms.
-Prefixed with <code>o-</code> in class names.</p>
-<h3 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="o-expandable"&gt;
-  &lt;button class="o-expandable__header"&gt;
-    &lt;div class="o-expandable__label"&gt;…&lt;/div&gt;
-  &lt;/button&gt;
-&lt;/div&gt;</code></pre>
-<h3 id="less_2">Less<a class="headerlink" href="#less_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.o-expandable {
-    position: relative;
-
-    &amp;__header {
-        padding: 0;
-        border: 0;
-        …
-    }
-    …
-}</code></pre>
-<h3 id="javascript_2">JavaScript<a class="headerlink" href="#javascript_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-js">const BASE_CLASS = 'o-expandable';
-function Expandable( element ) {
-  // Bitwise flags for the state of this Expandable.
-  const COLLAPSED = 0;
-  const COLLAPSING = 1;
-  const EXPANDING = 2;
-  const EXPANDED = 3;
-
-  // The Expandable element will directly be the Expandable
-  // when used in an ExpandableGroup, otherwise it can be the parent container.
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _target = _dom.querySelector( '.' + BASE_CLASS + '_header' );
-  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}</code></pre>
-<p>The Expandable organism can be instantiated
-by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const expandable = new Expandable(_dom.querySelector('.o-expandable'));
-expandable.init(_expandable.EXPANDED);</code></pre>
-<p>or</p>
-<pre class="highlight"><code class="language-js">import {
-  instantiateAll,
-  Expandable,
-} from '@cfpb/cfpb-design-system/src/index.js';
-instantiateAll('.o-expandable', Expandable);</code></pre>
+then it won’t have an associated JS and/or SCSS file.</p>
+<h2 id="css-class-name-prefixes">CSS class name prefixes<a class="headerlink" href="#css-class-name-prefixes" title="Permanent link">¶</a></h2>
+<p>The atomic components have CSS class names with the prefixes <code>a-</code>, <code>m-</code>, <code>o-</code>,
+corresponding to atoms, molecules, and organisms. Additionally, utility classes
+have the <code>u-</code> prefix. These classes are for one-off adjustments, that are shared
+across several components and don't fit neatly into the atomic hierarchy.</p>
 <h2 id="folder-structure">Folder structure<a class="headerlink" href="#folder-structure" title="Permanent link">¶</a></h2>
 <p>Our atomic components are separated and named based on asset type.
-HTML, Less, and JavaScript for each component are in separate directories.</p>
-<h3 id="html_3">HTML<a class="headerlink" href="#html_3" title="Permanent link">¶</a></h3>
+HTML, SCSS, and JavaScript for each component are in separate directories.</p>
+<h3 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code>consumerfinance.gov/cfgov/v1/jinja2/v1/includes/atoms/
 consumerfinance.gov/cfgov/v1/jinja2/v1/includes/molecules/
 consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Some of our foundational components get their Less and JavaScript
+<p>Some of our foundational components get their SCSS and JavaScript
 from the <a href="https://cfpb.github.io/design-system/">Design System</a>,
 but the HTML for their Wagtail block templates
 is stored in the above folders.</p>
@@ -307,7 +201,7 @@ is stored in the above folders.</p>
 <pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/css/atoms/
 consumerfinance.gov/cfgov/unprocessed/css/molecules/
 consumerfinance.gov/cfgov/unprocessed/css/organisms/</code></pre>
-<h3 id="javascript_3">JavaScript<a class="headerlink" href="#javascript_3" title="Permanent link">¶</a></h3>
+<h3 id="javascript">JavaScript<a class="headerlink" href="#javascript" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/js/molecules/
 consumerfinance.gov/cfgov/unprocessed/js/organisms/</code></pre>
 <h3 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">¶</a></h3>
@@ -315,21 +209,7 @@ consumerfinance.gov/cfgov/unprocessed/js/organisms/</code></pre>
 consumerfinance.gov/test/unit_tests/js/organisms/</code></pre>
 <h2 id="javascript-architecture">JavaScript architecture<a class="headerlink" href="#javascript-architecture" title="Permanent link">¶</a></h2>
 <p>JavaScript components are built to be rendered on the server
-and then enhanced via JavaScript on the client.
-The basic interface for the components is as follows:</p>
-<pre class="highlight"><code class="language-js">function AtomicComponent(domElement) {
-  // Ensure the passed in Element is in the DOM.
-  // Query and store references to sub-elements.
-  // Instantiate child atomic components.
-  // Bind necessary events for referenced DOM elements.
-  // Perform other initialization related tasks.
-  this.init = function init() {};
-
-  // General teardown function
-  // We don't remove the element from the DOM so
-  // we need to unbind the events.
-  this.destroy = function destroy() {};
-}</code></pre>
+and then enhanced via JavaScript on the client.</p>
 <p>We generally favor composition over inheritance.
 You can get more information by reading the following:</p>
 <ul>

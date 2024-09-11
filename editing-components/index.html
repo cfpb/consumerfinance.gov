@@ -387,12 +387,12 @@ those context variables can also be output with simple Jinja2 expression tags:
 <code>{{ context_var }}</code>.</p>
 <h4 id="adding-css">Adding CSS<a class="headerlink" href="#adding-css" title="Permanent link">¶</a></h4>
 <p>If a component needs any custom styling not already provided
-by the <a href="https://github.com/cfpb/design-system">Design System</a> or consumerfinance.gov,
-you can add it by creating a new
-<a href="http://lesscss.org/">Less</a> file for the component.</p>
+by the <a href="https://github.com/cfpb/design-system">Design System</a>
+or consumerfinance.gov, you can add it by creating a new
+<a href="https://sass-lang.com/">SCSS</a> file for the component.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Please be sure that you actually need new Less before creating it.
+<p>Please be sure that you actually need new SCSS before creating it.
   We have a wide array of styles already available in the
   <a href="https://cfpb.github.io/design-system/components/">Design System components</a> and
   <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css">here in consumerfinance.gov</a>,
@@ -405,11 +405,11 @@ for site-wide use, this file should live in
 <code>cfgov/unprocessed/css/&lt;atoms|molecules|organisms&gt;/</code>.
 (Choose the deepest folder according to the atomic rank of the component.)
 Continuing the <code>RelatedContent</code> example, if it needed its own styles,
-it would live at <code>cfgov/unprocessed/css/molecules/related-content.less</code>.</p>
-<p>Newly-created Less files need to be imported into the project's main
-<code>main.less</code> file, located at <code>cfgov/unprocessed/css/main.less</code>.
+it would live at <code>cfgov/unprocessed/css/molecules/related-content.scss</code>.</p>
+<p>Newly-created SCSS files need to be imported (with <code>@use</code>) into the project's
+main <code>main.scss</code> file, located at <code>cfgov/unprocessed/css/main.scss</code>.
 Please place them in the appropriate section for their atomic rank.</p>
-<p>Because consumerfinance.gov uses <code>main.less</code> to build a single CSS file
+<p>Because consumerfinance.gov uses <code>main.scss</code> to build a single CSS file
 for almost the entire project, it is not necessary
 to tell the Python model anything about a component-specific stylesheet
 (for general-purpose, site-wide components).
@@ -417,7 +417,7 @@ That is <em>not</em> the case with JavaScript, as we will see in the next sectio
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you're working on a component that belongs to a particular sub-app,
-  its Less file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code>.</p>
+  its SCSS file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code>.</p>
 </div>
 <h4 id="adding-javascript">Adding JavaScript<a class="headerlink" href="#adding-javascript" title="Permanent link">¶</a></h4>
 <p>Each atomic component may optionally be given a <code>Media</code> class that can
