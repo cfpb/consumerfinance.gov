@@ -1,179 +1,26 @@
 # Notes on Atomic Design
 
-Our components employ the concept of atomic design, meaning that
-we break them down into atoms, molecules, and organisms,
+In general, our components employ the concept of atomic design,
+meaning that we break them down into atoms, molecules, and organisms,
 each successive level being more complex than the previous.
 (We do not currently use the template or page concepts as described in
 [Brad Frost's seminal article introducing atomic design](http://bradfrost.com/blog/post/atomic-web-design/)).
 
-Our components are composed (on the front-end) of HTML, Less, and JavaScript.
+Our components are composed (on the front-end) of HTML, SCSS (Sass), and JavaScript.
 If a component doesn’t have user interactions or require styling,
-then it won’t have an associated JS and/or Less file.
-Components that are available for adding to a Wagtail page also
-require some Python programming—see the
-[creating and editing components](editing-components.md) page for details.
+then it won’t have an associated JS and/or SCSS file.
 
-We compose our atomic components as follows:
+## CSS class name prefixes
 
-## Atoms
-
-The smallest kind of component.
-May not contain any other components.
-Prefixed with `a-` in class names.
-
-### HTML
-
-```html
-<div class="a-tag">Tag label {{ svg_icon('error') }}</div>
-```
-
-### Less
-
-```css
-.a-tag {
-    cursor: default;
-    display: inline-block;
-    padding: 5px 10px;
-    …
-}
-```
-
-### JavaScript
-
-None of our atoms require any JavaScript at this time.
-
-## Molecules
-
-The medium-sized component.
-May contain atoms.
-Prefixed with `m-` in class names.
-
-### HTML
-
-```html
-<div
-  class="m-notification
-         m-notification--visible
-         m-notification--error"
->
-  {{ svg_icon('error') }}
-  <div class="m-notification__content" role="alert">
-    <div class="m-notification__message">Page not found.</div>
-  </div>
-</div>
-```
-
-### Less
-
-```css
-.m-notification {
-    display: none;
-    position: relative;
-    padding: @notification-padding-px;
-    …
-}
-```
-
-### JavaScript
-
-```js
-const BASE_CLASS = 'm-notification';
-function Notification( element ) {
-  // Constants for the state of this Notification.
-  const SUCCESS = 'success';
-  const WARNING = 'warning';
-  const ERROR = 'error';
-
-  // Constants for the Notification modifiers.
-  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}
-```
-
-The Notification molecule can be instantiated
-by adding the following to your project's JavaScript code:
-
-```js
-const notification = new Notification(_dom);
-notification.init();
-```
-
-## Organisms
-
-The largest component.
-May contain atoms, molecules, or
-(if no other solution is viable) other organisms.
-Prefixed with `o-` in class names.
-
-### HTML
-
-```html
-<div class="o-expandable">
-  <button class="o-expandable__header">
-    <div class="o-expandable__label">…</div>
-  </button>
-</div>
-```
-
-### Less
-
-```css
-.o-expandable {
-    position: relative;
-
-    &__header {
-        padding: 0;
-        border: 0;
-        …
-    }
-    …
-}
-```
-
-### JavaScript
-
-```js
-const BASE_CLASS = 'o-expandable';
-function Expandable( element ) {
-  // Bitwise flags for the state of this Expandable.
-  const COLLAPSED = 0;
-  const COLLAPSING = 1;
-  const EXPANDING = 2;
-  const EXPANDED = 3;
-
-  // The Expandable element will directly be the Expandable
-  // when used in an ExpandableGroup, otherwise it can be the parent container.
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _target = _dom.querySelector( '.' + BASE_CLASS + '_header' );
-  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}
-```
-
-The Expandable organism can be instantiated
-by adding the following to your project's JavaScript code:
-
-```js
-const expandable = new Expandable(_dom.querySelector('.o-expandable'));
-expandable.init(_expandable.EXPANDED);
-```
-
-or
-
-```js
-import {
-  instantiateAll,
-  Expandable,
-} from '@cfpb/cfpb-design-system/src/index.js';
-instantiateAll('.o-expandable', Expandable);
-```
+The atomic components have CSS class names with the prefixes `a-`, `m-`, `o-`,
+corresponding to atoms, molecules, and organisms. Additionally, utility classes
+have the `u-` prefix. These classes are for one-off adjustments, that are shared
+across several components and don't fit neatly into the atomic hierarchy.
 
 ## Folder structure
 
 Our atomic components are separated and named based on asset type.
-HTML, Less, and JavaScript for each component are in separate directories.
+HTML, SCSS, and JavaScript for each component are in separate directories.
 
 ### HTML
 
@@ -185,7 +32,7 @@ consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/
 
 !!! note
 
-    Some of our foundational components get their Less and JavaScript
+    Some of our foundational components get their SCSS and JavaScript
     from the [Design System](https://cfpb.github.io/design-system/),
     but the HTML for their Wagtail block templates
     is stored in the above folders.
@@ -216,23 +63,6 @@ consumerfinance.gov/test/unit_tests/js/organisms/
 
 JavaScript components are built to be rendered on the server
 and then enhanced via JavaScript on the client.
-The basic interface for the components is as follows:
-
-```js
-function AtomicComponent(domElement) {
-  // Ensure the passed in Element is in the DOM.
-  // Query and store references to sub-elements.
-  // Instantiate child atomic components.
-  // Bind necessary events for referenced DOM elements.
-  // Perform other initialization related tasks.
-  this.init = function init() {};
-
-  // General teardown function
-  // We don't remove the element from the DOM so
-  // we need to unbind the events.
-  this.destroy = function destroy() {};
-}
-```
 
 We generally favor composition over inheritance.
 You can get more information by reading the following:

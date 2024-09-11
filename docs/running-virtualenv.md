@@ -125,7 +125,7 @@ The following yarn tasks are available:
 
 ```
 yarn scripts             # Build the Javascript with esbuild
-yarn styles              # Build the Less with esbuild w/ its PostCSSPlugin
+yarn styles              # Build the SCSS with esbuild and its PostCSS plugin
 yarn copy                # Move static files to the output directory
 yarn build               # Run scripts, styles, and copy along with app-specific scripts
 yarn watch               # Run the build then watch JS and LESS changes

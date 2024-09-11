@@ -19,7 +19,7 @@ const directories = [
       'cfgov/unprocessed/apps/filing-instruction-guide',
       'cfgov/filing_instruction_guide',
       'cfgov/unprocessed/js/organisms/SecondaryNav.js',
-      'cfgov/unprocessed/css/organisms/secondary-nav.less',
+      'cfgov/unprocessed/css/organisms/secondary-nav.scss',
       'cfgov/v1/jinja2/v1/includes/organisms/secondary-nav-fig.html',
     ],
     'compliance/small-business-lending',
@@ -85,7 +85,7 @@ const directories = [
   [
     [
       'cfgov/unprocessed/js/routes/on-demand/chart.js',
-      'cfgov/unprocessed/css/on-demand/chart.less',
+      'cfgov/unprocessed/css/on-demand/chart.scss',
       'cfgov/v1/jinja2/v1/includes/organisms/chart.html',
       /cfgov\/v1\/.*\.py/,
     ],
@@ -104,7 +104,7 @@ const directories = [
       'cfgov/unprocessed/js/routes/on-demand/filterable-list-controls.js',
       'cfgov/unprocessed/js/organisms/FilterableListControls.js',
       'cfgov/unprocessed/js/modules/util/FormModel.js',
-      'cfgov/unprocessed/css/organisms/filterable-list-controls.less',
+      'cfgov/unprocessed/css/organisms/filterable-list-controls.scss',
       'cfgov/v1/jinja2/v1/includes/organisms/filterable-list-controls.html',
       'cfgov/v1/jinja2/v1/includes/organisms/filterable-list-results.html',
       /cfgov\/v1\/.*\.py/,
@@ -115,7 +115,7 @@ const directories = [
     [
       'cfgov/unprocessed/js/organisms/Footer.js',
       'cfgov/unprocessed/js/modules/footer-button.js',
-      'cfgov/unprocessed/css/organisms/footer.less',
+      'cfgov/unprocessed/css/organisms/footer.scss',
       'cfgov/v1/jinja2/v1/includes/organisms/footer.html',
       /cfgov\/v1\/.*\.py/,
     ],
@@ -128,11 +128,11 @@ const directories = [
       'cfgov/unprocessed/js/organisms/MegaMenuDesktop.js',
       'cfgov/unprocessed/js/organisms/MegaMenuMobile.js',
       'cfgov/unprocessed/js/molecules/GlobalSearch.js',
-      'cfgov/unprocessed/css/organisms/header.less',
-      'cfgov/unprocessed/css/organisms/mega-menu.less',
-      'cfgov/unprocessed/css/molecules/global-eyebrow.less',
-      'cfgov/unprocessed/css/molecules/global-header-cta.less',
-      'cfgov/unprocessed/css/molecules/global-search.less',
+      'cfgov/unprocessed/css/organisms/header.scss',
+      'cfgov/unprocessed/css/organisms/mega-menu.scss',
+      'cfgov/unprocessed/css/molecules/global-eyebrow.scss',
+      'cfgov/unprocessed/css/molecules/global-header-cta.scss',
+      'cfgov/unprocessed/css/molecules/global-search.scss',
       'cfgov/v1/jinja2/v1/includes/organisms/header.html',
       'cfgov/mega_menu/jinja2/mega_menu',
       'cfgov/v1/jinja2/v1/includes/molecules/global-eyebrow.html',
@@ -145,7 +145,7 @@ const directories = [
   [['cfgov/v1/jinja2/v1/layouts/base.html'], 'components/meta'],
   [
     [
-      'cfgov/unprocessed/css/organisms/filterable-list-controls.less',
+      'cfgov/unprocessed/css/organisms/filterable-list-controls.scss',
       'cfgov/unprocessed/js/organisms/FilterableListControls.js',
       'cfgov/v1/jinja2/v1/includes/organisms/filterable-list-controls.html',
       /cfgov\/v1\/.*\.py/,
@@ -167,8 +167,8 @@ const directories = [
   [
     [
       'cfgov/unprocessed/js/routes/on-demand/mortgage-performance-trends.js',
-      'cfgov/unprocessed/css/on-demand/mortgage-performance-trends.less',
-      'cfgov/unprocessed/css/on-demand/chart.less',
+      'cfgov/unprocessed/css/on-demand/mortgage-performance-trends.scss',
+      'cfgov/unprocessed/css/on-demand/chart.scss',
       'cfgov/unprocessed/js/organisms/MortgagePerformanceTrends',
       'cfgov/v1/jinja2/v1/includes/organisms/mortgage-chart.html',
       'cfgov/v1/jinja2/v1/includes/organisms/mortgage-map.html',
@@ -181,7 +181,7 @@ const directories = [
     [
       'cfgov/unprocessed/apps/paying-for-college',
       'cfgov/unprocessed/js/organisms/SecondaryNav.js',
-      'cfgov/unprocessed/css/organisms/secondary-nav.less',
+      'cfgov/unprocessed/css/organisms/secondary-nav.scss',
       'cfgov/paying_for_college',
     ],
     'paying-for-college/disclosures',
@@ -190,7 +190,7 @@ const directories = [
     [
       'cfgov/unprocessed/apps/paying-for-college',
       'cfgov/unprocessed/js/organisms/SecondaryNav.js',
-      'cfgov/unprocessed/css/organisms/secondary-nav.less',
+      'cfgov/unprocessed/css/organisms/secondary-nav.scss',
       'cfgov/paying_for_college',
     ],
     'paying-for-college/your-financial-path-to-graduation',

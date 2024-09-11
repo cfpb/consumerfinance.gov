@@ -254,13 +254,13 @@ those context variables can also be output with simple Jinja2 expression tags:
 #### Adding CSS
 
 If a component needs any custom styling not already provided
-by the [Design System](https://github.com/cfpb/design-system) or consumerfinance.gov,
-you can add it by creating a new
-[Less](http://lesscss.org/) file for the component.
+by the [Design System](https://github.com/cfpb/design-system)
+or consumerfinance.gov, you can add it by creating a new
+[SCSS](https://sass-lang.com/) file for the component.
 
 !!! note
 
-      Please be sure that you actually need new Less before creating it.
+      Please be sure that you actually need new SCSS before creating it.
       We have a wide array of styles already available in the
       [Design System components](https://cfpb.github.io/design-system/components/) and
       [here in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css),
@@ -273,13 +273,13 @@ for site-wide use, this file should live in
 `cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
 (Choose the deepest folder according to the atomic rank of the component.)
 Continuing the `RelatedContent` example, if it needed its own styles,
-it would live at `cfgov/unprocessed/css/molecules/related-content.less`.
+it would live at `cfgov/unprocessed/css/molecules/related-content.scss`.
 
-Newly-created Less files need to be imported into the project's main
-`main.less` file, located at `cfgov/unprocessed/css/main.less`.
+Newly-created SCSS files need to be imported (with `@use`) into the project's
+main `main.scss` file, located at `cfgov/unprocessed/css/main.scss`.
 Please place them in the appropriate section for their atomic rank.
 
-Because consumerfinance.gov uses `main.less` to build a single CSS file
+Because consumerfinance.gov uses `main.scss` to build a single CSS file
 for almost the entire project, it is not necessary
 to tell the Python model anything about a component-specific stylesheet
 (for general-purpose, site-wide components).
@@ -288,7 +288,7 @@ That is _not_ the case with JavaScript, as we will see in the next section.
 !!! note
 
       If you're working on a component that belongs to a particular sub-app,
-      its Less file should live in `cfgov/unprocessed/<app-name>/css/`.
+      its SCSS file should live in `cfgov/unprocessed/<app-name>/css/`.
 
 #### Adding JavaScript
 
