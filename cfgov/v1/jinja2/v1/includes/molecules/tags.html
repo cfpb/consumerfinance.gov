@@ -27,13 +27,13 @@
         Topics
     </h4>
     {% endif %}
-    <ol class="m-tag-group{{ ' m-tag-group--stacked' if stack_tags else '' }}" aria-label="Topics">
+    <ul class="m-tag-group{{ ' m-tag-group--stacked' if stack_tags else '' }}" aria-label="Topics">
         {% for tag in tags %}
         <li>
             {% if tag.url %}
-                <a href="{{ tag.url }}" class="a-tag-topic">
+            <a href="{{ tag.url }}" class="a-tag-topic">
             {% else %}
-                <span class="a-tag-topic">
+            <span class="a-tag-topic">
             {% endif %}
                 <span class="a-tag-topic__bullet" aria-hidden="true">•</span>
                 <span class="a-tag-topic__text">{{ tag.text }}</span>
@@ -44,6 +44,6 @@
             {% endif %}
         </li>
         {% endfor %}
-    </ol>
+    </ul>
 </div>
 {% endmacro %}
