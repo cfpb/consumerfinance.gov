@@ -19,7 +19,7 @@
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.3",
     "@cfpb/cfpb-analytics": "0.3.2",
-    "@cfpb/cfpb-design-system": "3.1.1",
+    "@cfpb/cfpb-design-system": "3.1.7",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.20",
     "axe-core": "4.10.0",
