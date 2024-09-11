@@ -20,23 +20,23 @@
 
    ========================================================================== #}
 
-{% macro render(tags, show_heading=true) %}
-<div class="m-tags">
+{% macro render(tags, show_heading=true, stack_tags=false) %}
+<div>
     {% if show_heading %}
-    <span class="m-tags__heading">
-        Topics:
-    </span>
+    <h4>
+        Topics
+    </h4>
     {% endif %}
-    <ul class="m-tags__list" aria-label="Topics">
+    <ul class="m-tag-group{{ ' m-tag-group--stacked' if stack_tags else '' }}" aria-label="Topics">
         {% for tag in tags %}
-        <li class="m-tags__item">
+        <li>
             {% if tag.url %}
-            <a href="{{ tag.url }}" class="m-tags__tag">
+            <a href="{{ tag.url }}" class="a-tag-topic">
             {% else %}
-            <span class="m-tags__tag">
+            <span class="a-tag-topic">
             {% endif %}
-                <span class="m-tags__bullet" aria-hidden="true">&bull;</span>
-                {{ tag.text }}
+                <span class="a-tag-topic__bullet" aria-hidden="true">•</span>
+                <span class="a-tag-topic__text">{{ tag.text }}</span>
             {% if tag.url %}
             </a>
             {% else %}
