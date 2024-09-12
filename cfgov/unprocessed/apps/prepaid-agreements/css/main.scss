@@ -56,7 +56,7 @@
       padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
         em;
     }
-    .o-multiselect__choices {
+    .o-multiselect .m-tag-group {
       display: none;
     }
   }
