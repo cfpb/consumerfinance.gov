@@ -74,7 +74,7 @@ export class Multiselect {
   }
 
   choicesElement() {
-    return this.multiSelect('choices').find('label');
+    return this.choices().find('label');
   }
 
   choicesElementClick() {
@@ -104,7 +104,7 @@ export class Multiselect {
   }
 
   displayedTag() {
-    return this.multiSelect('choices').find('li');
+    return this.choices().find('li');
   }
 
   isRendered() {
