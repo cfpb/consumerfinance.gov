@@ -160,7 +160,7 @@
 
     &--parent {
       @include heading-4;
-
+      // Override for h4 margin.
       margin-bottom: inherit;
     }
   }
