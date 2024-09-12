@@ -20,7 +20,10 @@ export class Multiselect {
   }
 
   choices() {
-    return this.multiSelect('choices');
+    return cy
+      .contains('label[for^=o-filterable-list-controls]', this.label)
+      .next('.o-multiselect')
+      .find(`.m-tag-group`);
   }
 
   header() {
