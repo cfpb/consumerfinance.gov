@@ -37,6 +37,6 @@ export class FilterableList {
   }
 
   selectedTopics() {
-    return cy.get('.o-multiselect .m-tag-group > li');
+    return cy.get('.o-multiselect .m-tag-group .a-tag-filter');
   }
 }
