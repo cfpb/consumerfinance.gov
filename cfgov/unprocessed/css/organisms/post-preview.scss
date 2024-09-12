@@ -77,7 +77,6 @@
   &__subtitle {
     @include heading-6;
 
-    // margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
     clear: both;
   }
 

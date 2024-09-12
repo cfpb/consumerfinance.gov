@@ -42,6 +42,7 @@
     .financial-item__label > :not(p),
     .financial-item__value {
       @include heading-4;
+      // Override for h4 margin.
       margin-bottom: 0;
     }
   }

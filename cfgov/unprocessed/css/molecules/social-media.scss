@@ -26,6 +26,7 @@
   &--share {
     .m-social-media__heading {
       @include heading-5;
+      // Override for h5 margin.
       margin: auto 0;
     }
 

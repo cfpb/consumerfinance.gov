@@ -158,6 +158,7 @@ $bp-graph-cols-min: 740px;
 
   &__prompt {
     @include heading-2;
+    // Override for h2 heading.
     margin-bottom: math.div(30px, $size-ii) + em;
   }
 
@@ -188,6 +189,7 @@ $bp-graph-cols-min: 740px;
   &__heading,
   &__label {
     @include heading-5;
+    // Override for h5 margin.
     margin-bottom: 0;
   }
 
@@ -1416,6 +1418,7 @@ $bp-graph-cols-min: 740px;
 
     &__summary-heading {
       @include heading-4;
+      // Override for h4 margin and text-transform.
       margin-bottom: math.div(10px, $size-iv) + em;
       text-transform: none;
     }
