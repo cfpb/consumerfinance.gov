@@ -107,6 +107,15 @@
     }
   }
 
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    // This is essentially .m-list--links.
+    &__nav-list .m-list__item,
+    &__list .m-list__item {
+      margin-bottom: 0;
+    }
+  }
+
   &__pre {
     position: relative;
     margin-bottom: math.div(45px, $base-font-size-px) + em;
