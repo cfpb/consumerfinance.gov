@@ -796,7 +796,7 @@ if ENABLE_SSO:
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
 
 
-# Deletion archival
+# Deletion archive
 # If this is set then when Wagtail pages are deleted a JSON archive file will
 # be written to this path containing the deleted page's data.
 ARCHIVE_FILESYSTEM = os.environ.get("ARCHIVE_FILESYSTEM")
