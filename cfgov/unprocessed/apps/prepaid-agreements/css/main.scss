@@ -27,6 +27,7 @@
     font-size: inherit;
 
     @include heading-4;
+    // Override for h4 margin.
     margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
       em;
 
@@ -56,7 +57,7 @@
       padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
         em;
     }
-    .o-multiselect__choices {
+    .o-multiselect .m-tag-group {
       display: none;
     }
   }
@@ -105,6 +106,7 @@
 .prepaid-agreements-detail {
   dt h2 {
     @include h4;
+    // Override for h4 margin.
     margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
       em;
   }

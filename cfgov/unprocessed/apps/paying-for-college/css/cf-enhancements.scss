@@ -82,12 +82,8 @@
 
   &__text {
     @include h4;
+    // Override for h4 margin.
     margin: 0;
-
-    .short-desc {
-      display: block;
-      font-size: $base-font-size-px;
-    }
   }
 }
 

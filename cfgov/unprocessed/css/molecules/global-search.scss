@@ -12,11 +12,6 @@ $mobile-trigger-ht-px: 54px;
 
 .m-global-search {
   &__trigger {
-    // Hide search unless we have JavaScript (JS).
-    html.no-js & {
-      display: none;
-    }
-
     font-weight: 500;
 
     // Resets for default button styles.
@@ -106,8 +101,6 @@ $mobile-trigger-ht-px: 54px;
       width: 100%;
 
       &-form {
-        @include u-drop-shadow-after;
-
         box-sizing: border-box;
         width: 100%;
         padding: $margin-em $margin-half-em $margin-half-em;
@@ -118,6 +111,8 @@ $mobile-trigger-ht-px: 54px;
         background-color: var(--gray-5);
         border-top: 1px solid var(--gray-40);
         border-bottom: 1px solid var(--gray-40);
+
+        @include u-drop-shadow-after;
       }
     }
   }
@@ -186,4 +181,9 @@ $mobile-trigger-ht-px: 54px;
       display: block;
     }
   }
+}
+
+// Hide search unless we have JavaScript (JS).
+html.no-js .m-global-search__trigger {
+  display: none;
 }

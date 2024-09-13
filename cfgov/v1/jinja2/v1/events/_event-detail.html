@@ -79,7 +79,7 @@
     </div>
     {% if page.tags.names() | length %}
     <footer>
-        {%- import 'v1/includes/tags.html' as tags %}
+        {%- import 'v1/includes/molecules/tags.html' as tags %}
         {{ tags.render(page.related_metadata_tags().links) }}
     </footer>
     {% endif %}

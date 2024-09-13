@@ -158,6 +158,7 @@ $bp-graph-cols-min: 740px;
 
   &__prompt {
     @include heading-2;
+    // Override for h2 heading.
     margin-bottom: math.div(30px, $size-ii) + em;
   }
 
@@ -188,6 +189,7 @@ $bp-graph-cols-min: 740px;
   &__heading,
   &__label {
     @include heading-5;
+    // Override for h5 margin.
     margin-bottom: 0;
   }
 
@@ -399,9 +401,9 @@ $bp-graph-cols-min: 740px;
   &__summary,
   &__summary.column-well__content {
     padding-top: math.div(20px, $base-font-size-px) + em;
-    padding-right: ($grid_gutter-width / 2);
+    padding-right: math.div($grid_gutter-width, 2);
     padding-bottom: math.div(20px, $base-font-size-px) + em;
-    padding-left: ($grid_gutter-width / 2);
+    padding-left: math.div($grid_gutter-width, 2);
     margin-top: math.div(30px, $base-font-size-px) + em;
     margin-right: -1 * math.div($grid_gutter-width, 2);
     margin-left: -1 * math.div($grid_gutter-width, 2);
@@ -1232,7 +1234,9 @@ $bp-graph-cols-min: 740px;
 
   &__top-label {
     width: $bar-graph-top-label-width;
-    margin-left: -($bar-graph-top-label-width - $bar-graph-width) / 2 - $bar-graph-line-overhang;
+    margin-left: (
+        -1 * math.div(($bar-graph-top-label-width - $bar-graph-width), 2)
+      ) - $bar-graph-line-overhang;
     position: absolute;
     top: math.div(-$bar-graph-top-label-height, $small-font-size-px) + em;
     left: 50%;
@@ -1414,6 +1418,7 @@ $bp-graph-cols-min: 740px;
 
     &__summary-heading {
       @include heading-4;
+      // Override for h4 margin and text-transform.
       margin-bottom: math.div(10px, $size-iv) + em;
       text-transform: none;
     }

@@ -18,7 +18,7 @@ export class BeforeYouClaim {
   }
 
   enterAge(age) {
-    const year = new Date().getFullYear();
+    const year = 2024;
     this.setBirthDate('1', '1', String(year - age));
     this.setHighestAnnualSalary('115000');
     this.getEstimate();
@@ -39,7 +39,7 @@ export class BeforeYouClaim {
   interceptRetirementAPIRequests() {
     cy.intercept(
       {
-        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1979/**',
+        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1981/**',
       },
       (request) => {
         request.reply(retirementAPIResponseUnder50);
@@ -48,7 +48,7 @@ export class BeforeYouClaim {
 
     cy.intercept(
       {
-        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1969/**',
+        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1959/**',
       },
       (request) => {
         request.reply(retirementAPIResponseOver50);
@@ -57,7 +57,7 @@ export class BeforeYouClaim {
 
     cy.intercept(
       {
-        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1952/**',
+        url: '/consumer-tools/retirement/retirement-api/estimator/1-1-1953/**',
       },
       (request) => {
         request.reply(retirementAPIResponseOver70);

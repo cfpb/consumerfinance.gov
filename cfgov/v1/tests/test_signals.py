@@ -1,9 +1,10 @@
-from unittest import TestCase, mock
+from unittest import mock
 
-from django.test import TestCase as DjangoTestCase
+from django.test import TestCase, override_settings
 
 from wagtail.models import Site
 
+from cdntools.backends import MOCK_PURGED
 from teachers_digital_platform.models import ActivityPage, ActivitySetUp
 from v1.models import (
     BlogPage,
@@ -16,6 +17,13 @@ from v1.models import (
 from v1.signals import invalidate_filterable_list_caches
 
 
+@override_settings(
+    WAGTAILFRONTENDCACHE={
+        "akamai": {
+            "BACKEND": "cdntools.backends.MockCacheBackend",
+        },
+    }
+)
 class FilterableListInvalidationTestCase(TestCase):
     def setUp(self):
         self.root_page = Site.objects.first().root_page
@@ -42,12 +50,13 @@ class FilterableListInvalidationTestCase(TestCase):
         self.root_page.add_child(instance=self.non_filterable_page)
         self.non_filterable_page.save()
 
-    @mock.patch("v1.signals.AkamaiBackend.purge_by_tags")
+        # Reset cache purged URLs after each test
+        MOCK_PURGED[:] = []
+
     @mock.patch("v1.signals.cache")
     def test_invalidate_filterable_list_caches(
         self,
         mock_cache,
-        mock_purge,
     ):
         invalidate_filterable_list_caches(None, instance=self.blog_page)
 
@@ -61,24 +70,18 @@ class FilterableListInvalidationTestCase(TestCase):
             mock_cache.delete.assert_any_call(f"{cache_key_prefix}-page_ids")
             mock_cache.delete.assert_any_call(f"{cache_key_prefix}-topics")
 
-        mock_purge.assert_called_once()
-        self.assertIn(
-            self.filterable_list_page.slug, mock_purge.mock_calls[0].args[0]
-        )
+        self.assertIn(self.filterable_list_page.slug, MOCK_PURGED)
 
-    @mock.patch("v1.signals.AkamaiBackend.purge_by_tags")
     @mock.patch("django.core.cache.cache")
-    def test_invalidate_filterable_list_caches_does_nothing(
-        self, mock_cache, mock_purge
-    ):
+    def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):
         invalidate_filterable_list_caches(
             None, instance=self.non_filterable_page
         )
         mock_cache.delete.assert_not_called()
-        mock_purge.assert_not_called()
+        self.assertEqual(MOCK_PURGED, [])
 
 
-class RefreshActivitiesTestCase(DjangoTestCase):
+class RefreshActivitiesTestCase(TestCase):
     fixtures = ["tdp_minimal_data"]
 
     def setUp(self):

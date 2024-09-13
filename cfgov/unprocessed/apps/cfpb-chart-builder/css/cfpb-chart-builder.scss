@@ -92,9 +92,10 @@ x/y positioning on the SVG elements.
     // Center "Select time range" label.
     .cfpb-chart__small {
       .highcharts-range-selector-label {
-        @include h6;
         transform: translateY(370px);
         left: calc(50% - 64px) !important;
+
+        @include h6;
       }
 
       .highcharts-axis-title {

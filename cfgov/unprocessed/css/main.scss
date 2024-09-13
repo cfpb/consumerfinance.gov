@@ -1,6 +1,6 @@
 /* ==========================================================================
    consumerfinance.gov
-   Main Less file
+   Main SCSS file
    ========================================================================== */
 
 /* Base styles
@@ -60,7 +60,6 @@
 @use 'molecules/related-metadata' as *;
 @use 'molecules/related-posts' as *;
 @use 'molecules/social-media' as *;
-@use 'molecules/tags' as *;
 
 /* Organism pieces
    ========================================================================== */
