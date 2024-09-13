@@ -1415,13 +1415,6 @@ $bp-graph-cols-min: 740px;
         padding-left: math.div(40px, $base-font-size-px) + em;
       }
     }
-
-    &__summary-heading {
-      @include heading-4;
-      // Override for h4 margin and text-transform.
-      margin-bottom: math.div(10px, $size-iv) + em;
-      text-transform: none;
-    }
   }
 
   .line-item {
