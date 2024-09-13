@@ -30,13 +30,6 @@
     // Override for h4 margin.
     margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
       em;
-
-    &:last-of-type {
-      margin-bottom: math.div(
-          math.div($grid-gutter-width, 6),
-          $base-font-size-px
-        ) + em;
-    }
   }
 
   dd + dt {
@@ -104,13 +97,6 @@
 }
 
 .prepaid-agreements-detail {
-  dt h2 {
-    @include h4;
-    // Override for h4 margin.
-    margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
-      em;
-  }
-
   dd {
     margin-bottom: math.div(
         math.div($grid-gutter-width, 1.5),
