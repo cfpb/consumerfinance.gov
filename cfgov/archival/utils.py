@@ -98,7 +98,7 @@ def import_page(parent_page, page_json, slug=None):
     # slug.
     page.slug = find_available_slug(parent_page, page.slug)
 
-    # These will all be set appropriate when we call add_child on parent_page
+    # These will all be set appropriately when we call add_child on parent_page
     page.path = None
     page.depth = None
     page.numchild = 0
