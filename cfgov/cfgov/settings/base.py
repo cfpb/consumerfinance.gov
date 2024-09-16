@@ -799,4 +799,6 @@ if ENABLE_SSO:
 # Deletion archive
 # If this is set then when Wagtail pages are deleted a JSON archive file will
 # be written to this path containing the deleted page's data.
-ARCHIVE_FILESYSTEM = os.environ.get("ARCHIVE_FILESYSTEM")
+ARCHIVE_PATH = os.environ.get("ARCHIVE_PATH")
+if ARCHIVE_PATH is not None:
+    ARCHIVE_FILESYSTEM = f"osfs://{ARCHIVE_PATH}"
