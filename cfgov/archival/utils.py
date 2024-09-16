@@ -69,14 +69,10 @@ def import_page(parent_page, page_json, slug=None):
     app_label = page_data["app_label"]
     model_name = page_data["model"]
 
-    # Get the specific model that the imported page belongs to
-    try:
-        model = apps.get_model(app_label, model_name)
-    except LookupError as exc:
-        logger.error(
-            f"Unable to import page of type {app_label}.{model_name}; {exc}"
-        )
-        raise
+    # Get the specific model that the imported page belongs to.
+    # This will raise a `LookupError` if the app/model doesn't exist, which
+    # we'll let percolate up.
+    model = apps.get_model(app_label, model_name)
 
     # Construct a bare Page object first to get the treebeard
     # assignments right.
