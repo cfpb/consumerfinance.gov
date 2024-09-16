@@ -25,9 +25,8 @@ def archive_page_data_receiver(sender, instance, **kwargs):
     fs = apps.get_app_config("archival").filesystem
 
     page = instance.specific
-
-    page_path = unquote(page.relative_url[1:])
-    fs.exists(page_path) or fs.makedirs(page_path)
+    site = page.get_site()
+    page_path = unquote(page.relative_url(site))
 
     page_json = export_page(page)
 
@@ -35,6 +34,7 @@ def archive_page_data_receiver(sender, instance, **kwargs):
     page_filename = f"{page.slug}-{now.isoformat()}.json"
     target_path = smart_str(fs_path.join(page_path, page_filename))
 
+    fs.exists(page_path) or fs.makedirs(page_path)
     fs.writetext(target_path, page_json, encoding="utf8")
 
 
