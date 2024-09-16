@@ -68,7 +68,6 @@ def import_page(parent_page, page_json, slug=None):
     # Verify that we can load import the page
     app_label = page_data["app_label"]
     model_name = page_data["model"]
-    page_last_migration = page_data["last_migration"]
 
     # Get the specific model that the imported page belongs to
     try:
@@ -78,16 +77,6 @@ def import_page(parent_page, page_json, slug=None):
             f"Unable to import page of type {app_label}.{model_name}; {exc}"
         )
         raise
-
-    # Compare the last migration
-    last_migration = get_last_migration(app_label)
-    if last_migration != page_last_migration:
-        message = (
-            f"Mismatched migrations: {app_label} is at {last_migration}, "
-            f"page exported at {page_last_migration}"
-        )
-        logger.error(message)
-        raise ValueError(message)
 
     # Construct a bare Page object first to get the treebeard
     # assignments right.
@@ -103,10 +92,6 @@ def import_page(parent_page, page_json, slug=None):
     page.depth = None
     page.numchild = 0
     page.url_path = None
-
-    # Reset the translation key
-    # TODO: I doubt we want to do this, but it's useful in testing.
-    # page.translation_key = uuid.uuid4()
 
     # All imported pages will be drafts by default
     page.live = False
