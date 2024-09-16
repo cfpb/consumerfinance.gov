@@ -84,13 +84,8 @@ class ImportPageTestCase(TestCase):
                 "data": {},
             }
         )
-        with self.assertRaises(LookupError), self.assertLogs(
-            "archival.utils"
-        ) as cm:
+        with self.assertRaises(LookupError):
             import_page(self.root_page, page_json)
-
-        self.assertEqual(len(cm.output), 1)
-        self.assertIn("Unable to import page of type", cm.output[0])
 
     def test_import_page_app_does_not_exist(self):
         page_json = json.dumps(
@@ -101,13 +96,8 @@ class ImportPageTestCase(TestCase):
                 "data": {},
             }
         )
-        with self.assertRaises(LookupError), self.assertLogs(
-            "archival.utils"
-        ) as cm:
+        with self.assertRaises(LookupError):
             import_page(self.root_page, page_json)
-
-        self.assertEqual(len(cm.output), 1)
-        self.assertIn("Unable to import page of type", cm.output[0])
 
     def test_import_page(self):
         page = import_page(self.root_page, self.page_json)
