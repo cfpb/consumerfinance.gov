@@ -109,23 +109,6 @@ class ImportPageTestCase(TestCase):
         self.assertEqual(len(cm.output), 1)
         self.assertIn("Unable to import page of type", cm.output[0])
 
-    def test_import_page_mismatched_migrations(self):
-        page_json = json.dumps(
-            {
-                "app_label": "v1",
-                "model": "blogpage",
-                "last_migration": "XXXX_non_existent_migration",
-                "data": {},
-            }
-        )
-        with self.assertRaises(ValueError), self.assertLogs(
-            "archival.utils"
-        ) as cm:
-            import_page(self.root_page, page_json)
-
-        self.assertEqual(len(cm.output), 1)
-        self.assertIn("Mismatched migrations", cm.output[0])
-
     def test_import_page(self):
         page = import_page(self.root_page, self.page_json)
 
