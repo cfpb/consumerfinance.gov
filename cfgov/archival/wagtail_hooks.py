@@ -26,7 +26,7 @@ def archive_page_data_receiver(sender, instance, **kwargs):
 
     page = instance.specific
 
-    page_path = unquote(page.url[1:])
+    page_path = unquote(page.relative_url[1:])
     fs.exists(page_path) or fs.makedirs(page_path)
 
     page_json = export_page(page)
