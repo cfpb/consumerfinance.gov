@@ -100,6 +100,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+// Accessibility Demo (no clicking allowed)
+// don't allow mouse clicking
+* {
+  pointer-events: none;
+}
+
 // Make Arial the first-line font in Vietnamese pages' main content area.
 // This is used because Avenir Next does not contain all Vietnamese diacritics.
 // See https://[GHE]/Design-Development/Design-and-Content-Team/issues/175
