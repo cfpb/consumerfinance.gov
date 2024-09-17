@@ -3,6 +3,7 @@ diff_cover==8.0.3
 django-slowtests==1.1.1
 freezegun==1.4.0
 github3.py==4.0.1
+matplotlib==3.7.5
 model-bakery==1.17.0
 moto==5.0.2
 pip

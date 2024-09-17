@@ -1,4 +1,5 @@
 beautifulsoup4==4.11.2
 boto3==1.34.54
 github3.py==4.0.1
+matplotlib==3.7.5
 requests==2.32.0
