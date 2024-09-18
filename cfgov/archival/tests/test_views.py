@@ -1,3 +1,4 @@
+import json
 from io import StringIO
 
 from django.test import TestCase
@@ -91,3 +92,49 @@ class ImportViewTestCase(TestCase, WagtailTestUtils):
         )
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
+
+    def test_import_view_post_app_does_not_exist(self):
+        page_json = json.dumps(
+            {
+                "app_label": "app_does_not_exist",
+                "model": "blogpage",
+                "last_migration": "",
+                "data": {},
+            }
+        )
+        page_io = StringIO(page_json)
+
+        # Log in and post it
+        self.login()
+        response = self.client.post(
+            reverse("import_page", kwargs={"page_id": self.root_page.id}),
+            {"page_file": page_io},
+        )
+        self.assertTrue(len(response.context["form"].errors["page_file"]) > 0)
+        self.assertIn(
+            "There was an error importing this file as a page.",
+            response.context["form"].errors["page_file"][0],
+        )
+
+    def test_import_view_post_model_does_not_exist(self):
+        page_json = json.dumps(
+            {
+                "app_label": "v1",
+                "model": "PageModelDoesNotExist",
+                "last_migration": "",
+                "data": {},
+            }
+        )
+        page_io = StringIO(page_json)
+
+        # Log in and post it
+        self.login()
+        response = self.client.post(
+            reverse("import_page", kwargs={"page_id": self.root_page.id}),
+            {"page_file": page_io},
+        )
+        self.assertTrue(len(response.context["form"].errors["page_file"]) > 0)
+        self.assertIn(
+            "There was an error importing this file as a page.",
+            response.context["form"].errors["page_file"][0],
+        )
