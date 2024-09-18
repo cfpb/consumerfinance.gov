@@ -51,8 +51,8 @@ Try using keyboard shortcuts like tab, enter, and spacebar instead. 🥳⌨️�
         });
 
         // Create an accessibility icon that says no mouse clicking is allowed when clicked
-        const accessibilityMenu = document.createElement('button');
-        accessibilityMenu.style = `
+        const accessibilityButton = document.createElement('button');
+        accessibilityButton.style = `
             background-size: cover;
             background: ${noMouseIconUrlString};
             height: 40px;
@@ -62,14 +62,14 @@ Try using keyboard shortcuts like tab, enter, and spacebar instead. 🥳⌨️�
             width: 40px;
             z-index: 10000;
         `;
-        accessibilityMenu.setAttribute('aria-hidden', 'true');
-        accessibilityMenu.setAttribute('tabindex', '-1');
-        accessibilityMenu.setAttribute('data-accessibility', 'keyboard');
+        accessibilityButton.setAttribute('aria-hidden', 'true');
+        accessibilityButton.setAttribute('tabindex', '-1');
+        accessibilityButton.setAttribute('data-accessibility', 'keyboard');
         
         // track number of clicks for the easter egg 🥚
-        accessibilityMenu.setAttribute('data-clicks', 0);
+        accessibilityButton.setAttribute('data-clicks', 0);
 
-        accessibilityMenu.addEventListener('click', e => {
+        accessibilityButton.addEventListener('click', e => {
             const accessibilityButtonAttributes = e.target.dataset;
             const buttonStyle = e.target.style;
             const clicksAsNum = Number(e.target.dataset.clicks);
@@ -97,23 +97,9 @@ P.S. You can also go back to the normal mode by clicking the icon again.
             }
         });
 
-        document.body.appendChild(accessibilityMenu);
-
-
+        // append accessibility button and blocking div to body
+        document.body.appendChild(accessibilityButton);
         document.body.appendChild(clickBlockingDiv);
-
-
-        // // create a div that covers the whole screen and blocks clicking and can't see through
-        // const clickBlockingDivNoVisual = document.createElement('div');
-        // clickBlockingDivNoVisual.style = `
-        //     position: fixed;
-        //     top: 0;
-        //     left: 0;
-        //     width: 100%;
-        //     height: 100%;
-        //     z-index: 9999;
-        //     background-color: black;
-        // `;
     </script>
 
     {% if flag_enabled('BETA_NOTICE') %}
