@@ -427,20 +427,13 @@ Enter = open links and activate buttons
       accessibilityIcon.setAttribute('data-clicks', 0);
 
       accessibilityIcon.addEventListener('click', e => {
-          const accessibilityIconAttributes = e.target.dataset;
-          const iconStyle = e.target.style;
-          const clicksAsNum = Number(e.target.dataset.clicks);
+        alert(`
+No easter eggs hiding here this time!
 
-          if (accessibilityIconAttributes.accessibility === 'keyboard') {
-              e.target.dataset.accessibility = 'screen-reader';
-              clickBlockingDiv.style.backgroundColor = '#101820';
-              e.target.style.background = noVisualOrMouseIconUrlString;
-          } else if (accessibilityIconAttributes.accessibility === 'screen-reader') {
-              e.target.dataset.accessibility = 'keyboard';
-              e.target.style.background = noMouseIconUrlString;
-              clickBlockingDiv.style.backgroundColor = '';
-              e.target.dataset.clicks = 0;
-          }
+Try exploring the site on your own with your screen reader.
+
+Can you try looking up information in the Consumer Complaint Database? 🕵️
+        `)
       });
 
       // append accessibility button and blocking div to body
@@ -449,7 +442,7 @@ Enter = open links and activate buttons
   </script>
 
   {# The following script block is consumerfinance.gov specific #}
-  <script>
+  <script type="text/javascript">
     // remove the search functionality because it doesn't work great on dev
     const globalSearchButton = document.querySelector('.m-global-search__trigger');
     globalSearchButton.style.display = 'none';
