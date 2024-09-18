@@ -372,6 +372,8 @@ itemscope itemtype="https://schema.org/FAQPage"
         </script><div id='ZN_eLsXNyVBrTKgTHM'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
     {% endif %}
 
+
+    {# The following script block can be added to other sites to test accessibility #}
     <script type="text/javascript">
       console.log('Initializing accessibility button...')
 
@@ -402,8 +404,8 @@ Try using keyboard shortcuts like tab, enter, and spacebar instead. 🥳⌨️�
       });
 
       // Create an accessibility icon that says no mouse clicking is allowed when clicked
-      const accessibilityButton = document.createElement('button');
-      accessibilityButton.style = `
+      const accessibilityIcon = document.createElement('div');
+      accessibilityIcon.style = `
           background-size: cover;
           background: ${noMouseIconUrlString};
           height: 40px;
@@ -413,23 +415,23 @@ Try using keyboard shortcuts like tab, enter, and spacebar instead. 🥳⌨️�
           width: 40px;
           z-index: 10000;
       `;
-      accessibilityButton.setAttribute('aria-hidden', 'true');
-      accessibilityButton.setAttribute('tabindex', '-1');
-      accessibilityButton.setAttribute('data-accessibility', 'keyboard');
+      accessibilityIcon.setAttribute('aria-hidden', 'true');
+      // accessibilityIcon.setAttribute('tabindex', '-1');
+      accessibilityIcon.setAttribute('data-accessibility', 'keyboard');
       
       // track number of clicks for the easter egg 🥚
-      accessibilityButton.setAttribute('data-clicks', 0);
+      accessibilityIcon.setAttribute('data-clicks', 0);
 
-      accessibilityButton.addEventListener('click', e => {
-          const accessibilityButtonAttributes = e.target.dataset;
-          const buttonStyle = e.target.style;
+      accessibilityIcon.addEventListener('click', e => {
+          const accessibilityIconAttributes = e.target.dataset;
+          const iconStyle = e.target.style;
           const clicksAsNum = Number(e.target.dataset.clicks);
 
           // add one to the number of clicks
           e.target.dataset.clicks = clicksAsNum + 1;
 
           // show screen reader easter egg after 3 clicks 🥚
-          if (accessibilityButtonAttributes.accessibility === 'keyboard' && clicksAsNum + 1 >= 3) {
+          if (accessibilityIconAttributes.accessibility === 'keyboard' && clicksAsNum + 1 >= 3) {
               e.target.dataset.accessibility = 'screen-reader';
               clickBlockingDiv.style.backgroundColor = '#101820';
               e.target.style.background = noVisualOrMouseIconUrlString;
@@ -440,7 +442,7 @@ Bonus challenge: can you navigate to the Consumer Complaint Database without bei
 
 P.S. You can also go back to the normal mode by clicking the icon again.
           `);
-          } else if (accessibilityButtonAttributes.accessibility === 'screen-reader') {
+          } else if (accessibilityIconAttributes.accessibility === 'screen-reader') {
               e.target.dataset.accessibility = 'keyboard';
               e.target.style.background = noMouseIconUrlString;
               clickBlockingDiv.style.backgroundColor = '';
@@ -449,8 +451,15 @@ P.S. You can also go back to the normal mode by clicking the icon again.
       });
 
       // append accessibility button and blocking div to body
-      document.body.appendChild(accessibilityButton);
+      document.body.appendChild(accessibilityIcon);
       document.body.appendChild(clickBlockingDiv);
+  </script>
+
+  {# The following script block is consumerfinance.gov specific #}
+  <script>
+    // remove the search functionality because it doesn't work great on dev
+    const globalSearchDiv = document.querySelector('.m-global-search');
+    globalSearchDiv.remove();
   </script>
 
     {% endblock javascript %}
