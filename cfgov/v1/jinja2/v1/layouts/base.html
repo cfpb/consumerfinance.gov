@@ -458,8 +458,8 @@ P.S. You can also go back to the normal mode by clicking the icon again.
   {# The following script block is consumerfinance.gov specific #}
   <script>
     // remove the search functionality because it doesn't work great on dev
-    const globalSearchDiv = document.querySelector('.m-global-search');
-    globalSearchDiv.remove();
+    const globalSearchButton = document.querySelector('.m-global-search__trigger');
+    globalSearchButton.style.display = 'none';
   </script>
 
     {% endblock javascript %}
