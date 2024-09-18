@@ -30,10 +30,19 @@ def import_view(request, page_id):
 
         if input_form.is_valid():
             json_file = request.FILES["page_file"]
-            new_page = import_page(
-                parent_page, json_file.read().decode("utf8")
-            )
-            return redirect("wagtailadmin_pages:edit", new_page.id)
+            try:
+                new_page = import_page(
+                    parent_page, json_file.read().decode("utf8")
+                )
+            except Exception:
+                input_form.add_error(
+                    "page_file",
+                    "There was an error importing this file as a page. "
+                    "Please ensure the app and model it references exist, "
+                    "and that its schema is up to date.",
+                )
+            else:
+                return redirect("wagtailadmin_pages:edit", new_page.id)
     else:
         input_form = ImportForm()
 
