@@ -984,7 +984,7 @@
 
 {% block javascript scoped %}
 {{ super() }}
-<script>
+<script nonce="{{request.csp_nonce}}">
   jsl(['{{ static("apps/financial-well-being/js/home.js") }}']);
 </script>
 {% endblock %}

@@ -463,117 +463,28 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
         "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
     }
 
-# CSP Allowlists
+# CSP
 #
-# Please note: Changing these lists will change the value of the
-# Content-Security-Policy header Django returns. Django does NOT include
-# header values when calculating the response hash returned in the ETag
-# header.
-# Our Akamai cache uses the ETag header to know whether a cached copy of a
-# page has been updated after it expires or after an invalidation purge.
-#
-# Together, this means that any changes to these CSP values WILL NOT BE
-# RETURNED by Akamai until a page's non-header content changes, or a
-# delete-purge is performed.
+# See https://web.dev/articles/strict-csp
 
-# These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
-    "'self'",
+    "'strict-dynamic'",
+    "https:",
     "'unsafe-inline'",
-    "'unsafe-eval'",
-    "*.consumerfinance.gov",
-    "dap.digitalgov.gov",
-    "*.googleanalytics.com",
-    "*.google-analytics.com",
-    "*.googletagmanager.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
-    "api.mapbox.com",
-    "js-agent.newrelic.com",
-    "bam.nr-data.net",
-    "gov-bam.nr-data.net",
-    "*.youtube.com",
-    "*.ytimg.com",
-    "*.mouseflow.com",
-    "*.geo.census.gov",
-    "about:",
-    "www.federalregister.gov",
-    "*.qualtrics.com",
-    "www.ssa.gov/accessibility/andi/",
-    "ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js", # needed for ANDI accessibility tool
 )
-
-# These specify valid sources of CSS code
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
-    "*.consumerfinance.gov",
-    "*.googletagmanager.com",
-    "optimize.google.com",
-    "fonts.googleapis.com",
-    "api.mapbox.com",
-    "www.ssa.gov/accessibility/andi/",
+    "https:",
 )
-
-# These specify valid image sources
 CSP_IMG_SRC = (
-    "'self'",
-    "*.consumerfinance.gov",
-    "www.ecfr.gov",
-    "s3.amazonaws.com",
-    "img.youtube.com",
-    "*.google-analytics.com",
-    "*.googletagmanager.com",
-    "optimize.google.com",
-    "api.mapbox.com",
-    "*.tiles.mapbox.com",
-    "blob:",
+    "*",
     "data:",
-    "www.gravatar.com",
-    "*.qualtrics.com",
-    "*.mouseflow.com",
-    "i.ytimg.com",
-    "www.ssa.gov/accessibility/andi/",
+    "blob:",
 )
-
-# These specify what URL's we allow to appear in frames/iframes
-CSP_FRAME_SRC = (
-    "'self'",
-    "*.consumerfinance.gov",
-    "*.googletagmanager.com",
-    "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
-    "www.youtube.com",
-    "*.qualtrics.com",
-    "mailto:",
-)
-
-# These specify where we allow fonts to come from
-CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
-
-# These specify hosts we can make (potentially) cross-domain AJAX requests to
-CSP_CONNECT_SRC = (
-    "'self'",
-    "*.consumerfinance.gov",
-    "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "*.tiles.mapbox.com",
-    "api.mapbox.com",
-    "bam.nr-data.net",
-    "gov-bam.nr-data.net",
-    "s3.amazonaws.com",
-    "public.govdelivery.com",
-    "n2.mouseflow.com",
-    "*.qualtrics.com",
-    "raw.githubusercontent.com",
-)
-
-# These specify valid media sources (e.g., MP3 files)
-CSP_MEDIA_SRC = (
-    "'self'",
-    "*.consumerfinance.gov",
-)
+CSP_OBJECT_SRC = ("'none'")
+CSP_BASE_URI = ("'none'")
+CSP_INCLUDE_NONCE_IN = ["script-src"]
 
 # FEATURE FLAGS
 # Flags can be declared here with an empty list, which will evaluate as false

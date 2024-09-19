@@ -315,7 +315,7 @@
 {% block javascript %}
     {{ super() }}
 
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       // Store backend settings to pass to front-end scripts.
       window.cfpbHudSettings = {};
       window.cfpbHudSettings.hud_data = {};
@@ -325,7 +325,7 @@
       window.cfpbHudSettings.mapbox_access_token = "{{ mapbox_access_token }}";
     </script>
 
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl(['{{ static("apps/find-a-housing-counselor/js/common.js") }}']);
     </script>
 {% endblock javascript %}

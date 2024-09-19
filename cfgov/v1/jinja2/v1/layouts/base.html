@@ -150,7 +150,7 @@ itemscope itemtype="https://schema.org/FAQPage"
           href="{{ static('fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2') }}"
           as="font"
           type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+    <link rel="preload" nonce="{{request.csp_nonce}}" href="{{ static('js/routes/common.js') }}" as="script">
 
     {# Preconnecting comes from the 3rd best practice in
        https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
@@ -184,7 +184,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     {# Begin Google Optimize #}
     {# Optimize anti-flicker snippet. #}
     <style>.async-hide { opacity: 0 !important} </style>
-    <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    <script nonce="{{request.csp_nonce}}">(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
     h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
     (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
     })(window,document.documentElement,'async-hide','dataLayer',4000,
@@ -197,7 +197,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     {% endif %}
 
     {# Begin Google Tag Manager #}
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script nonce="{{request.csp_nonce}}">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;
@@ -209,7 +209,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     {% endif -%}
 
     {% block javascript_loader %}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
       function jsl(a){
         if(window.fetch){
@@ -219,7 +219,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     </script>
     {% endblock javascript_loader %}
 
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       if(window.fetch){
         document.documentElement.className = document.documentElement.className.replace('no-js', 'js')
       }
@@ -308,7 +308,7 @@ itemscope itemtype="https://schema.org/FAQPage"
 
     {% block javascript scoped %}
 
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       if ( window.fetch ) {
         !function(){
           {# Include site-wide JavaScript. #}
@@ -361,7 +361,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     </script>
 
     {% if flag_enabled('PATH_MATCHES_FOR_QUALTRICS') %}
-        <script type='text/javascript'>
+        <script nonce="{{request.csp_nonce}}" type='text/javascript'>
         (function(){var g=function(e,h,f,g){
         this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
         this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};

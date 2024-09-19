@@ -94,8 +94,6 @@ WAGTAIL_PLACEHOLDERIMAGES_SOURCE = (
     f"//{_placeholder_domain}/{{width}}x{{height}}/addc91/1fa040"
 )
 
-CSP_IMG_SRC += (_placeholder_domain,)
-
 # Add django-cprofile-middleware to enable lightweight local profiling.
 # The middleware's profiling is only available if DEBUG=True
 MIDDLEWARE += ("django_cprofile_middleware.middleware.ProfilerMiddleware",)

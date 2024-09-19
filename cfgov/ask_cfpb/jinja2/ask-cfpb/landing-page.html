@@ -48,5 +48,7 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script src="{{ static('apps/ask-cfpb/js/main.js') }}"></script>
+    <script nonce="{{request.csp_nonce}}">
+      jsl(["{{ static('apps/ask-cfpb/js/main.js') }}"])
+    </script>
 {% endblock javascript %}
