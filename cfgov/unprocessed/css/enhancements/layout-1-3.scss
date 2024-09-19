@@ -1,0 +1,146 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@layer layout-1-3 {
+  // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.
+  .u-layout-grid--1-3 {
+    // Mobile
+    .u-layout-grid {
+      &__secondary-nav {
+        margin-left: math.div(-15px, $base-font-size-px) + rem;
+        margin-right: math.div(-15px, $base-font-size-px) + rem;
+      }
+    }
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      .u-layout-grid {
+        &__secondary-nav {
+          // Hide this element when it has a secondary nav DOM.
+          &:has(nav.o-secondary-nav--no-children) {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    // Tablet only.
+    @include respond-to-range($bp-sm-min, $bp-sm-max) {
+      .u-layout-grid {
+        &__secondary-nav {
+          margin-left: math.div(-30px, $base-font-size-px) + rem;
+          margin-right: math.div(-30px, $base-font-size-px) + rem;
+        }
+      }
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__wrapper {
+          grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
+
+          // Numbers below are 870 split into four parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(217.5px, 1fr) minmax(652.5px, 3fr);
+          grid-template-areas:
+            'c-breadcrumbs c-breadcrumbs'
+            'c-secondary-nav c-main';
+        }
+
+        &__main,
+        &__secondary-nav {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  // 1-3 Left-to-right (LTR) layout.
+  .u-layout-grid--1-3:not(.u-layout-grid--1-3[dir='rtl']) {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__wrapper {
+          grid-auto-rows: minmax(0, auto) minmax(0, auto) 1fr;
+
+          // Numbers below are 870 split into four parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(217.5px, 1fr) minmax(652.5px, 3fr);
+          grid-template-areas:
+            'c-breadcrumbs c-breadcrumbs'
+            'c-secondary-nav c-main';
+        }
+
+        &__main {
+          position: relative;
+          margin-left: math.div(30px, $base-font-size-px) + rem;
+
+          &::after {
+            content: '';
+            border-left: 1px solid $content-main-border;
+            position: absolute;
+            top: math.div(30px, $base-font-size-px) + rem;
+            bottom: 0;
+            left: math.div((-1 * 30px), $base-font-size-px) + rem;
+          }
+        }
+
+        &__secondary-nav {
+          margin-right: math.div(30px, $base-font-size-px) + rem;
+        }
+      }
+    }
+  }
+
+  // 1-3 Right-to-left (RTL) layout.
+  .u-layout-grid--1-3[dir='rtl'] {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__main {
+          position: relative;
+          margin-right: math.div(30px, $base-font-size-px) + rem;
+
+          &::after {
+            content: '';
+            border-left: 1px solid $content-main-border;
+            position: absolute;
+            top: math.div(30px, $base-font-size-px) + rem;
+            bottom: 0;
+            right: math.div((-1 * 30px), $base-font-size-px) + rem;
+          }
+        }
+
+        &__secondary-nav {
+          margin-left: math.div(30px, $base-font-size-px) + rem;
+        }
+      }
+    }
+  }
+
+  // Optionally make the secondary nav sticky
+  .u-layout-grid__secondary-nav--sticky {
+    position: sticky;
+    top: 0;
+    align-self: start;
+
+    // This puts the secondary nav behind the mega menu hamburger menu,
+    // but above other things on the page.
+    z-index: 9;
+
+    // Expand the sticky nav to full height on desktop with optional scrolling
+    // and adjust spacing so that the scrollbar does not cover content
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      max-height: 100vh;
+      overflow-y: auto;
+      margin-right: math.div(15px, $base-font-size-px) + rem;
+
+      .o-secondary-nav {
+        margin-right: math.div(15px, $base-font-size-px) + rem;
+        padding-bottom: math.div(60px, $base-font-size-px) + rem;
+      }
+    }
+  }
+}

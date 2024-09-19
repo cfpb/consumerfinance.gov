@@ -1,0 +1,81 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-full-width-text-group {
+  clear: both;
+
+  /**
+     * Fix for Wagtail's default img markup that includes height attribute
+     * and for loss of margin on extant Media block images.
+     * TODO: Remove once data migration from Media to ContentImage is complete
+     */
+
+  > img {
+    height: auto;
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+
+  .m-inset {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    &:not(:first-child) {
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+  }
+
+  .m-full-width-media {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    &:not(:first-child) {
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+  }
+
+  .m-full-width-text {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+
+  .m-full-width-text + .m-call-to-action {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+  }
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .m-full-width-text {
+      margin-top: math.div(45px, $base-font-size-px) + em;
+      margin-bottom: math.div(45px, $base-font-size-px) + em;
+    }
+
+    .m-inset {
+      margin-left: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+      & + .m-full-width-text ul,
+      & + .m-full-width-text ol {
+        // Fix for IE11 rendering bullets issue
+        overflow: hidden;
+      }
+
+      &:not(:first-child) {
+        margin-top: 0;
+      }
+    }
+
+    .m-inset--left {
+      margin-right: math.div($grid-gutter-width, $base-font-size-px) + em;
+      margin-bottom: math.div(20px, $base-font-size-px) + em;
+      margin-left: 0;
+    }
+
+    .m-full-width-text + .m-inset__image {
+      // 19px value optically aligns top of image
+      // with adjacent Avenir Next cap height
+      margin-top: math.div(19px, $base-font-size-px) + em;
+    }
+
+    .m-full-width-text + .m-inset__image + .m-full-width-text {
+      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+  }
+}

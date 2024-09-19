@@ -1,0 +1,31 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+dt {
+  display: inline-block;
+
+  @include h5;
+  // Override h5 margin.
+  margin-bottom: 0.5em;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+dd {
+  display: inline;
+  margin-left: 0.2em;
+
+  &::after {
+    display: block;
+    content: '';
+  }
+}
+
+.eyebrow {
+  @include heading-5;
+}
+
+.a-link__text {
+  overflow-wrap: break-word;
+}

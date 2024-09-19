@@ -4,7 +4,7 @@ import {
   AlphaTransition,
   BaseTransition,
   EventObserver,
-} from '@cfpb/cfpb-atomic-component';
+} from '@cfpb/cfpb-design-system/src/index.js';
 import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 

@@ -1,0 +1,25 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-item-introduction {
+  margin-bottom: math.div($grid-gutter-width * 2, $base-font-size-px) + rem;
+
+  &__intro {
+    padding-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) + rem;
+  }
+
+  .lead-paragraph {
+    margin-top: 0;
+  }
+
+  .meta {
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + rem;
+
+    .byline {
+      @include heading-4;
+    }
+  }
+}

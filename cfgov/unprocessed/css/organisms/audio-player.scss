@@ -1,0 +1,7 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+audio {
+  display: block;
+  margin: (math.div(15px, $base-font-size-px) + em) 0;
+}

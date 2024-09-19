@@ -1,2 +1,2 @@
-import { ExpandableGroup } from '@cfpb/cfpb-expandables';
+import { ExpandableGroup } from '@cfpb/cfpb-design-system/src/index.js';
 ExpandableGroup.init();

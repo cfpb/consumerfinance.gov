@@ -1,0 +1,24 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+.m-global-header-cta {
+  border-left: 1px solid var(--gray-40);
+  padding-left: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    em;
+  padding-top: 13px;
+  padding-bottom: 11px;
+
+  a {
+    font-weight: 500;
+
+    // Colors for :link, :visited, :hover, :focus, :active.
+    @include u-link-colors(
+      var(--pacific),
+      var(--pacific),
+      var(--pacific-dark),
+      var(--pacific),
+      var(--navy-dark)
+    );
+  }
+}

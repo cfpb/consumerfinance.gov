@@ -1,0 +1,266 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Design System
+   Enhancements
+   ========================================================================== */
+
+// This is your project's DS enhancements.
+//
+// Whenever building enhancements or changes to existing CF components,
+// write them here to work out the details before contributing them back
+// to a Design System component.
+//
+
+/* ==========================================================================
+   New style form labels
+   ========================================================================== */
+
+.form-label {
+  font-size: 1.125em;
+}
+
+.form-label__text-wrapper {
+  display: block;
+  margin-bottom: math.div(5px, $base-font-size-px) + em;
+  font-size: 1.125em;
+}
+
+/* ==========================================================================
+   Capital Framework Notification Styling
+   from https://github.com/cfpb/consumerfinance.gov/blob/2c62c966880afba0d634df7062876abec3393661/cfgov/unprocessed/css/cf-notifications.scss
+   ========================================================================== */
+
+.cf-notification {
+  $notification-padding-px: 11px;
+
+  position: relative;
+
+  padding: $notification-padding-px;
+  padding-left: 40px;
+  margin-bottom: $notification-padding-px + 4px;
+
+  background: var(--gray-20);
+  border: 1px solid var(--gray);
+
+  &--error {
+    background: var(--red-20);
+    border-color: var(--red);
+  }
+
+  &--success {
+    background: var(--green-20);
+    border-color: var(--green);
+  }
+
+  &--warning {
+    background: var(--gold-20);
+    border-color: var(--gold);
+  }
+
+  &__icon {
+    position: absolute;
+    top: $notification-padding-px + 2px;
+    left: $notification-padding-px + 4px;
+
+    color: var(--gray-20);
+    font-size: math.div(18px, $base-font-size-px) + em;
+
+    &--error {
+      color: #d14327;
+    }
+
+    &--success {
+      color: #2cb34a;
+    }
+
+    &--warning {
+      color: #ff931b;
+    }
+  }
+
+  &__text {
+    @include h4;
+    // Override for h4 margin.
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Big numbered lists (from Know Before You Owe)
+   ========================================================================== */
+
+$char-icon-size: math.div(32px, $base-font-size-px) + em;
+$char-icon-spacing: 0.5em;
+
+@mixin char-icon {
+  box-sizing: border-box;
+  padding-left: $char-icon-size + $char-icon-spacing;
+  position: relative;
+
+  &::before {
+    display: block;
+    box-sizing: border-box;
+    width: $char-icon-size;
+    height: $char-icon-size;
+    border-radius: 100%;
+    margin-right: $char-icon-spacing;
+    position: absolute;
+    left: 0;
+    top: ($base-line-height - $char-icon-size) + em;
+    background: var(--green-20);
+    color: var(--black);
+    font-size: math.div(18px, $base-font-size-px) + em;
+    line-height: $char-icon-size;
+    text-align: center;
+    text-indent: 0;
+  }
+
+  &--1::before {
+    content: '1';
+  }
+  &--2::before {
+    content: '2';
+  }
+  &--3::before {
+    content: '3';
+  }
+  &--4::before {
+    content: '4';
+  }
+  &--5::before {
+    content: '5';
+  }
+  &--6::before {
+    content: '6';
+  }
+  &--7::before {
+    content: '7';
+  }
+  &--8::before {
+    content: '8';
+  }
+  &--9::before {
+    content: '9';
+  }
+  &--0::before {
+    content: '0';
+  }
+}
+
+// Ordered list with char-icon-style numerals
+.super-numerals {
+  padding-left: 0;
+  list-style: none;
+
+  & > li {
+    counter-increment: steps;
+
+    @include char-icon;
+  }
+
+  & > li::before {
+    content: counter(steps);
+  }
+}
+
+/* ==========================================================================
+   Well that runs the entire height of a column
+   ========================================================================== */
+
+.column-well {
+  padding-top: math.div(25px, $base-font-size-px) + em;
+  padding-bottom: math.div(10px, $base-font-size-px) + em;
+  position: relative;
+
+  @include respond-to-min($bp-sm-min) {
+    padding-top: math.div(30px, $base-font-size-px) + em;
+    padding-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+
+  &::after {
+    display: block;
+    width: 9999px;
+    height: 9999px;
+    position: absolute;
+    top: 0;
+    left: (-1 * math.div(math.div($grid_gutter-width, $base-font-size-px), 2)) +
+      em;
+    z-index: 0;
+    background-color: var(--gray-5);
+    content: '';
+
+    @include respond-to-min($bp-sm-min) {
+      width: 100%;
+      left: 0;
+    }
+  }
+
+  &__wrapper {
+    overflow: hidden;
+
+    &--overflow-small {
+      overflow: visible;
+
+      @include respond-to-min($bp-sm-min) {
+        overflow: hidden;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+
+    @include respond-to-min($bp-sm-min) {
+      padding-right: math.div(30px, $base-font-size-px) + em;
+      padding-left: math.div(30px, $base-font-size-px) + em;
+    }
+  }
+
+  &--bleed {
+    &::after {
+      @include respond-to-min($bp-med-min) {
+        padding-right: $grid_gutter-width * 2;
+        left: -$grid_gutter-width;
+      }
+    }
+
+    .column-well__content {
+      @include respond-to-min($bp-med-min) {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+
+  &--not-stacked {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    @include respond-to-min($bp-sm-min) {
+      padding-top: math.div(30px, $base-font-size-px) + em;
+      padding-bottom: math.div(30px, $base-font-size-px) + em;
+    }
+
+    &::after {
+      display: none;
+
+      @include respond-to-min($bp-sm-min) {
+        display: block;
+      }
+    }
+  }
+
+  &--emphasis {
+    @include respond-to-min($bp-sm-min) {
+      padding-top: math.div(50px, $base-font-size-px) + em;
+      padding-bottom: math.div(50px, $base-font-size-px) + em;
+    }
+
+    &::after {
+      background-color: var(--gray-5);
+    }
+  }
+}

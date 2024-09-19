@@ -1,0 +1,19 @@
+@mixin u-drop-shadow-after() {
+  &::after {
+    display: block;
+    height: 5px;
+    width: 100%;
+
+    position: absolute;
+
+    // Offset for thickness of shadow.
+    bottom: -5px;
+    left: 0;
+
+    background: var(--gray);
+
+    // Whitespace in content so element can have dimensions set.
+    content: '';
+    opacity: 0.2;
+  }
+}

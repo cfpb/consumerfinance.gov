@@ -1,0 +1,76 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+// Modifier for jump links to give them topic-tags style gold/gray styling.
+.a-link--jump-gold {
+  font-size: math.div(12px, $base-font-size-px) + rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold-80);
+  border-color: var(--gold-80);
+  letter-spacing: 1px;
+
+  @include u-link-colors(var(--gold-80));
+
+  .a-link__text {
+    color: var(--gray-90);
+    border-bottom-color: var(--gold-80);
+  }
+}
+
+a.a-link--jump-gold:hover .a-link__text {
+  color: var(--black);
+}
+
+a.a-link--jump-gold:hover::before {
+  border-color: var(--gold-80);
+  color: var(--gold-80);
+}
+
+// If it's not a link, don't add a border.
+// TODO: Make it so topic tag related metadata items are ALWAYS links.
+span.a-link--jump-gold:hover::before {
+  border-top-color: transparent !important;
+}
+
+$margin-half-em: math.div(15px, $base-font-size-px) + em;
+
+.m-related-metadata {
+  .m-list__link {
+    @include u-link-colors(
+      var(--pacific),
+      var(--pacific),
+      var(--pacific-60),
+      var(--pacific),
+      var(--navy)
+    );
+  }
+
+  // Tablet only.
+  @include respond-to-range($bp-sm-min, $bp-sm-max) {
+    border-left: $margin-half-em solid transparent;
+    border-right: $margin-half-em solid transparent;
+  }
+}
+
+.m-related-metadata__item-container {
+  &:not(:last-child) {
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+  }
+
+  .status-definitions {
+    display: block;
+  }
+}
+
+.m-related-metadata__status {
+  div {
+    margin-bottom: 1.25em;
+  }
+
+  h6 {
+    margin-bottom: 0.25em;
+    color: var(--gray);
+  }
+}

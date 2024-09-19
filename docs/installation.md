@@ -226,7 +226,7 @@ docker-compose up
 Either approach will build and start our
 PostgreSQL, Elasticsearch, and Python services.
 
-The first time this is fun, it will
+The first time this is run, it will
 [load initial data](#load-initial-data)
 and
 [build the frontend](#build-the-frontend)

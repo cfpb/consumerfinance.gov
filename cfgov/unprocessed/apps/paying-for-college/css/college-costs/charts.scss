@@ -1,0 +1,44 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.college-costs {
+  &__tool-section--school-results {
+    & .highcharts-plot-band {
+      fill-opacity: 1;
+
+      &:first-child {
+        fill: $college-costs-chart-min;
+      }
+      &:nth-child(2) {
+        fill: $college-costs-chart-median;
+      }
+      &:last-child {
+        fill: $college-costs-chart-max;
+      }
+    }
+  }
+
+  #affording-your-loans__chart,
+  #max-debt-guideline__chart {
+    .highcharts-plot-line {
+      stroke: #20aa3f;
+      stroke-width: 3px;
+    }
+  }
+
+  #make-a-plan__chart {
+    .highcharts-plot-line {
+      stroke: #d14124;
+      stroke-width: 3px;
+    }
+  }
+
+  &__chart {
+    & + p.median-salary-note {
+      font-size: math.div(12px, $base-font-size-px) + rem;
+      margin-top: math.div(15px, $base-font-size-px) + rem;
+      padding-top: math.div(15px, $base-font-size-px) + rem;
+      border-top: black 1px solid;
+    }
+  }
+}

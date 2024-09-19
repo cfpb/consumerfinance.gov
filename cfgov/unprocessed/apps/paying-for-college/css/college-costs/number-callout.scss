@@ -1,0 +1,44 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.number-callout {
+  &__header {
+    font-size: math.div(16px, $base-font-size-px) + em;
+    font-weight: 500;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    margin-top: 0;
+    margin-bottom: math.div(10px, $base-font-size-px) + em;
+    font-size: math.div(18px, $base-font-size-px) + em;
+  }
+
+  &--large {
+    .number-callout__value {
+      font-size: math.div(28px, $base-font-size-px) + em;
+      font-weight: 600;
+    }
+  }
+
+  &--right {
+    text-align: right;
+    border-right: 5px solid var(--black);
+    padding-right: math.div(10px, $base-font-size-px) + em;
+  }
+
+  &--warning {
+    border-color: var(--red);
+
+    .number-callout__value {
+      color: var(--red);
+    }
+  }
+
+  &--border-top {
+    border-top: 1px solid $block-border;
+    padding-top: math.div(10px, $base-font-size-px) + em;
+    margin-top: math.div(30px, $base-font-size-px) + em;
+  }
+}

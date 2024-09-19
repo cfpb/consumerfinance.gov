@@ -1,6 +1,6 @@
 import { addEl, getEl, getEls, removeClass } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-icons/src/icons/plus-round.svg';
+import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/plus-round.svg';
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.
@@ -40,15 +40,11 @@ function isRural(fips, counties) {
 }
 
 /**
- * @param {Array} urbanClusters - Array from census API.
  * @param {Array} urbanAreas - Array from census API.
  * @returns {boolean} True if address is rural, false otherwise.
  */
-function isRuralCensus(urbanClusters, urbanAreas) {
-  return (
-    (urbanClusters === null || urbanClusters.length === 0) &&
-    (urbanAreas === null || urbanAreas.length === 0)
-  );
+function isRuralCensus(urbanAreas) {
+  return urbanAreas === null || urbanAreas.length === 0;
 }
 
 /**

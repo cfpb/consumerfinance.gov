@@ -38,7 +38,7 @@ The overall test coverage of the codebase should not decrease.
 Python code is expected to follow
 [PEP8](https://www.python.org/dev/peps/pep-0008/) and
 [not commit atrocities](https://www.youtube.com/watch?v=wf-BqAjZb8M).
-JavaScript, CSS/Less, and markup should follow our
+JavaScript, CSS/SCSS, and markup should follow our
 [front-end standards](https://github.com/cfpb/development).
 When in doubt, mimic the styles and patterns in the existing codebase.
 
@@ -50,7 +50,7 @@ for more information.
 
 #### Browser Testing
 
-We run automated browser tests in headless Chrome with `yarn cypress run`.
+We run automated browser tests in headless Chrome with `yarn cy`.
 See our [cross browser testing docs](https://cfpb.github.io/consumerfinance.gov/other-front-end-testing/#cross-browser-testing) for other testing methods.
 
 #### Satellite app assets

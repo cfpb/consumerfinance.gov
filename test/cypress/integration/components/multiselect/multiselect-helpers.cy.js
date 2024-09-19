@@ -20,7 +20,10 @@ export class Multiselect {
   }
 
   choices() {
-    return this.multiSelect('choices');
+    return cy
+      .contains('label[for^=o-filterable-list-controls]', this.label)
+      .next('.o-multiselect')
+      .find(`.m-tag-group`);
   }
 
   header() {
@@ -71,7 +74,7 @@ export class Multiselect {
   }
 
   choicesElement() {
-    return this.multiSelect('choices').find('label');
+    return this.choices().find('label');
   }
 
   choicesElementClick() {
@@ -101,7 +104,7 @@ export class Multiselect {
   }
 
   displayedTag() {
-    return this.multiSelect('choices').find('li');
+    return this.choices().find('li');
   }
 
   isRendered() {

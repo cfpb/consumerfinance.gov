@@ -1,0 +1,38 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Regulations 3000
+   Regulations listing on landing page
+   ========================================================================== */
+
+#regulations-listing {
+  margin: (math.div(45px, $base-font-size-px) + em) 0
+    (math.div(60px, $base-font-size-px) + em);
+
+  > ul {
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+    padding-left: 0;
+
+    > li {
+      border-bottom: 1px solid var(--gray);
+      list-style-type: none;
+      padding-bottom: math.div(15px, $base-font-size-px) + em;
+
+      &:first-child {
+        border-top: 1px solid var(--gray);
+        padding-top: math.div(15px, $base-font-size-px) + em;
+      }
+    }
+
+    .new-version {
+      font-size: math.div($size-v, $base-font-size-px) + em;
+      font-weight: normal;
+      list-style-type: square;
+    }
+  }
+
+  a {
+    border: 0;
+  }
+}

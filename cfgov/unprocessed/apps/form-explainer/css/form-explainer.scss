@@ -1,0 +1,292 @@
+@use 'sass:math';
+@use 'sass:list';
+@use 'sass:map';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+/* ==========================================================================
+   "Form explainer" custom styles
+   ========================================================================== */
+
+$colors-map: (
+  'gold-dk': #ff9e1b,
+  // var(--gold))
+  'gold-md': #ffce8d,
+  // var(--gold-60)
+  'gold-lt': #ffd8a3,
+  // var(--gold-50)
+  'gold-bg': #fff8f0,
+  'red-dk': #d486b2,
+  // var(--purple-60)
+  'red-md': #dc9cbf,
+  // var(--purple-50)
+  'red-lt': #f0d8e2,
+  // var(--purple-20)
+  'red-bg': #f9f6f6,
+  'blue-dk': #6f88b2,
+  // var(--navy-70)
+  'blue-md': #9daecc,
+  // var(--navy-50)
+  'blue-lt': #d3daeb,
+  // var(--navy-20)
+  'blue-bg': #f4f7fa,
+  'teal-dk': #579695,
+  // var(--teal-80)
+  'teal-md': #70a6a5,
+  // var(--teal-70)
+  'teal-lt': #d4e7e6,
+  // var(--teal-20)
+  'teal-bg': #f2f8f8,
+);
+$colors: gold, red, blue, teal;
+
+.form-explainer {
+  .image-map {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: math.div(30px, $base-font-size-px) + em;
+
+    @include u-clearfix;
+  }
+
+  .image-map__wrapper {
+    position: relative;
+  }
+
+  .image-map__image {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid var(--black);
+  }
+
+  .image-map__overlay {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    background: transparent;
+    transition: border 100ms ease-out;
+  }
+
+  @each $value in $colors {
+    $index: list.index($colors, $value);
+    $color: map.get($colors-map, #{$value}-dk);
+
+    .image-map__overlay--category-#{$index} {
+      background: rgba($color, 0.2);
+
+      &:hover,
+      &.hover-has-attention {
+        border-color: $color;
+      }
+
+      &:focus,
+      &.has-attention {
+        border-color: $color;
+        background: rgba($color, 0.5);
+      }
+
+      &:focus {
+        outline: 1px dotted $color;
+        outline-offset: 1px;
+      }
+    }
+  }
+
+  // Expandable overrides
+  // TODO: Make this its own component.
+
+  .o-expandable-group .o-expandable {
+    border: 4px solid transparent;
+    box-sizing: border-box;
+    transition: transform 100ms ease-out;
+    margin-bottom: 5px;
+
+    &:first-child {
+      border-top: 4px solid transparent;
+    }
+
+    &.has-attention {
+      // Tablet and above.
+      @include respond-to-min($bp-sm-min) {
+        $translate-value: math.div(
+            math.div(-1 * $grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+        transform: translateX($translate-value);
+      }
+
+      .o-expandable__cues {
+        color: var(--black);
+      }
+    }
+
+    .o-expandable__content[data-open='true']::before {
+      border: none;
+    }
+
+    .o-expandable__label {
+      font-size: 1em;
+    }
+
+    @each $value in $colors {
+      $index: list.index($colors, $value);
+      $tint: map.get($colors-map, #{$value}-bg);
+      $light: map.get($colors-map, #{$value}-lt);
+      $med: map.get($colors-map, #{$value}-md);
+
+      &.o-expandable__form-explainer-category-#{$index} {
+        background-color: $tint;
+
+        .o-expandable__header {
+          background-color: $light;
+        }
+
+        border-color: $light;
+
+        &.has-attention,
+        &:hover {
+          border-color: $med;
+        }
+
+        &.has-attention {
+          .o-expandable__header {
+            background-color: $med;
+          }
+        }
+      }
+    }
+
+    &.o-expandable__form-explainer + h3 {
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+  }
+
+  .o-expandable__label {
+    max-width: 80%;
+  }
+
+  .o-expandable__cues {
+    display: block;
+    width: 20%;
+    text-align: right;
+    color: var(--gray-80);
+  }
+
+  .explain {
+    margin: 0 auto math.div(60px, $base-font-size-px) + em;
+
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      &__image-map {
+        display: flex;
+      }
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      &__container {
+        display: flex;
+      }
+
+      &__image-map {
+        max-width: 66%;
+      }
+
+      .image-map__wrapper {
+        position: sticky;
+        top: 2vh;
+      }
+
+      .image-map__image {
+        margin-right: 2px;
+        max-height: 96vh;
+        max-width: 100%;
+      }
+
+      &__terms {
+        flex: 1;
+        padding-left: math.div(35px, $base-font-size-px) + em;
+      }
+
+      &__pagination {
+        margin-bottom: math.div(
+            math.div($grid-gutter-width, 3),
+            $base-font-size-px
+          ) + em;
+      }
+    }
+  }
+
+  .explain__page {
+    // Position is needed to allow .explain_image-map
+    // to stick to the bottom of .explain_page.
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      position: relative;
+    }
+  }
+
+  .explain__pagination {
+    margin-top: math.div(15px, $base-font-size-px) + em;
+
+    @include u-clearfix;
+  }
+
+  .form-explainer__page-buttons {
+    button {
+      position: absolute;
+      top: 45%;
+      padding-left: math.div(10px, $btn-font-size) + em;
+      padding-right: math.div(10px, $btn-font-size) + em;
+      z-index: 100;
+      &.prev {
+        left: -16px;
+      }
+
+      &.next {
+        right: -16px;
+      }
+    }
+  }
+
+  .form-explainer__nav-label {
+    float: left;
+  }
+
+  .form-explainer__page-links {
+    margin-bottom: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+      em !important;
+    float: left;
+    li {
+      float: left;
+      a {
+        float: left;
+        display: block;
+        padding: 0 math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+          em;
+        cursor: pointer;
+
+        // Tablet and above.
+        @include respond-to-min($bp-sm-min) {
+          $margin-value: math.div(
+              math.div($grid-gutter-width, 2),
+              $base-font-size-px
+            ) + em;
+          padding: 0;
+          border-bottom-width: 1px;
+          margin: 0 $margin-value;
+        }
+
+        &.current-page {
+          &,
+          &:focus,
+          &:hover,
+          &:active {
+            color: var(--black);
+            border-bottom-width: 0;
+          }
+        }
+      }
+    }
+  }
+}

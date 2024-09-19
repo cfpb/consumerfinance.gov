@@ -10,7 +10,7 @@ const jsonpP = jsonpPModule.default;
  */
 function callTiger(x, y, layer) {
   // See versions at https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb
-  const apiVersion = 'tigerWMS_ACS2019';
+  const apiVersion = 'tigerWMS_ACS2024';
   const url =
     'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/' +
     apiVersion +

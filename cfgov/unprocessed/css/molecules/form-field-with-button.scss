@@ -1,0 +1,16 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// TODO: Look into merging email-signup and form-field-with-button styles.
+// Form field with button isn't used anywhere else.
+.m-form-field-with-button {
+  .m-form-field {
+    margin-bottom: 0;
+  }
+
+  &__info,
+  .a-btn {
+    margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+  }
+}

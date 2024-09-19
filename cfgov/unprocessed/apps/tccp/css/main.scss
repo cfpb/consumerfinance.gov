@@ -1,0 +1,645 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+@import 'tooltip';
+
+@include respond-to-min($bp-sm-min) {
+  .o-form__group {
+    max-width: math.div(380px, $base-font-size-px) + rem;
+  }
+}
+
+// A form fieldset with large block-level areas for
+// helper text under each form field
+.o-form__fieldset--helpers {
+  .a-checkbox:checked + .a-label {
+    border: 1px solid var(--pacific);
+    border-bottom: 0;
+    box-shadow: none;
+  }
+
+  .m-form-field--checkbox {
+    &:has(.a-checkbox:focus) {
+      outline: 1px dotted var(--pacific);
+      outline-offset: 1px;
+    }
+
+    .a-checkbox:focus + .a-label {
+      outline: none;
+    }
+
+    .a-checkbox ~ [data-helper-text] {
+      display: none;
+      box-sizing: border-box;
+      width: 100%;
+      padding: math.div(15px, $base-font-size-px) + rem;
+      padding-top: 0;
+      background-color: var(--pacific-20);
+      border: 1px solid var(--pacific);
+      border-top: 0;
+    }
+
+    .a-checkbox:checked ~ [data-helper-text] {
+      display: block;
+    }
+  }
+
+  [data-helper-text] > .m-list {
+    list-style: square;
+    padding-left: 1.125em;
+
+    .m-list__item {
+      margin-left: math.div(15px, $base-font-size-px) + rem;
+    }
+
+    .m-list__item--has-icon {
+      display: flex;
+      margin-left: 0;
+
+      .cf-icon-svg {
+        display: inline;
+        margin-right: 6px;
+        color: var(--green);
+      }
+
+      span {
+        margin-top: math.div(-1px, $base-font-size-px) + rem;
+      }
+    }
+  }
+}
+
+.u-btn-helper {
+  width: 100%;
+  margin-top: math.div(15px, $base-font-size-px) + rem;
+  text-align: center;
+  a {
+    border-bottom-width: 1px;
+  }
+
+  @include respond-to-min($bp-sm-min) {
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
+    margin-left: math.div(6px, $btn-font-size) + rem;
+  }
+}
+
+.u-small-text--subtle {
+  color: var(--gray);
+}
+
+.o-well.o-well--speed-bump {
+  padding: math.div(20px, $base-font-size-px) + rem;
+  background-color: var(--teal-10);
+
+  a {
+    border-color: var(--pacific-mid-dark);
+    color: var(--pacific-mid-dark);
+  }
+
+  p {
+    max-width: 100%;
+  }
+
+  &-large {
+    padding: (math.div(75px, $base-font-size-px) + rem)
+      (math.div(45px, $base-font-size-px) + rem);
+
+    p:first-child {
+      @include h3;
+    }
+
+    // Make everything bigger on desktop
+    @include respond-to-min($bp-sm-min) {
+      padding-right: math.div(60px, $base-font-size-px) + rem;
+
+      p:last-child {
+        @include heading-3;
+      }
+    }
+  }
+
+  .cf-icon-svg {
+    color: var(--green);
+  }
+}
+
+.m-apr-rating {
+  &--less .cf-icon-svg {
+    color: var(--green);
+  }
+
+  &--average .cf-icon-svg {
+    color: var(--gold);
+  }
+
+  &--more .cf-icon-svg {
+    color: var(--red);
+  }
+}
+
+@mixin u-heading-4-size-only() {
+  font-size: $size-iv;
+  line-height: 1.25;
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    line-height: math.div(18px, $base-font-size-px);
+  }
+}
+
+.m-card.m-card--tabular {
+  padding: 0;
+  border: 0;
+  color: var(--black);
+
+  > a {
+    padding: math.div(20px, $base-font-size-px) + rem;
+    border: 1px solid #d2d3d5;
+    border-bottom-width: 3px;
+    color: var(--black);
+
+    // Disable iOS link highlighting for our large cards
+    -webkit-tap-highlight-color: transparent;
+
+    &:visited .m-card__subtitle {
+      border-color: $link-underline-visited;
+      color: $link-text-visited;
+    }
+
+    @include respond-to-min($bp-sm-min) {
+      padding-bottom: math.div(20px, $base-font-size-px) + rem;
+    }
+  }
+
+  dl {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    > a {
+      box-shadow:
+        0 2px 0 0 inset var(--gray-20),
+        2px 0 0 0 inset var(--gray-20),
+        -2px 0 0 0 inset var(--gray-20);
+    }
+
+    .m-card__subtitle {
+      border-bottom: 1px solid $link-underline-hover;
+      color: $link-text-hover;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 1px;
+      height: 5px;
+      width: 100%;
+      background: var(--green);
+    }
+  }
+
+  .m-card__heading-group {
+    margin-bottom: math.div(20px, $base-font-size-px) + rem;
+  }
+
+  .m-card__heading {
+    margin-bottom: 0;
+    color: var(--gray);
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .m-card__subtitle {
+    display: inline;
+    border-bottom: 1px dotted $link-underline;
+    color: $link-text;
+  }
+
+  .m-card__footer {
+    margin-top: math.div(5px, $base-font-size-px) + rem;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-top: math.div(20px, $base-font-size-px) + rem;
+    }
+  }
+
+  .m-apr-rating {
+    font-weight: 600;
+    margin-bottom: math.div(20px, $base-font-size-px) + rem;
+
+    @include u-heading-4-size-only;
+
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      margin-bottom: math.div(10px, $base-font-size-px) + rem;
+    }
+  }
+}
+
+.o-apr-rating-group {
+  &--heading {
+    @include h3;
+  }
+
+  .m-apr-rating {
+    margin-bottom: math.div(5px, $base-font-size-px) + rem;
+    display: grid;
+    grid-template-columns: (math.div(45px, $base-font-size-px) + em) 1fr;
+    align-items: baseline;
+    gap: math.div(5px, $base-font-size-px) + em;
+    font-weight: 500;
+
+    @include u-heading-4-size-only;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      margin-bottom: 0;
+    }
+  }
+
+  dt {
+    justify-self: right;
+  }
+}
+
+.m-data-specs {
+  display: grid;
+  grid-template-areas:
+    'apr transfer'
+    'fee rewards'
+    '. requirements';
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 15px;
+
+  @include respond-to-min($bp-sm-min) {
+    grid-template-areas: 'apr fee transfer rewards requirements';
+    grid-template-columns: 5fr 4fr 6fr 7fr 7fr;
+  }
+}
+
+.m-data-spec {
+  display: flex;
+  flex-direction: column-reverse;
+  align-self: start;
+
+  &--apr {
+    grid-area: apr;
+  }
+
+  &--apr-disclaimer {
+    font-size: math.div(14px, $base-font-size-px) + rem;
+
+    @include respond-to-min($bp-sm-min) {
+      font-size: math.div(16px, $base-font-size-px) + rem;
+      line-height: math.div(22px, $base-font-size-px) + rem;
+    }
+  }
+
+  &--fee {
+    grid-area: fee;
+  }
+
+  &--transfer {
+    grid-area: transfer;
+  }
+
+  &--rewards {
+    grid-area: rewards;
+    text-transform: lowercase;
+
+    dd::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &--requirements {
+    padding-bottom: math.div(15px, $base-font-size-px) + rem;
+    grid-area: requirements;
+    dt {
+      @include u-visually-hidden;
+    }
+
+    dd {
+      padding-top: math.div(4px, $base-font-size-px) + rem;
+    }
+
+    @include respond-to-min($bp-sm-min) {
+      padding-bottom: 0;
+    }
+  }
+
+  dt,
+  &.m-data-spec--requirements dd {
+    text-transform: none;
+    letter-spacing: inherit;
+    font-size: math.div(14px, $base-font-size-px) + rem;
+    font-weight: normal;
+    strong {
+      font-weight: 500;
+    }
+
+    @include respond-to-min($bp-sm-min) {
+      font-size: math.div(16px, $base-font-size-px) + rem;
+      line-height: math.div(22px, $base-font-size-px) + rem;
+      strong {
+        font-size: math.div(18px, $base-font-size-px) + rem;
+      }
+    }
+  }
+
+  dd {
+    margin: 0;
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    strong {
+      font-size: math.div(18px, $base-font-size-px) + rem;
+      font-weight: 500;
+    }
+    &::after {
+      content: none;
+    }
+
+    @include respond-to-min($bp-sm-min) {
+      font-size: math.div(22px, $base-font-size-px) + rem;
+      line-height: math.div(26px, $base-font-size-px) + rem;
+      strong {
+        font-size: math.div(26px, $base-font-size-px) + rem;
+      }
+    }
+  }
+}
+
+// "Show more results" functionality for JS users
+// Only show the first 10 results
+html.js .o-filterable-list-results--partial {
+  .o-card-group__cards {
+    .u-show-more {
+      display: none;
+    }
+  }
+}
+
+// A vertical white linear gradient that overlaps the last
+// card result to emphasize that there are more cards to see
+#u-show-more-fade {
+  position: relative;
+  margin-top: math.div(-200px, $base-font-size-px) + rem;
+  padding-top: math.div(180px, $base-font-size-px) + rem;
+  z-index: 1;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0%),
+    rgba(255, 255, 255, 70%),
+    rgba(255, 255, 255, 97%),
+    rgba(255, 255, 255, 100%)
+  );
+}
+
+.m-credit-tier-chart {
+  display: flex;
+  align-items: stretch;
+  font-size: math.div(15px, $base-font-size-px) + rem;
+
+  @include respond-to-min($bp-sm-min) {
+    margin-left: math.div(-18px, $base-font-size-px) + rem;
+    font-size: math.div(16px, $base-font-size-px) + rem;
+  }
+
+  &__tier {
+    display: flex;
+    flex-direction: column;
+    padding: (math.div(5px, $base-font-size-px) + rem)
+      (math.div(15px, $base-font-size-px) + rem);
+    background-color: var(--teal-10);
+
+    @include respond-to-min($bp-sm-min) {
+      display: block;
+      padding: (math.div(5px, $base-font-size-px) + rem)
+        (math.div(20px, $base-font-size-px) + rem);
+    }
+  }
+  &__tier:first-of-type {
+    border-radius: 20px 0 0 20px;
+  }
+  &__tier:last-of-type {
+    border-radius: 0 20px 20px 0;
+  }
+  &__tier--selected {
+    background-color: var(--teal-dark);
+    color: var(--white);
+  }
+  &__tier--unselected + &__tier--unselected {
+    border-left: 1px solid var(--gray-40);
+  }
+  &__tier--selected + &__tier--selected {
+    border-left: 1px solid var(--white);
+  }
+  &__tier--unselected &__icon {
+    @include respond-to-min($bp-sm-min) {
+      display: none;
+    }
+  }
+}
+
+.m-location-requirements {
+  white-space: nowrap;
+}
+
+.o-contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.o-card-details-section {
+  margin-top: math.div(45px, $base-font-size-px) + rem;
+
+  &--introduction {
+    padding-bottom: math.div(30px, $base-font-size-px) + rem;
+    margin-bottom: math.div(10px, $base-font-size-px) + rem;
+    border-bottom: 1px solid var(--gray-40);
+
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      margin-top: math.div(30px, $base-font-size-px) + rem;
+    }
+  }
+
+  &:not(.o-card-details-section--introduction) > h2 {
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      font-weight: 600;
+    }
+  }
+}
+
+.o-table--apr {
+  margin-top: math.div(30px, $base-font-size-px) + rem;
+  margin-bottom: math.div(30px, $base-font-size-px) + rem;
+}
+
+.o-additional-details {
+  margin-top: math.div(30px, $base-font-size-px) + rem;
+}
+
+.m-list__card-details {
+  dt {
+    margin-top: math.div(15px, $base-font-size-px) + rem;
+  }
+  dt:first-child {
+    margin-top: 0;
+  }
+  dt:last-of-type {
+    margin-bottom: 0.5em;
+  }
+  dt,
+  dd {
+    display: block;
+  }
+  dd {
+    margin-left: 0;
+  }
+  dd + dd {
+    margin-top: math.div(15px, $base-font-size-px) + rem;
+  }
+  dd::after {
+    content: none;
+  }
+  dd .o-table {
+    margin-top: math.div(10px, $base-font-size-px) + rem;
+  }
+}
+
+.m-apr-disclaimer {
+  // Hang the asterisk at the beginning of the content
+  text-indent: -0.7ch;
+}
+
+.m-payment-calculation {
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to-min($bp-sm-min) {
+    flex-direction: row;
+    gap: math.div(30px, $base-font-size-px) + rem;
+  }
+
+  &__operator {
+    @include respond-to-min($bp-sm-min) {
+      align-self: center;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// htmx animated progress bar
+// See https://htmx.org/attributes/hx-indicator/
+.htmx-progress {
+  display: none;
+
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  height: math.div(5px, $base-font-size-px) + rem;
+  width: 100%;
+
+  .htmx-progress-bar {
+    background-color: var(--pacific);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: inherit;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      will-change: left, right;
+      animation: indeterminate 2.5s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+        infinite;
+    }
+    &::after {
+      animation-name: indeterminate-short;
+      animation-delay: 1s;
+    }
+  }
+}
+
+.htmx-request .htmx-progress {
+  display: inline;
+}
+
+// Dim search results while inflight
+.htmx-request #htmx-results {
+  opacity: 0.5;
+}
+
+// Hide form submit button for htmx users
+html.js form[hx-boost] {
+  .o-form__group:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-btn-group {
+    display: none;
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  40% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  40% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+
+.a-select {
+  & &--error {
+    outline: 2px solid var(--red);
+    &:focus {
+      box-shadow: 0 0 0 2px var(--red);
+      outline: 1px dotted var(--red);
+    }
+  }
+}
+
+.a-form-alert__text {
+  display: block;
+  margin-left: math.div(20px, $base-font-size-px) + em;
+}
+
+// Our page has no sidebar but there are a handful of
+// elements that we want to cap at a width slightly longer
+// than our standard cf.gov line length.
+.u-cap-width {
+  max-width: math.div(700px, $base-font-size-px) + em;
+}

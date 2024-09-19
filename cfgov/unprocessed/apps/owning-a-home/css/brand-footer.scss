@@ -1,0 +1,54 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   "Brand footer" custom styles
+   ========================================================================== */
+
+.brand-footer {
+  background-color: var(--gray-5);
+  border-top: 1px solid var(--gray-40);
+
+  &__wrapper {
+    box-sizing: border-box;
+    padding: math.div(30px, $base-font-size-px) + rem;
+    padding-bottom: math.div(60px, $base-font-size-px) + rem;
+    max-width: 1230px;
+    margin: 0 auto;
+  }
+
+  &__heading {
+    margin-bottom: math.div(30px, $base-font-size-px) + rem;
+  }
+
+  &__blocks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: math.div(60px, $base-font-size-px) + rem;
+  }
+
+  &__block {
+    flex-grow: 1;
+    width: 240px;
+  }
+
+  .title-link {
+    border-bottom-width: 1px;
+  }
+
+  &__img {
+    text-align: center;
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      text-align: left;
+    }
+
+    img {
+      width: 150px;
+      padding-bottom: math.div(($grid-gutter-width - 5), $base-font-size-px) +
+        em;
+    }
+  }
+}

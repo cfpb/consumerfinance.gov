@@ -76,7 +76,7 @@ def generate_filename(type):
 
 class PageMetadataReportView(PageReportView):
     header_icon = "doc-empty-inverse"
-    title = "Page Metadata (for Live Pages)"
+    page_title = "Page Metadata (for Live Pages)"
 
     list_export = PageReportView.list_export + [
         "url",
@@ -109,7 +109,9 @@ class PageMetadataReportView(PageReportView):
         }
     }
 
-    template_name = "v1/page_metadata_report.html"
+    index_url_name = "page_metadata_report"
+    index_results_url_name = "page_metadata_report_results"
+    results_template_name = "v1/page_metadata_report.html"
 
     def get_filename(self):
         return generate_filename("pages")
@@ -122,7 +124,7 @@ class PageMetadataReportView(PageReportView):
 
 class DraftReportView(PageReportView):
     header_icon = "doc-empty"
-    title = "Draft Pages"
+    page_title = "Draft Pages"
 
     list_export = PageReportView.list_export + [
         "url",
@@ -151,7 +153,9 @@ class DraftReportView(PageReportView):
         }
     }
 
-    template_name = "v1/page_draft_report.html"
+    index_url_name = "page_drafts_report"
+    index_results_url_name = "page_drafts_report_results"
+    results_template_name = "v1/page_draft_report.html"
 
     def get_filename(self):
         return generate_filename("pages")
@@ -167,7 +171,7 @@ class DraftReportView(PageReportView):
 
 class DocumentsReportView(ReportView):
     header_icon = "doc-full"
-    title = "Documents"
+    page_title = "Documents"
 
     list_export = [
         "id",
@@ -195,7 +199,9 @@ class DocumentsReportView(ReportView):
         "url": {"csv": construct_absolute_url},
     }
 
-    template_name = "v1/documents_report.html"
+    index_url_name = "documents_report"
+    index_results_url_name = "documents_report_results"
+    results_template_name = "v1/documents_report.html"
 
     def get_filename(self):
         return generate_filename("documents")
@@ -206,7 +212,7 @@ class DocumentsReportView(ReportView):
 
 class ImagesReportView(ReportView):
     header_icon = "image"
-    title = "Images"
+    page_title = "Images"
 
     list_export = [
         "title",
@@ -231,7 +237,9 @@ class ImagesReportView(ReportView):
         "tags.names": {"csv": process_tags},
     }
 
-    template_name = "v1/images_report.html"
+    index_url_name = "images_report"
+    index_results_url_name = "images_report_results"
+    results_template_name = "v1/images_report.html"
 
     def get_filename(self):
         return generate_filename("images")
@@ -247,7 +255,7 @@ class ImagesReportView(ReportView):
 
 class EnforcementActionsReportView(ReportView):
     header_icon = "form"
-    title = "Enforcement Actions"
+    page_title = "Enforcement Actions"
 
     list_export = [
         "title",
@@ -278,7 +286,9 @@ class EnforcementActionsReportView(ReportView):
         "url": {"csv": construct_absolute_url},
     }
 
-    template_name = "v1/enforcement_actions_report.html"
+    index_url_name = "enforcement_report"
+    index_results_url_name = "enforcement_report_results"
+    results_template_name = "v1/enforcement_actions_report.html"
 
     def get_filename(self):
         """Get a better filename than the default 'spreadsheet-export'."""
@@ -292,7 +302,7 @@ class EnforcementActionsReportView(ReportView):
 
 class AskReportView(ReportView):
     header_icon = "help"
-    title = "Ask CFPB"
+    page_title = "Ask CFPB"
 
     list_export = [
         "answer_base",
@@ -369,7 +379,9 @@ class AskReportView(ReportView):
         },
     }
 
-    template_name = "v1/ask_report.html"
+    index_url_name = "ask_report"
+    index_results_url_name = "ask_report_results"
+    results_template_name = "v1/ask_report.html"
 
     def get_filename(self):
         return generate_filename("ask-cfpb")
@@ -383,9 +395,11 @@ class AskReportView(ReportView):
 
 
 class CategoryIconReportView(ReportView):
-    title = "Category Icons"
+    page_title = "Category Icons"
     header_icon = "site"
-    template_name = "v1/category_icon_report.html"
+    index_url_name = "category_icons_report"
+    index_results_url_name = "category_icons_report_results"
+    results_template_name = "v1/category_icon_report.html"
     paginate_by = 0
 
     list_export = [
@@ -431,9 +445,11 @@ class TranslatedPagesReportFilterSet(WagtailFilterSet):
 
 
 class TranslatedPagesReportView(PageReportView):
-    title = "Translated Pages"
+    page_title = "Translated Pages"
     header_icon = "site"
-    template_name = "v1/translated_pages_report.html"
+    index_url_name = "translated_pages_report"
+    index_results_url_name = "translated_pages_report_results"
+    results_template_name = "v1/translated_pages_report.html"
     filterset_class = TranslatedPagesReportFilterSet
 
     def get_queryset(self):
@@ -448,9 +464,11 @@ class TranslatedPagesReportView(PageReportView):
 
 
 class ActiveUsersReportView(ReportView):
-    title = "Active Users"
+    page_title = "Active Users"
     header_icon = "user"
-    template_name = "v1/active_users_report.html"
+    index_url_name = "active_users_report"
+    index_results_url_name = "active_users_report_results"
+    results_template_name = "v1/active_users_report.html"
     paginate_by = 0
 
     list_export = [
