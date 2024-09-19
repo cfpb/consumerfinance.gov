@@ -13,7 +13,7 @@ import wagtail_footnotes.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0035_add_footnotes'),
+        ('v1', '0036_delete_cdnhistory'),
     ]
 
     operations = [
