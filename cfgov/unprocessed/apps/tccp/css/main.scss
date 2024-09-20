@@ -107,7 +107,7 @@
       (math.div(45px, $base-font-size-px) + rem);
 
     p:first-child {
-      @include h3;
+      @include heading-3;
     }
 
     // Make everything bigger on desktop
@@ -115,7 +115,7 @@
       padding-right: math.div(60px, $base-font-size-px) + rem;
 
       p:last-child {
-        @include heading-3;
+        @include heading-3($is-responsive: false);
       }
     }
   }
@@ -244,7 +244,7 @@
 
 .o-apr-rating-group {
   &--heading {
-    @include h3;
+    @include heading-3;
   }
 
   .m-apr-rating {

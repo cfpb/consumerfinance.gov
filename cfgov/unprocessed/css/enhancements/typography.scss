@@ -3,9 +3,8 @@
 dt {
   display: inline-block;
 
-  @include h5;
-  // Override h5 margin.
   margin-bottom: 0.5em;
+  @include heading-5($has-margin-bottom: false);
 
   &:last-of-type {
     margin-bottom: 0;

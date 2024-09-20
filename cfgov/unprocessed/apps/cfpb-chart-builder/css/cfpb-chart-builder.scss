@@ -95,7 +95,7 @@ x/y positioning on the SVG elements.
         transform: translateY(370px);
         left: calc(50% - 64px) !important;
 
-        @include h6;
+        @include heading-6;
       }
 
       .highcharts-axis-title {

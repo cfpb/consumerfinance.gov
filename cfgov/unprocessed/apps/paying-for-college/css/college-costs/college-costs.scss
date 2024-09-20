@@ -73,7 +73,7 @@
       .financial-item {
         &__label div,
         &__value span {
-          @include h3;
+          @include heading-3;
         }
       }
 
@@ -84,7 +84,7 @@
 
         &__label.h4,
         &__link span {
-          @include h3;
+          @include heading-3;
         }
       }
 
