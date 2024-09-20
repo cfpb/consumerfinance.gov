@@ -3,6 +3,7 @@ import tilemap from 'highcharts/modules/tilemap';
 import cloneDeep from 'lodash.clonedeep';
 import defaultTilemap from './tilemap-styles.js';
 import usLayout from './us-layout.js';
+import populations from './populations.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
 tilemap(Highmaps);
@@ -18,8 +19,10 @@ function makeTilemapOptions(data, dataAttributes) {
 
   let defaultObj = cloneDeep(defaultTilemap);
 
+  let styles;
   if (styleOverrides) {
-    overrideStyles(styleOverrides, defaultObj, data);
+    styles = JSON.parse(styleOverrides);
+    overrideStyles(styles, defaultObj, data);
   }
 
   const formattedSeries = formatSeries(data);
@@ -31,7 +34,7 @@ function makeTilemapOptions(data, dataAttributes) {
 
   defaultObj = {
     ...defaultObj,
-    ...getMapConfig(formattedSeries),
+    ...getMapConfig(formattedSeries, styles.perCapita),
   };
 
   if (!defaultObj.tooltip.formatter) {
@@ -152,20 +155,31 @@ function makeDivisor(v) {
 /**
  * Generates a config object to be added to the chart config
  * @param {Array} series - The formatted series data
+ * @param perCapita
  * @returns {Array} series data with a geographic component added
  */
-function getMapConfig(series) {
+function getMapConfig(series, perCapita) {
   let min = Infinity;
   let max = -Infinity;
   let dataMin = Infinity;
-  const data = series[0].data;
+  let data = series[0].data;
+  if (perCapita) {
+    data = data.map((v) => {
+      return {
+        ...v,
+        perCapita: v.value / populations[v.name],
+      };
+    });
+  }
 
   data.forEach((v) => {
-    if (v.value < dataMin) dataMin = v.value;
+    const val = perCapita ? v.perCapita : v.value;
+    if (val < dataMin) dataMin = val;
   });
 
   const added = data.map((v) => {
-    const val = Math.round(Number(v.value) * 100) / 100;
+    const val =
+      Math.round(Number(perCapita ? v.perCapita : v.value) * 100) / 100;
     if (val <= min) min = val;
     if (val >= max) max = val;
     return {
