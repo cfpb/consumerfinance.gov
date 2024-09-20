@@ -87,6 +87,13 @@ function updateTilemapLegend(node, data, legendTitle) {
     title.innerText = legendTitle;
     legend.appendChild(title);
   }
+  if (data.perCapita) {
+    labels[0].innerText = 'Less';
+    labels[labels.length - 1].innerText = 'More';
+    for (let i = 1; i < labels.length - 1; i++) {
+      labels[i].innerText = '\xa0';
+    }
+  }
   colors.forEach((v) => legend.appendChild(v));
   labels.forEach((v) => legend.appendChild(v));
 }
