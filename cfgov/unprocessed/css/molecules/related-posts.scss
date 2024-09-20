@@ -17,6 +17,7 @@ $gap-half: math.div(15px, $base-font-size-px) + rem;
   );
 
   .m-list__link {
+    @include u-link-no-border;
     @include u-link-colors(
       var(--pacific),
       var(--pacific),
@@ -24,7 +25,6 @@ $gap-half: math.div(15px, $base-font-size-px) + rem;
       var(--pacific),
       var(--navy)
     );
-    @include u-link-no-border;
 
     &:hover {
       border-bottom: 1px dotted;

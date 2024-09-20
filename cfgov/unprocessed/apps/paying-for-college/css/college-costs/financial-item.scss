@@ -154,11 +154,11 @@
   }
 
   .o-costs-group__content {
+    margin-bottom: math.div(15px, $base-font-size-px) + em;
+
     .financial-item {
       margin-top: math.div(15px, $base-font-size-px) + em;
     }
-
-    margin-bottom: math.div(15px, $base-font-size-px) + em;
   }
 
   & [data-financial-item='gapLoan_gapLoan'] {

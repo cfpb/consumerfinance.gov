@@ -18,8 +18,8 @@
     font-size: math.div($grid-gutter-width, $base-font-size-px) + rem;
     line-height: 1;
 
-    @include u-link-colors(var(--gray-dark), var(--pacific-80));
     @include u-link-no-border;
+    @include u-link-colors(var(--gray-dark), var(--pacific-80));
   }
 
   // Only for elements in "share" (m-social-media--share) section.

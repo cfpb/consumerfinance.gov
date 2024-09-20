@@ -33,11 +33,11 @@
 }
 
 .prepaid-agreements-search {
+  padding-top: 0 !important;
+
   .o-multiselect__label {
     word-break: break-word;
   }
-
-  padding-top: 0 !important;
 
   .filters {
     &__applied {

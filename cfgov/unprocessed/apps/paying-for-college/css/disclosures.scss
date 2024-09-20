@@ -164,11 +164,13 @@ $bp-graph-cols-min: 740px;
   &__school,
   &__location {
     margin-bottom: math.div(15px, $size-iii) + em;
+
+    @include heading-3($has-margin-bottom: false, $is-responsive: false);
+
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
       margin-bottom: math.div(5px, $size-iii) + em;
     }
-    @include heading-3($has-margin-bottom: false, $is-responsive: false);
   }
   &__school {
     margin-bottom: 0;
@@ -1029,9 +1031,10 @@ $bp-graph-cols-min: 740px;
   }
 
   &__projection-value {
+    text-align: right;
+
     @include u-grid-column(5);
     @include heading-4($is-responsive: false);
-    text-align: right;
   }
 
   &__explanation {

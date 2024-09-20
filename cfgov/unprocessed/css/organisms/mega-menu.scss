@@ -45,8 +45,10 @@ $menu-link-hover-bar-px: 5px;
 
 // Focus item appearance.
 @mixin u-focus-rectangle() {
-  // Position focus rectangle relative to parent container.
-  position: relative;
+  & {
+    // Position focus rectangle relative to parent container.
+    position: relative;
+  }
 
   // Remove default focus outline.
   &:focus {
@@ -265,10 +267,9 @@ $menu-link-hover-bar-px: 5px;
   // 1st-level menu.
   &__content-1 {
     &-link {
+      display: block;
       // Colors for :link, :visited, :hover, :focus, :active.
       @include u-link-colors(var(--black));
-
-      display: block;
     }
   }
 
@@ -282,6 +283,8 @@ $menu-link-hover-bar-px: 5px;
 
     &-link,
     &-overview-link {
+      display: block;
+
       // Colors for :link, :visited, :hover, :focus, :active.
       @include u-link-colors(
         var(--pacific),
@@ -293,8 +296,6 @@ $menu-link-hover-bar-px: 5px;
       &:hover:focus {
         color: var(--black);
       }
-
-      display: block;
     }
   }
 
@@ -373,8 +374,6 @@ $menu-link-hover-bar-px: 5px;
     // Menu flyout.
     // All menus - Tablet/Mobile.
     &__content {
-      @include u-drop-shadow-after;
-
       display: none;
       box-sizing: border-box;
       width: 100%;
@@ -382,6 +381,8 @@ $menu-link-hover-bar-px: 5px;
       background-color: var(--gray-5);
       border-top: 1px solid var(--gray-40);
       border-bottom: 1px solid var(--gray-40);
+
+      @include u-drop-shadow-after;
 
       .js & {
         position: absolute;
@@ -460,6 +461,8 @@ $menu-link-hover-bar-px: 5px;
       &-link,
       &-overview-link {
         position: relative;
+        padding-top: math.div(15px, 18px) + em;
+        padding-bottom: math.div(15px, 18px) + em;
 
         // Colors for :link, :visited, :hover, :focus, :active.
         @include u-link-colors(
@@ -469,9 +472,6 @@ $menu-link-hover-bar-px: 5px;
           var(--pacific),
           var(--navy-dark)
         );
-
-        padding-top: math.div(15px, 18px) + em;
-        padding-bottom: math.div(15px, 18px) + em;
 
         // Hide  >  icon when we do not have children.
         &-icon-post {
@@ -923,14 +923,14 @@ $menu-link-hover-bar-px: 5px;
       }
 
       &-list--featured &-link {
-        // Remove hover bar for featured item link.
-        @include u-hover-link-featured-desktop;
-        @include u-focus-link-featured-desktop;
-
         display: flex;
         padding: 0;
         left: 0;
         border: none;
+
+        // Remove hover bar for featured item link.
+        @include u-hover-link-featured-desktop;
+        @include u-focus-link-featured-desktop;
 
         & .cf-icon-svg {
           color: var(--gold);
