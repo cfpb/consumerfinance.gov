@@ -119,7 +119,7 @@ function trimTenth(v) {
 function formatLegendValues(s1, s2, isLast) {
   const f1 = mLabel(s1);
   const f2 = mLabel(s2);
-  return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+  return `$${f1[0]}${f1[1]} - $${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
 }
 
 /**
@@ -191,11 +191,11 @@ function getMapConfig(series) {
   return {
     colorAxis: {
       dataClasses: [
-        makeDataClass(min, step1, '#f1f9ed'),
-        makeDataClass(step1, step2, '#d4eac6'),
-        makeDataClass(step2, step3, '#addc91'),
-        makeDataClass(step3, step4, '#48b753'),
-        makeDataClass(step4, max, '#1e9642', 1),
+        makeDataClass(min, step1, '#d4eac6'),
+        makeDataClass(step1, step2, '#addc91'),
+        makeDataClass(step2, step3, '#48b753'),
+        makeDataClass(step3, step4, '#1e9642'),
+        makeDataClass(step4, max, '#187835', 1),
       ],
     },
     series: [{ clip: false, data: added }],

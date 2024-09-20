@@ -27,7 +27,7 @@ const tilemap = {
         },
         style: {
           textOutline: false,
-          fontSize: 14,
+          fontSize: '13px',
         },
       },
     },

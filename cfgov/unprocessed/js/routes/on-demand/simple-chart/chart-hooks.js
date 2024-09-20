@@ -6,13 +6,13 @@ const hooks = {
       y: i + 1,
     }));
   },
-
+  //Includes very janky alignment hack
   cpf_formatter() {
-    return `<span style="font-weight:500">${
+    const val = Math.round(this.point.value / 1e6);
+    const digits = Math.ceil(Math.log10(val));
+    return `<span style="visibility:hidden">${digits > 1 ? (digits > 2 ? 'o.' : 'o') : '.'}</span><span style="font-weight:500;">${
       this.point.name
-    }</span><br/><span style="font-weight:300">${Math.round(
-      this.point.value / 1e6,
-    )}M</span>`;
+    }</span><span style="visibility:hidden">${digits > 1 ? 'o' : ''}</span><br/><span style="font-weight:300">$${val}M</span>`;
   },
 
   cpf_labeller() {
