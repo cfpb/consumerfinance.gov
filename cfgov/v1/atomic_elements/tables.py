@@ -114,6 +114,7 @@ class Table(blocks.StructBlock):
             ),
         ]
     )
+    caption = blocks.RichTextBlock(required=False)
 
     class Meta:
         icon = "table"
