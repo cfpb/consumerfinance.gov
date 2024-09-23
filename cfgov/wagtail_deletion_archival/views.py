@@ -6,8 +6,8 @@ from django.template.response import TemplateResponse
 
 from wagtail.models import Page
 
-from archival.forms import ImportForm
-from archival.utils import export_page, import_page
+from wagtail_deletion_archival.forms import ImportForm
+from wagtail_deletion_archival.utils import export_page, import_page
 
 
 def export_view(request, page_id):
@@ -48,7 +48,7 @@ def import_view(request, page_id):
 
     return TemplateResponse(
         request,
-        "archival/import_page.html",
+        "wagtail_deletion_archival/import_page.html",
         {
             "parent_page": parent_page,
             "form": input_form,

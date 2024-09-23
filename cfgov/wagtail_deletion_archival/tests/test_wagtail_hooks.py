@@ -5,8 +5,8 @@ from django.urls import reverse
 from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
 
-from archival.wagtail_hooks import archive_page_data_receiver
 from v1.models import BlogPage
+from wagtail_deletion_archival.wagtail_hooks import archive_page_data_receiver
 
 
 class ArchivePageOnDeletionTestCase(TestCase, WagtailTestUtils):
@@ -27,7 +27,7 @@ class ArchivePageOnDeletionTestCase(TestCase, WagtailTestUtils):
         self.test_page3 = BlogPage(title="test page 3", slug="test-page3")
         root_page.add_child(instance=self.test_page3)
 
-        self.fs = apps.get_app_config("archival").filesystem
+        self.fs = apps.get_app_config("wagtail_deletion_archival").filesystem
 
     def test_delete_page(self):
         self.client.post(
@@ -85,7 +85,7 @@ class ArchivePageOnDeletionTestCase(TestCase, WagtailTestUtils):
             0,
         )
 
-    @override_settings(ARCHIVE_FILESYSTEM=None)
+    @override_settings(WAGTAIL_DELETION_ARCHIVE_FILESYSTEM=None)
     def test_delete_page_with_no_archive_dir(self):
         archive_page_data_receiver(None, self.test_page3)
 

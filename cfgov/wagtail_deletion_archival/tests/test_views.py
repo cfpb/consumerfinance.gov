@@ -7,8 +7,8 @@ from django.urls import reverse
 from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
 
-from archival.utils import export_page
 from v1.models import BlogPage
+from wagtail_deletion_archival.utils import export_page
 
 
 class ExportViewTestCase(TestCase, WagtailTestUtils):
