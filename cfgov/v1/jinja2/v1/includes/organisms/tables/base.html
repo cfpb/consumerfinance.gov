@@ -24,6 +24,8 @@
                                  ]
                              }
 
+   value.caption:            Optional rich text to render after the table.
+
    value.options:            Enabled configuration options as a list of strings.
                              For example: ['stack_on_mobile'].
                              See list of supported options below.
@@ -96,4 +98,6 @@
     </tbody>
 </table>
 
-{{ value.caption | richtext }}
+{% if value.caption -%}
+    {{ value.caption | richtext }}
+{%- endif %}
