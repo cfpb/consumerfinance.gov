@@ -13,16 +13,16 @@ from wagtail.admin.widgets import Button
 
 from fs import path as fs_path
 
-from archival.utils import export_page
-from archival.views import export_view, import_view
+from wagtail_deletion_archival.utils import export_page
+from wagtail_deletion_archival.views import export_view, import_view
 
 
 def archive_page_data_receiver(sender, instance, **kwargs):
-    # If settings.ARCHIVE_FILESYSTEM is not set, don't do anything
-    if getattr(settings, "ARCHIVE_FILESYSTEM", None) is None:
+    # Skip all this if settings.WAGTAIL_DELETION_ARCHIVE_FILESYSTEM is not set
+    if getattr(settings, "WAGTAIL_DELETION_ARCHIVE_FILESYSTEM", None) is None:
         return
 
-    fs = apps.get_app_config("archival").filesystem
+    fs = apps.get_app_config("wagtail_deletion_archival").filesystem
 
     page = instance.specific
     site = page.get_site()

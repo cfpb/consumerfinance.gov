@@ -5,12 +5,12 @@ from django.test import TestCase
 
 from wagtail.models import Site
 
-from archival.utils import (
+from v1.models import BlogPage
+from wagtail_deletion_archival.utils import (
     export_page,
     get_last_migration,
     import_page,
 )
-from v1.models import BlogPage
 
 
 class LastMigrationTestCase(TestCase):

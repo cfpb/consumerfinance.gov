@@ -118,7 +118,7 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
-    "archival",
+    "wagtail_deletion_archival",
 )
 
 MIDDLEWARE = (
@@ -799,6 +799,6 @@ if ENABLE_SSO:
 # Deletion archive
 # If this is set then when Wagtail pages are deleted a JSON archive file will
 # be written to this path containing the deleted page's data.
-ARCHIVE_PATH = os.environ.get("ARCHIVE_PATH")
-if ARCHIVE_PATH is not None:
-    ARCHIVE_FILESYSTEM = f"osfs://{ARCHIVE_PATH}"
+WAGTAIL_DELETION_ARCHIVE_PATH = os.environ.get("WAGTAIL_DELETION_ARCHIVE_PATH")
+if WAGTAIL_DELETION_ARCHIVE_PATH is not None:
+    WAGTAIL_DELETION_ARCHIVE_FILESYSTEM = f"osfs://{WAGTAIL_DELETION_ARCHIVE_PATH}"

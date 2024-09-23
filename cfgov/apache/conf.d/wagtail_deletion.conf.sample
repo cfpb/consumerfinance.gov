@@ -1,7 +1,7 @@
 # Serve deleted content JSON archives at /__deleted
-PassEnv ARCHIVE_PATH
+PassEnv WAGTAIL_DELETION_ARCHIVE_PATH
 LoadModule autoindex_module modules/mod_autoindex.so
-Alias /__deleted/ "${ARCHIVE_PATH}"
-<Directory "${ARCHIVE_PATH}">
+Alias /__deleted/ "${WAGTAIL_DELETION_ARCHIVE_PATH}"
+<Directory "${WAGTAIL_DELETION_ARCHIVE_PATH}">
     Options +Indexes
 </Directory>

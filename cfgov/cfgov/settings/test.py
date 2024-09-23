@@ -72,4 +72,4 @@ DEPLOY_ENVIRONMENT = "test"
 
 INSTALLED_APPS += ("tccp.tests.testapp",)
 
-ARCHIVE_FILESYSTEM = "mem:///archive"
+WAGTAIL_DELETION_ARCHIVE_FILESYSTEM = "mem:///archive"
