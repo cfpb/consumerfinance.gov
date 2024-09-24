@@ -1,4 +1,5 @@
 import tippy from 'tippy.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import { attach } from '@cfpb/cfpb-design-system/src/index.js';
 
 import orderingDropdown from './ordering';
@@ -27,7 +28,40 @@ function init() {
   // Initialize any tooltips on the page
   initializeTooltips();
   // Reinitialize tooltips after an htmx request replaces DOM nodes
-  attach(document, 'htmx:afterSwap', initializeTooltips);
+  attach(document, 'htmx:afterSwap', initializeAndReport);
+}
+
+/**
+ *
+ * @param {Event} event - htmx event
+ */
+function initializeAndReport(event) {
+  initializeTooltips();
+  reportFilter(event);
+}
+
+/**
+ *
+ * @param {Event} event - htmx event
+ */
+function reportFilter(event) {
+  let category, value;
+  const { target } = event.detail.requestConfig.triggeringEvent;
+  if (target.tagName === 'SELECT') {
+    category = target.name;
+    value = target.value;
+  } else {
+    category = target
+      .closest('fieldset')
+      .firstElementChild.textContent.toLowerCase();
+    value = target.labels[0].textContent.trim();
+  }
+
+  analyticsSendEvent({
+    name: 'tccp:card-list-refinement',
+    category,
+    value,
+  });
 }
 
 /**
