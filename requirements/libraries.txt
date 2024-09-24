@@ -36,7 +36,7 @@ wagtail-autocomplete==0.11.0
 wagtail-content-audit==0.1
 wagtail_draftail_anchors==0.6.0
 wagtail-flags==5.3.1
-wagtail-footnotes==0.12
+# wagtail-footnotes==0.12
 wagtail-inventory==3.0
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.12.1
@@ -46,3 +46,5 @@ wagtailmedia==0.15.2
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.18.2/owning_a_home_api-0.18.2-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.7.1/ccdb5_api-1.7.1-py3-none-any.whl
+
+git+https://github.com/cfpb/wagtail-footnotes/@human-friendly-numbering
