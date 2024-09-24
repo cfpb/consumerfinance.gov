@@ -12,7 +12,6 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-import wagtailcharts.blocks
 from wagtail_footnotes.blocks import RichTextBlockWithFootnotes
 from wagtailcharts.blocks import ChartBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
@@ -527,7 +526,7 @@ class SimpleChart(blocks.StructBlock):
         css = ["simple-chart.css"]
 
 
-class WagtailChartsChartBlock(wagtailcharts.blocks.ChartBlock):
+class WagtailChartsChartBlock(ChartBlock):
     class Meta:
         label = "Wagtail Charts Chart"
         icon = "image"

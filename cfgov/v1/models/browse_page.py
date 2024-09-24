@@ -104,7 +104,15 @@ class AbstractBrowsePage(CFGOVPage):
         }
 
 
-COLORS = (
+CHART_TYPES = (
+    ("line", "Line Chart"),
+    ("bar", "Vertical Bar Chart"),
+    ("bar_horizontal", "Horizontal Bar Chart"),
+    ("pie", "Pie Chart"),
+)
+
+
+CHART_COLORS = (
     ("#addc91", "Green 60"),
     ("#1fa040", "Mid Dark Green"),
     ("#257675", "Teal"),
@@ -154,7 +162,9 @@ class BrowsePage(AbstractBrowsePage):
             ("chart_block", organisms.ChartBlock()),
             (
                 "wagtailchart_block",
-                organisms.WagtailChartsChartBlock(colors=COLORS),
+                organisms.WagtailChartsChartBlock(
+                    chart_types=CHART_TYPES, colors=CHART_COLORS
+                ),
             ),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
             ("mortgage_map_block", organisms.MortgageMapBlock()),
