@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0093_uploadedfile'),
-        ('v1', '0036_delete_cdnhistory'),
+        ('v1', '0037_add_table_caption'),
     ]
 
     operations = [
