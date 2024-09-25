@@ -70,12 +70,14 @@ RUN apk update --no-cache && \
     apk upgrade --no-cache && \
     apk add --no-cache --virtual .frontend-deps jpeg-dev yarn zlib-dev
 
+# Target a production frontend build
+ARG FRONTEND_TARGET=production
+
 # See .dockerignore for details on which files are included
 COPY . .
 
 # Build the front-end
-RUN yarn && \
-    yarn run build && \
+RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache cfgov/unprocessed
 

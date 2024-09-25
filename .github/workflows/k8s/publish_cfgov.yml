@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 2
 
       - name: Build Root Docker Image
-        run: docker build . --file Dockerfile --tag $(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,') --label "runnumber=${GITHUB_RUN_ID}"
+        run: docker build . --file Dockerfile --tag $(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,') --label "runnumber=${GITHUB_RUN_ID}" --build-arg "FRONTEND_TARGET=production"
 
       - name: GitHub Container Registry Login
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
