@@ -165,11 +165,11 @@
 of the code and all of its Python dependencies. We use these
 archives to deploy the site to a Linux server.</p>
 <h1 id="generating-a-deployment-artifact">Generating a deployment artifact<a class="headerlink" href="#generating-a-deployment-artifact" title="Permanent link">¶</a></h1>
-<p>Running the script at <code>./docker/deployable-zipfile/build.sh</code> will start a CentOS 6
+<p>Running the script at <code>./docker/builder/build.sh</code> will start a CentOS 7
 container, generate the artifact (via
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker/deployable-zipfile/_build.sh">this script</a>),
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker/builder/_build.sh">this script</a>),
 and save it to <code>./cfgov_current_build.zip</code>.</p>
-<p>We use CentOS 6 here, so that the Python modules that include compiled code, will
+<p>We use CentOS 7 here so that the Python modules that include compiled code, will
 be compiled for the same environment they will be run in.</p>
 <h1 id="whats-in-an-artifact">What's in an artifact?<a class="headerlink" href="#whats-in-an-artifact" title="Permanent link">¶</a></h1>
 <p>Here's a (very abbreviated) peek into what's <em>in</em> the zip file:</p>
