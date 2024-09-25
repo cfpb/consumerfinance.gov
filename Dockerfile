@@ -99,8 +99,14 @@ RUN cp -Rfp /build/* /usr/local && rm -Rf /build
 # See .dockerignore for details on which files are included
 COPY --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
 
-# Run Django's collectstatic to collect assets from the frontend build
-RUN cfgov/manage.py collectstatic
+# Run Django's collectstatic to collect assets from the frontend build.
+#
+# Our Django settings file requires a SECRET_KEY, but we don't want to
+# bake our key into the Docker image. We need to provide one in order to
+# be able to run collectstatic, even though the key value isn't actually
+# used in any way during staticfiles collection. We provide a random
+# secret key here for this step only.
+RUN SECRET_KEY=only-for-collectstatic cfgov/manage.py collectstatic
 
 #######################################################################
 # Build mod_wsgi against target Python version
