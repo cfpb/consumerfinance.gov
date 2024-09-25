@@ -58,7 +58,7 @@ function reportFilter(event) {
   }
 
   analyticsSendEvent({
-    name: 'tccp:card-list-refinement',
+    event: 'tccp:card-list-refinement',
     category,
     value,
   });
