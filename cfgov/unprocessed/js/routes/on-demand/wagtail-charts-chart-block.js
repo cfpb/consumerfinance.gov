@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import pattern from 'patternomaly';
 
 /**
  * Set default text color to a dark gray
@@ -9,7 +10,8 @@ Chart.defaults.color = '#5a5d61';
 
 /**
  * Takes an array of Chart.js datasets and returns a new array
- * with a different line pattern for each dataset.
+ * with a different line pattern assigned to each dataset's
+ * borderDash property.
  *
  * The first line pattern is solid, the second is dashed,
  * the third is dotted and all subsequent patterns are dashed
@@ -36,6 +38,53 @@ const patternizeChartLines = (datasets) => {
 };
 
 /**
+ * Takes an array of Chart.js datasets and returns a new array
+ * with a different pattern assigned to each dataset's
+ * backgroundColor property.
+ *
+ * Patterns are from the patternomaly library.
+ *
+ * @param {array} datasets - Array of Chart.js datasets
+ * @returns {array} Array of Chart.js datasets with backgroundColor property set
+ *
+ * https://www.chartjs.org/docs/latest/general/colors.html#patterns-and-gradients
+ * https://github.com/ashiguruma/patternomaly
+ */
+const patternizeChartBars = (datasets) => {
+  const patterns = [
+    'plus',
+    'cross',
+    'dash',
+    'cross-dash',
+    'dot',
+    'dot-dash',
+    'disc',
+    'ring',
+    'line',
+    'line-vertical',
+    'weave',
+    'zigzag',
+    'zigzag-vertical',
+    'diagonal',
+    'diagonal-right-left',
+    'square',
+    'box',
+    'triangle',
+    'triangle-inverted',
+    'diamond',
+    'diamond-box',
+  ];
+  return datasets.map((dataset, i) => {
+    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+    dataset.backgroundColor = pattern.draw(
+      randomPattern,
+      dataset.backgroundColor,
+    );
+    return dataset;
+  });
+};
+
+/**
  * Change the default Chart.js tooltip options
  */
 const tooltipOptions = {
@@ -51,10 +100,15 @@ const tooltipOptions = {
 const ChartjsPluginCFPB = {
   id: 'cfpb-charts',
   beforeInit: (chart) => {
+    console.log(chart);
     chart.config.options.plugins.tooltip = tooltipOptions;
 
     if (chart.config.type === 'line') {
       patternizeChartLines(chart.config.data.datasets);
+    }
+
+    if (chart.config.type === 'bar') {
+      patternizeChartBars(chart.config.data.datasets);
     }
 
     chart.update();
