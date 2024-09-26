@@ -11,7 +11,7 @@ from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
-from v1.atomic_elements import molecules, organisms, schema
+from v1.atomic_elements import charts, molecules, organisms, schema
 from v1.models.base import CFGOVPage
 
 
@@ -104,35 +104,6 @@ class AbstractBrowsePage(CFGOVPage):
         }
 
 
-CHART_TYPES = (
-    ("line", "Line Chart"),
-    ("bar", "Vertical Bar Chart"),
-    ("bar_horizontal", "Horizontal Bar Chart"),
-    ("pie", "Pie Chart"),
-)
-
-
-CHART_COLORS = (
-    ("#addc91", "Green 60"),
-    ("#1fa040", "Mid Dark Green"),
-    ("#257675", "Teal"),
-    ("#89b6b5", "Teal 60"),
-    ("#d14124", "Red"),
-    ("#e79e8e", "Red 60"),
-    ("#0072ce", "Pacific"),
-    ("#7eb7e8", "Pacific 60"),
-    ("#254b87", "Navy"),
-    ("#9daecc", "Navy 50"),
-    ("#dc731c", "Dark Gold"),
-    ("#ffc372", "Gold 70"),
-    ("#745745", "Dark Neutral"),
-    ("#baa496", "Neutral 60"),
-    ("#a01b68", "Dark Purple"),
-    ("#dc9cbf", "Purple 50"),
-    ("#d2d3d5", "Gray 20"),
-)
-
-
 class BrowsePage(AbstractBrowsePage):
     header = StreamField(
         [
@@ -152,23 +123,27 @@ class BrowsePage(AbstractBrowsePage):
         [
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
-            ("simple_chart", organisms.SimpleChart()),
+            ("wagtailchart_block", charts.ChartBlock()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
             ("table", organisms.Table()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
-            ("chart_block", organisms.ChartBlock()),
+            ("simple_chart", organisms.SimpleChart(group="Not commonly used")),
+            ("chart_block", organisms.ChartBlock(group="Not commonly used")),
             (
-                "wagtailchart_block",
-                organisms.WagtailChartsChartBlock(
-                    chart_types=CHART_TYPES, colors=CHART_COLORS
-                ),
+                "mortgage_chart_block",
+                organisms.MortgageChartBlock(group="Not commonly used"),
             ),
-            ("mortgage_chart_block", organisms.MortgageChartBlock()),
-            ("mortgage_map_block", organisms.MortgageMapBlock()),
-            ("mortgage_downloads_block", MortgageDataDownloads()),
+            (
+                "mortgage_map_block",
+                organisms.MortgageMapBlock(group="Not commonly used"),
+            ),
+            (
+                "mortgage_downloads_block",
+                MortgageDataDownloads(group="Not commonly used"),
+            ),
             ("data_snapshot", organisms.DataSnapshot()),
             ("job_listing_table", JobListingTable()),
             ("faq_group", schema.FAQGroup()),

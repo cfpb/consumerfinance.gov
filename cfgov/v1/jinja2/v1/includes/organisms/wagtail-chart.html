@@ -1,0 +1,66 @@
+{# ==========================================================================
+
+   wagtail-chart
+
+   ==========================================================================
+
+   Description:
+
+   Create a chart block based on wagtailcharts
+
+   ========================================================================== #}
+
+{# TODO What should this o-class be? #}
+<div class="o-wagtail-chart">
+
+    {% if value.eyebrow %}
+        <div class="eyebrow">{{ value.eyebrow }}</div>
+    {% endif %}
+
+    {% if value.title %}
+       {% include_block value.title %}
+    {% endif %}
+
+    {% if value.intro %}
+       {% include_block value.intro %}
+    {% endif %}
+
+    {% if value.subtitle %}
+    <p class="o-simple-chart__subtitle">{{ value.subtitle }}</p>
+    {% endif %}
+
+    {# Copied from wagtailcharts/templates/wagtailcharts/blocks/chart_block.html #}
+    {# TODO: include the value.description somewhere?? #}
+    <canvas
+        id="chart-{{block.id}}"
+        data-datasets="{{value.datasets}}"
+        data-config="{{value.settings.config}}"
+        data-chart-type="{{value.chart_type}}"
+        {% if self.callbacks %}data-callback="{{value.callbacks}}"{% endif %}
+        aria-label="A chart {% if value.title %} with the title {{value.title}} {%endif%}">
+        >
+        <p>
+            Your browser does not support the canvas element.
+            This canvas shows a chart {% if value.title %} with the title {{value.title}} {%endif%}
+        </p>
+    </canvas>
+
+    {# TODO: Copied from simple-chart.html #}
+    <p class="m-chart-footnote block block--sub block--border-top">
+        {% if value.data_source %}
+          <strong>Source:</strong> {{value.data_source}}<br>
+        {% endif %}
+        {% if value.date_published %}
+          <strong>Date Published:</strong> {{value.date_published}}<br>
+        {% endif %}
+
+        {% if value.download %}
+            <strong>Download:</strong>
+            <a href="{{value.download}}">{{value.download}}</a><br>
+        {% endif %}
+        {% if value.notes%}
+          <strong>Notes:</strong> {{value.notes}}
+        {% endif %}
+    </p>
+</div>
+
