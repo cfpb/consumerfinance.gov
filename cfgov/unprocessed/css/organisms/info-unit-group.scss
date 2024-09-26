@@ -52,6 +52,7 @@
     .content-l__top-divider {
       .content-l__col + .content-l__col {
         margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
         @include u-grid-column-top-divider;
       }
     }

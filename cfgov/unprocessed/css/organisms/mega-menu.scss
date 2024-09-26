@@ -268,6 +268,7 @@ $menu-link-hover-bar-px: 5px;
   &__content-1 {
     &-link {
       display: block;
+
       // Colors for :link, :visited, :hover, :focus, :active.
       @include u-link-colors(var(--black));
     }

@@ -26,6 +26,7 @@
   &--share {
     .m-social-media__heading {
       margin: auto 0;
+
       @include heading-5($has-margin-bottom: false, $has-margin-top: false);
     }
 

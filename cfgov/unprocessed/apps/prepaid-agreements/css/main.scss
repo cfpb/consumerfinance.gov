@@ -23,6 +23,7 @@
   dt {
     margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
       em;
+
     @include heading-4($has-margin-bottom: false, $is-responsive: false);
   }
 
