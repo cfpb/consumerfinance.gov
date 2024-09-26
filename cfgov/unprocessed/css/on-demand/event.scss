@@ -124,7 +124,7 @@
   }
 
   .datetime {
-    @include h5;
+    @include heading-5;
   }
 
   .event-meta__address {
@@ -162,5 +162,5 @@
   padding: math.div(9px, $base-font-size-px) + rem;
   text-align: center;
 
-  @include h6;
+  @include heading-6;
 }

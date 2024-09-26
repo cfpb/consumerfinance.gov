@@ -159,9 +159,8 @@
     }
 
     &--parent {
-      @include heading-4;
-      // Override for h4 margin.
       margin-bottom: inherit;
+      @include heading-4($has-margin-bottom: false, $is-responsive: false);
     }
   }
 

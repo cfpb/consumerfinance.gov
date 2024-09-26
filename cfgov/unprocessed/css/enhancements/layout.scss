@@ -90,6 +90,6 @@
 // $TODO: Expose heading class modifiers in wagtail
 .content__supersize-headings {
   .o-full-width-text-group h2 {
-    @include h1;
+    @include heading-1;
   }
 }

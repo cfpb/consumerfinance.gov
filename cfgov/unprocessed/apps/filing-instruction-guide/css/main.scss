@@ -9,27 +9,23 @@
   }
 
   h2 {
-    @include h1;
-    // Override for h1 margin.
     margin-top: 60px;
+    @include heading-1($has-margin-top: false);
   }
 
   h3 {
-    @include h2;
-    // Override for h2 margin.
     margin-top: 45px;
+    @include heading-2($has-margin-top: false);
   }
 
   &:not(.m-info-unit__heading-text) > h4 {
-    @include h3;
-    // Override for h3 margin.
     margin-top: 30px;
+    @include heading-3($has-margin-top: false);
   }
 
   h5 {
-    @include h4;
-    // Override for h4 margin.
     margin-top: 30px;
+    @include heading-4($has-margin-top: false);
   }
 
   pre {
