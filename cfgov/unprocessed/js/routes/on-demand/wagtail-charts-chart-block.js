@@ -75,11 +75,15 @@ const patternizeChartBars = (datasets) => {
     'diamond-box',
   ];
   return datasets.map((dataset, i) => {
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    dataset.backgroundColor = pattern.draw(
-      randomPattern,
-      dataset.backgroundColor,
-    );
+    const numPatterns = dataset.data.length;
+    dataset.backgroundColor = []
+      .concat(dataset.backgroundColor)
+      .map((color) => {
+        return pattern.draw(
+          patterns[Math.floor(Math.random() * patterns.length)],
+          color,
+        );
+      });
     return dataset;
   });
 };
@@ -100,7 +104,6 @@ const tooltipOptions = {
 const ChartjsPluginCFPB = {
   id: 'cfpb-charts',
   beforeInit: (chart) => {
-    console.log(chart);
     chart.config.options.plugins.tooltip = tooltipOptions;
 
     if (chart.config.type === 'line') {
