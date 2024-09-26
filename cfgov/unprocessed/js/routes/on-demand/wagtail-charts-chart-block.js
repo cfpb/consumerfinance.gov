@@ -74,8 +74,7 @@ const patternizeChartBars = (datasets) => {
     'diamond',
     'diamond-box',
   ];
-  return datasets.map((dataset, i) => {
-    const numPatterns = dataset.data.length;
+  return datasets.map((dataset) => {
     dataset.backgroundColor = []
       .concat(dataset.backgroundColor)
       .map((color) => {
