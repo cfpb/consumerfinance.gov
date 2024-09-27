@@ -485,6 +485,7 @@ CSP_IMG_SRC = (
 CSP_OBJECT_SRC = ("'none'")
 CSP_BASE_URI = ("'none'")
 CSP_INCLUDE_NONCE_IN = ["script-src"]
+CSP_EXCLUDE_URL_PREFIXES = ("/admin")
 
 # FEATURE FLAGS
 # Flags can be declared here with an empty list, which will evaluate as false
