@@ -44,9 +44,9 @@ class ChartBlock(WagtailChartBlock):
         label="Pre-heading",
     )
     title = v1_blocks.HeadingBlock(required=False)
-    intro = blocks.RichTextBlock(icon="edit")
+    intro = blocks.RichTextBlock(required=False, icon="edit")
     description = blocks.TextBlock(
-        required=True, help_text="Accessible description of the chart content"
+        required=False, help_text="Accessible description of the chart content"
     )
     data_source = blocks.TextBlock(
         required=False,
@@ -62,17 +62,23 @@ class ChartBlock(WagtailChartBlock):
     )
     notes = blocks.TextBlock(required=False, help_text="Note about the chart")
 
-    chart_type = blocks.ChoiceBlock(
-        choices=CHART_TYPES,
-        default="datetime",
-        required=True,
-    )
-
     def __init__(self, **kwargs):
         # Always override chart_types and colors with ours
         super().__init__(
             chart_types=CHART_TYPES, colors=CHART_COLORS, **kwargs
         )
+
+        # Create a more user-friendly ordering of this block's child blocks.
+        #
+        # This puts our content-focused blocks in front of the
+        # chart-configuration blocks we inherit from wagtailcharts.
+        #
+        # child_blocks is an OrderedDict that comes from Wagtail's
+        # StructBlock. This just calls OrderedDict.move_to_end() in the
+        # order we want the blocks to appear.
+        self.child_blocks.move_to_end("chart_type")
+        self.child_blocks.move_to_end("datasets")
+        self.child_blocks.move_to_end("settings")
 
     class Meta:
         label = "Chart"
