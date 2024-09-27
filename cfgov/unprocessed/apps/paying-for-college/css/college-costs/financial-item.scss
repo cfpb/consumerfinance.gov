@@ -41,9 +41,8 @@
   &--total {
     .financial-item__label > :not(p),
     .financial-item__value {
-      @include heading-4;
-      // Override for h4 margin.
       margin-bottom: 0;
+      @include heading-4($has-margin-bottom: false, $is-responsive: false);
     }
   }
 

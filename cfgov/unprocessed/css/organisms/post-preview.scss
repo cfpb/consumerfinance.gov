@@ -75,9 +75,8 @@
   }
 
   &__subtitle {
-    @include heading-6;
-
     clear: both;
+    @include heading-6;
   }
 
   &__byline-group,

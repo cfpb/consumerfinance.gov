@@ -30,23 +30,23 @@
     <div class="content-l">
             <div class="content-l__col content-l__col-1-2">
                 <dl>
-                    <dt><h2>Issuer name</h2></dt>
+                    <dt>Issuer name</dt>
                     <dd>{{ product.issuer_name }}</dd>
-                    <dt><h2>Prepaid product type</h2></dt>
+                    <dt>Prepaid product type</dt>
                     <dd>{{ product.prepaid_type if product.prepaid_type else default_text }}</dd>
                 </dl>
             </div>
             <div class="content-l__col content-l__col-1-2">
                 <dl>
-                    <dt><h2>Program manager</h2></dt>
+                    <dt>Program manager</dt>
                     <dd>{{ product.program_manager if product.program_manager else default_text }}</dd>
-                    <dt><h2>Current status</h2></dt>
+                    <dt>Current status</dt>
                     <dd>{{ product.status if product.status else default_text }}</dd>
                 </dl>
             </div>
         </div>
             <dl>
-                <dt><h2>Other relevant parties</h2></dt>
+                <dt>Other relevant parties</dt>
                 <dd>
                 {% if product.other_relevant_parties %}
                     {% if product.other_relevant_parties | length > 500 %}

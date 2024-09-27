@@ -15,7 +15,7 @@
     color: $table-head-text;
     background: $table-head-bg;
 
-    @include h5;
+    @include heading-5;
 
     &:first-child {
       border-top: 1px solid $table-head-bg;

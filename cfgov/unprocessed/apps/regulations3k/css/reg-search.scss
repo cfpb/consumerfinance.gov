@@ -37,6 +37,25 @@
     border: 1px solid var(--gray-40);
     background-color: var(--gray-5);
 
+    .reg-checkbox {
+      display: inline-block;
+    }
+    .num-results {
+      float: right;
+    }
+    .o-form__group {
+      margin-bottom: 0;
+    }
+
+    // TODO: Create sidebar filter pattern and remove expandable customizations.
+    .o-expandable {
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gray-40);
+      margin-bottom: 15px;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
     .o-expandable__content,
     .o-expandable__header {
       border: 0;
@@ -46,29 +65,6 @@
         border: 0;
         padding: 0;
       }
-    }
-
-    .reg-checkbox {
-      display: inline-block;
-    }
-    .num-results {
-      float: right;
-    }
-    .o-expandable {
-      padding-bottom: 15px;
-      border-bottom: 1px solid var(--gray-40);
-      margin-bottom: 15px;
-      &:nth-child(3n) {
-        border-bottom: none;
-      }
-      &__label {
-        @include h4;
-        // Override for h4 margin.
-        margin-bottom: 0;
-      }
-    }
-    .o-form__group {
-      margin-bottom: 0;
     }
   }
   .content__main {
