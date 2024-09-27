@@ -96,7 +96,6 @@ def global_admin_js():
 @hooks.register("insert_global_admin_css")
 def editor_css():
     css_files = [
-        "css/form-explainer.css",
         "css/general-enhancements.css",
         "css/heading-block.css",
         "css/expandable-block.css",
