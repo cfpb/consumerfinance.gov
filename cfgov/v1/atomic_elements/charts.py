@@ -4,14 +4,6 @@ from wagtailcharts.blocks import ChartBlock as WagtailChartBlock
 
 from v1 import blocks as v1_blocks
 
-# Bring tables into this module to maintain import structure across the project
-from v1.atomic_elements.tables import (  # noqa: F401
-    CaseDocketTable,
-    ConsumerReportingCompanyTable,
-    ContactUsTable,
-    Table,
-)
-
 
 CHART_TYPES = (
     ("line", "Line Chart"),
