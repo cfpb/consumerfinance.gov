@@ -80,6 +80,9 @@ class ChartBlock(WagtailChartBlock):
         self.child_blocks.move_to_end("datasets")
         self.child_blocks.move_to_end("settings")
 
+        # We also want the eyebrow to appear above the title field.
+        self.child_blocks.move_to_end("eyebrow", last=False)
+
     class Meta:
         label = "Chart"
         icon = "image"
