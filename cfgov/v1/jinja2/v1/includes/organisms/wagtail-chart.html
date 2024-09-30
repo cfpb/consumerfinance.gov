@@ -54,10 +54,11 @@
           <strong>Date Published:</strong> {{value.date_published}}<br>
         {% endif %}
 
-        {% if value.download %}
+        {% if value.download_text and value.download_file %}
             <strong>Download:</strong>
-            <a href="{{value.download}}">{{value.download}}</a><br>
+            <a href="{{value.download_file}}">{{value.download_text}}</a><br>
         {% endif %}
+
         {% if value.notes%}
           <strong>Notes:</strong> {{value.notes}}
         {% endif %}
