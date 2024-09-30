@@ -55,10 +55,14 @@ class ChartBlock(WagtailChartBlock):
     date_published = blocks.CharBlock(
         required=False, help_text="When the underlying data was published"
     )
+    download_text = blocks.CharBlock(
+        required=False,
+        help_text="Custom text for the chart download field. Required to "
+        "display a download link.",
+    )
     download_file = blocks.CharBlock(
         required=False,
-        help_text="Location to download this chart's data",
-        label="Download",
+        help_text="Location of a file to download",
     )
     notes = blocks.TextBlock(required=False, help_text="Note about the chart")
 
