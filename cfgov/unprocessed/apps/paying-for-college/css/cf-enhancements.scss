@@ -81,9 +81,8 @@
   }
 
   &__text {
-    @include h4;
-    // Override for h4 margin.
     margin: 0;
+    @include heading-4($has-margin-bottom: false, $has-margin-top: false);
   }
 }
 
