@@ -316,6 +316,21 @@ see [Notes on Atomic Design](atomic-structure.md).)
 This will load the `related-content.js` script on any page
 that includes the `RelatedContent` molecule in one of its StreamFields.
 
+If adding Javascript directly with a script tag is required, you'll need to add a `nonce` attribute with the value `{{request.csp_nonce}}`. This
+is due to our use of `strict-dynamic` in our Content Security Policy via [django-csp](https://django-csp.readthedocs.io/en/3.8/nonce.html).
+Here's an example from the [records-access-form template](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/privacy/jinja2/privacy/records-access-form.html):
+
+```javascript
+{% block javascript %}
+    {{ super() }}
+    <script nonce="{{request.csp_nonce}}">
+      jsl(['{{ static("js/routes/on-demand/privacy-forms.js") }}']);
+    </script>
+{% endblock javascript %}
+```
+
+You'll note this uses our asynchronous javascript loaderi (jsl), which is also how js in the Media classes of components are loaded.
+
 ## How-to guides
 
 ### Creating a new component
