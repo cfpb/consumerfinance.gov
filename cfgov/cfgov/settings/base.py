@@ -271,7 +271,26 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
 ]
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
+    # Archive will be available under /admin/ + whatever this next line is:
+    WAGTAIL_DELETION_ARCHIVE_URL = "__deleted/"
+
+    STORAGES["wagtail_deletion_archival"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": WAGTAIL_DELETION_ARCHIVE_PATH,
+        }
+    }
+
 
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
@@ -363,11 +382,14 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
     MEDIA_URL = os.path.join(
         AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
     )
+
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    }
 
 
 # GovDelivery

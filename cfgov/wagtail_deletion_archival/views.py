@@ -1,25 +1,21 @@
-from io import BytesIO
+import os.path
+from functools import cached_property
 
-from django.http import FileResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.http import FileResponse, Http404
+from django.shortcuts import get_object_or_404, redirect, reverse
 from django.template.response import TemplateResponse
+from django.utils.html import format_html
+from django.views.generic import View
 
+from wagtail.admin.views.reports import ReportView
 from wagtail.models import Page
 
 from wagtail_deletion_archival.forms import ImportForm
-from wagtail_deletion_archival.utils import export_page, import_page
-
-
-def export_view(request, page_id):
-    page = get_object_or_404(Page, id=page_id).specific
-    page_json = export_page(page)
-    page_io = BytesIO(page_json.encode())
-    response = FileResponse(
-        page_io,
-        as_attachment=True,
-        filename=f"{page.slug}.json",
-    )
-    return response
+from wagtail_deletion_archival.utils import (
+    ARCHIVE_FILENAME_RE,
+    get_archive_storage,
+    import_page,
+)
 
 
 def import_view(request, page_id):
@@ -54,3 +50,58 @@ def import_view(request, page_id):
             "form": input_form,
         },
     )
+
+
+class ArchiveStorageMixin:
+    @cached_property
+    def storage(self):
+        return get_archive_storage()
+
+
+class ArchiveLink:
+    def __init__(self, path):
+        self.path = path
+
+    def __str__(self):
+        return format_html(
+            '<a href="{}" target="_blank">{}</a>',
+            reverse(
+                "wagtail_deletion_archive_serve",
+                kwargs={"path": self.path},
+            ),
+            self.path,
+        )
+
+
+class ArchiveIndexView(ArchiveStorageMixin, ReportView):
+    page_title = "Deleted Wagtail pages"
+
+    def get_queryset(self):
+        return list(map(ArchiveLink, self.get_archive_files_recursive()))
+
+    def get_archive_files_recursive(self, path=""):
+        archive_files = []
+
+        dirs, filenames = self.storage.listdir(path)
+
+        for filename in filenames:
+            filename_path = os.path.join(path, filename)
+            if ARCHIVE_FILENAME_RE.match(filename_path):
+                archive_files.append(filename_path)
+
+        for dir in dirs:
+            archive_files.extend(
+                self.get_archive_files_recursive(os.path.join(path, dir))
+            )
+
+        return archive_files
+
+
+class ArchiveFileView(ArchiveStorageMixin, View):
+    def get(self, request, path):
+        if not ARCHIVE_FILENAME_RE.match(path) or not self.storage.exists(
+            path
+        ):
+            raise Http404
+
+        return FileResponse(self.storage.open(path), as_attachment=True)
