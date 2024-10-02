@@ -52,8 +52,8 @@ const patternizeChartLines = (datasets) => {
  */
 const patternizeChartBars = (datasets) => {
   const patterns = [
-    'diagonal',
     'dot',
+    'diagonal',
     'dash',
     'cross-dash',
     'zigzag-vertical',
@@ -75,10 +75,15 @@ const patternizeChartBars = (datasets) => {
     'diamond-box',
   ];
   return datasets.map((dataset, i) => {
-    dataset.backgroundColor = dataset.data.map((datum) => {
+    dataset.backgroundColor = dataset.data.map(() => {
       // First pattern is just the solid color
       if (i === 0) return dataset.backgroundColor;
-      return pattern.draw(patterns[i - 1], dataset.backgroundColor);
+      return pattern.draw(
+        patterns[i - 1],
+        dataset.backgroundColor,
+        'rgba(255, 255, 255, 0.6)',
+        10,
+      );
     });
     return dataset;
   });

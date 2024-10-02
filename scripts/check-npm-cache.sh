@@ -5,7 +5,7 @@ sort -u | \
 sed -e 's/\//-/' -e 's/@\([0-9]\)/-\1/' -e 's/$/.tgz/' | \
 while IFS= read -r f; do
   if [ ! -f "npm-packages-offline-cache/$f" ]; then
-    if [ $f != "css-2.2.4.tgz" ] && [ $f != "patternomaly-1.3.2.tgz" ]; then
+    if [ $f != "css-2.2.4.tgz" ]; then
        echo "🚨 Missing $f in npm cache.🚨"
     fi
   fi
