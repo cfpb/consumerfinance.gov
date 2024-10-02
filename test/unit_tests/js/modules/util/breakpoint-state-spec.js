@@ -5,7 +5,7 @@ import {
   getBreakpointState,
   viewportIsIn,
 } from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state.js';
-import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
+import { varsBreakpoints } from '@cfpb/cfpb-design-system/src/index.js';
 
 /**
  * Change the viewport to width x height. Mocks window.resizeTo( w, h ).

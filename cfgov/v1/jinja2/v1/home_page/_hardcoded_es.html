@@ -1,0 +1,100 @@
+{%- set hero = {
+    "heading": "<strong>On your side</strong> through life’s financial moments." | safe,
+    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to making sure you are treated fairly by banks, lenders and other financial institutions.",
+    "image": {
+        "url": static( "apps/homepage/img/hero.jpg" ),
+        "height": 575,
+        "width": 755
+    },
+    "is_50_50": true,
+    "is_jumbo": true
+} -%}
+
+{%- set answers_heading = "Find answers to your money questions" -%}
+
+{%- set topics = {
+    "cards": [
+        {
+            "icon": "credit-report",
+            "text": "Credit reports",
+            "url": "/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",
+        },
+        {
+            "icon": "debt-collection",
+            "text": "Debt collection",
+            "url": "/es/herramientas-del-consumidor/cobro-de-deudas/",
+        },
+        {
+            "icon": "money-transfer",
+            "text": "Money transfers",
+            "url": "/es/herramientas-del-consumidor/transferencias-de-dinero/",
+        },
+        {
+            "icon": "bank",
+            "text": "Bank accounts",
+            "url": "/es/herramientas-del-consumidor/cuentas-bancarias/",
+        },
+        {
+            "icon": "arrow-right-round",
+            "text": "See all money topics",
+            "url": "/es/herramientas-del-consumidor/",
+        }
+    ],
+} -%}
+
+<!-- {%- set highlights_heading = "Bureau highlights" -%} -->
+
+{%- set highlights = [
+    {
+        "img_src": static( "apps/homepage/img/putting-green_finances-covid.png" ),
+        "card_type": "highlight",
+        "heading": "Find answers to hundreds of financial questions",
+        "link_text": "Get answers",
+        "link_url": "/es/obtener-respuestas/"
+    },
+    {
+        "img_src": static( "apps/homepage/img/putting-green_submit-a-complaint.png" ),
+        "card_type": "highlight",
+        "heading": "Submit a complaint about a financial product or service",
+        "link_text": "Start a complaint",
+        "link_url": "/es/enviar-una-queja/"
+    },
+] -%}
+
+{%- set announcements = [
+    {
+        "heading": "The CFPB is standing up for you",
+        "content": "<ul><li><strong>4 million+</strong> consumer complaints received responses</li><li><strong>$20.7 billion+</strong> in financial relief as a result of CFPB actions</li><li><strong>205 million+</strong> people eligible for financial relief</li></ul>" | safe,
+        "link_text": "",
+        "link_url": ""
+    },
+    {
+        "heading": "Protecting you from unfair treatment",
+        "content": "<p>A central part our mission is to stand up for consumers and make sure they are treated fairly in the financial marketplace.</p>" | safe,
+        "link_text": "See how we’re standing up for you",
+        "link_url": "/activity-log/?title=&language=es&from_date=&to_date="
+    }
+] -%}
+
+{%- set breakout_cards_heading = "Get help planning for future goals" -%}
+
+{%- set breakout_cards = [
+    {
+        "card_type": "breakout",
+        "link_text": "Buy a house",
+        "link_url": "/es/prepararse-para-comprar-casa/",
+        "img_src": static( "apps/homepage/img/key-house.png" ),
+    },
+    {
+        "card_type": "breakout",
+        "link_text": "Financial well-being",
+        "link_url": "/es/herramientas-del-consumidor/bienestar-financiero/",
+        "img_src": static( "apps/homepage/img/fwb.png" ),
+    },
+    {
+        "card_type": "breakout",
+        "link_text": "Get an auto loan",
+        "link_url": "/es/herramientas-del-consumidor/prestamos-para-vehiculos/",
+        "img_src": static( "apps/homepage/img/key-car.png" )
+    }
+] -%}

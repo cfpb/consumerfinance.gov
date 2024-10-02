@@ -614,6 +614,12 @@ FLAGS = {
         ("environment is", "local"),
         ("environment is", "test"),
     ],
+    # Spanish homepage
+    "SPANISH_HOMEPAGE": [
+        ("environment is", "dev5"),
+        ("environment is", "local"),
+        ("environment is", "test"),
+    ],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [

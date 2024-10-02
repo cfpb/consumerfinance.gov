@@ -61,6 +61,21 @@
     },
 ] -%}
 
+{%- set announcements = [
+    {
+        "heading": "The CFPB is standing up for you",
+        "content": "<ul><li><strong>4 million+</strong> consumer complaints received responses</li><li><strong>$20.7 billion+</strong> in financial relief as a result of CFPB actions</li><li><strong>205 million+</strong> people eligible for financial relief</li></ul>" | safe,
+        "link_text": "",
+        "link_url": ""
+    },
+    {
+        "heading": "Protecting you from junk fees",
+        "content": "<p>The CFPB is working to save households billions of dollars a year by reducing exploitative junk fees charged by banks and financial companies.</p>" | safe,
+        "link_text": "Read about junk fees",
+        "link_url": "/rules-policy/junk-fees/"
+    }
+] -%}
+
 {%- set breakout_cards_heading = "Get help planning for future goals" -%}
 
 {%- set breakout_cards = [

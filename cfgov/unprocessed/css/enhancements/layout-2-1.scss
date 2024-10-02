@@ -1,0 +1,122 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@layer layout-2-1 {
+  // Layout 2-1 utilities.
+  @mixin u-hero-background() {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -50%;
+    width: 200vw;
+    height: 100%;
+    content: '';
+
+    // This CSS color variable is hardcoded in the hero.html template.
+    background: var(--m-hero-background-color);
+  }
+
+  @mixin u-sidebar-background() {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+
+    // Add a offset to the width to handle covering gaps added by the wrapper.
+    width: calc(100vw + 60px);
+    height: 100%;
+    content: '';
+    background: var(--gray-5);
+
+    // Expand off the screen to cover any margins added by the wrapper.
+    left: -30px;
+  }
+
+  // Defaults shared in left-to-right (LTR) and right-to-left (RTL) layouts.
+  .u-layout-grid--2-1 {
+    // Mobile and above
+    // TODO: The hero has a wrapper we need to ignore, so the direct reference to m-hero is a temp workaround.
+    .m-hero,
+    .u-layout-grid__hero {
+      position: relative;
+
+      // Create the hero background bleed.
+      &::after {
+        @include u-hero-background;
+      }
+    }
+
+    .u-layout-grid {
+      &__sidebar {
+        position: relative;
+        padding-left: math.div(30px, $base-font-size-px) + rem;
+        margin-left: math.div(-30px, $base-font-size-px) + rem;
+        padding-top: math.div(45px, $base-font-size-px) + rem;
+
+        &::after {
+          @include u-sidebar-background;
+        }
+      }
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__wrapper {
+          // Numbers below are 870 split into three parts
+          // 870 is the 900px breakpoint - 30px of gutters
+          grid-auto-columns: minmax(580px, 2fr) minmax(290px, 1fr);
+          grid-template-areas:
+            'c-breadcrumbs c-sidebar'
+            'c-main c-sidebar';
+        }
+      }
+    }
+  }
+
+  // 2-1 Left-to-right (LTR) layout.
+  .u-layout-grid--2-1:not(.u-layout-grid--2-1[dir='rtl']) {
+    // This is for the sidebar bleed.
+    overflow-x: hidden;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__main {
+          padding-right: math.div(10px, $base-font-size-px) + rem;
+        }
+
+        &__sidebar {
+          padding-left: math.div(30px, $base-font-size-px) + rem;
+          margin-left: math.div(20px, $base-font-size-px) + rem;
+
+          &::after {
+            border-left: 1px solid var(--gray-40);
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // 2-1 Right-to-left (RTL) layout.
+  .u-layout-grid--2-1[dir='rtl'] {
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      .u-layout-grid {
+        &__main {
+          padding-left: math.div(10px, $base-font-size-px) + rem;
+        }
+
+        &__sidebar {
+          padding-right: math.div(30px, $base-font-size-px) + rem;
+          margin-right: math.div(20px, $base-font-size-px) + rem;
+
+          &::after {
+            border-right: 1px solid var(--gray-40);
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+}

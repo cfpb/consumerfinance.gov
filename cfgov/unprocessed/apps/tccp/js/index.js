@@ -1,5 +1,5 @@
 import tippy from 'tippy.js';
-import { attach } from '@cfpb/cfpb-atomic-component';
+import { attach } from '@cfpb/cfpb-design-system/src/index.js';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
@@ -26,6 +26,8 @@ function init() {
   orderingDropdown.move();
   // Initialize any tooltips on the page
   initializeTooltips();
+  // Reinitialize tooltips after an htmx request replaces DOM nodes
+  attach(document, 'htmx:afterSwap', initializeTooltips);
 }
 
 /**

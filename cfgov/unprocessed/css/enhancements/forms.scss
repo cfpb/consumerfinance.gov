@@ -1,0 +1,21 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/*
+ * Removes top margin from text input when it follows
+ * .a-label--heading, which applies a 10px bottom margin.
+ *
+ * TODO: standardize form input spacing so margin is
+ * consistently applied to either the label or the input
+ */
+.m-form-field .a-label--heading + .a-text-input {
+  margin-top: 0;
+}
+
+/*
+ * Sets minimum height when an input is a datepicker.
+ * This is for an issue in iOS Safari where the input is collapsed.
+ */
+input[type='date'] {
+  min-height: math.div(35px, $base-font-size-px) + rem;
+}

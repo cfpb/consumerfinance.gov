@@ -1,0 +1,80 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@import '../node_modules/@cfpb/ccdb5-ui/dist/ccdb5.css';
+
+// TODO: CCDB requires a number of undesirable overrides here, since it imports
+//       the DS into its codebase independent of the import that happens for the
+//       rest of the site. In the future we should explore better encapsulation
+//       approaches for injecting the CCDB app into a page,
+//       such as making it a web component.
+
+// !important's are added for styles that are overriding ccdb5-ui styles.
+.wrapper {
+  max-width: 1200px !important;
+}
+
+.wrapper--match-content {
+  // Tablet size.
+  @media only screen and (min-width: 600px) and (max-width: 900px) {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+// This is needed because the base DS styles set ul:last-child to have a
+// bottom margin of zero, which then gets overridden by the mega menu.
+// However, CCDB also imports the DS into it's cold, so it overrides the
+// mega menu override and brings the ul:last-child back to having no bottom
+// margin. This causes the mega menu to lose a gap between featured menu items.
+.o-mega-menu__content-2-list--featured ul {
+  margin-bottom: math.div(30px, $base-font-size-px) + em;
+}
+
+.ccdb-search {
+  width: 100vw !important;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+  left: 50%;
+  right: 50%;
+  position: relative;
+  padding: math.div(30px, $base-font-size-px) + rem;
+  padding-bottom: 0;
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    padding: math.div(15px, $base-font-size-px) + rem;
+    padding-bottom: 0;
+  }
+
+  // Overrides for design system.
+  .o-expandable__header .o-expandable__cue-close,
+  .o-expandable__header .o-expandable__cue-open {
+    display: block !important;
+  }
+
+  .o-expandable__label {
+    margin-bottom: 0.83333333em !important;
+  }
+
+  // Overrides for cfpb-chart-builder.
+  .cfpb-chart[data-chart-type='tile_map'] {
+    .highcharts-legend__tile-map {
+      transform: translate(7px, 50px);
+    }
+  }
+
+  .cfpb-chart {
+    max-width: 100% !important;
+  }
+
+  #tile-chart-map {
+    height: auto;
+  }
+
+  // Overrides for styles in tags.scss
+  .m-tags {
+    padding-left: 0;
+  }
+}

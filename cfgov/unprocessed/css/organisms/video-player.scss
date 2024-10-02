@@ -1,0 +1,387 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+// Variable used to set the size of the play button.
+$play-btn-size-px: 60px;
+
+// Variable used to set the size of the play button's SVG icon.
+$play-btn-icon-size: 30px;
+
+// Magic number: height of standard button.
+$standard-btn-height-px: 36px;
+
+.o-video-player {
+  overflow: hidden;
+  background: var(--white);
+
+  // When JavaScript is disabled add a border to stand-alone videos.
+  .no-js &:not(.o-featured-content-module__visual) {
+    border: 1px solid var(--gray-40);
+  }
+
+  &__iframe-container {
+    height: 100%;
+    margin: 0;
+  }
+
+  &__iframe {
+    border: 0;
+  }
+}
+
+.o-video-player.video-playing {
+  overflow: visible;
+
+  .u-hide-on-video-playing {
+    opacity: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .u-show-on-video-playing {
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+// Video image related styles
+
+.o-video-player__image-container {
+  position: relative;
+  background-color: #fff;
+  text-align: center;
+  height: 100%;
+  display: flex;
+
+  // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
+  &::before {
+    content: '';
+    width: 1px;
+    margin-left: -1px;
+    float: left;
+    height: 0;
+
+    // Calculate padding to set the height of the container proportionally
+    // so that we end up with a 16:9 aspect ratio.
+    padding-top: math.div(9, 16) * 100%;
+  }
+
+  // To clear float.
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.o-video-player__image {
+  // Remove space below image created by inline display spacing.
+  display: block;
+  opacity: 0;
+  transition: opacity 0.25s;
+
+  // Needed for IE11 to not stretch the image.
+  flex-shrink: 0;
+  align-self: center;
+
+  // Using the default CFPB cover card image.
+  &[src^='/static/img/cfpb__video__cover__card__954x200'] {
+    padding: math.div(60px, $base-font-size-px) + em;
+    box-sizing: border-box;
+
+    // Overrides values set in featured-content-module.scss file in the DS.
+    &.o-featured-content-module__img {
+      max-width: 100%;
+      height: auto;
+      padding: math.div(15px, $base-font-size-px) + em;
+      left: 0;
+      transform: none;
+    }
+  }
+
+  .no-js &,
+  &-loaded,
+  &--thumbnail {
+    opacity: 1;
+  }
+}
+
+.o-video-player__duration {
+  color: var(--white);
+  background: rgba(0, 0, 0, 40%);
+  z-index: 1;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: math.div(16px, $base-font-size-px) + rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.o-video-player__play-btn {
+  box-sizing: border-box;
+  width: $play-btn-size-px;
+  height: $play-btn-size-px;
+
+  // !important is needed for when this is applied to a link.
+  border: 2px solid var(--gray-5) !important;
+  border-radius: 100%;
+  position: absolute;
+  z-index: 3;
+
+  // !important is needed for when this is applied to a link.
+  background-color: rgba(
+    16,
+    24,
+    32,
+    75%
+  ) !important; // CFPB Black (#101820) at 80% opacity
+  color: var(--white) !important;
+  font-size: $play-btn-icon-size;
+
+  &:hover {
+    // !important is needed to override non-hover background.
+    background-color: rgba(
+      0,
+      114,
+      206,
+      75%
+    ) !important; // Pacific (#0072ce) at 80% opacity
+  }
+
+  &--center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &--bottom-right {
+    right: math.div(math.div($grid-gutter-width, 2), $play-btn-icon-size) + em;
+    bottom: math.div(math.div($grid-gutter-width, 2), $play-btn-icon-size) + em;
+  }
+
+  &--center,
+  &--bottom-right {
+    &:focus-visible,
+    &:focus {
+      outline: none;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        display: block;
+      }
+
+      &::before {
+        width: 60px;
+        height: 60px;
+        left: -2px;
+        top: -2px;
+        border: 1px solid var(--white);
+        outline: 1px solid var(--white);
+      }
+
+      &::after {
+        width: 62px;
+        height: 62px;
+        left: -3px;
+        top: -3px;
+        border: 1px dotted var(--pacific);
+      }
+    }
+  }
+
+  & > .cf-icon-svg {
+    // Size and position visually centers the play arrow.
+    position: absolute;
+    left: 55%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+button.o-video-player__play-btn,
+.o-video-player--loaded a.o-video-player__play-btn {
+  display: none;
+}
+
+.o-video-player--loaded button.o-video-player__play-btn {
+  display: block;
+}
+
+.o-video-player__video-container {
+  opacity: 0;
+  height: 0;
+  margin: auto;
+
+  // var(--black) not used because it's not totally black.
+  background-color: #000;
+}
+
+.o-video-player__video-actions-container {
+  right: 0;
+  left: auto;
+
+  padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+  color: var(--white);
+
+  .m-social-media__heading {
+    margin-top: 0;
+    margin-right: 0;
+    padding: 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+
+// Tablet and above.
+@include respond-to-min($bp-sm-min) {
+  .o-video-player__video-actions-container {
+    position: absolute;
+    top: 0;
+  }
+}
+
+@mixin u-video-player-iframe-mixin() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.o-video-player__video-container--flexible {
+  .o-video-player__iframe-container {
+    width: auto;
+
+    @include u-flexible-container-mixin;
+  }
+
+  .o-video-player__iframe {
+    @include u-video-player-iframe-mixin;
+  }
+
+  .o-video-player__video-actions-container {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  .m-social-media {
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      text-align: right;
+    }
+  }
+
+  .m-social-media,
+  .o-video-player__video-actions {
+    margin-bottom: 0;
+
+    @include u-grid-column(6);
+
+    // Mobile only.
+    @include respond-to-max($bp-xs-max) {
+      width: 100%;
+    }
+  }
+}
+
+.o-video-player .m-social-media {
+  .cf-icon-svg {
+    fill: var(--white);
+  }
+
+  .m-social-media__icons {
+    display: block;
+    margin-right: 0;
+    margin-top: math.div(10px, $base-font-size-px) + rem;
+  }
+}
+
+.o-video-player .m-social-media,
+.o-video-player__video-actions {
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+  }
+}
+
+// Mobile only.
+@include respond-to-max($bp-xs-max) {
+  .o-video-player__iframe-container {
+    @include u-flexible-container-mixin;
+  }
+
+  .o-video-player__iframe {
+    @include u-video-player-iframe-mixin;
+  }
+}
+
+// Special styles for playing within a Featured Content Module (FCM).
+.o-featured-content-module {
+  .o-video-player__video-actions-container {
+    margin: 0;
+    padding: 0;
+
+    // Magic number: height of standard button and 1px border around FCM.
+    top: ($standard-btn-height-px + 1px) * -1;
+  }
+
+  .o-video-player__close-btn {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    display: block;
+
+    // Pushes button out of masked window when not playing.
+    margin-top: $standard-btn-height-px;
+  }
+}
+
+// Mobile only.
+@include respond-to-max($bp-xs-max) {
+  .o-featured-content-module .o-video-player__video-actions-container {
+    display: none;
+  }
+}
+
+// Tablet and above.
+@include respond-to-min($bp-sm-min) {
+  .o-featured-content-module.video-playing {
+    @include u-flexible-container-mixin;
+    transition: 0.5s all ease-out;
+    min-height: 0;
+
+    .o-video-player__close-btn {
+      // Moves button up into the masked window when playing.
+      margin-top: 0;
+    }
+  }
+
+  .o-featured-content-module__visual .o-video-player__iframe {
+    opacity: 0;
+    transition-delay: 0.5s;
+    transition-duration: 0s;
+    transition-property: opacity;
+  }
+
+  .o-featured-content-module__visual.video-playing {
+    // Position the element to the right for the start of the transition.
+    right: 0;
+    width: 100%;
+    transition: 0.5s all ease-out;
+
+    .o-video-player__iframe {
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+    }
+  }
+}

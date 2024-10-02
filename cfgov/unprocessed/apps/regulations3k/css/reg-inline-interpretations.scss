@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Regulations 3000
+   Regulation inline interpretation styling and cf-expandable overrides
+   ========================================================================== */
+
+.inline-interpretation {
+  margin-bottom: 1.875em;
+  max-width: 41.875rem;
+}
+
+// Generate six indentation levels for inline interpretations
+@mixin u-generate-interp-level($n, $i: 1) {
+  @if $i <= $n {
+    .level-#{$i} + .inline-interpretation {
+      margin-left: ($i * 2rem);
+      max-width: (41.875rem - ($i * 2));
+    }
+
+    @include u-generate-interp-level($n, ($i + 1));
+  }
+}
+
+@include u-generate-interp-level(6);

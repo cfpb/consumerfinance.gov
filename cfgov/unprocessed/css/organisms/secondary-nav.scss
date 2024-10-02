@@ -1,0 +1,253 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+.o-secondary-nav {
+  //
+  // Header
+  //
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    cursor: pointer;
+    padding: (math.div(10px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em);
+
+    &:focus {
+      outline: 1px dotted var(--black);
+      outline-offset: 1px;
+    }
+
+    .o-secondary-nav__cue-close,
+    .o-secondary-nav__cue-open {
+      display: none;
+    }
+
+    &[aria-expanded='false'] .o-secondary-nav__cue-open {
+      display: block;
+    }
+
+    &[aria-expanded='true'] .o-secondary-nav__cue-close {
+      display: block;
+    }
+  }
+
+  // Using the button element with .o-secondary-nav__header requires setting
+  // an explicit width.
+  button.o-secondary-nav__header {
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  &__cues {
+    min-width: 60px;
+    text-align: right;
+    color: var(--pacific);
+    font-size: math.div($btn-font-size, $base-font-size-px) + em;
+    line-height: math.div($base-line-height-px, $btn-font-size);
+  }
+
+  &__label {
+    // Grow to available width.
+    flex-grow: 1;
+
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--pacific);
+
+    line-height: math.div(22px, $size-v);
+    margin-bottom: 0;
+  }
+
+  &__content {
+    padding: math.div(15px, $base-font-size-px) + em;
+    padding-top: 0;
+
+    // The divider between __header and __content.
+    &::before {
+      content: '';
+      display: block;
+      border-top: 1px solid var(--gray-40);
+      padding-top: math.div(15px, $base-font-size-px) + em;
+    }
+
+    &::after {
+      padding-bottom: math.div(15px, $base-font-size-px) + em;
+      width: 100%;
+    }
+  }
+
+  &__list {
+    padding-left: 0;
+    list-style: none;
+
+    > li {
+      margin-left: 0;
+    }
+  }
+
+  &__list--children {
+    margin-left: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      // Add 5px for the border to half the gutter
+      margin-left: math.div(
+          math.div($grid-gutter-width, 2) + 5px,
+          $base-font-size-px
+        ) + em;
+    }
+  }
+
+  &__link {
+    display: inline-block;
+
+    // Break the menu word when it is too wide to fit in the sidebar area.
+    word-break: break-word;
+
+    @include u-link-colors(
+      var(--pacific),
+      var(--pacific),
+      var(--black),
+      var(--black),
+      var(--black),
+      transparent,
+      transparent,
+      var(--green),
+      var(--green),
+      var(--green)
+    );
+
+    border-style: solid;
+    border-left-width: 5px;
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      display: block;
+
+      padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding-top: math.div(10px, $base-font-size-px) + em;
+      padding-bottom: math.div(10px, $base-font-size-px) + em;
+      padding-left: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) + em;
+    }
+
+    &--current {
+      @include u-link-colors(
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--black)
+      );
+    }
+
+    &--parent {
+      @include heading-4;
+
+      margin-bottom: inherit;
+    }
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    background: var(--gray-5);
+    border-bottom: 1px solid var(--gray-40);
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 20%);
+
+    &--no-children {
+      display: none;
+    }
+
+    &__list--parents {
+      li[data-nav-is-active='False'] {
+        display: none;
+      }
+    }
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    .o-secondary-nav {
+      background: none;
+
+      &__header {
+        display: none;
+      }
+
+      &__content {
+        // These two !important values override basic expandable styling,
+        // because these do not function like expandables on med+ screens.
+        display: block !important;
+        max-height: 100% !important;
+        padding: 0;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // Hide on print.
+  @include respond-to-print {
+    display: none;
+  }
+}
+
+// Right-to-left (RTL) layout.
+html[lang='ar'] {
+  .o-secondary-nav {
+    button.o-secondary-nav__header {
+      text-align: right;
+    }
+
+    &__cues {
+      text-align: left;
+    }
+
+    &__list--parents {
+      padding-right: 0;
+    }
+
+    &__link {
+      border-left-width: 0;
+      border-right-width: 5px;
+    }
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      &__link {
+        padding-right: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+
+      &__list--parents {
+        padding-right: math.div(
+            math.div($grid-gutter-width, 2),
+            $base-font-size-px
+          ) + em;
+      }
+    }
+  }
+}
