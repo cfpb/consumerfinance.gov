@@ -1,9 +1,9 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
-{% block titletag %}Import page into {{ title }}{% endblock %}
+{% block titletag %}Import page into {{ parent_page.get_admin_display_title }}{% endblock %}
 
 {% block content %}
-    {% include "wagtailadmin/shared/header.html" with title="Import page" subtitle=page.get_admin_display_title icon="doc-empty-inverse" %}
+    {% include "wagtailadmin/shared/header.html" with title="Import page" subtitle=parent_page.get_admin_display_title icon="doc-empty-inverse" %}
 
     <div class="nice-padding">
         {% include "wagtailadmin/shared/non_field_errors.html" %}

@@ -1,16 +1,29 @@
 import json
 import logging
+import os.path
+import re
+from urllib.parse import unquote
 
 from django.apps import apps
+from django.core.files.base import ContentFile
+from django.core.files.storage import InvalidStorageError, storages
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.migrations.recorder import MigrationRecorder
 from django.utils import timezone
+from django.utils.encoding import smart_str
 
 from wagtail.coreutils import find_available_slug
 from wagtail.models import get_streamfield_names
 
 
 logger = logging.getLogger(__name__)
+
+
+def get_archive_storage():
+    try:
+        return storages["wagtail_deletion_archival"]
+    except InvalidStorageError:
+        return None
 
 
 def get_last_migration(app):
@@ -24,7 +37,7 @@ def get_last_migration(app):
     return last_migration.name
 
 
-def export_page(page):
+def convert_page_to_json(page):
     """Get a copy of the page as JSON."""
 
     # This includes its app_label, model, and the latest migration applied for
@@ -58,8 +71,47 @@ def export_page(page):
         page_export, ensure_ascii=False, indent=4, cls=DjangoJSONEncoder
     )
 
-    logger.info(f"Exported {page.slug} to JSON")
     return page_json
+
+
+def make_archive_filename(page):
+    now = timezone.now()
+    return f"{page.slug}-{now.isoformat()}.json"
+
+
+ARCHIVE_FILENAME_RE = re.compile(
+    # Starting with any character then -
+    r"^.+-"
+    # YYYY-MM-DDTHH:MM:SS
+    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"
+    # Optional .ffffff
+    r"(\.[0-9]{1,6})?"
+    # Optional timezone
+    r"([+-][0-9]{2}:[0-9]{2})?"
+    # .json
+    r"\.json$"
+)
+
+
+def export_page_signal_handler(sender, instance, **kwargs):
+    archive_storage = get_archive_storage()
+
+    if not archive_storage:
+        return
+
+    page = instance.specific
+    site = page.get_site()
+    page_path = unquote(page.relative_url(site)).lstrip("/")
+
+    page_json = convert_page_to_json(page)
+
+    page_filename = make_archive_filename(page)
+    target_path = smart_str(os.path.join(page_path, page_filename))
+
+    archived_filename = archive_storage.save(
+        target_path, ContentFile(page_json.encode("utf-8"))
+    )
+    logger.info(f"Exported {page.slug} to JSON at {archived_filename}")
 
 
 def import_page(parent_page, page_json, slug=None):
