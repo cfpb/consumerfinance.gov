@@ -77,7 +77,10 @@ const patternizeChartBars = (datasets) => {
   return datasets.map((dataset, i) => {
     dataset.backgroundColor = dataset.data.map(() => {
       // First pattern is just the solid color
-      if (i === 0) return dataset.backgroundColor;
+      if (i === 0)
+        return Array.isArray(dataset.backgroundColor)
+          ? dataset.backgroundColor[0]
+          : dataset.backgroundColor;
       return pattern.draw(
         patterns[i - 1],
         dataset.backgroundColor,
