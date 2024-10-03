@@ -47,11 +47,11 @@
             <span class="financial-item__value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
-            <span class="o-costs-group__cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
-                {{ svg_icon('edit') if value.is_editable else svg_icon('plus-round') }}
+            <span class="o-costs-group__cue-open" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
+                {{ 'Edit' if value.is_editable else svg_icon('plus-round') }}
             </span>
-            <span class="o-costs-group__cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
-                {{ svg_icon('edit') if value.is_editable else svg_icon('minus-round') }}
+            <span class="o-costs-group__cue-close" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
+                {{ 'Close' if value.is_editable else svg_icon('minus-round') }}
             </span>
         </span>
         </span>

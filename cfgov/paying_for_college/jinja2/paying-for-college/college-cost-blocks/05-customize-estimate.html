@@ -20,7 +20,7 @@
                 'value': '$0',
                 'is_editable': 'True',
                 'status': 'warning',
-                'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll get into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.',
+                'note': 'Previously, we showed you average costs for your family&apos;s income level. Now we&apos;ll get into specifics. Type in the costs listed in your financial aid offer, adding additional costs as needed. Remember, these are estimates based on students’ reported spending.', 
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() flyout(flyout_settings) %}
@@ -226,6 +226,36 @@
                         })
                     }}
                 </div>
+
+                <div class="block block--mid block--flush-bottom financial-item-group graduate-content">
+                    <div class="plus-loan-form" >
+                        {% set tt = tooltip.render('Grad PLUS loan: For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.') %}
+                        {{
+                            input.render({
+                                'label': 'Grad PLUS Loan amount' ~ tt,
+                                'id': 'plan__gradPlus',
+                                'value': '0',
+                                'data_attribute': 'data-financial-item="plusLoan_gradPlus"',
+                                'note': ''
+                            })
+                        }}
+                        {% set tt = tooltip.render('Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
+                        {{
+                            text_item.render({
+                                'label': 'Interest rate (%)' ~ tt,
+                                'value': '0',
+                                'data_attribute': 'data-financial-item="rate_gradPlus"',
+                            })
+                        }}
+                        {{
+                            text_item.render({
+                                'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.'),
+                                'value': '0',
+                                'data_attribute': 'data-financial-item="fee_gradPlus"',
+                            })
+                        }}
+                    </div>
+                </div>
             {% endcall %}
         </div>
 
@@ -283,52 +313,14 @@
             <p>If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider:</p>
 
             <ul>
-                <li>Grad PLUS loan: For graduate or professional degree students. These loans are generally eligible for the same benefits as Direct subsidized and unsubsidized loans. More details about Grad PLUS loans can be found at <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
-                <li>Parent PLUS loan: For parents of dependent students. These loans are generally not eligible for income-driven repayment (IDR) plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
+                <li class="undergrad-content">Parent PLUS loan: For parents of dependent students. These loans are generally not eligible for income-driven repayment (IDR) plans but can be consolidated to become eligible for the income-contingent repayment plan which is generally less generous than the income-driven repayment plans available to other federal loans. More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>.</li>
                 <li>Private student loan: You or a family member can apply for a private student loan from a bank or credit union. Students without a credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
             </ul>
 
             {% set flyout_settings = {
-                'label': 'Grad PLUS loan' | safe,
-                'value': '$0',
-                'class': 'graduate-content o-costs-group--first',
-                'is_editable': 'True',
-                'data_attribute': 'data-financial-item="total_plusLoans"'
-            } %}
-            {% call() flyout(flyout_settings) %}
-                <div class="plus-loan-form" >
-                    {{
-                        input.render({
-                            'label': 'Loan amount',
-                            'id': 'plan__gradPlus',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="plusLoan_gradPlus"',
-                            'note': ''
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Interest rate (%)',
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="rate_gradPlus"',
-                            'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Loan fee (%)' ~ tooltip.render('This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.'),
-                            'value': '0',
-                            'data_attribute': 'data-financial-item="fee_gradPlus"',
-                            'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
-                        })
-                    }}
-                </div>
-            {% endcall %}
-
-            {% set flyout_settings = {
                 'label': 'Parent PLUS loan' | safe,
                 'value': '$0',
-                'class': 'dependent-content o-costs-group--first',
+                'class': 'undergrad-content dependent-content o-costs-group--first',
                 'note': '',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_plusLoans"'
