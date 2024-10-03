@@ -1,5 +1,4 @@
 import os.path
-from functools import cached_property
 
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, reverse
@@ -52,10 +51,13 @@ def import_view(request, page_id):
     )
 
 
-class ArchiveStorageMixin:
-    @cached_property
-    def storage(self):
-        return get_archive_storage()
+class ArchiveStorageViewMixin:
+    def dispatch(self, *args, **kwargs):
+        if not (storage := get_archive_storage()):
+            raise Http404
+
+        self.storage = storage
+        return super().dispatch(*args, **kwargs)
 
 
 class ArchiveLink:
@@ -73,7 +75,7 @@ class ArchiveLink:
         )
 
 
-class ArchiveIndexView(ArchiveStorageMixin, ReportView):
+class ArchiveIndexView(ArchiveStorageViewMixin, ReportView):
     page_title = "Deleted Wagtail pages"
 
     def get_queryset(self):
@@ -97,7 +99,7 @@ class ArchiveIndexView(ArchiveStorageMixin, ReportView):
         return archive_files
 
 
-class ArchiveFileView(ArchiveStorageMixin, View):
+class ArchiveFileView(ArchiveStorageViewMixin, View):
     def get(self, request, path):
         if not ARCHIVE_FILENAME_RE.match(path) or not self.storage.exists(
             path

@@ -281,9 +281,6 @@ STORAGES = {
 }
 
 if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
-    # Archive will be available under /admin/ + whatever this next line is:
-    WAGTAIL_DELETION_ARCHIVE_URL = "__deleted/"
-
     STORAGES["wagtail_deletion_archival"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {

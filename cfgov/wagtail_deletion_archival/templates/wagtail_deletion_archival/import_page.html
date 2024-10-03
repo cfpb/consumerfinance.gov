@@ -8,7 +8,7 @@
     <div class="nice-padding">
         {% include "wagtailadmin/shared/non_field_errors.html" %}
 
-        <form enctype="multipart/form-data" action="{% url 'import_page' parent_page.id %}" method="POST">
+        <form enctype="multipart/form-data" action="{% url 'wagtail_deletion_archive_import' parent_page.id %}" method="POST">
             {% csrf_token %}
             <ul class="fields">
                 {% for field in form %}
