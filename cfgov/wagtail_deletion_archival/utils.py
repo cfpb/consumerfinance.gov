@@ -74,9 +74,9 @@ def convert_page_to_json(page):
     return page_json
 
 
-def make_archive_filename(page):
+def make_archive_filename(page_slug):
     now = timezone.now()
-    return f"{page.slug}-{now.isoformat()}.json"
+    return f"{page_slug}-{now.isoformat()}.json"
 
 
 ARCHIVE_FILENAME_RE = re.compile(
@@ -105,7 +105,7 @@ def export_page_signal_handler(sender, instance, **kwargs):
 
     page_json = convert_page_to_json(page)
 
-    page_filename = make_archive_filename(page)
+    page_filename = make_archive_filename(page.slug)
     target_path = smart_str(os.path.join(page_path, page_filename))
 
     archived_filename = archive_storage.save(
@@ -114,7 +114,7 @@ def export_page_signal_handler(sender, instance, **kwargs):
     logger.info(f"Exported {page.slug} to JSON at {archived_filename}")
 
 
-def import_page(parent_page, page_json, slug=None):
+def import_page(parent_page, page_json):
     page_data = json.loads(page_json)
 
     # Verify that we can load import the page
