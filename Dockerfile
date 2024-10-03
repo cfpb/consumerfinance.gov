@@ -13,6 +13,14 @@ ENV APP_HOME /src/consumerfinance.gov
 
 WORKDIR ${APP_HOME}
 
+# Copy the zscaler root CA certificate
+ARG ZSCALER_CERT_LOCATION=https://raw.githubusercontent.com/contolini/zscaler-woes/refs/heads/main/zscaler_root_ca.pem
+ADD ${ZSCALER_CERT_LOCATION} /usr/local/share/ca-certificates/zscaler_root_ca.pem
+# Regenerate /etc/ssl/certs/ca-certificates.crt, the file that lists all system CA certs
+RUN update-ca-certificates
+# Tell pip to use the generated bundle of CA certs
+RUN pip config set global.cert /etc/ssl/certs/ca-certificates.crt
+
 # Install and update common OS packages, pip, setuptools, wheel, and awscli
 RUN apk update --no-cache && apk upgrade --no-cache
 RUN pip install --upgrade pip setuptools wheel awscli
@@ -65,10 +73,17 @@ FROM node:20-alpine as cfgov-node-builder
 ENV APP_HOME /src/consumerfinance.gov
 WORKDIR ${APP_HOME}
 
+# Copy the zscaler root CA certificate
+ARG ZSCALER_CERT_LOCATION=https://raw.githubusercontent.com/contolini/zscaler-woes/refs/heads/main/zscaler_root_ca.pem
+ADD ${ZSCALER_CERT_LOCATION} /usr/local/share/ca-certificates/zscaler_root_ca.pem
+
 # Install and update common OS packages and frontend dependencies
-RUN apk update --no-cache && \
-    apk upgrade --no-cache && \
-    apk add --no-cache --virtual .frontend-deps jpeg-dev yarn zlib-dev
+# Alpine's Node.js image doesn't include CA certificate management tools so we install them
+RUN apk update --no-cache && apk add --no-cache ca-certificates
+# Regenerate /etc/ssl/certs/ca-certificates.crt, the file that lists all system CA certs
+RUN update-ca-certificates
+RUN apk upgrade --no-cache
+RUN apk add --no-cache --virtual .frontend-deps jpeg-dev yarn zlib-dev
 
 # Target a production frontend build
 ARG FRONTEND_TARGET=production
