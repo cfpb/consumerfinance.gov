@@ -242,7 +242,7 @@
                         {% set tt = tooltip.render('Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.') %}
                         {{
                             text_item.render({
-                                'label': 'Interest rate (%)',
+                                'label': 'Interest rate (%)' ~ tt,
                                 'value': '0',
                                 'data_attribute': 'data-financial-item="rate_gradPlus"',
                             })
