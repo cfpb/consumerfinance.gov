@@ -40,12 +40,3 @@
   </div>
 {% endmacro %}
 
-{% if value %}
-  {{ render(
-      value.is_dark | default( false ),
-      value.message,
-      value.explanation | default( '' ),
-      value.links | default( [] )
-    )
-  }}
-{% endif %}
