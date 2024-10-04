@@ -105,3 +105,4 @@ class ChartBlock(WagtailChartBlock):
             "wagtail-charts-chart-block.js",
             "wagtailcharts/js/wagtailcharts.js?staticroot",
         ]
+        css = ["wagtail-chart.css"]
