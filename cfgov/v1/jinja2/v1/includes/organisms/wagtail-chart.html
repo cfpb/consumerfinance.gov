@@ -26,18 +26,17 @@
     {% endif %}
 
     {% if value.subtitle %}
-    <p class="o-simple-chart__subtitle">{{ value.subtitle }}</p>
+    <p class="o-wagtail-chart__subtitle">{{ value.subtitle }}</p>
     {% endif %}
 
     {# Copied from wagtailcharts/templates/wagtailcharts/blocks/chart_block.html #}
-    {# TODO: include the value.description somewhere?? #}
     <canvas
         id="chart-{{block.id}}"
         data-datasets="{{value.datasets}}"
         data-config="{{value.settings.config}}"
         data-chart-type="{{value.chart_type}}"
         {% if self.callbacks %}data-callback="{{value.callbacks}}"{% endif %}
-        aria-label="A chart {% if value.title %} with the title {{value.title}} {%endif%}">
+        {% if value.description %}aria-label="{{value.description}}"{% endif %}>
         >
         <p>
             Your browser does not support the canvas element.
@@ -45,13 +44,12 @@
         </p>
     </canvas>
 
-    {# TODO: Copied from simple-chart.html #}
     <p class="m-chart-footnote block block--sub block--border-top">
         {% if value.data_source %}
           <strong>Source:</strong> {{value.data_source}}<br>
         {% endif %}
         {% if value.date_published %}
-          <strong>Date Published:</strong> {{value.date_published}}<br>
+          <strong>Date published:</strong> {{value.date_published}}<br>
         {% endif %}
 
         {% if value.download_text and value.download_file %}
@@ -59,7 +57,7 @@
             <a href="{{value.download_file}}">{{value.download_text}}</a><br>
         {% endif %}
 
-        {% if value.notes%}
+        {% if value.notes %}
           <strong>Notes:</strong> {{value.notes}}
         {% endif %}
     </p>
