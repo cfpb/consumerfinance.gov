@@ -388,7 +388,6 @@ if os.environ.get("S3_ENABLED", "False") == "True":
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     }
 
-
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
 
@@ -813,11 +812,3 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
-
-
-# Deletion archive
-# If this is set then when Wagtail pages are deleted a JSON archive file will
-# be written to this path containing the deleted page's data.
-WAGTAIL_DELETION_ARCHIVE_PATH = os.environ.get("WAGTAIL_DELETION_ARCHIVE_PATH")
-if WAGTAIL_DELETION_ARCHIVE_PATH is not None:
-    WAGTAIL_DELETION_ARCHIVE_FILESYSTEM = f"osfs://{WAGTAIL_DELETION_ARCHIVE_PATH}"

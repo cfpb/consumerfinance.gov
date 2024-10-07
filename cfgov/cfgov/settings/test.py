@@ -74,5 +74,3 @@ if SKIP_DJANGO_MIGRATIONS:
 DEPLOY_ENVIRONMENT = "test"
 
 INSTALLED_APPS += ("tccp.tests.testapp",)
-
-WAGTAIL_DELETION_ARCHIVE_FILESYSTEM = "mem:///archive"
