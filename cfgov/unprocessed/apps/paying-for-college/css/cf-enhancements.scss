@@ -81,13 +81,8 @@
   }
 
   &__text {
-    @include h4;
     margin: 0;
-
-    .short-desc {
-      display: block;
-      font-size: $base-font-size-px;
-    }
+    @include heading-4($has-margin-bottom: false, $has-margin-top: false);
   }
 }
 

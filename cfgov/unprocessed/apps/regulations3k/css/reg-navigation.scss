@@ -108,10 +108,9 @@
   }
 
   &--parent {
-    @include heading-4;
+    margin-bottom: 0;
     font-size: 1em;
     font-weight: 300;
-    margin-bottom: 0;
   }
 }
 

@@ -124,8 +124,7 @@
   }
 
   .datetime {
-    @include h5;
-    text-transform: uppercase;
+    @include heading-5;
   }
 
   .event-meta__address {
@@ -158,10 +157,10 @@
 }
 
 .modification-date {
-  @include h6;
   background: var(--green-20);
   color: var(--black);
-  letter-spacing: 0;
   padding: math.div(9px, $base-font-size-px) + rem;
   text-align: center;
+
+  @include heading-6;
 }

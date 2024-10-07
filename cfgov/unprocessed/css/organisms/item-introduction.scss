@@ -19,7 +19,7 @@
     margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + rem;
 
     .byline {
-      @include heading-4;
+      @include heading-4($is-responsive: false);
     }
   }
 }

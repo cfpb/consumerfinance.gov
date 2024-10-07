@@ -139,25 +139,15 @@
 
    list:              A list of dictionaries containing links.
 
-   is_related_topics: Boolean indicating whether the list is a
-                      Related Topics list. Defaults to false.
-
    ========================================================================== #}
 
-{% macro _list(list, is_related_topics=false) %}
-<ul class="m-list
-           m-list--unstyled
-           m-list--links
-           m-related-metadata__topics">
+{% macro _list(list) %}
+    {% set tags_list = [] %}
     {% for item in list %}
-    <li class="m-list__item">
-        <span class="a-link a-link--jump a-link--jump-gold">
-          •
-          <span class="a-link__text">{{item}}</span>
-        </span>
-    </li>
+      {% do tags_list.append({'text': item}) %}
     {% endfor %}
-</ul>
+    {% import "v1/includes/molecules/tags.html" as tags with context %}
+    {{ tags.render(tags_list | sort(attribute='text'), false, true) }}
 {% endmacro %}
 
 {# ==========================================================================

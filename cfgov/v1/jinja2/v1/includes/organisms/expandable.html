@@ -39,14 +39,14 @@
             {{ 'o-expandable--border' if value.is_bordered else '' }}
             {{ 'o-expandable--onload-open' if value.is_expanded else '' }}"
      id="{{ value.group_index_slug if value.group_index_slug else value.label | slugify_unique }}"
-     {{ 'itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question"'
+     {{ 'itemscope itemprop=mainEntity itemtype=https://schema.org/Question'
         if value.is_faq else '' }} >
     <button class="o-expandable__header" type="button">
         {% if value.icon %}
             <span class="o-expandable__icon">{{ svg_icon( value.icon ) }}</span>
         {% endif %}
         <span class="o-expandable__label"
-              {{'itemprop="name"' if value.is_faq else ''}}>
+              {{'itemprop=name' if value.is_faq else ''}}>
             {{ value.label }}
         </span>
         <span class="o-expandable__cues">
@@ -60,7 +60,7 @@
     </button>
 
     <div class="o-expandable__content"
-          {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer"'
+          {{ 'itemprop=acceptedAnswer itemscope itemtype=https://schema.org/Answer'
         if value.is_faq else '' }}>
         {% if value.is_faq %}<div itemprop='text'>{% endif %}
             {% if caller is defined %}

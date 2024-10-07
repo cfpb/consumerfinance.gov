@@ -33,7 +33,7 @@ export class FilterableListControl {
 
   getResultCategoryHasTags() {
     return this.getResults()
-      .find('.m-tags__tag')
+      .find('.a-tag-topic')
       .closest('.o-post-preview')
       .find('.m-meta-header__item:first');
   }
@@ -42,16 +42,16 @@ export class FilterableListControl {
     return this.getResults()
       .find('.m-meta-header__item:first')
       .closest('.o-post-preview')
-      .find('.m-tags__tag:first');
+      .find('.a-tag-topic:first');
   }
 
   getResultTag() {
-    return this.getResults().find('.m-tags__tag:first');
+    return this.getResults().find('.a-tag-topic:first');
   }
 
   getResultTitleHasTag() {
     return this.getResults()
-      .find('.m-tags__tag:first')
+      .find('.a-tag-topic:first')
       .closest('.o-post-preview')
       .find('.o-post-preview__title:first');
   }

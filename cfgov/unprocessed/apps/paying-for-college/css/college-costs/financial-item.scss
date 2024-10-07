@@ -41,8 +41,8 @@
   &--total {
     .financial-item__label > :not(p),
     .financial-item__value {
-      @include heading-4;
       margin-bottom: 0;
+      @include heading-4($has-margin-bottom: false, $is-responsive: false);
     }
   }
 
@@ -70,6 +70,7 @@
 
     .financial-item__value {
       color: var(--black);
+      font-weight: 500;
     }
   }
 
@@ -84,8 +85,12 @@
         display: none;
       }
       .o-costs-group__cue-open {
-        display: inline;
-        margin-left: math.div(5px, $base-font-size-px) + em;
+        display: inline-block;
+        font-weight: 500;
+        margin-left: math.div(10px, $base-font-size-px) + em;
+        padding-left: math.div(10px, $base-font-size-px) + em;
+        border-left: 1px solid var(--gray-20);
+        width: 3em; 
       }
     }
 
@@ -94,8 +99,12 @@
         display: none;
       }
       .o-costs-group__cue-close {
-        display: inline;
-        margin-left: math.div(5px, $base-font-size-px) + em;
+        display: inline-block;
+        font-weight: 500;
+        margin-left: math.div(10px, $base-font-size-px) + em;
+        padding-left: math.div(10px, $base-font-size-px) + em;
+        border-left: 1px solid var(--gray-20);
+        width: 3em;
       }
     }
 

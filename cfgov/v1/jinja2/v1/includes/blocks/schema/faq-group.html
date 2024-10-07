@@ -35,7 +35,7 @@
 
 <div>
     {% for item in value.faq_items %}
-    <div itemscope=""
+    <div itemscope
          itemprop="mainEntity"
          itemtype="https://schema.org/Question"
          class="block
@@ -47,7 +47,7 @@
             {{- item.question -}}
         </{{ value.question_tag }}>
         <div itemprop="acceptedAnswer"
-             itemscope=""
+             itemscope
              itemtype="https://schema.org/Answer">
             <div itemprop="text">
                 {% for block in item.answer -%}

@@ -16,9 +16,9 @@ class RegTable:
         self.label = label
         self.header_rows = []
         self.body_rows = []
-        self.table_class = "o-table o-table-wrapper__scrolling"
-        self.cell_class = "o-table_cell__right-align"
-        self.cell_class_left = "o-table_cell__left-align"
+        self.table_class = "o-table o-table-wrapper--scrolling"
+        self.cell_class = "o-table__cell--right-align"
+        self.cell_class_left = "o-table__cell--left-align"
 
     def table(self):
         return self.SHELL.format(

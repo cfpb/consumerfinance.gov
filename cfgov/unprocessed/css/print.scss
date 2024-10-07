@@ -105,7 +105,7 @@
       // Print info unit images
       display: block;
     }
-    .m-info-unit__inline .m-info-unit__image {
+    .m-info-unit--inline .m-info-unit__image {
       // Preserve inline info unit image layout
       float: left;
       margin-right: math.div($grid-gutter-width, $base-font-size-px) + em;

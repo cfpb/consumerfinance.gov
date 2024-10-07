@@ -44,7 +44,7 @@
     {% endif %}
 
     <div class="o-expandable-group
-                {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
+                {{ 'o-expandable-group--accordion' if value.is_accordion else '' }}">
         {# Should be a stack of Expandable instances. #}
         {% if value.expandables %}
             {% for expandable in value.expandables %}

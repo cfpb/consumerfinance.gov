@@ -9,25 +9,21 @@ declaration-block-no-redundant-longhand-properties -
 declaration-empty-line-before -
   Turned off.
   TODO: Turn on this rule and work out what style we want.
-declaration-property-value-no-unknown -
-  Turned off for Less per documentation guidance.
 media-feature-range-notation -
-  Prefer prefixed values, since Less doesn't support ranges.
-media-query-no-invalid -
-  Turned off because of https://github.com/ssivanatarajan/stylelint-less/issues/6
+  Prefer prefixed values, traditionally used since Less doesn't support ranges.
+  TODO: Turn on this rule and migrate to newer style.
 no-descending-specificity -
   Turned off, but probably shouldn't be.
   TODO: Turn on this rule and see if issues can be fixed.
 number-max-precision -
-  TODO: See if long decimal values can be shortened using the unit helper.
+  TODO: See if long decimal values can be shortened.
 rule-empty-line-before -
   Custom setting that differs from stylelint-config-standard.
 selector-id-pattern -
   Turned off.
   TODO: Turn on this rule and work out regex for BEM syntax.
 selector-class-pattern -
-  Turned off.
-  TODO: Turn on this rule and work out regex for BEM syntax.
+  getBEM style syntax check for classes.
 scss/operator-no-newline-after -
   Turned off. Prettier(?) wraps long lines, so sometimes the + operator ends up
   at the end of the line.
@@ -42,9 +38,7 @@ export default {
     'color-function-notation': ['legacy'],
     'declaration-block-no-redundant-longhand-properties': null,
     'declaration-empty-line-before': null,
-    'declaration-property-value-no-unknown': null,
     'media-feature-range-notation': ['prefix'],
-    'media-query-no-invalid': null,
     'no-descending-specificity': null,
     'number-max-precision': 10,
     'rule-empty-line-before': [

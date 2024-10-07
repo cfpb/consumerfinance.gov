@@ -25,8 +25,8 @@
   // Only for elements in "share" (m-social-media--share) section.
   &--share {
     .m-social-media__heading {
-      @include heading-5;
       margin: auto 0;
+      @include heading-5($has-margin-bottom: false, $has-margin-top: false);
     }
 
     .m-social-media__print {

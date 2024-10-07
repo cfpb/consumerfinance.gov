@@ -64,13 +64,13 @@ $bp-graph-cols-min: 740px;
 
 .step {
   &__heading {
-    @include heading-2;
+    @include heading-2($is-responsive: false);
   }
 
   &__intro {
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
-      @include heading-3;
+      @include heading-3($is-responsive: false);
     }
   }
 }
@@ -157,18 +157,18 @@ $bp-graph-cols-min: 740px;
   }
 
   &__prompt {
-    @include heading-2;
     margin-bottom: math.div(30px, $size-ii) + em;
+    @include heading-2($has-margin-bottom: false, $is-responsive: false);
   }
 
   &__school,
   &__location {
-    @include heading-3;
-
+    margin-bottom: math.div(15px, $size-iii) + em;
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
       margin-bottom: math.div(5px, $size-iii) + em;
     }
+    @include heading-3($has-margin-bottom: false, $is-responsive: false);
   }
   &__school {
     margin-bottom: 0;
@@ -187,8 +187,8 @@ $bp-graph-cols-min: 740px;
 
   &__heading,
   &__label {
-    @include heading-5;
     margin-bottom: 0;
+    @include heading-5($has-margin-bottom: false);
   }
 
   &__value {
@@ -256,7 +256,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__subheading {
-    @include heading-4;
+    @include heading-4($is-responsive: false);
   }
 
   &__about-wrapper {
@@ -399,9 +399,9 @@ $bp-graph-cols-min: 740px;
   &__summary,
   &__summary.column-well__content {
     padding-top: math.div(20px, $base-font-size-px) + em;
-    padding-right: ($grid_gutter-width / 2);
+    padding-right: math.div($grid_gutter-width, 2);
     padding-bottom: math.div(20px, $base-font-size-px) + em;
-    padding-left: ($grid_gutter-width / 2);
+    padding-left: math.div($grid_gutter-width, 2);
     margin-top: math.div(30px, $base-font-size-px) + em;
     margin-right: -1 * math.div($grid_gutter-width, 2);
     margin-left: -1 * math.div($grid_gutter-width, 2);
@@ -429,7 +429,7 @@ $bp-graph-cols-min: 740px;
     padding-bottom: math.div(5px, $size-iv) + em;
     border-bottom: 1px solid var(--black);
 
-    @include heading-4;
+    @include heading-4($is-responsive: false);
 
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
@@ -509,7 +509,7 @@ $bp-graph-cols-min: 740px;
   @include u-grid-nested-col-group;
   margin-bottom: math.div(15px, $size-iv) + em;
 
-  @include heading-4;
+  @include heading-4($is-responsive: false);
 
   &__sign {
     display: inline-block;
@@ -655,7 +655,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__heading {
-    @include heading-3;
+    @include heading-3($is-responsive: false);
   }
 
   &__form-wrapper {
@@ -799,7 +799,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__heading-text {
-    @include heading-4;
+    @include heading-4($is-responsive: false);
   }
 
   &__remove-btn,
@@ -836,7 +836,7 @@ $bp-graph-cols-min: 740px;
 
 .debt-summary {
   .aid-form__summary-heading {
-    @include heading-3;
+    @include heading-3($is-responsive: false);
 
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
@@ -883,7 +883,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__heading {
-    @include heading-3;
+    @include heading-3($is-responsive: false);
   }
 
   &__wrapper {
@@ -948,7 +948,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__heading {
-    @include heading-4;
+    @include heading-4($is-responsive: false);
   }
 
   &__explanation {
@@ -1025,12 +1025,12 @@ $bp-graph-cols-min: 740px;
 
   &__projection-name {
     @include u-grid-column(7);
-    @include heading-4;
+    @include heading-4($is-responsive: false);
   }
 
   &__projection-value {
     @include u-grid-column(5);
-    @include heading-4;
+    @include heading-4($is-responsive: false);
     text-align: right;
   }
 
@@ -1232,7 +1232,9 @@ $bp-graph-cols-min: 740px;
 
   &__top-label {
     width: $bar-graph-top-label-width;
-    margin-left: -($bar-graph-top-label-width - $bar-graph-width) / 2 - $bar-graph-line-overhang;
+    margin-left: (
+        -1 * math.div(($bar-graph-top-label-width - $bar-graph-width), 2)
+      ) - $bar-graph-line-overhang;
     position: absolute;
     top: math.div(-$bar-graph-top-label-height, $small-font-size-px) + em;
     left: 50%;
@@ -1410,12 +1412,6 @@ $bp-graph-cols-min: 740px;
       @include respond-to-min($bp-lg-min) {
         padding-left: math.div(40px, $base-font-size-px) + em;
       }
-    }
-
-    &__summary-heading {
-      @include heading-4;
-      margin-bottom: math.div(10px, $size-iv) + em;
-      text-transform: none;
     }
   }
 
@@ -1667,7 +1663,7 @@ $bp-graph-cols-min: 740px;
   &__heading {
     padding-top: math.div(210px, $size-iv) + em;
 
-    @include heading-4;
+    @include heading-4($is-responsive: false);
 
     // Desktop and above.
     @include respond-to-min($bp-med-min) {
@@ -1676,7 +1672,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &--take-action-header {
-    @include heading-3;
+    @include heading-3($is-responsive: false);
   }
 
   // Top borders on all but the first option on small screens and only the second row of options on larger screens
@@ -1801,7 +1797,7 @@ $bp-graph-cols-min: 740px;
   }
 
   &__list-intro {
-    @include heading-4;
+    @include heading-4($is-responsive: false);
   }
 
   &__controls {

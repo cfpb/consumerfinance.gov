@@ -28,9 +28,9 @@
     }
 
     .term__name {
-      @include h2;
-
       display: block;
+
+      @include heading-2;
     }
 
     .term__definition {
@@ -190,9 +190,10 @@
   }
 
   .answer-edited-date {
-    @include h5;
     display: block;
     color: var(--gray-90);
+
+    @include heading-5;
   }
 
   // Tablet and above.
@@ -214,11 +215,11 @@
   }
 
   form[action='/ask-cfpb/search/'] h2 {
-    @include heading-4;
+    @include heading-4($is-responsive: false);
 
     // Desktop and above.
     @include respond-to-min($bp-med-min) {
-      @include heading-3;
+      @include heading-3($is-responsive: false);
     }
   }
 }

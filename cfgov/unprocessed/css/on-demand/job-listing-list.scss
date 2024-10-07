@@ -12,9 +12,10 @@
   }
 
   .a-link__subtext {
-    @include u-link-colors(var(--black));
     display: block;
     margin-top: math.div(2px, $base-font-size-px) + em;
     font-weight: normal;
+
+    @include u-link-colors(var(--black));
   }
 }

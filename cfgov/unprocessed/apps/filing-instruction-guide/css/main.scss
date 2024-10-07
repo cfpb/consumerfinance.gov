@@ -9,23 +9,23 @@
   }
 
   h2 {
-    @include h1;
     margin-top: 60px;
+    @include heading-1($has-margin-top: false);
   }
 
   h3 {
-    @include h2;
     margin-top: 45px;
+    @include heading-2($has-margin-top: false);
   }
 
   &:not(.m-info-unit__heading-text) > h4 {
-    @include h3;
     margin-top: 30px;
+    @include heading-3($has-margin-top: false);
   }
 
   h5 {
-    @include h4;
     margin-top: 30px;
+    @include heading-4($has-margin-top: false);
   }
 
   pre {

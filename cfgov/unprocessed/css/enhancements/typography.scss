@@ -1,10 +1,10 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 dt {
-  @include h5;
   display: inline-block;
 
   margin-bottom: 0.5em;
+  @include heading-5($has-margin-bottom: false);
 
   &:last-of-type {
     margin-bottom: 0;

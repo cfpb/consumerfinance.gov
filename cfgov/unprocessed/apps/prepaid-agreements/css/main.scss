@@ -21,21 +21,9 @@
   }
 
   dt {
-    letter-spacing: 0;
-    font-weight: normal;
-    text-transform: none;
-    font-size: inherit;
-
-    @include heading-4;
     margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
       em;
-
-    &:last-of-type {
-      margin-bottom: math.div(
-          math.div($grid-gutter-width, 6),
-          $base-font-size-px
-        ) + em;
-    }
+    @include heading-4($has-margin-bottom: false, $is-responsive: false);
   }
 
   dd + dt {
@@ -56,7 +44,7 @@
       padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
         em;
     }
-    .o-multiselect__choices {
+    .o-multiselect .m-tag-group {
       display: none;
     }
   }
@@ -103,12 +91,6 @@
 }
 
 .prepaid-agreements-detail {
-  dt h2 {
-    @include h4;
-    margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
-      em;
-  }
-
   dd {
     margin-bottom: math.div(
         math.div($grid-gutter-width, 1.5),
