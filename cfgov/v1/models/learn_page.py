@@ -281,6 +281,13 @@ class EventPage(AbstractFilterPage):
                 FieldPanel("end_dt", classname="col6"),
             ]
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel("venue_image_type"),
+                FieldPanel("venue_image"),
+            ],
+            heading="Image",
+        ),
         FieldPanel("future_body", heading="Content visible before event"),
         FieldPanel("live_body", heading="Content visible during event"),
         MultiFieldPanel(
@@ -288,7 +295,6 @@ class EventPage(AbstractFilterPage):
                 FieldPanel(
                     "archive_body", heading="Content visible after event"
                 ),
-                FieldPanel("archive_image", heading="Image shown after event"),
                 FieldPanel("archive_video_id"),
             ],
             heading="Body and information visible after event",
@@ -315,20 +321,6 @@ class EventPage(AbstractFilterPage):
                 FieldPanel("venue_zipcode"),
             ],
             heading="Venue Address",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("venue_image_type"),
-                FieldPanel("venue_image"),
-            ],
-            heading="Venue Image",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("post_event_image_type"),
-                FieldPanel("post_event_image"),
-            ],
-            heading="Post-event Image",
         ),
     ]
     # Agenda content tab
