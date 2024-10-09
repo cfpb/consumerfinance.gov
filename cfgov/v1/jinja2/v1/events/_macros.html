@@ -125,8 +125,14 @@
                         video_id=event.live_video_id,
                         button_pos='bottom-right'
                     ) }}
-                {% endif %}
-                {% if event.venue_image_type == 'map' %}
+                {% elif event_state == 'past' and event.archive_video_id %}
+                    {# DISPLAY VIDEO RECORDING #}
+                    {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
+                    {{ video_player.render(
+                        video_id=event.archive_video_id,
+                        button_pos='bottom-right'
+                    ) }}
+                {% elif event.venue_image_type == 'map' %}
                     {# DISPLAY MAP IMAGE #}
                     {# Note: Max dimesions for Mapbox static image API: 1280x1280. #}
                     <img src="{{ event.location_image_url(size='708x398') }}" alt="">
