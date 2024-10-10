@@ -110,9 +110,8 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
         return FilterablePagesDocumentSearch
 
     def get_filterable_search(self):
-        # If searching globally, use the root page of this page's Wagtail
-        # Site. If the page doesn't live under a Site (for example, it is
-        # in the Trash), use the default Site.
+        # If searching globally, use the root page of this page's Wagtail Site.
+        # If the page doesn't live under a Site, use the default Site.
         if not self.filter_children_only:
             site = self.get_site()
 

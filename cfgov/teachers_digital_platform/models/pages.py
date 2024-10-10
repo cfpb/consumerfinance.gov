@@ -56,8 +56,7 @@ class ActivityPageHandoutDocuments(Orderable):
 class ActivityPage(CFGOVPage):
     """A model for the Activity Detail page."""
 
-    # Allow Activity pages to exist under the ActivityIndexPage or the Trash
-    parent_page_types = ["ActivityIndexPage", "v1.HomePage"]
+    parent_page_types = ["ActivityIndexPage"]
     subpage_types = []
 
     date = models.DateField("Updated", default=timezone.now)
