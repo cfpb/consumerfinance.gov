@@ -2,7 +2,6 @@ import logging
 import re
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import path, re_path, reverse
 from django.utils.html import format_html_join
@@ -44,32 +43,6 @@ from v1.views.snippets import BannerViewSet
 
 
 logger = logging.getLogger(__name__)
-
-
-# Inspired by https://github.com/wagtail/wagtail/blob/5fa1bd15f3b711f612628576148e904568ed8bca/wagtail/admin/auth.py#L18-L26.
-def _prevent_page_deletion(request):
-    if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        raise PermissionDenied
-
-    messages.error(
-        request,
-        "Page deletion is currently disabled; "
-        "please move your page to the Trash instead.",
-    )
-    return redirect("wagtailadmin_home")
-
-
-@hooks.register("before_delete_page")
-def raise_delete_error(request, page):
-    return _prevent_page_deletion(request)
-
-
-@hooks.register("before_bulk_action")
-def raise_bulk_delete_error(
-    request, action_type, objects, action_class_instance
-):
-    if action_type == "delete":
-        return _prevent_page_deletion(request)
 
 
 @hooks.register("after_delete_page")
@@ -491,3 +464,31 @@ def register_internal_docs_menu_item():
         attrs={"target": "_blank", "rel": "noreferrer"},
         name="internal_docs_menu",
     )
+
+
+@hooks.register("before_delete_page")
+def prevent_locked_page_deletion(request, page):
+    """Prevent deletion of locked pages"""
+    if page.locked:
+        messages.warning(
+            request, f"{page.title} is locked and cannot be deleted."
+        )
+        return redirect("wagtailadmin_explore", page.pk)
+
+
+@hooks.register("before_bulk_action")
+def prevent_locked_page_bulk_deletion(
+    request, action_type, objects, action_class_instance
+):
+    """Prevent deletion of locked pages when part of a bulk action"""
+    if action_type == "delete":
+        for obj in objects:
+            if hasattr(obj, "locked") and obj.locked:
+                messages.warning(
+                    request,
+                    f"{obj} is locked and cannot be deleted. "
+                    "Please remove it from the selection.",
+                )
+                if request.META.get("HTTP_REFERER"):
+                    return redirect(request.META.get("HTTP_REFERER"))
+                return redirect("wagtailadmin_home")
