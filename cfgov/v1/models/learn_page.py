@@ -244,27 +244,6 @@ class EventPage(AbstractFilterPage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    post_event_image_type = models.CharField(
-        max_length=16,
-        choices=(
-            ("placeholder", "Placeholder image"),
-            ("image", "Unique image (selected below)"),
-        ),
-        default="placeholder",
-        verbose_name="Post-event image type",
-        help_text="Choose what to display after an event concludes. This will "
-        'be overridden by embedded video if the "YouTube video ID '
-        '(archive)" field on the previous tab is populated. If '
-        '"Unique image" is chosen here, you must select the image '
-        "you want below. It should be sized to 1416x796.",
-    )
-    post_event_image = models.ForeignKey(
-        "v1.CFGOVImage",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
 
     # Agenda content fields
     agenda_items = StreamField(
@@ -401,14 +380,6 @@ class EventPage(AbstractFilterPage):
         if self.venue_image_type == "image" and not self.venue_image:
             raise ValidationError(
                 {"venue_image": 'Required if "Venue image type" is "Image".'}
-            )
-        if self.post_event_image_type == "image" and not self.post_event_image:
-            raise ValidationError(
-                {
-                    "post_event_image": (
-                        'Required if "Post-event image type" is "Image".'
-                    )
-                }
             )
         if self.live_stream_availability:
             if not self.live_stream_date:
