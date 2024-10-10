@@ -58,12 +58,13 @@
     }
   }
   .content__main {
-    &::after {
-      border: 0;
-    }
     border: 0;
     border-top: 1px solid var(--gray-40);
     padding-top: 0;
+
+    &::after {
+      border: 0;
+    }
   }
   .results__count {
     padding: (
@@ -73,6 +74,7 @@
     border-right: 1px solid var(--gray-40);
     border-bottom: 1px solid var(--gray-40);
     background-color: var(--green-20);
+
     &.no-results {
       background-color: var(--red-20);
       padding-bottom: 15px;
@@ -81,6 +83,7 @@
   .results__list {
     padding: (math.div($grid-gutter-width, $base-font-size-px) + em)
       (math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em);
+
     li {
       list-style-type: none;
     }

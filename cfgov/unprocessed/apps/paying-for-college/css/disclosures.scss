@@ -158,17 +158,20 @@ $bp-graph-cols-min: 740px;
 
   &__prompt {
     margin-bottom: math.div(30px, $size-ii) + em;
+
     @include heading-2($has-margin-bottom: false, $is-responsive: false);
   }
 
   &__school,
   &__location {
     margin-bottom: math.div(15px, $size-iii) + em;
+
+    @include heading-3($has-margin-bottom: false, $is-responsive: false);
+
     // Tablet and above.
     @include respond-to-min($bp-sm-min) {
       margin-bottom: math.div(5px, $size-iii) + em;
     }
-    @include heading-3($has-margin-bottom: false, $is-responsive: false);
   }
   &__school {
     margin-bottom: 0;
@@ -188,6 +191,7 @@ $bp-graph-cols-min: 740px;
   &__heading,
   &__label {
     margin-bottom: 0;
+
     @include heading-5($has-margin-bottom: false);
   }
 
@@ -1029,9 +1033,10 @@ $bp-graph-cols-min: 740px;
   }
 
   &__projection-value {
+    text-align: right;
+
     @include u-grid-column(5);
     @include heading-4($is-responsive: false);
-    text-align: right;
   }
 
   &__explanation {

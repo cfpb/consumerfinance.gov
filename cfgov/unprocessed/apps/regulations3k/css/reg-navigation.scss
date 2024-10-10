@@ -39,11 +39,12 @@
 // Regs3K secondary nav sections
 .o-regs3k-sections {
   .o-expandable__header {
+    border: 0;
+
     // Desktop and above.
     @include respond-to-min($bp-med-min) {
       padding: 0.9375em 0;
     }
-    border: 0;
   }
 
   .o-expandable__content {
@@ -85,14 +86,14 @@
 
   .o-regs3k-navigation__header {
     display: none;
+    padding: (math.div(10px, $base-font-size-px) + em) 0
+      math.div(5px, $base-font-size-px) + em;
 
     // Tablet and below.
     @include respond-to-max($bp-sm-max) {
       display: flex;
     }
 
-    padding: (math.div(10px, $base-font-size-px) + em) 0
-      math.div(5px, $base-font-size-px) + em;
     .o-expandable__label {
       text-transform: uppercase;
     }

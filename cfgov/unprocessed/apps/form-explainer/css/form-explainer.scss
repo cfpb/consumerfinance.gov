@@ -136,12 +136,11 @@ $colors: gold, red, blue, teal;
 
       &.o-expandable__form-explainer-category-#{$index} {
         background-color: $tint;
+        border-color: $light;
 
         .o-expandable__header {
           background-color: $light;
         }
-
-        border-color: $light;
 
         &.has-attention,
         &:hover {

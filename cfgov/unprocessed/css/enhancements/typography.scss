@@ -4,6 +4,7 @@ dt {
   display: inline-block;
 
   margin-bottom: 0.5em;
+
   @include heading-5($has-margin-bottom: false);
 
   &:last-of-type {
