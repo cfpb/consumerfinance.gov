@@ -61,17 +61,20 @@ class LanguageMenuItem(ActionMenuItem):
 
 @hooks.register("construct_page_action_menu")
 def add_language_links(menu_items, request, context):
-    page = context["page"]
-    return menu_items.extend(
-        [
-            LanguageMenuItem(
-                f"Edit {languages[translation.language]} page",
-                f"/admin/pages/{translation.pk}/edit/",
-            )
-            for translation in page.get_translations()
-            if translation.language != page.language
-        ]
-    )
+    try:
+        page = context["page"]
+        return menu_items.extend(
+            [
+                LanguageMenuItem(
+                    f"Edit {languages[translation.language]} page",
+                    f"/admin/pages/{translation.pk}/edit/",
+                )
+                for translation in page.get_translations()
+                if translation.language != page.language
+            ]
+        )
+    except KeyError:
+        pass
 
 
 @hooks.register("after_delete_page")
