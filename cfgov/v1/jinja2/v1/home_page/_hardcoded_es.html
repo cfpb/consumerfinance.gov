@@ -1,0 +1,100 @@
+{%- set hero = {
+    "heading": "<strong>A su lado</strong> en los momentos financieros de la vida." | safe,
+    "body": "Somos la Oficina para la Protección Financiera del Consumidor, una agencia del gobierno de los EE. UU. dedicada a garantizar que los bancos, los prestamistas y otras instituciones financieras le traten de manera justa.",
+    "image": {
+        "url": static( "apps/homepage/img/hero.jpg" ),
+        "height": 575,
+        "width": 755
+    },
+    "is_50_50": true,
+    "is_jumbo": true
+} -%}
+
+{%- set answers_heading = "Encuentre respuestas a sus preguntas sobre finanzas" -%}
+
+{%- set topics = {
+    "cards": [
+        {
+            "icon": "credit-report",
+            "text": "Informes y puntajes de crédito",
+            "url": "/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",
+        },
+        {
+            "icon": "debt-collection",
+            "text": "Cobro de deudas",
+            "url": "/es/herramientas-del-consumidor/cobro-de-deudas/",
+        },
+        {
+            "icon": "money-transfer",
+            "text": "Transferencias de dinero",
+            "url": "/es/herramientas-del-consumidor/transferencias-de-dinero/",
+        },
+        {
+            "icon": "bank",
+            "text": "Cuentas y servicios bancarios",
+            "url": "/es/herramientas-del-consumidor/cuentas-bancarias/",
+        },
+        {
+            "icon": "arrow-right-round",
+            "text": "Ver todos los temas de dinero",
+            "url": "/es/herramientas-del-consumidor/",
+        }
+    ],
+} -%}
+
+<!-- {%- set highlights_heading = "Bureau highlights" -%} -->
+
+{%- set highlights = [
+    {
+        "img_src": static( "apps/homepage/img/putting-green_finances-covid.png" ),
+        "card_type": "highlight",
+        "heading": "Encuentre las respuestas a cientos de preguntas financieras",
+        "link_text": "Obtener respuestas",
+        "link_url": "/es/obtener-respuestas/"
+    },
+    {
+        "img_src": static( "apps/homepage/img/putting-green_submit-a-complaint.png" ),
+        "card_type": "highlight",
+        "heading": "Presentar una queja sobre un producto o servicio financiero",
+        "link_text": "Iniciar un reclamo",
+        "link_url": "/es/enviar-una-queja/"
+    },
+] -%}
+
+{%- set announcements = [
+    {
+        "heading": "El CFPB lo protege",
+        "content": "<ul><li><strong>+4 millones</strong> de quejas de consumidores recibieron respuestas</li><li><strong>+$20.7 billones</strong> en alivio financiero como resultado de las acciones del CFPB</li><li><strong>+205 millones</strong> de personas elegibles para recibir ayuda financiera</li></ul>" | safe,
+        "link_text": "",
+        "link_url": ""
+    },
+    {
+        "heading": "Lo protegemos de un trato injusto",
+        "content": "<p>Una parte central de nuestra misión es defender a los consumidores y asegurarnos de que sean tratados de manera justa en el mercado financiero.</p>" | safe,
+        "link_text": "Consulte las medidas que tomamos para protegerlo",
+        "link_url": "/activity-log/?title=&language=es&from_date=&to_date="
+    }
+] -%}
+
+{%- set breakout_cards_heading = "Obtenga ayuda para planificar sus metas futuras" -%}
+
+{%- set breakout_cards = [
+    {
+        "card_type": "breakout",
+        "link_text": "Comprar una casa",
+        "link_url": "/es/prepararse-para-comprar-casa/",
+        "img_src": static( "apps/homepage/img/key-house.png" ),
+    },
+    {
+        "card_type": "breakout",
+        "link_text": "Bienestar financiero",
+        "link_url": "/es/herramientas-del-consumidor/bienestar-financiero/",
+        "img_src": static( "apps/homepage/img/fwb.png" ),
+    },
+    {
+        "card_type": "breakout",
+        "link_text": "Préstamo vehicular",
+        "link_url": "/es/herramientas-del-consumidor/prestamos-para-vehiculos/",
+        "img_src": static( "apps/homepage/img/key-car.png" )
+    }
+] -%}

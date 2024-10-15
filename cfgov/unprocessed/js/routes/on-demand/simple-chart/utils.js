@@ -45,12 +45,11 @@ function resolveOverride(override, data) {
 
 /**
  * Mutates a style object with entries from the style overrides field
- * @param {string} styleOverrides - Stringified JSON style overrides
+ * @param {object} styles - JSON style overrides
  * @param {object} obj - The object to mutate
  * @param {object} data - The data to provide to the chart
  */
-function overrideStyles(styleOverrides, obj, data) {
-  const styles = JSON.parse(styleOverrides);
+function overrideStyles(styles, obj, data) {
   Object.keys(styles).forEach((key) => {
     const override = resolveOverride(styles[key], data);
     key.split('.').reduce((acc, curr, i, arr) => {
