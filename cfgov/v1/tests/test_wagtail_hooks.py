@@ -26,54 +26,6 @@ class TestAllowlistOverride(SimpleTestCase):
         self.assertHTMLEqual(output_html, "Consumer Finance")
 
 
-class TestDeleteProtections(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.login()
-
-        root_page = Site.objects.get(is_default_site=True).root_page
-        self.page1 = BlogPage(title="delete1", slug="delete1")
-        root_page.add_child(instance=self.page1)
-        self.page2 = BlogPage(title="delete2", slug="delete2")
-        root_page.add_child(instance=self.page2)
-
-        self.delete_url = reverse(
-            "wagtailadmin_pages:delete", args=(self.page1.id,)
-        )
-        self.bulk_delete_url = (
-            reverse(
-                "wagtail_bulk_action",
-                args=(
-                    "wagtailcore",
-                    "page",
-                    "delete",
-                ),
-            )
-            + f"?id={self.page1.id}&id={self.page2.id}"
-        )
-
-    def test_delete_page_block(self):
-        response = self.client.post(self.delete_url)
-        self.assertRedirects(response, reverse("wagtailadmin_home"))
-
-    def test_delete_page_block_ajax(self):
-        response = self.client.post(
-            self.delete_url,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.assertEqual(response.status_code, 403)
-
-    def test_bulk_delete_block(self):
-        response = self.client.post(self.bulk_delete_url)
-        self.assertRedirects(response, reverse("wagtailadmin_home"))
-
-    def test_bulk_delete_page_block_ajax(self):
-        response = self.client.post(
-            self.bulk_delete_url,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.assertEqual(response.status_code, 403)
-
-
 class TestDjangoAdminLink(TestCase, WagtailTestUtils):
     def get_admin_response_for_user(self, is_staff):
         credentials = {"username": "regular", "password": "regular"}
@@ -113,3 +65,81 @@ class TestInternalDocsLink(TestCase, WagtailTestUtils):
     def test_guide_defined_creates_link_in_admin(self):
         InternalDocsSettings.objects.create(url="https://example.com/")
         self.assertContains(self.get_admin_response(), "/admin/internal-docs/")
+
+
+class LockedPageDeletionTestCase(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.login()
+
+        root_page = Site.objects.get(is_default_site=True).root_page
+
+        self.locked_page = BlogPage(title="locked page", slug="locked-page")
+        self.locked_page.locked = True
+        root_page.add_child(instance=self.locked_page)
+
+        self.unlocked_page = BlogPage(
+            title="unlocked page", slug="unlocked-page"
+        )
+        root_page.add_child(instance=self.unlocked_page)
+
+    def test_delete_locked_page(self):
+        response = self.client.post(
+            reverse("wagtailadmin_pages:delete", args=(self.locked_page.pk,))
+        )
+        self.assertTrue(any("message" in ctx for ctx in response.context))
+        self.assertEqual(
+            "locked page is locked and cannot be deleted.",
+            next(
+                ctx["message"] for ctx in response.context if "message" in ctx
+            ),
+        )
+        self.assertRedirects(
+            response,
+            reverse("wagtailadmin_explore", args=(self.locked_page.pk,)),
+        )
+        self.assertEqual(
+            self.locked_page, BlogPage.objects.get(pk=self.locked_page.pk)
+        )
+
+    def test_bulk_delete_locked_page(self):
+        response = self.client.post(
+            reverse(
+                "wagtail_bulk_action",
+                args=(
+                    "wagtailcore",
+                    "page",
+                    "delete",
+                ),
+            )
+            + f"?id={self.locked_page.pk}&id={self.unlocked_page.pk}"
+        )
+        self.assertTrue(any("message" in ctx for ctx in response.context))
+        self.assertIn(
+            "locked page is locked and cannot be deleted.",
+            next(
+                ctx["message"] for ctx in response.context if "message" in ctx
+            ),
+        )
+        self.assertRedirects(response, reverse("wagtailadmin_home"))
+
+    def test_bulk_delete_locked_page_with_referrer(self):
+        response = self.client.post(
+            reverse(
+                "wagtail_bulk_action",
+                args=(
+                    "wagtailcore",
+                    "page",
+                    "delete",
+                ),
+            )
+            + f"?id={self.locked_page.pk}&id={self.unlocked_page.pk}",
+            HTTP_REFERER="/",
+        )
+        self.assertTrue(any("message" in ctx for ctx in response.context))
+        self.assertIn(
+            "locked page is locked and cannot be deleted.",
+            next(
+                ctx["message"] for ctx in response.context if "message" in ctx
+            ),
+        )
+        self.assertRedirects(response, "/")

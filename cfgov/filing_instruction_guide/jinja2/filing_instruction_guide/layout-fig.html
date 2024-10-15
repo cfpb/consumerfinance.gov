@@ -13,26 +13,19 @@
 {% if effective_start_date and effective_end_date %}
     {% set date_message = 'You are viewing a previous version of the FIG, effective ' + effective_start_date + ' to ' + effective_end_date + '.' %}
 {% endif %}
-{% set banner_modification = ' o-banner--dark' if version_status == 'Archived' else ''  %}
-
 {% block banner_top %}
     {% if version_status %}
-        {% import 'v1/includes/molecules/notification.html' as notification with context %}
-        <div class="o-banner{{ banner_modification }}">
-            <div class="wrapper
-                        wrapper--match-content">
-                {{ notification.render(
-                    'warning',
-                    true,
-                    version_message,
-                    date_message,
-                    [ {
-                        'text': 'View all versions of the FIG.',
-                        'url': '../'
-                    } ]
-                ) }}
-            </div>
-        </div>
+        {% set is_banner_dark = true if version_status == 'Archived' else false  %}
+        {% import 'v1/includes/molecules/banner.html' as banner %}
+        {{- banner.render(
+            is_banner_dark,
+            version_message,
+            date_message,
+            [ {
+                'text': 'View all versions of the FIG',
+                'url': '../'
+            } ]
+        ) }}
     {% endif %}
 {% endblock %}
 

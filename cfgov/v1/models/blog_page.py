@@ -79,4 +79,4 @@ class LegacyBlogPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")
     )
-    template = "v1/blog/blog_page.html"
+    template = "v1/blog/legacy_blog_page.html"

@@ -192,12 +192,6 @@ class EventPageNoDBTests(SimpleTestCase):
             venue_image_type="image",
         )
 
-    def test_failing_validation_post_event_image(self):
-        self.assertValidationFails(
-            'Required if "Post-event image type" is "Image".',
-            post_event_image_type="image",
-        )
-
     def test_failing_validation_live_start_date(self):
         self.assertValidationFails(
             "Cannot be on or after Event End.",

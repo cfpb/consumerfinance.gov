@@ -1,0 +1,42 @@
+{# ==========================================================================
+
+   banner.render()
+
+   ==========================================================================
+
+   Description:
+
+   Builds banner markup when given:
+
+   is_dark:     Whether the banner is dark or not. Default is false.
+
+   message:     Text to display within the banner's notification markup.
+
+   explanation: Text to display as an explanation
+                within the banner's notification markup.
+                Defaults to none.
+
+   links:       Array of link objects, which each contain:
+                - text (required):         text of link.
+                - url:                     link url.
+                - is_link_boldface:        sets bold formatting.
+                - open_link_in_new_window: opens the link in a new window
+                Defaults to an empty array.
+
+   ========================================================================== #}
+
+{% macro render(is_dark, message, explanation, links) %}
+  <div class="o-banner{{ ' o-banner--dark' if is_dark else '' }}">
+    <div class="wrapper wrapper--match-content">
+        {% import 'v1/includes/molecules/notification.html' as notification %}
+        {{ notification.render(
+            'warning',
+            true,
+            message,
+            explanation,
+            links
+        ) }}
+    </div>
+  </div>
+{% endmacro %}
+

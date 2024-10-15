@@ -1,0 +1,29 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+{% block titletag %}Import page into {{ parent_page.get_admin_display_title }}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="Import page" subtitle=parent_page.get_admin_display_title icon="doc-empty-inverse" %}
+
+    <div class="nice-padding">
+        {% include "wagtailadmin/shared/non_field_errors.html" %}
+
+        <form enctype="multipart/form-data" action="{% url 'wagtail_deletion_archive_import' parent_page.id %}" method="POST">
+            {% csrf_token %}
+            <ul class="fields">
+                {% for field in form %}
+                  <li>
+                      {% if field.is_hidden %}
+                          {{ field }}
+                      {% else %}
+                          {% include "wagtailadmin/shared/field.html" with field=field %}
+                      {% endif %}
+                  </li>
+                {% endfor %}
+                <li>
+                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Uploading…' %}">{% icon name="spinner" %}<em>{% trans 'Upload' %}</em></button>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}
