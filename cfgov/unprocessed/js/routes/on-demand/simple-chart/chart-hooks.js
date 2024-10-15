@@ -28,7 +28,7 @@ const hooks = {
     }</b><br/>Payments to consumers: <b>$${Math.round(val).toLocaleString(
       'en-US',
     )}</b><br/>Number of consumers: <b>${this.point.consumers.toLocaleString('en-US')}
-    </b><br/>Population: <b>${populations[this.point.name].toLocaleString('en-US')}</b>`;
+    </b>`;
   },
 
   cct_yoy_transform(d) {

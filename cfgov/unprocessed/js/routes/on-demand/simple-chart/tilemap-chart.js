@@ -34,7 +34,7 @@ function makeTilemapOptions(data, dataAttributes) {
 
   defaultObj = {
     ...defaultObj,
-    ...getMapConfig(formattedSeries, styles.perCapita),
+    ...getMapConfig(formattedSeries, defaultObj, styles.perCapita),
   };
 
   if (!defaultObj.tooltip.formatter) {
@@ -162,10 +162,11 @@ function makeDivisor(v) {
 /**
  * Generates a config object to be added to the chart config
  * @param {Array} series - The formatted series data
- * @param perCapita
+ * @param {object} defaultObj - The style object with overrides applied
+ * @param {boolean} perCapita - Whether data should be perCapita
  * @returns {Array} series data with a geographic component added
  */
-function getMapConfig(series, perCapita) {
+function getMapConfig(series, defaultObj, perCapita) {
   let min = Infinity;
   let max = -Infinity;
   let dataMin = Infinity;
@@ -211,13 +212,15 @@ function getMapConfig(series, perCapita) {
 
   return {
     colorAxis: {
-      dataClasses: [
-        makeDataClass(min, step1, '#d4eac6'),
-        makeDataClass(step1, step2, '#addc91'),
-        makeDataClass(step2, step3, '#48b753'),
-        makeDataClass(step3, step4, '#1e9642'),
-        makeDataClass(step4, max, '#187835', 1),
-      ],
+      dataClasses: defaultObj.dataClasses
+        ? defaultObj.dataClasses
+        : [
+            makeDataClass(min, step1, '#d4eac6'),
+            makeDataClass(step1, step2, '#addc91'),
+            makeDataClass(step2, step3, '#48b753'),
+            makeDataClass(step3, step4, '#1e9642'),
+            makeDataClass(step4, max, '#187835', 1),
+          ],
     },
     series: [{ clip: false, data: added }],
   };
