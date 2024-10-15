@@ -53,9 +53,7 @@ class ActivityIndexPageTests(WagtailPageTestCase):
         self.assertCanNotCreateAt(ActivityPage, HomePage)
 
     def test_activity_page_parent_pages(self):
-        self.assertAllowedParentPageTypes(
-            ActivityPage, {ActivityIndexPage, HomePage}
-        )
+        self.assertAllowedParentPageTypes(ActivityPage, {ActivityIndexPage})
 
     def test_can_create_activity_index_page(self):
         root_page = HomePage.objects.first()

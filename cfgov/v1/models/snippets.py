@@ -121,7 +121,7 @@ class EmailSignUp(RevisionMixin, models.Model):
         verbose_name="Privacy Act statement",
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         help_text=(
             'Choose the page that the "See Privacy Act statement" link '
             'should go to. If in doubt, use "Generic Email Sign-Up '
