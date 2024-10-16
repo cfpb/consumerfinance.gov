@@ -35,6 +35,7 @@ const textlets = {
 };
 
 const currentLanguage = document.querySelector('html').getAttribute('lang');
+const graphContainer = document.getElementById('graph-container');
 
 // TODO: merge textlets and catalog hashes.
 const catalog = {
@@ -147,8 +148,7 @@ function init() {
 
   // Window resize handler
   $(window).resize(function () {
-    const hiddenContent = '.step-one-hidden, .step-three .hidden-content';
-    if ($(hiddenContent).is(':visible')) {
+    if (graphContainer.style.display == 'block') {
       redrawGraph();
     }
   });

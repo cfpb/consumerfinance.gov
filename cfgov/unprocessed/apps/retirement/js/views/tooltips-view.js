@@ -1,5 +1,7 @@
 import $ from '../../../../js/modules/util/dollar-sign.js';
 
+const tooltipContainer = document.getElementById('tooltip-container');
+
 /**
  * Initialize the tooltips view.
  */
@@ -95,8 +97,8 @@ function toolTipper(elem) {
   });
 
   window.addEventListener('resize', function () {
-    if ($('#tooltip-container').is(':visible')) {
-      $('#tooltip-container').hide();
+    if (tooltipContainer.style.display == 'block') {
+      tooltipContainer.style.display = 'none';
     }
   });
 }
