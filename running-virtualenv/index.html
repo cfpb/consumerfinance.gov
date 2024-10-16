@@ -254,14 +254,12 @@ password will expire after 60 days).</p>
 </div>
 <h3 id="yarn-commands">yarn commands<a class="headerlink" href="#yarn-commands" title="Permanent link">¶</a></h3>
 <p>The following yarn tasks are available:</p>
-<pre class="highlight"><code>yarn scripts             # Build the Javascript with esbuild
-yarn styles              # Build the SCSS with esbuild and its PostCSS plugin
-yarn copy                # Move static files to the output directory
-yarn build               # Run scripts, styles, and copy along with app-specific scripts
+<pre class="highlight"><code>yarn build               # Build the JavaScript, SCSS, and frontend assets.
 yarn watch               # Run the build then watch JS and SCSS changes
 yarn lint                # Run frontend linting
 yarn jest                # Run frontend tests
-yarn test                # Run both</code></pre>
+yarn test                # Run both
+yarn cy                  # Run Cypress integration tests</code></pre>
 <h3 id="reinstalling-the-virtual-environment">Reinstalling the virtual environment<a class="headerlink" href="#reinstalling-the-virtual-environment" title="Permanent link">¶</a></h3>
 <p>To remove an existing virtual environment for
 <a href="../installation/#stand-alone-installation">a reinstall of consumerfinance.gov</a>,
