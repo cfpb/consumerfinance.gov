@@ -9,7 +9,7 @@
     "url": "https://cfpb.github.io/"
   },
   "dependencies": {
-    "@cfpb/ccdb5-ui": "2.13.1"
+    "@cfpb/ccdb5-ui": "cfpb/ccdb5-ui#WW-DATAP-1208-reducers-use-slices"
   },
   "repository": {
     "type": "git",
