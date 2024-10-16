@@ -1,7 +1,6 @@
 import isElementInView from '../utils/is-element-in-view.js';
 
-// TODO: remove jquery.
-import $ from 'jquery';
+import $ from '../../../../js/modules/util/dollar-sign.js';
 
 /**
  * @param {number} ageRightNow - The current age.
@@ -10,7 +9,7 @@ import $ from 'jquery';
 function init(ageRightNow = 0, fullRetirementAge = 0) {
   limitAgeSelector(ageRightNow);
 
-  $('#retirement-age-selector').change(function () {
+  $('.step-three').on( 'change', '#retirement-age-selector', function () {
     chooseClaimingAge(fullRetirementAge);
   });
 }

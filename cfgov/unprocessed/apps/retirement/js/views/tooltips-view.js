@@ -1,5 +1,4 @@
-// TODO: remove jquery.
-import $ from 'jquery';
+import $ from '../../../../js/modules/util/dollar-sign.js';
 
 /**
  * Initialize the tooltips view.
