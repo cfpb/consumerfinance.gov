@@ -6,8 +6,7 @@ import questionsView from './questions-view.js';
 import { convertStringToNumber } from '../../../../js/modules/util/format.js';
 import validDates from '../utils/valid-dates.js';
 
-// TODO: remove jquery.
-import $ from 'jquery';
+import $, { window } from '../../../../js/modules/util/dollar-sign.js';
 
 const graphSettings = {
   graphHeight: 0,
@@ -36,6 +35,7 @@ const textlets = {
 };
 
 const currentLanguage = document.querySelector('html').getAttribute('lang');
+const graphContainer = document.getElementById('graph-container');
 
 // TODO: merge textlets and catalog hashes.
 const catalog = {
@@ -107,7 +107,7 @@ function init() {
     moveIndicatorToAge($(this).attr('data-age-value'));
   });
 
-  $('[data-bar_age]').click(function () {
+  $('#claim-canvas').on('click', '[data-bar_age]', function () {
     const age = $(this).attr('data-bar_age');
     moveIndicatorToAge(age);
   });
@@ -148,8 +148,7 @@ function init() {
 
   // Window resize handler
   $(window).resize(function () {
-    const hiddenContent = '.step-one-hidden, .step-three .hidden-content';
-    if ($(hiddenContent).is(':visible')) {
+    if (graphContainer.style.display == 'block') {
       redrawGraph();
     }
   });
@@ -192,11 +191,9 @@ function checkEstimateReady() {
  * Initializes the listener on the slider indicator
  */
 function initIndicator() {
-  const $indicator = $('#graph__slider-input');
-
   /* Need both onchange and oninput to work in all browsers
       https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ */
-  $indicator.on('change input', function () {
+  $('#claim-canvas').on('change input', '#graph__slider-input', function () {
     const indicatorValue = Number($(this).val());
     setAgeWithIndicator(indicatorValue);
   });

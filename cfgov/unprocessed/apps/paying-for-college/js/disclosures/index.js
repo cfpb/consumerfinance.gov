@@ -1,4 +1,4 @@
-import $ from './utils/dollar-sign.js';
+import $ from '../../../../js/modules/util/dollar-sign.js';
 import getApiValues from './dispatchers/get-api-values.js';
 import verifyOffer from './dispatchers/post-verify.js';
 import financialModel from './models/financial-model.js';

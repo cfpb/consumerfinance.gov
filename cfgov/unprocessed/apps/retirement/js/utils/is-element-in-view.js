@@ -1,5 +1,5 @@
 // TODO: remove jquery.
-import $ from 'jquery';
+import $ from '../../../../js/modules/util/dollar-sign.js';
 
 /**
  * This function determines if the element specified is currently in the
