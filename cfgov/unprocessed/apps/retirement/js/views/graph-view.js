@@ -193,7 +193,7 @@ function checkEstimateReady() {
 function initIndicator() {
   /* Need both onchange and oninput to work in all browsers
       https://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ */
-  $('#claim-canvas').on('change input', '#graph_slider-input', function () {
+  $('#claim-canvas').on('change input', '#graph__slider-input', function () {
     const indicatorValue = Number($(this).val());
     setAgeWithIndicator(indicatorValue);
   });
