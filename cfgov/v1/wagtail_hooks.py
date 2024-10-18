@@ -7,8 +7,7 @@ from django.urls import path, re_path, reverse
 from django.utils.html import format_html_join
 
 from wagtail import hooks
-from wagtail.admin import messages
-from wagtail.admin.action_menu import ActionMenuItem
+from wagtail.admin import messages, widgets
 from wagtail.admin.menu import MenuItem
 from wagtail.snippets.models import register_snippet
 
@@ -48,33 +47,18 @@ logger = logging.getLogger(__name__)
 languages = dict(settings.LANGUAGES)
 
 
-class LanguageMenuItem(ActionMenuItem):
-    icon_name = "globe"
-
-    def __init__(self, label, url):
-        self.label = label
-        self.url = url
-
-    def get_url(self, context):
-        return self.url
-
-
-@hooks.register("construct_page_action_menu")
-def add_language_links(menu_items, request, context):
-    try:
-        page = context["page"]
-        return menu_items.extend(
-            [
-                LanguageMenuItem(
-                    f"Edit {languages[translation.language]} page",
-                    f"/admin/pages/{translation.pk}/edit/",
-                )
-                for translation in page.get_translations()
-                if translation.language != page.language
-            ]
+@hooks.register("register_page_header_buttons")
+def page_header_buttons(page, user, view_name, next_url=None):
+    return [
+        widgets.Button(
+            f"Edit {languages[translation.language]} page",
+            f"/admin/pages/{translation.pk}/edit/",
+            priority=1000,
+            icon_name="globe",
         )
-    except KeyError:
-        pass
+        for translation in page.get_translations()
+        if translation.language != page.language
+    ]
 
 
 @hooks.register("after_delete_page")
