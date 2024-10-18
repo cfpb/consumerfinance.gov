@@ -6,3 +6,7 @@
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.13.1.tgz#cd7e8738fd7a0bd562baf946369c26f57b6d30e7"
   integrity sha512-dXoy64QPAoAmk1AARL23pAAhCUrChrl//EfZ40saayUHJtCMLbNUh4IecMwoV9ZPAxsi84mUCx/72PMiP7ZQrw==
+
+"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#DATAP-1558-Upgrade-to-Design-System-v3.x":
+  version "2.13.1"
+  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/2ff7ba8533119c07e652538fa41f2c857c4eb2a2"
