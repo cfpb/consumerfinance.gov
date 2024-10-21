@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from core.templatetags.svg_icon import svg_icon
 from core.utils import (
     ASK_CFPB_LINKS,
+    NON_CFPB_LINKS,
     add_link_markup,
     extract_answers_from_request,
     format_file_size,
@@ -277,3 +278,35 @@ class LinkUtilsTests(SimpleTestCase):
 
         expected_tag = BeautifulSoup(expected_html, "html.parser")
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
+
+    def test_non_cfpb_links(self):
+        cfpb_urls = [
+            "http://consumerfinance.gov",
+            "https://consumerfinance.gov",
+            "http://cfpb.gov",
+            "https://cfpb.gov",
+            "http://www.consumerfinance.gov",
+            "https://www.consumerfinance.gov",
+            "http://localhost",
+            "https://localhost",
+            "http://localhost:8000",
+            "http://content.localhost:8000",
+            "https://www.consumerfinance.gov/foo/bar/",
+        ]
+
+        for url in cfpb_urls:
+            with self.subTest(url=url):
+                self.assertFalse(NON_CFPB_LINKS.match(url))
+
+        non_cfpb_urls = [
+            "https://example.com/page/",
+            "https://example.com/foo/www.consumerfinance.gov/bar/",
+            "http://example.com/foo/cfpb.gov/bar/",
+            "https://subdomain.example.com:1234",
+            "https://subdomain.example.com:1234/foo/",
+            "http://notconsumerfinance.gov",
+        ]
+
+        for url in non_cfpb_urls:
+            with self.subTest(url=url):
+                self.assertTrue(NON_CFPB_LINKS.match(url))
