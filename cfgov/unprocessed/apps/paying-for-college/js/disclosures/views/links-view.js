@@ -1,6 +1,6 @@
 import formatURL from '../utils/format-url.js';
 import constructScorecardSearch from '../utils/construct-scorecard-search.js';
-import $ from '../utils/dollar-sign.js';
+import $ from '../../../../../js/modules/util/dollar-sign.js';
 
 const linksView = {
   $gradLinkText: $('.graduation-link'),
