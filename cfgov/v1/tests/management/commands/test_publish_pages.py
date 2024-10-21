@@ -30,10 +30,10 @@ class PublishPagesTests(TestCase):
 
     @contextmanager
     def make_tempfile(self, content):
-        tf = tempfile.NamedTemporaryFile()
-        tf.write(content)
-        tf.seek(0)
-        yield tf
+        with tempfile.NamedTemporaryFile() as tf:
+            tf.write(content)
+            tf.seek(0)
+            yield tf
 
     def test_dry_run(self):
         with self.make_tempfile(b"/a/\n/b/\n/c/\n") as tf:
