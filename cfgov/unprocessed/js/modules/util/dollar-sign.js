@@ -548,10 +548,12 @@ Query.prototype.outerWidth = function (val) {
 Query.prototype.scrollTop = function (val) {
   if (typeof val === 'undefined') {
     const elem = this.elements[0];
-    if (elem.window === elem) {
-      return document.defaultView.pageYOffset;
-    } else {
-      return elem.scrollTop;
+    if (elem) {
+      if (elem.window === elem) {
+        return document.defaultView.pageYOffset;
+      } else {
+        return elem.scrollTop;
+      }
     }
   } else {
     this.elements.forEach((elem) => {
