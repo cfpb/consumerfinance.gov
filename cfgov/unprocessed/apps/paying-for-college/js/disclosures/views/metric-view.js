@@ -1,4 +1,4 @@
-import $ from '../utils/dollar-sign.js';
+import $ from '../../../../../js/modules/util/dollar-sign.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
 import { formatUSD } from '../../../../../js/modules/util/format.js';
