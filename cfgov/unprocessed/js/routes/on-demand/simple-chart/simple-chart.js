@@ -101,7 +101,7 @@ function makeChartOptions(data, dataAttributes) {
   let defaultObj = cloneDeep(getDefaultChartObject(chartType));
 
   if (styleOverrides) {
-    overrideStyles(styleOverrides, defaultObj, data);
+    overrideStyles(JSON.parse(styleOverrides), defaultObj, data);
   }
 
   if (xAxisSource && chartType !== 'datetime') {
