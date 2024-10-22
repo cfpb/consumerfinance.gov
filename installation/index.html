@@ -287,22 +287,12 @@ building and
 </div>
 <h3 id="set-up-and-run-the-docker-containers">Set up and run the Docker containers<a class="headerlink" href="#set-up-and-run-the-docker-containers" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-You can use either
-<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> or
-<a href="https://kubernetes.io/">Kubernetes</a> via <a href="https://helm.sh/">Helm</a>
+You can use
+<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a>
 to run these services along side the consumerfinance.gov Django site.</p>
 <p>To build and run our Docker containers for the first time, run:</p>
 <h4 id="docker-compose">docker-compose:<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
-<h4 id="kubernetes-via-helm">Kubernetes via Helm:<a class="headerlink" href="#kubernetes-via-helm" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-shell">./build-images.sh &amp;&amp; ./helm-install.sh</code></pre>
-<p>Either approach will build and start our
-PostgreSQL, Elasticsearch, and Python services.</p>
-<p>The first time this is run, it will
-<a href="#load-initial-data">load initial data</a>
-and
-<a href="#build-the-frontend">build the frontend</a>
-for you.</p>
 <h3 id="load-initial-data">Load initial data<a class="headerlink" href="#load-initial-data" title="Permanent link">¶</a></h3>
 <p>Our <code>initial-data.sh</code> script can be used to initialize a new database to make
 it easy to get started working on consumerfinance.gov.
