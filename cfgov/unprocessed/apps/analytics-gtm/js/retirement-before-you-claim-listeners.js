@@ -162,7 +162,7 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
       .querySelector('#retirement-age-selector')
       .addEventListener('change', function (event) {
         const target = event.currentTarget;
-        if ( target.selectedIndex > -1 ) {
+        if (target.selectedIndex > -1) {
           const val = target[target.selectedIndex].value;
           analyticsSendEvent({
             event: 'Before You Claim Interaction',

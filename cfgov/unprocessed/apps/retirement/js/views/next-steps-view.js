@@ -9,7 +9,7 @@ import $ from '../../../../js/modules/util/dollar-sign.js';
 function init(ageRightNow = 0, fullRetirementAge = 0) {
   limitAgeSelector(ageRightNow);
 
-  $('.step-three').on( 'change', '#retirement-age-selector', function () {
+  $('.step-three').on('change', '#retirement-age-selector', function () {
     chooseClaimingAge(fullRetirementAge);
   });
 }

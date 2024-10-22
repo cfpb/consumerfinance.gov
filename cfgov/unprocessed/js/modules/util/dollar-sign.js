@@ -1,6 +1,6 @@
 /**
  * @param {Document|Window|string} selector - A jQuery-style selector.
- * @returns {Document|Window|undefined} The document, window, or nothing.
+ * @returns {Document|Window|undefined} The Query object.
  */
 function Query(selector) {
   this.elements = [];
@@ -55,9 +55,9 @@ function Query(selector) {
 /**************************/
 
 /**
- *
- * @param {number|string} val - The value to make into stringified pixels
- * @returns {string} - Value converted to stringifed pixels
+ * Turns a number into a string ending with 'px'
+ * @param {number} val - numeric value
+ * @returns {string} string ending with 'px'
  */
 function pixelator(val) {
   if (typeof val === 'number') {
@@ -284,10 +284,10 @@ Query.prototype.submit = function (callback) {
 
 /**
  * Handles events in eventType
- * @param {string} eventType - the type of event
+ * @param {string} eventType - Type of event for which to listen
  * @param {string | Function} paramOne - A selector or callback
  * @param {Function} paramTwo - A callback if paramOne is a selector.
- * @returns {object} - this
+ * @returns {object} this Query object
  */
 Query.prototype.on = function (eventType, paramOne, paramTwo) {
   if (typeof paramOne == 'function') {
