@@ -5,7 +5,6 @@
 !cfgov
 !config
 !esbuild
-!helm
 !requirements
 !static.in
 !scripts

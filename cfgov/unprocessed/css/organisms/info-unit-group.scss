@@ -2,7 +2,6 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 @mixin u-grid-column-top-divider() {
-  margin-top: math.div($grid-gutter-width * 2, $base-font-size-px) + em;
   border-left-width: math.div($grid-gutter-width, 2);
 
   &::before {
@@ -33,15 +32,18 @@
 
   .content-l__top-divider {
     .content-l__col-1 + .content-l__col-1 {
+      margin-top: math.div($grid-gutter-width * 2, $base-font-size-px) + em;
+
       // Adds top divider between single-column info units
       @include u-grid-column-top-divider;
     }
   }
 
   .content-l__top-divider + .content-l__top-divider {
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
     // Adds top divider between multi-column info unit rows
     @include u-grid-column-top-divider;
-    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
   }
 
   // Mobile only.
@@ -49,8 +51,9 @@
     // Adds top divider between info unit cols on small screens
     .content-l__top-divider {
       .content-l__col + .content-l__col {
-        @include u-grid-column-top-divider;
         margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+        @include u-grid-column-top-divider;
       }
     }
   }

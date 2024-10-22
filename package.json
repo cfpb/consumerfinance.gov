@@ -65,9 +65,6 @@
     "jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
-    "copy": "yarn build copy",
-    "styles": "yarn build styles",
-    "scripts": "yarn build scripts",
     "watch": "yarn build watch",
     "build": "node ./esbuild/build.js",
     "cy": "./scripts/cypress.sh"

@@ -109,6 +109,9 @@
     // Break the menu word when it is too wide to fit in the sidebar area.
     word-break: break-word;
 
+    border-style: solid;
+    border-left-width: 5px;
+
     @include u-link-colors(
       var(--pacific),
       var(--pacific),
@@ -121,9 +124,6 @@
       var(--green),
       var(--green)
     );
-
-    border-style: solid;
-    border-left-width: 5px;
 
     // Tablet and below.
     @include respond-to-max($bp-sm-max) {
@@ -160,6 +160,7 @@
 
     &--parent {
       margin-bottom: inherit;
+
       @include heading-4($has-margin-bottom: false, $is-responsive: false);
     }
   }

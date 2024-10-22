@@ -52,6 +52,7 @@
       padding-bottom: 15px;
       border-bottom: 1px solid var(--gray-40);
       margin-bottom: 15px;
+
       &:last-child {
         border-bottom: none;
       }
@@ -60,6 +61,7 @@
     .o-expandable__header {
       border: 0;
       padding: 0;
+
       &::before,
       &::after {
         border: 0;
@@ -68,12 +70,13 @@
     }
   }
   .content__main {
-    &::after {
-      border: 0;
-    }
     border: 0;
     border-top: 1px solid var(--gray-40);
     padding-top: 0;
+
+    &::after {
+      border: 0;
+    }
   }
   .results__count {
     padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
@@ -81,6 +84,7 @@
     border-right: 1px solid var(--gray-40);
     border-bottom: 1px solid var(--gray-40);
     background-color: var(--green-20);
+
     &.no-results {
       background-color: var(--red-20);
       padding-bottom: 15px;
