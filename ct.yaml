@@ -1,8 +1,0 @@
-helm-extra-args: --timeout 600s
-chart-dirs:
-  - helm/
-target-branch: main
-chart-repos:
-  - bitnami=https://charts.bitnami.com/bitnami
-  - elastic=https://helm.elastic.co/
-  - opensearch=https://opensearch-project.github.io/helm-charts/
