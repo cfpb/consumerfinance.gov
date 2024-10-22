@@ -606,7 +606,7 @@ home price, down payment, and more can affect mortgage interest rates.
 
 {% block javascript scoped %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl([
         '{{ static("apps/owning-a-home/js/common.js") }}',
         '{{ static("apps/owning-a-home/js/explore-rates/index.js") }}'

@@ -38,7 +38,7 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
         jsl(['{{ static("apps/filing-instruction-guide/js/fig-init.js") }}']);
     </script>
 {% endblock javascript %}
