@@ -1,0 +1,102 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// Set up default label settings.
+@mixin u-chart-label() {
+  font-size: $base-font-size-px;
+  font-family: inherit;
+  color: var(--gray);
+}
+
+// Set colors and position for legend and tooltip lines.
+@mixin u-chart-colorizer-line($color-primary) {
+  .highcharts-color-0,
+  .highcharts-color-1,
+  .highcharts-navigator-series .highcharts-graph {
+    stroke: $color-primary;
+  }
+
+  // Remove drop-shadow filter from tooltip text.
+  div.highcharts-tooltip {
+    filter: unset;
+  }
+
+  .highcharts-tooltip {
+    margin-left: 3px;
+
+    .highcharts-header {
+      margin-left: -5px;
+    }
+
+    .highcharts-strong {
+      font-weight: normal;
+    }
+
+    .highcharts-color-0,
+    .highcharts-color-1 {
+      position: relative;
+
+      /* We want a dash next to each series label in tooltip as a key.
+         By default, highcharts adds a bullet next to the series label.
+         This hack moves that bullet far off screen, we then offset the
+         dash back the other direction with a 4px adjustment to position it.
+      */
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+
+      &::before {
+        position: absolute;
+
+        // This value offsets the value sent in the parent position.
+        left: 9995px;
+
+        content: '';
+        padding-top: 3px;
+        width: 15px;
+        margin-top: 8px;
+
+        /* Using an SVG prevents an issue where the 1px dash line will disappear
+           at certain heights due to rounding off of single pixels.
+        */
+        $svg-url: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" version="1.1" width="14" height="4" viewBox="0 0 14 4"%3E%3Cpath d="M 0.5 0.5 L 261.5 0.5 261.5 79.5 0.5 79.5 Z" style="fill: #{$color-primary}"%3E%3C/path%3E%3C/svg%3E';
+
+        //        $svg-url: %( "data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='14' height='4' viewBox='0 0 14 4'%3E%3Cpath d='M 0.5 0.5 L 261.5 0.5 261.5 79.5 0.5 79.5 Z' style='fill: %a'%3E%3C/path%3E%3C/svg%3E", escape( $color-primary ) );
+        background-image: url('#{$svg-url}');
+        background-repeat: no-repeat;
+      }
+    }
+
+    .highcharts-color-1 {
+      &::before {
+        padding-top: 1.5px;
+      }
+    }
+  }
+}
+
+// Set colors for bar chart bars and tooltip.
+@mixin u-chart-colorizer-bar($color-primary, $color-secondary) {
+  .highcharts-point {
+    fill: $color-secondary;
+
+    &.highcharts-data__unprojected {
+      fill: $color-primary;
+    }
+  }
+
+  .highcharts-tooltip-box {
+    stroke: $color-primary;
+  }
+}
+
+// Set colors in navigator (used in line charts).
+@mixin u-chart-colorizer-navigator($color-primary, $color-secondary) {
+  .highcharts-navigator-series .highcharts-graph {
+    stroke: $color-primary;
+  }
+
+  .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1 {
+    stroke: $color-secondary;
+  }
+}

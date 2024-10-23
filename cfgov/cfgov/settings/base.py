@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
-    "wagtail.users",
     "wagtail.images",
     "wagtail.embeds",
     "wagtail.contrib.frontend_cache",
@@ -78,6 +77,7 @@ INSTALLED_APPS = (
     "storages",
     "data_research",
     "v1",
+    "cdntools",
     "core",
     "django_extensions",
     "jobmanager",
@@ -99,6 +99,7 @@ INSTALLED_APPS = (
     "django_opensearch_dsl",
     "corsheaders",
     "login",
+    "login.apps.LoginUsersAppConfig",
     "filing_instruction_guide",
     "health_check",
     "health_check.db",
@@ -117,6 +118,7 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
+    "wagtail_deletion_archival",
 )
 
 MIDDLEWARE = (
@@ -269,7 +271,23 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
 ]
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
+    STORAGES["wagtail_deletion_archival"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": WAGTAIL_DELETION_ARCHIVE_PATH,
+        }
+    }
+
 
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
@@ -288,8 +306,6 @@ WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
-WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # This is used for easy autocomplete search behavior in the Wagtail admin.
@@ -363,12 +379,14 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
     MEDIA_URL = os.path.join(
         AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
     )
 
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    }
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -447,10 +465,11 @@ WAGTAILFRONTENDCACHE = {}
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get("ENABLE_AKAMAI_CACHE_PURGE", False)
 if ENABLE_AKAMAI_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["akamai"] = {
-        "BACKEND": "v1.models.caching.AkamaiBackend",
-        "CLIENT_TOKEN": os.environ.get("AKAMAI_CLIENT_TOKEN"),
-        "CLIENT_SECRET": os.environ.get("AKAMAI_CLIENT_SECRET"),
-        "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
@@ -459,11 +478,8 @@ ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": {
-            "files.consumerfinance.gov": os.environ.get(
-                "CLOUDFRONT_DISTRIBUTION_ID_FILES"
-            )
-        },
+        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
+        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists
@@ -502,6 +518,8 @@ CSP_SCRIPT_SRC = (
     "about:",
     "www.federalregister.gov",
     "*.qualtrics.com",
+    "www.ssa.gov/accessibility/andi/",
+    "ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js", # needed for ANDI accessibility tool
 )
 
 # These specify valid sources of CSS code
@@ -513,6 +531,7 @@ CSP_STYLE_SRC = (
     "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
+    "www.ssa.gov/accessibility/andi/",
 )
 
 # These specify valid image sources
@@ -533,6 +552,7 @@ CSP_IMG_SRC = (
     "*.qualtrics.com",
     "*.mouseflow.com",
     "i.ytimg.com",
+    "www.ssa.gov/accessibility/andi/",
 )
 
 # These specify what URL's we allow to appear in frames/iframes

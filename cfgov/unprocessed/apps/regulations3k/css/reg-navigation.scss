@@ -1,0 +1,125 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+/* ==========================================================================
+   Regulations 3000
+   Custom eRegs secondary navigation styles
+   ========================================================================== */
+
+// Regs3K sidebar
+.regulations3k .o-regs3k-sidebar {
+  // TODO: If secondary navigation is overriding o-expandables appearance,
+  //       they aren't atomic expandables anymore per the design spec.
+  //       Secondary navigation should use FlyoutMenu for expandable-like
+  //       behavior and handle its own styling
+  //       (possibly shared with expandables).
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    background-color: var(--gray-5);
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    // Add drop-shadow.
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 20%);
+  }
+
+  // TODO - this will be updated to data-open='true' in newer expandables.
+  .o-expandable__target--expanded {
+    .o-expandable__cue-close {
+      display: block;
+    }
+  }
+  .o-expandable__target--collapsed {
+    .o-expandable__cue-open {
+      display: block;
+    }
+  }
+}
+
+// Regs3K secondary nav sections
+.o-regs3k-sections {
+  .o-expandable__header {
+    border: 0;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding: 0.9375em 0;
+    }
+  }
+
+  .o-expandable__content {
+    padding: 0;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      background: none;
+      border: none;
+    }
+    &::before {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  &::before {
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      border-bottom: 1px solid var(--gray-40);
+      content: ' ';
+      display: block;
+    }
+  }
+}
+
+// Regs3K secondary nav header
+.o-regs3k-navigation {
+  .o-expandable__label {
+    padding: 0 !important;
+    font-size: 1.125em;
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    padding: (math.div(10px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em);
+  }
+
+  .o-regs3k-navigation__header {
+    display: none;
+    padding: (math.div(10px, $base-font-size-px) + em) 0
+      math.div(5px, $base-font-size-px) + em;
+
+    // Tablet and below.
+    @include respond-to-max($bp-sm-max) {
+      display: flex;
+    }
+
+    .o-expandable__label {
+      text-transform: uppercase;
+    }
+  }
+}
+
+// TODO: convert iRegs secondary nav override abuse to modifiers on secondary nav.
+.o-secondary-nav__link {
+  color: var(--pacific);
+
+  &--current {
+    color: var(--black);
+  }
+
+  &--parent {
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: 300;
+  }
+}
+
+// Utility methods specific to when regs3k secondary nav
+// is stacked on top of the page's content
+.u-hide-on-stacked {
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    display: none;
+  }
+}

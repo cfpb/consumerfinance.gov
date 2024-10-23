@@ -1,0 +1,32 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.m-breadcrumbs {
+  // Mobile size.
+  position: relative;
+  display: flex;
+  gap: math.div(10px, $base-font-size-px) + rem;
+  align-items: center;
+  flex-wrap: wrap;
+
+  font-size: math.div(14px, $base-font-size-px) + rem;
+  padding-top: math.div(15px, $base-font-size-px) + rem;
+  padding-bottom: math.div(15px, $base-font-size-px) + rem;
+  min-height: 33px;
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    padding-top: math.div(30px, $base-font-size-px) + rem;
+
+    // Bottom is zero because main content area may or may not have a breadcrumb,
+    // so the main content needs to set it s own spacing.
+    padding-bottom: 0;
+  }
+}
+
+// Hide on print.
+@include respond-to-print {
+  .m-breadcrumbs {
+    display: none;
+  }
+}

@@ -15,7 +15,6 @@ from v1.models.browse_filterable_page import (
     NewsroomLandingPage,
 )
 from v1.models.browse_page import BrowsePage
-from v1.models.caching import AkamaiBackend, CDNHistory
 from v1.models.enforcement_action_page import (
     EnforcementActionPage,
     EnforcementActionProduct,

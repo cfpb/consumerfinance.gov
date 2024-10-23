@@ -140,10 +140,3 @@ Earn rewards: 3
 """.strip()
             + "\n\n",
         )
-
-    def test_charts(self):
-        self.make_test_data()
-
-        self.assertFalse(len(os.listdir(self.tempdir)))
-        self.call_validate(save_charts=True)
-        self.assertEqual(len(os.listdir(self.tempdir)), 3)

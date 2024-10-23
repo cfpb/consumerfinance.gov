@@ -204,9 +204,8 @@ yarn build
 ### Set up and run the Docker containers
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-You can use either
-[`docker-compose`](https://docs.docker.com/compose/) or
-[Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
+You can use
+[`docker-compose`](https://docs.docker.com/compose/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
@@ -216,21 +215,6 @@ To build and run our Docker containers for the first time, run:
 ```sh
 docker-compose up
 ```
-
-#### Kubernetes via Helm:
-
-```shell
-./build-images.sh && ./helm-install.sh
-```
-
-Either approach will build and start our
-PostgreSQL, Elasticsearch, and Python services.
-
-The first time this is fun, it will
-[load initial data](#load-initial-data)
-and
-[build the frontend](#build-the-frontend)
-for you.
 
 ### Load initial data
 

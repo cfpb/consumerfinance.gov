@@ -8,8 +8,18 @@ from core.templatetags.svg_icon import svg_icon
 
 
 NON_CFPB_LINKS = re.compile(
-    r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
-    r"(?!(content\.)?localhost).*)"
+    # HTTP or HTTPS
+    r"https?:\/\/"
+    # Negative lookahead: don't match anything that matches what follows
+    r"(?!"
+    # Match any subdomains
+    r"((\w+\.)*"
+    # Match consumerfinance.gov, cfpb.gov, or localhost
+    r"(consumerfinance\.gov|cfpb\.gov|localhost))"
+    # Match a port number, if provided
+    r"(?:\:\d+)?"
+    # Match the rest of the URL
+    r".*)"
 )
 
 LINK_PATTERN = re.compile(

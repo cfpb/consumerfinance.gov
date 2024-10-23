@@ -6,7 +6,7 @@
    ========================================================================== */
 
 import AtomicComponent from './AtomicComponent.js';
-import { EventObserver } from '@cfpb/cfpb-atomic-component';
+import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
 import ExpandableTransition from './ExpandableTransition.js';
 
 const eventObserver = new EventObserver();
@@ -126,7 +126,7 @@ const Expandable = AtomicComponent.extend({
     targetExpanded: 'o-expandable__target--expanded',
     targetCollapsed: 'o-expandable__target--collapsed',
     group: 'o-expandable-group',
-    groupAccordion: 'o-expandable-group__accordion',
+    groupAccordion: 'o-expandable-group--accordion',
   },
 
   events: {

@@ -4,12 +4,12 @@ archives to deploy the site to a Linux server.
 
 # Generating a deployment artifact
 
-Running the script at `./docker/deployable-zipfile/build.sh` will start a CentOS 6
+Running the script at `./docker/builder/build.sh` will start a CentOS 7
 container, generate the artifact (via
-[this script](https://github.com/cfpb/consumerfinance.gov/blob/main/docker/deployable-zipfile/_build.sh)),
+[this script](https://github.com/cfpb/consumerfinance.gov/blob/main/docker/builder/_build.sh)),
 and save it to `./cfgov_current_build.zip`.
 
-We use CentOS 6 here, so that the Python modules that include compiled code, will
+We use CentOS 7 here so that the Python modules that include compiled code, will
 be compiled for the same environment they will be run in.
 
 # What's in an artifact?

@@ -1,0 +1,63 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+$gap: math.div(30px, $base-font-size-px) + rem;
+$gap-half: math.div(15px, $base-font-size-px) + rem;
+
+.m-related-posts__list {
+  display: grid;
+  column-gap: $gap;
+  row-gap: $gap-half;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    // 230px is an arbitrary width for small screens.
+    minmax(230px, calc(50% - $gap-half))
+  );
+
+  .m-list__link {
+    @include u-link-no-border;
+    @include u-link-colors(
+      var(--pacific),
+      var(--pacific),
+      var(--pacific-60),
+      var(--pacific),
+      var(--navy)
+    );
+
+    &:hover {
+      border-bottom: 1px dotted;
+    }
+  }
+
+  .m-list__item .a-date {
+    margin-bottom: 0;
+    margin-top: math.div(10px, $base-font-size-px) + rem;
+  }
+}
+
+.m-related-posts__list-container {
+  margin-bottom: $gap;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Mobile only.
+@include respond-to-max($bp-xs-max) {
+  // Always remove columns at mobile size.
+  .m-related-posts__list {
+    grid-template-columns: initial;
+  }
+}
+
+// Desktop and above.
+@include respond-to-min($bp-med-min) {
+  // If in the sidebar at desktop sizes, do not break into columns.
+  // Related posts also appear in the pre-footer, so we exclude that here.
+  .u-layout-grid__sidebar .m-related-posts__list {
+    grid-template-columns: initial;
+  }
+}

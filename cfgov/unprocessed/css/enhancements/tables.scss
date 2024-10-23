@@ -1,0 +1,24 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// Tablet and below.
+@include respond-to-max($bp-sm-max) {
+  table {
+    width: 100%;
+  }
+}
+
+.o-table {
+  tbody th {
+    border-bottom: 1px solid $table-head-bg;
+    padding: math.div(10px, $size-v) + em;
+    color: $table-head-text;
+    background: $table-head-bg;
+
+    @include heading-5;
+
+    &:first-child {
+      border-top: 1px solid $table-head-bg;
+    }
+  }
+}

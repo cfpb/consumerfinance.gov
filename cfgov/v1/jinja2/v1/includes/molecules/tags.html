@@ -1,0 +1,49 @@
+
+{# ==========================================================================
+
+   tags.render()
+
+   ==========================================================================
+
+   Description:
+
+   Render a tags list when given:
+
+   tags:     List of tags to render with:
+
+       url:  (optional) The tag URL.
+
+       text: The tag text.
+
+   show_heading: The optional boolean flag to show the tags_heading element.
+                 Defaults to true.
+
+   ========================================================================== #}
+
+{% macro render(tags, show_heading=true, stack_tags=false) %}
+<div>
+    {% if show_heading %}
+    <h4>
+        Topics
+    </h4>
+    {% endif %}
+    <ul class="m-tag-group{{ ' m-tag-group--stacked' if stack_tags else '' }}" aria-label="Topics">
+        {% for tag in tags %}
+        <li>
+            {% if tag.url %}
+            <a href="{{ tag.url }}" class="a-tag-topic">
+            {% else %}
+            <span class="a-tag-topic">
+            {% endif %}
+                <span class="a-tag-topic__bullet" aria-hidden="true">•</span>
+                <span class="a-tag-topic__text">{{ tag.text }}</span>
+            {% if tag.url %}
+            </a>
+            {% else %}
+            </span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endmacro %}

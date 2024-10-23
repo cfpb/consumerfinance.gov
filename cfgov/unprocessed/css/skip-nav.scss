@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/components/cfpb-buttons/button' as *;
+
+.skip-nav {
+  position: relative;
+
+  &__link {
+    position: absolute;
+    top: auto;
+    left: -10000px;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    background: transparent;
+    transition:
+      transform 1s ease,
+      background 0.5s linear;
+    z-index: 11;
+
+    &:focus {
+      @include a-btn;
+
+      // TODO: refactor a-btn mixin to allow overriding of values.
+      /* stylelint-disable no-duplicate-selectors */
+      & {
+        /* stylelint-enable */
+        // Adjustments to button to make it appear like a super button.
+        padding: (math.div(11px, 18px) + em) (math.div(29px, 18px) + em);
+        font-size: math.div(18px, $base-font-size-px) + em;
+
+        top: 15px;
+        left: 15px;
+        height: auto;
+        width: auto;
+        overflow: visible;
+        outline: 0;
+        transition:
+          transform 0.1s ease,
+          background 0.2s linear;
+      }
+    }
+
+    &--flush-left:focus {
+      left: 0;
+    }
+  }
+}

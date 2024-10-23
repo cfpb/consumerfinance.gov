@@ -1,0 +1,79 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+@mixin u-grid-column-top-divider() {
+  border-left-width: math.div($grid-gutter-width, 2);
+
+  &::before {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+    margin-left: auto !important;
+    position: static;
+    background-color: var(--gray-40);
+    content: '';
+  }
+}
+
+.o-info-unit-group {
+  .content-l {
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+  }
+
+  > .content-l:first-child {
+    margin-top: 0;
+  }
+
+  .content-l__col-1 + .content-l__col-1 {
+    // Adds margin top to info units that follow another
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em !important;
+  }
+
+  .content-l__top-divider {
+    .content-l__col-1 + .content-l__col-1 {
+      margin-top: math.div($grid-gutter-width * 2, $base-font-size-px) + em;
+
+      // Adds top divider between single-column info units
+      @include u-grid-column-top-divider;
+    }
+  }
+
+  .content-l__top-divider + .content-l__top-divider {
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    // Adds top divider between multi-column info unit rows
+    @include u-grid-column-top-divider;
+  }
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    // Adds top divider between info unit cols on small screens
+    .content-l__top-divider {
+      .content-l__col + .content-l__col {
+        margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+        @include u-grid-column-top-divider;
+      }
+    }
+  }
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .content-l__top-divider + .content-l__top-divider {
+      // Matches top divider width to cols on larger screens
+      &::before {
+        // Overrides @include u-grid-column-top-divider(); margin-left !important rule
+        margin-left: 15px !important;
+        margin-right: 15px;
+        width: auto;
+      }
+    }
+    .content-l__col-1:nth-of-type(n + 2),
+    .content-l__col-1-2:nth-of-type(n + 3),
+    .content-l__col-1-3:nth-of-type(n + 4) {
+      // Adds margin-top to info units that begin a new row in their group
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+  }
+}

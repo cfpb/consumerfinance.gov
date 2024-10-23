@@ -13,7 +13,7 @@ async function copy(baseConfig) {
   const files = await getFiles(resolvedBase);
 
   const staticFiles = files.filter(
-    (v) => !v.match(/\/\.[-.\w]*$|\.js$|\.less$|\.css$/i),
+    (v) => !v.match(/\/\.[-.\w]*$|\.js$|\.scss$|\.css$/i),
   );
 
   const inDirs = [...new Set(staticFiles.map((v) => dirname(v)))];
@@ -37,7 +37,7 @@ async function copy(baseConfig) {
 
   // Handle icons
   copyAll(
-    `${modules}/@cfpb/cfpb-icons/src/icons`,
+    `${modules}/@cfpb/cfpb-design-system/src/components/cfpb-icons/icons`,
     `${baseConfig.outdir}/icons`,
   );
 }

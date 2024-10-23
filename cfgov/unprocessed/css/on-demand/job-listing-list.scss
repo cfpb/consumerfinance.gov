@@ -1,0 +1,21 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+.m-jobs-list .m-list--links {
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .m-list__item + .m-list__item {
+      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+  }
+
+  .a-link__subtext {
+    display: block;
+    margin-top: math.div(2px, $base-font-size-px) + em;
+    font-weight: normal;
+
+    @include u-link-colors(var(--black));
+  }
+}

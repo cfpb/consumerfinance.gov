@@ -1,0 +1,210 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '../node_modules/ctrl-f/dist/css/index.css';
+
+.o-fig__main {
+  // Bump up all heading sizes to improve readability
+  h1 {
+    @include u-superheading;
+  }
+
+  h2 {
+    margin-top: 60px;
+
+    @include heading-1($has-margin-top: false);
+  }
+
+  h3 {
+    margin-top: 45px;
+
+    @include heading-2($has-margin-top: false);
+  }
+
+  &:not(.m-info-unit__heading-text) > h4 {
+    margin-top: 30px;
+
+    @include heading-3($has-margin-top: false);
+  }
+
+  h5 {
+    margin-top: 30px;
+
+    @include heading-4($has-margin-top: false);
+  }
+
+  pre {
+    font-family: Menlo, 'Andale Mono', 'Courier New', monospace;
+    overflow-x: auto;
+    font-size: math.div(14px, $base-font-size-px) + em;
+  }
+
+  .o-table {
+    margin-top: math.div(30px, $base-font-size-px) + em;
+    td {
+      vertical-align: top;
+      hyphens: auto;
+    }
+    br {
+      display: none;
+    }
+  }
+
+  .u-fig-print-link {
+    margin-top: math.div(45px, $base-font-size-px) + em;
+    margin-bottom: math.div(60px, $base-font-size-px) + em;
+    padding-top: math.div(30px, $base-font-size-px) + em;
+  }
+
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    // Increase the sidebar border from 1px to 2px
+    .content &::after {
+      border-left-width: 2px;
+    }
+  }
+}
+
+.o-fig__heading {
+  a {
+    color: var(--black);
+    word-break: break-word;
+  }
+}
+
+.o-fig__section--sub-sub {
+  margin-top: math.div(45px, $base-font-size-px) + em;
+  margin-bottom: math.div(45px, $base-font-size-px) + em;
+
+  // Put a horizontal rule below all sub level 3 headings
+  &::after {
+    display: inline-block;
+    content: '';
+    border-top: 2px solid var(--gray-50);
+    width: calc(100% + 30px);
+    margin: (math.div(45px, $base-font-size-px) + em) 0 0
+      (math.div(-30px, $base-font-size-px) + em);
+  }
+}
+
+// TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
+.o-fig__sidebar {
+  .o-secondary-nav__label {
+    width: 95%;
+  }
+
+  // When the sidebar collapses into an expandable,
+  // make the expandable's content scrollable
+  .o-secondary-nav__content[data-open='true'] {
+    overflow-y: auto;
+    height: 100vh;
+    > .o-secondary-nav__list {
+      // Add a large buffer underneath to ensure mobile users
+      // can use assistive technology like Reachability to access
+      // items at the bottom of the list
+      padding-bottom: math.div(420px, $base-font-size-px) + em;
+    }
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    .o-secondary-nav__link {
+      padding: math.div(10px, $base-font-size-px) + em;
+    }
+  }
+
+  .o-secondary-nav__link {
+    padding-left: math.div(24px, $base-font-size-px) + em;
+    text-indent: math.div(-18px, $base-font-size-px) + em;
+  }
+
+  .o-secondary-nav__list--parents > .o-secondary-nav__link {
+    padding-left: math.div(10px, $base-font-size-px) + em;
+    text-indent: math.div(-10px, $base-font-size-px) + em;
+  }
+
+  h4 {
+    padding-left: math.div(19px, $size-iv) + em;
+  }
+}
+
+.research-report {
+  // 670px, plus a 15px gutter on each side (standard paragrah widths)
+  max-width: math.div((670 + 30), 16) + em;
+
+  .lead-paragraph,
+  .author-names {
+    margin: 30px 0;
+  }
+
+  .report-header > a {
+    color: black;
+    &:visited {
+      color: black;
+    }
+  }
+}
+
+.u-hide-on-desktop {
+  // Desktop and above.
+  @include respond-to-min($bp-med-min) {
+    display: none;
+  }
+}
+
+.u-hide-on-tablet {
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    display: none;
+  }
+}
+
+#ctrl-f-modal {
+  h3 {
+    font-size: math.div(16px, $base-font-size-px) + em;
+  }
+  svg {
+    // cf-icon-svg
+    height: $cf-icon-height;
+    vertical-align: text-top;
+    fill: currentcolor;
+  }
+  input {
+    // Reset the browser's default styling.
+    appearance: none;
+    display: inline-block;
+    padding: math.div(7px, $base-font-size-px) + em;
+    border: 1px solid $input-border;
+    background: $input-bg;
+    color: $input-text;
+
+    padding-left: math.div(32px, $base-font-size-px) + em;
+    &:focus {
+      border-color: $input-border-focused;
+      box-shadow: 0 0 0 1px $input-border-focused;
+      outline: 1px dotted $input-border-focused;
+
+      // The outline-offset property is not supported everywhere (e.g. IE)
+      // but it adds a nice touch in browsers where it is.
+      outline-offset: 2px;
+    }
+  }
+  .ctrl-f-search-result {
+    border-bottom: 1px solid var(--gray-40);
+    a {
+      color: var(--black);
+      &:focus {
+        border-color: $input-border-focused;
+        box-shadow: 0 0 0 1px $input-border-focused;
+        outline: 1px dotted $input-border-focused;
+
+        // The outline-offset property is not supported everywhere (e.g. IE)
+        // but it adds a nice touch in browsers where it is.
+        outline-offset: 2px;
+      }
+      &:hover {
+        border-color: $input-border-hover;
+        outline: 1px solid $input-border-hover;
+      }
+    }
+  }
+}

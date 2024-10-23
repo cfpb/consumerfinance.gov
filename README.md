@@ -6,43 +6,25 @@ This Django project includes the front-end assets and build tools,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
 
-## Documentation
-
-Full documentation for this project is available in the [docs/](docs/) directory
-and [online](https://cfpb.github.io/consumerfinance.gov/).
-
 ## Quickstart
+
+Full installation and usage instructions are available in
+[our documentation](https://cfpb.github.io/consumerfinance.gov).
 
 This quickstart requires a working Docker Desktop installation and git:
 
 - [Clone the repository](https://cfpb.github.io/consumerfinance.gov/installation/#clone-the-repository):
 
   ```shell
-  git clone https://github.com/cfpb/consumerfinance.gov.git
-  cd consumerfinance.gov
+   git clone https://github.com/cfpb/consumerfinance.gov.git
+   cd consumerfinance.gov
   ```
 
-- One of the following runtimes:
+- [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-  - [Set up and run the Docker containers via docker-compose](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
-
-    ```shell
-    docker-compose up
-    ```
-
-  - [Set up and run the Docker containers via Kubernetes via Helm](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
-
-    ```shell
-    ./build-images.sh && ./helm-install.sh
-    ```
-
-  if you see an error like:
-
+  ```shell
+  docker-compose up
   ```
-  Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
-  ```
-
-  then you need to activate Kubernetes in your docker desktop settings!
 
   This may take some time, as it will also
   [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
@@ -51,15 +33,15 @@ This quickstart requires a working Docker Desktop installation and git:
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-Our documentation will be available at <http://localhost:8888> (docker-compose only).
+Our documentation will be available at <http://localhost:8888>.
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
 
-## Getting the package
+## Documentation
 
-Packages are tagged into one of three groups: main Branch -> latest, PRs -> pr-#, and Release -> major.minor.patch. The github SHA of the commit packaged should be listed as a label.
-To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov)
+Full documentation for this project is available in the [docs/](docs/) directory
+and [online](https://cfpb.github.io/consumerfinance.gov/).
 
 ## Getting help
 

@@ -1,5 +1,6 @@
 import tippy from 'tippy.js';
-import { attach } from '@cfpb/cfpb-atomic-component';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
+import { attach } from '@cfpb/cfpb-design-system/src/index.js';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
@@ -26,6 +27,41 @@ function init() {
   orderingDropdown.move();
   // Initialize any tooltips on the page
   initializeTooltips();
+  // Reinitialize tooltips after an htmx request replaces DOM nodes
+  attach(document, 'htmx:afterSwap', initializeAndReport);
+}
+
+/**
+ *
+ * @param {Event} event - htmx event
+ */
+function initializeAndReport(event) {
+  initializeTooltips();
+  reportFilter(event);
+}
+
+/**
+ *
+ * @param {Event} event - htmx event
+ */
+function reportFilter(event) {
+  let category, value;
+  const { target } = event.detail.requestConfig.triggeringEvent;
+  if (target.tagName === 'SELECT') {
+    category = target.name;
+    value = target.value;
+  } else {
+    category = target
+      .closest('fieldset')
+      .firstElementChild.textContent.toLowerCase();
+    value = target.labels[0].textContent.trim();
+  }
+
+  analyticsSendEvent({
+    event: 'tccp:card-list-refinement',
+    category,
+    value,
+  });
 }
 
 /**
@@ -98,8 +134,10 @@ function handleShowMore(event) {
   }
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
+  const nextResult = document.querySelector('.u-show-more > a');
   results.classList.remove('o-filterable-list-results--partial');
   showMoreFade.classList.add('u-hidden');
+  nextResult.focus();
 }
 
 /**

@@ -2,7 +2,7 @@ import {
   checkDom,
   instantiateAll,
   setInitFlag,
-} from '@cfpb/cfpb-atomic-component';
+} from '@cfpb/cfpb-design-system/src/index.js';
 import { init as footerButtonInit } from '../modules/footer-button.js';
 
 const BASE_CLASS = 'o-footer';

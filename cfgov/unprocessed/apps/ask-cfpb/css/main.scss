@@ -1,0 +1,269 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use './autocomplete';
+
+/* ==========================================================================
+   consumerfinance.gov
+   Ask CFPB pages at /ask-cfpb/.
+   ========================================================================== */
+
+.ask-cfpb-page--see-all {
+  .search-bar,
+  .m-notification,
+  .results,
+  .terms {
+    box-sizing: border-box;
+    max-width: 41.875rem;
+  }
+
+  .terms {
+    padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    .term {
+      margin-bottom: math.div($grid-gutter-width * 1.5, $base-font-size-px) + em;
+    }
+
+    .term + .term {
+      padding-top: math.div($grid-gutter-width * 1.5, $base-font-size-px) + em;
+    }
+
+    .term__name {
+      display: block;
+
+      @include heading-2;
+    }
+
+    .term__definition {
+      display: block;
+      margin-left: 0;
+    }
+  }
+
+  .ask-search-link {
+    // Break Ask search link below text on smaller screen sizes.
+    display: flex;
+    flex-wrap: wrap;
+    gap: math.div(10px, $base-font-size-px) + rem;
+  }
+
+  .search-bar {
+    margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+
+    label {
+      margin-bottom: math.div(
+          math.div($grid-gutter-width, 3),
+          $base-font-size-px
+        ) + em;
+    }
+
+    .a-btn {
+      margin-top: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+        em;
+    }
+
+    .a-btn--link {
+      margin-left: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+        em;
+    }
+
+    // Tablet and above.
+    @include respond-to-min($bp-sm-min) {
+      .m-form-field {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+
+        button {
+          margin-left: math.div(
+              math.div($grid-gutter-width, 3),
+              $base-font-size-px
+            ) + em;
+          margin-top: 0;
+        }
+
+        .a-btn--link {
+          flex-shrink: 0;
+          margin-top: 0.5em;
+        }
+      }
+    }
+  }
+
+  h1 + .search-bar {
+    margin-top: math.div(25px, $base-font-size-px) + em;
+  }
+
+  .results-message {
+    margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+    margin-bottom: math.div(40px, $base-font-size-px) + em;
+  }
+
+  .results-link {
+    margin: (math.div(5px, $base-font-size-px) + em) 0;
+    display: block;
+  }
+
+  .results {
+    article {
+      padding-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
+      padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+      border-top: 1px solid $block-border-top;
+
+      .h3 {
+        margin-bottom: 0;
+
+        a {
+          color: var(--black);
+
+          &:hover {
+            border-style: solid;
+            border-color: $link-underline-hover;
+            color: $link-text-hover;
+          }
+        }
+      }
+    }
+
+    article:last-of-type {
+      padding-bottom: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) + em;
+    }
+  }
+}
+
+/* Answer page */
+
+.ask-cfpb-page--answer {
+  .m-notification {
+    max-width: 41.875rem;
+  }
+
+  .answer-text {
+    h2,
+    h3,
+    h4 {
+      max-width: 41.875rem;
+    }
+    .row + .row {
+      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+        em;
+    }
+
+    .row + .row > .o-table:first-child,
+    .row + .row > .o-video-player:first-child {
+      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+    }
+
+    .row + .row h2 {
+      margin-top: math.div($grid-gutter-width, $size-ii) + em;
+    }
+
+    .row + .row h3 {
+      margin-top: math.div($grid-gutter-width, $size-iii) + em;
+    }
+
+    // Large desktop size.
+    @include respond-to-min($bp-lg-min) {
+      .row + .row h2 {
+        margin-top: math.div($grid-gutter-width * 1.5, $size-ii) + em;
+      }
+    }
+  }
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    .related-questions {
+      margin: (math.div($grid-gutter-width, $base-font-size-px) + em) 0;
+    }
+  }
+
+  .about-us-text a {
+    font-weight: 500;
+  }
+
+  .lead-paragraph {
+    // This makes for line lengths between 85-95 characters
+    max-width: 41.875rem;
+  }
+
+  .answer-edited-date {
+    display: block;
+    color: var(--gray-90);
+
+    @include heading-5;
+  }
+
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .m-list__item--last {
+      padding-top: math.div(7px, $base-font-size-px) + em;
+    }
+  }
+}
+
+/* Landing page */
+
+.ask-cfpb-page--landing {
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    .m-hero {
+      border-bottom: 1px solid $block-border;
+    }
+  }
+
+  form[action='/ask-cfpb/search/'] h2 {
+    @include heading-4($is-responsive: false);
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      @include heading-3($is-responsive: false);
+    }
+  }
+}
+
+.ask-cfpb-page {
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    .m-pagination {
+      height: auto;
+    }
+  }
+
+  .search-results {
+    max-width: 41.875rem;
+  }
+
+  .question__summary {
+    border-bottom: 1px solid $block-border-bottom;
+  }
+}
+
+.ask-cfpb-page--search {
+  .o-search-bar {
+    max-width: 41.875rem;
+    .a-text-input {
+      width: 100%;
+    }
+    form {
+      max-width: 41.875rem;
+    }
+  }
+
+  .question__summary {
+    padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
+      0;
+
+    // Desktop and above.
+    @include respond-to-min($bp-med-min) {
+      padding: (math.div($grid-gutter-width, $base-font-size-px) + em) 0;
+    }
+
+    .question__title a {
+      font-size: $size-iv;
+      border-width: 0;
+    }
+  }
+}

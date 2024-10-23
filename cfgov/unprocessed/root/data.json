@@ -1,708 +1,351 @@
 {
-  "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
-  "@type": "dcat:Catalog",
-  "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
-  "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
-  "dataset": [
+    "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+    "@type": "dcat:Catalog",
+    "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+    "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
+    "dataset": [
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1D",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "describedBy": "https://cfpb.github.io/api/ccdb/api.html",
+            "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+                    "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
+                    "title": "Consumer Complaint Database"
+                }
+            ],
+            "identifier": "CCDB",
+            "keyword": [
+                "consumer",
+                "finance",
+                "complaint",
+                "bank account",
+                "bank service",
+                "credit card",
+                "credit report",
+                "debt collection",
+                "money transfer",
+                "mortgage",
+                "student loan",
+                "loan"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+            "modified": "2020-06-29",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Consumer Complaint Database"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "describedBy": "https://api.consumerfinance.gov/data/hmda",
+            "description": "Home Mortgage Disclosure Act (HMDA) requires many FIs to maintain, report, and publicly disclose information about applications for and originations of mortgage loans.  HMDA s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. ",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/hmda/",
+                    "description": "Home Mortgage Disclosure Act (HMDA) requires many FIs to maintain, report, and publicly disclose information about applications for and originations of mortgage loans. HMDA s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes.",
+                    "title": "Home Mortgage Disclosure Act (HMDA) Public Data from 2007-2017"
+                }
+            ],
+            "identifier": "hmda_lar",
+            "keyword": [
+                "consumer",
+                "finance",
+                "mortgage",
+                "HMDA",
+                "Home Mortgage Disclosure Act",
+                "loan"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/hmda/",
+            "modified": "2017-12-31",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "temporal": "2007-02-01T00:00:00Z/2017-12-31T00:00:00Z",
+            "title": "Home Mortgage Disclosure Act (HMDA) Public Data from 2007-2017"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "description": "HMDA requires many Financial Institutions (FI)s to maintain, report, and publicly disclose information about applications for and originations of mortgage loans. HMDA s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. This publicly-available data asset contains HMDA data collected in or after 2017 and has been modified to protect the privacy of individuals whose information is present in the dataset.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://ffiec.cfpb.gov/data-publication/",
+                    "description": "HMDA requires many Financial Institutions (FI)s to maintain, report, and publicly disclose information about applications for and originations of mortgage loans. HMDA s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. This publicly-available data asset contains HMDA data collected in or after 2017 and has been modified to protect the privacy of individuals whose information is present in the dataset.",
+                    "title": "HMDA Public Data (Starting in 2017)"
+                }
+            ],
+            "identifier": "hmda_snapshot",
+            "keyword": [
+                "consumer",
+                "finance",
+                "mortgage",
+                "HMDA",
+                "Home Mortgage Disclosure Act",
+                "loan"
+            ],
+            "landingPage": "https://ffiec.cfpb.gov/data-publication/",
+            "modified": "2021-08-10",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "HMDA Public Data (Starting in 2017)"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "describedBy": "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-codebook.pdf",
+            "describedByType": "application/pdf",
+            "description": "The 2017 National Financial Well-Being in America Survey, conducted for the CFPB Offices of Financial Education and Financial Protection for Older Americans, was an online survey conducted to measure the financial well-being of adults in the United States. These data were created as a foundation for internal and external research into financial well-being and are relevant to work being done by researchers in the Office of Research who have access to the (deidentified) data.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
+                    "description": "The 2017 National Financial Well-Being in America Survey, conducted for the CFPB Offices of Financial Education and Financial Protection for Older Americans, was an online survey conducted to measure the financial well-being of adults in the United States. These data were created as a foundation for internal and external research into financial well-being and are relevant to work being done by researchers in the Office of Research who have access to the (deidentified) data.",
+                    "title": "Financial Well-Being in America (2017)"
+                }
+            ],
+            "identifier": "54210e71-e472-4e95-af82-15afd6362a5e",
+            "keyword": [
+                "Income",
+                "finance",
+                "employment",
+                "Savings",
+                "safety nets",
+                "Past financial experiences",
+                "Financial behaviors",
+                "skills",
+                "well-being",
+                "financial security",
+                "financial freedom",
+                "freedom of choice"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
+            "modified": "2017-09-30",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "references": [
+                "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-user-guide.pdf"
+            ],
+            "spatial": "United States",
+            "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
+            "title": "Financial Well-Being in America (2017)"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "description": "As required by the Credit CARD Act of 2009, we collect information annually from credit card issuers who have marketing agreements with universities, colleges, or affiliated organizations such as alumni associations, sororities, fraternities, and foundations.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/student-banking/marketing-agreements-and-data/",
+                    "description": "As required by the Credit CARD Act of 2009, we collect information annually from credit card issuers who have marketing agreements with universities, colleges, or affiliated organizations such as alumni associations, sororities, fraternities, and foundations.",
+                    "title": "College Credit Card Marketing Agreements Data"
+                }
+            ],
+            "identifier": "CCMA",
+            "keyword": [
+                "student",
+                "credit card",
+                "card",
+                "agreement",
+                "fee",
+                "consumer",
+                "financial"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/marketing-agreements-and-data/",
+            "modified": "2021-12-30",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "College Credit Card Marketing Agreements Data"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1D",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
+           "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
+                    "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule. Data is refreshed nightly.",
+                    "title": "Prepaid Product Agreements Database"
+                }
+            ],
+            "identifier": "PPAD",
+            "keyword": [
+                "prepaid",
+                "product",
+                "type",
+                "agreement"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
+            "modified": "2021-09-21",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Prepaid Product Agreements Database"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P6M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
 
-    {
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1D",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "describedBy": "https://cfpb.github.io/api/ccdb/api.html",
-      "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.csv.zip",
-          "mediaType": "text/csv"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.json.zip",
-          "mediaType": "application/json"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "format": "API",
-          "accessURL": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
-        }
-      ],
-      "identifier": "CCDB",
-      "keyword": [
-        "consumer",
-        "finance",
-        "complaint",
-        "bank account",
-        "bank service",
-        "credit card",
-        "credit report",
-        "debt collection",
-        "money transfer",
-        "mortgage",
-        "student loan",
-        "loan"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
-      "modified": "2020-06-29",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Consumer Complaint Database"
-    },
 
-    {
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1Y",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "describedBy": "https://api.consumerfinance.gov/data/hmda",
-      "description": "Home Mortgage Disclosure Act (HMDA) requires many FIs to maintain, report, and publicly disclose information about applications for and originations of mortgage loans.  HMDA’s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. ",
-      "distribution": [
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2017",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2017_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2016",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2016_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2015",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2015_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2014",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2014_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2013",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2013_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2012",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2012_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2011",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2011_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2010",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2010_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2009",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2009_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2008",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2008_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-            "@type": "dcat:Distribution",
-            "description": "HMDA 2007",
-            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2007_nationwide_all-records_labels.zip",
-            "mediaType": "text/csv"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "accessURL": "https://api.consumerfinance.gov/data/hmda",
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda.json",
-          "mediaType": "application/json"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "accessURL": "https://api.consumerfinance.gov/data/hmda",
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda.xml",
-          "description": "https://www.consumerfinance.gov/data-research/hmda/historic-data/",
-          "mediaType": "application/xml"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "format": "API",
-          "accessURL": "https://api.consumerfinance.gov/data/hmda",
-          "description": "https://www.consumerfinance.gov/data-research/hmda/historic-data/"
-        }
-      ],
-      "identifier": "hmda_lar",
-      "keyword": [
-        "consumer",
-        "finance",
-        "mortgage",
-        "HMDA",
-        "Home Mortgage Disclosure Act",
-        "loan"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/hmda/",
-      "modified": "2017-12-31",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "temporal": "2007-02-01T00:00:00Z/2017-12-31T00:00:00Z",
-      "title": "Home Mortgage Disclosure Act (HMDA) Public Data from 2007-2017"
-    },
+            "description": "The TCCP is a semi-annual survey on the terms of credit card plans offered by over 150 financial institutions.  Twice per year, the Bureau is required by law to collect certain credit card price and availability information from a sample of credit card issuers and report this information to Congress and the public.  The largest credit card issuers in the country are required to participate in the survey as well as a sample of geographically diverse issuers.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/",
+                    "description": "The TCCP is a semi-annual survey on the terms of credit card plans offered by over 150 financial institutions. Twice per year, the Bureau is required by law to collect certain credit card price and availability information from a sample of credit card issuers and report this information to Congress and the public. The largest credit card issuers in the country are required to participate in the survey as well as a sample of geographically diverse issuers.",
+                    "title": "Terms of Credit Card Plans (TCCP) Survey"
+                }
+            ],
+            "identifier": "TCCP",
+            "keyword": [
+                "terms",
+                "credit card",
+                "plans",
+                "survey"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/",
+            "modified": "2021-01-31",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Terms of Credit Card Plans (TCCP) Survey"
+          },
+          {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P3M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            
 
-    {
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1Y",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "description": "HMDA requires many Financial Institutions (FI)s to maintain, report, and publicly disclose information about applications for and originations of mortgage loans. HMDA’s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. This publicly-available data asset contains HMDA data collected in or after 2017 and has been modified to protect the privacy of individuals whose information is present in the dataset.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "accessURL": "https://ffiec.cfpb.gov/data-publication/snapshot-national-loan-level-dataset/",
-          "description": "The snapshot files contain the national HMDA datasets as of a fixed date per year for all HMDA reporters, as modified by the Bureau to protect applicant and borrower privacy. The snapshot files are available to download in both .csv and pipe delimited text file formats.",
-          "title": "Snapshot National Loan Level Dataset"
-        }
-      ],
-      "identifier": "hmda_snapshot",
-      "keyword": [
-        "consumer",
-        "finance",
-        "mortgage",
-        "HMDA",
-        "Home Mortgage Disclosure Act",
-        "loan"
-      ],
-      "landingPage": "https://ffiec.cfpb.gov/data-publication/",
-      "modified": "2021-08-10",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "HMDA Public Data (Starting in 2017)"
-    },
-
-    {
-
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1Y",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-
-      "describedBy": "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-codebook.pdf",
-      "describedByType":"application/pdf",
-      "description": "The 2017 National Financial Well-Being in America Survey, conducted for the CFPB Offices of Financial Education and Financial Protection for Older Americans, was an online survey conducted to measure the financial well-being of adults in the United States. These data were created as a foundation for internal and external research into financial well-being and are relevant to work being done by researchers in the Office of Research who have access to the (deidentified) data.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "accessURL": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/NFWBS_PUF_2016_data.csv",
-          "mediaType": "text/csv"
-        }
-      ],
-      "identifier": "54210e71-e472-4e95-af82-15afd6362a5e",
-      "keyword": [
-        "Income",
-        "finance",
-        "employment",
-        "Savings",
-        "safety nets",
-        "Past financial experiences",
-        "Financial behaviors",
-        "skills",
-        "well-being",
-        "financial security",
-        "financial freedom",
-        "freedom of choice"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
-      "modified": "2017-09-30",
-      "programCode": [
-          "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "references": [
-          "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-user-guide.pdf"
-      ],
-      "spatial": "United States",
-      "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
-      "title": "Financial Well-Being in America (2017)"
-    },
-
-    {
-
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1Y",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "description": "As required by the Credit CARD Act of 2009, we collect information annually from credit card issuers who have marketing agreements with universities, colleges, or affiliated organizations such as alumni associations, sororities, fraternities, and foundations.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2009-2019",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/cfpb_college-credit-card-agreements-database-2009-2019.csv",
-          "mediaType": "text/csv"
-        },
-        {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2011",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/College_2011.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2012",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/College_2012.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2013",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2013.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2014",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2014.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2015",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2015.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2016",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2016.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2017",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/All_Agreements_PDFs_2017.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2018",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2018.zip",
-          "mediaType": "application/pdf"
-         },
-         {
-          "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2019",
-          "downloadURL": "https://files.consumerfinance.gov/f/documents/cfpb_college-credit-card-agreements_2020-10.zip",
-          "mediaType": "application/pdf"
-         }
-      ],
-      "identifier": "CCMA",
-      "keyword": [
-        "student",
-        "credit card",
-        "card",
-        "agreement",
-        "fee",
-        "consumer",
-        "financial"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/marketing-agreements-and-data/",
-      "modified": "2021-12-30",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "College Credit Card Marketing Agreements Data"
-    },
-
-    {
-
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P1D",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
-      "distribution": [
-
-       {
-          "@type": "dcat:Distribution",
-          "downloadURL": "https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata_all_agreements.csv",
-          "mediaType": "text/csv"
-        }
-      ],
-      "identifier": "PPAD",
-      "keyword": [
-        "prepaid",
-        "product",
-        "type",
-        "agreement"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
-      "modified": "2021-09-21",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Prepaid Product Agreements Database"
-    },
-
-    {
-
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P6M",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "description": "The TCCP is a semi-annual survey on the terms of credit card plans offered by over 150 financial institutions.  Twice per year, the Bureau is required by law to collect certain credit card price and availability information from a sample of credit card issuers and report this information to Congress and the public.  The largest credit card issuers in the country are required to participate in the survey as well as a sample of geographically diverse issuers.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "accessURL": "https://cfpb-sites.force.com/CreditCardPlanSurveys",
-	  "mediaType": "application/json",
-          "format": "API"
-        }
-      ],
-      "identifier": "TCCP",
-      "keyword": [
-        "terms",
-        "credit card",
-        "plans",
-        "survey"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/",
-      "modified": "2021-01-31",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Terms of Credit Card Plans (TCCP) Survey"
-    },
-
-    {
-
-      "@type": "dcat:Dataset",
-      "accessLevel": "public",
-      "accrualPeriodicity": "R/P3M",
-      "bureauCode": [
-        "581:00"
-      ],
-      "contactPoint": {
-        "@type": "vcard:Contact",
-        "fn": "devops@cfpb.gov",
-        "hasEmail": "mailto:devops@cfpb.gov"
-      },
-      "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
-      "distribution": [
-        {
-          "@type": "dcat:Distribution",
-          "description": "Q3 2011",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2011",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2012",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2012",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2012",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2012",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2013",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2013",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2013",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2013",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2014",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2014",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2014",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2014",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2016",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2016",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2016",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2016",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2017",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2017",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2017",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2017",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2018",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2018",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2018",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2018",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2019",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2019",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2019",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2019",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2020",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q1.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q2 2020",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q2.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q3 2020",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q3.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q4 2020",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q4.zip",
-          "mediaType": "application/pdf"
-        },
-	{
-          "@type": "dcat:Distribution",
-          "description": "Q1 2021",
-	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2021_Q1.zip",
-          "mediaType": "application/pdf"
-        }
-      ],
-      "identifier": "CCAD",
-      "keyword": [
-        "agreements",
-        "credit card",
-        "card",
-        "database"
+	    "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/credit-cards/agreements/",
+                    "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
+                    "title": "Credit Card Agreements Database"
+                }
+            ], "identifier": "CCAD",
+      		"keyword": [
+        	"agreements",
+        	"credit card",
+        	"card",
+        	"database"
       ],
       "landingPage": "https://www.consumerfinance.gov/credit-cards/agreements/",
       "modified": "2021-03-31",
@@ -715,6 +358,131 @@
       },
       "spatial": "United States",
       "title": "Credit Card Agreements Database"
-    }
+      },
+      {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P3M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },       
+   
+	    "description": "While federal student loans from the U.S. Department of Education and private financial institutions are the major ways in which students borrow, this report examines a financial product that is less familiar to many students and families: a tuition payment plan.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/research-reports/tuition-payment-plans-in-higher-education/",
+                    "description": "While federal student loans from the U.S. Department of Education and private financial institutions are the major ways in which students borrow, this report examines a financial product that is less familiar to many students and families: a tuition payment plan.",
+                    "title": "Tuition Payment Plans in Higher Education"
+                }
+            ],
+            "identifier": "TPPHE",
+            "keyword": [
+            "tuition",
+            "payment plans",
+            "higher education",
+            "student loan"
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/tuition-payment-plans-in-higher-education/", 
+      "modified": "2024-09-14",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "Tuition Payment Plans in Higher Education"
+      }, 
+      {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P3M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },       
+   
+	    "description": "This page presents information about banking products provided to college students pursuant to agreements between institutions of higher education and financial service providers and governed in part by the Department of Education's cash management regulations.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/student-banking/deposit-product-marketing-agreements-and-data/",
+                    "description": "This page presents information about banking products provided to college students pursuant to agreements between institutions of higher education and financial service providers and governed in part by the Department of Education's cash management regulations.",
+                    "title": "College deposit product marketing agreements and data"
+                }
+            ],
+            "identifier": "CDPMA",
+            "keyword": [
+            "deposit",
+            "product marketing",
+            "agreements",
+            "data",
+            "college"
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/deposit-product-marketing-agreements-and-data/",
+      "modified": "2022-06-30",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "College Banking Agreements and Related Data"
+     }, 
+      {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P3M",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },       
+   
+	    "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
+                    "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
+                    "title": "Costs of Electronic Payments in K-12 Schools"
+                }
+            ],
+            "identifier": "CEPK12S",
+            "keyword": [
+            "cost",
+            "payment",
+            "electronic",
+            "schools",
+            "k12"
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
+      "modified": "2022-07-25",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "Costs of Electronic Payments in K-12 Schools"
+     }
   ]
 }

@@ -1,0 +1,189 @@
+@use 'sass:math';
+@use '../misc' as *;
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+// TODO: Move the theme variables to /enhancements/ for CF.
+
+$margin-em: math.div($grid-gutter-width, $base-font-size-px) + em;
+$margin-half-em: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+  em;
+$mobile-trigger-ht-px: 54px;
+
+.m-global-search {
+  &__trigger {
+    font-weight: 500;
+
+    // Resets for default button styles.
+    background-color: transparent;
+    border: none;
+
+    box-sizing: border-box;
+    border-left: 1px solid transparent;
+
+    @include respond-to-max($bp-xs-max) {
+      font-size: 18px;
+    }
+
+    &:focus {
+      outline: 1px dotted var(--black);
+    }
+
+    &-open-label {
+      vertical-align: text-top;
+    }
+
+    &-close-label {
+      display: none;
+    }
+
+    // Hover state for desktop.
+    &:hover {
+      color: var(--gray-90);
+    }
+  }
+
+  &__content {
+    position: absolute;
+    left: 0;
+
+    &-form {
+      position: absolute;
+      width: 100%;
+    }
+
+    &.u-invisible {
+      overflow-x: hidden;
+    }
+
+    &[data-open='true'] &-form {
+      display: block;
+    }
+  }
+
+  // Tablet and below.
+  @include respond-to-max($bp-sm-max) {
+    &__fallback {
+      margin: $margin-half-em;
+    }
+
+    &__trigger {
+      padding-top: 5px;
+      height: $mobile-trigger-ht-px;
+      min-width: $mobile-trigger-ht-px;
+
+      &[aria-expanded='true'] {
+        background: var(--gray-10);
+        border-left: 1px solid var(--gray-40);
+
+        .m-global-search__trigger-open-label {
+          display: none;
+        }
+
+        .m-global-search__trigger-close-label {
+          display: block;
+        }
+      }
+
+      // Hover state for (x) close button.
+      @media (hover: hover) {
+        &:hover {
+          color: var(--black);
+          border-left: 1px solid var(--gray-40);
+
+          // Important needed to override background color in expanded state.
+          background: var(--gray-20) !important;
+        }
+      }
+    }
+
+    &__content {
+      width: 100%;
+
+      &-form {
+        box-sizing: border-box;
+        width: 100%;
+        padding: $margin-em $margin-half-em $margin-half-em;
+
+        left: 0;
+        z-index: 10;
+
+        background-color: var(--gray-5);
+        border-top: 1px solid var(--gray-40);
+        border-bottom: 1px solid var(--gray-40);
+
+        @include u-drop-shadow-after;
+      }
+    }
+  }
+
+  // Tablet only.
+  @include respond-to-range($bp-sm-min, $bp-sm-max) {
+    &__trigger {
+      // Min-width sets open/close states to same size.
+      min-width: 110px;
+
+      padding-left: math.div(math.div($grid-gutter-width, 2), 18px) + em;
+      padding-right: math.div(math.div($grid-gutter-width, 2), 18px) + em;
+    }
+  }
+
+  // Desktop and above
+  @include respond-to-min($bp-med-min) {
+    // Center on the call to action (CTA) divider to right of search.
+    padding-top: 6px;
+    padding-bottom: 5px;
+
+    // Match CTA offset from divider.
+    padding-right: $margin-half-em;
+    position: relative;
+
+    overflow: hidden;
+
+    &__trigger {
+      float: right;
+
+      // Match height of input with button.
+      padding: 8px 0;
+      line-height: math.div(19px, $base-font-size-px);
+
+      &[aria-expanded='true'] {
+        @include u-invisible;
+      }
+    }
+
+    &__content {
+      right: $margin-half-em;
+      width: auto;
+
+      // Add margin so that the focus rectangle is not cropped by
+      // the hidden overflow of the search container element.
+      margin-left: 3px;
+    }
+  }
+
+  // Hide on print.
+  @include respond-to-print {
+    & {
+      // Important needed to override JS display settings.
+      display: none !important;
+    }
+  }
+
+  // Hide fallback by default.
+  &__fallback {
+    display: none;
+    padding: 8px;
+    padding-right: 0;
+
+    // Only show fallback if JavaScript (JS) is not enabled.
+    .no-js & {
+      display: block;
+    }
+  }
+}
+
+// Hide search unless we have JavaScript (JS).
+html.no-js .m-global-search__trigger {
+  display: none;
+}

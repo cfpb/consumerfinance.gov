@@ -1,0 +1,23 @@
+{% extends 'v1/blog/blog_page.html' %}
+
+{% block content_intro scoped -%}
+    {% import 'v1/includes/molecules/banner.html' as banner %}
+    {% set canonical_archive_url = 'https://wayback.archive-it.org/23462/20241001120000/' ~ request.build_absolute_uri(request.path) | lower %}
+    {{- banner.render(
+        true,
+        'Archived content',
+        'This content has been archived, and its original formatting has been removed.',
+        [ {
+            'text': 'View this page as it was originally published',
+            'url': canonical_archive_url
+        } ]
+    ) }}
+{%- endblock %}
+
+{% block content_main %}
+
+    {% include 'v1/includes/article.html' %}
+    {% block post_article_content %}
+
+    {% endblock %}
+{% endblock %}

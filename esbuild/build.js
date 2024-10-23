@@ -32,14 +32,6 @@ const arg = process.argv.slice(2)[0];
     const ctx = await esbuild.context(mergedConfig);
     await ctx.watch();
     // Not disposing context here as the user will ctrl+c to end watching.
-  } else if (arg === 'scripts') {
-    const ctx = await esbuild.context(scriptsConfig);
-    await ctx.rebuild();
-    return await ctx.dispose();
-  } else if (arg === 'styles') {
-    const ctx = await esbuild.context(stylesConfig);
-    await ctx.rebuild();
-    return await ctx.dispose();
   } else {
     const ctx = await esbuild.context(mergedConfig);
     await ctx.rebuild();

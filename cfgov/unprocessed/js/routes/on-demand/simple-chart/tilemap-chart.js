@@ -3,6 +3,7 @@ import tilemap from 'highcharts/modules/tilemap';
 import cloneDeep from 'lodash.clonedeep';
 import defaultTilemap from './tilemap-styles.js';
 import usLayout from './us-layout.js';
+import populations from './populations.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
 tilemap(Highmaps);
@@ -18,8 +19,10 @@ function makeTilemapOptions(data, dataAttributes) {
 
   let defaultObj = cloneDeep(defaultTilemap);
 
+  let styles;
   if (styleOverrides) {
-    overrideStyles(styleOverrides, defaultObj, data);
+    styles = JSON.parse(styleOverrides);
+    overrideStyles(styles, defaultObj, data);
   }
 
   const formattedSeries = formatSeries(data);
@@ -31,17 +34,19 @@ function makeTilemapOptions(data, dataAttributes) {
 
   defaultObj = {
     ...defaultObj,
-    ...getMapConfig(formattedSeries),
+    ...getMapConfig(formattedSeries, defaultObj, styles.perCapita),
   };
 
-  defaultObj.tooltip.formatter = function () {
-    const label = yAxisLabel ? yAxisLabel + ': ' : '';
-    return `<span style="font-weight:600">${
-      this.point.name
-    }</span><br/>${label}<span style="font-weight:600">${
-      Math.round(this.point.value * 10) / 10
-    }</span>`;
-  };
+  if (!defaultObj.tooltip.formatter) {
+    defaultObj.tooltip.formatter = function () {
+      const label = yAxisLabel ? yAxisLabel + ': ' : '';
+      return `<span style="font-weight:600">${
+        this.point.label
+      }</span><br/>${label}<span style="font-weight:600">${
+        Math.round(this.point.value * 10) / 10
+      }</span>`;
+    };
+  }
 
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
@@ -56,7 +61,7 @@ function makeTilemapOptions(data, dataAttributes) {
  * Makes a legend for the tilemap
  * @param {object} node - The chart node
  * @param {object} data - The data object
- * @param {string } legendTitle - The legend title
+ * @param {string} legendTitle - The legend title
  */
 function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
@@ -82,66 +87,140 @@ function updateTilemapLegend(node, data, legendTitle) {
     title.innerText = legendTitle;
     legend.appendChild(title);
   }
+  if (data.perCapita) {
+    labels[0].innerText = 'Less';
+    labels[labels.length - 1].innerText = 'More';
+    for (let i = 1; i < labels.length - 1; i++) {
+      labels[i].innerText = '\xa0';
+    }
+  }
   colors.forEach((v) => legend.appendChild(v));
   labels.forEach((v) => legend.appendChild(v));
 }
 
 /**
+ *
+ * @param {number} v - A given step min or max
+ * @returns {Array} - An array with the step adjusted to label with a millions value or not
+ */
+function mLabel(v) {
+  if (v >= 1e6) {
+    return [v / 1e6, 'M'];
+  }
+  return [v, ''];
+}
+
+/**
+ *
+ * @param {number} v - Upper end of a given step
+ * @returns {number} - The step trimmed so the bins don't overlap
+ */
+function trimTenth(v) {
+  return Math.round((v - 0.1) * 10) / 10;
+}
+
+/**
+ *
+ * @param {number} s1 - step min
+ * @param {number} s2 - step max
+ * @param {boolean} isLast - whether we're operating on the last data class
+ * @returns {string} formatted legend label
+ */
+function formatLegendValues(s1, s2, isLast) {
+  const f1 = mLabel(s1);
+  const f2 = mLabel(s2);
+  return `$${f1[0]}${f1[1]} - $${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+}
+
+/**
+ *
+ * @param {number} s1 - step min
+ * @param {number} s2 - step max
+ * @param {string} color - hex color for legend class
+ * @param {boolean} isLast - whether we're operating on the last data class
+ * @returns {object} - dataClass object for highcharts
+ */
+function makeDataClass(s1, s2, color, isLast = 0) {
+  return {
+    from: s1,
+    to: s2,
+    color,
+    name: formatLegendValues(s1, s2, isLast),
+  };
+}
+
+/**
+ *
+ * @param {number} v - The raw number to get the divisor for
+ * @returns {number} a divisor which can round the number to its largest digit
+ */
+function makeDivisor(v) {
+  const precision = Math.floor(v).toString().length;
+  return Math.pow(10, precision - 1);
+}
+
+/**
  * Generates a config object to be added to the chart config
  * @param {Array} series - The formatted series data
+ * @param {object} defaultObj - The style object with overrides applied
+ * @param {boolean} perCapita - Whether data should be perCapita
  * @returns {Array} series data with a geographic component added
  */
-function getMapConfig(series) {
+function getMapConfig(series, defaultObj, perCapita) {
   let min = Infinity;
   let max = -Infinity;
-  const data = series[0].data;
+  let dataMin = Infinity;
+  let data = series[0].data;
+  if (perCapita) {
+    data = data.map((v) => {
+      return {
+        ...v,
+        perCapita: v.value / populations[v.name],
+      };
+    });
+  }
+
+  data.forEach((v) => {
+    const val = perCapita ? v.perCapita : v.value;
+    if (val < dataMin) dataMin = val;
+  });
+
   const added = data.map((v) => {
-    const val = Math.round(Number(v.value) * 100) / 100;
+    const val =
+      Math.round(Number(perCapita ? v.perCapita : v.value) * 100) / 100;
     if (val <= min) min = val;
     if (val >= max) max = val;
     return {
       ...usLayout[v.name],
-      state: v.name,
+      ...v,
       value: val,
     };
   });
-  min = Math.floor(min);
-  max = Math.ceil(max);
-  const step = Math.round((max - min) / 5);
-  const step1 = min + step;
-  const step2 = step1 + step;
-  const step3 = step2 + step;
-  const step4 = step3 + step;
-  const trimTenth = (v) => Math.round((v - 0.1) * 10) / 10;
+
+  const divisor = makeDivisor(min);
+  min = Math.floor(min / divisor) * divisor;
+  max = Math.ceil(max / divisor) * divisor;
+
+  let step = (max - min) / 5;
+  const stepDivisor = makeDivisor(step);
+  step = Math.round(step / stepDivisor) * stepDivisor;
+
+  const step1 = Math.round(min + step);
+  const step2 = Math.round(step1 + step);
+  const step3 = Math.round(step2 + step);
+  const step4 = Math.round(step3 + step);
+
   return {
     colorAxis: {
-      dataClasses: [
-        {
-          from: min,
-          to: step1,
-          color: '#addc91',
-          name: `${min} - ${trimTenth(step1)}`,
-        },
-        {
-          from: step1,
-          to: step2,
-          color: '#e2efd8',
-          name: `${step1} - ${trimTenth(step2)}`,
-        },
-        {
-          from: step2,
-          to: step3,
-          color: '#ffffff',
-          name: `${step2} - ${trimTenth(step3)}`,
-        },
-        {
-          from: step3,
-          to: step4,
-          color: '#d6e8fa',
-          name: `${step3} - ${trimTenth(step4)}`,
-        },
-        { from: step4, color: '#7eb7e8', name: `${step4} - ${max}` },
-      ],
+      dataClasses: defaultObj.dataClasses
+        ? defaultObj.dataClasses
+        : [
+            makeDataClass(min, step1, '#d4eac6'),
+            makeDataClass(step1, step2, '#addc91'),
+            makeDataClass(step2, step3, '#48b753'),
+            makeDataClass(step3, step4, '#1e9642'),
+            makeDataClass(step4, max, '#187835', 1),
+          ],
     },
     series: [{ clip: false, data: added }],
   };

@@ -24,11 +24,11 @@ function sendAnalyticsEvent(action, label) {
  */
 function toolTipTracking() {
   const tooltips = document.querySelectorAll('.a-tooltip');
-  tooltips.forEach( (elem) => {
+  tooltips.forEach((elem) => {
     const parentText = elem.parentElement.innerText;
-    elem.addEventListener( 'mouseenter', (event) => {
-      sendAnalyticsEvent( 'Tooltip Mouseenter', parentText );
-    })
+    elem.addEventListener('mouseenter', () => {
+      sendAnalyticsEvent('Tooltip Mouseenter', parentText);
+    });
   });
 }
 

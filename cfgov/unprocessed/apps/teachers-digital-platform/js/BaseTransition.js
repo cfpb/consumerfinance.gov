@@ -2,7 +2,7 @@
 // design-system to isolate TDP expandable customizations.
 
 // Required modules.
-import { EventObserver } from '@cfpb/cfpb-atomic-component';
+import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
 
 // eslint-disable-next-line max-statements
 /**

@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+/* ==========================================================================
+   consumerfinance.gov
+   tag
+   ========================================================================== */
+
+.a-tag {
+  border: 1px solid var(--teal);
+  padding: 4px 10px;
+  background-color: var(--teal-20);
+  border-radius: math.div(3px, $base-font-size-px) + rem;
+  font-weight: 500;
+  color: var(--black);
+
+  &:hover {
+    background-color: var(--teal-40);
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 1px dotted var(--teal);
+    outline-offset: 1px;
+  }
+
+  &:active {
+    background-color: var(--teal);
+  }
+
+  .cf-icon-svg {
+    display: inline-block;
+    margin-left: 10px;
+    pointer-events: none;
+  }
+}
+
+a.a-tag {
+  // Colors for :link, :visited, :hover, :focus, :active.
+  @include u-link-colors(
+    var(--black),
+    var(--black),
+    var(--black),
+    var(--black),
+    var(--black)
+  );
+}

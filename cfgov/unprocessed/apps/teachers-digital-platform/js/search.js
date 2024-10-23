@@ -1,4 +1,4 @@
-import { attach } from '@cfpb/cfpb-atomic-component';
+import { attach } from '@cfpb/cfpb-design-system/src/index.js';
 import {
   getSearchValues,
   serializeFormFields,

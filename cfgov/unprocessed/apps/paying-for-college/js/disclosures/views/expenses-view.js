@@ -1,4 +1,4 @@
-import $ from '../utils/dollar-sign.js';
+import $ from '../../../../../js/modules/util/dollar-sign.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';

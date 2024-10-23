@@ -1,5 +1,7 @@
-import { SummaryMinimal } from '@cfpb/cfpb-expandables';
-import { Multiselect } from '@cfpb/cfpb-forms';
+import {
+  Multiselect,
+  SummaryMinimal,
+} from '@cfpb/cfpb-design-system/src/index.js';
 
 Multiselect.init();
 SummaryMinimal.init();

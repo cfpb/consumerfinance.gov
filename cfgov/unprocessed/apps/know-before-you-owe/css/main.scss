@@ -1,0 +1,79 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.kbyo-professional-resources,
+.kbyo-footer {
+  background-color: var(--gray-5);
+  border-bottom: 1px solid var(--gray-10);
+  border-top: 1px solid var(--gray-10);
+  padding-top: math.div(60px, $base-font-size-px) + rem;
+  padding-bottom: math.div(60px, $base-font-size-px) + rem;
+}
+
+.kbyo-compare-tiles {
+  margin-bottom: 0.9375em;
+  position: relative;
+}
+
+.kbyo-compare-col {
+  padding-bottom: math.div(45px, $base-font-size-px) + rem;
+}
+
+@media only all and (min-width: 50em) {
+  .kbyo-compare-row {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .kbyo-compare-col {
+    display: inline-block;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+}
+
+.kbyo-compare-tiles-overlay {
+  height: 374px;
+}
+
+.kbyo-compare-tiles img {
+  border: 1px solid var(--gray-30);
+  box-shadow: 3px 3px 3px var(--gray-30);
+  display: inline-block;
+  zoom: 1;
+  margin: 10px 10px 0 0;
+  vertical-align: top;
+}
+
+.kbyo-compare-tiles-overlay img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  z-index: 100;
+}
+
+.kbyo-compare-tiles-overlay a + a img {
+  position: absolute;
+  top: 50px;
+  left: 75px;
+  z-index: 90;
+}
+
+.kbyo-compare-tiles-overlay a + a + a img {
+  position: absolute;
+  top: 100px;
+  left: 150px;
+  z-index: 80;
+}
+
+// Timeline page.
+.kbyo-timeline-page__date {
+  color: var(--gray-90);
+}

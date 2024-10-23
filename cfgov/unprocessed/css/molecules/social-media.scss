@@ -1,0 +1,63 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+.m-social-media {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: math.div(10px, $base-font-size-px) + rem;
+  column-gap: math.div(30px, $base-font-size-px) + rem;
+
+  &__icons {
+    display: flex;
+    gap: math.div(10px, $base-font-size-px) + rem;
+  }
+
+  &__icon {
+    color: var(--gray-dark);
+    font-size: math.div($grid-gutter-width, $base-font-size-px) + rem;
+    line-height: 1;
+
+    @include u-link-no-border;
+    @include u-link-colors(var(--gray-dark), var(--pacific-80));
+  }
+
+  // Only for elements in "share" (m-social-media--share) section.
+  &--share {
+    .m-social-media__heading {
+      margin: auto 0;
+
+      @include heading-5($has-margin-bottom: false, $has-margin-top: false);
+    }
+
+    .m-social-media__print {
+      padding-left: math.div(10px, $base-font-size-px) + rem;
+      border-left: 1px solid var(--black);
+    }
+  }
+
+  // Hide on print.
+  @include respond-to-print {
+    display: none;
+  }
+
+  // Hide print when JS is off.
+  .no-js &__print {
+    display: none;
+  }
+}
+
+// Right-to-left (RTL) layout.
+html[lang='ar'] .m-social-media--share {
+  .m-social-media__print {
+    padding-left: 0;
+    border-left: none;
+    padding-right: math.div(10px, $base-font-size-px) + rem;
+    border-right: 1px solid var(--black);
+  }
+
+  // TODO: Scrutinize usage of unordered list and see if it can be removed.
+  .m-list__item:first-child {
+    margin-right: 0;
+  }
+}

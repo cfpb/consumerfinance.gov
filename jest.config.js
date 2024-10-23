@@ -17,6 +17,7 @@ export default {
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js',
+    '\\.(scss)$': '<rootDir>/test/unit_tests/mocks/fileMock.js',
   },
   modulePaths: [
     '<rootDir>/cfgov/unprocessed/apps/teachers-digital-platform/node_modules',

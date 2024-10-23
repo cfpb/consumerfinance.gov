@@ -1,0 +1,268 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.save-links {
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--gray-40);
+  margin: 30px 0;
+  text-align: right;
+}
+
+.spectrum {
+  padding-top: 120px;
+  margin-top: 30px;
+  position: relative;
+  max-width: 770px;
+}
+
+.score-box {
+  height: 150px;
+  border-color: var(--black);
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.score-box--left {
+  padding-left: 10px;
+  border-width: 0 0 0 1px;
+}
+
+.score-box--right {
+  padding-right: 10px;
+  border-width: 0 1px 0 0;
+  text-align: right;
+}
+
+.score-box--avg {
+  height: 70px;
+  top: 80px;
+}
+
+.score-box a {
+  border-bottom-width: 1px;
+}
+
+.spectrum__x-label {
+  padding-top: 5px;
+  padding-left: 5px;
+  border-left: 1px solid var(--gray-40);
+  position: absolute;
+  font-size: math.div(12px, $base-font-size-px) + em;
+  list-style: none;
+}
+
+.spectrum__x-label--40 {
+  left: 32.0987654321%;
+}
+
+.spectrum__x-label--50 {
+  left: 44.4444444444%;
+}
+
+.spectrum__x-label--60 {
+  left: 56.7901234568%;
+}
+
+.spectrum__x-label--70 {
+  left: 69.1358024691%;
+}
+
+.spectrum__x-label--overall {
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.comparison-chart__toggle {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+.comparison-chart__toggle-button {
+  margin-bottom: 5px;
+  background-color: var(--pacific-20);
+  color: var(--black);
+  font-size: math.div(14px, $base-font-size-px) + em;
+}
+
+.comparison-chart__toggle-button:hover,
+.comparison-chart__toggle-button:focus,
+.comparison-chart__toggle-button--selected {
+  background-color: var(--pacific-60);
+}
+
+.comparison-chart__title {
+  margin-top: 30px;
+}
+
+.comparison-chart__list {
+  margin-top: 30px;
+  position: relative;
+}
+
+.comparison-chart__list dt,
+.comparison-chart__source dt {
+  font-size: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.comparison-chart__list dt {
+  width: 30%;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.comparison-chart__list dd {
+  width: 65%;
+  border-bottom: 1px solid var(--gray-40);
+  position: relative;
+  bottom: 0.25em;
+}
+
+.comparison-chart__list dd:not(.u-hidden) {
+  display: inline-block;
+}
+
+.comparison-chart__list dd span {
+  height: 30px;
+  padding-left: 5px;
+  border-left-width: 4px;
+  border-left-style: solid;
+  margin-left: -2px;
+  position: absolute;
+  bottom: -0.5em;
+  line-height: 1;
+}
+
+.comparison-chart__source {
+  padding-top: 15px;
+  border-top: 1px solid var(--gray-40);
+  margin-top: 30px;
+  color: var(--gray-80);
+  font-size: math.div(12px, $base-font-size-px) + em;
+}
+
+$scale-point-count: 5;
+
+.o-scale {
+  + .o-scale {
+    padding-top: math.div(30px, $base-font-size-px) + em;
+    border-top: 1px solid var(--gray-40);
+    margin-top: math.div(30px, $base-font-size-px) + em;
+  }
+
+  .m-form-field + .m-form-field {
+    margin-top: 0;
+  }
+
+  @include respond-to-min($bp-sm-min) {
+    .m-form-field--radio {
+      width: math.percentage(math.div(1, $scale-point-count));
+
+      float: left;
+      position: relative;
+
+      &:not(:last-child)::before {
+        border-top: 1px solid var(--gray-80);
+
+        position: absolute;
+        top: 11px;
+        right: 0;
+        left: 22px;
+
+        content: '';
+      }
+    }
+
+    .a-label,
+    .a-label::before {
+      display: block;
+    }
+
+    .a-label::before {
+      margin-bottom: math.div(3px, $base-font-size-px) + em;
+
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  @include respond-to-max($bp-lg-max) {
+    .o-scale__answer-prefix {
+      margin-bottom: math.div(15px, $base-font-size-px) + em;
+    }
+  }
+
+  @include respond-to-min($bp-xl-min) {
+    .o-scale__answer-prefix {
+      box-sizing: border-box;
+      padding-right: math.div(15px, $base-font-size-px) + em;
+      width: 20%;
+
+      float: left;
+    }
+
+    .o-scale__answer-options {
+      width: 80%;
+
+      float: left;
+    }
+  }
+}
+
+/* CF Enhancements */
+@media all and (max-width: 37.5em) {
+  .comparison-chart__toggle-button {
+    display: block;
+  }
+}
+
+@media print {
+  /* Force all these things back on when printing, regardless
+     of how the user has interacted with the page */
+  .js .comparison__data-point {
+    display: inline-block !important;
+  }
+
+  .o-expandable__content {
+    /* Using !important to work around IE not handling the
+         :not([aria-expanded="true"]) selector */
+    height: auto !important;
+  }
+
+  .o-expandable__content table {
+    height: 510px;
+  }
+
+  .o-expandable__content thead {
+    border-bottom: none;
+  }
+
+  .o-expandable__content th:last-child {
+    width: 25% !important;
+  }
+
+  .o-expandable__content tbody tr {
+    border-bottom: none;
+  }
+
+  .content__main {
+    display: block !important;
+  }
+
+  .content__main * {
+    overflow: visible !important;
+  }
+
+  /* Hide various things when printing */
+  .save-links,
+  .o-expandable__cues,
+  .comparison-chart__toggle,
+  .content__sidebar,
+  .o-footer {
+    display: none !important;
+  }
+}

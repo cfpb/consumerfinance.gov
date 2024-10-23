@@ -73,31 +73,33 @@
 
    Creates related metadata list markup when given:
 
-   list:              A list of dictionaries containing links.
-
-   is_related_topics: Boolean indicating whether the list is a
-                      Related Topics list. Defaults to false.
+   list: A list of dictionaries containing links.
 
    ========================================================================== #}
 
-{% macro _list(list, is_related_topics=false) %}
-<ul class="m-list
-           m-list--unstyled
-           m-list--links
-           {{ 'm-related-metadata__topics' if is_related_topics else '' }} ">
-    {% for link in list.links %}
-    <li class="m-list__item">
-        {% if link.url %}
-            <a href="{{ link.url }}" class="m-list__link">
-                {{ link.text }}
-            </a>
-        {% else %}
-            <span class="m-list__link">{{ link.text }}</span>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+{% macro _list(list) %}
+    {% import "v1/includes/molecules/tags.html" as tags with context %}
+    {{ tags.render(list.links | sort(attribute='text'), false, true) }}
 {% endmacro %}
+
+{# ==========================================================================
+
+    _topics()
+
+    ==========================================================================
+
+    Description:
+
+    Creates related metadata related topics markup
+
+    list: An object holding the tag information.
+
+    ========================================================================== #}
+
+ {% macro _topics(list) %}
+    {% import "v1/includes/molecules/tags.html" as tags with context %}
+    {{ tags.render(page.related_metadata_tags().links | sort(attribute='text'), false, true) }}
+ {% endmacro %}
 
 {# ==========================================================================
 
@@ -136,22 +138,4 @@
 
 {% macro _text(text) %}
     {{ text.blob | safe }}
-{% endmacro %}
-
-{# ==========================================================================
-
-   _topics()
-
-   ==========================================================================
-
-   Description:
-
-   Creates related metadata related topics markup
-
-   list: An object holding the tag information.
-
-   ========================================================================== #}
-
-{% macro _topics(list) %}
-    {{ _list( page.related_metadata_tags(), true ) }}
 {% endmacro %}

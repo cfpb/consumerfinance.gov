@@ -1,0 +1,83 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/utilities' as *;
+
+$info-unit-img-sm: 130px;
+$m-info-unit-img-lg: 150px;
+
+/*
+    info-unit Helper Mixin -
+    This mixin is used to create the main info-unit class below.
+    It shouldn't be used on it's own.
+ */
+@mixin u-info-unit-base() {
+  &__image {
+    display: block;
+    margin-right: auto;
+    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      em;
+    margin-left: auto;
+    background-size: cover;
+
+    &--square {
+      width: math.div($info-unit-img-sm, $base-font-size-px) + em;
+      height: math.div($info-unit-img-sm, $base-font-size-px) + em;
+
+      // Desktop and above.
+      @include respond-to-min($bp-med-min) {
+        width: math.div($m-info-unit-img-lg, $base-font-size-px) + em;
+        height: math.div($m-info-unit-img-lg, $base-font-size-px) + em;
+      }
+    }
+  }
+
+  &__heading-link {
+    display: block;
+
+    @include u-link-colors(var(--black), var(--pacific-80));
+  }
+}
+
+/*
+    Inline info-unit Helper Mixin -
+    This mixin is used to modify an info-unit to an inline arrangement.
+    Most of the time the `.m-info-unit--inline` class will be sufficient,
+    but there are limited situations the inline arrangement needs to be conditioned.
+    See /pages/home.scss L:103
+ */
+@mixin u-info-unit-base-inline($img_size) {
+  @include u-clearfix;
+
+  .m-info-unit__image {
+    float: left;
+    margin-bottom: 0;
+  }
+
+  .m-info-unit__content,
+  .m-info-unit__heading-text {
+    margin-left: math.div(($img_size + $grid-gutter-width), $base-font-size-px) +
+      em;
+  }
+}
+
+.m-info-unit {
+  @include u-info-unit-base;
+
+  &--inline {
+    // Tablet only.
+    @include respond-to-range($bp-sm-min, $bp-sm-max) {
+      @include u-info-unit-base-inline($info-unit-img-sm);
+    }
+
+    @include respond-to-min($bp-med-max) {
+      @include u-info-unit-base-inline($m-info-unit-img-lg);
+    }
+  }
+
+  // Hide image on print.
+  @include respond-to-print {
+    &__image {
+      display: none;
+    }
+  }
+}

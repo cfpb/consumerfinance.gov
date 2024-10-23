@@ -1,0 +1,43 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// TODO: Remove this code when owning-a-home is migrated Wagtail.
+.brand-header {
+  background-color: var(--gray-5);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--gray-40);
+
+  &__1-2-container {
+    padding: 15px;
+
+    @include respond-to-min(799px) {
+      @include u-grid-column(6);
+      border: 0;
+      &:last-child {
+        border-left: 1px solid var(--gray-40);
+      }
+    }
+  }
+
+  &__text {
+    font-size: 14px;
+  }
+
+  &__1-2-container--with-icon {
+    .brand-header__icon {
+      color: var(--green);
+      font-size: 2.5em;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      top: -7px;
+    }
+    .brand-header__headline {
+      font-size: 16px;
+      font-weight: 500;
+      padding-left: 3em;
+      position: relative;
+    }
+  }
+}

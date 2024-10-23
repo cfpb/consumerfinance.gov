@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Rural or underserved tool
+   Main SCSS file
+   ========================================================================== */
+
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// Select menu inside the h2 header on the search tool view.
+.u-inline-select {
+  display: inline-block;
+  width: 130px;
+}
+
+// Loading icon color.
+#countMessage .cf-icon-svg {
+  color: var(--green);
+}
+
+// Error coloring.
+.warn {
+  background-color: var(--gold-20);
+  border-color: var(--gold);
+}
+
+.error {
+  background-color: var(--red-20);
+  border-color: var(--red);
+}
+
+// Position search result totals.
+#results-total .content-l__col {
+  display: inline-flex;
+  min-width: 12em;
+
+  & > h1 {
+    text-align: right;
+  }
+
+  & > h4 {
+    margin-top: 0.5em;
+    margin-left: 1em;
+  }
+}
+
+// Result counts.
+#results-total .rural-cnt,
+#results-total .not-rural-cnt,
+#results-total .not-found-cnt,
+#results-total .duplicate-cnt {
+  font-size: 3rem;
+}
+
+// Map in the results table.
+.hide-print.right {
+  float: right;
+}
+
+// TODO: Overrides to cf-tables should be incorporated into the available
+//       cf-tables styles.
+
+// Override .o-table--scrolling table added border.
+.o-table table {
+  border: none;
+  width: 100%;
+}
+
+// Override zebra-striping of table rows.
+.o-table--scrolling table > tbody > tr:nth-child(even) > td {
+  background: #fff;
+}
+
+tr.data + tr[class=''] {
+  border-top: 2px solid var(--white);
+}
+
+.map {
+  overflow: hidden;
+  height: 200px;
+  width: 100%;
+}
+
+// Prevent clicking of the SVG in "Show map" from blocking clicks of the toggle.
+.js-load-map svg {
+  pointer-events: none;
+}
+
+// Print-related styling.
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
+@import './print';
+
+// u-hidden is duplicated from cf-core,
+// but since we only import cf-core by reference it gets overridden by cf-grid,
+// making it necessary to define here so it overrides cf-grid display: block.
+.u-hidden,
+.print-only {
+  display: none;
+}

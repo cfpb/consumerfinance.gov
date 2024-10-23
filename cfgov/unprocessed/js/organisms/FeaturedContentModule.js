@@ -2,7 +2,7 @@
    Featured Content Module Class
    ========================================================================== */
 
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system/src/index.js';
 import VideoPlayer from './VideoPlayer.js';
 
 const BASE_CLASS = 'o-featured-content-module';

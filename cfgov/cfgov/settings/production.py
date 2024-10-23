@@ -85,9 +85,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 DEFAULT_FROM_EMAIL = "wagtail@cfpb.gov"
 
-STATICFILES_STORAGE = (
-    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-)
+STORAGES["staticfiles"] = {
+    "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+}
 
 STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
