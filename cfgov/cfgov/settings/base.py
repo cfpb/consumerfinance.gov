@@ -137,6 +137,7 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
