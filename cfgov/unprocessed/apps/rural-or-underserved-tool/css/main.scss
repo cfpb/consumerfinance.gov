@@ -58,14 +58,14 @@
 // TODO: Overrides to cf-tables should be incorporated into the available
 //       cf-tables styles.
 
-// Override .o-table-wrapper--scrolling table added border.
+// Override .o-table--scrolling table added border.
 .o-table table {
   border: none;
   width: 100%;
 }
 
 // Override zebra-striping of table rows.
-.o-table-wrapper--scrolling table > tbody > tr:nth-child(even) > td {
+.o-table--scrolling table > tbody > tr:nth-child(even) > td {
   background: #fff;
 }
 
