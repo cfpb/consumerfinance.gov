@@ -1,5 +1,3 @@
-version: '3.4'
-
 volumes:
   postgres_data:
 
@@ -11,16 +9,13 @@ services:
   python:
     image: cfgov_python:prod
     build:
-      target: cfgov-prod
+      target: prod
     environment:
       ALLOW_ADMIN_URL: 'True'
-      APACHE_PORT: 8000
-      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DJANGO_ADMIN_USERNAME: admin
       DJANGO_ADMIN_PASSWORD: admin
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
-      APACHE_STATUS_ALLOW_FROM: 127.0.0.1
     ports:
       - '8000:8000'
     volumes:
