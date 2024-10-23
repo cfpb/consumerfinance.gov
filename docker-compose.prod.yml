@@ -18,7 +18,3 @@ services:
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
     ports:
       - '8000:8000'
-    volumes:
-      - ./cfgov/apache/conf/:/src/consumerfinance.gov/cfgov/apache/conf/
-      - ./cfgov/apache/conf.d/:/src/consumerfinance.gov/cfgov/apache/conf.d/
-      - ./cfgov/apache/conf.modules.d/:/src/consumerfinance.gov/cfgov/apache/conf.modules.d/
