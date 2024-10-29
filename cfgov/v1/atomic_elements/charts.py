@@ -9,7 +9,6 @@ CHART_TYPES = (
     ("line", "Line Chart"),
     ("bar", "Vertical Bar Chart"),
     ("bar_horizontal", "Horizontal Bar Chart"),
-    ("pie", "Pie Chart"),
 )
 
 
