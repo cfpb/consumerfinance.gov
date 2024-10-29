@@ -19,7 +19,7 @@ function makeTilemapOptions(data, dataAttributes) {
 
   let defaultObj = cloneDeep(defaultTilemap);
 
-  let styles;
+  let styles = {};
   if (styleOverrides) {
     styles = JSON.parse(styleOverrides);
     overrideStyles(styles, defaultObj, data);
