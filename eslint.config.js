@@ -1,3 +1,5 @@
+// Run `npx @eslint/config-inspector` to inspect the config.
+
 import globals from 'globals';
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
@@ -8,6 +10,9 @@ import pluginCypress from 'eslint-plugin-cypress/flat';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
+  {
+    ignores: ['.tox', 'cfgov/static_built', 'collectstatic'],
+  },
   js.configs.recommended,
   importPlugin.flatConfigs.recommended,
   jsdoc.configs['flat/recommended'],
@@ -28,6 +33,7 @@ export default [
         ...globals.browser,
         ...globals.node,
         ...globals.jest,
+        ...globals.serviceworker,
       },
     },
     settings: {
@@ -43,8 +49,7 @@ export default [
       },
     },
     // Some plugins are automatically included.
-    // Run `yarn eslint --print-config foo.js > bar.json` to see included plugins.
-    plugins: { jsdoc },
+    // plugins: {},
     rules: {
       'jsdoc/require-hyphen-before-param-description': ['warn', 'always'],
       'no-console': ['warn'],
