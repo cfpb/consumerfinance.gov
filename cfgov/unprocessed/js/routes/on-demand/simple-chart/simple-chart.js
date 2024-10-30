@@ -14,7 +14,6 @@ import {
   formatSeries,
   makeFormatter,
   overrideStyles,
-  convertEpochToDateString,
 } from './utils.js';
 import { initFilters } from './data-filters.js';
 
