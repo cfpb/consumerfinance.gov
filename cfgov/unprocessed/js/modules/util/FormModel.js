@@ -81,7 +81,7 @@ function FormModel(form) {
 
       _fieldCache.set(element, {
         type: type,
-        label: _getLabelText(element, isInGroup || false),
+        label: _getLabelText(element, isInGroup),
         isInGroup: isInGroup,
       });
     }

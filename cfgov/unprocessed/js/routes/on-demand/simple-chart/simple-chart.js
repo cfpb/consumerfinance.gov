@@ -9,6 +9,7 @@ import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import {
   alignMargin,
+  convertEpochToDateString,
   extractSeries,
   formatSeries,
   makeFormatter,
