@@ -27,7 +27,6 @@ function processDelinquencies(datasets) {
 }
 
 /**
- * Returns data starting in January 2009 for use in all line charts.
  * @param {number} data - response from requested JSON file.
  * @param {string} [group] -
  *   Optional parameter for specifying if the chart requires use of a "group"
@@ -57,24 +56,6 @@ function processNumOriginationsData(data, group, source) {
     return 'propertyError';
   }
 
-  // Remove data before January 2009.
-  let x;
-  for (x = 0; x < data.adjusted.length; x++) {
-    if (data.adjusted[x][0] < Date.UTC(2009, 0)) {
-      data.adjusted.splice(x, 1);
-      // Check array[x] again, since we removed an entry in the array.
-      x--;
-    }
-  }
-
-  for (x = 0; x < data.unadjusted.length; x++) {
-    if (data.unadjusted[x][0] < Date.UTC(2009, 0)) {
-      data.unadjusted.splice(x, 1);
-      // Check array[x] again, since we removed an entry in the array.
-      x--;
-    }
-  }
-
   data.unadjusted = data.unadjusted.sort(function (a, b) {
     return a[0] - b[0];
   });
@@ -100,7 +81,6 @@ function processNumOriginationsData(data, group, source) {
 }
 
 /**
- * Returns data starting in January 2009 for use in all bar charts.
  * @param {number} data - response from requested JSON file.
  * @param {string} [group] -
  *   Optional parameter for specifying if the chart requires use of a "group"
@@ -121,17 +101,6 @@ function processYoyData(data, group) {
   } else if (group !== null && !Object.hasOwn(data, group)) {
     // If group is not a property of the data, return an error
     return 'groupError';
-  }
-
-  // remove data before January 2009, convert the rest from decimal values to percentages
-  for (let x = 0; x < data.length; x++) {
-    if (data[x][0] < Date.UTC(2009, 0)) {
-      data.splice(x, 1);
-      // Check array[x] again, since we removed an entry in the array.
-      x--;
-    } else {
-      data[x][1] *= 100;
-    }
   }
 
   data.projectedDate = {};
