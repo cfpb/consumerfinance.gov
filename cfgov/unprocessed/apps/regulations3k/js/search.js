@@ -105,7 +105,7 @@ function handleFilter(event) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch (err) {}
+  } catch {}
   const searchContainer = document.querySelector('#regs3k-results');
   const filters = document.querySelectorAll('input:checked');
   const searchField = document.querySelector('input[name=q]');

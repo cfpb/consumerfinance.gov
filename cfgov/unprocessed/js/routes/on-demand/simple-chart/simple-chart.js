@@ -9,13 +9,13 @@ import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import {
   alignMargin,
+  convertEpochToDateString,
   extractSeries,
   formatSeries,
   makeFormatter,
   overrideStyles,
 } from './utils.js';
 import { initFilters } from './data-filters.js';
-import { convertEpochToDateString } from './utils';
 
 accessibility(Highcharts);
 
