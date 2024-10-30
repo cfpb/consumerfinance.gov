@@ -92,7 +92,7 @@ class GeoMap {
 
       /**
        * pointDescriptionFormatter - Formatter function for tooltips.
-       * @returns {type} HTML string for the tooltip.
+       * @returns {string} HTML string for the tooltip.
        */
       this.chartOptions.tooltip.formatter = function () {
         return tooltipFormatter(this.point, data[0].meta);
@@ -103,8 +103,8 @@ class GeoMap {
       /**
        * pointDescriptionFormatter - Formatter function to use instead of the
        * default for point descriptions.
-       * @param {type} point - Highcharts point to describe
-       * @returns {type} String with the description of the point for a screen
+       * @param {object} point - Highcharts point to describe
+       * @returns {string} String with the description of the point for a screen
        *  reader user.
        */
       this.chartOptions.pointDescriptionFormatter = function (point) {
@@ -116,8 +116,8 @@ class GeoMap {
       /**
        * screenReaderSectionFormatter - Formatter function to use instead of the
        * default for series descriptions.
-       * @param {type} series - Highcharts series to describe
-       * @returns {type} String with the description of the series for a screen
+       * @param {object} series - Highcharts series to describe
+       * @returns {string} String with the description of the series for a screen
        *  reader user.
        */
       this.chartOptions.seriesDescriptionFormatter = function (series) {
@@ -129,8 +129,8 @@ class GeoMap {
       /**
        * screenReaderSectionFormatter - A formatter function to create the HTML
        * contents of the hidden screen reader information region.
-       * @param {type} chart - Highcharts chart object
-       * @returns {type} String with the HTML content of the region.
+       * @param {object} chart - Highcharts chart object
+       * @returns {string} String with the HTML content of the region.
        */
       this.chartOptions.screenReaderSectionFormatter = function (chart) {
         return screenReaderSectionFormatter(chart);
