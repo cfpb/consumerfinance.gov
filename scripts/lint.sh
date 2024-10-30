@@ -2,7 +2,7 @@
 yarn prettier "./**/*.{js,jsx,ts,tsx,md,css,scss}" --write
 
 ## Run JS linting. See ignored path in .eslintignore.
-eslint --ignore-pattern node_modules './{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js' --fix
+eslint --ignore-pattern node_modules "./{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js" --fix
 
 ## Run CSS linting. See ignored path in .stylelintignore.
-stylelint './cfgov/unprocessed/**/*.{css,scss}' --fix
+stylelint "./cfgov/unprocessed/**/*.{css,scss}" --fix
