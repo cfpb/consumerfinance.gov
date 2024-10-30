@@ -13,9 +13,9 @@ import {
   formatSeries,
   makeFormatter,
   overrideStyles,
+  convertEpochToDateString,
 } from './utils.js';
 import { initFilters } from './data-filters.js';
-import { convertEpochToDateString } from './utils';
 
 accessibility(Highcharts);
 
@@ -29,10 +29,10 @@ const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
 /**
- * Fetches JSON data
- * @param {string} url - The url to fetch data from
- * @param {boolean} isCSV - Whether the data to fetch is a CSV
- * @returns {Promise} Promise that resolves to JSON data
+ * Fetches JSON data.
+ * @param {string} url - The url to fetch data from.
+ * @param {boolean} isCSV - Whether the data to fetch is a CSV.
+ * @returns {Promise} Promise that resolves to JSON data.
  */
 function fetchData(url, isCSV) {
   const promise = promiseCache[url];
@@ -63,9 +63,9 @@ function fetchData(url, isCSV) {
 }
 
 /**
- * Selects appropriate chart import style
- * @param {string} type - The chart type as defined in the organism
- * @returns {object} The appropriately loaded style object
+ * Selects appropriate chart import style.
+ * @param {string} type - The chart type as defined in the organism.
+ * @returns {object} The appropriately loaded style object.
  */
 function getDefaultChartObject(type) {
   switch (type) {
@@ -81,12 +81,11 @@ function getDefaultChartObject(type) {
 }
 
 /**
- * Overrides default chart options using provided Wagtail configurations
- * @param {object} data - The data to provide to the chart
- * @param {object} dataAttributes - Data attributes passed to the chart target node
- * @returns {object} The configured style object
+ * Overrides default chart options using provided Wagtail configurations.
+ * @param {object} data - The data to provide to the chart.
+ * @param {object} dataAttributes - Data attributes passed to the chart target node.
+ * @returns {object} The configured style object.
  */
-// eslint-disable-next-line max-lines-per-function
 function makeChartOptions(data, dataAttributes) {
   const {
     chartType,
@@ -285,7 +284,7 @@ function getTransformObject(rawTransform = '') {
 
 /**
  * Initializes a chart
- * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} chartNode - The DOM node of the current chart.
  */
 function buildChart(chartNode) {
   const target = chartNode.getElementsByClassName('o-simple-chart__target')[0];

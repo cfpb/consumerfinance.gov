@@ -8,14 +8,14 @@ const dataLayerEventRadio = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Questionnaire Radio Button Clicked',
   label: 'I could handle a major unexpected expense',
-  eventCallback: undefined, // eslint-disable-line  no-undefined
+  eventCallback: undefined,
   eventTimeout: 500,
 };
 const dataLayerEventSubmit = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Questionnaire Submitted',
   label: 'Get my score',
-  eventCallback: undefined, // eslint-disable-line  no-undefined
+  eventCallback: undefined,
   eventTimeout: 500,
 };
 

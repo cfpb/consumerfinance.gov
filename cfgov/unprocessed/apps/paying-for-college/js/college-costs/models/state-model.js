@@ -327,8 +327,9 @@ const stateModel = {
   },
 
   /**
-   * useNetPrice - Uses various state items to determine whether netPrice should be used
-   * by the financial-model in calculations
+   * useNetPrice - Uses various state items to determine whether netPrice should
+   * be used by the financial-model in calculations.
+   * @returns {boolean} True if using netPrice, false otherwise.
    */
   useNetPrice: function () {
     const earlyPages = [
@@ -343,7 +344,7 @@ const stateModel = {
       vals.navDestination !== null ? vals.navDestination : vals.activeSection;
     if (earlyPages.indexOf(section) > -1) {
       return true;
-      // If the user already set the value to "yes" or we're on the customize estimate page, don't use netPrice
+      // If the user already set the value to "yes" or we're on the customize estimate page, don't use netPrice.
     } else if (
       vals.usingNetPrice === 'no' ||
       section === 'customize-estimate'

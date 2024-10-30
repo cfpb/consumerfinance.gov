@@ -1,20 +1,20 @@
 import globals from 'globals';
-import eslintJs from '@eslint/js';
-import eslintPluginImport from 'eslint-plugin-import';
+import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
 import jsdoc from 'eslint-plugin-jsdoc';
-import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import eslintPluginReact from 'eslint-plugin-react';
-//import eslintPluginCypress from 'eslint-plugin-cypress';
-import eslintPrettierConfig from 'eslint-config-prettier';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactPlugin from 'eslint-plugin-react';
+import pluginCypress from 'eslint-plugin-cypress/flat';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
-  eslintJs.configs.recommended,
-  //eslintPluginImport.flatConfigs.recommended,
-  //eslintPluginJsdoc.configs['flat/recommended'],
-  //eslintPluginJsxA11y.flatConfigs.recommended,
-  //eslintPluginReact.configs.flat.recommended,
-  //eslintPluginCypress.configs.recommended,
-  //eslintPrettierConfig,
+  js.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  jsdoc.configs['flat/recommended'],
+  jsxA11y.flatConfigs.recommended,
+  reactPlugin.configs.flat.recommended,
+  pluginCypress.configs.recommended,
+  eslintConfigPrettier,
 
   {
     languageOptions: {
@@ -27,6 +27,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...globals.jest,
       },
     },
     settings: {
@@ -41,15 +42,6 @@ export default [
         version: 'detect',
       },
     },
-    /*
-    extends: [
-      'eslint:recommended',
-      'plugin:import/errors',
-      'plugin:jsdoc/recommended',
-      'plugin:jsx-a11y/recommended',
-      'plugin:react/recommended',
-      'eslint-config-prettier',
-    ],*/
     // Some plugins are automatically included.
     // Run `yarn eslint --print-config foo.js > bar.json` to see included plugins.
     plugins: { jsdoc },

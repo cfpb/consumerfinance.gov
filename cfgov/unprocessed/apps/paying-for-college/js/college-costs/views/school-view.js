@@ -18,10 +18,12 @@ import {
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { decimalToPercentString } from '../util/number-utils.js';
-import { formatUSD } from '../../../../../js/modules/util/format.js';
+import {
+  formatUSD,
+  convertStringToNumber,
+} from '../../../../../js/modules/util/format.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 const schoolView = {
   _searchSection: null,
