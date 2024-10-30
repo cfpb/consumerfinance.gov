@@ -184,7 +184,7 @@ function handleFilter(event, target = null) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch (err) {}
+  } catch {}
   target = target ? target : event.target;
   const wrapperLI = target.parentElement.parentElement;
   if (wrapperLI && wrapperLI.tagName.toLowerCase() === 'li') {

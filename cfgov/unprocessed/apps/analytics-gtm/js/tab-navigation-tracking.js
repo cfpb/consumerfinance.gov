@@ -7,7 +7,7 @@ let _sessionStorage;
 try {
   _localStorage = window.localStorage;
   _sessionStorage = window.sessionStorage;
-} catch (err) {
+} catch {
   _localStorage = null;
   _sessionStorage = null;
 }
