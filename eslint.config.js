@@ -48,7 +48,7 @@ export default [
     rules: {
       'jsdoc/require-hyphen-before-param-description': ['warn', 'always'],
       'no-console': ['warn'],
-      'no-use-before-define': ['error'],
+      'no-use-before-define': ['error', 'nofunc'],
       'no-unused-vars': [
         'error',
         {
@@ -60,8 +60,6 @@ export default [
       'no-var': ['error'],
       'prefer-const': ['error'],
       radix: ['error'],
-      // TODO: remove this and fix definition order.
-      'no-use-before-define': 0,
     },
   },
 ];
