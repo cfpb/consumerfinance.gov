@@ -129,7 +129,7 @@ function trimTenth(v) {
 function formatLegendValues(s1, s2, isLast) {
   const f1 = mLabel(s1);
   const f2 = mLabel(s2);
-  return `$${f1[0]}${f1[1]} - $${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+  return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
 }
 
 /**
@@ -150,13 +150,10 @@ function makeDataClass(s1, s2, color, isLast = 0) {
 }
 
 /**
- *
- * @param {number} v - The raw number to get the divisor for
  * @returns {number} a divisor which can round the number to its largest digit
  */
-function makeDivisor(v) {
-  const precision = Math.floor(v).toString().length;
-  return Math.pow(10, precision - 1);
+function makeDivisor() {
+  return 10;
 }
 
 /**
@@ -197,12 +194,12 @@ function getMapConfig(series, defaultObj, perCapita) {
     };
   });
 
-  const divisor = makeDivisor(min);
+  const divisor = makeDivisor();
   min = Math.floor(min / divisor) * divisor;
   max = Math.ceil(max / divisor) * divisor;
 
   let step = (max - min) / 5;
-  const stepDivisor = makeDivisor(step);
+  const stepDivisor = makeDivisor();
   step = Math.round(step / stepDivisor) * stepDivisor;
 
   const step1 = Math.round(min + step);
@@ -215,11 +212,11 @@ function getMapConfig(series, defaultObj, perCapita) {
       dataClasses: defaultObj.dataClasses
         ? defaultObj.dataClasses
         : [
-            makeDataClass(min, step1, '#d4eac6'),
-            makeDataClass(step1, step2, '#addc91'),
-            makeDataClass(step2, step3, '#48b753'),
-            makeDataClass(step3, step4, '#1e9642'),
-            makeDataClass(step4, max, '#187835', 1),
+            makeDataClass(min, step1, '#7eb7e8'),
+            makeDataClass(step1, step2, '#d6e8fa'),
+            makeDataClass(step2, step3, '#ffffff'),
+            makeDataClass(step3, step4, '#e2efd8'),
+            makeDataClass(step4, max, '#addc91', 1),
           ],
     },
     series: [{ clip: false, data: added }],
