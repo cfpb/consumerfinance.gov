@@ -121,7 +121,6 @@ function ExpandableFacetTransition(element) {
 
   return this;
 }
-/* eslint-enable max-lines-per-function */
 
 // Public static properties.
 ExpandableFacetTransition.CLASSES = CLASSES;

@@ -217,9 +217,8 @@ export class AdminPage {
     );
     cy.get('div[data-contentpath="content"] .c-sf-add-button').click();
 
-    const addTableOption = cy.contains('div.w-combobox__option', name);
-    addTableOption.should('be.visible');
-    return addTableOption.click();
+    cy.contains('div.w-combobox__option', name).should('be.visible');
+    return cy.contains('div.w-combobox__option', name).click();
   }
 
   addTable() {

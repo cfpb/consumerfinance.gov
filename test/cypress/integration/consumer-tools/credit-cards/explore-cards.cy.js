@@ -61,6 +61,7 @@ describe('Explore credit cards results page', () => {
     cy.get('div.tippy-heading').should('be.visible');
 
     cy.get('.m-card--tabular [data-tooltip]').first().type('{esc}');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     cy.get('div.tippy-heading').should('not.exist');
   });
@@ -78,6 +79,7 @@ describe('Explore credit cards results page', () => {
       .contains('Purchase interest rate and fees')
       .should('not.exist');
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     // Click a second time now that the tooltip is closed
     cy.get('.m-card--tabular .m-card__heading-group').first().click();

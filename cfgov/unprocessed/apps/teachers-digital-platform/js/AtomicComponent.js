@@ -87,7 +87,6 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
    */
   ensureElement: function () {
     if (!this.element) {
-      // eslint-disable-line no-negated-condition
       const attrs = Object.assign({}, this.attributes);
       attrs.id = this.id || this.u_id;
       if (this.className) attrs.class = this.className;
@@ -115,7 +114,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
   },
 
   // TODO Fix complexity issue
-  /* eslint-disable complexity */
+
   /**
    * Function used to set the cached DOM elements.
    * @returns {object} Hash of event names and cached elements.
@@ -141,7 +140,6 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
     return ui;
   },
-  /* eslint-enable complexity */
 
   /**
    * Function used to remove the base element from the DOM
@@ -175,7 +173,7 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
   },
 
   // TODO Fix complexity issue
-  /* eslint-disable complexity */
+
   /**
    * Function used to up event delegation on the base element.
    * Using Dom-delegate library to enable this functionality.
@@ -211,7 +209,6 @@ Object.assign(AtomicComponent.prototype, new EventObserver(), {
 
     return this;
   },
-  /* eslint-enable complexity */
 
   /**
    * Function used to set the attributes on an element.

@@ -26,6 +26,7 @@ export class DynamicDisclosures {
   }
 
   setText(name, value) {
-    cy.get(`#${name}`).clear().type(value);
+    cy.get(`#${name}`).clear();
+    cy.get(`#${name}`).type(value);
   }
 }

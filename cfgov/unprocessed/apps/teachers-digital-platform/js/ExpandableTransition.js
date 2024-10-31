@@ -11,7 +11,6 @@ const CLASSES = {
   OPEN_DEFAULT: 'o-expandable__content--onload-open',
 };
 
-/* eslint-disable max-lines-per-function */
 /**
  * ExpandableTransition
  * @class
@@ -122,7 +121,6 @@ function ExpandableTransition(element) {
 
   return this;
 }
-/* eslint-enable max-lines-per-function */
 
 // Public static properties.
 ExpandableTransition.CLASSES = CLASSES;

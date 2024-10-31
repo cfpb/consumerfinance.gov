@@ -20,37 +20,6 @@ const searchOptions = {
 };
 
 /**
- * Initialize the ctrl-f search modal.
- * @param {SecondaryNav} secondaryNavArg - A SecondaryNav instance.
- */
-function init(secondaryNavArg) {
-  secondaryNav = secondaryNavArg;
-  // Each searchable item (an HTML section with a heading and some paragraphs)
-  // is tagged with a `data-search-section` attribute in the jinja2 template.
-  const sectionsList = [...document.querySelectorAll('[data-search-section]')];
-
-  const searchContainer = document.getElementById('ctrl-f');
-  const searchData = getSearchData(sectionsList);
-
-  search(searchContainer, {
-    buttonText,
-    searchOptions,
-    searchData,
-    onFollow,
-    onSubmit,
-  });
-
-  // Track clicks on the FIG search form button
-  addEventListenerToSelector('#ctrl-f', 'click', () => {
-    analyticsSendEvent({
-      event: 'Small Business Lending FIG event',
-      action: 'search:click',
-      label: '',
-    });
-  });
-}
-
-/**
  * Generate a list of structured items to search
  * @param {Array} sections - HTML elements containing FIG headings and
  * paragraphs of content
@@ -117,5 +86,36 @@ const onSubmit = (query) => {
     label: query,
   });
 };
+
+/**
+ * Initialize the ctrl-f search modal.
+ * @param {SecondaryNav} secondaryNavArg - A SecondaryNav instance.
+ */
+function init(secondaryNavArg) {
+  secondaryNav = secondaryNavArg;
+  // Each searchable item (an HTML section with a heading and some paragraphs)
+  // is tagged with a `data-search-section` attribute in the jinja2 template.
+  const sectionsList = [...document.querySelectorAll('[data-search-section]')];
+
+  const searchContainer = document.getElementById('ctrl-f');
+  const searchData = getSearchData(sectionsList);
+
+  search(searchContainer, {
+    buttonText,
+    searchOptions,
+    searchData,
+    onFollow,
+    onSubmit,
+  });
+
+  // Track clicks on the FIG search form button
+  addEventListenerToSelector('#ctrl-f', 'click', () => {
+    analyticsSendEvent({
+      event: 'Small Business Lending FIG event',
+      action: 'search:click',
+      label: '',
+    });
+  });
+}
 
 export { init, getSearchData };
