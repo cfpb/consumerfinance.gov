@@ -16,7 +16,9 @@ class AnswerPageDocument(Document):
     )
     portal_topics = fields.KeywordField()
     portal_categories = fields.TextField()
-    text = fields.TextField(attr="text", analyzer=synonym_analyzer)
+    text = fields.TextField(
+        attr="text", analyzer=synonym_analyzer, term_vector="yes"
+    )
     url = fields.TextField()
     answer_id = fields.KeywordField()
     preview = fields.TextField(attr="answer_content_preview")
