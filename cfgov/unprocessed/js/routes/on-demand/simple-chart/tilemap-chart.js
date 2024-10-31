@@ -129,7 +129,7 @@ function trimTenth(v) {
 function formatLegendValues(s1, s2, isLast) {
   const f1 = mLabel(s1);
   const f2 = mLabel(s2);
-  return `${f1[0]}${f1[1]} - ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
+  return `${f1[0]}${f1[1]} to ${isLast ? f2[0] : trimTenth(f2[0])}${f2[1]}`;
 }
 
 /**
