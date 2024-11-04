@@ -17,9 +17,46 @@ from wagtail.signals import (
 )
 
 from django_opensearch_dsl.signals import RealTimeSignalProcessor
-from opensearchpy import analyzer, token_filter, tokenizer
+from opensearchpy import OpenSearch, analyzer, token_filter, tokenizer
 
 from search.models import Synonym
+
+
+def get_opensearchpy_client():
+    client = OpenSearch(settings.OPENSEARCH_DSL["default"])
+    return client
+
+
+def ask_doc_id_query_body(ask_id, language):
+    """Get the OpenSearch doc ID for an Ask page by ask_id and language."""
+    id_query_body = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"term": {"answer_id": ask_id}},
+                    {"term": {"language": language}},
+                ]
+            }
+        }
+    }
+    return id_query_body
+
+
+def mlt_query_body(doc_id, index="ask-cfpb", fields=None):
+    """Search query for vector-term-related OpenSearch entries."""
+    if fields is None:
+        fields = ["text"]
+    mlt_body = {
+        "query": {
+            "more_like_this": {
+                "fields": fields,
+                "like": [{"_index": index, "_id": f"{doc_id}"}],
+                "min_term_freq": 1,
+                "max_query_terms": 30,
+            }
+        }
+    }
+    return mlt_body
 
 
 def strip_html(markup):

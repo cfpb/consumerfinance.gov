@@ -15,15 +15,22 @@ from wagtail.admin.panels import (
 from wagtail.fields import RichTextField, StreamField
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtailautocomplete.edit_handlers import AutocompletePanel
 
+# from wagtailautocomplete.edit_handlers import AutocompletePanel
 from ask_cfpb.models import blocks as ask_blocks
+from search.elasticsearch_helpers import (
+    ask_doc_id_query_body,
+    get_opensearchpy_client,
+    mlt_query_body,
+)
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, PortalCategory, PortalTopic
 from v1.models.snippets import ReusableText
 
 
+RELATED_PAGES_LIMIT = 5
+INDEX = "ask-cfpb"
 REUSABLE_TEXT_TITLES = {
     "about_us": {
         "en": "About us (For consumers)",
@@ -150,13 +157,13 @@ class AnswerPage(CFGOVPage):
         blank=True,
         help_text="Search words or phrases, separated by commas",
     )
-    related_questions = ParentalManyToManyField(
-        "self",
-        symmetrical=False,
-        blank=True,
-        related_name="related_question",
-        help_text="Select no more than three.",
-    )
+    # related_questions = ParentalManyToManyField(
+    #     "self",
+    #     symmetrical=False,
+    #     blank=True,
+    #     related_name="related_question",
+    #     help_text="Select no more than three.",
+    # )
     portal_topic = ParentalManyToManyField(
         PortalTopic,
         blank=True,
@@ -210,11 +217,11 @@ class AnswerPage(CFGOVPage):
             "notification", heading="Notification or warning (optional)"
         ),
         FieldPanel("answer_content", heading="Body content"),
-        AutocompletePanel(
-            "related_questions",
-            target_model="ask_cfpb.AnswerPage",
-            classname="collapsible collapsed",
-        ),
+        # AutocompletePanel(
+        #     "related_questions",
+        #     target_model="ask_cfpb.AnswerPage",
+        #     classname="collapsible collapsed",
+        # ),
         MultiFieldPanel(
             [
                 FieldPanel(
@@ -267,6 +274,25 @@ class AnswerPage(CFGOVPage):
 
     template = "ask-cfpb/answer-page.html"
 
+    def get_related_ask_pages(self):
+        """Get the top related pages via OpenSearch MLT."""
+        client = get_opensearchpy_client()
+        id_query = ask_doc_id_query_body(self.answer_base_id, self.language)
+        id_resp = client.search(index=INDEX, body=id_query)
+        doc_id = id_resp["hits"]["hits"][0]["_id"]
+        # Use doc_id to get the MLT results
+        mlt_body = mlt_query_body(doc_id)
+        mlt_resp = client.search(index=INDEX, body=mlt_body)
+        top_hits = mlt_resp["hits"]["hits"][:RELATED_PAGES_LIMIT]
+        relateds = [
+            {
+                "title": hit["_source"]["autocomplete"],
+                "url": hit["_source"]["url"],
+            }
+            for hit in top_hits
+        ]
+        return relateds
+
     def get_meta_description(self):
         """Determine what the page's meta and OpenGraph description should be
 
@@ -312,7 +338,7 @@ class AnswerPage(CFGOVPage):
         if portal_topic is None and self.portal_topic.count() == 1:
             portal_topic = self.portal_topic.first()
         context = super().get_context(request)
-        context["related_questions"] = self.related_questions.all()
+        context["related_questions"] = self.get_related_ask_pages()
         context["last_edited"] = self.last_edited
         context["portal_page"] = get_portal_or_portal_search_page(
             portal_topic, language=self.language
