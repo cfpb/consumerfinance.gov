@@ -68,7 +68,7 @@
                 <div class="block block--sub">
                     <h3>{{ _('Browse related questions') }} </h3>
                     <ul class="m-list m-list--unstyled m-list--links">
-                        {% for question in related_questions.items %}
+                        {% for question in related_questions %}
                         <li class="m-list__item">
                             <a class="a-link a-link--jump"
                                href="{{ question.url }}">
