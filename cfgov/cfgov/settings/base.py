@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -377,8 +376,8 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 
 if os.environ.get("S3_ENABLED", "False") == "True":
-    AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-    AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
     AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
     MEDIA_URL = os.path.join(
         AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
@@ -519,7 +518,7 @@ CSP_SCRIPT_SRC = (
     "www.federalregister.gov",
     "*.qualtrics.com",
     "www.ssa.gov/accessibility/andi/",
-    "ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js", # needed for ANDI accessibility tool
+    "ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js",  # needed for ANDI accessibility tool
 )
 
 # These specify valid sources of CSS code
