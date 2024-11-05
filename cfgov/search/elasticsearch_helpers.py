@@ -23,7 +23,7 @@ from search.models import Synonym
 
 
 def get_opensearchpy_client():
-    client = OpenSearch(settings.OPENSEARCH_DSL["default"])
+    client = OpenSearch(**settings.OPENSEARCH_DSL["default"])
     return client
 
 
