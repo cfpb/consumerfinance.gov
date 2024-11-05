@@ -354,7 +354,7 @@ if os.environ.get("USE_AWS_ES", False):
 else:
     OPENSEARCH_DSL = {
         "default": {
-            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+            "hosts": [{"host": ES_HOST, "port": ES_PORT}],
             "http_auth": (
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
