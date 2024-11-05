@@ -46,11 +46,12 @@ def mlt_query_body(doc_id, index="ask-cfpb", fields=None):
     """Search query for vector-term-related OpenSearch entries."""
     if fields is None:
         fields = ["text"]
+    specific_index = environment_specific_index(index)
     mlt_body = {
         "query": {
             "more_like_this": {
                 "fields": fields,
-                "like": [{"_index": index, "_id": f"{doc_id}"}],
+                "like": [{"_index": specific_index, "_id": f"{doc_id}"}],
                 "min_term_freq": 1,
                 "max_query_terms": 30,
             }

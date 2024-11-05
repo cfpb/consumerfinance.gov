@@ -20,6 +20,7 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from ask_cfpb.models import blocks as ask_blocks
 from search.elasticsearch_helpers import (
     ask_doc_id_query_body,
+    environment_specific_index,
     get_opensearchpy_client,
     mlt_query_body,
 )
@@ -276,13 +277,14 @@ class AnswerPage(CFGOVPage):
 
     def get_related_ask_pages(self):
         """Get the top related pages via OpenSearch MLT."""
+        specific_index = environment_specific_index(INDEX)
         client = get_opensearchpy_client()
         id_query = ask_doc_id_query_body(self.answer_base_id, self.language)
-        id_resp = client.search(index=INDEX, body=id_query)
+        id_resp = client.search(index=specific_index, body=id_query)
         doc_id = id_resp["hits"]["hits"][0]["_id"]
         # Use doc_id to get the MLT results
         mlt_body = mlt_query_body(doc_id)
-        mlt_resp = client.search(index=INDEX, body=mlt_body)
+        mlt_resp = client.search(index=specific_index, body=mlt_body)
         top_hits = mlt_resp["hits"]["hits"][:RELATED_PAGES_LIMIT]
         relateds = [
             {
