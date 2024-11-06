@@ -64,14 +64,6 @@
             </span>
         </a>
         <form class="m-pagination__form" action="{{ fragment_id }}">
-            <label for="m-pagination__current-page-{{ index | string }}">
-                <span class="m-pagination__label">
-                    {{ _('Page') }}
-                </span>
-                <span class="u-visually-hidden">
-                    {{ current_page }} out of {{ total_pages }} total pages
-                </span>
-            </label>
             {% for (key, value_as_list) in request.GET.lists() %}
                 {% for list_item in value_as_list %}
                     {% if list_item != '' and key != 'page' %}
@@ -81,18 +73,22 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
-            <input id="m-pagination__current-page-{{ index | string }}"
-                   class="m-pagination__current-page"
-                   name="page"
-                   type="number"
-                   min="1"
-                   max="{{ total_pages }}"
-                   pattern="[0-9]*"
-                   inputmode="numeric"
-                   value="{{ current_page }}">
-            <span class="m-pagination__label">
+            <label class="m-pagination__label">
+                {{ _('Page') }}
+                <span class="u-visually-hidden">
+                    {{ current_page }} out of {{ total_pages }} total pages
+                </span>
+                <input id="m-pagination__current-page-{{ index | string }}"
+                       class="m-pagination__current-page"
+                       name="page"
+                       type="number"
+                       min="1"
+                       max="{{ total_pages }}"
+                       pattern="[0-9]*"
+                       inputmode="numeric"
+                       value="{{ current_page }}">
                 {{- ' ' ~ _('of') ~ ' ' -}} {{- total_pages -}}
-            </span>
+            </label>
             <button class="a-btn
                            a-btn--link
                            m-pagination__btn-submit"
