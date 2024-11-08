@@ -160,8 +160,7 @@ const HTML_SNIPPET = `
         </a>
         <form class="m-pagination__form"
               action="#pagination_content">
-            <label class="m-pagination__label"
-                   for="m-pagination__current-page">
+            <label class="m-pagination__label">
                 Page
                 <span class="u-visually-hidden">
                     number 22 out

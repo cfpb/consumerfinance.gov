@@ -75,13 +75,15 @@
 
         {{ render_form_fields(form) }}
 
-        <div class="content-l__col content-l__col-1 m-btn-group">
-            <button type="submit" class="a-btn" title="Apply filters">
-                Apply filters
-            </button>
-            <a class="a-btn a-btn--link a-btn--warning" href="{{ request.path }}">
-                Clear filters
-            </a>
+        <div class="content-l__col content-l__col-1">
+            <div class="m-btn-group">
+                <button type="submit" class="a-btn" title="Apply filters">
+                    Apply filters
+                </button>
+                <a class="a-btn a-btn--link a-btn--warning" href="{{ request.path }}">
+                    Clear filters
+                </a>
+            </div>
         </div>
     </div>
 </form>

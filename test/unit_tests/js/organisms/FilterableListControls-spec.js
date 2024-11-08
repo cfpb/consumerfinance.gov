@@ -150,12 +150,13 @@ const HTML_SNIPPET = `
         </div>
 
             <div class="content-l__col
-                        content-l__col-1
-                        m-btn-group">
-                <input class="a-btn" type="submit" value="Apply filters">
-                <a class="a-btn a-btn--link a-btn--warning" href="/about-us/blog/">
-                    Clear filters
-                </a>
+                        content-l__col-1">
+                <div class="m-btn-group">
+                    <input class="a-btn" type="submit" value="Apply filters">
+                    <a class="a-btn a-btn--link a-btn--warning" href="/about-us/blog/">
+                        Clear filters
+                    </a>
+                </div>
             </div>
         </div>
     </form>

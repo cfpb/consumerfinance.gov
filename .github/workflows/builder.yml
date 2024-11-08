@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-and-push-image:
-    if: github.repository == 'cfpb/consumerfinance.gov'
+    if: "! github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     permissions:
       contents: read
