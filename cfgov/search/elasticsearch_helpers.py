@@ -22,6 +22,9 @@ from opensearchpy import OpenSearch, analyzer, token_filter, tokenizer
 from search.models import Synonym
 
 
+RELATED_PAGE_QUERY_SIZE = 20
+
+
 def get_opensearchpy_client():
     client = OpenSearch(**settings.OPENSEARCH_DSL["default"])
     return client
@@ -48,6 +51,7 @@ def mlt_query_body(doc_id, index="ask-cfpb", fields=None):
         fields = ["text"]
     specific_index = environment_specific_index(index)
     mlt_body = {
+        "size": RELATED_PAGE_QUERY_SIZE,
         "query": {
             "more_like_this": {
                 "fields": fields,

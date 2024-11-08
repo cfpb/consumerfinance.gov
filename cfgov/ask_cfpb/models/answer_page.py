@@ -16,7 +16,6 @@ from wagtail.fields import RichTextField, StreamField
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
-# from wagtailautocomplete.edit_handlers import AutocompletePanel
 from ask_cfpb.models import blocks as ask_blocks
 from search.elasticsearch_helpers import (
     ask_doc_id_query_body,
@@ -275,8 +274,10 @@ class AnswerPage(CFGOVPage):
 
     template = "ask-cfpb/answer-page.html"
 
-    def get_related_ask_pages(self):
+    def get_related_ask_pages(self, limit=None):
         """Get the top related pages via OpenSearch MLT."""
+        if limit is None:
+            limit = RELATED_PAGES_LIMIT
         specific_index = environment_specific_index(INDEX)
         client = get_opensearchpy_client()
         id_query = ask_doc_id_query_body(self.answer_base_id, self.language)
@@ -285,7 +286,7 @@ class AnswerPage(CFGOVPage):
         # Use doc_id to get the MLT results
         mlt_body = mlt_query_body(doc_id)
         mlt_resp = client.search(index=specific_index, body=mlt_body)
-        top_hits = mlt_resp["hits"]["hits"][:RELATED_PAGES_LIMIT]
+        top_hits = mlt_resp["hits"]["hits"][:limit]
         relateds = [
             {
                 "title": hit["_source"]["autocomplete"],
