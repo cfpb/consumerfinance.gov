@@ -321,13 +321,6 @@ httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov
 </ol>
 <pre class="highlight"><code class="language-bash">docker-compose rm -sf python
 docker-compose up --build python</code></pre>
-<h4 id="jenkins-ci-docker-swarm">Jenkins CI + Docker Swarm<a class="headerlink" href="#jenkins-ci-docker-swarm" title="Permanent link">¶</a></h4>
-<p>This repo also includes a Docker Swarm-compatible Compose file
-(<code>docker-stack.yml</code>).
-This file is intended for use with the project's <code>Jenkinsfile</code>
-<a href="https://jenkins.io/doc/tutorials/build-a-multibranch-pipeline-project/">multibranch build pipeline</a>.
-It follows a standard Docker build/scan/push workflow,
-optionally deploying to our Docker Swarm cluster.</p>
 <h3 id="how-does-it-work">How does it work?<a class="headerlink" href="#how-does-it-work" title="Permanent link">¶</a></h3>
 <p>This project heavily utilizes
 "<a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage builds</a>".</p>
