@@ -42,10 +42,8 @@
                   a-btn--disabled
                   m-pagination__btn-prev">
         {% endif %}
-            <span class="a-btn__icon a-btn__icon--on-left">
-                {{- svg_icon('left') -}}
-            </span>
-            {{ _('Previous') }}
+            {{- svg_icon('left') -}}
+            <span>{{ _('Previous') }}</span>
         </a>
         {%- if current_page < total_pages %}
         <a class="a-btn
@@ -58,10 +56,8 @@
                   a-btn--disabled
                   m-pagination__btn-next">
         {% endif -%}
-            {{ _('Next') }}
-            <span class="a-btn__icon a-btn__icon--on-right">
-                {{- svg_icon('right') -}}
-            </span>
+            <span>{{ _('Next') }}</span>
+            {{- svg_icon('right') -}}
         </a>
         <form class="m-pagination__form" action="{{ fragment_id }}">
             {% for (key, value_as_list) in request.GET.lists() %}

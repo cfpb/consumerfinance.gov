@@ -229,35 +229,34 @@
                 </div>
             </div>
             <h2>Consent for release of records</h2>
-            <div class="o-well">
-                <div class="o-form__group">
-                    <div class="m-form-field m-form-field--checkbox">
-                        {{ form.consent }}
-                        <label class="a-label"
-                               for="{{ form.consent.id_for_label }}">
-                            {{ form.consent.label }}
-                        </label>
+            <div class="block block--flush-top">
+                <div class="o-well">
+                    <div class="o-form__group">
+                        <div class="m-form-field m-form-field--checkbox">
+                            {{ form.consent }}
+                            <label class="a-label"
+                                   for="{{ form.consent.id_for_label }}">
+                                {{ form.consent.label }}
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="o-form__group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label--heading"
-                               for="{{ form.full_name.id_for_label }}">
-                            {{ form.full_name.label }}
-                        </label>
-                        {{ form.full_name }}
+                    <div class="o-form__group">
+                        <div class="m-form-field">
+                            <label class="a-label a-label--heading"
+                                   for="{{ form.full_name.id_for_label }}">
+                                {{ form.full_name.label }}
+                            </label>
+                            {{ form.full_name }}
+                        </div>
                     </div>
                 </div>
             </div>
 
-
             <div class="o-form__group">
                 <div class="m-btn-group">
-                    <button id="submit-button" class="a-btn">
-                        Submit
-                        <span id="submit-icon" class="a-btn__icon a-btn__icon--on-right">
-                            {{ svg_icon('updating') }}
-                        </span>
+                    <button id="submit-button" class="a-btn a-btn--hide-icon">
+                        <span>Submit</span>
+                        {{ svg_icon('updating') }}
                     </button>
                     <a class="a-btn a-btn--link"
                        href="/privacy/records-disclosure-privacy-act-statement/"

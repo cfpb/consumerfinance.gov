@@ -85,10 +85,6 @@
   }
 }
 
-.u-small-text--subtle {
-  color: var(--gray);
-}
-
 .o-well.o-well--speed-bump {
   padding: math.div(20px, $base-font-size-px) + rem;
   background-color: var(--teal-10);
