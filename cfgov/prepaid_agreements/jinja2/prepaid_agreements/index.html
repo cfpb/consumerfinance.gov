@@ -89,7 +89,7 @@
 
 {% block javascript %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl(['{{ static("apps/prepaid-agreements/js/common.js") }}']);
     </script>
 {% endblock javascript %}

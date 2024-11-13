@@ -32,7 +32,7 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl(['{{ static("js/routes/on-demand/secondary-nav.js") }}']);
     </script>
 {% endblock javascript %}

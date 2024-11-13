@@ -38,7 +38,7 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl([
         'https://files.consumerfinance.gov/ccdb/metadata.js',
         '{{ static("apps/ccdb-search/js/main.js") }}'

@@ -303,7 +303,7 @@
 
 {% block javascript %}
     {{ super() }}
-    <script>
+    <script nonce="{{request.csp_nonce}}">
       jsl(['{{ static("js/routes/on-demand/privacy-forms.js") }}']);
     </script>
 {% endblock javascript %}
