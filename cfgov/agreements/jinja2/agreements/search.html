@@ -56,26 +56,26 @@
                 {% if page.has_previous() %}
                 <a class="a-btn m-pagination__btn-prev"
                     href="?page={{ page.previous_page_number() }}#ccagrsearch">
-                    <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon('left') }}</span>
-                    Previous
+                    {{ svg_icon('left') }}
+                    <span>Previous</span>
                 </a>
                 {% else %}
                 <a class="a-btn m-pagination__btn-prev" disabled>
-                    <span class="a-btn__icon a-btn__icon--on-left">{{ svg_icon('left') }}</span>
-                    Previous
+                    {{ svg_icon('left') }}
+                    <span>Previous</span>
                 </a>
                 {% endif %}
 
                 {% if page.has_next() %}
                 <a class="a-btn m-pagination__btn-next"
                     href="?page={{ page.next_page_number() }}#ccagrsearch">
-                    Next
-                    <span class="a-btn__icon a-btn__icon--on-right">{{ svg_icon('right') }}</span>
+                    <span>Next</span>
+                    {{ svg_icon('right') }}
                 </a>
                 {% else %}
                 <a class="a-btn m-pagination__btn-next" disabled>
-                    Next
-                    <span class="a-btn__icon a-btn__icon--on-right">{{ svg_icon('right') }}</span>
+                    <span>Next</span>
+                    {{ svg_icon('right') }}
                 </a>
                 {% endif %}
 
@@ -98,8 +98,7 @@
                         of {{ page.paginator.num_pages }}
                     </label>
                     <button class="a-btn
-                                    a-btn--link
-                                    m-pagination__btn-submit"
+                                   a-btn--link"
                             id="m-pagination__btn-submit"
                             type="submit">Go</button>
                 </form>

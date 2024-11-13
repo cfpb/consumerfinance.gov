@@ -180,12 +180,15 @@ def add_link_markup(tag, request_path):
     # add proper markup so that the link appears as a button with the icon on
     # the right side.
     if not spans and "a-btn" in class_attrs:
-        span = soup.new_tag(
-            "span", **{"class": "a-btn__icon a-btn__icon--on-right"}
-        )
-        span.contents.append(icon_soup)
+        span = soup.new_tag("span")
+        # Set the span's contents to whatever is in the `<a>` currently
+        span.contents = list(tag.contents)
+        # Remove that stuff from the `<a>`
+        tag.clear()
+        # Add the span back in
+        tag.append(span)
+        tag.contents.append(icon_soup)
 
-        tag.contents.append(span)
     # Otherwise, either modify an existing <span> or add a new one so that
     # it has the proper non-button link classes, and then add the icon after
     # the span.

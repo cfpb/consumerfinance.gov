@@ -60,7 +60,8 @@
                         aria-label="{{ _('Close video') }}"
                         aria-hidden="true"
                         tabindex="-1">
-                        {{ _('Close') }} {{ svg_icon('error-round') }}
+                        <span>{{ _('Close') }}</span>
+                        {{ svg_icon('error-round') }}
                     </button>
                 </div>
                 {% if not is_fcm %}

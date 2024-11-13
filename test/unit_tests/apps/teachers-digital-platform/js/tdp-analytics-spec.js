@@ -149,14 +149,14 @@ const HTML_SNIPPET = `
         <a class="a-btn
                   m-pagination__btn-prev"
            href="?page=21#pagination_content">
-            <span class="a-btn__icon a-btn__icon--on-left">{% include icons/left.svg %}</span>
-            Newer
+            {% include icons/left.svg %}
+            <span>Newer</span>
         </a>
         <a class="a-btn
                   m-pagination__btn-next"
            href="?page=23#pagination_content">
-            <span class="a-btn__icon a-btn__icon--on-right">{% include icons/right.svg %}</span>
-            Older
+            {% include icons/right.svg %}
+            <span>Older</span>
         </a>
         <form class="m-pagination__form"
               action="#pagination_content">
