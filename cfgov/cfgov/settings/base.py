@@ -564,6 +564,12 @@ CSP_FRAME_SRC = (
     "mailto:",
 )
 
+# These specify what URLs are allowed to embed *our* website
+CSP_FRAME_ANCESTORS = (
+    "'self'",
+    "ns2cloud.com"
+)
+
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 
