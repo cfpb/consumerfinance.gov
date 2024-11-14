@@ -31,6 +31,7 @@
     <nav class="m-pagination"
          role="navigation"
          aria-label="{{ _('Pagination') }}">
+
         {%- if current_page > 1 %}
         <a class="a-btn
                   m-pagination__btn-prev"
@@ -45,20 +46,7 @@
             {{- svg_icon('left') -}}
             <span>{{ _('Previous') }}</span>
         </a>
-        {%- if current_page < total_pages %}
-        <a class="a-btn
-                  m-pagination__btn-next"
-           href="?page={{ (current_page + 1) ~
-                          url_parameters(request.GET) ~
-                          fragment_id }}">
-        {%- else %}
-        <a class="a-btn
-                  a-btn--disabled
-                  m-pagination__btn-next">
-        {% endif -%}
-            <span>{{ _('Next') }}</span>
-            {{- svg_icon('right') -}}
-        </a>
+
         <form class="m-pagination__form" action="{{ fragment_id }}">
             {% for (key, value_as_list) in request.GET.lists() %}
                 {% for list_item in value_as_list %}
@@ -92,6 +80,21 @@
                 {{ _('Go') }}
             </button>
         </form>
+
+        {%- if current_page < total_pages %}
+        <a class="a-btn
+                  m-pagination__btn-next"
+           href="?page={{ (current_page + 1) ~
+                          url_parameters(request.GET) ~
+                          fragment_id }}">
+        {%- else %}
+        <a class="a-btn
+                  a-btn--disabled
+                  m-pagination__btn-next">
+        {% endif -%}
+            <span>{{ _('Next') }}</span>
+            {{- svg_icon('right') -}}
+        </a>
     </nav>
 {% endif %}
 {% endmacro %}
