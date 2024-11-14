@@ -13,6 +13,11 @@ CHART_TYPES = (
 
 
 CHART_COLORS = (
+    ("#20aa3f", "CFPB Green"),
+    ("#254b87", "Navy"),
+    ("#7eb7e8", "Pacific 60"),
+    ("#ffb858", "Gold 80"),
+    ("#c55998", "Purple 80"),
     ("#addc91", "Green 60"),
     ("#1fa040", "Mid Dark Green"),
     ("#257675", "Teal"),
@@ -20,14 +25,10 @@ CHART_COLORS = (
     ("#d14124", "Red"),
     ("#e79e8e", "Red 60"),
     ("#0072ce", "Pacific"),
-    ("#7eb7e8", "Pacific 60"),
     ("#254b87", "Navy"),
-    ("#9daecc", "Navy 50"),
     ("#dc731c", "Dark Gold"),
-    ("#ffc372", "Gold 70"),
     ("#745745", "Dark Neutral"),
     ("#baa496", "Neutral 60"),
-    ("#a01b68", "Dark Purple"),
     ("#dc9cbf", "Purple 50"),
     ("#d2d3d5", "Gray 20"),
 )
