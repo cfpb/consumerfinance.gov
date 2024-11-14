@@ -30,6 +30,7 @@ CHART_COLORS = (
     ("#745745", "Dark Neutral"),
     ("#baa496", "Neutral 60"),
     ("#dc9cbf", "Purple 50"),
+    ("#a01b68", "Dark Purple"),
     ("#d2d3d5", "Gray 20"),
 )
 
