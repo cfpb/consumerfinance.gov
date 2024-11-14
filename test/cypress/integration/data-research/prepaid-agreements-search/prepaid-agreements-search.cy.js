@@ -7,6 +7,7 @@ describe('Prepaid Agreements', () => {
     prepaidAgreementsSearch.open();
     prepaidAgreementsSearch.searchByTerm('metro');
     cy.url().should('include', 'q=metro');
+    cy.get('#searchText').should('have.value', 'metro');
   });
 
   it('should limit results when a search field is selected', () => {
