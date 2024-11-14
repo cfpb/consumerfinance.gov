@@ -26,7 +26,9 @@
 
 .search__results {
   .content__sidebar {
-    padding: 45px 15px 0;
+    padding: (math.div(45px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em) 0;
+
     border: 1px solid var(--gray-40);
     background-color: var(--gray-5);
 
@@ -57,6 +59,9 @@
       margin-bottom: 0;
     }
   }
+  .content__sidebar.no-results {
+    padding: math.div(30px, $base-font-size-px) + em;
+  }
   .content__main {
     border: 0;
     border-top: 1px solid var(--gray-40);
@@ -67,10 +72,8 @@
     }
   }
   .results__count {
-    padding: (
-        math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
-      )
-      (math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em) 0;
+    padding: (math.div(15px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em) 0;
     border-right: 1px solid var(--gray-40);
     border-bottom: 1px solid var(--gray-40);
     background-color: var(--green-20);
@@ -81,27 +84,26 @@
     }
   }
   .results__list {
-    padding: (math.div($grid-gutter-width, $base-font-size-px) + em)
-      (math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em);
+    padding: (math.div(30px, $base-font-size-px) + em)
+      (math.div(15px, $base-font-size-px) + em);
 
     li {
       list-style-type: none;
     }
   }
   .results__item {
-    margin: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
+    margin: math.div(15px, $base-font-size-px) + em;
     & + .results__item {
-      margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+      margin-top: math.div(30px, $base-font-size-px) + em;
       h4 {
-        padding-top: math.div($grid-gutter-width, $base-font-size-px) + em;
+        padding-top: math.div(30px, $base-font-size-px) + em;
         border-top: 1px solid var(--gray-40);
       }
     }
   }
   .results__paginator {
-    margin: 0 math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
-    padding: 0 math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
-      em;
+    margin: 0 math.div(15px, $base-font-size-px) + em;
+    padding: 0 math.div(15px, $base-font-size-px) + em;
     max-width: 41.875rem;
   }
 }
@@ -110,12 +112,13 @@
 @include respond-to-max($bp-sm-max) {
   .search__results {
     .content__sidebar {
-      padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
-        em;
+      padding-top: math.div(15px, $base-font-size-px) + em;
+    }
+    .content__sidebar.no-results {
+      padding: math.div(15px, $base-font-size-px) + em;
     }
     .content__main {
-      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
-        em;
+      margin-top: math.div(15px, $base-font-size-px) + em;
     }
     .results__count {
       border-left: 1px solid var(--gray-40);

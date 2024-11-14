@@ -11,14 +11,14 @@ echo "Using $(python3 --version 2>&1) located at $(which python3)"
 # Do first-time set up of the database if necessary
 if [ ! -z "$RUN_MIGRATIONS" ]; then
   # Wait for the database to be ready for initialization tasks
-  until pg_isready --host="${PGHOST:-localhost}" --port="${PGPORT:-5432}"
+  until psql "$DATABASE_URL" -c '\q' >/dev/null 2>&1
   do
-    echo "Waiting for postgres at: ${PGHOST:-localhost}:${PGPORT:-5432}"
+    echo "Waiting for postgres at $DATABASE_URL"
     sleep 1;
   done
 
   # Check the DB if it needs refresh or migrations (initial-data.sh)
-  if ! psql "postgres://${PGUSER:-cfpb}:${PGPASSWORD:-cfpb}@${PGHOST:-localhost}:${PGPORT:-5432}/${PGDATABASE:-cfgov}" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1 || [ ! -z $FORCE_DB_REBUILD ]; then
+  if ! psql "$DATABASE_URL" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1 || [ ! -z $FORCE_DB_REBUILD ]; then
     echo "Doing first-time database and search index setup..."
     if [ -n "$CFGOV_PROD_DB_LOCATION" ] || [ -n "$DB_DUMP_FILE" ] || [ -n "$DB_DUMP_URL" ]; then
       echo "Running refresh-data.sh... $DB_DUMP_FILE"
