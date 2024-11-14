@@ -1,6 +1,6 @@
 import tippy from 'tippy.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
-import { attach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
@@ -12,15 +12,15 @@ let tooltips;
  */
 function init() {
   // Attach "show more" click handler
-  attach('show-more', 'click', handleShowMore);
+  behaviorAttach('show-more', 'click', handleShowMore);
   // Attach change handler to the "sort by" field
-  attach('ordering-change', 'change', handleOrderingChange);
+  behaviorAttach('ordering-change', 'change', handleOrderingChange);
   // Attach landing page location field handler
-  attach('select-location', 'change', handleFormValidation);
+  behaviorAttach('select-location', 'change', handleFormValidation);
   // Attach landing page form validation handler
-  attach('submit-situations', 'click', handleFormValidation);
+  behaviorAttach('submit-situations', 'click', handleFormValidation);
   // Attach handler for conditional link targets
-  attach('ignore-link-targets', 'click', handleIgnoreLinkTargets);
+  behaviorAttach('ignore-link-targets', 'click', handleIgnoreLinkTargets);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
@@ -28,7 +28,7 @@ function init() {
   // Initialize any tooltips on the page
   initializeTooltips();
   // Reinitialize tooltips after an htmx request replaces DOM nodes
-  attach(document, 'htmx:afterSwap', initializeAndReport);
+  behaviorAttach(document, 'htmx:afterSwap', initializeAndReport);
 }
 
 /**

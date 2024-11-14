@@ -79,10 +79,8 @@ function removeItem(key, storage) {
 
 /**
  * Internal function for whether to use local or session storage.
- * @param {object} storage- -
- *   Use non-persistent storage (sessionStorage)
+ * @param {object} storage - Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
- * @param storage
  * @returns {object} A local storage or session storage instance.
  */
 function _getStorageType(storage) {
@@ -91,7 +89,7 @@ function _getStorageType(storage) {
     if (typeof _storage === 'undefined') {
       try {
         storage = window.sessionStorage;
-      } catch (err) {
+      } catch {
         // SecurityError was thrown if cookies are off.
         storage = {};
       }

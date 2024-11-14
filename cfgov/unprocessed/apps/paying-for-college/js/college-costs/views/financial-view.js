@@ -1,10 +1,12 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../../js/modules/util/format.js';
 import { decimalToPercentString } from '../util/number-utils.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { updateFinancial } from '../dispatchers/update-models.js';
-import { formatUSD } from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 

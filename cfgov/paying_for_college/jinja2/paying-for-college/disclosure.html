@@ -180,19 +180,21 @@
                                 </dd>
                             </dl>
                             <div class="verify__controls">
+                                <div class="m-btn-group">
                                 <a href="#info-right"
-                                class="a-btn a-btn--full-on-xs"
-                                title="Yes, this information is correct"
-                                data-gtm_ignore="true">
-                                    Yes, this is correct
-                                </a>
-                                <a href="#info-wrong"
-                                class="a-btn a-btn--full-on-xs a-btn--link
-                                verify__wrong-info-btn"
-                                title="No, this is not my information"
-                                data-gtm_ignore="true">
-                                    No, this is not my information
-                                </a>
+                                    class="a-btn a-btn--full-on-xs"
+                                    title="Yes, this information is correct"
+                                    data-gtm_ignore="true">
+                                        Yes, this is correct
+                                    </a>
+                                    <a href="#info-wrong"
+                                    class="a-btn a-btn--full-on-xs a-btn--link
+                                    verify__wrong-info-btn"
+                                    title="No, this is not my information"
+                                    data-gtm_ignore="true">
+                                        No, this is not my information
+                                    </a>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -1995,7 +1997,8 @@
                                 <div class="continue__controls">
                                     <button class="a-btn a-btn--full-on-xs a-btn--disabled"
                                     title="Continue to Step 2" type="button" disabled>
-                                    {{ svg_icon('updating') }} Continue to Step 2
+                                        <span>Continue to Step 2</span>
+                                        {{ svg_icon('updating') }}
                                     </button>
                                 </div>
                             </div>

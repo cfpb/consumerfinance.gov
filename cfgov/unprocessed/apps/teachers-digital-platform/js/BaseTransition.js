@@ -4,7 +4,6 @@
 // Required modules.
 import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
 
-// eslint-disable-next-line max-statements
 /**
  * BaseTransition
  * @class

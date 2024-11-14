@@ -12,12 +12,7 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      PGDATABASE: cfgov
-      PGUSER: cfpb
-      PGPASSWORD: cfpb
-      POSTGRES_USER: cfpb
-      PGHOST: localhost
-      PGPORT: 5432
+      DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       DJANGO_ADMIN_USERNAME: admin
       DJANGO_ADMIN_PASSWORD: admin

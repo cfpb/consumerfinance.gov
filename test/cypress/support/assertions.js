@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const isInViewport = (_chai) => {
   /**
    * Check that a subject element is in the viewport.

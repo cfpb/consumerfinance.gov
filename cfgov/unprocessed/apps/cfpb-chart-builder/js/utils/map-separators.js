@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // Visual line separators for Hawaii, Alaska, Puerto Rico
 export default {
   type: 'FeatureCollection',

@@ -252,10 +252,8 @@ class LinkUtilsTests(SimpleTestCase):
         expected_html = (
             '<a class="a-btn" '
             f'href="{url}">'
-            "Click"
-            '<span class="a-btn__icon a-btn__icon--on-right">'
+            "<span>Click</span>"
             f"{self.external_link_icon}"
-            "</span>"
             "</a>"
         )
 

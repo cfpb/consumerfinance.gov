@@ -105,26 +105,13 @@ class LineChartIndex {
         labels: {
           useHTML: true,
         },
-        plotLines: [
-          {
-            value: data.projectedDate.timestamp,
-            label: {
-              text:
-                'Values after ' + data.projectedDate.label + ' are projected',
-              rotation: 0,
-              useHTML: true,
-              x: -300,
-              y: -126,
-            },
-          },
-        ],
       },
       yAxis: {
         allowDecimals: false,
         showLastLabel: true,
         opposite: false,
         title: {
-          text: 'Index (January 2009 = 100)',
+          text: 'Index (January 2010 = 100)',
           align: 'high',
           // useHTML true value is needed to set width beyond chart marginTop.
           useHTML: true,
@@ -150,23 +137,11 @@ class LineChartIndex {
           name: 'Seasonally adjusted',
           data: data.adjusted,
           legendIndex: 1,
-          zoneAxis: 'x',
-          zones: [
-            {
-              value: data.projectedDate.timestamp,
-            },
-          ],
         },
         {
           name: 'Unadjusted',
           data: data.unadjusted,
           legendIndex: 2,
-          zoneAxis: 'x',
-          zones: [
-            {
-              value: data.projectedDate.timestamp,
-            },
-          ],
         },
       ],
       responsive: {
@@ -188,21 +163,6 @@ class LineChartIndex {
                 labels: {
                   y: 26,
                 },
-                plotLines: [
-                  {
-                    value: data.projectedDate.timestamp,
-                    label: {
-                      text:
-                        'Values after ' +
-                        data.projectedDate.label +
-                        ' are projected',
-                      rotation: 0,
-                      useHTML: true,
-                      x: -300,
-                      y: -20,
-                    },
-                  },
-                ],
               },
               yAxis: {
                 title: {

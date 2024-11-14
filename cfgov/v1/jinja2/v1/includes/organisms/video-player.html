@@ -60,7 +60,8 @@
                         aria-label="{{ _('Close video') }}"
                         aria-hidden="true"
                         tabindex="-1">
-                        {{ _('Close') }} {{ svg_icon('error-round') }}
+                        <span>{{ _('Close') }}</span>
+                        {{ svg_icon('error-round') }}
                     </button>
                 </div>
                 {% if not is_fcm %}
@@ -79,7 +80,8 @@
                     src="{{ video_url }}"
                     allow="fullscreen; autoplay"
                     aria-hidden="true"
-                    tabindex="-1">
+                    tabindex="-1"
+                    title="This is a placeholder for a video that will load.">
                 </iframe>
             </div>
         </div>

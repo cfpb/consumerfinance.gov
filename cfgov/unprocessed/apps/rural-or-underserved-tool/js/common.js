@@ -350,7 +350,9 @@ bindEvents('#print', 'click', window.print.bind(window));
 
 // csv download
 /**
- *
+ * // TODO: Refactor to remove this. We're in a post-IE world.
+ * Detect whether IE is used or not.
+ * @returns {number|boolean} IE version number, or false if not IE.
  */
 function detectIE() {
   const ua = window.navigator.userAgent;

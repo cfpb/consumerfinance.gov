@@ -114,12 +114,14 @@
                             <button
                                 type="submit"
                                 id="get-your-estimates"
-                                class="get-your-estimates a-btn a-btn--disabled"
+                                class="a-btn
+                                       a-btn--disabled
+                                       a-btn--hide-icon"
                                 disabled>
-                                {{ _("Get your estimates") }}
-                                <span id="api-data-loading-indicator">
-                                    {{ svg_icon('updating') }}
+                                <span>
+                                    {{ _("Get your estimates") }}
                                 </span>
+                                {{ svg_icon('updating') }}
                             </button>
                         </div>
                     </div>

@@ -7,7 +7,10 @@ import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
 import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
-import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateSchoolView,
+} from '../dispatchers/update-view.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
@@ -17,7 +20,6 @@ import {
   getSchoolValue,
   getStateValue,
 } from '../dispatchers/get-model-values.js';
-import { updateSchoolView } from './update-view.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 

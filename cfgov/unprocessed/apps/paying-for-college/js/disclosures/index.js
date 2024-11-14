@@ -85,7 +85,7 @@ const app = {
             const region = schoolValues.BLSAverage.slice(0, 2);
             $('#bls-region-select').val(region).change();
             $step2.removeClass('a-btn--disabled');
-            $step2.find('svg').remove();
+            $step2.addClass('a-btn--hide-icon');
             $step2.elements[0].removeAttribute('disabled');
           });
       }
