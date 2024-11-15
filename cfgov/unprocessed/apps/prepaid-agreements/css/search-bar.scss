@@ -10,22 +10,8 @@
   flex-wrap: wrap;
 }
 
-.layout-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-fixed {
-  flex: none;
-}
-
 .flex-all {
   flex: 1 0 auto;
-}
-
-button.a-btn.flex-fixed {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 // Tablet and below.
@@ -37,7 +23,7 @@ button.a-btn.flex-fixed {
   }
 }
 
-// select
+// Dark gray drop-down adjacent to the search input.
 $select-height: $size-ii;
 
 .a-select {

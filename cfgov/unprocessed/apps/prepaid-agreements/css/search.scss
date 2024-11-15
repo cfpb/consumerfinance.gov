@@ -1,12 +1,6 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
-.search__wrapper {
-  &.o-well {
-    max-width: 100%;
-  }
-}
-
 .filters__applied,
 .filters__tags {
   display: flex;
@@ -49,10 +43,6 @@
         padding-left: 0;
         padding-right: 0;
       }
-    }
-
-    .num-results {
-      float: right;
     }
 
     .o-form__group {
