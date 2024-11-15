@@ -28,6 +28,10 @@
 
 ## Screenshots
 
+| Before | After  |
+| ------ | ------ |
+|        |        |
+
 
 ## Notes and todos
 
