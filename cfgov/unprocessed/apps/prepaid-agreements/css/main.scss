@@ -1,8 +1,7 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
-@import '../../../css/main';
-@import './search';
-@import './search-bar';
+@use './search' as *;
+@use './search-bar' as *;
 
 .u-readable-width {
   // Magic number: matches max-width for content set in cf-layout
