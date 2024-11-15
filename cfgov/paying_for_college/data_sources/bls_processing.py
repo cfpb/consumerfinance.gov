@@ -45,7 +45,7 @@ OUT_FILE = "paying_for_college/fixtures/bls_data.json"
 
 
 def load_bls_data(csvfile):
-    with open(csvfile, "rU") as f:
+    with open(csvfile) as f:
         reader = cdr(f)
         return [row for row in reader]
 
