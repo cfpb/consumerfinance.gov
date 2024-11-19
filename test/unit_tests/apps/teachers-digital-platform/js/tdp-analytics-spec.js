@@ -18,7 +18,6 @@ const HTML_SNIPPET = `
     <button class="a-btn">Search</button>
   </form>
 
-
   <div id="tdp-search-facets-and-results" style="opacity: 1;">
 
     <form id="filter-form" action="." method="get" data-js-hook="behavior_change-filter">
@@ -129,14 +128,14 @@ const HTML_SNIPPET = `
           <div class="results__filters">
             <span class="results__filters-label">Filters applied</span>
             <div class="results__filters-tags">
-              <div class="a-tag" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
+              <button class="a-tag-filter" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
                 Executive function
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
-              </div>
-              <div class="a-tag" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
+              </button>
+              <button class="a-tag-filter" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
                 Getting paid
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
-              </div>
+              </button>
               <button class="a-btn a-btn--link a-btn--warning results__filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
             </div>
           </div>
@@ -146,17 +145,10 @@ const HTML_SNIPPET = `
 
     </form>
     <nav class="m-pagination" role="navigation" aria-label="Pagination">
-        <a class="a-btn
-                  m-pagination__btn-prev"
+        <a class="a-btn m-pagination__btn-prev"
            href="?page=21#pagination_content">
             {% include icons/left.svg %}
-            <span>Newer</span>
-        </a>
-        <a class="a-btn
-                  m-pagination__btn-next"
-           href="?page=23#pagination_content">
-            {% include icons/right.svg %}
-            <span>Older</span>
+            <span>Previous</span>
         </a>
         <form class="m-pagination__form"
               action="#pagination_content">
@@ -182,6 +174,11 @@ const HTML_SNIPPET = `
                     id="m-pagination__btn-submit"
                     type="submit">Go</button>
         </form>
+        <a class="a-btn m-pagination__btn-next"
+           href="?page=23#pagination_content">
+            <span>Next</span>
+            {% include icons/right.svg %}
+        </a>
     </nav>
   </div>
 `;
@@ -214,7 +211,7 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should send an analytics event when a filter is clicked', () => {
-    const filterTag = document.querySelector('.results__filters .a-tag');
+    const filterTag = document.querySelector('.results__filters .a-tag-filter');
     const spy = jest.fn();
 
     bindAnalytics(spy);
