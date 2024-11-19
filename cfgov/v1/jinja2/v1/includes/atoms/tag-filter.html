@@ -27,9 +27,9 @@
   {%- set href = 'href=' ~ options.href if options.href else '' -%}
 
   {% if href %}
-    <a {{href}} class="a-tag" {{ value }} {{ behavior }}>
+    <a {{href}} class="a-tag-filter" {{ value }} {{ behavior }}>
   {% else %}
-    <button class="a-tag" {{ value }} {{ behavior }}>
+    <button class="a-tag-filter" {{ value }} {{ behavior }}>
   {% endif %}
       {{ options.label }} {{ svg_icon('error') }}
   {% if href %}
