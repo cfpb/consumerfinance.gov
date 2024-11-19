@@ -94,7 +94,7 @@ function clearFilters(event) {
   // Handle Analytics here before tags vanish.
   handleClearAllClick(event);
 
-  const filterTags = document.querySelectorAll('.a-tag');
+  const filterTags = document.querySelectorAll('.a-tag-filter');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,
