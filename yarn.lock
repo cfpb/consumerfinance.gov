@@ -283,10 +283,17 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
+<<<<<<< HEAD
 "@cfpb/cfpb-design-system@3.4.10":
   version "3.4.10"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.4.10.tgz#bdf040d78737c28d009e966764b6bf7a3c5bd2f3"
   integrity sha512-WuHvFUuhMOoF1NW0s7cm5pkpKF4BmM1Z16kgng8AdOMcXRRSmU7pk5UqyKUT+I+XRuwmp22+x389+Zrtj6JSpw==
+=======
+"@cfpb/cfpb-design-system@3.4.11":
+  version "3.4.11"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.4.11.tgz#3214afea6e0e6f93ec7143362c90918c15186d36"
+  integrity sha512-5ea8RcenbAwzXGvaaf7uMoKSOF5OKSs9uca8hyyfcd81dZazXPGRe2jdDMDZ3nTPfSfHe6DQuHzfmDjOt/0efw==
+>>>>>>> 0e1b310084 (Update to DS@3.4.11 | remove code moved to the DS)
 
 "@colors/colors@1.5.0":
   version "1.5.0"
