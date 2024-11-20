@@ -1,0 +1,17 @@
+{# ==========================================================================
+
+   Renders json from a list of credit card agreement issuers.
+
+   issuers: List of credit card agreement issuers.
+
+   ========================================================================== #}
+<div style="display:none" id="issuer-json">
+  [
+  {%- for issuer in issuers -%}
+   {
+    "value":"{{issuer.slug}}",
+    "label":"{{issuer.name}}"
+   }{{ "," if not loop.last else "" }}
+  {%- endfor -%}
+  ]
+</div>
