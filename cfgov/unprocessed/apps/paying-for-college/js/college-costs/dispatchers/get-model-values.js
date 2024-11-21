@@ -117,10 +117,6 @@ function getStateValue(prop) {
  * returning whether the financial-model should use netPrice or not
  * @returns {boolean} true if the netPrice should be used
  */
-
-/**
- *
- */
 function useNetPrice() {
   return stateModel.useNetPrice();
 }

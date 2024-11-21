@@ -1,8 +1,6 @@
-version: '3.4'
-
 services:
   oidcprovider:
-    image: mozilla/oidc-testprovider:oidc_testprovider-latest
+    image: mozilla/oidc-testprovider:oidc_testprovider-v0.10.9
     ports:
       - "8080:8080"
     command: >

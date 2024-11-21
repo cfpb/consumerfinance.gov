@@ -39,7 +39,6 @@ const _wrapMap = {
 };
 
 /**
- *
  * @param {HTMLElement|string} elements - An HTML element or a selector.
  * @param {Function} applyFn - Function to apply to each element.
  */
@@ -54,7 +53,6 @@ function applyAll(elements, applyFn) {
 }
 
 /**
- *
  * @param {Array} elements - A list of HTML DOM nodes.
  * @param {Array|string} events - A list or single event type.
  * @param {Function} callback - A function to call at the end.

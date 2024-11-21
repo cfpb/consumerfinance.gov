@@ -78,6 +78,10 @@ function VideoPlayer(element) {
    *   to video player instance.
    */
   function _videoPlayerReadyHandler(event) {
+    // Video has loaded into the iframe, so we can show it to assistive devices.
+    _iframeDom.removeAttribute('aria-hidden');
+    _iframeDom.removeAttribute('tabindex');
+
     // Add duration timestamp to video.
     const player = event.target;
     const duration = player.getDuration();

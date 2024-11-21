@@ -1,9 +1,11 @@
 // This file contains the 'view' of expenses budget after graduation
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
-import { formatUSD } from '../../../../../js/modules/util/format.js';
+import {
+  formatUSD,
+  convertStringToNumber,
+} from '../../../../../js/modules/util/format.js';
 import { selectorMatches } from '../util/other-utils.js';
-import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import {
   updateAffordingChart,
   updateCostOfBorrowingChart,

@@ -140,7 +140,7 @@ function FormSubmit(element, baseClass, opts) {
             result = response.result;
             message = response.message || '';
             heading = response.heading || '';
-          } catch (err) {
+          } catch {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';

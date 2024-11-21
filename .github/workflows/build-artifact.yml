@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build:
-    if: github.repository == 'cfpb/consumerfinance.gov'
+    if: "! github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     env:
       ARTIFACT_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}

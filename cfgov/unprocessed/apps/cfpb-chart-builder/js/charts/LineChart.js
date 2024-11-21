@@ -15,7 +15,7 @@ Highcharts.setOptions({
 /**
  * _getYAxisLabel - Get the text of the y-axis title.
  * @param {Array} chartData - An array of values to check.
- * @param {sting} yAxisLabel - A string to use for the y-axis label.
+ * @param {string} yAxisLabel - A string to use for the y-axis label.
  * @returns {string} Appropriate y-axis title.
  */
 function _getYAxisLabel(chartData, yAxisLabel) {

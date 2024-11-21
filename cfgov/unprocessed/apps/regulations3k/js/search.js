@@ -1,4 +1,4 @@
-import { attach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
 import {
   getSearchValues,
   serializeFormFields,
@@ -18,8 +18,8 @@ const { signal } = searchRequest.signal;
  */
 function init() {
   // Override search form submission
-  attach('submit-search', 'submit', handleSubmit);
-  attach('change-filter', 'change', handleFilter);
+  behaviorAttach('submit-search', 'submit', handleSubmit);
+  behaviorAttach('change-filter', 'change', handleFilter);
   attachHandlers();
 }
 
@@ -27,8 +27,8 @@ function init() {
  * Attach search results handlers
  */
 function attachHandlers() {
-  attach('clear-filter', 'click', clearFilter);
-  attach('clear-all', 'click', clearFilters);
+  behaviorAttach('clear-filter', 'click', clearFilter);
+  behaviorAttach('clear-all', 'click', clearFilters);
 }
 
 /**
@@ -65,7 +65,7 @@ function removeTag(tag) {
  * @param {Event} event - Click event.
  */
 function clearFilters(event) {
-  const filterTags = document.querySelectorAll('.filters__tags .a-tag');
+  const filterTags = document.querySelectorAll('.filters__tags .a-tag-filter');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,
@@ -105,7 +105,7 @@ function handleFilter(event) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch (err) {}
+  } catch {}
   const searchContainer = document.querySelector('#regs3k-results');
   const filters = document.querySelectorAll('input:checked');
   const searchField = document.querySelector('input[name=q]');

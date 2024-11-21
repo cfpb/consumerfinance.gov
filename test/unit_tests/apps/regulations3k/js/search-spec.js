@@ -27,16 +27,16 @@ const HTML_SNIPPET = `
     <div class="m-form-field m-form-field--checkbox reg-checkbox">
       <input class="a-checkbox" type="checkbox" value="1002" id="regulation-1002" name="regs" checked>
       <label class="a-label" for="regulation-1002">
-          1002 (Regulation B)
+          1002 (Reg<span class="u-hide-on-mobile">ulation</span> B)
       </label>
     </div>
   </div>
   <div class="filters__tags">
-    <div class="a-tag" data-value="1002" data-js-hook="behavior_clear-filter">
-    1002 (Regulation B)
+    <button class="a-tag-filter" data-value="1002" data-js-hook="behavior_clear-filter">
+      <span>1002 (Reg<span class="u-hide-on-mobile">ulation</span> B)</span>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg">
       </svg>
-    </div>
+    </button>
   </div>
   <button class="a-btn a-btn--link a-btn--warning filters__clear"
           data-js-hook="behavior_clear-all">
@@ -83,41 +83,41 @@ describe('The Regs3K search page', () => {
   });
 
   it('should clear a filter when its X icon is clicked', () => {
-    const clearIcon = document.querySelector('.a-tag svg');
+    const clearIcon = document.querySelector('.a-tag-filter svg');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(1);
 
     simulateEvent('click', clearIcon);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(0);
   });
 
   it('should clear a filter when its tag is clicked', () => {
-    const div = document.querySelector('div.a-tag');
+    const div = document.querySelector('button.a-tag-filter');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(1);
 
     simulateEvent('click', div);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(0);
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {
     const clearAllLink = document.querySelector('.filters__clear');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(1);
 
     simulateEvent('click', clearAllLink);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(0);
   });
 
   it('should handle errors when the server is down', (done) => {
     fetch.mockReject(new Error('Server error!'));
-    const clearIcon = document.querySelector('.a-tag svg');
+    const clearIcon = document.querySelector('.a-tag-filter svg');
 
     simulateEvent('click', clearIcon);
     setTimeout(() => {

@@ -1,42 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
-# Dump the contents of the Database into a gzipped SQL file.
+# Dump the contents of the database into a gzipped SQL file.
+#
+# Optionally provide the name of the file to create:
+#
+# ./dump-data.sh <dump.sql.gz>
+#
+# Database URL must be specified with the DATABASE_URL environment variable.
+# See https://github.com/jazzband/dj-database-url for URL formatting.
 # ==========================================================================
 
 set -e
 
-# The filename to dump to. Defaults to test.sql.gz if empty.
+# Ensure that the DATABASE_URL environment variable is set.
+: "${DATABASE_URL?The DATABASE_URL environment variable must be set.}"
+
+# Dump filename defaults to test.sql.gz if not provided on the command line.
 dump_filename=$1
-if [ -z "$dump_filename" ]; then
-    dump_filename=test.sql.gz
-fi
+dump_filename=${dump_filename:-test.sql.gz}
 
-dump_data() {
-    # This preamble will drop the existing 'cfpb' schema if it exists.
-    DROP_PREAMBLE=$(cat << EOF
---
--- We add this DROP to ensure that a database dump can be loaded to generate
--- a state that exactly matches the one that was dumped. Without this, objects
--- in the schema before the dump happens may exist and conflict with the
--- dumped data being loaded.
---
-SET client_min_messages = WARNING;
-DROP SCHEMA IF EXISTS ${PGUSER:-cfpb} CASCADE;
-
-
-EOF
-)
-
-    # Echo the preamble and then run pg_dump.
-    # The output is piped to gzip and output to our desired output file.
-    ( \
-        echo "$DROP_PREAMBLE" && \
-        pg_dump \
-            --no-owner \
-            --no-privileges \
-            ${PGDATABASE:-cfgov}
-    ) | gzip > $dump_filename
-}
-
-dump_data
+# Pipe the output of pg_dump to gzip and then to our desired output file.
+pg_dump \
+    --no-owner \
+    --no-privileges \
+    --clean \
+    --if-exists \
+    $DATABASE_URL \
+| gzip > $dump_filename

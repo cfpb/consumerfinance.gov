@@ -1,4 +1,4 @@
-import { attach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
 import {
   getSearchValues,
   serializeFormFields,
@@ -36,11 +36,11 @@ function init() {
  */
 function attachHandlers() {
   addDataGtmIgnore();
-  attach('submit-search', 'submit', handleSubmit);
-  attach('change-filter', 'change', handleFilter);
-  attach('clear-filter', 'click', clearFilter);
-  attach('clear-all', 'click', clearFilters);
-  attach('clear-search', 'clear', clearSearch);
+  behaviorAttach('submit-search', 'submit', handleSubmit);
+  behaviorAttach('change-filter', 'change', handleFilter);
+  behaviorAttach('clear-filter', 'click', clearFilter);
+  behaviorAttach('clear-all', 'click', clearFilters);
+  behaviorAttach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
 }
@@ -94,7 +94,7 @@ function clearFilters(event) {
   // Handle Analytics here before tags vanish.
   handleClearAllClick(event);
 
-  const filterTags = document.querySelectorAll('.a-tag');
+  const filterTags = document.querySelectorAll('.a-tag-filter');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,
@@ -184,7 +184,7 @@ function handleFilter(event, target = null) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch (err) {}
+  } catch {}
   target = target ? target : event.target;
   const wrapperLI = target.parentElement.parentElement;
   if (wrapperLI && wrapperLI.tagName.toLowerCase() === 'li') {

@@ -5,13 +5,13 @@
    scrolltop-animation-without-jquery
    ========================================================================== */
 
-import { attach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
 
 /**
  * Set up event handler for button to scroll to top of page.
  */
 function init() {
-  attach('return-to-top', 'click', (event) => {
+  behaviorAttach('return-to-top', 'click', (event) => {
     event.preventDefault();
     _scrollToTop();
   });

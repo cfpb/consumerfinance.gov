@@ -122,11 +122,13 @@ describe('Dynamic Disclosures', () => {
     page.stepTwo();
     cy.get('.private-loans .private-loans__loan').should('have.length', 1);
     cy.get('#summary_total-private-loans').should('contain', '3,000');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
     cy.get('button.private-loans__add-btn').click({ force: true });
     cy.get('.private-loans .private-loans__loan').should('have.length', 2);
     page.setText('contrib__private-loan_1', '1100');
     cy.get('#summary_total-private-loans').should('contain', '4,100');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
     cy.get('button.private-loans__add-btn').click({ force: true });
     cy.get('.private-loans .private-loans__loan').should('have.length', 3);

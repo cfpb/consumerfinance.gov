@@ -1,0 +1,40 @@
+
+{# ==========================================================================
+
+   tag.render()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a small visual tag with an X icon.
+
+   options:
+
+     label:    The tag's text content.
+
+     href:     The tag's X icon click URL. Optional.
+
+     value:    The tag's underlying value. Optional.
+
+     behavior: The checkbox's JS behavior. Optional.
+
+   ========================================================================== #}
+
+{% macro render( options ) %}
+  {%- set behavior = 'data-js-hook=behavior_' ~ options.behavior if options.behavior else '' -%}
+  {%- set value = 'data-value=' ~ options.value if options.value else '' -%}
+  {%- set href = 'href=' ~ options.href if options.href else '' -%}
+
+  {% if href %}
+    <a {{href}} class="a-tag-filter" {{ value }} {{ behavior }}>
+  {% else %}
+    <button class="a-tag-filter" {{ value }} {{ behavior }}>
+  {% endif %}
+      {{ options.label }} {{ svg_icon('error') }}
+  {% if href %}
+    </a>
+  {% else %}
+    </button>
+  {% endif %}
+{% endmacro %}

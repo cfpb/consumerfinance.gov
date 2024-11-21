@@ -113,8 +113,8 @@ const handleFilterClick = (event) => {
 const handleClearFilterClick = (event) => {
   const tags = event.currentTarget.querySelector('.results__filters-tags');
   if (!tags) return;
-  const tag = tags.closest('.a-tag') || event.target;
-  if (!tag.classList.contains('a-tag')) {
+  const tag = tags.closest('.a-tag-filter') || event.target;
+  if (!tag.classList.contains('a-tag-filter')) {
     return;
   }
 
@@ -204,7 +204,7 @@ const handlePaginationClick = (event) => {
 const handleClearAllClick = (event) => {
   const clearBtn = event.currentTarget;
   const tagsWrapper = clearBtn.parentElement;
-  const tags = tagsWrapper.querySelectorAll('.a-tag');
+  const tags = tagsWrapper.querySelectorAll('.a-tag-filter');
   if (!tags || tags.length === 0) {
     return;
   }

@@ -215,12 +215,14 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
       mainContent.classList.add('show-wayfinder');
       wayfinder.style.top = '0px';
       wayfinderLink.href = '#' + currentParagraph;
+      wayfinderLink.removeAttribute('tabindex');
     } else {
       sectionFormattedTitle = '';
       paragraphMarker = '';
       wayfinderLink.href = '#';
       mainContent.classList.remove('show-wayfinder');
       wayfinder.style.top = -Math.abs(wayfinderOffset) + 'px';
+      wayfinderLink.setAttribute('tabindex', '-1');
     }
 
     wayfinder.querySelector(
