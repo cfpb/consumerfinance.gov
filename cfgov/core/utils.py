@@ -269,7 +269,7 @@ def slugify_unique(context, value):
         index = 1
 
         while slug in used_slugs:
-            slug = "%s-%d" % (original_slug, index)
+            slug = f"{original_slug}-{index}"
             index += 1
 
         used_slugs.append(slug)
