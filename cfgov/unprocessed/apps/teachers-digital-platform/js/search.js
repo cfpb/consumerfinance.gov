@@ -123,8 +123,9 @@ function handleSubmit(event) {
   if (event instanceof Event) {
     event.preventDefault();
   }
+  const filters = document.querySelectorAll('input:checked');
   // fetch search results without applying filters when searching
-  const searchUrl = fetchSearchResults();
+  const searchUrl = fetchSearchResults(filters);
   return searchUrl;
 }
 

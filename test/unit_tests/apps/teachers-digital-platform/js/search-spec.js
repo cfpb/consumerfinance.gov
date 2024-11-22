@@ -165,7 +165,9 @@ describe('The TDP search page', () => {
   it('should handle search form submissions', () => {
     const form = document.querySelector('form#search-form');
     simulateEvent('submit', form);
-    expect(window.location.href).toEqual('http://localhost/?q=executive');
+    expect(window.location.href).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=4',
+    );
   });
 
   it('should clear a filter when its X icon is clicked', () => {
