@@ -24,7 +24,7 @@ class SyncStorageCommandMixin:
         count = queryset.count()
 
         for i, instance in enumerate(queryset):
-            log_prefix = "%d/%d (%d) " % (i + 1, count, instance.pk)
+            log_prefix = f"{i + 1}/{count} ({instance.pk}) "
             self.handle_instance(instance, log_prefix)
 
     def get_storage_subdirectories():

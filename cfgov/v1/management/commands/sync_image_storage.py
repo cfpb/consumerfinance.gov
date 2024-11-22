@@ -19,10 +19,6 @@ class Command(SyncStorageCommandMixin, BaseCommand):
         rendition_count = renditions.count()
 
         for j, rendition in enumerate(renditions):
-            rendition_prefix = "%d/%d (%d) " % (
-                j + 1,
-                rendition_count,
-                rendition.pk,
-            )
+            rendition_prefix = f"{j + 1}/{rendition_count} ({rendition.pk}) "
             self.stdout.write(log_prefix + rendition_prefix, ending="")
             self.save(rendition.file.name)
