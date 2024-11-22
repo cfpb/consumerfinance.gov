@@ -40,7 +40,6 @@ function attachHandlers() {
   behaviorAttach('change-filter', 'change', handleFilter);
   behaviorAttach('clear-filter', 'click', clearFilter);
   behaviorAttach('clear-all', 'click', clearFilters);
-  behaviorAttach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
 }
@@ -100,17 +99,14 @@ function clearFilters(event) {
       currentTarget: filterTag,
     });
   });
-  handleFilter(event);
+  clearSearch();
 }
 
 /**
  * Trigger a form submit after Clear Search is clicked.
- * @param {Event} event - Click event
  */
-function clearSearch(event) {
-  if (event instanceof Event) {
-    event.preventDefault();
-  }
+function clearSearch() {
+  document.querySelector('input[name=q]').value = '';
   handleSubmit(event);
 }
 
