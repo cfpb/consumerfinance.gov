@@ -11,11 +11,3 @@
 .m-form-field .a-label--heading + .a-text-input {
   margin-top: 0;
 }
-
-/*
- * Sets minimum height when an input is a datepicker.
- * This is for an issue in iOS Safari where the input is collapsed.
- */
-input[type='date'] {
-  min-height: math.div(35px, $base-font-size-px) + rem;
-}
