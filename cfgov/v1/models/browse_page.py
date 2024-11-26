@@ -144,8 +144,11 @@ class BrowsePage(AbstractBrowsePage):
                 "mortgage_downloads_block",
                 MortgageDataDownloads(group="Not commonly used"),
             ),
-            ("data_snapshot", organisms.DataSnapshot()),
-            ("job_listing_table", JobListingTable()),
+            (
+                "data_snapshot",
+                organisms.DataSnapshot(group="Not commonly used"),
+            ),
+            ("job_listing_table", JobListingTable(group="Not commonly used")),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
