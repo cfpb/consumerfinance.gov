@@ -37,11 +37,6 @@
         data-chart-type="{{value.chart_type}}"
         {% if self.callbacks %}data-callback="{{value.callbacks}}"{% endif %}
         {% if value.description %}aria-label="{{value.description}}"{% endif %}>
-        >
-        <p>
-            Your browser does not support the canvas element.
-            This canvas shows a chart {% if value.title %} with the title {{value.title}} {%endif%}
-        </p>
     </canvas>
 
     <p class="o-wagtail-chart__footnote block--sub block--border-top block">
