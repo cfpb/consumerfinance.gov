@@ -22,6 +22,7 @@ export class ActivitySearch {
   }
 
   search(term) {
+    cy.get('#search-text').clear();
     cy.get('#search-text').type(term);
     cy.get('form[action="."]')
       .first()
