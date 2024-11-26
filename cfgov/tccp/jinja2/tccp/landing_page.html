@@ -1,11 +1,12 @@
 {% extends "v1/layouts/layout-2-1.html" %}
+{% from 'tccp/includes/fields.html' import date %}
 
 {% block title -%}
     {{ title }} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
 {% block desc -%}
-    Search our large database of credit cards to find ones that are best for you.
+    Search our database of credit cards to find ones that are best for you.
 {%- endblock desc %}
 
 {% block og_desc -%}
@@ -32,7 +33,7 @@
     value = {
         "heading": heading,
         "body": (
-            "Our large database can help you find cards that are best for you."
+            "Our database can help you find cards that are best for you."
         ),
         "image": {
             "url": static("apps/tccp/img/explore-credit-cards-hero-lg.png"),
@@ -60,25 +61,28 @@
         </h2>
         <ul class="m-list">
             <li class="m-list__item">
-                Larger pool of cards, likely including banks you’ve never heard of with great rates
+                No paid advertising.
+            </li>
+            <li class="m-list__item">
+                Interest rates are rated, to help you compare.
+            </li>
+            <li class="m-list__item">
+                This tool is updated every six months and is currently based on data from {{ date(stats.first_report_date) }}. Advertised purchase APRs change over time. Check rates before applying and
+                <a
+                    href="{{ url('tccp:about') }}"
+                >learn more about the data</a>.
             </li>
             <li class="m-list__item">
                 <a
                     href="{{ url('tccp:about') }}"
                 >150 credit card companies are required by law to submit data to us</a>
-            </li>
-           <li class="m-list__item">
-                Any credit card company can
-                <a href="/data-research/credit-card-data/terms-credit-card-plans-survey/">voluntarily contribute data</a>
+                but any credit card company can voluntarily contribute data, creating a larger pool of cards, including banks you’ve never heard of with great rates.
             </li>
             <li class="m-list__item">
-                No paid advertising
-            </li>
-            <li class="m-list__item">
-                Card interest is rated, to help you compare
-            </li>
-          <li class="m-list__item">
-                Data is public and can be used by anyone
+                Data is public and can be used by anyone.
+                <a
+                    href="/data-research/credit-card-data/terms-credit-card-plans-survey/"
+                >Download the current data</a>.
             </li>
         </ul>
     </div>
