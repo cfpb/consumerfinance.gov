@@ -67,7 +67,11 @@
                 Interest rates are rated, to help you compare.
             </li>
             <li class="m-list__item">
-                This tool is updated every six months and is currently based on data from {{ date(stats.first_report_date) }}. Advertised purchase APRs change over time. Check rates before applying and
+                This tool is updated every six months
+                {%- if stats.first_report_date %}
+                and is currently based on data from {{ date(stats.first_report_date) }}
+                {%- endif %}.
+                Advertised purchase APRs change over time. Check rates before applying and
                 <a
                     href="{{ url('tccp:about') }}"
                 >learn more about the data</a>.
