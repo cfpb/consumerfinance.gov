@@ -14,7 +14,10 @@ $m-info-unit-img-lg: 150px;
   &__image {
     display: block;
     margin-right: auto;
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
     margin-left: auto;
     background-size: cover;
@@ -55,7 +58,10 @@ $m-info-unit-img-lg: 150px;
 
   .m-info-unit__content,
   .m-info-unit__heading-text {
-    margin-left: math.div(($img_size + $grid-gutter-width), $base-font-size-px) +
+    margin-left: math.div(
+        ($img_size + $grid-gutter-width),
+        $base-font-size-px
+      ) +
       em;
   }
 }
