@@ -200,7 +200,8 @@
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
 

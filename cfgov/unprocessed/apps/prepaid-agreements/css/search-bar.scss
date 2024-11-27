@@ -17,7 +17,10 @@
 // Tablet and below.
 @include respond-to-max($bp-sm-max) {
   .a-select {
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
     width: 100%;
   }

@@ -53,16 +53,23 @@
       margin-bottom: math.div(
           math.div($grid-gutter-width, 3),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
 
     .a-btn {
-      margin-top: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 3),
+          $base-font-size-px
+        ) +
         em;
     }
 
     .a-btn--link {
-      margin-left: math.div(math.div($grid-gutter-width, 3), $base-font-size-px) +
+      margin-left: math.div(
+          math.div($grid-gutter-width, 3),
+          $base-font-size-px
+        ) +
         em;
     }
 
@@ -77,7 +84,8 @@
           margin-left: math.div(
               math.div($grid-gutter-width, 3),
               $base-font-size-px
-            ) + em;
+            ) +
+            em;
           margin-top: 0;
         }
 
@@ -129,7 +137,8 @@
       padding-bottom: math.div(
           math.div($grid-gutter-width, 2),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
   }
 }
@@ -148,7 +157,10 @@
       max-width: 41.875rem;
     }
     .row + .row {
-      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) +
         em;
     }
 

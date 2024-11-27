@@ -1239,7 +1239,8 @@ $bp-graph-cols-min: 740px;
     width: $bar-graph-top-label-width;
     margin-left: (
         -1 * math.div(($bar-graph-top-label-width - $bar-graph-width), 2)
-      ) - $bar-graph-line-overhang;
+      ) -
+      $bar-graph-line-overhang;
     position: absolute;
     top: math.div(-$bar-graph-top-label-height, $small-font-size-px) + em;
     left: 50%;
@@ -1268,7 +1269,8 @@ $bp-graph-cols-min: 740px;
       top: math.div(
           ($bar-graph-average-font-size + $bar-graph-line-top-cheat),
           2
-        ) + px;
+        ) +
+        px;
     }
   }
 
