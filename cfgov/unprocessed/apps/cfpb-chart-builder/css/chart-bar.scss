@@ -1,4 +1,5 @@
 @use './vars.scss' as *;
+@use './mixins.scss' as *;
 
 .cfpb-chart[data-chart-type='bar'] {
   // Position horizontal rule.

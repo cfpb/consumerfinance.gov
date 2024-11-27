@@ -1,14 +1,14 @@
 // cf-core is included for cf-brand-colors and media queries.
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 @use './vars' as *;
-@import 'highcharts/css/highcharts.css';
-@import './mixins';
+@use 'highcharts/css/highcharts.css' as *;
+@use './mixins' as *;
 
 // Import chart-type specific styling.
-@import './chart-line';
-@import './chart-bar';
-@import './chart-tilemap';
-@import './chart-geomap';
+@use './chart-line' as *;
+@use './chart-bar' as *;
+@use './chart-tilemap' as *;
+@use './chart-geomap' as *;
 
 /*
 Updating the charts:
