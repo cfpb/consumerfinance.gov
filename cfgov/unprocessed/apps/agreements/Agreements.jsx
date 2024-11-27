@@ -14,7 +14,7 @@ function getOption(options, val) {
 }
 
 function Wrapper() {
-  const options = window.ISSUERS || []
+  const options = window.ISSUERS || [];
   const defaultValue = document.getElementById('issuer-slug')?.textContent;
 
   return (
@@ -28,9 +28,9 @@ function Wrapper() {
   );
 }
 
-const selectRoot = document.getElementById('select-root')
+const selectRoot = document.getElementById('select-root');
 
-if(selectRoot){
-  const root = createRoot();
+if (selectRoot) {
+  const root = createRoot(selectRoot);
   root.render(<Wrapper />);
 }
