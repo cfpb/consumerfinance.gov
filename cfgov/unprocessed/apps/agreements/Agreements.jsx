@@ -28,5 +28,9 @@ function Wrapper() {
   );
 }
 
-const root = createRoot(document.getElementById('select-root'));
-root.render(<Wrapper />);
+const selectRoot = document.getElementById('select-root')
+
+if(selectRoot){
+  const root = createRoot();
+  root.render(<Wrapper />);
+}
