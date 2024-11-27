@@ -24,6 +24,7 @@ function Wrapper() {
       placeholder="Search for an issuer"
       onChange={onChange}
       isSearchable={true}
+      name="Agreements selector"
     />
   );
 }
