@@ -10,7 +10,7 @@
 ] %}
 
 {% block content_main %}
-    <div class="block block--flush-top">
+    <div class="block block--sub block--flush-top">
         <h1>Credit card agreement database</h1>
 
         <div class="lead-paragraph">
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="block">
+    <div class="block block--sub">
         <h2 id="issuer-select">
             Show agreements by card issuer
         </h2>
@@ -33,46 +33,46 @@
         <a href="#find-issuer">
             Can't find an issuer?
         </a>
+    </div>
 
-        <p class="u-mt15">
-            This search method accesses all credit card agreements as of the CFPB’s most recent quarterly collection of
-            credit card agreements. To access all agreements from the most recent or earlier periods, please click on the
-            relevant agreement link below. (Please note that the Bureau did not collect agreements for 2015. The January
-            2016 archive is a sample that was collected by Bureau staff from the publicly-available websites of the largest
-            credit card issuers as of the first week of January 2016, and does not constitute a full set of agreements).
-            Credit card issuers are generally required to post the credit card agreements that they offer to the public on
-            their websites, with limited exceptions.
-            If you are an issuer, email <a href="mailto:CardAgreements@consumerfinance.gov">CardAgreements@consumerfinance.gov</a>
-            for agreement submission instructions.
-        </p>
+    <div class="block block--sub">
+      <p>
+          This search method accesses all credit card agreements as of the CFPB’s most recent quarterly collection of
+          credit card agreements. To access all agreements from the most recent or earlier periods, please click on the
+          relevant agreement link below. (Please note that the Bureau did not collect agreements for 2015. The January
+          2016 archive is a sample that was collected by Bureau staff from the publicly-available websites of the largest
+          credit card issuers as of the first week of January 2016, and does not constitute a full set of agreements).
+          Credit card issuers are generally required to post the credit card agreements that they offer to the public on
+          their websites, with limited exceptions.
+          If you are an issuer, email <a href="mailto:CardAgreements@consumerfinance.gov">CardAgreements@consumerfinance.gov</a>
+          for agreement submission instructions.
+      </p>
+      <h3 class="u-mb30"><a style="border-bottom-width:1px" href="./archive/">View the credit card agreement archive</a></h3>
+      <h3>Looking for your own credit card agreement?</h3>
+      <p>
+          We have provided this database so you can search for agreements between
+          credit card issuers and their customers. The agreements in this database
+          have general terms and conditions, pricing, and fee information.
+      </p>
+      <p>
+          If you are looking for information specific to your account,
+          contact the bank or institution that issued your card.
+          By law, the issuer must make your agreement available to you upon request.
+          If you are having trouble getting your agreement, let us know by
+          <a href="https://www.consumerfinance.gov/complaint/">submitting a complaint</a>.
+      </p>
 
-        <h3 class="block block--sub"><a style="border-bottom-width:1px" href="./archive/">View the credit card agreement archive</a></h3>
-
-        <h3>Looking for your own credit card agreement?</h3>
-        <p>
-            We have provided this database so you can search for agreements between
-            credit card issuers and their customers. The agreements in this database
-            have general terms and conditions, pricing, and fee information.
-        </p>
-        <p>
-            If you are looking for information specific to your account,
-            contact the bank or institution that issued your card.
-            By law, the issuer must make your agreement available to you upon request.
-            If you are having trouble getting your agreement, let us know by
-            <a href="https://www.consumerfinance.gov/complaint/">submitting a complaint</a>.
-        </p>
-
-        <h3>College credit card agreements</h3>
-        <p>
-            We have collected credit card issuer marketing agreements with
-            universities or affiliated organizations. We are also required to
-            report to Congress on the state of college credit card agreements.
-        </p>
-        <p>
-            <a href="/credit-cards/college-agreements/">
-                View college credit card agreements information
-            </a>
-        </p>
+      <h3>College credit card agreements</h3>
+      <p>
+          We have collected credit card issuer marketing agreements with
+          universities or affiliated organizations. We are also required to
+          report to Congress on the state of college credit card agreements.
+      </p>
+      <p>
+          <a href="/credit-cards/college-agreements/">
+              View college credit card agreements information
+          </a>
+      </p>
     </div>
 
     {% include '_database_disclaimer.html' %}
