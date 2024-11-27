@@ -4,7 +4,10 @@
 
 .o-post-preview {
   border-bottom: 1px solid var(--gray-40);
-  padding-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+  padding-bottom: math.div(
+      math.div($grid-gutter-width, 2),
+      $base-font-size-px
+    ) +
     em;
   display: grid;
   grid-template-rows: auto;
@@ -34,16 +37,21 @@
       margin-right: math.div(
           math.div($grid-gutter-width, 2),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
       margin-bottom: math.div(
           math.div($grid-gutter-width, 2),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
   }
 
   &__description {
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
   }
 
@@ -56,7 +64,8 @@
       margin-bottom: math.div(
           math.div($grid-gutter-width, 2),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
 
     // Desktop and above.
@@ -83,7 +92,10 @@
   &__byline-group,
   .m-tags {
     display: block;
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
   }
 }

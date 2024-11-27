@@ -121,7 +121,13 @@ select.chzn-select {
   background: #fff url(../img/chosen-sprite.png) no-repeat 100% -20px;
   background:
     url(../img/chosen-sprite.png) no-repeat 100% -20px,
-    -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+    -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.85, white),
+        color-stop(0.99, #eeeeee)
+      );
   background:
     url(../img/chosen-sprite.png) no-repeat 100% -20px,
     -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
@@ -431,7 +437,13 @@ select.chzn-select {
     #ffffff;
   background:
     url(../img/chosen-sprite.png) no-repeat -38px -20px,
-    -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+    -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.85, white),
+        color-stop(0.99, #eeeeee)
+      );
   background:
     url(../img/chosen-sprite.png) no-repeat -38px -20px,
     -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);

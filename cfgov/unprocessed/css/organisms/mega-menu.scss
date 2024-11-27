@@ -433,7 +433,8 @@ $menu-link-hover-bar-px: 5px;
         padding-top: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + rem;
+          ) +
+          rem;
         padding-left: math.div($grid-gutter-width, $base-font-size-px) + rem;
       }
 
@@ -452,11 +453,13 @@ $menu-link-hover-bar-px: 5px;
         padding-top: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
         padding-bottom: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
 
       &-link,
@@ -514,7 +517,8 @@ $menu-link-hover-bar-px: 5px;
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
 
@@ -552,18 +556,23 @@ $menu-link-hover-bar-px: 5px;
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
         padding-bottom: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
 
     // Group heading - Tablet/Mobile
     &__group-heading {
       // !important is used to override a highly specific ul+.h5 rule in base.scss
-      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) +
         rem !important;
 
       &--hidden {
@@ -715,7 +724,8 @@ $menu-link-hover-bar-px: 5px;
           padding-bottom: math.div(
               math.div($grid-gutter-width, 2),
               $base-font-size-px
-            ) + em;
+            ) +
+            em;
         }
 
         &:focus {
@@ -772,7 +782,8 @@ $menu-link-hover-bar-px: 5px;
           padding-right: math.div(
               ($grid-gutter-width - 4px),
               $base-font-size-px
-            ) + em;
+            ) +
+            em;
         }
 
         &--current {
@@ -822,7 +833,10 @@ $menu-link-hover-bar-px: 5px;
         padding-top: math.div(20px, $base-font-size-px) + em;
         padding-left: math.div(($grid-gutter-width * 1.5), $base-font-size-px) +
           em;
-        padding-right: math.div(($grid-gutter-width * 1.5), $base-font-size-px) +
+        padding-right: math.div(
+            ($grid-gutter-width * 1.5),
+            $base-font-size-px
+          ) +
           em;
       }
 
