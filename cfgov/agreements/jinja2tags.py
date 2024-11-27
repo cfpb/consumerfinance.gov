@@ -6,7 +6,7 @@ from jinja2.ext import Extension
 from agreements.models import Issuer
 
 
-def issuer_select(selected_issuer_slug=None):
+def issuer_select():
     # Select all issuers that have associated agreements, ordered by name.
     #
     # This is equivalent to the following SQL query:
@@ -35,24 +35,23 @@ def issuer_select(selected_issuer_slug=None):
     )
 
     return render_to_string(
-        "agreements/_select.html",
+        "agreements/_json.html",
         {
             "issuers": issuers,
-            "selected_issuer_slug": selected_issuer_slug,
         },
     )
 
 
 class AgreementsExtension(Extension):
     """
-    This will give us an {% agreements_issuer_select %} tag.
+    This will give us an {% agreements_issuers %} tag.
     """
 
     def __init__(self, environment):
         super().__init__(environment)
         self.environment.globals.update(
             {
-                "agreements_issuer_select": issuer_select,
+                "agreements_issuers": issuer_select,
             }
         )
 
