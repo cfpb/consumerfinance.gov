@@ -1,17 +1,17 @@
 {# ==========================================================================
 
-   Renders json from a list of credit card agreement issuers.
+   Includes issuers as a global JS object
 
    issuers: List of credit card agreement issuers.
 
    ========================================================================== #}
-<div style="display:none" id="issuer-json">
-  [
+<script>
+  window.ISSUERS = [
   {%- for issuer in issuers -%}
    {
-    "value":"{{issuer.slug}}",
-    "label":"{{issuer.name}}"
+    value:"{{issuer.slug}}",
+    label:"{{issuer.name}}"
    }{{ "," if not loop.last else "" }}
   {%- endfor -%}
   ]
-</div>
+</script>

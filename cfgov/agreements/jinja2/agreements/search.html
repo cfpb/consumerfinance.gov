@@ -62,6 +62,7 @@
 
     {% include '_database_disclaimer.html' %}
 
+    {{ agreements_issuers() | safe }}
 {% endblock %}
 
 {% block content_sidebar scoped  %}
@@ -78,7 +79,6 @@
 
             <p id="select-root" style="margin-bottom:0.5em"></p>
             <div style="display:none" id="issuer-slug">{{issuer.slug}}</div>
-            {{ agreements_issuer_select() | safe }}
             <p>
                 <a href="#find-issuer">
                     Can't find an issuer?

@@ -30,8 +30,6 @@
 
         <p id="select-root" style="margin-bottom:0.5em"></p>
 
-        {{ agreements_issuer_select() | safe }}
-
         <a href="#find-issuer">
             Can't find an issuer?
         </a>
@@ -79,6 +77,7 @@
 
     {% include '_database_disclaimer.html' %}
 
+    {{ agreements_issuers() | safe }}
 {% endblock %}
 
 {% block content_sidebar scoped  %}

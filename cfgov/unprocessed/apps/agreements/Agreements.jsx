@@ -14,9 +14,7 @@ function getOption(options, val) {
 }
 
 function Wrapper() {
-  const options = JSON.parse(
-    document.getElementById('issuer-json').textContent,
-  );
+  const options = window.ISSUERS || []
   const defaultValue = document.getElementById('issuer-slug')?.textContent;
 
   return (

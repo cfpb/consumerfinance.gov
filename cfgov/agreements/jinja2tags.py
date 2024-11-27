@@ -44,14 +44,14 @@ def issuer_select():
 
 class AgreementsExtension(Extension):
     """
-    This will give us an {% agreements_issuer_select %} tag.
+    This will give us an {% agreements_issuers %} tag.
     """
 
     def __init__(self, environment):
         super().__init__(environment)
         self.environment.globals.update(
             {
-                "agreements_issuer_select": issuer_select,
+                "agreements_issuers": issuer_select,
             }
         )
 
