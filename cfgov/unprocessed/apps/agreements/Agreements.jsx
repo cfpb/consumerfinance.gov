@@ -14,7 +14,7 @@ function getOption(options, val) {
 }
 
 function Wrapper() {
-  const options = window.ISSUERS || [];
+  const options = window.cfpbIssuers || [];
   const defaultValue = document.getElementById('issuer-slug')?.textContent;
 
   return (
