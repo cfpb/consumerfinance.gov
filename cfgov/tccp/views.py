@@ -37,6 +37,7 @@ class LandingPageView(FlaggedTemplateView):
                 "title": title(self.heading),
                 "heading": self.heading,
                 "form": LandingPageForm(),
+                "stats": CardSurveyData.objects.get_summary_statistics(),
             }
         )
 
