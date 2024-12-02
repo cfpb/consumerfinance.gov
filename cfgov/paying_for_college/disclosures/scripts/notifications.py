@@ -6,6 +6,9 @@ from django.utils import timezone
 
 from paying_for_college.models import Notification
 
+# Ashford withdrew from EFIP and should be excluded
+ASHFORD_ID = 154022
+
 
 INTRO = (
     "Notification failures \n"
@@ -26,7 +29,7 @@ def retry_notifications(days=1):
     days_old = timezone.now() - datetime.timedelta(days=int(days))
     failed_notifications = Notification.objects.filter(
         sent=False, timestamp__gt=days_old
-    )
+    ).exclude(institution_id=ASHFORD_ID)
     for each in failed_notifications:
         endmsg += f"{each.notify_school()}\n"
     if not endmsg:
