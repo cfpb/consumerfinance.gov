@@ -2,7 +2,7 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 // Import external cfpb-chart-builder stylesheet
-@import '../../apps/cfpb-chart-builder/css/cfpb-chart-builder';
+@use '../../apps/cfpb-chart-builder/css/cfpb-chart-builder' as *;
 
 // Footnote text below charts
 .m-chart-footnote {
