@@ -305,8 +305,8 @@ to save and commit your changes.</p>
 <li>Edit line 6 of your spec file and remove the call to the <code>.skip</code> method.
    The line should now read:</li>
 </ol>
-<pre class="highlight"><code class="language-js">it( 'should return a string with expected value', () =&gt; {
-  …
+<pre class="highlight"><code class="language-js">it('should return a string with expected value', () =&gt; {
+  // …
 });</code></pre>
 <ol>
 <li>Run your sample test using</li>
@@ -340,32 +340,12 @@ Let’s take a look at the structure of our very basic sample test file.</p>
 <p>Line 1 of any spec file will use an <code>import</code> statement to
 include the JavaScript file that you are testing.
 Additional dependencies should be added in the same manner.</p>
-<pre class="highlight"><code class="language-js">import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';</code></pre>
-<p>Some test files use <code>const</code> declarations to
-<code>require</code> scripts instead of <code>import</code>,
-because those files were written before <code>import</code> was available.
-We prefer to use <code>import</code> because it allows for tree shaking,
-meaning if two modules are importing the same module
-it should only be included in the bundle once,
-whereas with <code>require</code> it would be included twice.</p>
-<p>A consequence is that variables can’t be used in the import path,
-as they prevent Webpack from figuring out which modules are duplicates.
-For example, this snippet shows how a <code>require</code> statement
-should be converted to an <code>import</code> statement,
-but without including the <code>BASE_JS_PATH</code> variable in the file path:</p>
-<pre class="highlight"><code class="language-js">// This works, but could duplicate footer-button.js, if other files also require it.
-const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+<pre class="highlight"><code class="language-js">// This file has a default export.
+import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
 
-// This doesn't work and the build will fail.
-import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
-
-// This is ugly, but it works and supports tree shaking.
-import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';</code></pre>
-<p><code>import</code> also provides a benefit in that you can choose specific parts
-of a module so that you only import the dependencies you need.
-For testing purposes, we will typically import the whole module
-to make sure we have full test coverage.
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">Read the <code>import</code> reference guide on MDN</a>
+// Or, if the file has a named export, that can be imported.
+import { sample } from '../../../../cfgov/unprocessed/js/modules/sample.js';</code></pre>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">Read the <code>import</code> reference guide on MDN</a>
 on how to implement <code>import</code> for different use cases.</p>
 <h4 id="the-describe-function">The <code>describe</code> function<a class="headerlink" href="#the-describe-function" title="Permanent link">¶</a></h4>
 <p>In Jest (whose syntax is based on Jasmine),
@@ -376,8 +356,8 @@ to outline the methods you need in your JS module.</p>
 the name of the JavaScript module we are testing.
 For the sample, the name of our module is <code>sample</code>,
 so we set this up on line 4 of <code>sample-spec.js</code>:</p>
-<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
-  …
+<pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
+  // …
 });</code></pre>
 <p>This module name will appear in your test output in the console
 when the test is running:</p>
@@ -559,18 +539,18 @@ const HTML_SNIPPET = `
   &lt;/div&gt;
 `;
 
-describe( 'Notification', () =&gt; {
+describe('Notification', () =&gt; {
   let notificationElem;
   let notification;
   let thisNotification;
 
-  beforeEach( () =&gt; {
+  beforeEach(() =&gt; {
     document.body.innerHTML = HTML_SNIPPET;
-    notificationElem = document.querySelector( `.${ BASE_CLASS }` );
-    notification = new Notification( notificationElem, BASE_CLASS, {});
+    notificationElem = document.querySelector(`.${BASE_CLASS}`);
+    notification = new Notification(notificationElem, BASE_CLASS, {});
   });
 
-  …
+  // …
 });</code></pre>
 <p>The main things to note here at the beginning of the file are
 the addition of the <code>HTML_SNIPPET</code> definition,
@@ -598,30 +578,24 @@ For now, just be aware of this when
 <p>Further down, here are some of the tests that cover the <code>_setType</code> function
 (by way of the <code>setTypeAndContent</code> function that
 wraps both <code>_setType</code> and <code>_setContent</code>):</p>
-<pre class="highlight"><code class="language-js">describe( 'setTypeAndContent()', () =&gt; {
-  it( 'should update the notification type for the success state', () =&gt; {
+<pre class="highlight"><code class="language-js">describe('setTypeAndContent()', () =&gt; {
+  it('should update the notification type for the success state', () =&gt; {
     notification.init();
 
-    notification.setTypeAndContent(
-      notification.SUCCESS,
-      ''
-    );
+    notification.setTypeAndContent(notification.SUCCESS, '');
 
-    expect( notificationElem.classList ).toContain( 'm-notification--success' );
+    expect(notificationElem.classList).toContain('m-notification--success');
   });
 
-  it( 'should update the notification type for the warning state', () =&gt; {
+  it('should update the notification type for the warning state', () =&gt; {
     notification.init();
 
-    notification.setTypeAndContent(
-      notification.WARNING,
-      ''
-    );
+    notification.setTypeAndContent(notification.WARNING, '');
 
-    expect( notificationElem.classList ).toContain( 'm-notification--warning' );
+    expect(notificationElem.classList).toContain('m-notification--warning');
   });
 
-  …
+  // …
 });</code></pre>
 <p>This part mostly works like testing any other function.
 The notable distinction here is that the test invokes the function
