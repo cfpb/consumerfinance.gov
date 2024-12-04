@@ -94,8 +94,14 @@ function updateTilemapLegend(node, data, legendTitle) {
       labels[i].innerText = '\xa0';
     }
   }
-  colors.forEach((v) => legend.appendChild(v));
-  labels.forEach((v) => legend.appendChild(v));
+  const grid = document.createElement('div');
+  grid.className = 'legend-grid';
+  grid.style.gridTemplateColumns = `repeat(${classes.length}, 1fr)`;
+  legend.appendChild(grid);
+
+  colors.forEach((v) => grid.appendChild(v));
+  labels.forEach((v) => grid.appendChild(v));
+  legend.style.display = 'block';
 }
 
 /**
@@ -236,10 +242,6 @@ function init(chartNode, target, data, dataAttributes) {
   const tilemapOptions = makeTilemapOptions(data, dataAttributes);
   const chart = Highmaps.mapChart(target, tilemapOptions);
 
-  const legend = target.parentNode.getElementsByClassName(
-    'o-simple-chart__tilemap-legend',
-  )[0];
-  legend.style.display = 'block';
   updateTilemapLegend(target, tilemapOptions, yAxisLabel);
 
   /**
