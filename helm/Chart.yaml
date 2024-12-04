@@ -28,3 +28,6 @@ dependencies:
   - name: postgresql
     version: 16.2.3
     repository: https://charts.bitnami.com/bitnami
+  - name: pgadmin4
+    version: 1.33.3
+    repository: https://helm.runix.net

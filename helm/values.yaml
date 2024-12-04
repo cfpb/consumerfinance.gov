@@ -121,3 +121,18 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+postgresql:
+  global: 
+    postgresql:
+      auth:
+        database: cfgov
+        username: cfpb
+        password: cfpb
+
+pgadmin4:
+  env:
+    email:  test@domain.com
+    password: test 
+
+

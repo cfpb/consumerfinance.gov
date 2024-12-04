@@ -39,18 +39,8 @@ spec:
           env:
           - name: SECRET_KEY
             value: abcdef
-          - name: PGDATABASE
-            value: cfgov
-          - name: PGUSER
-            value: cfpb
-          - name: PGPASSWORD
-            value: cfpb
-          - name: POSTGRES_USER
-            value: cfpb
-          - name: PGHOST
-            value: "{{ .Values.postgresql.postgresqlDatabase }}"
-          - name: PGPORT  
-            value: "5432"
+          - name: DATABASE_URL
+            value: postgres://cfpb:cfpb@cfgov-postgresql/cfgov
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
