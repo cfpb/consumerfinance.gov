@@ -221,7 +221,7 @@ if ALLOW_ADMIN_URL:
 # See https://github.com/jazzband/dj-database-url for URL formatting.
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
+        default=os.getenv("DATABASE_URL", "postgres://cfpb:cfpb@localhost/cfgov")   
     ),
 }
 
