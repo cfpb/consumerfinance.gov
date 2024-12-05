@@ -14,6 +14,7 @@ class BlogContent(blocks.StreamBlock):
     full_width_text = organisms.FullWidthText()
     info_unit_group = organisms.InfoUnitGroup()
     expandable = organisms.Expandable()
+    expandable_group = organisms.ExpandableGroup()
     well = organisms.Well()
     video_player = organisms.VideoPlayer()
     email_signup = v1_blocks.EmailSignUpChooserBlock()
