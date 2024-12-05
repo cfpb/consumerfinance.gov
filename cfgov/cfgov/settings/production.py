@@ -22,8 +22,8 @@ if syslog_device:
     default_loggers.append("syslog")
 
 # if not running in mod_wsgi, add console logger
-if not (sys.argv and sys.argv[0] == "mod_wsgi"):
-    default_loggers.append("console")
+# if not (sys.argv and sys.argv[0] == "mod_wsgi"):
+default_loggers.append("console")
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 #
@@ -51,7 +51,7 @@ LOGGING = {
     "loggers": {
         "django.request": {
             "handlers": ["console"],
-            "level": "WARNING",
+            "level": "DEBUG",
             "propagate": True,
         },
         "django": {
@@ -60,7 +60,7 @@ LOGGING = {
         },
         "": {
             "handlers": default_loggers,
-            "level": "INFO",
+            "level": "DEBUG",
             "propagate": True,
         },
     },
@@ -113,7 +113,7 @@ SECURE_HSTS_SECONDS = 600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
 # Require the SECRET_KEY as an environment variable
 SECRET_KEY = os.getenv("SECRET_KEY")

@@ -28,6 +28,7 @@ DEPLOY_ENVIRONMENT = os.getenv("DEPLOY_ENVIRONMENT")
 
 # In certain environments, we allow DEBUG to be enabled
 DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
+DEBUG=True
 
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
@@ -217,7 +218,7 @@ if ALLOW_ADMIN_URL:
 # See https://github.com/jazzband/dj-database-url for URL formatting.
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL", "postgres://cfpb:cfpb@localhost/cfgov")   
+        default=os.getenv("DATABASE_URL", "postgres://cfpb:cfpb@localhost/cfgov")
     ),
 }
 

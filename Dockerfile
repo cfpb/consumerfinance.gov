@@ -15,7 +15,6 @@ ENV PYTHONUNBUFFERED 1
 # Set the APP_HOME, our working directory
 ENV APP_HOME /src/consumerfinance.gov
 
-# Add our top-level Python path to the PYTHONPATH
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
 # Set the working directory
@@ -114,4 +113,5 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 RUN SECRET_KEY=only-for-collectstatic cfgov/manage.py collectstatic --noinput
 
 # Run Gunicorn
-CMD gunicorn cfgov.wsgi:application -b :8000
+# CMD gunicorn --reload cfgov.wsgi:application -b :8000
+CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
