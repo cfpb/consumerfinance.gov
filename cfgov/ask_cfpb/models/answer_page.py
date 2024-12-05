@@ -29,7 +29,7 @@ from v1.models import CFGOVPage, PortalCategory, PortalTopic
 from v1.models.snippets import ReusableText
 
 
-RELATED_PAGES_LIMIT = 5
+RELATED_PAGES_LIMIT = 10
 INDEX = "ask-cfpb"
 REUSABLE_TEXT_TITLES = {
     "about_us": {
