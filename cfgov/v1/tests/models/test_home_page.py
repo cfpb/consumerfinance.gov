@@ -20,8 +20,8 @@ class HomePageTests(TestCase):
     def test_render_english(self):
         self.check_render_template("en", "v1/home_page/home_page.html")
 
-    def test_render_spanish_uses_legacy_template(self):
-        self.check_render_template("es", "v1/home_page/home_page_legacy.html")
+    def test_render_spanish(self):
+        self.check_render_template("es", "v1/home_page/home_page.html")
 
     def test_render_other_language_raises_exception(self):
         with self.assertRaises(NotImplementedError):
