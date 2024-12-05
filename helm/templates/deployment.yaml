@@ -40,7 +40,7 @@ spec:
           - name: SECRET_KEY
             value: abcdef
           - name: DATABASE_URL
-            value: sqlite:////src/consumerfinance.gov/cfgov.db
+            value: postgres://cfpb:cfpb@cfgov-postgresql/cfgov
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
