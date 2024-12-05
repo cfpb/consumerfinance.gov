@@ -20,9 +20,11 @@ ENV PYTHONPATH ${APP_HOME}/cfgov
 # Set the working directory
 WORKDIR ${APP_HOME}
 
-# Copy the application, requirements, etc.
-# See .dockerignore for details on which files are included
-COPY . .
+# Copy the application requirements, needed to build the Python environment
+# below
+# Note: by specifying specific files we enable this layer to be cached if
+# these files do not change.
+COPY requirements ./requirements
 
 # Build the Python environment
 RUN \
@@ -61,6 +63,11 @@ RUN pip install -r requirements/local.txt
 # Run our initial data entrypoint script
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
+# Copy the application directory to run it below
+# Note: by specifying specific files we enable this layer to be cached if
+# these files do not change.
+COPY cfgov ./
+
 # Run Django's runserver
 CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 
@@ -81,14 +88,31 @@ RUN apk update --no-cache && apk upgrade --no-cache && \
 # Target a production frontend build
 ARG FRONTEND_TARGET=production
 
-# Copy the application, requirements, etc.
-# See .dockerignore for details on which files are included
-COPY . .
+# Copy the files needed for building the frontend
+# Note: by specifying specific files we enable this layer to be cached if
+# these files do not change.
+COPY frontend.sh .
+COPY package.json .
+COPY yarn.lock .
+COPY cfgov/unprocessed ./cfgov/unprocessed
+COPY config  ./config/
+COPY esbuild  ./esbuild/
+COPY scripts ./scripts/
+COPY npm-packages-offline-cache ./npm-packages-offline-cache/
 
 # Build the front-end
 RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     yarn cache clean && \
-    rm -rf node_modules npm-packages-offline-cache cfgov/unprocessed
+    rm -rf \
+        frontend.sh \
+        package.json \
+        yarn.lock \
+        cfgov/unprocessed \
+        config \
+        esbuild \
+        scripts \
+        npm-packages-offline-cache \
+        node_modules
 
 #######################################################################
 # Production runs with Django via Gunicorn with cfgov.settings.production
@@ -99,6 +123,10 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
+
+# Copy the application code over
+COPY cfgov ./cfgov/
+COPY static.in ./static.in/
 
 # Copy our static build over from node-builder
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
