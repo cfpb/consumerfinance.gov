@@ -170,4 +170,5 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 USER $USERNAME
 
 # Run Gunicorn
-CMD gunicorn cfgov.wsgi:application -b :8000
+# CMD gunicorn --reload cfgov.wsgi:application -b :8000
+CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
