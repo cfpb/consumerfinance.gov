@@ -49,27 +49,6 @@ RUN \
 # The application will run on port 8000
 EXPOSE 8000
 
-#######################################################################
-# Dev runs with Django runserver with cfgov.settings.local
-FROM python AS dev
-
-# Django Settings
-ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
-ENV ALLOWED_HOSTS '["*"]'
-
-# Install dev/local Python requirements
-RUN pip install -r requirements/local.txt
-
-# Run our initial data entrypoint script
-ENTRYPOINT ["./docker-entrypoint.sh"]
-
-# Copy the application directory to run it below
-# Note: by specifying specific files we enable this layer to be cached if
-# these files do not change.
-COPY cfgov ./
-
-# Run Django's runserver
-CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 
 #######################################################################
 # Build frontend assets using a Node base image
@@ -113,6 +92,32 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
         scripts \
         npm-packages-offline-cache \
         node_modules
+
+#######################################################################
+# Dev runs with Django runserver with cfgov.settings.local
+FROM python AS dev
+
+# Django Settings
+ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
+ENV ALLOWED_HOSTS '["*"]'
+
+# Install dev/local Python requirements
+RUN pip install -r requirements/local.txt
+
+# Copy the root directory into the dev container
+# Note: by specifying specific files we enable this layer to be cached if
+# these files do not change.
+COPY cfgov ./cfgov/
+COPY static.in ./static.in/
+COPY docker-entrypoint.sh ./docker-entrypoint.sh
+
+COPY --from=node-builder ${APP_HOME} ${APP_HOME}
+
+# Run our initial data entrypoint script
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+# Run Django's runserver
+CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 
 #######################################################################
 # Production runs with Django via Gunicorn with cfgov.settings.production
