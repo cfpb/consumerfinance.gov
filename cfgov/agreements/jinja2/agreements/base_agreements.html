@@ -1,20 +1,6 @@
 {% extends "v1/layouts/layout-2-1.html" %}
 
-{% block css %}
-{{ super() }}
-<link rel="stylesheet" href="{{ static( 'agreements/css/chosen.css' ) }}" />
-{% endblock %}
-
 {% block javascript scoped %}
-{{ super() }}
-<script src="{{ static( 'agreements/js/jquery-3.5.1.min.js' ) }}"></script>
-<script src="{{ static( 'agreements/js/chosen.jquery.js' ) }}"></script>
-<script>
-    $(document).ready(function () {
-        $("#issuer_select").chosen();
-        $("#issuer_select").chosen().change( function(e){
-                window.location = '/credit-cards/agreements/issuer/' + jQuery(this).val() + '/';
-        });
-    });
-</script>
+  {{ super() }}
+  <script src="{{ static( 'apps/agreements/Agreements.js' ) }}"></script>
 {% endblock %}

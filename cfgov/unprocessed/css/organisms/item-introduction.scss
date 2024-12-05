@@ -8,7 +8,8 @@
     padding-bottom: math.div(
         math.div($grid-gutter-width, 2),
         $base-font-size-px
-      ) + rem;
+      ) +
+      rem;
   }
 
   .lead-paragraph {

@@ -40,7 +40,6 @@ function attachHandlers() {
   behaviorAttach('change-filter', 'change', handleFilter);
   behaviorAttach('clear-filter', 'click', clearFilter);
   behaviorAttach('clear-all', 'click', clearFilters);
-  behaviorAttach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
 }
@@ -94,23 +93,20 @@ function clearFilters(event) {
   // Handle Analytics here before tags vanish.
   handleClearAllClick(event);
 
-  const filterTags = document.querySelectorAll('.a-tag');
+  const filterTags = document.querySelectorAll('.a-tag-filter');
   filterTags.forEach((filterTag) => {
     clearFilter({
       currentTarget: filterTag,
     });
   });
-  handleFilter(event);
+  clearSearch();
 }
 
 /**
  * Trigger a form submit after Clear Search is clicked.
- * @param {Event} event - Click event
  */
-function clearSearch(event) {
-  if (event instanceof Event) {
-    event.preventDefault();
-  }
+function clearSearch() {
+  document.querySelector('input[name=q]').value = '';
   handleSubmit(event);
 }
 
@@ -123,8 +119,9 @@ function handleSubmit(event) {
   if (event instanceof Event) {
     event.preventDefault();
   }
+  const filters = document.querySelectorAll('input:checked');
   // fetch search results without applying filters when searching
-  const searchUrl = fetchSearchResults();
+  const searchUrl = fetchSearchResults(filters);
   return searchUrl;
 }
 

@@ -128,14 +128,14 @@ const HTML_SNIPPET = `
         <div class="results__filters">
           <span class="results__filters-label">Filters applied</span>
           <div class="results__filters-tags">
-            <div class="a-tag" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
+            <button class="a-tag-filter" data-value="#building-block--executive-function" data-js-hook="behavior_clear-filter">
               Executive function
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
-            </div>
-            <div class="a-tag" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
+            </button>
+            <button class="a-tag-filter" data-value="#topic-getting-paid" data-js-hook="behavior_clear-filter">
               Getting paid
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg"><path d="M451.4 613.7l248.1-248.1c25.6-25.1 26-66.3.8-91.9s-66.3-26-91.9-.8l-.8.8-248.1 248.1-248.1-248.1c-25.4-25.4-66.5-25.4-91.9 0s-25.4 66.5 0 91.9l248.1 248.1L19.5 861.8c-25.6 25.1-26 66.3-.8 91.9s66.3 26 91.9.8l.8-.8 248.1-248.1 248.1 248.1c25.4 25.4 66.5 25.4 91.9 0s25.4-66.5 0-91.9L451.4 613.7z"></path></svg>
-            </div>
+            </button>
             <button class="a-btn a-btn--link a-btn--warning results__filters-clear u-mb10" data-js-hook="behavior_clear-all">Clear all filters</button>
           </div>
         </div>
@@ -165,39 +165,41 @@ describe('The TDP search page', () => {
   it('should handle search form submissions', () => {
     const form = document.querySelector('form#search-form');
     simulateEvent('submit', form);
-    expect(window.location.href).toEqual('http://localhost/?q=executive');
+    expect(window.location.href).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=4',
+    );
   });
 
   it('should clear a filter when its X icon is clicked', () => {
     const clearIcon = document.querySelector('.results__filters svg');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(2);
 
     simulateEvent('click', clearIcon);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(1);
   });
 
   it('should not clear a filter when its tag is clicked', () => {
-    const div = document.querySelector('div.a-tag');
+    const div = document.querySelector('button.a-tag-filter');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(2);
 
     simulateEvent('click', div);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(1);
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {
     const clearAllLink = document.querySelector('.results__filters-clear');
 
-    let numFilters = document.querySelectorAll('div.a-tag').length;
+    let numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(2);
 
     simulateEvent('click', clearAllLink);
-    numFilters = document.querySelectorAll('div.a-tag').length;
+    numFilters = document.querySelectorAll('button.a-tag-filter').length;
     expect(numFilters).toEqual(0);
   });
 

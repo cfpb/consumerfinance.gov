@@ -30,4 +30,15 @@ describe('Activity Search', () => {
     search.search('money');
     cy.url().should('include', 'money');
   });
+
+  it('should remember filters when a new search query is performed', () => {
+    search.open();
+    search.search('money');
+    search.selectFilter('activity_duration', '1');
+    search.resultsFilterTag().should('be.visible');
+    search.search('loan');
+    cy.url().should('include', 'loan');
+    cy.url().should('include', 'activity_duration');
+    search.resultsFilterTag().should('be.visible');
+  });
 });

@@ -11,7 +11,8 @@
     padding-bottom: math.div(
         math.div($grid-gutter-width, 2),
         $base-font-size-px
-      ) + em;
+      ) +
+      em;
     border-bottom: 1px solid var(--gray-40);
   }
 
@@ -25,7 +26,10 @@
     border-bottom: 2px solid var(--teal-40);
     padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em
       0;
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
 
     // Tablet and above.
@@ -81,10 +85,14 @@
     padding-bottom: math.div(
         math.div($grid-gutter-width, 2),
         $base-font-size-px
-      ) + em;
+      ) +
+      em;
     border-top: 1px solid var(--gray-40);
     border-bottom: 1px solid var(--gray-40);
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
   }
 
