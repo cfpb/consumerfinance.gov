@@ -1,17 +1,55 @@
-# Default values for helm-cfgov.
+# Default values for cfgov.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
-image:
-  repository: cfgov
-  # This sets the pull policy for images.
-  pullPolicy: Never
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+initContainers:
+  - name: wait-for-db
+    image: 
+      repository: busybox
+      tag: "latest"
+    command: 
+      - 'sh' 
+      - '-c'
+      - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 2; done;'
+  - name: cfgov-migrations
+    image: 
+      repository: cfgov
+      pullPolicy: Never
+      tag: "latest"
+    env:
+      - name: DATABASE_URL
+        value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
+      - name: SECRET_KEY
+        value: "cfgov"
+    command: 
+      - 'sh'
+      - '-c'
+      - './refresh-data.sh --no-index test.sql.gz'
+      
+
+containers:
+  - name: cfgov
+    image: 
+      repository: cfgov
+      pullPolicy: Never
+      tag: "latest" 
+    port: 8000
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failedThreshold: 3
+    env:
+    - name: DATABASE_URL
+      value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
+    - name: SECRET_KEY
+      value: "cfgov"
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -54,7 +92,7 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8000
+  port: 80
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -86,14 +124,10 @@ resources: {}
   #   memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -122,6 +156,7 @@ tolerations: []
 
 affinity: {}
 
+
 postgresql:
   global:
     postgresql:
@@ -130,9 +165,8 @@ postgresql:
         username: cfpb
         password: cfpb
 
+
 pgadmin4:
   env:
     email:  test@domain.com
     password: test
-
-

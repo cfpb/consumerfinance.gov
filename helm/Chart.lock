@@ -6,4 +6,4 @@ dependencies:
   repository: https://helm.runix.net
   version: 1.33.3
 digest: sha256:cddb1ff2c6977f93a32c08d0089bdff4dc00a80504dad4d728de5f027ce9df30
-generated: "2024-12-04T15:26:35.566385-07:00"
+generated: "2024-12-06T05:48:28.869178-07:00"
