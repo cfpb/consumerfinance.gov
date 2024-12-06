@@ -160,9 +160,9 @@
     // Disable iOS link highlighting for our large cards
     -webkit-tap-highlight-color: transparent;
 
-    &:visited .m-card__subtitle {
-      border-color: $link-underline-visited;
-      color: $link-text-visited;
+    &:visited .m-card__link {
+      border-bottom: 1px dotted $link-underline;
+      color: $link-text;
     }
 
     @include respond-to-min($bp-sm-min) {
@@ -183,8 +183,8 @@
     }
 
     .m-card__subtitle {
-      border-bottom: 1px solid $link-underline-hover;
-      color: $link-text-hover;
+//      border-bottom: 1px solid $link-underline-hover;
+//      color: $link-text-hover;
     }
 
     &::after {
@@ -204,13 +204,17 @@
 
   .m-card__heading {
     margin-bottom: 0;
-    color: var(--gray);
+    color: var(--black);
     font-size: math.div(16px, $base-font-size-px) + rem;
     font-weight: 400;
     text-transform: uppercase;
   }
 
   .m-card__subtitle {
+    display: inline;
+  }
+
+  .m-card__link {
     display: inline;
     border-bottom: 1px dotted $link-underline;
     color: $link-text;
@@ -381,21 +385,11 @@ html.js .o-filterable-list-results--partial {
   }
 }
 
-// A vertical white linear gradient that overlaps the last
-// card result to emphasize that there are more cards to see
-#u-show-more-fade {
-  position: relative;
-  margin-top: math.div(-200px, $base-font-size-px) + rem;
-  padding-top: math.div(180px, $base-font-size-px) + rem;
+#u-show-more {
+  margin-top: math.div(0px, $base-font-size-px) + rem;
+  padding-top: math.div(20px, $base-font-size-px) + rem;
   z-index: 1;
   cursor: pointer;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0%),
-    rgba(255, 255, 255, 70%),
-    rgba(255, 255, 255, 97%),
-    rgba(255, 255, 255, 100%)
-  );
 }
 
 .m-credit-tier-chart {
