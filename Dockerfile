@@ -132,6 +132,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # Copy the application code over
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
+COPY . .
 
 # Copy our static build over from node-builder
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
@@ -146,5 +147,5 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 RUN SECRET_KEY=only-for-collectstatic cfgov/manage.py collectstatic --noinput
 
 # Run Gunicorn
-# CMD gunicorn --reload cfgov.wsgi:application -b :8000
-CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
+CMD gunicorn --reload cfgov.wsgi:application -b :8000
+# CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
