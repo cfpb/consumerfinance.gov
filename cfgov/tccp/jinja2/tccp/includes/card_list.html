@@ -60,7 +60,7 @@
             card.annual_fee_estimated,
             default=('See details' if card.annual_fee_estimated is none and card.periodic_fee_type else '$0')
         ) -%}
-        {%- set show_more = loop.index > 11 and ordering_by != 'product_name' -%}
+        {%- set show_more = loop.index > 10 and ordering_by != 'product_name' -%}
         <article class="m-card m-card--tabular{% if show_more %} u-show-more{% endif %}">
             <a
                 href="{{ card.url }}"
@@ -179,7 +179,7 @@
                     {%- endif -%}
                 </dl>
                 <div class="m-card__footer">
-                    <p class="m-card__subtitle">See card details</p>
+                    <p class="m-card__link">See card details</p>
                 </div>
             </a>
         </article>
