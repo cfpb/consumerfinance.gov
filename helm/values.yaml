@@ -50,6 +50,16 @@ containers:
       value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
     - name: SECRET_KEY
       value: "cfgov"
+  - name: cfgov-apache
+    image: 
+      repository: httpd
+      pullPolicy: IfNotPresent
+      tag: "latest"
+    port: 80
+    # volumeMounts: 
+    # - name: apache-cfgov-config
+    #   mountPath: /usr/local/apache2/conf/httpd.conf
+    #   subPath: httpd.conf
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -138,12 +148,10 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-
+volumes: 
+- name: apache-cfgov-config
+  configMap:
+    name: apache-config
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
