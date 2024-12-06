@@ -45,8 +45,8 @@ spec:
             - {{ . }}
           {{- end }}
       {{- end }}
-      {{- range .Values.containers }}
       containers:
+      {{- range .Values.containers }}
         - name: {{ .name }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
@@ -54,12 +54,26 @@ spec:
             - name: http
               containerPort: {{ .port }}
               protocol: TCP
+          {{- if .env }}
           env: 
             {{- range .env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
+          {{- end }}
+          {{- if .command}}
+          command:
+            {{- range .command }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .volumeMounts }}
+          volumeMounts:
+            {{- toYaml .volumeMounts | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- with .Values.volumes }}
       volumes:
