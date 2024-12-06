@@ -8,8 +8,6 @@
 
 set -e
 
-NO_INDEX=0
-
 usage() {
     cat << EOF
 Please download a recent database dump before running this script:
@@ -24,7 +22,7 @@ download it for you:
 
 Additional options:
 
-      --no-index  Do not update search indexes after refreshing
+      --noindex  Do not update search indexes after refreshing
 
 EOF
     exit 1;
@@ -94,11 +92,12 @@ get_data() {
     fi
 }
 
+noindex=false
 for arg in "$@"; do
     shift
     case "$arg" in
-        "--no-index")
-            NO_INDEX=1
+        "--noindex")
+            noindex=1
             ;;
         *)
             refresh_dump_name=$arg
@@ -110,6 +109,6 @@ get_data
 check_data
 refresh_data
 
-if [[ $NO_INDEX -ne 1 ]]; then
+if [[ $noindex -ne 1 ]]; then
     update_index
 fi

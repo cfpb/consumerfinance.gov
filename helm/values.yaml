@@ -27,7 +27,7 @@ initContainers:
     command: 
       - 'sh'
       - '-c'
-      - './refresh-data.sh --no-index test.sql.gz'
+      - './refresh-data.sh --noindex test.sql.gz'
       
 
 containers:
