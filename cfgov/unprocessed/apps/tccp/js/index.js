@@ -133,10 +133,8 @@ function handleShowMore(event) {
     event.preventDefault();
   }
   const results = document.querySelector('.o-filterable-list-results');
-  const showMoreFade = document.querySelector('#u-show-more-fade');
   const nextResult = document.querySelector('.u-show-more > a');
   results.classList.remove('o-filterable-list-results--partial');
-  showMoreFade.classList.add('u-hidden');
   nextResult.focus();
 }
 
