@@ -56,10 +56,42 @@ containers:
       pullPolicy: IfNotPresent
       tag: "latest"
     port: 80
-    # volumeMounts: 
-    # - name: apache-cfgov-config
-    #   mountPath: /usr/local/apache2/conf/httpd.conf
-    #   subPath: httpd.conf
+    env:
+    - name: APACHE_PORT
+      value: "80"
+    - name: APACHE_USER
+      value: "www-data"
+    - name: APACHE_GROUP
+      value: "www-data"
+    - name: APACHE_SERVER_ROOT
+      value: "/usr/local/apache2/"
+    - name: APACHE_UPLOADS_F_ALIAS
+      value: "/src/consumerfinance.gov/cfgov/f/"
+    - name: STATIC_PATH
+      value: "/tmp"
+    - name: ERROR_LOG
+      value: "/proc/self/fd/2"
+    - name: ACCESS_LOG
+      value: "/proc/self/fd/1"
+    - name: LIMIT_REQUEST_BODY
+      value: "0"
+    - name: APACHE_STATUS_ALLOW_FROM
+      value: "127.0.0.1"
+    - name: APACHE_PROCESS_COUNT
+      value: "4"
+    - name: CFGOV_APPLICATION_HOST
+      value: "localhost"
+    # command:
+    #   - 'sh'
+    #   - '-c'
+    #   - 'sleep 1000'     
+    volumeMounts: 
+    - name: apache-conf
+      mountPath: /usr/local/apache2/conf
+    - name: apache-confd
+      mountPath: /usr/local/apache2/conf.d
+    - name: apache-conf-modules
+      mountPath: /usr/local/apache2/conf.modules.d
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -149,9 +181,15 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes: 
-- name: apache-cfgov-config
+- name: apache-conf
   configMap:
-    name: apache-config
+    name: apache-conf-config
+- name: apache-confd
+  configMap:
+    name: apache-confd-config
+- name: apache-conf-modules
+  configMap:
+    name: apache-conf-modules-config
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
