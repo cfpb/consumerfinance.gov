@@ -51,11 +51,5 @@ if [ ! -z $REBUILD_INDEX ]; then
   django-admin opensearch document --force --refresh index
 fi
 
-# Do first-time build of the front-end if necessary
-if [ ! -d "node_modules" ] && [ ! "$(ls cfgov/static_built)" ]; then
-    echo "Running ./frontend.sh for the first time..."
-    ./frontend.sh
-fi
-
 # Execute the Docker CMD
 exec "$@"
