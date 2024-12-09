@@ -144,3 +144,12 @@ if ENABLE_SSO:
     LOGGING["loggers"]["mozilla_django_oidc"] = {
         "level": "INFO",
     }
+
+if DEPLOY_ENVIRONMENT == "container":
+    MIDDLEWARE += (
+        "whitenoise.middleware.WhiteNoiseMiddleware",
+    )
+
+    # This can result in a redirect loop if True and an X-Forwarded-Proto
+    # header is not provided.
+    SECURE_SSL_REDIRECT = False
