@@ -44,12 +44,11 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel awscli && \
-    pip3 install -r requirements/deployment.txt && \
+    pip3 install -r requirements/deployment_container.txt && \
     apk del .build-deps
 
 # The application will run on port 8000
 EXPOSE 8000
-
 
 #######################################################################
 # Build frontend assets using a Node base image
@@ -125,6 +124,7 @@ CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 FROM python AS prod
 
 # Django Settings
+ENV DEPLOY_ENVIRONMENT container
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
