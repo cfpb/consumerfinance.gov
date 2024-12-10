@@ -17,6 +17,7 @@
 !dump-data.sh
 !Dockerfile
 !frontend.sh
+!index.sh
 !initial-data.sh
 !jest.config.js
 !package.json

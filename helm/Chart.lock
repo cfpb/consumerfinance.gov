@@ -5,5 +5,8 @@ dependencies:
 - name: pgadmin4
   repository: https://helm.runix.net
   version: 1.33.3
-digest: sha256:cddb1ff2c6977f93a32c08d0089bdff4dc00a80504dad4d728de5f027ce9df30
-generated: "2024-12-06T05:48:28.869178-07:00"
+- name: opensearch
+  repository: https://opensearch-project.github.io/helm-charts/
+  version: 1.31.3
+digest: sha256:a9576d12585500d4f1e276d7d35b077f45b734cc2972183d519b60c0283980da
+generated: "2024-12-10T07:53:25.026703-07:00"

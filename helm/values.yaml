@@ -13,7 +13,8 @@ initContainers:
     command: 
       - 'sh' 
       - '-c'
-      - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 2; done;'
+      - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 10; done;'
+      - 'until nc -z opensearch-cluster-master 9200; do echo waiting for opensearch; sleep 10; done;'
   - name: cfgov-migrations
     image: 
       repository: cfgov
@@ -24,10 +25,14 @@ initContainers:
         value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
       - name: SECRET_KEY
         value: "cfgov"
+      - name: ES_HOST
+        value: "opensearch-cluster-master"
+      - name: ES_PORT
+        value: "9200"
     command: 
       - 'sh'
       - '-c'
-      - './refresh-data.sh --noindex test.sql.gz'
+      - './refresh-data.sh test.sql.gz' 
       
 
 containers:
@@ -50,6 +55,10 @@ containers:
       value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
     - name: SECRET_KEY
       value: "cfgov"
+    - name: ES_HOST
+      value: "opensearch-cluster-master"
+    - name: ES_PORT
+      value: "9200"
   - name: cfgov-apache
     image: 
       repository: httpd
@@ -216,3 +225,6 @@ pgadmin4:
   env:
     email:  test@domain.com
     password: test
+
+opensearch:
+  replicas: 1
