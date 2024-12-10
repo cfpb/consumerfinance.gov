@@ -3,6 +3,16 @@ FROM python:3.8-alpine as python
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
 
+# Create a non-root user
+ARG USERNAME=cfgov
+ARG USER_UID=1000
+RUN addgroup --gid ${USER_UID} ${USERNAME} && \
+    adduser \
+        --uid ${USER_UID} \
+        --ingroup ${USERNAME} \
+        --disabled-password \
+        ${USERNAME}
+
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 
@@ -104,17 +114,22 @@ ENV ALLOWED_HOSTS '["*"]'
 # Install dev/local Python requirements
 RUN pip install -r requirements/local.txt
 
-# Copy the root directory into the dev container
+# Copy the necessary files and directories into the dev container
 # Note: by specifying specific files we enable this layer to be cached if
 # these files do not change.
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
-
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 
 # Run our initial data entrypoint script
 ENTRYPOINT ["./docker-entrypoint.sh"]
+
+# Give our user ownership over the app directory
+RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
+
+# Run the application with the user we created
+USER $USERNAME
 
 # Run Django's runserver
 CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
@@ -124,7 +139,6 @@ CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 FROM python AS prod
 
 # Django Settings
-ENV DEPLOY_ENVIRONMENT container
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
@@ -145,6 +159,12 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 # used in any way during staticfiles collection. We provide a random
 # secret key here for this step only.
 RUN SECRET_KEY=only-for-collectstatic cfgov/manage.py collectstatic --noinput
+
+# Give our user ownership over the app directory
+RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
+
+# Run the application with the user we created
+USER $USERNAME
 
 # Run Gunicorn
 CMD gunicorn cfgov.wsgi:application -b :8000
