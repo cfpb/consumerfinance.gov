@@ -21,3 +21,6 @@ dependencies:
   - name: pgadmin4
     version: 1.33.3
     repository: https://helm.runix.net
+  - name: opensearch
+    version: 1.31.3
+    repository: https://opensearch-project.github.io/helm-charts/
