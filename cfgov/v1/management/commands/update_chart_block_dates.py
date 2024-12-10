@@ -56,7 +56,9 @@ class Command(BaseCommand):
     def update_chart_blocks(self, date_published, last_updated, markets):
         """Update date_published on all chart blocks"""
 
-        cct_landing_page = CFGOVPage.objects.get(pk=4475).specific
+        cct_landing_page = CFGOVPage.objects.get(
+            slug="consumer-credit-trends"
+        ).specific
 
         for page in BrowsePage.objects.live().descendant_of(cct_landing_page):
             chart_blocks = list(
