@@ -2,11 +2,8 @@ dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 16.2.3
-- name: pgadmin4
-  repository: https://helm.runix.net
-  version: 1.33.3
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts/
   version: 1.31.3
-digest: sha256:a9576d12585500d4f1e276d7d35b077f45b734cc2972183d519b60c0283980da
-generated: "2024-12-10T07:53:25.026703-07:00"
+digest: sha256:9a8a22b89a2f2c3c3d9ab178dc0b751c75d95e37215baf42a27b80982469efe0
+generated: "2024-12-10T15:35:50.786246-07:00"

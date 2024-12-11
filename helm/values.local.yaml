@@ -5,6 +5,11 @@
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
+tests:
+  enabled: false
+
+localDeployment: true
+
 initContainers:
   - name: wait-for-db
     image: 
@@ -125,7 +130,7 @@ serviceAccount:
 podAnnotations: {}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {}
+podLabels: {"app.kubernetes.io/name": "cfgov"}
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -213,6 +218,8 @@ affinity: {}
 
 
 postgresql:
+  labels:
+    app: cfgov-postgresql
   global:
     postgresql:
       auth:
