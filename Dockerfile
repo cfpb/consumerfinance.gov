@@ -53,8 +53,8 @@ RUN \
         curl \
         postgresql \
     && \
-    pip install --upgrade pip setuptools wheel awscli && \
-    pip3 install -r requirements/deployment_container.txt && \
+    pip install --upgrade pip setuptools wheel && \
+    pip install -r requirements/deployment_container.txt && \
     apk del .build-deps
 
 # The application will run on port 8000

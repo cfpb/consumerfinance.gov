@@ -1,6 +1,6 @@
 # Our classic mod_wsgi deployment will move this file into place if we're
 # expecting to use mod_wsgi.
-# TODO: Remove when the application is containerized or moved to Gunicorn
+# TODO: Remove when the application is containerized or moved to Gunicorn.
 
 ServerName https://www.consumerfinance.gov
 
