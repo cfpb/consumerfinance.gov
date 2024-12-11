@@ -385,11 +385,21 @@ html.js .o-filterable-list-results--partial {
   }
 }
 
-#u-show-more {
-  margin-top: math.div(0px, $base-font-size-px) + rem;
-  padding-top: math.div(20px, $base-font-size-px) + rem;
+// A vertical white linear gradient that overlaps the last
+// card result to emphasize that there are more cards to see
+#u-show-more-fade {
+  position: relative;
+  margin-top: math.div(-200px, $base-font-size-px) + rem;
+  padding-top: math.div(180px, $base-font-size-px) + rem;
   z-index: 1;
   cursor: pointer;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0%),
+    rgba(255, 255, 255, 70%),
+    rgba(255, 255, 255, 97%),
+    rgba(255, 255, 255, 100%)
+  );
 }
 
 .m-credit-tier-chart {

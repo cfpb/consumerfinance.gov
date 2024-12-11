@@ -1,6 +1,6 @@
-{% macro tooltip(name, heading=none, body=none, icon="help-round") -%}
+{% macro tooltip(name, heading=none, body=none, icon="help-round", tabindex="0") -%}
 
-<span data-tooltip>
+<span tabindex="{% if tabindex == False %}0{% else %}-1{% endif %}" data-tooltip>
     {{ svg_icon(icon) }}
 </span>
 <template>
