@@ -22,8 +22,12 @@ fi
 
 if ! docker images | grep -q "cfgov"; then
     echo -e "${RED}Docker images 'cfgov' could not be found." 
-    echo -e "Please run:{$NC} docker build . -t cfgov:latest"
-    exit 1
+    docker build . -t cfgov
+fi
+
+if ! docker images | grep -q "cfgov-apache"; then
+    echo -e "${RED}Docker images 'cfgov-apache' could not be found." 
+    docker build ./cfgov/apache/. -t cfgov-apache
 fi
 
 # Get the current Kubernetes cluster context
