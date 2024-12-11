@@ -5,7 +5,7 @@ First, follow
 to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
-to run an Elasticsearch container, a PostgreSQL container,
+to run an Elasticsearch container, a PostgreSQL container, an Apache container,
 and Django in a Python container.
 
 All of these containers are configured in our
@@ -15,13 +15,13 @@ for more about the format and use of this file.
 
 The following URLs are mapped to your host from the containers:
 
-- Access consumerfinance.gov running in the Python container: http://localhost:8000/
+- Access consumerfinance.gov directly running in the Python container: http://localhost:8000/
+- Access Apache proxying to the Python container: http://localhost:8080/
 - Access Elasticsearch: http://localhost:9200/
 
 To build and run the containers for the first time, run:
 
 ```bash
-docker network create cfgov
 docker-compose up
 ```
 
@@ -91,7 +91,7 @@ and need to interact with the running Django process when the breakpoint is reac
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
 ```bash
-docker attach consumerfinancegov_python_1
+docker attach consumerfinancegov-python-1
 ```
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
@@ -99,13 +99,13 @@ When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 !!! note
 
     `docker attach` takes the specific container name or ID.
-    Yours may or may not be `consumerfinancegov_python_1`.
+    Yours may or may not be `consumerfinancegov-python-1`.
     To verify, use `docker container ls`
     to get the Python container's full name or ID.
 
 !!! note
 
-    `docker attach` will ONLY work with the dev image, not prod (apache).
+    `docker attach` will ONLY work with the dev image, not prod.
 
 ## Useful Docker commands
 
@@ -132,9 +132,8 @@ container in production.
 This includes:
 
 - all relevant `consumerfinance.gov` source code
-- all OS, Python, and JS dependencies for building and running the cf.gov webapp
+- all OS, Python, and JS dependencies for building and running cf.gov
 - procedures for executing Django `collectstatic` and `yarn`-based frontend build process
-- an Apache HTTPD webserver with `mod_wsgi`, run with configs in `consumerfinance.gov`
 
 ### How do I use it?
 
@@ -173,18 +172,19 @@ change configs locally without having to rebuild the image each time.
    ./refresh-data.sh
    ```
 
-1. Browse to your new local cf.gov site.
+1. Browse to your new local cf.gov site
 
-   http://localhost:8000
+   http://localhost:8080 (Apache)
+
+   Or directly to Gunicorn running Django:
+
+   http://localhost:8000 (Gunicorn)
 
 1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache)
-   config and reload Apache (optional).
+   config and restart the Apache container.
 
    ```bash
-   docker-compose exec python sh
-
-   # Once in the container...
-   httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
+   docker-compose restart apache
    ```
 
 1. Switch back to the development Compose setup.
@@ -201,17 +201,12 @@ This project heavily utilizes
 
 There are a few layers at work here, with the hierarchy represented by the list structure:
 
-- `base` - This is the bare minimum base Python layer for building up any further layers.
-  - `cfgov-python-builder` - Installs deployment Python dependencies to `/build` for use
-    in `cfgov-dev` and `cfgov-prod`.
-    _ `cfgov-dev` - Dev layer used for local development. Contains no code
-    (requires code volume mount), and installs additional dependencies only needed for local development.
-    _ `cfgov-frontend-builder` - Frontend builder layer, builds static files for Django
-  - `cfgov-mod-wsgi` - mod_wsgi compile layer for Apache2
-    (helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
-  - `cfgov-prod` - Final layer for Production. Installs and uses Apache2,
-    swaps to `apache` user, copies in all files from previous layers to maintain a lightweight image.
-
-The production image extends **ONLY** the base layer to maintain a lightweight final image.
-Everything from previous layers is copied in from those layers using `COPY --from=<layer-name>`.
-This dramatically improves the overall final image size.
+- `python`, the base Python layer for building up any further layers.
+  It includes OS and Python-level application requirements.
+- `node-builder`, a Node-based image that runs our frontend build.
+- `dev`, based on `python`, which copies frontend assets from `node-builder`,
+  sets up some initial data, and runs Django with `local` settings via
+  `runserver` on port 8000.
+- `prod`, based on `python`, which copies frontend assets from `node-builder`,
+  and runs the application with `production` settings via Gunicorn on
+  port 8000.
