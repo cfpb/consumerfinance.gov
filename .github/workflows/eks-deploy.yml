@@ -1,11 +1,9 @@
 name: Deploy CF.gov to EKS
 on: 
   push:
-    branches:
-      - cfgov-helmed-eks
 jobs: 
   build: 
     runs-on: codebuild-cfgov-cfgov-gha
   steps: 
     - name: Say Hello World
-      run: echo "Hello World"
+      run: echo "Hello World
