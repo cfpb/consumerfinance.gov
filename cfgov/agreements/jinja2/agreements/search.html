@@ -62,6 +62,7 @@
 
     {% include '_database_disclaimer.html' %}
 
+    {{ agreements_issuers() | safe }}
 {% endblock %}
 
 {% block content_sidebar scoped  %}
@@ -75,7 +76,9 @@
             <h3 class="h6">
                 Show agreements by card issuer
             </h3>
-            {{ agreements_issuer_select(issuer.slug) | safe }}
+
+            <p id="select-root" class="u-mb5"></p>
+            <div style="display:none" id="issuer-slug">{{issuer.slug}}</div>
             <p>
                 <a href="#find-issuer">
                     Can't find an issuer?

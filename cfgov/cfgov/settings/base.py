@@ -72,6 +72,10 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sitemaps",
+    # Including WhiteNoise before staticfiles so that WhiteNoise always
+    # serves static files, even in development.
+    # https://whitenoise.readthedocs.io/en/latest/django.html#using-whitenoise-in-development
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "wagtail.search",
@@ -123,6 +127,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -136,7 +142,6 @@ MIDDLEWARE = (
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
@@ -627,6 +632,12 @@ FLAGS = {
     # TCCP credit card finder
     "TCCP": [
         ("environment is", "dev4"),
+        ("environment is", "local"),
+        ("environment is", "test"),
+    ],
+    # Spanish homepage
+    "SPANISH_HOMEPAGE": [
+        ("environment is", "dev5"),
         ("environment is", "local"),
         ("environment is", "test"),
     ],

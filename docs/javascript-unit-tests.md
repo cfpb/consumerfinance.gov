@@ -164,8 +164,8 @@ to save and commit your changes.
    The line should now read:
 
    ```js
-   it( 'should return a string with expected value', () => {
-     …
+   it('should return a string with expected value', () => {
+     // …
    });
    ```
 
@@ -216,38 +216,13 @@ include the JavaScript file that you are testing.
 Additional dependencies should be added in the same manner.
 
 ```js
+// This file has a default export.
 import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
+
+// Or, if the file has a named export, that can be imported.
+import { sample } from '../../../../cfgov/unprocessed/js/modules/sample.js';
 ```
 
-Some test files use `const` declarations to
-`require` scripts instead of `import`,
-because those files were written before `import` was available.
-We prefer to use `import` because it allows for tree shaking,
-meaning if two modules are importing the same module
-it should only be included in the bundle once,
-whereas with `require` it would be included twice.
-
-A consequence is that variables can’t be used in the import path,
-as they prevent Webpack from figuring out which modules are duplicates.
-For example, this snippet shows how a `require` statement
-should be converted to an `import` statement,
-but without including the `BASE_JS_PATH` variable in the file path:
-
-```js
-// This works, but could duplicate footer-button.js, if other files also require it.
-const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
-
-// This doesn't work and the build will fail.
-import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
-
-// This is ugly, but it works and supports tree shaking.
-import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
-```
-
-`import` also provides a benefit in that you can choose specific parts
-of a module so that you only import the dependencies you need.
-For testing purposes, we will typically import the whole module
-to make sure we have full test coverage.
 [Read the `import` reference guide on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
 on how to implement `import` for different use cases.
 
@@ -264,8 +239,8 @@ For the sample, the name of our module is `sample`,
 so we set this up on line 4 of `sample-spec.js`:
 
 ```js
-describe( 'sample', () => {
-  …
+describe('sample', () => {
+  // …
 });
 ```
 
@@ -493,18 +468,18 @@ const HTML_SNIPPET = `
   </div>
 `;
 
-describe( 'Notification', () => {
+describe('Notification', () => {
   let notificationElem;
   let notification;
   let thisNotification;
 
-  beforeEach( () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    notificationElem = document.querySelector( `.${ BASE_CLASS }` );
-    notification = new Notification( notificationElem, BASE_CLASS, {});
+    notificationElem = document.querySelector(`.${BASE_CLASS}`);
+    notification = new Notification(notificationElem, BASE_CLASS, {});
   });
 
-  …
+  // …
 });
 ```
 
@@ -537,30 +512,24 @@ Further down, here are some of the tests that cover the `_setType` function
 wraps both `_setType` and `_setContent`):
 
 ```js
-describe( 'setTypeAndContent()', () => {
-  it( 'should update the notification type for the success state', () => {
+describe('setTypeAndContent()', () => {
+  it('should update the notification type for the success state', () => {
     notification.init();
 
-    notification.setTypeAndContent(
-      notification.SUCCESS,
-      ''
-    );
+    notification.setTypeAndContent(notification.SUCCESS, '');
 
-    expect( notificationElem.classList ).toContain( 'm-notification--success' );
+    expect(notificationElem.classList).toContain('m-notification--success');
   });
 
-  it( 'should update the notification type for the warning state', () => {
+  it('should update the notification type for the warning state', () => {
     notification.init();
 
-    notification.setTypeAndContent(
-      notification.WARNING,
-      ''
-    );
+    notification.setTypeAndContent(notification.WARNING, '');
 
-    expect( notificationElem.classList ).toContain( 'm-notification--warning' );
+    expect(notificationElem.classList).toContain('m-notification--warning');
   });
 
-  …
+  // …
 });
 ```
 
