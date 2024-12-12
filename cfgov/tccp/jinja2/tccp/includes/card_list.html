@@ -182,7 +182,7 @@
                     {%- endif -%}
                 </dl>
                 <div class="m-card__footer">
-                    <p class="m-card__link" tabindex="{% if loop.index == 11 %}-1{% else %}0{% endif %}">See card details</p>
+                    <p class="m-card__link" data-js-hook="behavior_card-link-proxy" tabindex="{% if loop.index == 11 %}-1{% else %}0{% endif %}">See card details</p>
                 </div>
             </a>
         </article>
