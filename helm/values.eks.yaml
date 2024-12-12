@@ -23,7 +23,7 @@ initContainers:
   - name: cfgov-migrations
     image: 
       repository: cfgov
-      pullPolicy: Never
+      pullPolicy: Always
       tag: "latest"
     env:
       - name: DATABASE_URL
@@ -44,7 +44,7 @@ containers:
   - name: cfgov
     image: 
       repository: cfgov
-      pullPolicy: Never
+      pullPolicy: Always
       tag: "latest" 
     port: 8000
     readinessProbe:
@@ -67,7 +67,7 @@ containers:
   - name: cfgov-apache
     image: 
       repository: cfgov-apache
-      pullPolicy: Never
+      pullPolicy: Always
       tag: "latest"
     port: 80
 
