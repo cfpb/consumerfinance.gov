@@ -18,14 +18,14 @@ jobs:
             , ${{ secrets.SECURITY_SCAN}}
           parse-json-secrets: true
       
-      # - name: Build Docker Images
-      #   run: |
+      - name: Build Docker Images
+        run: |
 
-      #     # Build the CFGOV Image
-      #       docker build . -t ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          # Build the CFGOV Image
+            docker build . -t ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
 
-      #     # Build the CFGOV-Apache Image
-      #       docker build cfgov/apache/. -t ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+          # Build the CFGOV-Apache Image
+            docker build cfgov/apache/. -t ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
 
       - name: Security With Twistlock
@@ -33,7 +33,9 @@ jobs:
          curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
          chmod +x twistcli
 
-        #  ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" 
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
       
 
         
