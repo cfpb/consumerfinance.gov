@@ -11,31 +11,31 @@ jobs:
         uses: actions/checkout@v2
     
 
-      # - name: Retrieve Security Scan Secrets
-      #   uses: aws-actions/aws-secretsmanager-get-secrets@v2
-      #   with:
-      #     secret-ids: |
-      #       , ${{ secrets.SECURITY_SCAN}}
-      #     parse-json-secrets: true
+      - name: Retrieve Security Scan Secrets
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            , ${{ secrets.SECURITY_SCAN}}
+          parse-json-secrets: true
       
-      # - name: Build Docker Images
-      #   run: |
+      - name: Build Docker Images
+        run: |
 
-      #     # Build the CFGOV Image
-      #       docker build . -t ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          # Build the CFGOV Image
+            docker build . -t ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
 
-      #     # Build the CFGOV-Apache Image
-      #       docker build cfgov/apache/. -t ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+          # Build the CFGOV-Apache Image
+            docker build cfgov/apache/. -t ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
 
-      # - name: Security With Twistlock
-      #   run: |
-      #    curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
-      #    chmod +x twistcli
+      - name: Security With Twistlock
+        run: |
+         curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
+         chmod +x twistcli
 
-      #    ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
 
-      #    ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
       
 
         
@@ -45,9 +45,9 @@ jobs:
           # Login to ECR
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username ${{ secrets.AWS_USERNAME }} --password-stdin ${{ secrets.ECR_REGISTRY }}
 
-          # # Push to ECR
-          # docker push ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
-          # docker push ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+          # Push to ECR
+          docker push ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          docker push ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
       - name: Install K8s/Helm
         run: |
@@ -71,13 +71,13 @@ jobs:
           # Update kubeconfig to point to EKS Cluster
           aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
       
-      # - name: Deploy to EKS
-      #   run: >
-      #     helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml 
-      #     --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
-      #     --set initContainer[1].image.tag=${GITHUB_SHA}
-      #     --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
-      #     --set containers[0].image.tag=${GITHUB_SHA}
-      #     --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
-      #     --set containers[1].image.tag=${GITHUB_SHA}
-      #     --set mapping.host=${{ secrets.HOST }}
+      - name: Deploy to EKS
+        run: >
+          helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml 
+          --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
+          --set initContainer[1].image.tag=${GITHUB_SHA}
+          --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
+          --set containers[0].image.tag=${GITHUB_SHA}
+          --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
+          --set containers[1].image.tag=${GITHUB_SHA}
+          --set mapping.host=${{ secrets.HOST }}
