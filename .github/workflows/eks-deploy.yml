@@ -3,7 +3,45 @@ on:
   push:
 jobs: 
   build: 
-    runs-on: codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: 
+      - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
+      - buildspec-override: true 
+
     steps: 
       - name: Say Hello World
-        run: echo "Hello World
+        run: echo $TEST
+      # - name: Checkout Friendly-Umbrella
+      #   uses: actions/checkout@v2
+    
+
+      # - name: Retrieve Security Scan Secrets
+      #   uses: aws-actions/aws-secretsmanager-get-secrets@v2
+      #   with:
+      #     secret-ids: |
+      #       , ${{ secrets.SECURITY_SCAN_SECRET }}
+      #     parse-json-secrets: true
+      
+      # - name: Build Docker Images
+      #   run: |
+
+
+      # - name: Security With Twistlock
+      #   run: |
+      #    curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
+      #     chmod +x twistcli
+
+      #    ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" 
+      
+
+        
+      # - name: Push Images to ECR
+      #   run: |
+
+      #     # Login to ECR
+      #     aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username ${{ secrets.AWS_USERNAME }} --password-stdin ${{ secrets.ECR_REGISTRY }}
+
+      #     # Push to ECR
+      #     docker push ${{ secrets.ECR_REPO }}:$GITHUB_SHA
+
+      # - name: Say Hello World
+      #   run: echo "Hello World"

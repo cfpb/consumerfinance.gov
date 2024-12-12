@@ -1,0 +1,15 @@
+# Buildspec Reference Doc: https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+
+version: 0.2
+
+env:
+  variables:
+    TEST: "testing"
+
+phases:
+  install:
+    commands:
+      - echo "Testing buildspec"
+  pre_build:
+    commands:
+      - echo "Testing pre-build"
