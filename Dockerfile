@@ -19,6 +19,9 @@ ENV LANG en_US.UTF-8
 # Disable pip cache dir
 ENV PIP_NO_CACHE_DIR 1
 
+# Allow pip install as root.
+ENV PIP_ROOT_USER_ACTION ignore
+
 # Stops Python default buffering to stdout, improving logging to the console
 ENV PYTHONUNBUFFERED 1
 

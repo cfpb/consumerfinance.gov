@@ -172,7 +172,7 @@ change configs locally without having to rebuild the image each time.
    ./refresh-data.sh
    ```
 
-1. Browse to your new local cf.gov site
+1. Browse to your new local cf.gov site:
 
    http://localhost:8080 (Apache)
 
