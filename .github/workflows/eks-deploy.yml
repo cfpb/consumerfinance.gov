@@ -3,7 +3,7 @@ on:
   push:
 jobs: 
   build: 
-    runs-on: codebuild-cfpb-cfgov-cfgov-gha
+    runs-on: codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
     steps: 
       - name: Say Hello World
         run: echo "Hello World
