@@ -5,7 +5,7 @@ jobs:
   build: 
     runs-on: 
       - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
-      - buildspec-override: true 
+      - buildspec-override:true 
 
     steps: 
       - name: Say Hello World
