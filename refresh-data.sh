@@ -55,21 +55,14 @@ check_data() {
 refresh_data() {
     echo 'Importing refresh db'
     gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell > /dev/null
-    SCHEMA="$(gunzip -c $refresh_dump_name | grep -m 1 'CREATE SCHEMA' | sed 's/CREATE SCHEMA \(.*\);$/\1/')"
-    PGUSER="${PGUSER:-cfpb}"
-    if [ "${PGUSER}" != "${SCHEMA}" ]; then
-      echo "Adjusting schema name to match username..."
-      echo "DROP SCHEMA IF EXISTS \"${PGUSER}\" CASCADE; \
-        ALTER SCHEMA \"${SCHEMA}\" RENAME TO \"${PGUSER}\"" | psql > /dev/null 2>&1
-    fi
-    echo 'Running any necessary migrations'
-    ./cfgov/manage.py migrate --noinput --fake-initial
-    echo 'Setting up initial data'
-    ./cfgov/manage.py runscript initial_data
+}
+
+initial_data() {
+    ./initial-data.sh
 }
 
 update_index() {
-  source ./index.sh
+    source ./index.sh
 }
 
 get_data() {
@@ -108,6 +101,7 @@ done
 get_data
 check_data
 refresh_data
+initial_data
 
 if [[ $noindex -ne 1 ]]; then
     update_index

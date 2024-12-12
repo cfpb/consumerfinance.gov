@@ -1,3 +1,7 @@
+# Our classic mod_wsgi deployment will move this file into place if we're
+# expecting to use mod_wsgi.
+# TODO: Remove when the application is containerized or moved to Gunicorn.
+
 ServerName https://www.consumerfinance.gov
 
 LoadModule wsgi_module modules/mod_${SCL_PYTHON_VERSION}-wsgi.so
