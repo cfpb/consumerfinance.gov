@@ -3,7 +3,7 @@ on:
   push:
 jobs: 
   build: 
-    runs-on: codebuild-cfgov-cfgov-gha
+    runs-on: codebuild-cfpb-cfgov-cfgov-gha
     steps: 
       - name: Say Hello World
         run: echo "Hello World
