@@ -44,7 +44,7 @@ containers:
   - name: cfgov
     image: 
       repository: cfgov
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       tag: "latest" 
     port: 8000
     readinessProbe:
@@ -67,7 +67,7 @@ containers:
   - name: cfgov-apache
     image: 
       repository: cfgov-apache
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       tag: "latest"
     port: 80
 
