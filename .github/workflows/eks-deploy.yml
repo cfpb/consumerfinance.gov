@@ -33,7 +33,7 @@ jobs:
          curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
          chmod +x twistcli
 
-         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" 
+        #  ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" 
       
 
         
