@@ -69,7 +69,7 @@ jobs:
           kubectl version --client
 
           # Update kubeconfig to point to EKS Cluster
-          aws eks update-kubeconfig --name $CLUSTER_NAME --region us-east-1
+          aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
       
       - name: Deploy to EKS
         run: >
