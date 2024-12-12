@@ -184,7 +184,7 @@
 <a href="../installation/#docker-based-installation">the Docker installation instructions</a>
 to setup your Docker environment and create the project Docker containers.</p>
 <p>We use <a href="https://docs.docker.com/compose/reference/overview/"><code>docker-compose</code></a>
-to run an Elasticsearch container, a PostgreSQL container,
+to run an Elasticsearch container, a PostgreSQL container, an Apache container,
 and Django in a Python container.</p>
 <p>All of these containers are configured in our
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
@@ -192,12 +192,12 @@ See the <a href="https://docs.docker.com/compose/compose-file/">Docker documenta
 for more about the format and use of this file.</p>
 <p>The following URLs are mapped to your host from the containers:</p>
 <ul>
-<li>Access consumerfinance.gov running in the Python container: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
+<li>Access consumerfinance.gov directly running in the Python container: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
+<li>Access Apache proxying to the Python container: <a href="http://localhost:8080/">http://localhost:8080/</a></li>
 <li>Access Elasticsearch: <a href="http://localhost:9200/">http://localhost:9200/</a></li>
 </ul>
 <p>To build and run the containers for the first time, run:</p>
-<pre class="highlight"><code class="language-bash">docker network create cfgov
-docker-compose up</code></pre>
+<pre class="highlight"><code class="language-bash">docker-compose up</code></pre>
 <h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
 <p>Environment variables from your <code>.env</code> file are sourced
 when the Python container starts
@@ -242,18 +242,18 @@ and rebuild the Python container using:</p>
 <p>If you have inserted a <a href="https://docs.python.org/3/library/pdb.html">PDB breakpoint</a> in your code
 and need to interact with the running Django process when the breakpoint is reached
 you can run <a href="https://docs.docker.com/engine/reference/commandline/attach/"><code>docker attach</code></a>:</p>
-<pre class="highlight"><code class="language-bash">docker attach consumerfinancegov_python_1</code></pre>
+<pre class="highlight"><code class="language-bash">docker attach consumerfinancegov-python-1</code></pre>
 <p>When you're done, you can detach with <code>Ctrl+P Ctrl+Q</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code>docker attach</code> takes the specific container name or ID.
-Yours may or may not be <code>consumerfinancegov_python_1</code>.
+Yours may or may not be <code>consumerfinancegov-python-1</code>.
 To verify, use <code>docker container ls</code>
 to get the Python container's full name or ID.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>docker attach</code> will ONLY work with the dev image, not prod (apache).</p>
+<p><code>docker attach</code> will ONLY work with the dev image, not prod.</p>
 </div>
 <h2 id="useful-docker-commands">Useful Docker commands<a class="headerlink" href="#useful-docker-commands" title="Permanent link">¶</a></h2>
 <p>For <code>docker-compose</code> commands,
@@ -276,9 +276,8 @@ container in production.</p>
 <p>This includes:</p>
 <ul>
 <li>all relevant <code>consumerfinance.gov</code> source code</li>
-<li>all OS, Python, and JS dependencies for building and running the cf.gov webapp</li>
+<li>all OS, Python, and JS dependencies for building and running cf.gov</li>
 <li>procedures for executing Django <code>collectstatic</code> and <code>yarn</code>-based frontend build process</li>
-<li>an Apache HTTPD webserver with <code>mod_wsgi</code>, run with configs in <code>consumerfinance.gov</code></li>
 </ul>
 <h3 id="how-do-i-use-it">How do I use it?<a class="headerlink" href="#how-do-i-use-it" title="Permanent link">¶</a></h3>
 <h4 id="just-docker">Just Docker<a class="headerlink" href="#just-docker" title="Permanent link">¶</a></h4>
@@ -305,17 +304,16 @@ change configs locally without having to rebuild the image each time.</p>
 export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 ./refresh-data.sh</code></pre>
 <ol>
-<li>Browse to your new local cf.gov site.</li>
+<li>Browse to your new local cf.gov site:</li>
 </ol>
-<p><a href="http://localhost:8000">http://localhost:8000</a></p>
+<p><a href="http://localhost:8080">http://localhost:8080</a> (Apache)</p>
+<p>Or directly to Gunicorn running Django:</p>
+<p><a href="http://localhost:8000">http://localhost:8000</a> (Gunicorn)</p>
 <ol>
 <li>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
-   config and reload Apache (optional).</li>
+   config and restart the Apache container.</li>
 </ol>
-<pre class="highlight"><code class="language-bash">docker-compose exec python sh
-
-# Once in the container...
-httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart</code></pre>
+<pre class="highlight"><code class="language-bash">docker-compose restart apache</code></pre>
 <ol>
 <li>Switch back to the development Compose setup.</li>
 </ol>
@@ -326,20 +324,16 @@ docker-compose up --build python</code></pre>
 "<a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage builds</a>".</p>
 <p>There are a few layers at work here, with the hierarchy represented by the list structure:</p>
 <ul>
-<li><code>base</code> - This is the bare minimum base Python layer for building up any further layers.</li>
-<li><code>cfgov-python-builder</code> - Installs deployment Python dependencies to <code>/build</code> for use
-    in <code>cfgov-dev</code> and <code>cfgov-prod</code>.
-    _ <code>cfgov-dev</code> - Dev layer used for local development. Contains no code
-    (requires code volume mount), and installs additional dependencies only needed for local development.
-    _ <code>cfgov-frontend-builder</code> - Frontend builder layer, builds static files for Django</li>
-<li><code>cfgov-mod-wsgi</code> - mod_wsgi compile layer for Apache2
-    (helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)</li>
-<li><code>cfgov-prod</code> - Final layer for Production. Installs and uses Apache2,
-    swaps to <code>apache</code> user, copies in all files from previous layers to maintain a lightweight image.</li>
+<li><code>python</code>, the base Python layer for building up any further layers.
+  It includes OS and Python-level application requirements.</li>
+<li><code>node-builder</code>, a Node-based image that runs our frontend build.</li>
+<li><code>dev</code>, based on <code>python</code>, which copies frontend assets from <code>node-builder</code>,
+  sets up some initial data, and runs Django with <code>local</code> settings via
+  <code>runserver</code> on port 8000.</li>
+<li><code>prod</code>, based on <code>python</code>, which copies frontend assets from <code>node-builder</code>,
+  and runs the application with <code>production</code> settings via Gunicorn on
+  port 8000.</li>
 </ul>
-<p>The production image extends <strong>ONLY</strong> the base layer to maintain a lightweight final image.
-Everything from previous layers is copied in from those layers using <code>COPY --from=&lt;layer-name&gt;</code>.
-This dramatically improves the overall final image size.</p>
               
             </div>
           </div><footer>
