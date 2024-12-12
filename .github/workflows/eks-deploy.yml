@@ -73,7 +73,8 @@ jobs:
       
       - name: Deploy to EKS
         run: >
-          helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml 
+          helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml
+          -n ${{ secrets.NAMESPACE }} 
           --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set initContainer[1].image.tag=${GITHUB_SHA}
           --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
