@@ -6,3 +6,7 @@
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.13.2.tgz#f13f879714106d36a4a191e025e7d7444141186d"
   integrity sha512-Q7Mgmj8H1po7JnjUfKh/ek53h21Ife+voW6shoKUUMk7W3mtbS33If2NXhCLUyKucKnNC8pVWgU5Mm46cWmIgA==
+
+"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#63b39d79be8de37eea3e28e22bcf93d53beea570":
+  version "2.13.2"
+  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/63b39d79be8de37eea3e28e22bcf93d53beea570"
