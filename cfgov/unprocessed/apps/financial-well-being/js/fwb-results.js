@@ -1,5 +1,5 @@
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
-import { Expandable } from '@cfpb/cfpb-design-system/src/index.js';
+import { Expandable } from '@cfpb/cfpb-design-system';
 
 let buttonsDom;
 

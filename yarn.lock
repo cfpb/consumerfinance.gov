@@ -284,10 +284,12 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.5.0.tgz#ff78e9fd0ee87615d615e510b3f1139a2304d4f8"
-  integrity sha512-lZBh3FhlQnkoLQEZih4uFabPJNhE4s2cP+7l8BBQ05msV6+pdHMy8GQU6doa6HS7HTAgq4stVd/wDltJBV3QUg==
+"@cfpb/cfpb-design-system@3.6.1":
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.6.1.tgz#711ffef2c2520f23b4029486e0db9b10b222c7d5"
+  integrity sha512-8ZWKLKDvaHlMbBidKNEIi7FEoJyYvvlu85vEEisR/uhmTorJTRJEaFKAMq6+du0281SAr6QvimXiqB199cPVAQ==
+  dependencies:
+    tippy.js "6.3.7"
 
 "@colors/colors@1.5.0":
   version "1.5.0"
@@ -939,6 +941,11 @@
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
+
+"@popperjs/core@^2.9.0":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -5414,6 +5421,13 @@ through@^2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
+
+tippy.js@6.3.7:
+  version "6.3.7"
+  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+  integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
+  dependencies:
+    "@popperjs/core" "^2.9.0"
 
 tldts-core@^6.1.61:
   version "6.1.61"

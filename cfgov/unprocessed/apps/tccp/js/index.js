@@ -1,6 +1,6 @@
 import tippy from 'tippy.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
-import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
