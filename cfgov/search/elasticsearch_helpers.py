@@ -59,7 +59,7 @@ def mlt_query_body(doc_id, index="ask-cfpb", fields=None):
                 "min_term_freq": 1,
                 "max_query_terms": 30,
             }
-        }
+        },
     }
     return mlt_body
 
