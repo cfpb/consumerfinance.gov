@@ -1,9 +1,0 @@
-version: 0.2
-
-phases:
-  pre_build:
-    commands:
-      - echo testing the code
-cache:
-  paths:
-    - '/root/.docker'

@@ -13,3 +13,7 @@ phases:
   pre_build:
     commands:
       - echo "Testing pre-build"
+
+cache:
+  paths:
+    - '/root/.docker'
