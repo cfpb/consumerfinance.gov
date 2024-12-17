@@ -6,11 +6,10 @@ jobs:
     runs-on: 
       - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
       - buildspec-override:true
-      
+
     steps: 
       - name: Checkout Friendly-Umbrella
         uses: actions/checkout@v2
-    
 
       - name: Retrieve Security Scan Secrets
         uses: aws-actions/aws-secretsmanager-get-secrets@v2
@@ -23,10 +22,10 @@ jobs:
         run: |
 
           # Build the CFGOV Image
-            docker build . -t ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+            docker build . -t cfgov
 
           # Build the CFGOV-Apache Image
-            docker build cfgov/apache/. -t ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+            docker build cfgov/apache/. -t apache
 
 
       - name: Security With Twistlock
@@ -34,9 +33,9 @@ jobs:
          curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
          chmod +x twistcli
 
-         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" cfgov:latest
 
-         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" apache:latest
       
 
         
@@ -46,19 +45,22 @@ jobs:
           # Login to ECR
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username ${{ secrets.AWS_USERNAME }} --password-stdin ${{ secrets.ECR_REGISTRY }}
 
+          # retag the images
+          docker tag cfgov:latest ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          docker tag apache:latest ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+
           # Push to ECR
           docker push ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
           docker push ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
-      - name: Install K8s/Helm
+      - name: Install Helm
         run: |
-
-          # Install Helm
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
 
-          # Install kubectl
+      - name: Install kubectl
+        run: |
           curl -o ./kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl
           curl -o ./kubectl.sha256 https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl.sha256
           (diff  <(openssl sha256 kubectl | awk {'print $2'}) <(cat kubectl.sha256 | awk {'print $1'}) &&
@@ -69,7 +71,8 @@ jobs:
           source ~/.bashrc
           kubectl version --client
 
-          # Update kubeconfig to point to EKS Cluster
+      - name: Update kubeconfig
+        run: |
           aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
       
       - name: Deploy to EKS
