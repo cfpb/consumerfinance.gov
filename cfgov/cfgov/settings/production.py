@@ -89,8 +89,6 @@ STORAGES["staticfiles"] = {
     "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 }
 
-STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
-
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
 ALLOWED_HOSTS = environment_json(

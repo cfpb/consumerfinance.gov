@@ -300,6 +300,13 @@ STATICFILES_DIRS += [
     d for d in REPOSITORY_ROOT.joinpath("static.in").iterdir() if d.is_dir()
 ]
 
+# Collect static files into, and serve them from, cfgov/collectstatic,
+# unless otherwise specified via DJANGO_STATIC_ROOT.
+STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
+
+# Serve files under cfgov/root at the root of the website.
+WHITENOISE_ROOT = PROJECT_ROOT / "root"
+
 ALLOWED_HOSTS = ["*"]
 
 # Wagtail settings
