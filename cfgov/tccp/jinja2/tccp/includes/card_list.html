@@ -67,6 +67,7 @@
                 data-js-hook="behavior_ignore-link-targets"
                 data-ignore-link-targets="[data-tooltip]"
                 aria-label="{{ card.product_name }} from {{ card.institution_name }} with {{ card_purchase_apr }} purchase APR, {{ card_account_fee }} account fee, {{ card_rewards(card) }} card rewards{%- if card.requirements_for_opening or card.issued_by_credit_union -%}, eligibility requirements{%- endif -%}"
+                {% if loop.index == 11 %}data-js-hook="behavior_faded-card" tabindex="-1"{% endif %}
             >
                 <div class="m-card__heading-group">
                     <h2 class="h3 m-card__heading">{{ card.institution_name }}</h2>
@@ -102,8 +103,9 @@
                                         body=(
                                             'APRs change over time and are '
                                             ~ 'specific to the applicant. '
-                                            ~ 'Check rates before applying.'
-                                        )
+                                            ~ 'Check rates before applying.',
+                                        ),
+                                        tabindex=( loop.index == 11 )
                                     ) }}
                                 </span>
                             </div>
@@ -171,7 +173,8 @@
                                         ~ oxfordize(requirement_types)
                                         ~ ('. ' if card.geographic_restrictions or card.professional_affiliation)
                                         ~ 'See card details for more information.'
-                                    )
+                                    ),
+                                    tabindex=( loop.index == 11 )
                                 ) }}
                             </span>
                         </dd>
@@ -179,7 +182,7 @@
                     {%- endif -%}
                 </dl>
                 <div class="m-card__footer">
-                    <p class="m-card__subtitle">See card details</p>
+                    <p class="m-card__link" data-js-hook="behavior_card-link-proxy" tabindex="{% if loop.index == 11 %}-1{% else %}0{% endif %}">See card details</p>
                 </div>
             </a>
         </article>
