@@ -10,4 +10,4 @@ jobs:
       - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
     steps: 
       - name: testing
-        run: echo "hello from test actions"
+        run: echo "hello from test action!"
