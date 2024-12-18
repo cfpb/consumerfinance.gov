@@ -67,6 +67,9 @@
 {% set linkedin_text = ( value.linkedin_text or '' ) | urlencode %}
 {% set twitter_text = ( value.twitter_text or blurb ) | urlencode %}
 
+{% set facebook_campaign = '?utm_source=facebook&utm_medium=social&utm_campaign=share_button' | urlencode %}
+
+
 <div class="m-social-media
             m-social-media--{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
@@ -88,7 +91,7 @@
         {% set facebook_info = {
             'name': 'Facebook',
             'homepage': facebook_homepage,
-            'share_url': 'https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url,
+            'share_url': 'https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ facebook_campaign,
             'icon': 'facebook'
         } %}
 
