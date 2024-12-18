@@ -74,7 +74,10 @@
     }
 
     .m-full-width-text + .m-inset__image + .m-full-width-text {
-      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) +
         em;
     }
   }

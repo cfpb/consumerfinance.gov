@@ -121,11 +121,17 @@
 @include respond-to-max($bp-sm-max) {
   .search__results {
     .content__sidebar {
-      padding-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      padding-top: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) +
         em;
     }
     .content__main {
-      margin-top: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 2),
+          $base-font-size-px
+        ) +
         em;
     }
     .results__count {

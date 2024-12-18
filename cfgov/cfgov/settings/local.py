@@ -10,8 +10,6 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
-STATIC_ROOT = REPOSITORY_ROOT.joinpath("collectstatic")
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

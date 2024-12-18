@@ -41,7 +41,10 @@
     .a-link--jump {
       color: var(--white);
       border-color: var(--white);
-      margin-top: math.div(math.div($grid-gutter-width, 4), $base-font-size-px) +
+      margin-top: math.div(
+          math.div($grid-gutter-width, 4),
+          $base-font-size-px
+        ) +
         em;
     }
   }

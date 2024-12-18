@@ -58,10 +58,11 @@ class PrivacyActForm(forms.Form):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
     contact_channel = forms.ChoiceField(
+        widget=forms.RadioSelect,
         choices=[
             ("email", "Please send my records via email"),
             ("mail", "Please send my records by mail"),
-        ]
+        ],
     )
     street_address = forms.CharField(
         required=False,

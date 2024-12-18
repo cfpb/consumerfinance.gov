@@ -44,6 +44,7 @@ wagtail-sharing==2.12.1
 wagtail-treemodeladmin==1.9.2
 wagtailmedia==0.15.2
 wagtailcharts==0.6.1
+whitenoise==6.7.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.18.2/owning_a_home_api-0.18.2-py3-none-any.whl

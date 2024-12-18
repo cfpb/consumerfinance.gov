@@ -99,7 +99,8 @@
       margin-left: math.div(
           math.div($grid-gutter-width, 2) + 5px,
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
   }
 
@@ -140,7 +141,8 @@
       padding-left: math.div(
           math.div($grid-gutter-width, 2),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
 
     &--current {
@@ -239,14 +241,16 @@ html[lang='ar'] {
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
 
       &__list--parents {
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
   }

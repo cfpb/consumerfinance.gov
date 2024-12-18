@@ -3,15 +3,11 @@ export class CreditCardAgreementSearch {
     cy.visit('/credit-cards/agreements/');
   }
 
-  getIssuer() {
-    return cy.get('#issuer_select').children().first().siblings().first();
-  }
-
-  selectIssuer(issuer) {
-    cy.get('#issuer_select').select(issuer, { force: true });
+  openContainer() {
+    return cy.get('#select-root').children().first().click();
   }
 
   agreementsList() {
-    return cy.get('#ccagrsearch');
+    return cy.get('#react-select-2-listbox');
   }
 }

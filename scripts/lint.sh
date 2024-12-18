@@ -1,3 +1,8 @@
+#!/bin/sh
+
+# Exit on error from any of the linting sub-tasks.
+set -e
+
 ## Run prettier. See ignored path in .prettierignore.
 yarn prettier "./**/*.{js,jsx,ts,tsx,md,css,scss}" --write
 
