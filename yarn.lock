@@ -10,7 +10,6 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.25.9", "@babel/code-frame@^7.26.0":
   version "7.26.2"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.26.2.tgz#4b5fab97d33338eff916235055f0ebc21e573a85"
@@ -284,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.6.1":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.6.1.tgz#711ffef2c2520f23b4029486e0db9b10b222c7d5"
-  integrity sha512-8ZWKLKDvaHlMbBidKNEIi7FEoJyYvvlu85vEEisR/uhmTorJTRJEaFKAMq6+du0281SAr6QvimXiqB199cPVAQ==
+"@cfpb/cfpb-design-system@3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.6.2.tgz#81b1dbc0087c14ec06e7f826003c5dd8d63505ef"
+  integrity sha512-hHJa6UJs5pfuDBg/09kgs5d9C4QQxQ5l22SC+U6yGRD1GdiPtnzxUbYPE0v4x2HPc+6uGUaQPYPuVqd4cqQUvw==
   dependencies:
     tippy.js "6.3.7"
 
