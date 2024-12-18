@@ -51,6 +51,7 @@ export default [
     // Some plugins are automatically included.
     // plugins: {},
     rules: {
+      'import/no-unresolved': 0,
       'jsdoc/require-hyphen-before-param-description': ['warn', 'always'],
       'no-console': ['warn'],
       'no-use-before-define': ['error', 'nofunc'],
