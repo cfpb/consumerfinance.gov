@@ -5,9 +5,9 @@ jobs:
   build: 
     runs-on: 
       - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
-  steps: 
-    - name: testing
-      run: echo "hello from test actions"
-  
-    - name: testing 2
-      uses: cfpb/actions/.github/workflows/image-scan.yml@v1
+    steps: 
+      - name: testing
+        run: echo "hello from test actions"
+    
+      - name: testing 2
+        uses: cfpb/actions/.github/workflows/image-scan.yml@v1
