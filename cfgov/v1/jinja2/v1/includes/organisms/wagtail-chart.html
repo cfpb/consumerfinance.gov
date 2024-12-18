@@ -1,0 +1,60 @@
+{# ==========================================================================
+
+   wagtail-chart
+
+   ==========================================================================
+
+   Description:
+
+   Create a chart block based on wagtailcharts
+
+   ========================================================================== #}
+
+{# TODO What should this o-class be? #}
+<div class="o-wagtail-chart">
+
+    {% if value.eyebrow %}
+        <div class="eyebrow">{{ value.eyebrow }}</div>
+    {% endif %}
+
+    {% if value.title %}
+       {% include_block value.title %}
+    {% endif %}
+
+    {% if value.intro %}
+       {% include_block value.intro %}
+    {% endif %}
+
+    {% if value.subtitle %}
+    <p class="o-wagtail-chart__subtitle">{{ value.subtitle }}</p>
+    {% endif %}
+
+    {# Copied from wagtailcharts/templates/wagtailcharts/blocks/chart_block.html #}
+    <canvas
+        id="chart-{{block.id}}"
+        data-datasets="{{value.datasets}}"
+        data-config="{{value.settings.config}}"
+        data-chart-type="{{value.chart_type}}"
+        {% if self.callbacks %}data-callback="{{value.callbacks}}"{% endif %}
+        {% if value.description %}aria-label="{{value.description}}"{% endif %}>
+    </canvas>
+
+    <p class="o-wagtail-chart__footnote block--sub block--border-top block">
+        {% if value.data_source %}
+          <strong>Source:</strong> {{value.data_source}}<br>
+        {% endif %}
+        {% if value.date_published %}
+          <strong>Date published:</strong> {{value.date_published}}<br>
+        {% endif %}
+
+        {% if value.download_text and value.download_file %}
+            <strong>Download:</strong>
+            <a href="{{value.download_file}}">{{value.download_text}}</a><br>
+        {% endif %}
+
+        {% if value.notes %}
+          <strong>Notes:</strong> {{value.notes}}
+        {% endif %}
+    </p>
+</div>
+
