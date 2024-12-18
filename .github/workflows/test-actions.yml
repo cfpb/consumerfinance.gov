@@ -3,7 +3,7 @@ on:
   push:
 jobs: 
   test:
-    uses: cfpb/actions/.github/workflows/image-scan.yml
+    uses: cfpb/actions/.github/workflows/image-scan.yml@main
 
   build: 
     runs-on: 
