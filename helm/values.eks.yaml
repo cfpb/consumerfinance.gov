@@ -37,7 +37,7 @@ initContainers:
     command: 
       - 'sh'
       - '-c'
-      - 'python cfgov/manage.py migrate' 
+      - 'python cfgov/manage.py migrate && ./index.sh' 
       
 
 containers:
