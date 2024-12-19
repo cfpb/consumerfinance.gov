@@ -23,10 +23,6 @@ class LandingPageViewTests(TestCase):
         response = self.make_request()
         self.assertEqual(response.status_code, 200)
 
-    def test_invalid_situations(self):
-        response = self.make_request("?situations=fake+and+bad")
-        self.assertContains(response, "There are no results for your search.")
-
     def test_situation_redirect(self):
         tier = "Credit scores from 620 to 719"
 
@@ -86,6 +82,10 @@ class CardListViewTests(TestCase):
     def test_no_querystring_filters_by_good_tier(self):
         response = self.make_request()
         self.assertContains(response, "Consumer Financial Protection Bureau")
+        self.assertContains(response, "There are no results for your search.")
+
+    def test_invalid_situations(self):
+        response = self.make_request("?situations=fake+and+bad")
         self.assertContains(response, "There are no results for your search.")
 
     def test_htmx_includes_only_results(self):
