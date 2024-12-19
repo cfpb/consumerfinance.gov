@@ -156,3 +156,6 @@ cfgov/apache/modules
 # Local Docker-Compose Files #
 ##############################
 docker-compose.pgadmin.yml
+
+# Helm # 
+helm/charts/
