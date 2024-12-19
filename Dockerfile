@@ -17,6 +17,11 @@ ENV APP_HOME /src/consumerfinance.gov
 
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
+ARG USERNAME=cfgov
+ARG USER_UID=1000
+
+RUN adduser -u $USER_UID -D $USERNAME
+
 # Set the working directory
 WORKDIR ${APP_HOME}
 
@@ -145,6 +150,12 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 # used in any way during staticfiles collection. We provide a random
 # secret key here for this step only.
 RUN SECRET_KEY=only-for-collectstatic cfgov/manage.py collectstatic --noinput
+
+# Use a non-root user
+RUN chown -R $USERNAME:$USERNAME $APP_HOME
+
+# Create the user
+USER $USERNAME
 
 # Run Gunicorn
 CMD gunicorn --reload cfgov.wsgi:application -b :8000
