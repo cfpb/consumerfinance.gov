@@ -37,7 +37,7 @@ initContainers:
     command: 
       - 'sh'
       - '-c'
-      - 'sleep 1000' 
+      - 'python cfgov/manage.py migrate' 
       
 
 containers:
