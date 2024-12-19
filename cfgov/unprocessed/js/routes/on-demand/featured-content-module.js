@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import FeaturedContentModule from '../../organisms/FeaturedContentModule';
-import { instantiateAll } from '@cfpb/cfpb-design-system/src/index.js';
+import { instantiateAll } from '@cfpb/cfpb-design-system';
 
 instantiateAll(`.${FeaturedContentModule.BASE_CLASS}`, FeaturedContentModule);

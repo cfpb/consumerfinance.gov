@@ -1,7 +1,7 @@
 import {
   Multiselect,
   SummaryMinimal,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 
 Multiselect.init();
 SummaryMinimal.init();

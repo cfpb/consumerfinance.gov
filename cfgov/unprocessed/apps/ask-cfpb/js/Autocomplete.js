@@ -2,7 +2,7 @@ import {
   EventObserver,
   checkDom,
   setInitFlag,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 import throttle from 'lodash.throttle';
 
 // Class constants

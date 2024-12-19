@@ -1,4 +1,4 @@
-import { behaviorAttach } from '@cfpb/cfpb-design-system/src/index.js';
+import { behaviorAttach } from '@cfpb/cfpb-design-system';
 import {
   getSearchValues,
   serializeFormFields,
