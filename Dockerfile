@@ -150,6 +150,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # Copy the application code over
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
+COPY . .
 
 # Copy our static build over from node-builder
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
@@ -170,4 +171,4 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 USER $USERNAME
 
 # Run Gunicorn
-CMD gunicorn cfgov.wsgi:application -b :8000
+CMD gunicorn --reload cfgov.wsgi:application -b :8000

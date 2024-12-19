@@ -145,6 +145,9 @@ cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js.map
 cfgov/regulations3k/jinja2/regulations3k/workbox-*.js
 cfgov/regulations3k/jinja2/regulations3k/workbox-*.js.map
 
+# Helm Charts #
+helm/charts/
+
 # Apache #
 ##########
 cfgov/apache/logs
