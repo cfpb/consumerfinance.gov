@@ -69,7 +69,7 @@ containers:
       repository: cfgov-apache
       pullPolicy: IfNotPresent
       tag: "latest"
-    port: 80
+    port: 8080
     volumeMounts:
     - name: apache-logs
       mountPath: /usr/local/apache2/logs
