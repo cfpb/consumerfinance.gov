@@ -145,7 +145,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         # If we're rendering HTML, we need to augment the response context.
         if render_format == "html":
             form = filter_backend.used_filterset.form
-            situations = form.cleaned_data["situations"]
+            situations = form.cleaned_data.get("situations", [])
 
             purchase_apr_rating_ranges = self.get_purchase_apr_rating_ranges(
                 cards

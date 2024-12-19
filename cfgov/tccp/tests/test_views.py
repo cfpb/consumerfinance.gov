@@ -23,6 +23,10 @@ class LandingPageViewTests(TestCase):
         response = self.make_request()
         self.assertEqual(response.status_code, 200)
 
+    def test_invalid_situations(self):
+        response = self.make_request("?situations=fake+and+bad")
+        self.assertEqual(response.status_code, 200)
+
     def test_situation_redirect(self):
         tier = "Credit scores from 620 to 719"
 
