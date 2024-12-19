@@ -1,4 +1,4 @@
-FROM httpd:latest
+FROM httpd:2.4-alpine
 
 # Copy the Apache configuration file
 COPY ./conf /usr/local/apache2/conf
