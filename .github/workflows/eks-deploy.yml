@@ -1,88 +1,88 @@
-# name: Deploy CF.gov to EKS
-# on: 
-#   push:
-# jobs: 
-#   build: 
-#     runs-on: 
-#       - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
-#       - buildspec-override:true
+name: Deploy CF.gov to EKS
+on: 
+  push:
+jobs: 
+  build: 
+    runs-on: 
+      - codebuild-cfpb-cfgov-cfgov-gha-${{ github.run_id }}-${{ github.run_attempt }}
+      - buildspec-override:true
 
-#     steps: 
-#       - name: Checkout Friendly-Umbrella
-#         uses: actions/checkout@v2
+    steps: 
+      - name: Checkout Friendly-Umbrella
+        uses: actions/checkout@v2
 
-#       - name: Retrieve Security Scan Secrets
-#         uses: aws-actions/aws-secretsmanager-get-secrets@v2
-#         with:
-#           secret-ids: |
-#             , ${{ secrets.SECURITY_SCAN}}
-#           parse-json-secrets: true
+      - name: Retrieve Security Scan Secrets
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            , ${{ secrets.SECURITY_SCAN}}
+          parse-json-secrets: true
       
-#       - name: Build Docker Images
-#         run: |
+      - name: Build Docker Images
+        run: |
 
-#           # Build the CFGOV Image
-#             docker build . -t cfgov
+          # Build the CFGOV Image
+            docker build . -t cfgov
 
-#           # Build the CFGOV-Apache Image
-#             docker build cfgov/apache/. -t apache
+          # Build the CFGOV-Apache Image
+            docker build cfgov/apache/. -t apache
 
 
-#       - name: Security With Twistlock
-#         run: |
-#          curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
-#          chmod +x twistcli
+      - name: Security With Twistlock
+        run: |
+         curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
+         chmod +x twistcli
 
-#          ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" cfgov:latest
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" cfgov:latest
 
-#          ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" apache:latest
+         ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" apache:latest
       
 
         
-#       - name: Push Images to ECR
-#         run: |
+      - name: Push Images to ECR
+        run: |
 
-#           # Login to ECR
-#           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username ${{ secrets.AWS_USERNAME }} --password-stdin ${{ secrets.ECR_REGISTRY }}
+          # Login to ECR
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username ${{ secrets.AWS_USERNAME }} --password-stdin ${{ secrets.ECR_REGISTRY }}
 
-#           # retag the images
-#           docker tag cfgov:latest ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
-#           docker tag apache:latest ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+          # retag the images
+          docker tag cfgov:latest ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          docker tag apache:latest ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
-#           # Push to ECR
-#           docker push ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
-#           docker push ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
+          # Push to ECR
+          docker push ${{ secrets.CFGOV_IMAGE }}:$GITHUB_SHA
+          docker push ${{ secrets.CFGOV_APACHE_IMAGE }}:$GITHUB_SHA
 
-#       - name: Install Helm
-#         run: |
-#           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-#           chmod 700 get_helm.sh
-#           ./get_helm.sh
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
 
-#       - name: Install kubectl
-#         run: |
-#           curl -o ./kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl
-#           curl -o ./kubectl.sha256 https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl.sha256
-#           (diff  <(openssl sha256 kubectl | awk {'print $2'}) <(cat kubectl.sha256 | awk {'print $1'}) &&
-#             echo 'kubectl checksum matches, enabling usage') || (echo 'kubectl checksum failed, exiting' && exit 1)
-#           chmod +x kubectl
-#           mkdir -p $HOME/bin && mv kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-#           echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
-#           source ~/.bashrc
-#           kubectl version --client
+      - name: Install kubectl
+        run: |
+          curl -o ./kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl
+          curl -o ./kubectl.sha256 https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.14/2023-10-17/bin/linux/amd64/kubectl.sha256
+          (diff  <(openssl sha256 kubectl | awk {'print $2'}) <(cat kubectl.sha256 | awk {'print $1'}) &&
+            echo 'kubectl checksum matches, enabling usage') || (echo 'kubectl checksum failed, exiting' && exit 1)
+          chmod +x kubectl
+          mkdir -p $HOME/bin && mv kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+          echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+          source ~/.bashrc
+          kubectl version --client
 
-#       - name: Update kubeconfig
-#         run: |
-#           aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
       
-#       - name: Deploy to EKS
-#         run: >
-#           helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml
-#           -n ${{ secrets.NAMESPACE }} 
-#           --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
-#           --set initContainers[1].image.tag=${GITHUB_SHA}
-#           --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
-#           --set containers[0].image.tag=${GITHUB_SHA}
-#           --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
-#           --set containers[1].image.tag=${GITHUB_SHA}
-#           --set mapping.host=${{ secrets.HOST }}
+      - name: Deploy to EKS
+        run: >
+          helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml
+          -n ${{ secrets.NAMESPACE }} 
+          --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
+          --set initContainers[1].image.tag=${GITHUB_SHA}
+          --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
+          --set containers[0].image.tag=${GITHUB_SHA}
+          --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
+          --set containers[1].image.tag=${GITHUB_SHA}
+          --set mapping.host=${{ secrets.HOST }}
