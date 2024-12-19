@@ -70,6 +70,9 @@ containers:
       pullPolicy: IfNotPresent
       tag: "latest"
     port: 80
+    volumeMounts:
+    - name: apache-logs
+      mountPath: /usr/local/apache2/logs
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -167,6 +170,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+volumes:
+  - name: apache-logs
+    emptyDir: {}
 
 mapping:
   enabled: true
