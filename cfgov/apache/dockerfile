@@ -6,7 +6,7 @@ COPY ./conf.d /usr/local/apache2/conf.d
 COPY ./conf.modules.d /usr/local/apache2/conf.modules.d
 
 # Add Apache ENV variables
-ENV APACHE_PORT="80"
+ENV APACHE_PORT="8080"
 ENV APACHE_USER="www-data"
 ENV APACHE_GROUP="www-data"
 ENV APACHE_SERVER_ROOT="/usr/local/apache2/"
@@ -21,6 +21,6 @@ ENV CFGOV_APPLICATION_HOST="localhost"
 
 EXPOSE 80
 
-USER www-data
+USER apache
 
 CMD ["httpd-foreground"]
