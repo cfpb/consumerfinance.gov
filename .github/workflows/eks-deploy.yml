@@ -8,7 +8,7 @@ jobs:
       - buildspec-override:true
 
     steps: 
-      - name: Checkout Friendly-Umbrella
+      - name: Checkout consumerfinance.gov
         uses: actions/checkout@v2
 
       - name: Retrieve Security Scan Secrets
