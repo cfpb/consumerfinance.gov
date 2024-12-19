@@ -25,7 +25,7 @@ class LandingPageViewTests(TestCase):
 
     def test_invalid_situations(self):
         response = self.make_request("?situations=fake+and+bad")
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "There are no results for your search.")
 
     def test_situation_redirect(self):
         tier = "Credit scores from 620 to 719"
