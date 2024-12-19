@@ -21,4 +21,6 @@ ENV CFGOV_APPLICATION_HOST="localhost"
 
 EXPOSE 80
 
+USER www-data
+
 CMD ["httpd-foreground"]
