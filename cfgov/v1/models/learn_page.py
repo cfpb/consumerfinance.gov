@@ -99,6 +99,7 @@ class LearnPage(AbstractFilterPage):
             ("table", organisms.Table()),
             ("faq_group", schema.FAQGroup()),
             ("contact_us_table", organisms.ContactUsTable()),
+            ("wagtailchart_block", charts.ChartBlock()),
         ],
         blank=True,
     )
