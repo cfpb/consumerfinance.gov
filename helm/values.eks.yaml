@@ -182,16 +182,5 @@ mapping:
     - "--apiVersion-v3alpha1-only--default"
   prefix: "/"
 
-
-postgresql:
-  labels:
-    app: cfgov-postgresql
-  global:
-    postgresql:
-      auth:
-        database: cfgov
-        username: cfpb
-        password: cfpb
-
 opensearch:
   replicas: 1
