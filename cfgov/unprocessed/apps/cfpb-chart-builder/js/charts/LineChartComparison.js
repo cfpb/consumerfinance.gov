@@ -1,7 +1,7 @@
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import { processDelinquencies } from '../utils/process-json';
-import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
+import { EventObserver } from '@cfpb/cfpb-design-system';
 
 accessibility(Highcharts);
 
