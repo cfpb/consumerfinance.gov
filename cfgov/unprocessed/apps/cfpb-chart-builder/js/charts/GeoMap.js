@@ -1,4 +1,4 @@
-import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
+import { EventObserver } from '@cfpb/cfpb-design-system';
 import Highcharts from 'highcharts/highmaps';
 import accessibility from 'highcharts/modules/accessibility';
 import colorRange from '../utils/color-range';

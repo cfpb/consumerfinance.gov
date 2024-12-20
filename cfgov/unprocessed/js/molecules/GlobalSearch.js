@@ -5,7 +5,7 @@ import {
   EventObserver,
   FlyoutMenu,
   MoveTransition,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 import { TabTrigger } from '../modules/TabTrigger.js';
 
 const BASE_CLASS = 'm-global-search';

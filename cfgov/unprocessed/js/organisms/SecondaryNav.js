@@ -10,7 +10,7 @@ import {
   MaxHeightTransition,
   EventObserver,
   FlyoutMenu,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 
 const BASE_CLASS = 'o-secondary-nav';
 

@@ -6,7 +6,7 @@ import {
   FlyoutMenu,
   MaxHeightTransition,
   EventObserver,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 
 const BASE_CLASS = 'o-costs-group';
 
