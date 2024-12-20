@@ -1,6 +1,6 @@
-import tippy from 'tippy.js';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import { behaviorAttach } from '@cfpb/cfpb-design-system';
+import { Tooltip } from '@cfpb/cfpb-design-system/tooltips';
 
 import orderingDropdown from './ordering';
 import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
@@ -28,7 +28,7 @@ function init() {
   // Move the card ordering dropdown below the expandable
   orderingDropdown.move();
   // Initialize any tooltips on the page
-  initializeTooltips();
+  Tooltip.init();
   // Reinitialize tooltips after an htmx request replaces DOM nodes
   behaviorAttach(document, 'htmx:afterSwap', initializeAndReport);
 }
@@ -38,7 +38,7 @@ function init() {
  * @param {Event} event - htmx event
  */
 function initializeAndReport(event) {
-  initializeTooltips();
+  Tooltip.init();
   reportFilter(event);
   // Attach handler for "Enter" on card details link proxy
   behaviorAttach('card-link-proxy', 'keydown', handleCardLinkProxies);
@@ -69,50 +69,6 @@ function reportFilter(event) {
 }
 
 /**
- * Set up Tippy.js tooltips
- * See https://kabbouchi.github.io/tippyjs-v4-docs/html-content/
- */
-function initializeTooltips() {
-  tooltips = tippy('[data-tooltip]', {
-    theme: 'cfpb',
-    maxWidth: 450,
-    content: function (reference) {
-      const template = reference.nextElementSibling;
-      const container = document.createElement('div');
-      const node = document.importNode(template.content, true);
-      container.appendChild(node);
-      return container;
-    },
-    // See https://atomiks.github.io/tippyjs/v6/plugins/
-    plugins: [
-      {
-        name: 'hideOnEsc',
-        defaultValue: true,
-        fn({ hide }) {
-          /**
-           * Hide when the escape key is pressed.
-           * @param {KeyboardEvent} event - Key down event.
-           */
-          function onKeyDown(event) {
-            if (event.key === 'Escape') {
-              hide();
-            }
-          }
-          return {
-            onShow() {
-              document.addEventListener('keydown', onKeyDown);
-            },
-            onHide() {
-              document.removeEventListener('keydown', onKeyDown);
-            },
-          };
-        },
-      },
-    ],
-  });
-}
-
-/**
  * Handle links that shouldn't be followed when
  * specified children elements are targeted
  * or a tooltip is open.
@@ -138,9 +94,11 @@ function handleShowMore(event) {
   }
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
-  const nextResult = document.querySelector('[data-js-hook="behavior_faded-card"]');
+  const nextResult = document.querySelector(
+    '[data-js-hook="behavior_faded-card"]',
+  );
   nextResult.setAttribute('tabIndex', '0');
-  nextResult.querySelectorAll('[tabindex="-1"]').forEach( elem => {
+  nextResult.querySelectorAll('[tabindex="-1"]').forEach((elem) => {
     elem.setAttribute('tabIndex', '0');
   });
   results.classList.remove('o-filterable-list-results--partial');

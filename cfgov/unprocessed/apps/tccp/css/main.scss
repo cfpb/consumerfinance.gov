@@ -1,7 +1,6 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
-@use 'tooltip' as *;
 
 @include respond-to-min($bp-sm-min) {
   .o-form__group {
