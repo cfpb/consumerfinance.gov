@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: apache-conf-modules-config
-data:
-  {{ (.Files.Glob "apache/conf.modules.d/*").AsConfig | nindent 2 }}
