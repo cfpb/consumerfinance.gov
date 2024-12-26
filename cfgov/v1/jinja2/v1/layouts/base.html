@@ -110,10 +110,10 @@ itemscope itemtype="https://schema.org/FAQPage"
 
     {# End of Open Graph properties #}
 
-    <link rel="icon" href="{{ static('favicon.ico') }}" sizes="any">
-    <link rel="icon" href="{{ static('icon.svg') }}" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="{{ static('apple-touch-icon.png') }}">
-    <link rel="manifest" href="{{ static('site.webmanifest') }}">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
 
 {#
@@ -336,6 +336,8 @@ itemscope itemtype="https://schema.org/FAQPage"
             {% for js in page.media_js %}
                 {% if 'https://' in js %}
                   s.push('{{ js }}');
+                {% elif js.endswith('?staticroot') %}
+                  s.push('{{ static(js[:-11]) }}');
                 {% else %}
                   s.push( '{{ static('js/routes/on-demand/' + js) }}' );
                 {% endif %}

@@ -32,9 +32,6 @@ async function copy(baseConfig) {
     copyFile(f, f.replace(resolvedBase, baseConfig.outdir)),
   );
 
-  // Handle files that live at the root of the site
-  copyAll(`${unprocessed}/root`, baseConfig.outdir);
-
   // Handle icons
   copyAll(
     `${modules}/@cfpb/cfpb-design-system/src/components/cfpb-icons/icons`,

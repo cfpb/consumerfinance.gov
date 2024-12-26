@@ -3,10 +3,10 @@
    ========================================================================== */
 
 // Project specific SCSS goes here or you can break it up into discrete files.
-@import 'atoms/icon';
-@import 'molecules/form-fields';
-@import 'molecules/search-hero';
-@import 'organisms/expandable';
-@import 'organisms/expandable-facets';
-@import 'pages/activity-search';
-@import 'utilities/hide-on';
+@use 'atoms/icon' as *;
+@use 'molecules/form-fields' as *;
+@use 'molecules/search-hero' as *;
+@use 'organisms/expandable' as *;
+@use 'organisms/expandable-facets' as *;
+@use 'pages/activity-search' as *;
+@use 'utilities/hide-on' as *;
