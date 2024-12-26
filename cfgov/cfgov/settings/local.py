@@ -105,4 +105,5 @@ DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 # default it to local.
 DEPLOY_ENVIRONMENT = DEPLOY_ENVIRONMENT or "local"
 
+# Disable use_ssl for functional tests
 OPENSEARCH_DSL["default"]["use_ssl"] = False
