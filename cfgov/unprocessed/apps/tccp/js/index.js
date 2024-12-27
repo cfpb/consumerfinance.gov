@@ -21,6 +21,8 @@ function init() {
   behaviorAttach('submit-situations', 'click', handleFormValidation);
   // Attach handler for conditional link targets
   behaviorAttach('ignore-link-targets', 'click', handleIgnoreLinkTargets);
+  // Attach handler for "Enter" on card details link proxy
+  behaviorAttach('card-link-proxy', 'keydown', handleCardLinkProxies);
   // Make the breadcrumb on the details page go back to a filtered list
   updateBreadcrumb();
   // Move the card ordering dropdown below the expandable
@@ -38,6 +40,8 @@ function init() {
 function initializeAndReport(event) {
   initializeTooltips();
   reportFilter(event);
+  // Attach handler for "Enter" on card details link proxy
+  behaviorAttach('card-link-proxy', 'keydown', handleCardLinkProxies);
 }
 
 /**
@@ -134,7 +138,11 @@ function handleShowMore(event) {
   }
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
-  const nextResult = document.querySelector('.u-show-more > a');
+  const nextResult = document.querySelector('[data-js-hook="behavior_faded-card"]');
+  nextResult.setAttribute('tabIndex', '0');
+  nextResult.querySelectorAll('[tabindex="-1"]').forEach( elem => {
+    elem.setAttribute('tabIndex', '0');
+  });
   results.classList.remove('o-filterable-list-results--partial');
   showMoreFade.classList.add('u-hidden');
   nextResult.focus();
@@ -172,6 +180,18 @@ function handleFormValidation(event) {
     location.closest('.m-form-field').scrollIntoView({ behavior: 'smooth' });
     location.classList.add('a-select--error');
     locationError.classList.remove('u-visually-hidden');
+  }
+}
+
+/**
+ * Handles "Enter" key on focusable p elements ("card link proxies"). These
+ * proxies are p elements masquerading as anchor tags.
+ * @param {Event} event - Keydown event
+ */
+function handleCardLinkProxies(event) {
+  if (event.key && event.key === 'Enter') {
+    const parentAnchor = event.target.closest('a');
+    parentAnchor.click();
   }
 }
 

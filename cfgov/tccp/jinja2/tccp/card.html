@@ -700,9 +700,9 @@
                 <div class="m-payment-calculation__part">
                     {% call data_section(
                         balance_transfer_apr_term ~
-                        ' for ' ~
+                        (' for ' ~
                         '%.0f' | format(card.median_length_of_balance_transfer_apr) ~
-                        ' months'
+                        ' months' if card.median_length_of_balance_transfer_apr is not none)
                     ) %}
                         {% if card.transfer_apr_min is not none
                             and card.transfer_apr_max is not none
@@ -766,9 +766,14 @@
                 </p>
             {% endif %}
             <p>
-                After
-                {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
-                months, any remaining unpaid balance on your account will be
+                {%- if card.median_length_of_balance_transfer_apr is not none -%}
+                    After
+                    {{ '%.0f' | format(card.median_length_of_balance_transfer_apr ) }}
+                    months, a
+                {%- else -%}
+                    A
+                {%- endif -%}
+                ny remaining unpaid balance on your account will be
                 subject to interest charges based on your purchase APR.
             </p>
         {% else %}

@@ -84,6 +84,10 @@ class CardListViewTests(TestCase):
         self.assertContains(response, "Consumer Financial Protection Bureau")
         self.assertContains(response, "There are no results for your search.")
 
+    def test_invalid_situations(self):
+        response = self.make_request("?situations=fake+and+bad")
+        self.assertContains(response, "There are no results for your search.")
+
     def test_htmx_includes_only_results(self):
         response = self.make_request(**{"HTTP_HX-Request": "true"})
         self.assertNotContains(

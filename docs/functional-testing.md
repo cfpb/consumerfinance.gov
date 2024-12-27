@@ -18,7 +18,7 @@ You can run functional tests from the command line with `yarn cy`. That will run
 
 To run Cypress only on changed specs, run `yarn cy fast`.
 
-For a customized Cypress run, you might want to call Cypress directly with `npx cypress run` and pass in some common arguments:
+For a customized Cypress run, you may run `yarn cy` (or call Cypress directly with `npx cypress run`) with some common arguments:
 
 - `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
 - `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline
