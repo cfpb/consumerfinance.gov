@@ -72,9 +72,8 @@ const app = {
 
             // Add url values to the financial model
             publish.extendFinancialData(this.urlValues);
-            if (typeof this.urlValues.totalCost === 'undefined') {
-              publish.financialData('totalCost', null);
-            }
+            const trueTotalCost = Math.max(programData.totalCost, this.urlValues.urlTotalCost);
+            publish.financialData('totalCost', trueTotalCost);
             financialView.updateViewWithURL(schoolValues, this.urlValues);
             // initialize metric view
             metricView.init();
