@@ -332,7 +332,8 @@ const financialView = {
    */
   updateViewWithURL: function (values, urlvalues) {
     this.totalDirectCostVisible(
-      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0,
+      typeof urlvalues.urlTotalCost !== 'undefined' &&
+        urlvalues.urlTotalCost !== 0,
     );
     this.tuitionPaymentPlanVisible(
       typeof urlvalues.tuitionRepay !== 'undefined' &&
