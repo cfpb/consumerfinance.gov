@@ -2,12 +2,15 @@ name: 'Build cf.gov artifact'
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
   merge_group:
   workflow_dispatch:
 
 jobs:
   Build:
-    if: "! github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     env:
       ARTIFACT_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
@@ -20,25 +23,41 @@ jobs:
         with:
             node-version: '20.x'
 
+      - name: Install Act dependencies
+        if: ${{ env.ACT }}
+        run: corepack enable
+
       - name: Install dependencies
         run: yarn
 
       - name: Build frontend
         run: yarn run build
 
-      - name: Run the build process with Docker
-        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185
-        with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-            image: ghcr.io/${{ github.repository }}-builder:main
-            options: -v ${{ github.workspace }}:/cfgov
-            run: |
-              source scl_source enable rh-python38
-              ./call_create.sh
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Upload arifact
+      - name: Pull image to build artifact
+        run: docker pull ghcr.io/cfpb/cfgov-artifact-builder:latest
+
+      - name: Build artifact
+        run: docker run \
+          -v `pwd`:/cfgov \
+          ghcr.io/cfpb/cfgov-artifact-builder:latest
+
+      - name: Pull image to test artifact
+        run: docker pull ghcr.io/cfpb/cfgov-artifact-tester:latest
+
+      - name: Run built artifact as a Docker container
+        run : docker run \
+          -d \
+          -v `pwd`:/cfgov:ro \
+          -p 8000:80 \
+          --env-file docker/centos7/test.env \
+          ghcr.io/cfpb/cfgov-artifact-builder:latest
+
+      # Don't upload artifacts to S3 if PR is against a fork.
+      - name: Upload artifact to S3
+        if: "! github.event.pull_request.head.repo.fork"
         uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
           command: cp
