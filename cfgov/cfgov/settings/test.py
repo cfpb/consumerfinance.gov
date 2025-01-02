@@ -66,6 +66,10 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, "cfgov", "tests", "test-media")
 OPENSEARCH_DSL_AUTO_REFRESH = False
 OPENSEARCH_DSL_AUTOSYNC = False
 
+# Disable `use_ssl` for unit tests
+OPENSEARCH_DSL["default"]["use_ssl"] = False
+
+
 SKIP_DJANGO_MIGRATIONS = os.getenv("SKIP_DJANGO_MIGRATIONS", False)
 if SKIP_DJANGO_MIGRATIONS:
     for _db in DATABASES.values():

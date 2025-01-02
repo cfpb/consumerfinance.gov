@@ -102,3 +102,6 @@ DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 # If DEPLOY_ENVIRONMENT hasn't been set by the environment in base.py,
 # default it to local.
 DEPLOY_ENVIRONMENT = DEPLOY_ENVIRONMENT or "local"
+
+# Disable use_ssl for functional tests
+OPENSEARCH_DSL["default"]["use_ssl"] = False

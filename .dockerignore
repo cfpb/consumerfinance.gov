@@ -17,10 +17,12 @@
 !dump-data.sh
 !Dockerfile
 !frontend.sh
+!index.sh
 !initial-data.sh
 !jest.config.js
 !package.json
 !refresh-data.sh
+!test.sql.gz
 !yarn.lock
 
 # ...but DO ignore these others
