@@ -63,7 +63,7 @@ describe('Explore credit cards results page', () => {
     cy.get('.m-card--tabular [data-tooltip]').first().type('{esc}');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
-    cy.get('div.tippy-heading').should('not.exist');
+    cy.get('div.tippy-heading').should('not.be.visible');
   });
   it('should not follow card links when tooltips are open', () => {
     exploreCards.openResultsPage();
