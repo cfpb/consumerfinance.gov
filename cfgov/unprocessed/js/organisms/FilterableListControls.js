@@ -5,7 +5,7 @@ import {
   instantiateAll,
   Expandable,
   Multiselect,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import FormModel from '../modules/util/FormModel.js';
 

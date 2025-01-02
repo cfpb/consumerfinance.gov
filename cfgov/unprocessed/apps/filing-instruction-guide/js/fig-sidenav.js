@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
-import { varsBreakpoints } from '@cfpb/cfpb-design-system/src/index.js';
+import { varsBreakpoints } from '@cfpb/cfpb-design-system';
 
 import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';

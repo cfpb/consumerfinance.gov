@@ -4,7 +4,7 @@
 import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import search from 'ctrl-f';
-import { varsBreakpoints } from '@cfpb/cfpb-design-system/src/index.js';
+import { varsBreakpoints } from '@cfpb/cfpb-design-system';
 import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
 
 let secondaryNav;
