@@ -138,9 +138,11 @@ function handleShowMore(event) {
   }
   const results = document.querySelector('.o-filterable-list-results');
   const showMoreFade = document.querySelector('#u-show-more-fade');
-  const nextResult = document.querySelector('[data-js-hook="behavior_faded-card"]');
+  const nextResult = document.querySelector(
+    '[data-js-hook="behavior_faded-card"]',
+  );
   nextResult.setAttribute('tabIndex', '0');
-  nextResult.querySelectorAll('[tabindex="-1"]').forEach( elem => {
+  nextResult.querySelectorAll('[tabindex="-1"]').forEach((elem) => {
     elem.setAttribute('tabIndex', '0');
   });
   results.classList.remove('o-filterable-list-results--partial');
