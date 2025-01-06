@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@cfpb/jumbo-mortgage@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/jumbo-mortgage/-/jumbo-mortgage-5.0.0.tgz#4e6d197e3abce447dd0550c99ac718b86231ad44"
-  integrity sha512-XsOvs9twox5vcIL28PBt+4wlPW7wE0De26ZZVReKszzJVQqrplwRhVq1GZEb4BDZJq7+7zc42XWOJR0tJUKRMA==
+"@cfpb/jumbo-mortgage@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/jumbo-mortgage/-/jumbo-mortgage-6.0.0.tgz#850338092a20cc6b2589caa6f885062cd069c182"
+  integrity sha512-sdVZFMWjoLbjG+s3X5hOcCGI6YdSMQCBhtkUVB2ibqK0M0MhPOke/bU/S4fP8ShAKSk78MytA61txE9/n2+XHg==
   dependencies:
     format-usd "~0.1.0"
 

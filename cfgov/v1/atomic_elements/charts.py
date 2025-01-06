@@ -98,7 +98,6 @@ class ChartBlock(WagtailChartBlock):
     # https://github.com/overcastsoftware/wagtailcharts/blob/v0.5/wagtailcharts/templates/wagtailcharts/tags/render_charts.html
     class Media:
         js = [
-            "wagtailcharts/js/accounting.js?staticroot",
             "wagtailcharts/js/chart-types.js?staticroot",
             "wagtailcharts/js/chart.js?staticroot",
             "wagtailcharts/js/stacked-100.js?staticroot",

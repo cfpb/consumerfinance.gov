@@ -16,9 +16,8 @@ Chart.defaults.color = '#5a5d61';
  * The first line pattern is solid, the second is dashed,
  * the third is dotted and all subsequent patterns are dashed
  * with an increasingly thicker line.
- *
- * @param {array} datasets - Array of Chart.js datasets
- * @returns {array} Array of Chart.js datasets with borderDash property set
+ * @param {Array} datasets - Array of Chart.js datasets
+ * @returns {Array} Array of Chart.js datasets with borderDash property set
  *
  * https://www.chartjs.org/docs/latest/samples/line/styling.html
  * https://www.chartjs.org/docs/latest/configuration/#dataset-configuration
@@ -43,9 +42,8 @@ const patternizeChartLines = (datasets) => {
  * backgroundColor property.
  *
  * Patterns are from the patternomaly library.
- *
- * @param {array} datasets - Array of Chart.js datasets
- * @returns {array} Array of Chart.js datasets with backgroundColor property set
+ * @param {Array} datasets - Array of Chart.js datasets
+ * @returns {Array} Array of Chart.js datasets with backgroundColor property set
  *
  * https://www.chartjs.org/docs/latest/general/colors.html#patterns-and-gradients
  * https://github.com/ashiguruma/patternomaly

@@ -8,12 +8,6 @@ on:
       - '**.mo'
       - '**.po'
   merge_group:
-    paths-ignore:
-      - '**.py'
-      - 'requirements/**.txt'
-      - '**.html'
-      - '**.mo'
-      - '**.po'
 
 jobs:
   backend:

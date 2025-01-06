@@ -75,7 +75,7 @@ function queryHandler(queryString) {
     insl: 'tuitionRepay',
     insi: 'tuitionRepayRate',
     inst: 'tuitionRepayTerm',
-    totl: 'totalCost',
+    totl: 'urlTotalCost',
   };
 
   /**
