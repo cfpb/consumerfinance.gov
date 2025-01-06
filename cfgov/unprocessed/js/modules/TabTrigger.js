@@ -1,4 +1,4 @@
-import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
+import { EventObserver } from '@cfpb/cfpb-design-system';
 
 /**
  * TabTrigger

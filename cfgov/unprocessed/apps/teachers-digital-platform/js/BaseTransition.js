@@ -2,7 +2,7 @@
 // design-system to isolate TDP expandable customizations.
 
 // Required modules.
-import { EventObserver } from '@cfpb/cfpb-design-system/src/index.js';
+import { EventObserver } from '@cfpb/cfpb-design-system';
 
 /**
  * BaseTransition
