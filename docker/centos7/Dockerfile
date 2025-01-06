@@ -33,4 +33,8 @@ COPY ./install_cfgov_and_run_apache.sh .
 
 EXPOSE 80
 
+HEALTHCHECK \
+    --start-period=60s \
+    CMD curl -f http://localhost/ || exit 1
+
 ENTRYPOINT ["./install_cfgov_and_run_apache.sh"]

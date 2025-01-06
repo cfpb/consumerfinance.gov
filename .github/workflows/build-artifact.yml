@@ -2,10 +2,6 @@ name: 'Build cf.gov artifact'
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
   merge_group:
   workflow_dispatch:
 
@@ -23,7 +19,7 @@ jobs:
         with:
             node-version: '20.x'
 
-      - name: Install Act dependencies
+      - name: Install Act dependencies (if needed)
         if: ${{ env.ACT }}
         run: corepack enable
 
@@ -55,11 +51,17 @@ jobs:
       - name: Run built artifact as a Docker container
         run: |
           docker run \
+          --name cfgov \
           -d \
           -v `pwd`:/cfgov:ro \
           -p 8000:80 \
           --env-file docker/centos7/test.env \
-          ghcr.io/cfpb/cfgov-artifact-builder:latest
+          ghcr.io/cfpb/cfgov-artifact-tester:latest
+
+      - name: Wait for artifact container to be ready
+        run: |
+          timeout 180s bash -c \
+            'until [ "$(docker inspect -f {{.State.Health.Status}} cfgov)" == "healthy" ]; do sleep 2; done'
 
       # Don't upload artifacts to S3 if PR is against a fork.
       - name: Upload artifact to S3
