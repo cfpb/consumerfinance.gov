@@ -10,8 +10,6 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('filing_instruction_guide', '0001_squashed_0014_new_table_block'), ('filing_instruction_guide', '0002_deprecate_iug_sharing'), ('filing_instruction_guide', '0003_deprecate_super_button'), ('filing_instruction_guide', '0004_remove_large_pull_quote'), ('filing_instruction_guide', '0005_add_table_intro'), ('filing_instruction_guide', '0006_auto_20240201_1607'), ('filing_instruction_guide', '0007_raw_html_affordances'), ('filing_instruction_guide', '0008_rtf_to_urtf'), ('filing_instruction_guide', '0009_remove_resource_list'), ('filing_instruction_guide', '0010_add_reusable_notification'), ('filing_instruction_guide', '0011_remove_is_larger_heading'), ('filing_instruction_guide', '0012_fig_notification'), ('filing_instruction_guide', '0013_add_footnotes'), ('filing_instruction_guide', '0014_add_table_caption')]
-
     initial = True
 
     dependencies = [
