@@ -15,13 +15,12 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailredirects', '0008_add_verbose_name_plural'),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
         ('wagtailcore', '0069_log_entry_jsonfield'),
-        ('v1', '0017_remove_halfwidth'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

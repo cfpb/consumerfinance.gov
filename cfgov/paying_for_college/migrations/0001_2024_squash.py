@@ -12,15 +12,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailredirects', '0008_add_verbose_name_plural'),
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
-        ('v1', '0008_deprecate_heading_related_posts_in_sidebar_breakout'),
         ('wagtailcore', '0060_fix_workflow_unique_constraint'),
         ('wagtailcore', '0078_referenceindex'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0001_initial'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

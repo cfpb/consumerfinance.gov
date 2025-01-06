@@ -15,11 +15,8 @@ import wagtail.images.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0017_remove_halfwidth'),
-        ('ask_cfpb', '0004_ask_changes_202401'),
-        ('wagtailcore', '0089_log_entry_data_json_null_to_object'),
-        ('wagtailcore', '0093_uploadedfile'),
-        ('taggit', '0005_auto_20220424_2025'),
+        ('v1', '0001_2024_squash'),
+        ('ask_cfpb', '0001_2024_squash'),
     ]
 
     operations = [
