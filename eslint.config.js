@@ -56,6 +56,7 @@ export default [
         {
           ignore: [
             '@cfpb/cfpb-design-system$',
+            '@cfpb/cfpb-design-system/tooltips$',
             '@cfpb/cfpb-design-system/icons/.+.svg$',
           ],
         },
