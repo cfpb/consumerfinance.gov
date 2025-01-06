@@ -8,8 +8,6 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('paying_for_college', '0001_squashed_0020_new_table_block'), ('paying_for_college', '0002_deprecate_iug_sharing'), ('paying_for_college', '0003_delete_repayingstudentdebtpage'), ('paying_for_college', '0004_deprecate_super_button'), ('paying_for_college', '0005_remove_large_pull_quote'), ('paying_for_college', '0006_update_ds_links'), ('paying_for_college', '0007_add_table_intro'), ('paying_for_college', '0008_raw_html_affordances'), ('paying_for_college', '0009_rtf_to_urtf'), ('paying_for_college', '0010_add_reusable_notification'), ('paying_for_college', '0011_remove_is_larger_heading'), ('paying_for_college', '0012_add_footnotes'), ('paying_for_college', '0013_add_table_caption')]
-
     initial = True
 
     dependencies = [
