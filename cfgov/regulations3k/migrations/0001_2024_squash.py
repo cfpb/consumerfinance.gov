@@ -12,8 +12,6 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('regulations3k', '0001_squashed_0038_new_table_block'), ('regulations3k', '0002_deprecate_iug_sharing'), ('regulations3k', '0003_deprecate_super_button'), ('regulations3k', '0004_remove_large_pull_quote'), ('regulations3k', '0005_update_ds_links'), ('regulations3k', '0006_regulations_notification'), ('regulations3k', '0007_add_table_intro'), ('regulations3k', '0008_raw_html_affordances'), ('regulations3k', '0009_rtf_to_urtf'), ('regulations3k', '0010_add_reusable_notification'), ('regulations3k', '0011_add_footnotes'), ('regulations3k', '0012_add_table_caption')]
-
     initial = True
 
     dependencies = [
