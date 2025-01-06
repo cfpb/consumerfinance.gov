@@ -20,8 +20,6 @@ import wagtail.search.index
 
 class Migration(migrations.Migration):
 
-    replaces = [('v1', '0001_squashed_0254_delete_campaignpage'), ('v1', '0002_petition_categories'), ('v1', '0003_petition_categories_2'), ('v1', '0004_internaldocssettings'), ('v1', '0005_deprecate_preview_fields'), ('v1', '0006_deprecate_raft'), ('v1', '0007_deprecate_iug_sharing'), ('v1', '0008_deprecate_heading_related_posts_in_sidebar_breakout'), ('v1', '0009_deprecate_super_button'), ('v1', '0010_remove_large_pull_quote'), ('v1', '0011_wagtail_image_field_update'), ('v1', '0012_event_page_cleanup'), ('v1', '0013_remove_cfgovpage_schema_json'), ('v1', '0014_update_ds_links'), ('v1', '0015_grouppagepermission_index_fix'), ('v1', '0016_snippet_revisions'), ('v1', '0017_remove_halfwidth')]
-
     initial = True
 
     dependencies = [
