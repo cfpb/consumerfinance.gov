@@ -14,7 +14,7 @@ initContainers:
   - name: wait-for-db
     image:
       repository: busybox
-      tag: 'latest'
+      tag: "latest"
     command:
       - 'sh'
       - '-c'
@@ -24,27 +24,28 @@ initContainers:
     image:
       repository: cfgov
       pullPolicy: Never
-      tag: 'latest'
+      tag: "latest"
     env:
       - name: DATABASE_URL
-        value: 'postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov'
+        value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
       - name: SECRET_KEY
-        value: 'cfgov'
+        value: "cfgov"
       - name: ES_HOST
-        value: 'opensearch-cluster-master'
+        value: "opensearch-cluster-master"
       - name: ES_PORT
-        value: '9200'
+        value: "9200"
     command:
       - 'sh'
       - '-c'
       - './refresh-data.sh test.sql.gz'
+
 
 containers:
   - name: cfgov
     image:
       repository: cfgov
       pullPolicy: Never
-      tag: 'latest'
+      tag: "latest"
     port: 8000
     readinessProbe:
       httpGet:
@@ -55,26 +56,26 @@ containers:
       timeoutSeconds: 1
       failedThreshold: 3
     env:
-      - name: DATABASE_URL
-        value: 'postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov'
-      - name: SECRET_KEY
-        value: 'cfgov'
-      - name: ES_HOST
-        value: 'opensearch-cluster-master'
-      - name: ES_PORT
-        value: '9200'
+    - name: DATABASE_URL
+      value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
+    - name: SECRET_KEY
+      value: "cfgov"
+    - name: ES_HOST
+      value: "opensearch-cluster-master"
+    - name: ES_PORT
+      value: "9200"
   - name: cfgov-apache
     image:
       repository: cfgov-apache
       pullPolicy: Never
-      tag: 'latest'
+      tag: "latest"
     port: 80
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
-nameOverride: ''
-fullnameOverride: ''
+nameOverride: ""
+fullnameOverride: ""
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -86,7 +87,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ''
+  name: ""
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
@@ -95,16 +96,15 @@ podAnnotations:
   # This is currently needed because the crawler image tag is always "main".
   # https://v3.helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
   rollme: {{ randAlphaNum 5 | quote }}
+
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: { 'app.kubernetes.io/name': 'cfgov' }
+podLabels: {"app.kubernetes.io/name": "cfgov"}
 
-podSecurityContext:
-  {}
+podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext:
-  {}
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -122,9 +122,8 @@ service:
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
-  className: ''
-  annotations:
-    {}
+  className: ""
+  annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -137,8 +136,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -176,6 +174,7 @@ tolerations: []
 
 affinity: {}
 
+
 postgresql:
   labels:
     app: cfgov-postgresql
@@ -186,9 +185,10 @@ postgresql:
         username: cfpb
         password: cfpb
 
+
 pgadmin4:
   env:
-    email: test@domain.com
+    email:  test@domain.com
     password: test
 
 opensearch:
