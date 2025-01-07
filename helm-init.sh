@@ -25,7 +25,7 @@ fi
 
 if ! docker images -q --filter=reference='cfgov' | grep -q .; then
     echo -e "${RED}Docker image 'cfgov' could not be found."
-    docker build . -t cfgo
+    docker build . -t cfgov
 fi
 
 if ! docker images -q --filter=reference='cfgov-apache' | grep -q .; then
