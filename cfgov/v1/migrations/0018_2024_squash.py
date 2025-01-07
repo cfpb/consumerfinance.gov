@@ -14,14 +14,9 @@ import wagtail.images.models
 
 class Migration(migrations.Migration):
 
-    replaces = [('v1', '0018_ask_changes_202401'), ('v1', '0019_migrate_raw_anchors'), ('v1', '0020_remove_resources'), ('v1', '0021_add_table_intro'), ('v1', '0022_auto_20240201_1607'), ('v1', '0023_landing_page_featured_cards'), ('v1', '0024_raw_html_affordances'), ('v1', '0025_rtf_to_urtf'), ('v1', '0026_remove_resource_list'), ('v1', '0027_add_reusable_notification'), ('v1', '0028_remove_is_larger_heading'), ('v1', '0029_move_tip_to_ask'), ('v1', '0030_newsroom_ltter'), ('v1', '0031_alter_cfgovauthoredpages_tag_and_more'), ('v1', '0032_alter_browsepage_content'), ('v1', '0033_wagtailsearch_querydailyhits_index_fix'), ('v1', '0034_fix_reference_url'), ('v1', '0035_add_footnotes'), ('v1', '0036_delete_cdnhistory'), ('v1', '0037_add_table_caption'), ('v1', '0038_emailsignup_disclaimer_page_set_null'), ('v1', '0039_remove_post_event_image'), ('v1', '0040_blog_expandable_group'), ('v1', '0041_wagtail_charts_chart_block')]
-
     dependencies = [
-        ('v1', '0017_remove_halfwidth'),
-        ('ask_cfpb', '0004_ask_changes_202401'),
-        ('wagtailcore', '0089_log_entry_data_json_null_to_object'),
-        ('wagtailcore', '0093_uploadedfile'),
-        ('taggit', '0005_auto_20220424_2025'),
+        ('v1', '0001_2024_squash'),
+        ('ask_cfpb', '0001_2024_squash'),
     ]
 
     operations = [

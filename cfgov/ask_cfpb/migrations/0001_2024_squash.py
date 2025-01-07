@@ -12,18 +12,15 @@ import wagtail.search.index
 
 class Migration(migrations.Migration):
 
-    replaces = [('ask_cfpb', '0001_squashed_0004_new_table_block'), ('ask_cfpb', '0002_deprecate_super_button'), ('ask_cfpb', '0003_remove_halfwidth'), ('ask_cfpb', '0004_ask_changes_202401'), ('ask_cfpb', '0005_add_table_intro'), ('ask_cfpb', '0006_raw_html_affordances'), ('ask_cfpb', '0007_move_tip_to_ask'), ('ask_cfpb', '0008_add_footnotes'), ('ask_cfpb', '0009_add_table_caption')]
-
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailredirects', '0008_add_verbose_name_plural'),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
         ('wagtailcore', '0069_log_entry_jsonfield'),
-        ('v1', '0017_remove_halfwidth'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

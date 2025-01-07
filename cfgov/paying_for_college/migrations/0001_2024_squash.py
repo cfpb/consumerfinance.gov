@@ -8,21 +8,18 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('paying_for_college', '0001_squashed_0020_new_table_block'), ('paying_for_college', '0002_deprecate_iug_sharing'), ('paying_for_college', '0003_delete_repayingstudentdebtpage'), ('paying_for_college', '0004_deprecate_super_button'), ('paying_for_college', '0005_remove_large_pull_quote'), ('paying_for_college', '0006_update_ds_links'), ('paying_for_college', '0007_add_table_intro'), ('paying_for_college', '0008_raw_html_affordances'), ('paying_for_college', '0009_rtf_to_urtf'), ('paying_for_college', '0010_add_reusable_notification'), ('paying_for_college', '0011_remove_is_larger_heading'), ('paying_for_college', '0012_add_footnotes'), ('paying_for_college', '0013_add_table_caption')]
-
     initial = True
 
     dependencies = [
         ('wagtailredirects', '0008_add_verbose_name_plural'),
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
         ('wagtailinventory', '0003_pageblock_id_bigautofield'),
-        ('v1', '0008_deprecate_heading_related_posts_in_sidebar_breakout'),
         ('wagtailcore', '0060_fix_workflow_unique_constraint'),
         ('wagtailcore', '0078_referenceindex'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
         ('wagtailforms', '0005_alter_formsubmission_form_data'),
         ('wagtailinventory', '0001_initial'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

@@ -8,12 +8,10 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('form_explainer', '0001_squashed_0008_new_table_block'), ('form_explainer', '0002_deprecate_iug_sharing'), ('form_explainer', '0003_deprecate_super_button'), ('form_explainer', '0004_remove_large_pull_quote'), ('form_explainer', '0005_update_ds_links'), ('form_explainer', '0006_add_table_intro'), ('form_explainer', '0007_raw_html_affordances'), ('form_explainer', '0008_rtf_to_urtf'), ('form_explainer', '0009_add_reusable_notification'), ('form_explainer', '0010_add_footnotes'), ('form_explainer', '0011_remove_form_explainer_css'), ('form_explainer', '0012_add_table_caption')]
-
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

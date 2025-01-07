@@ -7,8 +7,6 @@ import tccp.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('tccp', '0001_initial'), ('tccp', '0002_indexes'), ('tccp', '0003_cardsurveydata_slug'), ('tccp', '0004_slug_primary_key'), ('tccp', '0005_indexes'), ('tccp', '0006_indexes'), ('tccp', '0007_cardsurveydata_top_25_institution'), ('tccp', '0008_state_names'), ('tccp', '0009_alter_cardsurveydata_rewards'), ('tccp', '0010_currencydecimalfield'), ('tccp', '0011_alter_cardsurveydata_targeted_credit_tiers'), ('tccp', '0012_cardsurveydata_institution_type'), ('tccp', '0013_dataset_updates')]
-
     initial = True
 
     dependencies = [

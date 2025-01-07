@@ -12,15 +12,13 @@ import wagtail.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('teachers_digital_platform', '0001_squashed_0005_add_use_json_field_to_streamfields'), ('teachers_digital_platform', '0002_raw_html_affordances'), ('teachers_digital_platform', '0003_rtf_to_urtf'), ('teachers_digital_platform', '0004_remove_activityindexpage_header_sidebar')]
-
     initial = True
 
     dependencies = [
         ('wagtailimages', '0019_delete_filter'),
         ('wagtaildocs', '0007_merge'),
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
         ('wagtaildocs', '0010_document_file_hash'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [
