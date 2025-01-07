@@ -91,11 +91,11 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations:
-  # Always restart containers, even if the image tag hasn't changed.
-  # This is currently needed because the crawler image tag is always "main".
-  # https://v3.helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
-  rollme: {{ randAlphaNum 5 | quote }}
+#
+# Always restart containers, even if the image tag hasn't changed.
+# This is currently needed because the crawler image tag is always "main".
+# https://v3.helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
+podAnnotations: {"rollme": "{{ randAlphaNum 5 | quote }}"}
 
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
