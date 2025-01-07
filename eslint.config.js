@@ -51,6 +51,15 @@ export default [
     // Some plugins are automatically included.
     // plugins: {},
     rules: {
+      'import/no-unresolved': [
+        2,
+        {
+          ignore: [
+            '@cfpb/cfpb-design-system$',
+            '@cfpb/cfpb-design-system/icons/.+.svg$',
+          ],
+        },
+      ],
       'jsdoc/require-hyphen-before-param-description': ['warn', 'always'],
       'no-console': ['warn'],
       'no-use-before-define': ['error', 'nofunc'],

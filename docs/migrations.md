@@ -13,7 +13,7 @@ additionally, changing field names or types on an existing block will require a
 1. [Schema migrations](#schema-migrations)
 1. [Data migrations](#data-migrations)
    1. [Wagtail-specific consideration](#wagtail-specific-considerations)
-1. [Recreating migrations](#recreating-migrations)
+1. [Squashing migrations](#squashing-migrations)
 
 ## Reference material
 

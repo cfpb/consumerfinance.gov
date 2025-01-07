@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     "filing_instruction_guide",
     "health_check",
     "health_check.db",
+    "wagtailcharts",
     # Satellites
     "complaint_search",
     "countylimits",

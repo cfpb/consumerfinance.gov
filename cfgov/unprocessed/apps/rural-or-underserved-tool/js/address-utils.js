@@ -1,6 +1,6 @@
 import { addEl, getEl, getEls, removeClass } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/plus-round.svg';
+import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.

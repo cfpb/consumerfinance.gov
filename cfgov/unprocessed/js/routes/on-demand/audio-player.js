@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import AudioPlayer from '../../organisms/AudioPlayer';
-import { instantiateAll } from '@cfpb/cfpb-design-system/src/index.js';
+import { instantiateAll } from '@cfpb/cfpb-design-system';
 
 instantiateAll('audio', AudioPlayer);
