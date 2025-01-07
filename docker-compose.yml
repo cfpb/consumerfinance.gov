@@ -62,7 +62,6 @@ services:
       ERROR_LOG: /proc/self/fd/2
       ACCESS_LOG: /proc/self/fd/1
       LIMIT_REQUEST_BODY: 0
-      APACHE_STATUS_ALLOW_FROM: 127.0.0.1
       APACHE_PROCESS_COUNT: 4
       CFGOV_APPLICATION_HOST: python
       # These aren't used in Docker but are used for our legacy EC2 servers
