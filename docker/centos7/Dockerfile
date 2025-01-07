@@ -1,4 +1,4 @@
-FROM centos:7 AS centos7
+FROM centos:7 AS centos7-py38
 
 COPY ./fix_centos_repos.sh .
 
@@ -6,11 +6,8 @@ RUN \
     ./fix_centos_repos.sh && \
     yum update -y && \
     yum install -y centos-release-scl && \
-    ./fix_centos_repos.sh
-
-FROM centos7 AS centos7-py38
-
-RUN yum install -y rh-python38
+    ./fix_centos_repos.sh && \
+    yum install -y rh-python38
 
 FROM centos7-py38 AS cfgov-artifact-builder
 
