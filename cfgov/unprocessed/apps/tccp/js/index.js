@@ -28,7 +28,7 @@ function init() {
   // Move the card ordering dropdown below the expandable
   orderingDropdown.move();
   // Initialize any tooltips on the page
-  Tooltip.init();
+  tooltips = Tooltip.init();
   // Reinitialize tooltips after an htmx request replaces DOM nodes
   behaviorAttach(document, 'htmx:afterSwap', initializeAndReport);
 }
@@ -38,7 +38,7 @@ function init() {
  * @param {Event} event - htmx event
  */
 function initializeAndReport(event) {
-  Tooltip.init();
+  tooltips = Tooltip.init();
   reportFilter(event);
   // Attach handler for "Enter" on card details link proxy
   behaviorAttach('card-link-proxy', 'keydown', handleCardLinkProxies);
