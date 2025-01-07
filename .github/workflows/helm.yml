@@ -1,0 +1,39 @@
+name: Helm testing
+on:
+  pull_request:
+    paths:
+      - helm/**
+  push:
+
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install Helm dependencies
+        run: helm dependency update helm
+
+      - name: Lint Helm chart
+        run: helm lint --strict -f helm/values.local.yaml helm
+
+      - name: Install Minikube
+        uses: manusa/actions-setup-minikube@v2.13.0
+        with:
+          minikube version: v1.34.0
+          kubernetes version: v1.32.0
+
+      - name: Setup Kubernetes context
+        run: kubectl config use-context minikube
+
+      - name: Install and test Helm chart
+        run: |
+          helm install cfgov helm \
+            -f helm/values.local.yaml \
+            --namespace cfgov \
+            --create-namespace
+          helm test cfgov --namespace cfgov
