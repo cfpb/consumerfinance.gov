@@ -61,9 +61,17 @@
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Artifacts and Deployment</a>
     <ul class="current">
     
-
-    
-
+        <ul>
+        
+            <li><a class="toctree-l4" href="#generating-an-artifact">Generating an artifact</a></li>
+        
+            <li><a class="toctree-l4" href="#whats-in-an-artifact">What's in an artifact?</a></li>
+        
+            <li><a class="toctree-l4" href="#deploying-an-artifact">Deploying an artifact</a></li>
+        
+            <li><a class="toctree-l4" href="#testing-an-artifact">Testing an artifact</a></li>
+        
+        </ul>
     
 
     </ul>
@@ -161,44 +169,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <p>This repository includes code for generating a self-extracting zip archive
+                <h1 id="deploying-to-rhelcentos-servers">Deploying to RHEL/CentOS servers<a class="headerlink" href="#deploying-to-rhelcentos-servers" title="Permanent link">¶</a></h1>
+<p>This repository includes code for generating a self-extracting zip archive
 of the code and all of its Python dependencies. We use these
 archives to deploy the site to a Linux server.</p>
-<h1 id="generating-a-deployment-artifact">Generating a deployment artifact<a class="headerlink" href="#generating-a-deployment-artifact" title="Permanent link">¶</a></h1>
-<p>Running the script at <code>./docker/builder/build.sh</code> will start a CentOS 7
-container, generate the artifact (via
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker/builder/_build.sh">this script</a>),
-and save it to <code>./cfgov_current_build.zip</code>.</p>
-<p>We use CentOS 7 here so that the Python modules that include compiled code, will
-be compiled for the same environment they will be run in.</p>
-<h1 id="whats-in-an-artifact">What's in an artifact?<a class="headerlink" href="#whats-in-an-artifact" title="Permanent link">¶</a></h1>
-<p>Here's a (very abbreviated) peek into what's <em>in</em> the zip file:</p>
-<pre class="highlight"><code>__main__.py
-cfgov.pth
-install_wheels.py
-loadenv.py
-loadenv-init.pth
-wheels/botocore-1.10.84-py2.py3-none-any.whl
-wheels/tqdm-4.15.0-py2.py3-none-any.whl
-...
-static.in/0/
-static.in/0/fonts/
-static.in/0/fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2
-...
-bootstrap_wheels/setuptools-41.2.0-py2.py3-none-any.whl
-bootstrap_wheels/pip-19.2.3-py2.py3-none-any.whl
-cfgov/...</code></pre>
-<p>The <code>__main__.py</code> file contains <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/deployable_zipfile/extract.py">the code that runs when the zip file is invoked
+<h2 id="generating-an-artifact">Generating an artifact<a class="headerlink" href="#generating-an-artifact" title="Permanent link">¶</a></h2>
+<p>We use a custom CentOS 7-based Docker image (<code>cfgov-artifact-builder</code>) to build
+deployment artifacts.
+CentOS is used so that the Python modules that include compiled code will
+be compiled for the same environment in which they will be run.</p>
+<p>This image is updated automatically via GitHub Actions and stored in the
+GitHub Container registry.</p>
+<p>To download the image from GitHub (after first
+<a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry">authenticating</a>):</p>
+<pre class="highlight"><code class="language-sh">docker pull ghcr.io/cfpb/cfgov-artifact-builder:latest</code></pre>
+<p>Alternatively, to build the image locally:</p>
+<pre class="highlight"><code class="language-sh">docker build docker/centos7 --target=cfgov-artifact-builder -t ghcr.io/cfpb/cfgov-artifact-builder:latest</code></pre>
+<p>To use the image to build a deployable artifact from your local source code:</p>
+<pre class="highlight"><code class="language-sh">docker run -v `pwd`:/cfgov ghcr.io/cfpb/cfgov-artifact-builder:latest</code></pre>
+<p>The generated artifact will be created in the current directory as
+<code>cfgov_current_build.zip</code>.</p>
+<p>Note that artifacts generated locally may include extra files from local development
+directories that are not intended to be deployed to production.
+Only artifacts generated in a clean environment (e.g. on GitHub Actions)
+should be used in real deployments.</p>
+<h2 id="whats-in-an-artifact">What's in an artifact?<a class="headerlink" href="#whats-in-an-artifact" title="Permanent link">¶</a></h2>
+<p>A deployable artifact is a zipfile that can be executed by Python.
+It contains the full project source code and static assets
+along with various additional files.</p>
+<p>A <code>__main__.py</code> file contains <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/deployable_zipfile/extract.py">the code that runs when the zip file is invoked
 as a Python module</a>.</p>
-<p>The <code>wheels/</code> directory contains all of our python dependencies, while
+<p>A <code>wheels/</code> directory contains all of our python dependencies, while
 <code>bootstrap_wheels/</code> contains modules needed at deployment time, to install
 everything.</p>
 <p><code>loadenv.py</code> and <code>loadenv-init.pth</code> are used to load environment variables from
 a <code>environment.json</code> file, deployed seperately.</p>
-<p>Before the final version of the zip file is saved, we prepend a python "shebang" line,
-<code>#!/usr/bin/env python</code>. This, combined with <code>__main__.py</code> described above, is what makes
-the file executable and self-extracting.</p>
-<h1 id="deploying-an-artifact">Deploying an artifact<a class="headerlink" href="#deploying-an-artifact" title="Permanent link">¶</a></h1>
+<p>Before the final version of the zip file is saved, we prepend a python "shebang"
+line, <code>#!/usr/bin/env python</code>.
+This, combined with <code>__main__.py</code> described above, is what makes the file
+executable and self-extracting.</p>
+<h2 id="deploying-an-artifact">Deploying an artifact<a class="headerlink" href="#deploying-an-artifact" title="Permanent link">¶</a></h2>
 <p>We currently use Ansible to prepare servers to run an artifact, and to do the actual deployment.
 If we ignore some specifics and quirks of our environment, the basic steps look something like this:</p>
 <ol>
@@ -214,6 +224,23 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
 <li>update a symlink to point to the latest release</li>
 <li>restart your WSGI server.</li>
 </ol>
+<h2 id="testing-an-artifact">Testing an artifact<a class="headerlink" href="#testing-an-artifact" title="Permanent link">¶</a></h2>
+<p>A CentOS-based Docker image (<code>cfgov-artifact-tester</code>) can be used to test deployable artifacts locally without requiring access to a Linux server.
+This image unpacks a deployable artifact and runs it in a Docker container in the
+same way it runs on RHEL/CentOS servers.</p>
+<p>This image is updated automatically via GitHub Actions and stored in the
+GitHub Container registry.</p>
+<p>To download the image from GitHub (after first
+<a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry">authenticating</a>):</p>
+<pre class="highlight"><code class="language-sh">docker pull ghcr.io/cfpb/cfgov-artifact-tester:latest</code></pre>
+<p>Alternatively, to build the image locally:</p>
+<pre class="highlight"><code class="language-sh">docker build docker/centos7 --target=cfgov-artifact-tester -t ghcr.io/cfpb/cfgov-artifact-tester:latest</code></pre>
+<p>To use the image to test a local deployable artifact named <code>cfgov_current_build.zip</code>:</p>
+<pre class="highlight"><code class="language-sh">docker run -it -v `pwd`:/cfgov:ro -p 8000:80 --env-file docker/centos7/test.env cfgov-artifact-tester:latest</code></pre>
+<p>Running this container extracts the local artifact and serves it using an Apache
+webserver accessible locally at <a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>The <code>docker/centos7/test.env</code> file includes various environment variables that can
+be modified to alter the application's behavior.</p>
               
             </div>
           </div><footer>
