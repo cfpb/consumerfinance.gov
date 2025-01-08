@@ -63,7 +63,7 @@ class SchoolModelsTest(TestCase):
         state="OZ",
         ope6=5555,
         ope8=555500,
-        settlement_school=None,
+        settlement_school="",
     ):
         return School.objects.create(
             school_id=school_id,
