@@ -63,6 +63,7 @@ class SchoolModelsTest(TestCase):
         state="OZ",
         ope6=5555,
         ope8=555500,
+        settlement_school=None,
     ):
         return School.objects.create(
             school_id=school_id,
@@ -74,6 +75,7 @@ class SchoolModelsTest(TestCase):
             state=state,
             ope6_id=ope6,
             ope8_id=ope8,
+            settlement_school=settlement_school,
         )
 
     def create_alias(self, alias, school):
@@ -142,18 +144,24 @@ class SchoolModelsTest(TestCase):
         self.assertTrue(s.convert_ope6() == "")
         self.assertTrue(s.convert_ope8() == "")
 
-    @mock.patch("paying_for_college.models.disclosures.requests.get")
+    @mock.patch("paying_for_college.models.disclosures.requests.post")
     def test_notification_request(self, mock_requests):
         contact = self.create_contact()
         unicode_endpoint = "http://unicode.contact.com"
         contact.endpoint = unicode_endpoint
         contact.save()
-        school = self.create_school()
+        school = self.create_school(settlement_school="settlement")
         school.contact = contact
         notification = self.create_notification(school)
         notification.notify_school()
-        self.assertTrue(
-            mock_requests.called_with, unicode_endpoint.encode("utf-8")
+        mock_requests.assert_called_with(
+            unicode_endpoint.encode("utf-8"),
+            data={
+                "oid": notification.oid,
+                "time": notification.timestamp.isoformat(),
+                "errors": "none",
+            },
+            timeout=10,
         )
 
     def test_constant_models(self):
