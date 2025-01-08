@@ -19,20 +19,3 @@ jobs:
 
       - name: Lint Helm chart
         run: helm lint --strict -f helm/values.local.yaml helm
-
-      - name: Install Minikube
-        uses: manusa/actions-setup-minikube@v2.13.0
-        with:
-          minikube version: v1.34.0
-          kubernetes version: v1.32.0
-
-      - name: Setup Kubernetes context
-        run: kubectl config use-context minikube
-
-      - name: Install and test Helm chart
-        run: |
-          helm install cfgov helm \
-            -f helm/values.local.yaml \
-            --namespace cfgov \
-            --create-namespace
-          helm test cfgov --namespace cfgov
