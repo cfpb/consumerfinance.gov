@@ -78,7 +78,8 @@ function handleIgnoreLinkTargets(event) {
   const ignoredTargets = event.currentTarget?.getAttribute(
     'data-ignore-link-targets',
   );
-  const tooltipIsOpen = tooltips.some((tip) => tip.state.isMounted);
+  const tooltipIsOpen = tooltips.some((tip) => tip.tooltip.state.isMounted);
+
   if (event.target.closest(ignoredTargets) || tooltipIsOpen) {
     event.preventDefault();
   }
