@@ -1,14 +1,11 @@
-name: Create and publish a Docker image that can be used to build a deployable zipfile
+name: Maintain deployable zipfile Docker images
 
 on:
   push:
     branches: ['main']
     paths:
-      - 'docker/builder/**'
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}-builder
+      - 'docker/centos7/**'
+  workflow_dispatch:
 
 jobs:
   build-and-push-image:
@@ -25,20 +22,26 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build deployable zipfile builder image
+        run: |
+          docker build docker/centos7 \
+          --target=cfgov-artifact-builder \
+          -t ghcr.io/cfpb/cfgov-artifact-builder:latest
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./docker/builder/
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build deployable zipfile tester image
+        run: |
+          docker build docker/centos7 \
+          --target=cfgov-artifact-tester \
+          -t ghcr.io/cfpb/cfgov-artifact-tester:latest
+
+      - name: Push deployable zipfile builder image
+        run: |
+          docker push ghcr.io/cfpb/cfgov-artifact-builder:latest
+
+      - name: Push deployable zipfile tester image
+        run: |
+          docker push ghcr.io/cfpb/cfgov-artifact-tester:latest

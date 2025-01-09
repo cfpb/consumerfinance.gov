@@ -283,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.6.2":
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.6.2.tgz#81b1dbc0087c14ec06e7f826003c5dd8d63505ef"
-  integrity sha512-hHJa6UJs5pfuDBg/09kgs5d9C4QQxQ5l22SC+U6yGRD1GdiPtnzxUbYPE0v4x2HPc+6uGUaQPYPuVqd4cqQUvw==
+"@cfpb/cfpb-design-system@3.6.3":
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.6.3.tgz#421b87d4ea427ae3cdf7296aadba288f8a0e3ccb"
+  integrity sha512-EAY7rGakAd21x4vkWNIM8+Nkl6xobLiIpIZ2DG14T0GrOAy7GMLsYHJhTrVEWS67dCt0KP/2ykSMLtC88S5IDA==
   dependencies:
     tippy.js "6.3.7"
 

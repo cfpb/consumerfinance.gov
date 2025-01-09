@@ -185,25 +185,23 @@ class OfferTest(django.test.TestCase):
         )
         no_oid = "?iped=408039&pid=981&oid="
         bad_school = (
-            "?iped=xxxxxx&pid=981&" "oid=f38283b5b7c939a058889f997949efa566c61"
+            "?iped=xxxxxx&pid=981&oid=f38283b5b7c939a058889f997949efa566c61"
         )
         bad_program = (
-            "?iped=408039&pid=xxx&"
-            "oid=f38283b5b7c939a058889f997949efa566c616c5"
+            "?iped=408039&pid=xxx&oid=f38283b5b7c939a058889f997949efa566c616c5"
         )
         # puerto_rico = '?iped=243197&pid=981&oid='
         missing_oid_field = "?iped=408039&pid=981"
         missing_school_id = "?iped="
         bad_oid = (
-            "?iped=408039&pid=981&oid=f382"
-            "<script></script>f997949efa566c616c5"
+            "?iped=408039&pid=981&oid=f382<script></script>f997949efa566c616c5"
         )
         illegal_program = (
             "?iped=408039&pid=<981>&oid=f38283b"
             "5b7c939a058889f997949efa566c616c5"
         )
         no_program = (
-            "?iped=408039&pid=&oid=f38283b" "5b7c939a058889f997949efa566c616c5"
+            "?iped=408039&pid=&oid=f38283b5b7c939a058889f997949efa566c616c5"
         )
         resp = self.client.get(url + qstring)
         self.assertEqual(resp.status_code, 200)

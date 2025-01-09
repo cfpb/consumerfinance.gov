@@ -32,6 +32,9 @@ build_args=(
     "--extra-static" "$webfonts_path"
 )
 
+# Activate the appropriate version of Python.
+source /opt/rh/rh-python38/enable
+
 # Build the deployable zipfile.
 "$cfgov_refresh_volume/cfgov/deployable_zipfile/create.py" "${build_args[@]}"
 
