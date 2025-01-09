@@ -1,4 +1,3 @@
-{{- if .Values.tests.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     {{- include "cfgov.labels" . | nindent 4 }}
   annotations:
-    "cfgov.sh/hook": test
+    "helm.sh/hook": test
 spec:
   containers:
     - name: wget
@@ -14,4 +13,3 @@ spec:
       command: ['wget']
       args: ['{{ include "cfgov.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
-{{- end }}

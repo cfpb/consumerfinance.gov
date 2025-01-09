@@ -6,22 +6,22 @@
 replicaCount: 1
 
 tests:
-  enabled: false
+  enabled: true
 
 localDeployment: true
 
 initContainers:
   - name: wait-for-db
-    image: 
+    image:
       repository: busybox
       tag: "latest"
-    command: 
-      - 'sh' 
+    command:
+      - 'sh'
       - '-c'
       - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 10; done;'
       - 'until nc -z opensearch-cluster-master 9200; do echo waiting for opensearch; sleep 10; done;'
   - name: cfgov-migrations
-    image: 
+    image:
       repository: cfgov
       pullPolicy: Never
       tag: "latest"
@@ -34,18 +34,18 @@ initContainers:
         value: "opensearch-cluster-master"
       - name: ES_PORT
         value: "9200"
-    command: 
+    command:
       - 'sh'
       - '-c'
-      - './refresh-data.sh test.sql.gz' 
-      
+      - './refresh-data.sh test.sql.gz'
+
 
 containers:
   - name: cfgov
-    image: 
+    image:
       repository: cfgov
       pullPolicy: Never
-      tag: "latest" 
+      tag: "latest"
     port: 8000
     readinessProbe:
       httpGet:
@@ -65,7 +65,7 @@ containers:
     - name: ES_PORT
       value: "9200"
   - name: cfgov-apache
-    image: 
+    image:
       repository: cfgov-apache
       pullPolicy: Never
       tag: "latest"
@@ -91,7 +91,12 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+#
+# Always restart containers, even if the image tag hasn't changed.
+# This is currently needed because the crawler image tag is always "main".
+# https://v3.helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
+podAnnotations: {"rollme": "{{ randAlphaNum 5 | quote }}"}
+
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {"app.kubernetes.io/name": "cfgov"}

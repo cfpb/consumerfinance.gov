@@ -26,7 +26,7 @@ OpenSearch:
 
 cfgov:
   - Service Name: cfgov
-  - Applicaiton Port: 8000
+  - Application Port: 8000
   - Apache Port: 80
 
   To access cfgov, run the following commands:

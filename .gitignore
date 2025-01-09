@@ -146,6 +146,7 @@ cfgov/regulations3k/jinja2/regulations3k/workbox-*.js
 cfgov/regulations3k/jinja2/regulations3k/workbox-*.js.map
 
 # Helm Charts #
+helm/apache/
 helm/charts/
 
 # Apache #
@@ -156,6 +157,3 @@ cfgov/apache/modules
 # Local Docker-Compose Files #
 ##############################
 docker-compose.pgadmin.yml
-
-# Helm # 
-helm/charts/

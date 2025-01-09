@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fail if any command fails.
+set -e
+
 # Define color codes for pretty output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -20,13 +23,13 @@ if ! command -v kubectl &> /dev/null; then
     exit 1
 fi
 
-if ! docker images | grep -q "cfgov"; then
-    echo -e "${RED}Docker images 'cfgov' could not be found." 
+if ! docker images -q --filter=reference='cfgov' | grep -q .; then
+    echo -e "${RED}Docker image 'cfgov' could not be found."
     docker build . -t cfgov
 fi
 
-if ! docker images | grep -q "cfgov-apache"; then
-    echo -e "${RED}Docker images 'cfgov-apache' could not be found." 
+if ! docker images -q --filter=reference='cfgov-apache' | grep -q .; then
+    echo -e "${RED}Docker image 'cfgov-apache' could not be found."
     docker build ./cfgov/apache/. -t cfgov-apache
 fi
 
@@ -76,7 +79,7 @@ else
         echo -e "${GREEN}Updating Helm dependencies...${NC}"
         helm dependency update $HELM_DIR
     fi
-fi 
+fi
 
 # Upgrade or install the Helm release
 echo -e "${GREEN}Upgrading/Installing Helm release...${NC}"
