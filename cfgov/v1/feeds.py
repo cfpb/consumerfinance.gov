@@ -48,7 +48,7 @@ class FilterableFeed(Feed):
         ]
 
     def item_guid(self, item):
-        return f'{item["page_id"]}<>consumerfinance.gov'
+        return f"{item['page_id']}<>consumerfinance.gov"
 
 
 def get_appropriate_rss_feed_url_for_page(page, request=None):

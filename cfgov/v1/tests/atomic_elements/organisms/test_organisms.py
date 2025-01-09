@@ -444,7 +444,7 @@ class ItemIntroductionTests(WagtailPageTreeTestCase):
 <div class="o-item-introduction">
     <div class="o-item-introduction__intro">
         <a class="h4" href="/landing/?categories=at-the-cfpb">
-            { svg_icon("bullhorn") }
+            {svg_icon("bullhorn")}
             <span class="u-visually-hidden">
                 Category:
             </span>

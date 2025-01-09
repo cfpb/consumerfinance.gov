@@ -34,7 +34,7 @@ class Command(BaseCommand):
         self.stdout.write(f"{invalid_cards.count()} cards with invalid APRs")
 
         for i, invalid_card in enumerate(invalid_cards):
-            self.stdout.write(f"{i+1}: {invalid_card.slug}")
+            self.stdout.write(f"{i + 1}: {invalid_card.slug}")
 
         self.stdout.write()
 
