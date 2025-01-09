@@ -1,5 +1,5 @@
 import { handleContentClick, handleNavClick } from './analytics.js';
-import { Expandable } from '@cfpb/cfpb-design-system/src/index.js';
+import { Expandable } from '@cfpb/cfpb-design-system';
 
 const navHeader = document.querySelector('.o-regs3k-navigation__header');
 const navItems = document.querySelector('.o-regs3k-sections');
