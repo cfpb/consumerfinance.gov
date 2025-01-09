@@ -83,7 +83,7 @@ class Command(BaseCommand):
             # Notify specified emails (e.g. system admins)
             if len(emails) > 0:
                 self.stdout.write(
-                    "Sending inactive user list to " "{}\n".format(
+                    "Sending inactive user list to {}\n".format(
                         ",".join(emails)
                     )
                 )

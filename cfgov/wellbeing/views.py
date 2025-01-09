@@ -49,7 +49,7 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 4
             "question": _(
-                "I can enjoy life because of the way I'm managing " "my money"
+                "I can enjoy life because of the way I'm managing my money"
             ),
             "answers": [
                 _("Not at all"),
@@ -73,8 +73,7 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 6
             "question": _(
-                "I am concerned that the money I have or will save "
-                "won't last"
+                "I am concerned that the money I have or will save won't last"
             ),
             "answers": [
                 _("Completely"),

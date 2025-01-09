@@ -545,7 +545,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_write.call_count, 3)
 
     def test_unzip_file(self):
-        test_zip = f"{COLLEGE_ROOT}/data_sources/ipeds/" "test.txt.zip"
+        test_zip = f"{COLLEGE_ROOT}/data_sources/ipeds/test.txt.zip"
         self.assertTrue(update_ipeds.unzip_file(test_zip))
 
     @patch("paying_for_college.disclosures.scripts.update_ipeds.requests.get")

@@ -294,8 +294,7 @@ class ContactPhone(blocks.StructBlock):
                     blocks.CharBlock(
                         max_length=15,
                         help_text=(
-                            "Do not include spaces or dashes. "
-                            "Ex. 8554112372"
+                            "Do not include spaces or dashes. Ex. 8554112372"
                         ),
                         validators=[phone_number_format_validator()],
                     ),
@@ -317,8 +316,7 @@ class ContactPhone(blocks.StructBlock):
                         required=False,
                         label="TTY",
                         help_text=(
-                            "Do not include spaces or dashes. "
-                            "Ex. 8554112372"
+                            "Do not include spaces or dashes. Ex. 8554112372"
                         ),
                         validators=[phone_number_format_validator()],
                     ),

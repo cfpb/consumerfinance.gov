@@ -186,8 +186,7 @@ class TestLoadPrograms(django.test.TestCase):
         "load_programs.clean_string_as_string"
     )
     @patch(
-        "paying_for_college.disclosures.scripts."
-        "load_programs.standardize_rate"
+        "paying_for_college.disclosures.scripts.load_programs.standardize_rate"
     )
     def test_clean(self, mock_standardize, mock_string, mock_number):
         mock_number.return_value = "NUMBER"
@@ -225,8 +224,7 @@ class TestLoadPrograms(django.test.TestCase):
             "and Schools (ACICS) - Test"
         )
         jpr_note = (
-            "The rate reflects employment status "
-            "as of November 1, 2014 - Test"
+            "The rate reflects employment status as of November 1, 2014 - Test"
         )
         program_name = "Occupational Therapy Assistant - 981 - Test"
         mock_read_in.return_value = [

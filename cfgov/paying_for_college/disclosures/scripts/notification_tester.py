@@ -13,7 +13,7 @@ BINGET = "https://httpbin.org/get"
 # test values
 OID = "9e0280139f3238cbc9702c7b0d62e5c238a835d0"
 ERRORS = "INVALID: test notification via Python"
-REPORT = "URL is {}\nOK is {}\nReason is {}\n" "Status is {}\nTime sent is {}"
+REPORT = "URL is {}\nOK is {}\nReason is {}\nStatus is {}\nTime sent is {}"
 
 
 def send_test_notifications(url=None, oid=OID, errors=ERRORS):
