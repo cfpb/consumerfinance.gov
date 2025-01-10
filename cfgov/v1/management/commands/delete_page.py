@@ -35,7 +35,7 @@ class Command(BaseCommand):
             page = Page.objects.get(pk=page_id)
 
         self.stdout.write(
-            f'Deleting{" children of" if children_only else ""} '
+            f"Deleting{' children of' if children_only else ''} "
             f'page "{page.title}", ID {page.pk}, slug {page.slug}'
         )
 

@@ -211,7 +211,7 @@ def load(source, s3=False):
             data = serializer.validated_data
             if not validate_pid(data["program_code"]):
                 print(
-                    "ERROR: invalid program code: " "{}".format(
+                    "ERROR: invalid program code: {}".format(
                         data["program_code"]
                     )
                 )
@@ -234,10 +234,10 @@ def load(source, s3=False):
             program.completion_rate = data["completion_rate"]
             program.default_rate = data["default_rate"]
             program.mean_student_loan_completers = data[
-                "mean_student_" "loan_completers"
+                "mean_student_loan_completers"
             ]
             program.median_student_loan_completers = data[
-                "median_student_" "loan_completers"
+                "median_student_loan_completers"
             ]
             program.program_code = data["program_code"]
             program.program_name = strip_control_chars(data["program_name"])
