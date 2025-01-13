@@ -196,21 +196,21 @@
 <ol>
 <li>
 <p><strong>Local Kubernetes Cluster</strong>:</p>
-<ul>
-<li>Ensure you have a local Kubernetes cluster running. We only support <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> and <a href="https://github.com/abiosoft/colima">colima</a>.</li>
-</ul>
+</li>
+<li>
+<p>Ensure you have a local Kubernetes cluster running. We only support <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> and <a href="https://github.com/abiosoft/colima">colima</a>.</p>
 </li>
 <li>
 <p><strong>kubectl</strong>:</p>
-<ul>
-<li>Install <code>kubectl</code>, the Kubernetes command-line tool, by following the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">official installation guide</a>.</li>
-</ul>
+</li>
+<li>
+<p>Install <code>kubectl</code>, the Kubernetes command-line tool, by following the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">official installation guide</a>.</p>
 </li>
 <li>
 <p><strong>Helm</strong>:</p>
-<ul>
-<li>Install Helm, the package manager for Kubernetes, by following the <a href="https://helm.sh/docs/intro/install/">official installation guide</a>.</li>
-</ul>
+</li>
+<li>
+<p>Install Helm, the package manager for Kubernetes, by following the <a href="https://helm.sh/docs/intro/install/">official installation guide</a>.</p>
 </li>
 </ol>
 <h2 id="helm-chart">Helm Chart<a class="headerlink" href="#helm-chart" title="Permanent link">¶</a></h2>
@@ -227,35 +227,39 @@
 <ol>
 <li>
 <p>Busybox:</p>
-<ul>
-<li>Starts up once we have our Postgresql and Opensearch Pods running.</li>
-<li>Serves as a pre-cursor to our cfgov-migrations container.</li>
-</ul>
+</li>
+<li>
+<p>Starts up once we have our Postgresql and Opensearch Pods running.</p>
+</li>
+<li>
+<p>Serves as a pre-cursor to our cfgov-migrations container.</p>
 </li>
 <li>
 <p>cfgov-migrations</p>
-<ul>
-<li>Runs the django migrations and the <code>refresh-data.sh</code> script and populates it with test data <code>test.sql.gz</code>.</li>
-<li>Indexes our database to Opensearch.</li>
-</ul>
 </li>
+<li>
+<p>Runs the django migrations and the <code>refresh-data.sh</code> script and populates it with test data <code>test.sql.gz</code>.</p>
+</li>
+<li>Indexes our database to Opensearch.</li>
 </ol>
 <h4 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">¶</a></h4>
 <ol>
 <li>
 <p>cfgov:</p>
-<ul>
-<li>Uses the cfgov image, found in the repo's root <code>dockerfile</code></li>
-<li>Serves up our Django application on Port 8000 of the cfgov pod</li>
-</ul>
+</li>
+<li>
+<p>Uses the cfgov image, found in the repo's root <code>dockerfile</code></p>
+</li>
+<li>
+<p>Serves up our Django application on Port 8000 of the cfgov pod</p>
 </li>
 <li>
 <p>cfgov-apache:</p>
-<ul>
-<li>Built from <code>cfgov-apache</code> image built from the <code>apache/dockerfile</code></li>
-<li>Serves as a webserver to proxy to our cfgov container</li>
-</ul>
 </li>
+<li>
+<p>Built from <code>cfgov-apache</code> image built from the <code>apache/dockerfile</code></p>
+</li>
+<li>Serves as a webserver to proxy to our cfgov container</li>
 </ol>
 <h3 id="notestxt">notes.txt<a class="headerlink" href="#notestxt" title="Permanent link">¶</a></h3>
 <p>Our <a href="https://helm.sh/docs/chart_template_guide/notes_files/">notes.txt</a> is split to work for local deployments and deployments to production.</p>
