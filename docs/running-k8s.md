@@ -21,15 +21,15 @@ This guide explains the setup and deployment process for the CFPB Helm Chart, wh
 
 1. **Local Kubernetes Cluster**:
 
-    - Ensure you have a local Kubernetes cluster running. We only support [Docker Desktop](https://www.docker.com/products/docker-desktop) and [colima](https://github.com/abiosoft/colima).
+   - Ensure you have a local Kubernetes cluster running. We only support [Docker Desktop](https://www.docker.com/products/docker-desktop) and [colima](https://github.com/abiosoft/colima).
 
 2. **kubectl**:
 
-    - Install `kubectl`, the Kubernetes command-line tool, by following the [official installation guide](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
+   - Install `kubectl`, the Kubernetes command-line tool, by following the [official installation guide](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 3. **Helm**:
 
-    - Install Helm, the package manager for Kubernetes, by following the [official installation guide](https://helm.sh/docs/intro/install/).
+   - Install Helm, the package manager for Kubernetes, by following the [official installation guide](https://helm.sh/docs/intro/install/).
 
 ## Helm Chart
 
@@ -50,25 +50,25 @@ We have two init containers:
 
 1. Busybox:
 
-    - Starts up once we have our Postgresql and Opensearch Pods running.
-    - Serves as a pre-cursor to our cfgov-migrations container.
+   - Starts up once we have our Postgresql and Opensearch Pods running.
+   - Serves as a pre-cursor to our cfgov-migrations container.
 
 2. cfgov-migrations
 
-    - Runs the django migrations and the `refresh-data.sh` script and populates it with test data `test.sql.gz`.
-    - Indexes our database to Opensearch.
+   - Runs the django migrations and the `refresh-data.sh` script and populates it with test data `test.sql.gz`.
+   - Indexes our database to Opensearch.
 
 #### Containers
 
 1. cfgov:
 
-    - Uses the cfgov image, found in the repo's root `dockerfile`
-    - Serves up our Django application on Port 8000 of the cfgov pod
+   - Uses the cfgov image, found in the repo's root `dockerfile`
+   - Serves up our Django application on Port 8000 of the cfgov pod
 
 2. cfgov-apache:
 
-    - Built from `cfgov-apache` image built from the `apache/dockerfile`
-    - Serves as a webserver to proxy to our cfgov container
+   - Built from `cfgov-apache` image built from the `apache/dockerfile`
+   - Serves as a webserver to proxy to our cfgov container
 
 ### notes.txt
 
