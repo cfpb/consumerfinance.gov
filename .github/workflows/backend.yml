@@ -51,6 +51,9 @@ jobs:
         if: matrix.toxenv == 'validate-translations'
         run: sudo apt-get install gettext
 
+      - name: Install lxml dependencies
+        run: sudo apt-get install libxml2-dev libxslt-dev
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
