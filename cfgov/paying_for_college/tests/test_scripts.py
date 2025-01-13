@@ -326,7 +326,9 @@ class TestScripts(django.test.TestCase):
         mock_requests.return_value = mock_response
         api_utils.api_school_query(123456, "school.name")
         self.assertEqual(mock_requests.call_count, 1)
-        self.assertTrue(mock_requests.called_with((123456, "school.name")))
+        mock_requests.assert_called_with(
+            "https://api.data.gov/ed/collegescorecard/v1/schools.json?id=123456&api_key=&fields=school.name"
+        )
 
     @unittest.skipUnless(
         connection.vendor == "postgresql", "PostgreSQL-dependent"
@@ -338,8 +340,9 @@ class TestScripts(django.test.TestCase):
         mock_get_data.return_value = self.mock_results.get("results")[0]
         update_colleges.update(single_school=408039)
         self.assertEqual(mock_get_data.call_count, 1)
-        self.assertTrue(
-            mock_get_data.called_with(408039, api_utils.build_field_string())
+        mock_get_data.assert_called_with(
+            f"https://api.data.gov/ed/collegescorecard/v1/schools.json?"
+            f"api_key=&id=408039&fields={api_utils.build_field_string()}"
         )
 
     @patch(
@@ -434,7 +437,7 @@ class TestScripts(django.test.TestCase):
         mock_requests.return_value = mock_response
         data = update_colleges.get_scorecard_data("example.com")
         self.assertEqual(mock_requests.call_count, 1)
-        self.assertTrue(mock_requests.called_with("example.com"))
+        mock_requests.assert_called_with("example.com")
         self.assertEqual(type(data), dict)
 
     @patch(
