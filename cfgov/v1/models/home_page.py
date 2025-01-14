@@ -14,13 +14,4 @@ class HomePage(CFGOVPage):
         ]
     )
 
-    def get_template(self, request, *args, **kwargs):
-        try:
-            return {
-                "en": "v1/home_page/home_page.html",
-                "es": "v1/home_page/home_page.html",
-            }[self.language]
-        except KeyError as e:
-            raise NotImplementedError(
-                f"Unsupported HomePage language: {self.language}"
-            ) from e
+    template = "v1/home_page/home_page.html"
