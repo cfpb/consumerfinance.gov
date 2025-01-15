@@ -80,9 +80,9 @@ jobs:
         run: >
           helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml
           -n ${{ secrets.NAMESPACE }} 
-          --set initContainers[1].image.repository=${{ secrets.CFGOV_IMAGE }}
-          --set initContainers[1].image.tag=${GITHUB_SHA}
-          --set initContainers[1].env[0].value=${DB_URL}
+          --set initContainers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
+          --set initContainers[0].image.tag=${GITHUB_SHA}
+          --set initContainers[0].env[0].value=${DB_URL}
           --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set containers[0].image.tag=${GITHUB_SHA}
           --set containers[0].env[0].value=${DB_URL}
