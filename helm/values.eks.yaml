@@ -185,3 +185,6 @@ mapping:
 
 opensearch:
   replicas: 1
+
+postgresql:
+  enabled: false 
