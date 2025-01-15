@@ -18,3 +18,8 @@ dependencies:
   - name: opensearch
     version: 1.31.3
     repository: https://opensearch-project.github.io/helm-charts/
+    condition: opensearch.enabled
+  - name: postgresql
+    version: 16.2.3
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled

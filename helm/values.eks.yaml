@@ -11,15 +11,16 @@ tests:
 localDeployment: false
 
 initContainers:
-  - name: wait-for-db
+  - name: wait-for-data-stores
     image: 
       repository: busybox
       tag: "latest"
     command: 
       - 'sh' 
       - '-c'
-      - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 10; done;'
-      - 'until nc -z opensearch-cluster-master 9200; do echo waiting for opensearch; sleep 10; done;'
+      - 'sleep 10'
+      # - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 10; done;'
+      # - 'until nc -z opensearch-cluster-master 9200; do echo waiting for opensearch; sleep 10; done;'
   - name: cfgov-migrations
     image: 
       repository: cfgov
@@ -184,7 +185,7 @@ mapping:
   prefix: "/"
 
 opensearch:
-  replicas: 1
+  enabled: false
 
 postgresql:
   enabled: false 
