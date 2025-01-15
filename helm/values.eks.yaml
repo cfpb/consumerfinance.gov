@@ -27,7 +27,7 @@ initContainers:
         value: "9200"
       - name: ES_USER
         value: ""
-      - name: ES_PASSWORD
+      - name: ES_PASS
         value: ""
     command: 
       - 'sh'
@@ -61,7 +61,7 @@ containers:
       value: "9200"
     - name: ES_USER
       value: ""
-    - name: ES_PASSWORD
+    - name: ES_PASS
       value: ""
   - name: cfgov-apache
     image: 
@@ -187,3 +187,6 @@ opensearch:
 
 postgresql:
   enabled: false 
+
+
+
