@@ -15,8 +15,9 @@ jobs:
         uses: aws-actions/aws-secretsmanager-get-secrets@v2
         with:
           secret-ids: |
-            , ${{ secrets.SECURITY_SCAN}}
-            DB_URL, ${{secrets.DB}} 
+            , ${{ secrets.SECURITY_SCAN }}
+            DB_URL, ${{ secrets.DB }}
+            ES_CREDS, ${{ secrets.ES }} 
           parse-json-secrets: true
       
       - name: Build Docker Images
@@ -83,9 +84,17 @@ jobs:
           --set initContainers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set initContainers[0].image.tag=${GITHUB_SHA}
           --set initContainers[0].env[0].value=${DB_URL}
+          --set initContainers[0].env[2].value=${{ secrets.ES_HOST }}
+          --set initContainers[0].env[3].value=${{ secrets.ES_PORT }}
+          --set initContainers[0].env[4].value=${ES_CREDS_USERNAME}
+          --set initContainers[0].env[5].value=${ES_CREDS_PASSWORD}
           --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set containers[0].image.tag=${GITHUB_SHA}
           --set containers[0].env[0].value=${DB_URL}
+          --set containers[0].env[2].value=${{ secrets.ES_HOST }}
+          --set containers[0].env[3].value=${{ secrets.ES_PORT }}
+          --set containers[0].env[4].value=${ES_CREDS_USERNAME}
+          --set containers[0].env[5].value=${ES_CREDS_PASSWORD}
           --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
           --set containers[1].image.tag=${GITHUB_SHA}
           --set mapping.host=${{ secrets.HOST }}

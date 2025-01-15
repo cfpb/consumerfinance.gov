@@ -25,6 +25,10 @@ initContainers:
         value: "opensearch-cluster-master"
       - name: ES_PORT
         value: "9200"
+      - name: ES_USER
+        value: ""
+      - name: ES_PASSWORD
+        value: ""
     command: 
       - 'sh'
       - '-c'
