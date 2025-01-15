@@ -17,7 +17,7 @@ jobs:
           secret-ids: |
             , ${{ secrets.SECURITY_SCAN }}
             DB_URL, ${{ secrets.DB }}
-            ES_CREDS, ${{ secrets.ES }} 
+            ES_CREDS, ${{ secrets.ES_CREDS }} 
           parse-json-secrets: true
       
       - name: Build Docker Images
