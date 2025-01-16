@@ -77,6 +77,9 @@ containers:
       requests:
         cpu: 40m
         memory: 200Mi
+    volumeMounts:
+    - name: cfgov-tmp
+      mountPath: /tmp 
   - name: cfgov-apache
     image: 
       repository: cfgov-apache
@@ -190,6 +193,8 @@ affinity: {}
 
 volumes:
   - name: apache-logs
+    emptyDir: {}
+  - name: cfgov-tmp
     emptyDir: {}
 
 mapping:
