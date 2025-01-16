@@ -32,7 +32,14 @@ initContainers:
     command: 
       - 'sh'
       - '-c'
-      - 'python cfgov/manage.py migrate && ./index.sh' 
+      - 'python cfgov/manage.py migrate && ./index.sh'
+    resources:
+      limits:
+        cpu: 100m
+        memory: 400Mi
+      requests:
+        cpu: 40m
+        memory: 200Mi
       
 
 containers:
@@ -63,12 +70,26 @@ containers:
       value: ""
     - name: ES_PASS
       value: ""
+    resources:
+      limits:
+        cpu: 100m
+        memory: 400Mi
+      requests:
+        cpu: 40m
+        memory: 200Mi
   - name: cfgov-apache
     image: 
       repository: cfgov-apache
       pullPolicy: IfNotPresent
       tag: "latest"
     port: 8080
+    resources:
+      limits:
+        cpu: 60m
+        memory: 100Mi
+      requests:
+        cpu: 20m
+        memory: 50Mi
     volumeMounts:
     - name: apache-logs
       mountPath: /usr/local/apache2/logs

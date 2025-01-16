@@ -44,6 +44,14 @@ spec:
           {{- range .command }}
             - {{ . }}
           {{- end }}
+          {{- if .resources }}
+          resources:
+            {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- if $.Values.securityContext }}
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          {{- end }}
       {{- end }}
       containers:
       {{- range .Values.containers }}
@@ -73,6 +81,14 @@ spec:
           {{- if .volumeMounts }}
           volumeMounts:
             {{- toYaml .volumeMounts | nindent 12 }}
+          {{- end }}
+          {{- if .resources }}
+          resources:
+            {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
           {{- end }}
       {{- end }}
       {{- with .Values.volumes }}
