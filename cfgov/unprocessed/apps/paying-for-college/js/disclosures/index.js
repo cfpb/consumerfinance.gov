@@ -15,8 +15,7 @@ import expensesView from './views/expenses-view.js';
 import metricView from './views/metric-view.js';
 import questionView from './views/question-view.js';
 import publish from './dispatchers/publish-update.js';
-
-// import('./utils/print-page.js');
+import print from './utils/print-page.js';
 
 const ready = function (callback) {
   if (document.readyState !== 'loading') {
@@ -96,6 +95,7 @@ const app = {
       financialView.updateView(getFinancial.values());
     });
     verifyOffer.init();
+    print.init();
   },
 };
 
