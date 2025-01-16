@@ -40,7 +40,6 @@ class ZipCodeBasedCounselorGeocoder:
         )
 
     def filter_zipcodes(self, counselor):
-        counselor = dict(counselor)
         zipcode = counselor["zipcd"][:5]
 
         if zipcode not in self.zipcodes:
@@ -50,8 +49,6 @@ class ZipCodeBasedCounselorGeocoder:
         return True
 
     def geocode_counselor(self, counselor):
-        counselor = dict(counselor)
-
         lat_lng_keys = ("agc_ADDR_LATITUDE", "agc_ADDR_LONGITUDE")
         if all(counselor.get(k) for k in lat_lng_keys):
             return counselor
