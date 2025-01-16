@@ -30,20 +30,31 @@ class ZipCodeBasedCounselorGeocoder:
         self.zipcodes = zipcodes
 
     def geocode(self, counselors):
-        return list(map(self.geocode_counselor, counselors))
+        return list(
+            map(
+                self.geocode_counselor,
+                filter(
+                    self.filter_zipcodes, map(lambda c: dict(c), counselors)
+                ),
+            )
+        )
+
+    def filter_zipcodes(self, counselor):
+        zipcode = counselor["zipcd"][:5]
+
+        if zipcode not in self.zipcodes:
+            logger.warning(f"{zipcode} not in zipcodes")
+            return False
+
+        return True
 
     def geocode_counselor(self, counselor):
-        counselor = dict(counselor)
-
         lat_lng_keys = ("agc_ADDR_LATITUDE", "agc_ADDR_LONGITUDE")
         if all(counselor.get(k) for k in lat_lng_keys):
             return counselor
 
         zipcode = counselor["zipcd"][:5]
         logger.warning("need to geocode counselor with zipcode %s", zipcode)
-
-        if zipcode not in self.zipcodes:
-            raise KeyError(f"{zipcode} not in zipcodes")
 
         coordinates = self.zipcodes[zipcode]
         counselor.update(zip(lat_lng_keys, coordinates))
