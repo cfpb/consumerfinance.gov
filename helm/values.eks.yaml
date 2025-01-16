@@ -35,10 +35,10 @@ initContainers:
       - 'python cfgov/manage.py migrate && ./index.sh'
     resources:
       limits:
-        cpu: 100m
-        memory: 400Mi
+        cpu: 500m
+        memory: 1000Mi
       requests:
-        cpu: 40m
+        cpu: 200m
         memory: 200Mi
       
 
