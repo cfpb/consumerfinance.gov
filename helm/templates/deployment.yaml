@@ -44,10 +44,10 @@ spec:
           {{- range .command }}
             - {{ . }}
           {{- end }}
-          {{- if .resources }}
-          resources:
-            {{- toYaml .resources | nindent 12 }}
-          {{- end }}
+          # {{- if .resources }}
+          # resources:
+          #   {{- toYaml .resources | nindent 12 }}
+          # {{- end }}
           # {{- if $.Values.securityContext }}
           # securityContext:
           #   {{- toYaml $.Values.securityContext | nindent 12 }}
