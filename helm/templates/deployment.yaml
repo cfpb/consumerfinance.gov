@@ -86,7 +86,7 @@ spec:
           resources:
             {{- toYaml .resources | nindent 12 }}
           {{- end }}
-          {{- if .Values.securityContext }}
+          {{- if $.Values.securityContext }}
           securityContext:
             {{- toYaml $.Values.securityContext | nindent 12 }}
           {{- end }}
