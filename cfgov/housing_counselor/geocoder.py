@@ -33,7 +33,9 @@ class ZipCodeBasedCounselorGeocoder:
         return list(
             map(
                 self.geocode_counselor,
-                filter(self.filter_zipcodes, counselors),
+                filter(
+                    self.filter_zipcodes, map(lambda c: dict(c), counselors)
+                ),
             )
         )
 
