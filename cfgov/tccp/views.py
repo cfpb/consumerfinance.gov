@@ -5,8 +5,8 @@ from django.shortcuts import redirect, reverse
 from django.template.defaultfilters import title
 from django.urls import reverse_lazy
 from django.utils.functional import cached_property
+from django.views.generic import TemplateView
 
-from flags.views import FlaggedTemplateView, FlaggedViewMixin
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
@@ -22,8 +22,7 @@ from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
 from .situations import Situation, SituationSpeedBumps
 
 
-class LandingPageView(FlaggedTemplateView):
-    flag_name = "TCCP"
+class LandingPageView(TemplateView):
     template_name = "tccp/landing_page.html"
     heading = "Explore credit cards for your situation"
 
@@ -57,8 +56,7 @@ class LandingPageView(FlaggedTemplateView):
         )
 
 
-class AboutView(FlaggedTemplateView):
-    flag_name = "TCCP"
+class AboutView(TemplateView):
     template_name = "tccp/about.html"
     breadcrumb_items = [
         {
@@ -78,8 +76,7 @@ class AboutView(FlaggedTemplateView):
         }
 
 
-class CardListView(FlaggedViewMixin, ListAPIView):
-    flag_name = "TCCP"
+class CardListView(ListAPIView):
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
     serializer_class = CardSurveyDataListSerializer
@@ -193,8 +190,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         return rating_ranges
 
 
-class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
-    flag_name = "TCCP"
+class CardDetailView(RetrieveAPIView):
     model = CardSurveyData
     lookup_field = "slug"
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]

@@ -638,12 +638,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-    # TCCP credit card finder
-    "TCCP": [
-        ("environment is", "dev4"),
-        ("environment is", "local"),
-        ("environment is", "test"),
-    ],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [
