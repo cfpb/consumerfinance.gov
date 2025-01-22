@@ -102,7 +102,7 @@ def check_static(url):
                 f"of {count} failed for {url}: {failures}\x1b[0m\n"
             )
     else:
-        return f"\x1b[32m{count} static links passed " f"for {url}\x1b[0m\n"
+        return f"\x1b[32m{count} static links passed for {url}\x1b[0m\n"
 
 
 if __name__ == "__main__":  # pragma: nocover
@@ -133,7 +133,7 @@ if __name__ == "__main__":  # pragma: nocover
     )
     if fail:
         logger.warning(
-            "\x1b[91mFAIL. Too many static links " "didn't return 200.\x1b[0m"
+            "\x1b[91mFAIL. Too many static links didn't return 200.\x1b[0m"
         )
     else:
         logger.info("\x1b[32mSUCCESS! Static links return 200.\x1b[0m")

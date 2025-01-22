@@ -53,17 +53,17 @@ class CommandTests(unittest.TestCase):
         self.assertTrue(mock_update.call_count == 1)
         call_command("update_via_api", "--school_id", "999999")
         self.assertTrue(mock_update.call_count == 2)
-        self.assertTrue(mock_update.called_with(single_school=999999))
+        mock_update.assert_called_with(single_school="999999")
         call_command(
             "update_via_api", "--school_id", "999999", "--save_programs"
         )
         self.assertTrue(mock_update.call_count == 3)
-        self.assertTrue(
-            mock_update.called_with(single_school=999999, store_programs=True)
+        mock_update.assert_called_with(
+            single_school="999999", store_programs=True
         )
         call_command("update_via_api", "--save_programs")
         self.assertTrue(mock_update.call_count == 4)
-        self.assertTrue(mock_update.called_with(store_programs=True))
+        mock_update.assert_called_with(store_programs=True)
 
     @mock.patch(
         "paying_for_college.management.commands."
@@ -111,7 +111,7 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(mock_retry.call_count, 1)
         call_command("retry_notifications", "--days", "2")
         self.assertEqual(mock_retry.call_count, 2)
-        self.assertTrue(mock_retry.called_with(days=2))
+        mock_retry.assert_called_with(days=2)
 
     @mock.patch(
         "paying_for_college.management.commands."
@@ -125,4 +125,4 @@ class CommandTests(unittest.TestCase):
             "send_stale_notifications", "--add-email", "fake@fake.com"
         )
         self.assertEqual(mock_send.call_count, 2)
-        self.assertTrue(mock_send.called_with(add_email=["fake@fake.com"]))
+        mock_send.assert_called_with(add_email=["fake@fake.com"])
