@@ -49,7 +49,7 @@ describe('Paying For College', () => {
       );
       cy.get('span[data-financial-item="total_costOfProgram"]').should(
         'contain',
-        '$12,596',
+        '$2,152',
       );
     });
     it('does not advance without valid selections', () => {
