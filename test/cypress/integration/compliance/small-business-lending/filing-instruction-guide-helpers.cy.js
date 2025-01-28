@@ -60,7 +60,7 @@ export class FilingInstructionGuide {
   }
 
   clickNavItem(section) {
-    return this.getNavItem(section).click({ scrollBehavior: 'center' });
+    return this.getNavItem(section).click({ scrollBehavior: 'bottom' });
   }
 
   clickSectionHeading(section) {
