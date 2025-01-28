@@ -62,11 +62,13 @@ class ReviewDateBulkAction(PageBulkAction):
     def __init__(self, request, model):
         super().__init__(request, model)
         r = request.GET
-        self.next_url = (
-            f"{r.get('next')}"
-            f"?q={r.get('q')}"
-            f"&content_type={r.get('content_type')}"
-        )
+        next_url = r.get("next")
+        q = f"?q={r.get('q')}"
+        ct = ""
+        if r.get("content_type"):
+            ct = f"&content_type={r.get('content_type')}"
+
+        self.next_url = next_url + q + ct
 
     def check_perm(self, page):
         return page.permissions_for_user(self.request.user).can_edit()
