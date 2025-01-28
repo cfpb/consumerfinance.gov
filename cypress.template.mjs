@@ -16,7 +16,7 @@ export default defineConfig({
     '*.newrelic.com',
     '*.nr-data.net',
   ],
-  scrollBehavior: 'nearest',
+  scrollBehavior: 'bottom',
   e2e: {
     baseUrl: 'http://localhost:8000',
     specPattern: 'test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
