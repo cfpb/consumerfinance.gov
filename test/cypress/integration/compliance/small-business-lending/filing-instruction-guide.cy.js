@@ -168,8 +168,8 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.getSection(2).should('not.be.inViewport');
 
             fig.toggleToc();
-            fig.clickNavItem(3);
-            fig.getSection(3).should('be.inViewport');
+            fig.clickNavItem(1);
+            fig.getSection(1).should('be.inViewport');
             fig.getSection(4).should('not.be.inViewport');
           });
         });
