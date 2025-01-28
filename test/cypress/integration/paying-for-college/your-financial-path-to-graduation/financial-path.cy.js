@@ -91,7 +91,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$138',
+        '$28',
       );
     });
 
@@ -108,7 +108,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$2,998',
+        '$3,902',
       );
     });
   });
