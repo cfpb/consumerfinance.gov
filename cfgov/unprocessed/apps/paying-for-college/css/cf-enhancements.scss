@@ -92,11 +92,11 @@
    ========================================================================== */
 
 $char-icon-size: math.div(32px, $base-font-size-px) + em;
-$char-icon-spacing: 0.5em;
+$char-icon-spacing: 1em;
 
 @mixin char-icon {
   box-sizing: border-box;
-  padding-left: $char-icon-size + $char-icon-spacing;
+  padding-left: math.div(32px, $base-font-size-px) + $char-icon-spacing;
   position: relative;
 
   &::before {

@@ -30,7 +30,7 @@ class RegTable:
     def assemble_header_rows(self):
         if not self.header_rows:
             return ""
-        header_shell = "<thead>\n" "{h_rows}\n" "</thead>\n"
+        header_shell = "<thead>\n{h_rows}\n</thead>\n"
         return header_shell.format(h_rows="\n".join(self.header_rows))
 
     def parse_xml_table(self, table_soup):

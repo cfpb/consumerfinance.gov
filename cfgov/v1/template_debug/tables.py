@@ -112,7 +112,7 @@ crc_table_test_cases = {
         ),
         "phone": mark_safe('<a href="tel:202-555-1234">(202) 555-1234</a>'),
         "mailing_address": mark_safe(
-            "Example, Inc.<br/>" "P.O. Box 8000<br/>" "Washington, DC 20001"
+            "Example, Inc.<br/>P.O. Box 8000<br/>Washington, DC 20001"
         ),
     }
 }
