@@ -59,6 +59,15 @@ class ReviewDateBulkAction(PageBulkAction):
     action_priority = 30
     template_name = "wagtailadmin_overrides/confirmation.html"
 
+    def __init__(self, request, model):
+        super().__init__(request, model)
+        r = request.GET
+        self.next_url = (
+            f"{r.get('next')}"
+            f"?q={r.get('q')}"
+            f"&content_type={r.get('content_type')}"
+        )
+
     def check_perm(self, page):
         return page.permissions_for_user(self.request.user).can_edit()
 
@@ -80,7 +89,7 @@ class ReviewDateBulkAction(PageBulkAction):
                     f"Updating last reviewed date on {sp.last_edited}"
                 )
                 sp.last_edited = today
-                sp.save()
+                sp.save_revision(user=user).publish()
                 count += 1
             except AttributeError:
                 failed += 1
