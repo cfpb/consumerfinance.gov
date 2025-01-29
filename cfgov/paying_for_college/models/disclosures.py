@@ -597,7 +597,7 @@ class Notification(models.Model):
         }
         now = datetime.datetime.now()
         no_contact_msg = (
-            "School notification failed: " f"No endpoint or email info {now}"
+            f"School notification failed: No endpoint or email info {now}"
         )
         # we prefer to use endpount notification, so use it first if existing
         if school.contact:
@@ -608,26 +608,24 @@ class Notification(models.Model):
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
                 except requests.exceptions.ConnectionError as e:
-                    exmsg = "Error: connection error at school " f"{now} {e}\n"
+                    exmsg = f"Error: connection error at school {now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.Timeout:
-                    exmsg = (
-                        "Error: connection with school " f"timed out {now}\n"
-                    )
+                    exmsg = f"Error: connection with school timed out {now}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.RequestException as e:
-                    exmsg = "Error: request error at school: " f"{now} {e}\n"
+                    exmsg = f"Error: request error at school: {now} {e}\n"
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 else:
                     if resp.ok:
                         self.sent = True
-                        self.log = "School notified " f"via endpoint {now}"
+                        self.log = f"School notified via endpoint {now}"
                         self.save()
                         return self.log
                     else:
@@ -659,7 +657,7 @@ class Notification(models.Model):
                     )
                     self.sent = True
                     self.emails = school.contact.contacts
-                    self.log = "School notified via email " f"at {self.emails}"
+                    self.log = f"School notified via email at {self.emails}"
                     self.save()
                     return self.log
                 except smtplib.SMTPException as e:

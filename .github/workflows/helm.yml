@@ -1,0 +1,21 @@
+name: Helm testing
+on:
+  pull_request:
+    paths:
+      - helm/**
+
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install Helm dependencies
+        run: helm dependency update helm
+
+      - name: Lint Helm chart
+        run: helm lint --strict -f helm/values.local.yaml helm

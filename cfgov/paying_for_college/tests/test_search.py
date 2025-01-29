@@ -15,44 +15,40 @@ class SchoolSearchTest(TestCase):
     fixtures = ["test_fixture.json", "test_school.json"]
 
     @mock.patch.object(SchoolDocument, "search")
-    def test_school_autocomplete(self, mock_autocomplete):
-        term = "Kansas"
-        school = School.objects.get(pk=155317)
-        school.save()
-        mock_return = mock.Mock()
-        mock_return.text = school.primary_alias
-        mock_return.school_id = school.school_id
-        mock_return.city = school.city
-        mock_return.state = school.state
-        mock_return.zip5 = school.zip5
-        mock_return.nicknames = "Jayhawks"
-        # mock_autocomplete.return_value = [mock_return]
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        # mock_autocomplete.return_value = mock_queryset
-        mock_autocomplete().query().filter().sort().__getitem__().execute.return_value = [  # noqa: E501
-            mock_return
+    def test_school_autocomplete(self, mock_search):
+        # Mock what Opensearch would return in response to a query.
+        mock_search.return_value.query.return_value.execute.return_value = [
+            SchoolDocument.from_opensearch(
+                {
+                    "_source": SchoolDocument().prepare(
+                        School.objects.get(pk=155317)
+                    )
+                }
+            )
         ]
-        mock_count = mock.Mock(return_value=1)
-        mock_autocomplete().query().count = mock_count
-        mock_autocomplete().query().filter().sort().__getitem__().count = (
-            mock_count
-        )
-        url = "{}?q=Kansas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        response = school_autocomplete(RequestFactory().get(url))
-        # output = json.loads(response.content)
-        # self.assertEqual(sorted(output[0].keys()), ["id", "schoolname"])
+
+        autocomplete = reverse("paying_for_college:disclosures:school_search")
+        request = RequestFactory().get(f"{autocomplete}?q=Kansas")
+        response = school_autocomplete(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_autocomplete.call_count, 4)
-        self.assertTrue(mock_autocomplete.called_with(search_term=term))
-        self.assertTrue("Kansas" in mock_return.text)
-        self.assertEqual(155317, mock_return.school_id)
-        self.assertTrue("Jayhawks" in mock_return.nicknames)
-        self.assertTrue("Lawrence" in mock_return.city)
-        self.assertTrue("KS" in mock_return.state)
+
+        self.assertEqual(
+            json.loads(response.content),
+            [
+                {
+                    "schoolname": "University of Kansas",
+                    "id": 155317,
+                    "city": "Lawrence",
+                    "nicknames": "Jayhawks",
+                    "state": "KS",
+                    "zip5": "",
+                    "url": reverse(
+                        "paying_for_college:disclosures:school-json",
+                        args=(155317,),
+                    ),
+                }
+            ],
+        )
 
     @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_school_id(self, mock_search):

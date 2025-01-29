@@ -6,6 +6,7 @@ cfgov/retirement_api/data/
 cfgov/static_built/
 **/fixtures/
 collectstatic/
+helm/
 
 # Ignore all HTML files:
 *.html

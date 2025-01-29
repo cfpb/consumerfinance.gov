@@ -77,7 +77,7 @@ class InfoUnitGroup(blocks.StructBlock):
         required=False,
         label="Show rule lines between items",
         help_text=(
-            "Check this to show horizontal rule lines between info " "units."
+            "Check this to show horizontal rule lines between info units."
         ),
     )
 
@@ -148,9 +148,7 @@ class RelatedPosts(blocks.StructBlock):
         required=False,
         default=True,
         label="Show Heading and Icon?",
-        help_text=(
-            "This toggles the heading and " "icon for the related types."
-        ),
+        help_text=("This toggles the heading and icon for the related types."),
     )
     header_title = blocks.CharBlock(
         default="Further reading", label="Slug Title"
@@ -913,8 +911,7 @@ class ChartBlock(blocks.StructBlock):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of "
-            "chart block."
+            "Check this to add a horizontal rule line to top of chart block."
         ),
     )
 
@@ -962,8 +959,7 @@ class MortgageChartBlock(blocks.StructBlock):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of "
-            "chart block."
+            "Check this to add a horizontal rule line to top of chart block."
         ),
     )
 

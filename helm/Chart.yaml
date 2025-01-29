@@ -1,0 +1,24 @@
+apiVersion: v2
+name: cfgov
+description: A Helm chart for consumerfinance.gov
+type: application
+icon: https://www.consumerfinance.gov/static/icon.svg
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: '1.16.0'
+
+dependencies:
+  - name: postgresql
+    version: 16.2.3
+    repository: https://charts.bitnami.com/bitnami
+  - name: opensearch
+    version: 1.31.3
+    repository: https://opensearch-project.github.io/helm-charts/

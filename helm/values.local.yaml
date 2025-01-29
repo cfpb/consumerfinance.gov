@@ -1,0 +1,195 @@
+# Default values for cfgov.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+tests:
+  enabled: true
+
+localDeployment: true
+
+initContainers:
+  - name: wait-for-db
+    image:
+      repository: busybox
+      tag: "latest"
+    command:
+      - 'sh'
+      - '-c'
+      - 'until nc -z cfgov-postgresql 5432; do echo waiting for database; sleep 10; done;'
+      - 'until nc -z opensearch-cluster-master 9200; do echo waiting for opensearch; sleep 10; done;'
+  - name: cfgov-migrations
+    image:
+      repository: cfgov
+      pullPolicy: Never
+      tag: "latest"
+    env:
+      - name: DATABASE_URL
+        value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
+      - name: SECRET_KEY
+        value: "cfgov"
+      - name: ES_HOST
+        value: "opensearch-cluster-master"
+      - name: ES_PORT
+        value: "9200"
+    command:
+      - 'sh'
+      - '-c'
+      - './refresh-data.sh test.sql.gz'
+
+
+containers:
+  - name: cfgov
+    image:
+      repository: cfgov
+      pullPolicy: Never
+      tag: "latest"
+    port: 8000
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failedThreshold: 3
+    env:
+    - name: DATABASE_URL
+      value: "postgres://cfpb:cfpb@cfgov-postgresql:5432/cfgov"
+    - name: SECRET_KEY
+      value: "cfgov"
+    - name: ES_HOST
+      value: "opensearch-cluster-master"
+    - name: ES_PORT
+      value: "9200"
+  - name: cfgov-apache
+    image:
+      repository: cfgov-apache
+      pullPolicy: Never
+      tag: "latest"
+    port: 80
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+#
+# Always restart containers, even if the image tag hasn't changed.
+# This is currently needed because the crawler image tag is always "main".
+# https://v3.helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
+podAnnotations: {"rollme": "{{ randAlphaNum 5 | quote }}"}
+
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {"app.kubernetes.io/name": "cfgov"}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 80
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+
+# This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
+postgresql:
+  labels:
+    app: cfgov-postgresql
+  global:
+    postgresql:
+      auth:
+        database: cfgov
+        username: cfpb
+        password: cfpb
+
+
+pgadmin4:
+  env:
+    email:  test@domain.com
+    password: test
+
+opensearch:
+  replicas: 1
