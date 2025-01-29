@@ -91,7 +91,7 @@ categories = [
             ("supplementary-reports", "Supplementary reports"),
             ("utilities", "Utilities"),
             ("retail", "Retail"),
-            ("gaming", "Gaming"),
+            ("gaming", "Gambling and sports betting"),
         ),
     ),
     (
