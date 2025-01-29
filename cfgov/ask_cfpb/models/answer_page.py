@@ -274,6 +274,15 @@ class AnswerPage(CFGOVPage):
 
     template = "ask-cfpb/answer-page.html"
 
+    @property
+    def portal_topic_text(self):
+        if self.language == "es":
+            return ", ".join(
+                [cat.heading_es for cat in self.portal_topic.all()]
+            )
+        else:
+            return ", ".join([cat.heading for cat in self.portal_topic.all()])
+
     def get_related_ask_pages(self, limit=None):
         """Get the top related pages via OpenSearch MLT."""
         if limit is None:

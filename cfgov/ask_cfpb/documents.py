@@ -15,6 +15,7 @@ class AnswerPageDocument(Document):
         analyzer=ngram_tokenizer, fields={"raw": fields.KeywordField()}
     )
     portal_topics = fields.KeywordField()
+    portal_topic_text = fields.TextField(term_vector="yes")
     portal_categories = fields.TextField()
     text = fields.TextField(
         attr="text", analyzer=synonym_analyzer, term_vector="yes"
