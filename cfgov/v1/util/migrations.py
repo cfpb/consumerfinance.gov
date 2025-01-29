@@ -1,12 +1,15 @@
 import logging
 import re
 
+from django.utils.deconstruct import deconstructible
+
 from wagtail.blocks.migrations.operations import BaseBlockOperation
 
 
 logger = logging.getLogger(__name__)
 
 
+@deconstructible
 class RegexAlterBlockValueOperation(BaseBlockOperation):
     """Alter a block's value with a regex pattern and replacement"""
 

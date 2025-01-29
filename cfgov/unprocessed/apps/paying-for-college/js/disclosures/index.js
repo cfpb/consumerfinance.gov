@@ -15,8 +15,7 @@ import expensesView from './views/expenses-view.js';
 import metricView from './views/metric-view.js';
 import questionView from './views/question-view.js';
 import publish from './dispatchers/publish-update.js';
-
-// import('./utils/print-page.js');
+import print from './utils/print-page.js';
 
 const ready = function (callback) {
   if (document.readyState !== 'loading') {
@@ -72,9 +71,11 @@ const app = {
 
             // Add url values to the financial model
             publish.extendFinancialData(this.urlValues);
-            if (typeof this.urlValues.totalCost === 'undefined') {
-              publish.financialData('totalCost', null);
-            }
+            const trueTotalCost = Math.max(
+              programData.totalCost,
+              this.urlValues.urlTotalCost,
+            );
+            publish.financialData('totalCost', trueTotalCost);
             financialView.updateViewWithURL(schoolValues, this.urlValues);
             // initialize metric view
             metricView.init();
@@ -94,6 +95,7 @@ const app = {
       financialView.updateView(getFinancial.values());
     });
     verifyOffer.init();
+    print.init();
   },
 };
 

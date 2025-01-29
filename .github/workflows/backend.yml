@@ -2,12 +2,6 @@ name: backend
 
 on:
   workflow_dispatch:
-    paths:
-      - '**.py'
-      - 'requirements/**.txt'
-      - '**.html'
-      - '**.mo'
-      - '**.po'
   pull_request:
     paths:
       - '**.py'
@@ -16,12 +10,6 @@ on:
       - '**.mo'
       - '**.po'
   merge_group:
-    paths:
-      - '**.py'
-      - 'requirements/**.txt'
-      - '**.html'
-      - '**.mo'
-      - '**.po'
 
 jobs:
   backend:

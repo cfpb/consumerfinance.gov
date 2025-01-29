@@ -1,0 +1,24 @@
+FROM httpd:2.4-alpine
+
+# Copy the Apache configuration file
+COPY ./conf /usr/local/apache2/conf
+COPY ./conf.d /usr/local/apache2/conf.d
+COPY ./conf.modules.d /usr/local/apache2/conf.modules.d
+
+# Add Apache ENV variables
+ENV APACHE_PORT="80"
+ENV APACHE_USER="www-data"
+ENV APACHE_GROUP="www-data"
+ENV APACHE_SERVER_ROOT="/usr/local/apache2/"
+ENV APACHE_UPLOADS_F_ALIAS="/src/consumerfinance.gov/cfgov/f/"
+ENV STATIC_PATH="/tmp"
+ENV ERROR_LOG="/proc/self/fd/2"
+ENV ACCESS_LOG="/proc/self/fd/1"
+ENV LIMIT_REQUEST_BODY="0"
+ENV APACHE_STATUS_ALLOW_FROM="127.0.0.1"
+ENV APACHE_PROCESS_COUNT="4"
+ENV CFGOV_APPLICATION_HOST="localhost"
+
+EXPOSE 80
+
+CMD ["httpd-foreground"]

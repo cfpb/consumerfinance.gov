@@ -9,8 +9,8 @@ import {
   getNextEls,
 } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/plus-round.svg';
-import MINUS_ROUND_ICON from '@cfpb/cfpb-design-system/src/components/cfpb-icons/icons/minus-round.svg';
+import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
+import MINUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/minus-round.svg';
 
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';

@@ -14,7 +14,7 @@ import {
   EventObserver,
   instantiateAll,
   setInitFlag,
-} from '@cfpb/cfpb-design-system/src/index.js';
+} from '@cfpb/cfpb-design-system';
 import Delegate from 'ftdomdelegate';
 
 const TAG_NAME = 'div';

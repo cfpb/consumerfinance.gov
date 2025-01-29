@@ -44,7 +44,7 @@ describe('Disclosures', () => {
 
   it('extends the financial model with url values', () => {
     publishUpdate.extendFinancialData(getUrlValues());
-    expect(financialModel.values.totalCost).toBe(45000);
+    expect(financialModel.values.urlTotalCost).toBe(45000);
     expect(financialModel.values.costOfAttendance).toBe(43626);
   });
 
