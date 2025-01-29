@@ -23,8 +23,12 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             browse_page.content.stream_block, [atomic.data_snapshot], True
         )
 
-        publish_page(child=sl)
+        sl.content = StreamValue(
+            sl.content.stream_block, [atomic.full_width_text], True
+        )
+
         publish_page(child=browse_page)
+        publish_page(child=sl)
 
         # Call management command to update values
         filename = os.path.join(
@@ -71,8 +75,12 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             True,
         )
 
-        publish_page(child=sl)
+        sl.content = StreamValue(
+            sl.content.stream_block, [atomic.full_width_text], True
+        )
+
         publish_page(child=browse_page)
+        publish_page(child=sl)
 
         # Call management command to update values
         filename = os.path.join(
