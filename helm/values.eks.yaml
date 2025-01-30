@@ -92,11 +92,11 @@ containers:
       value: ""
     resources:
       limits:
-        cpu: 100m
-        memory: 400Mi
+        cpu: 200m
+        memory: 500Mi
       requests:
-        cpu: 40m
-        memory: 200Mi
+        cpu: 120m
+        memory: 300Mi
     volumeMounts:
     - name: cfgov-tmp
       mountPath: /tmp 
