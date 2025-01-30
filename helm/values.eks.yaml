@@ -70,23 +70,23 @@ containers:
       value: ""
     - name: ES_PASS
       value: ""
-    - name: enable_sso
+    - name: ENABLE_SSO
       value: ""
-    - name: oidc_rp_client_id 
+    - name: OIDC_RP_CLIENT_ID 
       value: ""
-    - name: oidc_rp_client_secret 
+    - name: OIDC_RP_CLIENT_SECRET
       value: ""
-    - name: oidc_rp_sign_algo
+    - name: OIDC_RP_SIGN_ALGO
       value: ""
-    - name: oidc_op_jwks_endpoint 
+    - name: OIDC_OP_JWKS_ENDPOINT 
       value: ""
-    - name: oidc_op_authorization_endpoint 
+    - name: OIDC_OP_AUTHORIZATION_ENDPOINT
       value: ""
-    - name: oidc_op_token_endpoint
+    - name: OIDC_OP_TOKEN_ENDPOINT
       value: ""
-    - name: oidc_op_user_endpoint 
+    - name: OIDC_OP_USER_ENDPOINT
       value: ""
-    - name: oidc_op_admin_role 
+    - name: OIDC_OP_ADMIN_ROLE
       value: ""
     - name: ALLOW_ADMIN_URL 
       value: ""
