@@ -70,6 +70,24 @@ containers:
       value: ""
     - name: ES_PASS
       value: ""
+    - name: enable_sso
+      value: ""
+    - name: oidc_rp_client_id 
+      value: ""
+    - name: oidc_rp_client_secret 
+      value: ""
+    - name: oidc_rp_sign_algo
+      value: ""
+    - name: oidc_op_jwks_endpoint 
+      value: ""
+    - name: oidc_op_authorization_endpoint 
+      value: ""
+    - name: oidc_op_token_endpoint
+      value: ""
+    - name: oidc_op_user_endpoint 
+      value: ""
+    - name: oidc_op_admin_role 
+      value: ""
     resources:
       limits:
         cpu: 100m

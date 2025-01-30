@@ -95,6 +95,15 @@ jobs:
           --set containers[0].env[3].value=${{ secrets.ES_PORT }}
           --set containers[0].env[4].value=${ES_CREDS_USERNAME}
           --set containers[0].env[5].value=${ES_CREDS_PASSWORD}
+          --set containers[0].env[6].value=${{ secrets.ENABLE }}
+          --set containers[0].env[7].value=${{ secrets.OIDC_CLIENT_ID }}
+          --set containers[0].env[8].value=${{ secrets.OIDC_CLIENT_SECRET }}
+          --set containers[0].env[9].value=${{ secrets.OIDC_ALGO }}
+          --set containers[0].env[10].value=${{ secrets.OIDC_ENDPOINT }}
+          --set containers[0].env[11].value=${{ secrets.OIDC_AUTH_ENDPOINT }}
+          --set containers[0].env[9].value=${{ secrets.OIDC_TOKEN }}
+          --set containers[0].env[10].value=${{ secrets.OIDC_USER_ENDPOINT }}
+          --set containers[0].env[11].value=${{ secrets.OIDC_ADMIN_ROLE }}
           --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
           --set containers[1].image.tag=${GITHUB_SHA}
           --set mapping.host=${{ secrets.HOST }}
