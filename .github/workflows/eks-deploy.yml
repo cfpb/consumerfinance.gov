@@ -101,9 +101,10 @@ jobs:
           --set containers[0].env[9].value=${{ secrets.OIDC_ALGO }}
           --set containers[0].env[10].value=${{ secrets.OIDC_ENDPOINT }}
           --set containers[0].env[11].value=${{ secrets.OIDC_AUTH_ENDPOINT }}
-          --set containers[0].env[9].value=${{ secrets.OIDC_TOKEN }}
-          --set containers[0].env[10].value=${{ secrets.OIDC_USER_ENDPOINT }}
-          --set containers[0].env[11].value=${{ secrets.OIDC_ADMIN_ROLE }}
+          --set containers[0].env[12].value=${{ secrets.OIDC_TOKEN }}
+          --set containers[0].env[13].value=${{ secrets.OIDC_USER_ENDPOINT }}
+          --set containers[0].env[14].value=${{ secrets.OIDC_ADMIN_ROLE }}
+          --set containers[0].env[15].value=${{ secrets.ALLOW_ADMIN_URL }}
           --set containers[1].image.repository=${{ secrets.CFGOV_APACHE_IMAGE }}
           --set containers[1].image.tag=${GITHUB_SHA}
           --set mapping.host=${{ secrets.HOST }}

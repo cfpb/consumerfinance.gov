@@ -88,6 +88,8 @@ containers:
       value: ""
     - name: oidc_op_admin_role 
       value: ""
+    - name: ALLOW_ADMIN_URL 
+      value: ""
     resources:
       limits:
         cpu: 100m
