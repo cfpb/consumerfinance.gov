@@ -1,12 +1,16 @@
 /* eslint-disable no-undef */
 import pattern from 'patternomaly';
 
+const white60 = 'rgba(255, 255, 255, 0.6)';
+// This is the gray from the CFPB DS.
+const gray = '#5a5d61';
+
 /**
- * Set default text color to a dark gray
+ * Set default text color to a dark gray.
  *
  * https://www.chartjs.org/docs/latest/general/colors.html
  */
-Chart.defaults.color = '#5a5d61';
+Chart.defaults.color = gray;
 
 /**
  * Takes an array of Chart.js datasets and returns a new array
@@ -42,8 +46,8 @@ const patternizeChartLines = (datasets) => {
  * backgroundColor property.
  *
  * Patterns are from the patternomaly library.
- * @param {Array} datasets - Array of Chart.js datasets
- * @returns {Array} Array of Chart.js datasets with backgroundColor property set
+ * @param {Array} datasets - List of Chart.js datasets.
+ * @returns {Array} List of Chart.js datasets with backgroundColor property set.
  *
  * https://www.chartjs.org/docs/latest/general/colors.html#patterns-and-gradients
  * https://github.com/ashiguruma/patternomaly
@@ -74,7 +78,7 @@ const patternizeChartBars = (datasets) => {
   ];
   return datasets.map((dataset, i) => {
     dataset.backgroundColor = dataset.data.map(() => {
-      // First pattern is just the solid color
+      // First pattern is just the solid color.
       if (i === 0)
         return Array.isArray(dataset.backgroundColor)
           ? dataset.backgroundColor[0]
@@ -82,7 +86,7 @@ const patternizeChartBars = (datasets) => {
       return pattern.draw(
         patterns[i - 1],
         dataset.backgroundColor,
-        'rgba(255, 255, 255, 0.6)',
+        white60,
         10,
       );
     });
@@ -91,7 +95,7 @@ const patternizeChartBars = (datasets) => {
 };
 
 /**
- * Change the default Chart.js tooltip options
+ * Change the default Chart.js tooltip options.
  */
 const tooltipOptions = {
   yAlign: 'bottom',
@@ -99,7 +103,7 @@ const tooltipOptions = {
 };
 
 /**
- * Define a Chart.js plugin for our CFPB customizations
+ * Define a Chart.js plugin for our CFPB customizations.
  *
  * https://www.chartjs.org/docs/latest/developers/plugins.html
  */

@@ -68,7 +68,7 @@ class ChartBlock(WagtailChartBlock):
     notes = blocks.TextBlock(required=False, help_text="Note about the chart")
 
     def __init__(self, **kwargs):
-        # Always override chart_types and colors with ours
+        # Always override chart_types and colors with ours.
         super().__init__(
             chart_types=CHART_TYPES, colors=CHART_COLORS, **kwargs
         )
