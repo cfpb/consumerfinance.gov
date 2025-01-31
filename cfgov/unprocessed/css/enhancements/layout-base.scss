@@ -46,10 +46,10 @@
     // Tablet and below.
     @include respond-to-max($bp-sm-max) {
       &__breadcrumbs {
-        padding-left: math.div(30px, $base-font-size-px) + rem;
-        padding-right: math.div(30px, $base-font-size-px) + rem;
-        margin-left: math.div(-30px, $base-font-size-px) + rem;
-        margin-right: math.div(-30px, $base-font-size-px) + rem;
+        padding-left: math.div(15px, $base-font-size-px) + rem;
+        padding-right: math.div(15px, $base-font-size-px) + rem;
+        margin-left: math.div(-15px, $base-font-size-px) + rem;
+        margin-right: math.div(-15px, $base-font-size-px) + rem;
         background: var(--gray-5);
         border-bottom: 1px solid var(--gray-40);
       }
@@ -58,8 +58,10 @@
     // Tablet only.
     @include respond-to-range($bp-sm-min, $bp-sm-max) {
       &__breadcrumbs {
-        padding-left: math.div(15px, $base-font-size-px) + rem;
-        padding-right: math.div(15px, $base-font-size-px) + rem;
+        padding-left: math.div(30px, $base-font-size-px) + rem;
+        padding-right: math.div(30px, $base-font-size-px) + rem;
+        margin-left: math.div(-30px, $base-font-size-px) + rem;
+        margin-right: math.div(-30px, $base-font-size-px) + rem;
       }
     }
 
@@ -98,11 +100,6 @@
     .u-layout-grid__wrapper {
       max-width: initial;
     }
-  }
-
-  // Modifier to allow breadcrumbs on full-width layouts, as in TCCP
-  .u-layout-grid--full-width-breadcrumbs {
-    overflow-x: hidden;
   }
 
   // Set default line width.
