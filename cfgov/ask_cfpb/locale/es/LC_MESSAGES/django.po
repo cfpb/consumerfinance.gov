@@ -39,10 +39,6 @@ msgstr ""
 msgid "last reviewed"
 msgstr "revisado"
 
-#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:60
-msgid "Read full answer"
-msgstr "Leer más"
-
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:66
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:86
 msgid "Don't see what you're looking for?"
