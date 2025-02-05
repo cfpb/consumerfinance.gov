@@ -1925,10 +1925,10 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-cypress-axe@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.5.0.tgz#95082734583da77b51ce9b7784e14a442016c7a1"
-  integrity sha512-Hy/owCjfj+25KMsecvDgo4fC/781ccL+e8p+UUYoadGVM2ogZF9XIKbiM6KI8Y3cEaSreymdD6ZzccbI2bY0lQ==
+cypress-axe@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.6.0.tgz#2d70475e15356dd243ebcbfefd5719526f7ca9bc"
+  integrity sha512-C/ij50G8eebBrl/WsGT7E+T/SFyIsRZ3Epx9cRTLrPL9Y1GcxlQGFoAVdtSFWRrHSCWXq9HC6iJQMaI89O9yvQ==
 
 cypress-fail-fast@7.1.1:
   version "7.1.1"
@@ -1937,10 +1937,10 @@ cypress-fail-fast@7.1.1:
   dependencies:
     chalk "4.1.2"
 
-cypress@13.17.0:
-  version "13.17.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.17.0.tgz#34c3d68080c4497eace0f353bd1629587a5f600d"
-  integrity sha512-5xWkaPurwkIljojFidhw8lFScyxhtiFHl/i/3zov+1Z5CmY4t9tjIdvSXfu82Y3w7wt0uR9KkucbhkVvJZLQSA==
+cypress@14.0.2:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-14.0.2.tgz#6d4811685a43911f70690bf0b2abbef991190412"
+  integrity sha512-3qqTU2JoVY262qkYg9I2nohwxcfsJk0dSVp/LXAjD94Jz2y6411Mf/l5uHEHiaANrOmMcHbzYgOd/ueDsZlS7A==
   dependencies:
     "@cypress/request" "^3.0.6"
     "@cypress/xvfb" "^1.2.4"
