@@ -1,6 +1,6 @@
 # These packages are installed from PyPI.
 base36==0.1.1
-backports.zoneinfo==0.2.1
+backports.zoneinfo==0.2.1;python_version<"3.9"
 beautifulsoup4==4.11.2
 boto3==1.34.144
 dj-database-url==2.2.0
@@ -26,7 +26,8 @@ mozilla-django-oidc==4.0.1
 opensearch-py==2.6.0
 # psycopg2 > 2.9.6 causes cf.gov to hang locally for people with on-network
 # Macs, so we'll pin to 2.9.6 for now. See PR 8203 for details.
-psycopg2-binary==2.9.6
+psycopg2-binary==2.9.6;python_version<"3.13"
+psycopg2-binary==2.9.10;python_version<"3.14"
 python-dateutil==2.9.0
 regdown==1.0.7
 requests-aws4auth==1.2.3

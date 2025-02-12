@@ -41,6 +41,8 @@ LINK_ICON_TEXT_CLASSES = ["a-link__text"]
 # Regular expression format string that will match any tag <tag_name> (that is
 # not self-closing) and group its contents.
 TAG_RE = (
+    # Make '.' match new lines, ignore case
+    r"(?s)(?i)"
     # Match an <tag_name[ attributes]>. If tag_name is not followed by a space
     # and any characters except >, it must be followed by >.
     r"<{tag_name}(?:\s+[^>]*?|)>"
@@ -48,8 +50,6 @@ TAG_RE = (
     r".+?(?=</{tag_name}>)"
     # Then match the closing </tag>
     r"</{tag_name}>"
-    # Make '.' match new lines, ignore case
-    r"(?s)(?i)"
 )
 
 # Match <body…>…</body>
