@@ -368,7 +368,7 @@ else:
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
             ),
-            "use_ssl": True, 
+            "use_ssl": True,
             "verify_certs": False,
         }
     }
@@ -816,3 +816,6 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
+
+    # Require manual Wagtail user creation.
+    OIDC_CREATE_USER = False
