@@ -65,8 +65,8 @@ jobs:
       run: ./refresh-data.sh test.sql.gz
 
     - name: Prepare config
-      env:
-        CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      #env:
+      #  CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: ./scripts/cypress-fast-specs.sh
 
     - name: Run Cypress
