@@ -55,11 +55,11 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements/local.txt
 
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v44.5.2
-      with:
-        separator: '___'
+        #    - name: Get changed files
+        # id: changed-files
+        #uses: tj-actions/changed-files@v44.5.2
+        #with:
+        #separator: '___'
 
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
