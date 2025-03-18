@@ -1,6 +1,7 @@
 name: Deploy CF.gov to EKS
 on: 
   push:
+  workflow_dispatch:
 jobs: 
   build: 
     runs-on: 
