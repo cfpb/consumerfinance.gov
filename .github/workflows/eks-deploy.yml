@@ -1,14 +1,14 @@
 name: Deploy CF.gov to EKS
-on: 
+on:
   push:
   workflow_dispatch:
-jobs: 
-  build: 
-    runs-on: 
+jobs:
+  build:
+    runs-on:
       - codebuild-cfpb-cfgov-cfpb-cfgov-${{ github.run_id }}-${{ github.run_attempt }}
       - buildspec-override:true
 
-    steps: 
+    steps:
       - name: Checkout consumerfinance.gov
         uses: actions/checkout@v2
 
@@ -17,10 +17,10 @@ jobs:
         with:
           secret-ids: |
             , ${{ secrets.SECURITY_SCAN }}
-            DB_URL, ${{ secrets.DB }}
-            ES_CREDS, ${{ secrets.ES_CREDS }} 
+            DB_CREDS, ${{ secrets.DB }}
+            ES_CREDS, ${{ secrets.ES_CREDS }}
           parse-json-secrets: true
-      
+
       - name: Build Docker Images
         run: |
 
@@ -39,9 +39,9 @@ jobs:
          ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" cfgov:latest
 
          ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u  "${TL_USER}" -p "${TL_PASSWORD}" apache:latest
-      
 
-        
+
+
       - name: Push Images to ECR
         run: |
 
@@ -77,21 +77,21 @@ jobs:
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig --name $CLUSTER_NAME --region ${{ secrets.AWS_REGION }}
-      
+
       - name: Deploy to EKS
         run: >
           helm upgrade --install cfgov ./helm --values ./helm/values.eks.yaml
-          -n ${{ secrets.NAMESPACE }} 
+          -n ${{ secrets.NAMESPACE }}
           --set initContainers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set initContainers[0].image.tag=${GITHUB_SHA}
-          --set initContainers[0].env[0].value=${DB_URL}
+          --set initContainers[0].env[0].value=${DB_CREDS_DATABASE_URL}
           --set initContainers[0].env[2].value=${{ secrets.ES_HOST }}
           --set initContainers[0].env[3].value=${{ secrets.ES_PORT }}
           --set initContainers[0].env[4].value=${ES_CREDS_USERNAME}
           --set initContainers[0].env[5].value=${ES_CREDS_PASSWORD}
           --set containers[0].image.repository=${{ secrets.CFGOV_IMAGE }}
           --set containers[0].image.tag=${GITHUB_SHA}
-          --set containers[0].env[0].value=${DB_URL}
+          --set containers[0].env[0].value=${DB_CREDS_DATABASE_URL}
           --set containers[0].env[2].value=${{ secrets.ES_HOST }}
           --set containers[0].env[3].value=${{ secrets.ES_PORT }}
           --set containers[0].env[4].value=${ES_CREDS_USERNAME}
