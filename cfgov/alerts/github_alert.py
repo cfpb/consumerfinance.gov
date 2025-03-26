@@ -28,8 +28,14 @@ class GithubAlert:
     def post(self, title, body, labels=None) -> ShortIssue:
         if not labels:
             labels = ["alert"]
+
         # Truncate the title if needed, max is 256 chars
         title = title[:256]
+
+        # Truncate the body if needed, max seems to be 65536 chars, see
+        # https://github.com/dead-claudia/github-limits?tab=readme-ov-file#issue-description
+        body = body[:65536]
+
         issue = self.matching_issue(title)
         if issue:  # Issue already exists
             if issue.is_closed():
