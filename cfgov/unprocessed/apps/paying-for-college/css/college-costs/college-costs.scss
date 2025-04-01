@@ -117,18 +117,21 @@
         margin-bottom: math.div(
             math.div($grid_gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
         margin-top: math.div(
             math.div($grid_gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
 
       .m-form-field {
         margin-top: math.div(
             math.div($grid_gutter-width, 3),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
 
@@ -180,7 +183,8 @@
         margin-top: math.div(
             math.div($grid_gutter-width, 3),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
 
       dl {
@@ -191,7 +195,10 @@
           margin-bottom: 0;
         }
         dd::after {
-          height: math.div(math.div($grid_gutter-width, 3), $base-font-size-px) +
+          height: math.div(
+              math.div($grid_gutter-width, 3),
+              $base-font-size-px
+            ) +
             em;
         }
       }
@@ -235,7 +242,8 @@
       margin-bottom: math.div(
           math.div($grid_gutter-width, 3),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
 
     .school-results__rank-display {
@@ -276,7 +284,8 @@
       padding-left: math.div(
           math.div($grid_gutter-width, 1.5),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
     .subtotal-row {
       font-weight: 600;

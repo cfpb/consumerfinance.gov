@@ -23,7 +23,7 @@ from wagtail.models import Page
 from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms, schema
+from v1.atomic_elements import charts, molecules, organisms, schema
 from v1.models.base import CFGOVPage
 from v1.util.events import get_venue_coords
 
@@ -99,6 +99,7 @@ class LearnPage(AbstractFilterPage):
             ("table", organisms.Table()),
             ("faq_group", schema.FAQGroup()),
             ("contact_us_table", organisms.ContactUsTable()),
+            ("wagtailchart_block", charts.ChartBlock()),
         ],
         blank=True,
     )
@@ -122,6 +123,7 @@ class DocumentDetailPage(AbstractFilterPage):
             ("table", organisms.Table()),
             ("crc_table", organisms.ConsumerReportingCompanyTable()),
             ("case_docket_table", organisms.CaseDocketTable()),
+            ("wagtailchart_block", charts.ChartBlock()),
         ],
         blank=True,
         block_counts={"case_docket_table": {"max_num": 1}},

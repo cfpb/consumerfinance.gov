@@ -122,25 +122,32 @@ class FlaggedWagtailOnlyViewTests(TestCase):
 
 class HandleErrorTestCase(TestCase):
     def setUp(self):
-        self.factory = RequestFactory()
+        self.request = RequestFactory().get("/")
 
-    @mock.patch("cfgov.urls.render")
-    def test_handle_error_attribute_error(self, mock_render):
-        mock_render.side_effect = AttributeError()
-        result = urls.handle_error(404, self.factory.get("/test"))
-        self.assertIn(b"This request could not be processed", result.content)
-        self.assertIn(b"HTTP Error 404.", result.content)
+    def test_handle_error(self):
+        with mock.patch("cfgov.urls.render") as mock_render:
+            urls.handle_error(404, self.request)
 
-    @mock.patch("cfgov.urls.render")
-    def test_handle_error(self, mock_render):
-        request = self.factory.get("/Test")
-        urls.handle_error(404, request)
         mock_render.assert_called_with(
-            request,
+            self.request,
             "v1/layouts/404.html",
-            context={"request": request},
+            context={"request": self.request},
             status=404,
         )
+
+    def test_error_while_handling_404_should_be_raised(self):
+        with mock.patch(
+            "cfgov.urls.render", side_effect=RuntimeError
+        ), self.assertRaises(RuntimeError):
+            urls.handler404(self.request)
+
+    def test_error_while_handling_500_should_log_plain_text_response(self):
+        with mock.patch("cfgov.urls.render", side_effect=RuntimeError):
+            result = urls.handler500(self.request)
+            self.assertIn(
+                b"This request could not be processed", result.content
+            )
+            self.assertIn(b"HTTP Error 500.", result.content)
 
 
 class TestBetaRefreshEndpoint(TestCase):

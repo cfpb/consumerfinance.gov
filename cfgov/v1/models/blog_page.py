@@ -5,7 +5,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import organisms, schema
+from v1.atomic_elements import charts, organisms, schema
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 from v1.models.learn_page import AbstractFilterPage
 
@@ -14,12 +14,14 @@ class BlogContent(blocks.StreamBlock):
     full_width_text = organisms.FullWidthText()
     info_unit_group = organisms.InfoUnitGroup()
     expandable = organisms.Expandable()
+    expandable_group = organisms.ExpandableGroup()
     well = organisms.Well()
     video_player = organisms.VideoPlayer()
     email_signup = v1_blocks.EmailSignUpChooserBlock()
     simple_chart = organisms.SimpleChart()
     faq_schema = schema.FAQ(label="FAQ schema")
     how_to_schema = schema.HowTo(label="HowTo schema", max_num=1)
+    wagtailchart_block = charts.ChartBlock()
 
 
 class BlogPage(AbstractFilterPage):

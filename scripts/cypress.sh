@@ -5,5 +5,5 @@ if [ "$1" = "fast" ]; then
 elif [ "$1" = "open" ]; then
     ./node_modules/.bin/cypress open --config-file cypress.template.mjs
 else
-    ./node_modules/.bin/cypress run --config-file cypress.template.mjs
+    ./node_modules/.bin/cypress run --config-file cypress.template.mjs $@
 fi

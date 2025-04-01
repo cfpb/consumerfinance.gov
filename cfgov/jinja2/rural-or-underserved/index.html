@@ -170,6 +170,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     <!-- Actual hidden file upload component. -->
                                     <label>
                                         <input type="file" id="file">
+                                        <span class="u-visually-hidden">Choose a file to upload</span>
                                     </label>
                                     <!-- Styled faux overlay component. -->
                                     <button class="a-btn
@@ -760,6 +761,11 @@ home price, down payment, and more can affect mortgage interest rates.
                     or underserved, lenders have the option to check the
                     address on the Census Bureau’s automated address search
                     tool and the rural or underserved counties lists.'
+                ) }}
+
+                {{ expandable.render(
+                   'Why did I receive inaccurate results for Connecticut addresses in January 2025?',
+                   'If accessed between January 1, 2025, and January 22, 2025, the rural or underserved tool might have incorrectly indicated underserved status for some addresses in Connecticut as a result of recent changes by the Census Bureau in the county-equivalent codes for that state. The Bureau implemented a solution for this issue on January 23, 2025. As of that date, the rural or underserved tool produces correct results for addresses in the State of Connecticut.'
                 ) }}
             </div>
         </div>

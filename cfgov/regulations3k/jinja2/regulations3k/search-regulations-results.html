@@ -1,4 +1,4 @@
-{% import 'v1/includes/atoms/tag.html' as tag %}
+{% import 'v1/includes/atoms/tag-filter.html' as tag %}
 {% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 
@@ -28,8 +28,9 @@
             {% for reg in page.results.all_regs %}
                 {% if reg.selected %}
                     {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
+                    {%- set reg_label = '<span>' | safe ~ reg.id ~ ' ' ~ reg_name ~ '</span>' | safe -%}
                     {{ tag.render({
-                        'label': reg.id ~ ' ' ~ reg_name | safe,
+                        'label': reg_label,
                         'value': reg.id,
                         'behavior': 'clear-filter'
                     }) }}

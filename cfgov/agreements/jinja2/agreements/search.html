@@ -46,70 +46,23 @@
                     {% endfor %}
                 </tbody>
             </table>
-
-            {% if page.has_next() or page.has_previous() %}
-
-            <nav class="m-pagination"
-                    role="navigation"
-                    aria-label="Pagination">
-
-                {% if page.has_previous() %}
-                <a class="a-btn m-pagination__btn-prev"
-                    href="?page={{ page.previous_page_number() }}#ccagrsearch">
-                    {{ svg_icon('left') }}
-                    <span>Previous</span>
-                </a>
-                {% else %}
-                <a class="a-btn m-pagination__btn-prev" disabled>
-                    {{ svg_icon('left') }}
-                    <span>Previous</span>
-                </a>
-                {% endif %}
-
-                {% if page.has_next() %}
-                <a class="a-btn m-pagination__btn-next"
-                    href="?page={{ page.next_page_number() }}#ccagrsearch">
-                    <span>Next</span>
-                    {{ svg_icon('right') }}
-                </a>
-                {% else %}
-                <a class="a-btn m-pagination__btn-next" disabled>
-                    <span>Next</span>
-                    {{ svg_icon('right') }}
-                </a>
-                {% endif %}
-
-                <form class="m-pagination__form"
-                        action="#ccagrsearch">
-                    <label class="m-pagination__label">
-                        Page
-                        <span class="u-visually-hidden">
-                            number {{ page.number }} out
-                        </span>
-                        <input class="m-pagination__current-page"
-                                id="m-pagination__current-page"
-                                name="page"
-                                type="number"
-                                min="1"
-                                max="999"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                                value="{{ page.number }}">
-                        of {{ page.paginator.num_pages }}
-                    </label>
-                    <button class="a-btn
-                                   a-btn--link"
-                            id="m-pagination__btn-submit"
-                            type="submit">Go</button>
-                </form>
-            </nav>
-
-            {% endif %}
         </div>
+        {% if page.has_next() or page.has_previous() %}
+        <div class="block block--flush-top block--flush-bottom block--padded-top">
+            {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+            {{ pagination.render(
+                page.paginator.num_pages,
+                page.number,
+                'ccagrsearch'
+            ) }}
+        </div>
+        {% endif %}
+
     </div>
 
     {% include '_database_disclaimer.html' %}
 
+    {{ agreements_issuers() | safe }}
 {% endblock %}
 
 {% block content_sidebar scoped  %}
@@ -123,7 +76,9 @@
             <h3 class="h6">
                 Show agreements by card issuer
             </h3>
-            {{ agreements_issuer_select(issuer.slug) | safe }}
+
+            <p id="select-root" class="u-mb5"></p>
+            <div style="display:none" id="issuer-slug">{{issuer.slug}}</div>
             <p>
                 <a href="#find-issuer">
                     Can't find an issuer?

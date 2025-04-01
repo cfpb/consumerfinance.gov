@@ -1,4 +1,4 @@
-import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system/src/index.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system';
 import { GlobalSearch } from '../molecules/GlobalSearch.js';
 import { MegaMenu } from '../organisms/MegaMenu.js';
 

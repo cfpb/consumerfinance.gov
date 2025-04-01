@@ -8,6 +8,7 @@ from wagtail.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 from v1.models.browse_page import BrowsePage
+from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
@@ -15,12 +16,19 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
     def test_data_snapshot(self):
         """Management command correctly updates data snapshot values"""
         browse_page = BrowsePage(title="Browse Page", slug="browse")
+        sl = SublandingPage(title="Consumer Credit Trends", slug="cct")
 
         # Adds a STU market to a browse page
         browse_page.content = StreamValue(
             browse_page.content.stream_block, [atomic.data_snapshot], True
         )
+
+        sl.content = StreamValue(
+            sl.content.stream_block, [atomic.full_width_text], True
+        )
+
         publish_page(child=browse_page)
+        publish_page(child=sl)
 
         # Call management command to update values
         filename = os.path.join(
@@ -47,6 +55,9 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
         self.assertNotContains(response, "In year-over-year inquiries")
         self.assertNotContains(response, "In year-over-year credit tightness")
 
+        landing_response = self.client.get("/cct/")
+        self.assertContains(landing_response, "October 02, 2018")
+
     def test_data_snapshot_with_inquiry_and_tightness(self):
         """Management command correctly updates data snapshot values
         for market that contains inquiry and tightness data"""
@@ -55,13 +66,21 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             slug="browse",
         )
 
+        sl = SublandingPage(title="Consumer Credit Trends", slug="cct")
+
         # Adds a AUT market to a browse page
         browse_page.content = StreamValue(
             browse_page.content.stream_block,
             [atomic.data_snapshot_with_optional_fields],
             True,
         )
+
+        sl.content = StreamValue(
+            sl.content.stream_block, [atomic.full_width_text], True
+        )
+
         publish_page(child=browse_page)
+        publish_page(child=sl)
 
         # Call management command to update values
         filename = os.path.join(

@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0001_squashed_0254_delete_campaignpage'),
+        ('v1', '0001_2024_squash'),
     ]
 
     operations = [

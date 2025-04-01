@@ -1,0 +1,17 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-wagtail-chart {
+  max-width: math.div(670px, $base-font-size-px) + rem;
+  margin-bottom: math.div(60px, $base-font-size-px) + rem;
+
+  &__subtitle {
+    margin: 0 0 (math.div(30px, $base-font-size-px) + rem);
+  }
+
+  &__footnote {
+    max-width: math.div(670px, $size-vi) + rem;
+    padding-top: math.div(15px, $size-vi) + rem;
+    font-size: math.div(12px, $base-font-size-px) + rem;
+  }
+}

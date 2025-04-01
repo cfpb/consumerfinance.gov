@@ -619,13 +619,19 @@ def handle_error(code, request, exception=None):
             context={"request": request},
             status=code,
         )
-    except AttributeError:
-        # for certain URL's, it seems like our middleware doesn't run
-        # Thankfully, these are probably not errors real users see -- usually
-        # the results of a security scan, or a malformed static file reference.
+    except Exception:
+        # If we encounter an exception when rendering a 500 error page, we
+        # want to handle it so that we don't trigger infinite recursion
+        # (error -> try rendering error page -> another error -> etc).
+        # In that case, we fall back to a plain text error HTTP response.
+        #
+        # For other errors (like 404s), we do want to raise the exception,
+        # so that we (hopefully correctly) log and render the 500 page.
+        if code != 500:
+            raise
 
         return HttpResponse(
-            "This request could not be processed, " f"HTTP Error {str(code)}.",
+            f"This request could not be processed, HTTP Error {str(code)}.",
             status=code,
         )
 

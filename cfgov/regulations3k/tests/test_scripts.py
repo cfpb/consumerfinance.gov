@@ -75,7 +75,7 @@ class LinkScriptTestCase(TestCase):
     @mock.patch("regulations3k.scripts.insert_section_links.insert_links")
     def test_run_with_args(self, mock_inserter):
         run("1002")
-        self.assertTrue(mock_inserter.called_with, "1002")
+        mock_inserter.assert_called_with(reg="1002")
 
     def test_insert_links_skips_processed_file(self):
         regdown_with_link = (

@@ -26,9 +26,21 @@ class TestZipCodeBasedCounselorGeocoder(TestCase):
 
     def test_returns_list_of_counselors(self):
         counselors = [
-            {"agc_ADDR_LATITUDE": 1, "agc_ADDR_LONGITUDE": -1},
-            {"agc_ADDR_LATITUDE": 2, "agc_ADDR_LONGITUDE": -2},
-            {"agc_ADDR_LATITUDE": 3, "agc_ADDR_LONGITUDE": -3},
+            {
+                "agc_ADDR_LATITUDE": 1,
+                "agc_ADDR_LONGITUDE": -1,
+                "zipcd": "20001",
+            },
+            {
+                "agc_ADDR_LATITUDE": 2,
+                "agc_ADDR_LONGITUDE": -2,
+                "zipcd": "20001",
+            },
+            {
+                "agc_ADDR_LATITUDE": 3,
+                "agc_ADDR_LONGITUDE": -3,
+                "zipcd": "20001",
+            },
         ]
 
         geocoded = self.geocoder.geocode(counselors)
@@ -84,11 +96,11 @@ class TestZipCodeBasedCounselorGeocoder(TestCase):
         self.assertEqual(geocoded[0]["agc_ADDR_LATITUDE"], 123.45)
         self.assertEqual(geocoded[0]["agc_ADDR_LONGITUDE"], -78.9)
 
-    def test_raises_keyerror_if_zipcode_not_available(self):
+    def test_filters_out_bad_zips(self):
         counselor = {"zipcd": "20002"}
 
-        with self.assertRaises(KeyError):
-            self.geocoder.geocode([counselor])
+        geocoded = self.geocoder.geocode([counselor])
+        self.assertEqual(len(geocoded), 0)
 
 
 class TestBulkZipCodeGeocoder(TestCase):

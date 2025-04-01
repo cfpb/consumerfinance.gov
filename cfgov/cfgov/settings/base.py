@@ -72,6 +72,10 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sitemaps",
+    # Including WhiteNoise before staticfiles so that WhiteNoise always
+    # serves static files, even in development.
+    # https://whitenoise.readthedocs.io/en/latest/django.html#using-whitenoise-in-development
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "wagtail.search",
@@ -104,6 +108,7 @@ INSTALLED_APPS = (
     "filing_instruction_guide",
     "health_check",
     "health_check.db",
+    "wagtailcharts",
     # Satellites
     "complaint_search",
     "countylimits",
@@ -123,6 +128,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -136,7 +143,6 @@ MIDDLEWARE = (
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
@@ -295,6 +301,13 @@ STATICFILES_DIRS += [
     d for d in REPOSITORY_ROOT.joinpath("static.in").iterdir() if d.is_dir()
 ]
 
+# Collect static files into, and serve them from, cfgov/collectstatic,
+# unless otherwise specified via DJANGO_STATIC_ROOT.
+STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
+
+# Serve files under cfgov/root at the root of the website.
+WHITENOISE_ROOT = PROJECT_ROOT / "root"
+
 ALLOWED_HOSTS = ["*"]
 
 # Wagtail settings
@@ -355,6 +368,7 @@ else:
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
             ),
+            "use_ssl": True,
             "verify_certs": False,
         }
     }
@@ -624,12 +638,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-    # TCCP credit card finder
-    "TCCP": [
-        ("environment is", "dev4"),
-        ("environment is", "local"),
-        ("environment is", "test"),
-    ],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [
@@ -808,3 +816,6 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
+
+    # Require manual Wagtail user creation.
+    OIDC_CREATE_USER = False

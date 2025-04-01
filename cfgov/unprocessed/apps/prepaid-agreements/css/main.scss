@@ -1,8 +1,7 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
-@import '../../../css/main';
-@import './search';
-@import './search-bar';
+@use './search' as *;
+@use './search-bar' as *;
 
 .u-readable-width {
   // Magic number: matches max-width for content set in cf-layout
@@ -21,7 +20,10 @@
   }
 
   dt {
-    margin-bottom: math.div(math.div($grid-gutter-width, 6), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 6),
+        $base-font-size-px
+      ) +
       em;
 
     @include heading-4($has-margin-bottom: false, $is-responsive: false);
@@ -67,7 +69,8 @@
       margin-bottom: math.div(
           math.div($grid-gutter-width, 1.5),
           $base-font-size-px
-        ) + em;
+        ) +
+        em;
     }
   }
 
@@ -96,6 +99,7 @@
     margin-bottom: math.div(
         math.div($grid-gutter-width, 1.5),
         $base-font-size-px
-      ) + em;
+      ) +
+      em;
   }
 }

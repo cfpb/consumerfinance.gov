@@ -1,6 +1,5 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
-@import '../main';
 @import 'highcharts/css/highcharts.css';
 
 .o-simple-chart {
@@ -229,12 +228,14 @@
     width: 100%;
     height: 60px;
     margin-top: -5px;
-    margin-bottom: 66px;
 
     // Mobile only.
     @include respond-to-max($bp-xs-max) {
       margin-top: -8px;
-      margin-bottom: -6px;
+    }
+
+    .legend-grid {
+      display: grid;
     }
 
     .legend-title {
@@ -244,8 +245,6 @@
 
     .legend-color,
     .legend-label {
-      float: left;
-      width: 19.75%;
       text-align: center;
     }
     .legend-label {
@@ -255,8 +254,7 @@
     .legend-color {
       height: 15px;
       border: 1px solid var(--gray-60);
-      width: 19.5%;
-      &:not(:nth-child(2)) {
+      &:not(:first-child) {
         border-left: none;
       }
     }

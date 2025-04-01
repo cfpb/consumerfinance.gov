@@ -1,0 +1,37 @@
+The following pods have been deployed to your cluster:
+
+PostgreSQL:
+  - Service Name: postgres
+  - Internal Port: 5432
+
+  To access PostgreSQL, run the following commands:
+  export POSTGRES_POD=$(kubectl get pods -l "statefulset.kubernetes.io/pod-name=cfgov-postgresql-0"  -o jsonpath="{.items[0].metadata.name}")
+  export POSTGRES_PORT=$(kubectl get pod $POSTGRES_POD -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "PostgreSQL is running on internal port $POSTGRES_PORT"
+  kubectl   port-forward $POSTGRES_POD 5432:$POSTGRES_PORT
+  Visit PostgreSQL at: http://127.0.0.1:5432
+
+OpenSearch:
+  - Service Name: opensearch
+  - Http Internal Port: 9200
+  - Transport Internal Port: 9300
+  - Metrics Internal Port: 9600
+
+  To access OpenSearch Metrics, run the following commands:
+  export OPENSEARCH_POD=$(kubectl get pods -l "statefulset.kubernetes.io/pod-name=opensearch-cluster-master-0" -o jsonpath="{.items[0].metadata.name}")
+  export OPENSEARCH_PORT=$(kubectl get pod $OPENSEARCH_POD -o jsonpath="{.spec.containers[0].ports[2].containerPort}")
+  echo "OpenSearch Metrics is running on internal port $OPENSEARCH_PORT"
+  kubectl port-forward $OPENSEARCH_POD 9600:$OPENSEARCH_PORT
+  Visit OpenSearch at: http://127.0.0.1:9600
+
+cfgov:
+  - Service Name: cfgov
+  - Application Port: 8000
+  - Apache Port: 80
+
+  To access cfgov, run the following commands:
+  export CFGOV_POD=$(kubectl get pods -l "app.kubernetes.io/name=cfgov" -o jsonpath="{.items[0].metadata.name}")
+  export CFGOV_PORT=$(kubectl get pod $CFGOV_POD -o jsonpath="{.spec.containers[1].ports[0].containerPort}")
+  echo "cfgov is running on internal port $CFGOV_PORT"
+  kubectl port-forward $CFGOV_POD 8080:$CFGOV_PORT
+  Visit cfgov at: http://127.0.0.1:8080

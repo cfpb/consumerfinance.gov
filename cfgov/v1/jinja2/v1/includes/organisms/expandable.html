@@ -73,6 +73,10 @@
                         <p>
                             {% include_block block %}
                         </p>
+                    {% elif block.block_type == 'well' %}
+                        <div class="block block--sub">
+                            {% include_block block %}
+                        </div>
                     {% else %}
                         {% include_block block %}
                     {% endif %}

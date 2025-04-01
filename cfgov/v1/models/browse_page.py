@@ -11,7 +11,7 @@ from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
-from v1.atomic_elements import molecules, organisms, schema
+from v1.atomic_elements import charts, molecules, organisms, schema
 from v1.models.base import CFGOVPage
 
 
@@ -123,19 +123,32 @@ class BrowsePage(AbstractBrowsePage):
         [
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
-            ("simple_chart", organisms.SimpleChart()),
+            ("wagtailchart_block", charts.ChartBlock()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
             ("table", organisms.Table()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
-            ("chart_block", organisms.ChartBlock()),
-            ("mortgage_chart_block", organisms.MortgageChartBlock()),
-            ("mortgage_map_block", organisms.MortgageMapBlock()),
-            ("mortgage_downloads_block", MortgageDataDownloads()),
-            ("data_snapshot", organisms.DataSnapshot()),
-            ("job_listing_table", JobListingTable()),
+            ("simple_chart", organisms.SimpleChart(group="Not commonly used")),
+            ("chart_block", organisms.ChartBlock(group="Not commonly used")),
+            (
+                "mortgage_chart_block",
+                organisms.MortgageChartBlock(group="Not commonly used"),
+            ),
+            (
+                "mortgage_map_block",
+                organisms.MortgageMapBlock(group="Not commonly used"),
+            ),
+            (
+                "mortgage_downloads_block",
+                MortgageDataDownloads(group="Not commonly used"),
+            ),
+            (
+                "data_snapshot",
+                organisms.DataSnapshot(group="Not commonly used"),
+            ),
+            ("job_listing_table", JobListingTable(group="Not commonly used")),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,

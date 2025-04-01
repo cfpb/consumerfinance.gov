@@ -2,11 +2,7 @@
    Video Player Class
    ========================================================================== */
 
-import {
-  checkDom,
-  setInitFlag,
-  EventObserver,
-} from '@cfpb/cfpb-design-system/src/index.js';
+import { checkDom, setInitFlag, EventObserver } from '@cfpb/cfpb-design-system';
 import { formatTimestamp } from '../modules/util/strings.js';
 import youTubeAPI from '../modules/youtube-api.js';
 

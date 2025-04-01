@@ -1,7 +1,7 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
-@import '../enhancements/typography';
+@use '../enhancements/typography' as *;
 
 @mixin u-upper-hover-line() {
   position: absolute;
@@ -200,7 +200,8 @@
         padding-right: math.div(
             math.div($grid-gutter-width, 2),
             $base-font-size-px
-          ) + em;
+          ) +
+          em;
       }
     }
 

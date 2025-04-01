@@ -338,7 +338,6 @@ button.o-video-player__play-btn,
   .o-video-player__close-btn {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    display: block;
 
     // Pushes button out of masked window when not playing.
     margin-top: $standard-btn-height-px;

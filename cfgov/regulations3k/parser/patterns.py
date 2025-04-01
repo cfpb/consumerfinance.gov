@@ -377,6 +377,6 @@ dot_id_patterns = {
 }
 
 interp_reference_pattern = r"(\d{1,3})(\([a-z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: E501
-interp_inferred_section_pattern = r"(\([a-z]{1,2}\))(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: E501'
+interp_inferred_section_pattern = r"(\([a-z]{1,2}\))(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: E501
 
 LEVEL_STATE = IdLevelState()

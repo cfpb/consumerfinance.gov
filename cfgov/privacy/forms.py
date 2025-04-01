@@ -26,8 +26,7 @@ class PrivacyActForm(forms.Form):
     )
     system_of_record = forms.CharField(
         label=(
-            "Name of the system of records you believe contain the "
-            "record(s)"
+            "Name of the system of records you believe contain the record(s)"
         ),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
@@ -35,7 +34,7 @@ class PrivacyActForm(forms.Form):
     date_of_records = forms.CharField(
         label="Date of the record(s)",
         help_text=(
-            "Or the period in which you believe that the record was " "created"
+            "Or the period in which you believe that the record was created"
         ),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
@@ -58,10 +57,11 @@ class PrivacyActForm(forms.Form):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
     contact_channel = forms.ChoiceField(
+        widget=forms.RadioSelect,
         choices=[
             ("email", "Please send my records via email"),
             ("mail", "Please send my records by mail"),
-        ]
+        ],
     )
     street_address = forms.CharField(
         required=False,

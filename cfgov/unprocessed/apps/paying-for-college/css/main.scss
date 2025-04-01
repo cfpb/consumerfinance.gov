@@ -5,24 +5,21 @@
 // This is your project's main SCSS file.
 // Project-specific SCSS rules go after the imports.
 
-// Import Design System components.
-@import '../../../css/main';
-
 // Import the Design System enhancements
-@import 'cf-enhancements';
+@use 'cf-enhancements' as *;
 
 // Import the disclosures.scss file
-@import 'disclosures';
+@use 'disclosures' as *;
 
 // Import the college-costs.scss file
-@import 'college-costs/vars';
-@import 'college-costs/college-costs';
-@import 'college-costs/charts';
-@import 'college-costs/financial-item';
-@import 'college-costs/nav';
-@import 'college-costs/number-callout';
-@import 'college-costs/search';
-@import 'college-costs/state-based';
-@import 'college-costs/stepper';
-@import 'college-costs/tooltip';
-@import 'print';
+@use 'college-costs/vars' as *;
+@use 'college-costs/college-costs' as *;
+@use 'college-costs/charts' as *;
+@use 'college-costs/financial-item' as *;
+@use 'college-costs/nav' as *;
+@use 'college-costs/number-callout' as *;
+@use 'college-costs/search' as *;
+@use 'college-costs/state-based' as *;
+@use 'college-costs/stepper' as *;
+@use 'college-costs/tooltip' as *;
+@use 'print' as *;

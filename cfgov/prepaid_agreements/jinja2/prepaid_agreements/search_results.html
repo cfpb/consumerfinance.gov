@@ -1,10 +1,11 @@
 {% import 'v1/includes/atoms/checkbox.html' as checkbox %}
 {% import 'v1/includes/atoms/radio-button.html' as radio %}
-{% import 'v1/includes/atoms/tag.html' as tag %}
+{% import 'v1/includes/atoms/tag-filter.html' as tag %}
 {% import 'prepaid_agreements//search_result_item.html' as search_item %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
+{% if current_count and current_count > 0  %}
 <aside class="content__sidebar content--flush-top-on-small content--flush-sides-on-small filters">
     <h3>Narrow results by...</h3>
 
@@ -95,6 +96,16 @@
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
     </form>
 </aside>
+{% else %}
+<aside class="content__sidebar content--flush-top-on-small content--flush-sides-on-small filters no-results">
+    <h3 class="h4">
+        Try a broader search.
+    </h3>
+    <p>
+        Enter a different search term above.
+    </p>
+</aside>
+{% endif %}
 
 <div class="content__main content--flush-all-on-small content--flush-bottom">
     <div class="results__header">

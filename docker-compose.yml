@@ -1,5 +1,3 @@
-version: '3.4'
-
 volumes:
   postgres_data:
 
@@ -14,12 +12,14 @@ services:
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: '-Xms512m -Xmx512m'
+
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.0
     depends_on:
       - elasticsearch
     ports:
       - 127.0.0.1:5601:5601
+
   postgres:
     image: postgres:13-alpine
     user: postgres
@@ -32,8 +32,9 @@ services:
       POSTGRES_DB: cfgov
     ports:
       - 127.0.0.1:5432:5432
+
   python:
-    image: cfgov_python:local
+    image: cfgov-python:local
     build:
       context: .
       dockerfile: Dockerfile
@@ -46,3 +47,28 @@ services:
       DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
       ES_HOST: elasticsearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
+
+  apache:
+    image: httpd:2.4-alpine
+    depends_on:
+      - python
+    environment:
+      APACHE_PORT: 80
+      APACHE_USER: www-data
+      APACHE_GROUP: www-data
+      APACHE_SERVER_ROOT: /usr/local/apache2/
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
+      STATIC_PATH: /tmp
+      ERROR_LOG: /proc/self/fd/2
+      ACCESS_LOG: /proc/self/fd/1
+      LIMIT_REQUEST_BODY: 0
+      APACHE_PROCESS_COUNT: 4
+      CFGOV_APPLICATION_HOST: python
+      # These aren't used in Docker but are used for our legacy EC2 servers
+      CFGOV_CURRENT: "/usr/local/apache2/"
+    volumes:
+      - ./cfgov/apache/conf.d/:/usr/local/apache2/conf.d/
+      - ./cfgov/apache/conf/:/usr/local/apache2/conf/
+      - ./cfgov/apache/conf.modules.d/:/usr/local/apache2/conf.modules.d/
+    ports:
+      - '8080:80'

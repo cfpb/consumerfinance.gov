@@ -10,9 +10,7 @@ import pluginCypress from 'eslint-plugin-cypress/flat';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
-  {
-    ignores: ['.tox', 'cfgov/static_built', 'collectstatic'],
-  },
+  { ignores: ['.tox', 'cfgov/static_built', 'collectstatic'] },
   js.configs.recommended,
   importPlugin.flatConfigs.recommended,
   jsdoc.configs['flat/recommended'],
@@ -24,17 +22,8 @@ export default [
   {
     languageOptions: {
       ecmaVersion: 2023,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.jest,
-        ...globals.serviceworker,
-      },
+      parserOptions: { ecmaFeatures: { jsx: true } },
+      globals: { ...globals.browser, ...globals.node, ...globals.jest },
     },
     settings: {
       'import/resolver': {
@@ -44,23 +33,27 @@ export default [
           moduleDirectory: ['node_modules'],
         },
       },
-      react: {
-        version: 'detect',
-      },
+      react: { version: 'detect' },
     },
     // Some plugins are automatically included.
     // plugins: {},
     rules: {
+      'import/no-unresolved': [
+        2,
+        {
+          ignore: [
+            '@cfpb/cfpb-design-system$',
+            '@cfpb/cfpb-design-system/tooltips$',
+            '@cfpb/cfpb-design-system/icons/.+.svg$',
+          ],
+        },
+      ],
       'jsdoc/require-hyphen-before-param-description': ['warn', 'always'],
       'no-console': ['warn'],
       'no-use-before-define': ['error', 'nofunc'],
       'no-unused-vars': [
         'error',
-        {
-          vars: 'all',
-          args: 'after-used',
-          ignoreRestSiblings: false,
-        },
+        { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
       ],
       'no-var': ['error'],
       'prefer-const': ['error'],

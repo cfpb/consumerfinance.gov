@@ -23,8 +23,6 @@ if [ ! -z "$RUN_MIGRATIONS" ]; then
     if [ -n "$CFGOV_PROD_DB_LOCATION" ] || [ -n "$DB_DUMP_FILE" ] || [ -n "$DB_DUMP_URL" ]; then
       echo "Running refresh-data.sh... $DB_DUMP_FILE"
       ./refresh-data.sh "$DB_DUMP_FILE"
-      echo "Create the cache table..."
-      ./cfgov/manage.py createcachetable
 
       # refresh-data.sh runs migrations and rebuilds index,
       # unset vars to prevent further action
@@ -51,12 +49,6 @@ if [ ! -z $REBUILD_INDEX ]; then
   echo "Rebuilding Search Indexes..."
   django-admin opensearch index --force rebuild
   django-admin opensearch document --force --refresh index
-fi
-
-# Do first-time build of the front-end if necessary
-if [ ! -d "node_modules" ] && [ ! "$(ls cfgov/static_built)" ]; then
-    echo "Running ./frontend.sh for the first time..."
-    ./frontend.sh
 fi
 
 # Execute the Docker CMD

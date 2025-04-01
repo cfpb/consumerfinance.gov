@@ -86,10 +86,8 @@ EMAIL_HOST = os.getenv("EMAIL_HOST")
 DEFAULT_FROM_EMAIL = "wagtail@cfpb.gov"
 
 STORAGES["staticfiles"] = {
-    "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 }
-
-STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
@@ -113,7 +111,12 @@ SECURE_HSTS_SECONDS = 600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
+
+# In production deployments SSL is never terminated at the Django application,
+# so in practice Django will never receive secure requests. HTTP requests must
+# always come with an "X-Forwarded-Proto: https" header if this is set to True
+# or this we get into a redirect loop.
+SECURE_SSL_REDIRECT = False
 
 # Require the SECRET_KEY as an environment variable
 SECRET_KEY = os.getenv("SECRET_KEY")

@@ -1,0 +1,17 @@
+{# ==========================================================================
+
+   Includes issuers as a global JS object
+
+   issuers: List of credit card agreement issuers.
+
+   ========================================================================== #}
+<script>
+  window.cfpbIssuers = [
+  {%- for issuer in issuers -%}
+   {
+    value:"{{issuer.slug}}",
+    label:"{{issuer.name}}"
+   }{{ "," if not loop.last else "" }}
+  {%- endfor -%}
+  ]
+</script>

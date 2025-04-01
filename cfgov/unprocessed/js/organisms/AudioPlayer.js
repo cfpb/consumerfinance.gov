@@ -1,4 +1,4 @@
-import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system/src/index.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 const BASE_CLASS = 'o-audio-player';

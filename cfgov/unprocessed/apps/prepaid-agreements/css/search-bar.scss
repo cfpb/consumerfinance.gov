@@ -10,34 +10,23 @@
   flex-wrap: wrap;
 }
 
-.layout-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-fixed {
-  flex: none;
-}
-
 .flex-all {
   flex: 1 0 auto;
-}
-
-button.a-btn.flex-fixed {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 // Tablet and below.
 @include respond-to-max($bp-sm-max) {
   .a-select {
-    margin-bottom: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) +
+    margin-bottom: math.div(
+        math.div($grid-gutter-width, 2),
+        $base-font-size-px
+      ) +
       em;
     width: 100%;
   }
 }
 
-// select
+// Dark gray drop-down adjacent to the search input.
 $select-height: $size-ii;
 
 .a-select {
