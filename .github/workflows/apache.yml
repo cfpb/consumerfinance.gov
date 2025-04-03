@@ -22,9 +22,9 @@ jobs:
         run: docker run -d -p 8000:80 cfgov-apache:latest && sleep 5
 
       - name: Test cfgov-apache image with no proxy configured
-        # Expect this to show the default Apache "It works!" page, since we
+        # Expect this to show the default Apache 404 Not Found page, since we
         # haven't configured a proxy for all web traffic.
-        run: curl -sf http://localhost:8000 | grep -q "It works!"
+        run: curl -s http://localhost:8000 | grep -q "404 Not Found"
 
       - name: Run cfgov-apache image with readonly filesystem
         # Map a writeable volume for /usr/local/apache2/logs, because that's
@@ -42,7 +42,7 @@ jobs:
         # If we didn't map a writeable volume for /usr/local/apache2/logs,
         # Apache wouldn't be able to start up successfully since it wouldn't
         # be able to write its pidfile to a readonly filesystem.
-        run: curl -sf http://localhost:8001 | grep -q "It works!"
+        run: curl -s http://localhost:8001 | grep -q "404 Not Found"
 
       - name: Run cfgov-apache image with proxy configured
         # Proxy Apache to a simulated backend using CFGOV_APPLICATION_PROXY.

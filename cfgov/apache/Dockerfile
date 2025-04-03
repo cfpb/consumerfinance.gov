@@ -4,7 +4,7 @@ FROM httpd:2.4-alpine
 ENV APACHE_PORT="80"
 ENV APACHE_USER="www-data"
 ENV APACHE_GROUP="www-data"
-ENV APACHE_SERVER_ROOT="/usr/local/apache2/"
+ENV APACHE_SERVER_ROOT="/usr/local/apache2"
 ENV APACHE_UPLOADS_F_ALIAS="/src/consumerfinance.gov/cfgov/f/"
 ENV STATIC_PATH="/usr/local/apache2/htdocs"
 ENV ERROR_LOG="/proc/self/fd/2"
@@ -17,6 +17,9 @@ ENV APACHE_PROCESS_COUNT="4"
 COPY ./conf "$APACHE_SERVER_ROOT/conf"
 COPY ./conf.d "$APACHE_SERVER_ROOT/conf.d"
 COPY ./conf.modules.d "$APACHE_SERVER_ROOT/conf.modules.d"
+
+# Delete default Apache homepage.
+RUN rm -f "$APACHE_SERVER_ROOT/htdocs/index.html"
 
 # The default httpd image runs as root but we want to run as the www-data user.
 # This user doesn't have permission for $APACHE_SERVER_ROOT/logs, which is
