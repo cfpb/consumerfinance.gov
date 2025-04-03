@@ -63,9 +63,9 @@ services:
       ACCESS_LOG: /proc/self/fd/1
       LIMIT_REQUEST_BODY: 0
       APACHE_PROCESS_COUNT: 4
-      CFGOV_APPLICATION_HOST: python
+      CFGOV_APPLICATION_PROXY: http://python
       # These aren't used in Docker but are used for our legacy EC2 servers
-      CFGOV_CURRENT: "/usr/local/apache2/"
+      CFGOV_CURRENT: '/usr/local/apache2/'
     volumes:
       - ./cfgov/apache/conf.d/:/usr/local/apache2/conf.d/
       - ./cfgov/apache/conf/:/usr/local/apache2/conf/
