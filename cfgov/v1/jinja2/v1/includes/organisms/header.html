@@ -103,9 +103,10 @@
             {% import 'v1/includes/molecules/global-search.html' as global_search with context %}
             {{ global_search.render( language ) }}
 
-            {% if mega_menu_content %}
-                {% from 'mega_menu/mega-menu.html' import mega_menu with context %}
-                {{ mega_menu ( mega_menu_content, language=language ) }}
+            {% from './mega-menu.html' import mega_menu %}
+            {% from './mega-menu-items.html' import menu_items_by_language %}
+            {% if language in menu_items_by_language %}
+              {{ mega_menu ( menu_items_by_language[language], language=language ) }}
             {% endif %}
         </div>
 
