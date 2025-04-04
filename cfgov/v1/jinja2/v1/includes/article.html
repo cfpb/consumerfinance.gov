@@ -53,6 +53,12 @@
         {% with value = item_intro_data -%}
             {% include 'v1/includes/organisms/item-introduction.html' %}
         {%- endwith %}
+
+        {% for block in page.header -%}
+            {% if block.block_type == 'notification' %}
+                {{ render_block.render(block, loop.index) }}
+            {% endif %}
+        {% endfor %}
     </header>
 
     <div>
