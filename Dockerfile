@@ -1,4 +1,4 @@
-FROM python:3.8-alpine as python
+FROM python:3.8-alpine AS python
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
@@ -14,22 +14,22 @@ RUN addgroup --gid ${USER_UID} ${USERNAME} && \
         ${USERNAME}
 
 # Ensure that the environment uses UTF-8 encoding by default
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 # Disable pip cache dir
-ENV PIP_NO_CACHE_DIR 1
+ENV PIP_NO_CACHE_DIR=1
 
 # Allow pip install as root.
-ENV PIP_ROOT_USER_ACTION ignore
+ENV PIP_ROOT_USER_ACTION=ignore
 
 # Stops Python default buffering to stdout, improving logging to the console
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # Set the APP_HOME, our working directory
-ENV APP_HOME /src/consumerfinance.gov
+ENV APP_HOME=/src/consumerfinance.gov
 
 # Add our top-level Python path to the PYTHONPATH
-ENV PYTHONPATH ${APP_HOME}/cfgov
+ENV PYTHONPATH=${APP_HOME}/cfgov
 
 # Set the working directory
 WORKDIR ${APP_HOME}
@@ -65,9 +65,9 @@ EXPOSE 8000
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:20-alpine as node-builder
+FROM node:20-alpine AS node-builder
 
-ENV APP_HOME /src/consumerfinance.gov
+ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
 
 # Install and update common OS packages and frontend dependencies
@@ -111,8 +111,8 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
 FROM python AS dev
 
 # Django Settings
-ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
-ENV ALLOWED_HOSTS '["*"]'
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.local
+ENV ALLOWED_HOSTS='["*"]'
 
 # Install dev/local Python requirements
 RUN pip install -r requirements/local.txt
@@ -142,10 +142,10 @@ CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 FROM python AS prod
 
 # Django Settings
-ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
-ENV STATIC_PATH ${APP_HOME}/cfgov/static/
-ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
-ENV ALLOWED_HOSTS '["*"]'
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
+ENV STATIC_PATH=${APP_HOME}/cfgov/static/
+ENV DJANGO_STATIC_ROOT=${STATIC_PATH}
+ENV ALLOWED_HOSTS='["*"]'
 
 # Copy the application code over
 COPY cfgov ./cfgov/
@@ -174,4 +174,4 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 USER $USERNAME
 
 # Run Gunicorn
-CMD gunicorn --reload cfgov.wsgi:application -b :8000
+CMD ["gunicorn", "--reload", "cfgov.wsgi:application", "-b", ":8000"]
