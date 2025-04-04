@@ -97,7 +97,6 @@ INSTALLED_APPS = (
     "hmda",
     "diversity_inclusion",
     "privacy",
-    "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
@@ -197,7 +196,6 @@ TEMPLATES = [
                 "core.jinja2tags.filters",
                 "core.jinja2tags.language",
                 "agreements.jinja2tags.agreements",
-                "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
                 "regulations3k.jinja2tags.regulations",
                 "v1.jinja2tags.datetimes_extension",
@@ -659,7 +657,6 @@ PARSE_LINKS_EXCLUSION_LIST = [
     (
         r"^/admin/(?!"
         r"pages/\d+/(edit/preview|view_draft)/|"
-        r"mega_menu/menu/preview/\w+/|"
         r"template_debug/"
         r")"
     ),
