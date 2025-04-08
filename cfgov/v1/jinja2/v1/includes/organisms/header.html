@@ -103,8 +103,11 @@
             {{ global_search.render( language ) }}
 
             {% if show_mega_menu %}
-              {% from './mega-menu.html' import mega_menu %}
-              {{ mega_menu ( language=language ) }}
+              {% if language == 'es' %}
+                {% include './mega-menu-es.html' %}
+              {% else %}
+                {% include './mega-menu-en.html' %}
+              {% endif %}
             {% endif %}
         </div>
 
