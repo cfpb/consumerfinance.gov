@@ -52,7 +52,7 @@ jobs:
             --network testing \
             -p 8002:80 \
             --name hello \
-            nginxdemos/hello
+            nginxdemos/hello:0.4
           docker run -d \
             --network testing \
             -p 8003:80 \
