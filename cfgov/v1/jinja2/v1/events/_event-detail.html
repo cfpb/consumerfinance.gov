@@ -5,9 +5,17 @@
         <h1 class="h1">
             {{ page.title | safe }}
         </h1>
+
+        {% if page.notification %}
+        <div class="block block--padded-top block--flush-top">
+            {{ page.notification }}
+        </div>
+        {% endif %}
+
         <p class="h4">
             {{ page.body | safe }}
         </p>
+
         <div class="t-event__details">
             {% if page.latest_revision_created_at %}
             <div class="modification-date">
