@@ -1,4 +1,5 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
+{% from './result.html' import render as render_result %}
 
 {% block title -%}
     {{ title }} | Consumer Financial Protection Bureau
@@ -12,16 +13,15 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+
 {% block content_main %}
+<style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)}</style>
+    <h1>{{ _('Search consumerfinance.gov') }}</h1>
     <div class="block block--flush-top">
       {%- include './search.html' -%}
-      {% for res in results %}
-      <div class="block block--sub">
-        <div>{{res.title.replace(" | Consumer Financial Protection Bureau", "")}}</div>
-        <a href="{{res.url}}">{{res.url}}</a>
-        <br/>
-      </div>
-      {% endfor %}
+      {% for res in results -%}
+        {{render_result(res)}}
+     {%- endfor %}
     </div>
 {% endblock content_main %}
 

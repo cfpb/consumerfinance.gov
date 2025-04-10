@@ -1,11 +1,5 @@
 <div class="o-search-bar">
-    <form method="get"
-          action="/search/"
-          >
-        <h2>
-            {{ _('Search consumerfinance.gov') }}
-        </h2>
-
+    <form method="get" action="/search/">
         <div>
             {% import 'v1/includes/organisms/search-input.html' as search_input %}
             {% set placeholder_value = _('Search for a page') %}

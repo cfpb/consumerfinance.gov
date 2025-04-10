@@ -1,5 +1,3 @@
-import re
-
 from django.conf import settings
 from django.template.defaultfilters import title
 from django.views.generic import TemplateView
@@ -13,7 +11,7 @@ API_ENDPOINT = f"https://api.gsa.gov/technology/searchgov/v2/results/i14y?affili
 
 
 class SearchView(TemplateView):
-    template_name = "searchgov/search_page.html"
+    template_name = "searchgov/index.html"
     heading = "Search for a page"
 
     def get(self, request):
@@ -25,8 +23,8 @@ class SearchView(TemplateView):
             response = requests.get(f"{API_ENDPOINT}{query}")
             results = response.json()["web"]["results"]
             for res in results:
-                # Strip non-printable characters and | CFPB suffix
-                res["title"] = re.sub(r"[^\x00-\x7f]", r"", res["title"])[:-39]
+                # Strip | CFPB suffix
+                res["title"] = res["title"][:-39]
 
         return self.render_to_response(
             {
