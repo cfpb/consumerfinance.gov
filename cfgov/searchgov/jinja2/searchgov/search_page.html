@@ -1,0 +1,30 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+
+{% block title -%}
+    {{ title }} | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Search consumerfinance.gov
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block content_main %}
+    <div class="block block--flush-top">
+      {%- include './search.html' -%}
+      {% for res in results %}
+      <div class="block block--sub">
+        <div>{{res.title.replace(" | Consumer Financial Protection Bureau", "")}}</div>
+        <a href="{{res.url}}">{{res.url}}</a>
+        <br/>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock content_main %}
+
+{% block content_sidebar %}
+    {%- include "./sidebar.html" -%}
+{% endblock content_sidebar %}

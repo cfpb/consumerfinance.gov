@@ -71,6 +71,7 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+    re_path(r"^search/", include("searchgov.urls")),
     re_path(
         r"^rural-or-underserved-tool/$",
         TemplateView.as_view(

@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     "wagtailflags",
     "ask_cfpb",
     "agreements",
+    "searchgov",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -327,6 +328,9 @@ WAGTAILSEARCH_BACKENDS = {
 # This is the name of the template that will render a footnote citaiton
 # inline in rich text.
 WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
+
+# Search api
+SEARCHGOV_API_KEY = os.environ.get("SEARCHGOV_API_KEY")
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
