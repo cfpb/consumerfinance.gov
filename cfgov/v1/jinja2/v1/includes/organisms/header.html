@@ -18,9 +18,8 @@
 
 {% macro render( show_mega_menu=true, language='en' ) %}
 
-{% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
 
-<header class="o-header{% if mega_menu_content %} o-header--mega-menu{% endif %}">
+<header class="o-header{% if show_mega_menu %} o-header--mega-menu{% endif %}">
 
     {% if flag_enabled('BETA_NOTICE') %}
     {% import 'v1/includes/molecules/banner.html' as banner %}
@@ -103,9 +102,9 @@
             {% import 'v1/includes/molecules/global-search.html' as global_search with context %}
             {{ global_search.render( language ) }}
 
-            {% if mega_menu_content %}
-                {% from 'mega_menu/mega-menu.html' import mega_menu with context %}
-                {{ mega_menu ( mega_menu_content, language=language ) }}
+            {% if show_mega_menu %}
+              {% from './mega-menu.html' import mega_menu %}
+              {{ mega_menu( language=language ) }}
             {% endif %}
         </div>
 
