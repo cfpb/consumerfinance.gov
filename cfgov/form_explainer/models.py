@@ -28,6 +28,7 @@ class FormExplainerPage(CFGOVPage):
         [
             ("hero", molecules.Hero()),
             ("text_introduction", molecules.TextIntroduction()),
+            ("notification", molecules.Notification()),
         ],
         blank=True,
     )
