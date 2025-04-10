@@ -26,6 +26,7 @@ class CollegeCostsPage(CFGOVPage):
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
+            ("notification", molecules.Notification()),
         ],
         blank=True,
     )
