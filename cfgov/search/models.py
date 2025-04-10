@@ -1,9 +1,6 @@
 from django.db import models
 
 
-AUTOCOMPLETE_MAX_CHARS = 75
-
-
 class Synonym(models.Model):
     synonym = models.CharField(
         max_length=500,

@@ -6,11 +6,13 @@ from core.templatetags.svg_icon import svg_icon
 from core.utils import (
     ASK_CFPB_LINKS,
     NON_CFPB_LINKS,
+    UNSAFE_CHARACTERS,
     add_link_markup,
     extract_answers_from_request,
     format_file_size,
     get_body_html,
     get_link_tags,
+    make_safe,
 )
 
 
@@ -18,6 +20,19 @@ class FakeRequest:
     # Quick way to simulate a request object with a POST attribute
     def __init__(self, params):
         self.POST = params
+
+
+class TestSearchMakeSafe(SimpleTestCase):
+    def test_make_safe(self):
+        term = "What is a mortgage"
+        unsafe_term = term + "".join(UNSAFE_CHARACTERS)
+        self.assertEqual(term, make_safe(unsafe_term))
+
+    def test_make_safe_max_length(self):
+        term = """We're the Consumer Financial Protection Bureau (CFPB), 
+            a U.S. government agency that makes sure banks, 
+            lenders, and other financial companies treat you fairly."""
+        self.assertEqual(75, len(make_safe(term)))
 
 
 class ExtractAnswersTest(SimpleTestCase):
