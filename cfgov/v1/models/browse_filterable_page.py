@@ -33,6 +33,7 @@ class BrowseFilterablePage(AbstractFilterablePage, AbstractBrowsePage):
         [
             ("text_introduction", molecules.TextIntroduction()),
             ("featured_content", organisms.FeaturedContent()),
+            ("notification", molecules.Notification()),
         ],
     )
     content = StreamField(
