@@ -28,6 +28,7 @@ class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
     header = StreamField(
         [
             ("hero", molecules.Hero()),
+            ("notification", molecules.Notification()),
         ],
         blank=True,
     )
