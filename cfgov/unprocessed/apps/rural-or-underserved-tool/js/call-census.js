@@ -1,6 +1,6 @@
 import jsonpPModule from 'jsonp-p';
 const jsonpP = jsonpPModule.default;
-import { addEl, createEl, getEl, removeClass } from './dom-tools.js';
+import { addEl, createEl, removeClass } from './dom-tools.js';
 import { incrementTotal } from './count.js';
 
 /**
@@ -10,11 +10,12 @@ import { incrementTotal } from './count.js';
  * @param {Function} cb - Callback to call.
  */
 function callCensus(address, ruralCounties, cb) {
-  let url =
-    'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?';
-  url += 'address=' + address;
-  url += '&benchmark=4';
-  url += '&format=jsonp';
+  const url =
+    'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?' +
+    'address=' +
+    address +
+    '&benchmark=4' +
+    '&format=jsonp';
 
   jsonpP(url)
     .promise.then(function (data) {
@@ -22,9 +23,9 @@ function callCensus(address, ruralCounties, cb) {
     })
     .catch(function (error) {
       if (error) {
-        const addressElement = createEl('<li>' + address + '</li>');
+        const addressElement = createEl(`<li>${address}</li>`);
 
-        addEl(getEl('#process-error-desc'), addressElement);
+        addEl(document.querySelector('#process-error-desc'), addressElement);
         removeClass('#process-error', 'u-hidden');
 
         incrementTotal();

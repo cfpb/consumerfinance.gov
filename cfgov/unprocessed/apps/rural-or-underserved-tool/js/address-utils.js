@@ -1,4 +1,4 @@
-import { addEl, getEl, getEls, removeClass } from './dom-tools.js';
+import { addEl, removeClass } from './dom-tools.js';
 
 import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
 
@@ -65,16 +65,16 @@ function isValid(row) {
  * @param {object} result - Address data.
  */
 function render(result) {
-  let rowCount = getEls('#' + result.type + ' tbody tr').length;
+  let rowCount = document.querySelectorAll(`#${result.type} tbody tr`).length;
   if (result.type === 'rural' || result.type === 'notRural') {
-    rowCount = getEls('#' + result.type + ' tbody tr').length / 2;
+    rowCount = document.querySelectorAll(`#${result.type} tbody tr`).length / 2;
   }
 
   let hideRow = false;
   if (rowCount >= 5) {
     hideRow = true;
-    removeClass('#' + result.type + 'More', 'u-hidden');
-    removeClass('#' + result.type + 'All', 'u-hidden');
+    removeClass(`#${result.type}More`, 'u-hidden');
+    removeClass(`#${result.type}All`, 'u-hidden');
   }
 
   let rural;
@@ -117,8 +117,8 @@ function render(result) {
       </tr>`;
   }
 
-  removeClass('#' + result.type, 'u-hidden');
-  addEl(getEl('#' + result.type + ' tbody'), rowHTML);
+  removeClass(`#${result.type}`, 'u-hidden');
+  addEl(document.querySelector(`#${result.type} tbody`), rowHTML);
 }
 
 /**

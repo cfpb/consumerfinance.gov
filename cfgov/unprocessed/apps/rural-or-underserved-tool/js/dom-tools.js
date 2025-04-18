@@ -46,7 +46,7 @@ function applyAll(elements, applyFn) {
   if (elements instanceof HTMLElement) {
     elements = [elements];
   } else if (typeof elements === 'string') {
-    elements = getEls(elements);
+    elements = document.querySelectorAll(elements);
   }
 
   return [].slice.call(elements || []).forEach(applyFn);
@@ -70,22 +70,24 @@ function bindEvents(elements, events, callback) {
 }
 
 /**
- * @param {HTMLElement|string} parent - An HTML element node or CSS selector.
+ * @param {HTMLElement} parent - An HTML element node.
  * @param {HTMLElement|string} child - An HTML element node or snippet.
+ * @returns {HTMLElement} - The appended element
  */
 function addEl(parent, child) {
   return fastDom.mutate(function () {
     const el = createEl(child);
-    return getEl(parent).appendChild(el);
+    return parent.appendChild(el);
   });
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement} element - An HTMLElement.
  * @param {string} attributeName - A value to add to a data- attribute.
+ * @returns {string} - The value of the selected data attribute
  */
-function getElData(selector, attributeName) {
-  return getEl(selector).getAttribute('data-' + attributeName);
+function getElData(element, attributeName) {
+  return element.getAttribute(`data-${attributeName}`);
 }
 
 /**
@@ -210,30 +212,6 @@ function _filter(element, propName, filter) {
 }
 
 /**
- * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
- * @returns {HTMLElement} An HTML node returned by the passed selector,
- *  or the selector passed into this method.
- */
-function getEl(selector) {
-  if (_isEl(selector)) {
-    return selector;
-  }
-  return document.querySelector(selector);
-}
-
-/**
- * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
- * @returns {NodeList} A list of HTML nodes returned by the passed selector,
- *  or the selector passed into this method.
- */
-function getEls(selector) {
-  if (_isEl(selector)) {
-    return selector;
-  }
-  return document.querySelectorAll(selector);
-}
-
-/**
  * @param {HTMLElement} element - An element.
  * @param {string} filterNode - The string to filter by.
  */
@@ -274,8 +252,6 @@ export {
   addClass,
   hasClass,
   removeClass,
-  getEl,
-  getEls,
   getParentEls,
   getNextEls,
   nextFrame,

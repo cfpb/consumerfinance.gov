@@ -1,10 +1,4 @@
-import {
-  addClass,
-  changeElHTML,
-  changeElText,
-  getEl,
-  getEls,
-} from './dom-tools.js';
+import { addClass, changeElHTML, changeElText } from './dom-tools.js';
 
 let types = {};
 let totalCount = 0;
@@ -30,8 +24,11 @@ function updateAddressCount(number) {
  * Add one to the total address count.
  */
 function incrementTotal() {
-  const totalCountElement = getEl('#totalCnt');
-  const addressCount = parseInt(getEl('#addressCount').textContent, 10);
+  const totalCountElement = document.querySelector('#totalCnt');
+  const addressCount = parseInt(
+    document.querySelector('#addressCount').textContent,
+    10,
+  );
 
   // add one to the total
   totalCount++;
@@ -52,7 +49,7 @@ function incrementTotal() {
 function updateCount(type) {
   let noun = 'addresses';
   let verb = 'are';
-  const countElements = getEls('.' + type + '-cnt');
+  const countElements = document.querySelectorAll('.' + type + '-cnt');
   // add one to correct type
   let typeCount = types[type] || 0;
   types[type] = ++typeCount;

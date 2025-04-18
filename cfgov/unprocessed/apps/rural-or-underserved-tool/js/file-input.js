@@ -1,10 +1,10 @@
-import { changeElHTML, addClass, removeClass, getEl } from './dom-tools.js';
+import { changeElHTML, addClass, removeClass } from './dom-tools.js';
 
 /**
  * Reset the file input value.
  */
 function resetFileName() {
-  getEl('#file-name').value = 'No file chosen';
+  document.querySelector('#file-name').value = 'No file chosen';
 }
 
 /**
@@ -12,7 +12,7 @@ function resetFileName() {
  * @param {string} fileName - A filename.
  */
 function setFileName(fileName) {
-  getEl('#file-name').value = fileName;
+  document.querySelector('#file-name').value = fileName;
 }
 
 /**
