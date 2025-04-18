@@ -4,7 +4,6 @@ import {
   removeEl,
   addClass,
   removeClass,
-  getEl,
 } from './dom-tools.js';
 
 let count = 1;
@@ -38,13 +37,15 @@ function add() {
 
   const previous = count - 1;
 
-  if (getEl('#address' + previous).value === '') {
+  if (document.querySelector('#address' + previous).value === '') {
     addClass('#address' + previous, 'error');
   } else {
     removeClass('#address' + previous, 'error');
   }
 
-  const addressElementContainer = getEl('#address1').cloneNode(true);
+  const addressElementContainer = document
+    .querySelector('#address1')
+    .cloneNode(true);
   addressElementContainer.setAttribute('id', 'address' + count);
   const addressElement = addressElementContainer.querySelector('input');
   addressElement.setAttribute('name', 'address' + count);
