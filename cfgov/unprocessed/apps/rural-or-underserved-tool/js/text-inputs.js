@@ -50,7 +50,7 @@ function add() {
   const addressElement = addressElementContainer.querySelector('input');
   addressElement.setAttribute('name', 'address' + count);
   addressElement.value = '';
-  addEl('.input-container', addressElementContainer);
+  addEl(document.querySelector('.input-container'), addressElementContainer);
   addressElement.focus();
 }
 

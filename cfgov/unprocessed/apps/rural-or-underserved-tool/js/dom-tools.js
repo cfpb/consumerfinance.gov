@@ -70,22 +70,24 @@ function bindEvents(elements, events, callback) {
 }
 
 /**
- * @param {HTMLElement|string} parent - An HTML element node or CSS selector.
+ * @param {HTMLElement} parent - An HTML element node.
  * @param {HTMLElement|string} child - An HTML element node or snippet.
+ * @returns {HTMLElement} - The appended element
  */
 function addEl(parent, child) {
   return fastDom.mutate(function () {
     const el = createEl(child);
-    return document.querySelector(parent).appendChild(el);
+    return parent.appendChild(el);
   });
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement} element - An HTMLElement.
  * @param {string} attributeName - A value to add to a data- attribute.
+ * @returns {string} - The value of the selected data attribute
  */
-function getElData(selector, attributeName) {
-  return document.querySelector(selector).getAttribute('data-' + attributeName);
+function getElData(element, attributeName) {
+  return element.getAttribute(`data-${attributeName}`);
 }
 
 /**
