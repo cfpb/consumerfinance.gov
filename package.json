@@ -19,7 +19,7 @@
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.4",
     "@cfpb/cfpb-analytics": "0.3.2",
-    "@cfpb/cfpb-design-system": "3.7.0",
+    "@cfpb/cfpb-design-system": "3.7.1",
     "@csstools/postcss-sass": "5.1.1",
     "@csstools/sass-import-resolve": "1.0.0",
     "autoprefixer": "10.4.21",
@@ -36,12 +36,12 @@
   },
   "devDependencies": {
     "@cypress/skip-test": "2.6.1",
-    "@eslint/js": "9.24.0",
+    "@eslint/js": "9.25.0",
     "axe-core": "4.10.3",
     "cypress": "13.17.0",
     "cypress-axe": "1.5.0",
     "cypress-fail-fast": "7.1.1",
-    "eslint": "9.24.0",
+    "eslint": "9.25.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-cypress": "4.2.1",
     "eslint-plugin-import": "2.31.0",
