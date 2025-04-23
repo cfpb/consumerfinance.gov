@@ -1,18 +1,7 @@
 import { changeElHTML, addClass, removeClass } from './dom-tools.js';
 
-/**
- * Reset the file input value.
- */
 function resetFileName() {
-  document.querySelector('#file-name').value = 'No file chosen';
-}
-
-/**
- * Set a filename for a file input.
- * @param {string} fileName - A filename.
- */
-function setFileName(fileName) {
-  document.querySelector('#file-name').value = fileName;
+  addClass('#file-list-wrapper', 'u-hidden');
 }
 
 /**
@@ -55,11 +44,4 @@ function isCSV(fileName) {
   return fileName.slice(fileName.lastIndexOf('.') + 1) === 'csv';
 }
 
-export {
-  resetFileName,
-  setFileName,
-  resetError,
-  setError,
-  getUploadName,
-  isCSV,
-};
+export { resetFileName, resetError, setError, getUploadName, isCSV };
