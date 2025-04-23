@@ -105,7 +105,7 @@
                             <input id="hud-hca-api-query"
                                     type="text"
                                     name="zipcode"
-                                    class="a-text-input a-text-input--full"
+                                    class="a-text-input a-text-input--full{% if zipcode and error_message %} a-text-input--error{% endif %}"
                                     value="{% if zipcode %}{{ zipcode }}{% endif %}"
                                     placeholder="Please enter a five-digit ZIP code">
                         </div>
