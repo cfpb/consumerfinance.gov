@@ -1,7 +1,7 @@
 FROM httpd:2.4-alpine
 
 # Define default Apache ENV variables.
-ENV APACHE_PORT="80"
+ENV APACHE_PORT="8080"
 ENV APACHE_USER="www-data"
 ENV APACHE_GROUP="www-data"
 ENV APACHE_SERVER_ROOT="/usr/local/apache2"
@@ -55,7 +55,7 @@ RUN CURRENT_LIBXML2=$( \
         apk upgrade --no-cache libxml2; \
     fi
 
-EXPOSE 80
+EXPOSE 8080
 
 USER www-data
 
