@@ -84,30 +84,22 @@
                                 Search by ZIP code:
                             </label>
 
-                            {% if zipcode and error_message %}
-                            <div class="u-mb15">
-                                <div class="m-notification
-                                            m-notification--error
-                                            m-notification--visible">
-                                    {{ svg_icon('warning-round') }}
-                                    <div class="m-notification__content" role="alert">
-                                        <div class="m-notification__message">
-                                            {{ error_message }}
-                                        </div>
-                                        <div class="m-notification__explanation">
-                                            {{ error_help }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-
                             <input id="hud-hca-api-query"
                                     type="text"
                                     name="zipcode"
                                     class="a-text-input a-text-input--full{% if zipcode and error_message %} a-text-input--error{% endif %}"
                                     value="{% if zipcode %}{{ zipcode }}{% endif %}"
                                     placeholder="Please enter a five-digit ZIP code">
+
+                            {% if zipcode and error_message %}
+                            <div class="a-form-alert a-form-alert--error" role="alert">
+                                {{ svg_icon('error-round') }}
+                                <span class="a-form-alert__text">
+                                    {{ error_message }}
+                                    {{ error_help }}
+                                </span>
+                            </div>
+                            {% endif %}
                         </div>
 
                         <p>
