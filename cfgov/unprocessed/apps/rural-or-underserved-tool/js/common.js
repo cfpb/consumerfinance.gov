@@ -156,7 +156,7 @@ fileChangeDom.addEventListener('change', function () {
   const fileValue = fileElement.value;
 
   textInputs.reset();
-  document.querySelector('#file-name').innerHTML = getUploadName(fileValue);
+  document.querySelector('#file-name').innerText = getUploadName(fileValue);
   removeClass('#file-list-wrapper', 'u-hidden');
 
   resetError();
