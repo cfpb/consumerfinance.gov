@@ -17,7 +17,13 @@ import {
   removeClass,
   getParentEls,
 } from './dom-tools.js';
-import { resetError, setError, getUploadName, isCSV } from './file-input.js';
+import {
+  resetFileName,
+  resetError,
+  setError,
+  getUploadName,
+  isCSV,
+} from './file-input.js';
 import Papaparse from 'papaparse';
 import getRuralCounties from './get-rural-counties.js';
 import * as textInputs from './text-inputs.js';
@@ -150,7 +156,8 @@ fileChangeDom.addEventListener('change', function () {
   const fileValue = fileElement.value;
 
   textInputs.reset();
-  document.querySelector('#file-name').value = getUploadName(fileValue);
+  document.querySelector('#file-name').innerText = getUploadName(fileValue);
+  removeClass('#file-list-wrapper', 'u-hidden');
 
   resetError();
 
@@ -209,6 +216,8 @@ fileChangeDom.addEventListener('change', function () {
         ' For more information about CSV files, view our' +
         ' Frequently Asked Questions below.',
     );
+
+    resetFileName();
   }
 });
 
@@ -218,7 +227,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   evt.preventDefault();
 
   window.location.hash = 'rural-or-underserved';
-  let fileElement = document.querySelector('#file-name');
+  let fileElement = document.querySelector('#file');
   const fileValue = fileElement.value;
   if (
     fileValue === '' ||
