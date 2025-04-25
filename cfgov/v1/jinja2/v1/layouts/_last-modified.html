@@ -2,7 +2,8 @@
 
 {% if page and page.last_published_at %}
 <div class="block">
-    <p><strong>Page last updated {{ time.render( page.last_published_at, { 'date': true, 'time':true, 'timezone':true }, text_format=True ) }}.</strong></p>
+    <p><hr></p>
+    <p>Page last modified {{ time.render( page.last_published_at, { 'date': true, 'time':true, 'timezone':true }, text_format=True ) }}</p>
     <p><a class="a-link a-link--jump" href="https://wayback.archive-it.org/23481/*/https://www.consumerfinance.gov{{ request.path }}">View older versions of this page at our public archive.</a></p>
  </div>
  {% endif %}
