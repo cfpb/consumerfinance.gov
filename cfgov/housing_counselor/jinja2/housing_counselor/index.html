@@ -75,28 +75,47 @@
                 loaded via JavaScript.
             #}
             <section id="hud_search_container"
-                        class="no-js
-                            hud-search-container">
+                     class="no-js hud-search-container">
                 <div class="hud-search-container__text">
                     <form class="o-form" action="#hud_search_container">
                         <div class="m-form-field u-mb15">
+
+                            {% if zipcode and failed_fetch_error_message %}
+                            <div class="u-mb15">
+                                <div class="m-notification
+                                            m-notification--error
+                                            m-notification--visible">
+                                    {{ svg_icon('warning-round') }}
+                                    <div class="m-notification__content" role="alert">
+                                        <div class="m-notification__message">
+                                            {{ failed_fetch_error_message }}
+                                        </div>
+                                        <div class="m-notification__explanation">
+                                            {{ failed_fetch_error_explanation }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
                             <label class="a-label a-label--heading" for="hud-hca-api-query">
-                                Search by ZIP code:
+                                Search by ZIP code
+                                <small class="a-label__helper a-label__helper--block">Please enter a valid five-digit ZIP code</small>
                             </label>
 
                             <input id="hud-hca-api-query"
                                     type="text"
                                     name="zipcode"
-                                    class="a-text-input a-text-input--full{% if zipcode and error_message %} a-text-input--error{% endif %}"
+                                    class="a-text-input a-text-input--full{% if zipcode and invalid_zip_error_message %} a-text-input--error{% endif %}"
                                     value="{% if zipcode %}{{ zipcode }}{% endif %}"
-                                    placeholder="Please enter a five-digit ZIP code">
+                                    placeholder="_ _ _ _ _"
+                                    maxlength="5">
 
-                            {% if zipcode and error_message %}
+                            {% if zipcode and invalid_zip_error_message %}
                             <div class="a-form-alert a-form-alert--error" role="alert">
                                 {{ svg_icon('error-round') }}
                                 <span class="a-form-alert__text">
-                                    {{ error_message }}
-                                    {{ error_help }}
+                                    {{ invalid_zip_error_message }}
                                 </span>
                             </div>
                             {% endif %}

@@ -57,13 +57,14 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     template_name = "housing_counselor/index.html"
 
     invalid_zip_msg = {
-        "error_message": "Sorry, you have entered an invalid ZIP code.",
-        "error_help": "Please enter a valid five-digit ZIP code below.",
+        "invalid_zip_error_message": "Please enter a valid five-digit ZIP  \
+            code.",
     }
 
     failed_fetch_msg = {
-        "error_message": "Sorry, there was an error retrieving your results.",
-        "error_help": "Please try again later.",
+        "failed_fetch_error_message": "Sorry, there was an error retrieving \
+            your results.",
+        "failed_fetch_error_explanation": "Please try again later.",
     }
 
     def get_context_data(self, **kwargs):
