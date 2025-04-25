@@ -57,7 +57,7 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     template_name = "housing_counselor/index.html"
 
     invalid_zip_msg = {
-        "invalid_zip_error_message": "Please enter a valid five-digit ZIP  \
+        "invalid_zip_error_message": "You must enter a valid 5-digit ZIP \
             code.",
     }
 

@@ -15,7 +15,7 @@
 
 // Tablet and above.
 @include respond-to-min($bp-sm-min) {
-  #hud-hca-api-query {
+  .hud-search-container__text {
     max-width: math.div(480px, $base-font-size-px) + em;
   }
 }
