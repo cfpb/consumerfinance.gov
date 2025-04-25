@@ -15,6 +15,11 @@
    show_value_for: (Optional) Object of fields to show.
                    Default is true for 'date', 'time', and 'timezone'.
 
+   text_format: (Optional) Boolean that, if true, changes month abbreviations
+                from, for example, "NOV" to "Nov." and does not include leading
+                zeros in front of days.
+                Default is false.
+
    ========================================================================== #}
 
 {% macro render(datetime,

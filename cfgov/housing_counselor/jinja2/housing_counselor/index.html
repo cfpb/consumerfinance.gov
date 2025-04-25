@@ -75,63 +75,71 @@
                 loaded via JavaScript.
             #}
             <section id="hud_search_container"
-                        class="no-js
-                            hud-search-container">
+                     class="no-js hud-search-container">
                 <div class="hud-search-container__text">
                     <form class="o-form" action="#hud_search_container">
-                        <div class="m-form-field-with-button">
+                        <div class="m-form-field u-mb15">
 
-                            <div class="m-form-field">
-                                <label class="a-label a-label--heading" for="hud-hca-api-query">
-                                    Search by ZIP code:
-                                </label>
-
-                                {% if zipcode and error_message %}
-                                <div class="u-mb15">
-                                    <div class="m-notification
-                                                m-notification--error
-                                                m-notification--visible">
-                                        {{ svg_icon('warning-round') }}
-                                        <div class="m-notification__content" role="alert">
-                                            <div class="m-notification__message">
-                                                {{ error_message }}
-                                            </div>
-                                            <div class="m-notification__explanation">
-                                                {{ error_help }}
-                                            </div>
+                            {% if zipcode and failed_fetch_error_message %}
+                            <div class="u-mb15">
+                                <div class="m-notification
+                                            m-notification--error
+                                            m-notification--visible">
+                                    {{ svg_icon('warning-round') }}
+                                    <div class="m-notification__content" role="alert">
+                                        <div class="m-notification__message">
+                                            {{ failed_fetch_error_message }}
+                                        </div>
+                                        <div class="m-notification__explanation">
+                                            {{ failed_fetch_error_explanation }}
                                         </div>
                                     </div>
                                 </div>
-                                {% endif %}
-
-                                <input id="hud-hca-api-query"
-                                        type="text"
-                                        name="zipcode"
-                                        class="a-text-input a-text-input--full"
-                                        value="{% if zipcode %}{{ zipcode }}{% endif %}"
-                                        placeholder="Please enter a five-digit ZIP code">
                             </div>
+                            {% endif %}
 
+                            <label class="a-label a-label--heading" for="hud-hca-api-query">
+                                Search by ZIP code
+                                <small class="a-label__helper a-label__helper--block">Please enter a valid five-digit ZIP code</small>
+                            </label>
+
+                            <input id="hud-hca-api-query"
+                                    type="text"
+                                    name="zipcode"
+                                    class="a-text-input a-text-input--full{% if zipcode and invalid_zip_error_message %} a-text-input--error{% endif %}"
+                                    value="{% if zipcode %}{{ zipcode }}{% endif %}"
+                                    placeholder="_ _ _ _ _"
+                                    maxlength="5">
+
+                            {% if zipcode and invalid_zip_error_message %}
+                            <div class="a-form-alert a-form-alert--error" role="alert">
+                                {{ svg_icon('error-round') }}
+                                <span class="a-form-alert__text">
+                                    {{ invalid_zip_error_message }}
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <p>
                             <button class="a-btn a-btn--full-on-xs"
                                     type="submit"
                                     data-cy="btn-fahc-submit">
                                 Find a counselor
                             </button>
-                            <div class="m-form-field-with-button__info">
-                                <p>
-                                    This tool is powered by
-                                    <a class="a-link"
-                                        href="https://data.hud.gov/housing_counseling.html">
-                                        <span class="a-link__text">HUD's</span>
-                                        {{ svg_icon('external-link') }}</a>
-                                    official list of housing counselors.
-                                </p>
-                                <p>
-                                    If you notice errors in the housing counselor data,
-                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-                                </p>
-                            </div>
-                        </div>
+                        </p>
+                        <p>
+                            This tool is powered by
+                            <a class="a-link"
+                                href="https://data.hud.gov/housing_counseling.html">
+                                <span class="a-link__text">HUD's</span>
+                                {{ svg_icon('external-link') }}</a>
+                            official list of housing counselors.
+                        </p>
+                        <p>
+                            If you notice errors in the housing counselor data,
+                            contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                        </p>
                     </form>
 
                     {% if zipcode and zipcode_valid %}

@@ -628,8 +628,6 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     "AB_TESTING": [],
-    # Ping google on page publication in production only
-    "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.

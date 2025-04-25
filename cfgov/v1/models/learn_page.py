@@ -157,6 +157,13 @@ class AgendaItemBlock(blocks.StructBlock):
 class EventPage(AbstractFilterPage):
     # General content fields
     body = RichTextField("Subheading", blank=True)
+    notification = StreamField(
+        [
+            ("notification", molecules.Notification()),
+        ],
+        blank=True,
+        max_num=1,
+    )
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
     future_body = RichTextField(blank=True)
@@ -256,6 +263,7 @@ class EventPage(AbstractFilterPage):
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("body"),
+        FieldPanel("notification"),
         FieldRowPanel(
             [
                 FieldPanel("start_dt", classname="col6"),

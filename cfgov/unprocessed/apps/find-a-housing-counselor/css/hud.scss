@@ -13,8 +13,11 @@
   height: 320px;
 }
 
-#hud-hca-api-query {
-  max-width: math.div(480px, $base-font-size-px) + em;
+// Tablet and above.
+@include respond-to-min($bp-sm-min) {
+  #hud-hca-api-query {
+    max-width: math.div(480px, $base-font-size-px) + em;
+  }
 }
 
 // Desktop and above.
