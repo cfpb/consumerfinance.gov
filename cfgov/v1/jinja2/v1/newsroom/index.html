@@ -31,39 +31,37 @@
     <div class="block">
         {% include "v1/includes/organisms/filterable-list-results.html" %}
     </div>
-
-    <aside class="o-prefooter">
-        {% if page.sidefoot %}
-            {{ streamfield_sidefoot.render(page.sidefoot) }}
-        {% endif %}
-        <div class="block
-                    block--bg
-                    block--flush-sides
-                    block--flush-bottom
-                    block--border-top">
-            <div class="content-l">
-                <section class="block
-                                block--flush-top
-                                content-l__col
-                                content-l__col-1-2">
-                    {% import 'v1/includes/molecules/related-content.html' as related_links %}
-                    {{- related_links.render({
-                        'heading': 'Related links',
-                        'links': [
-                        {
-                            'url': '/about-us/blog/',
-                            'text': 'The blog'
-                        },
-                        {
-                            'url': '/about-us/the-bureau/',
-                            'text': 'About us'
-                        }
-                    ]}) -}}
-                </section>
-                <section class="block content-l__col content-l__col-1-2">
-                    {% include 'v1/includes/templates/upcoming-events.html' %}
-                </section>
-            </div>
-        </div>
-    </aside>
 {% endblock %}
+
+{% block prefooter_more_content %}
+    <div class="block
+                block--bg
+                block--flush-sides
+                block--flush-bottom
+                block--border-top">
+        <div class="content-l">
+            <section class="block
+                            block--flush-top
+                            content-l__col
+                            content-l__col-1-2">
+                {% import 'v1/includes/molecules/related-content.html' as related_links %}
+                {{- related_links.render({
+                    'heading': 'Related links',
+                    'links': [
+                    {
+                        'url': '/about-us/blog/',
+                        'text': 'The blog'
+                    },
+                    {
+                        'url': '/about-us/the-bureau/',
+                        'text': 'About us'
+                    }
+                ]}) -}}
+            </section>
+            <section class="block content-l__col content-l__col-1-2">
+                {% include 'v1/includes/templates/upcoming-events.html' %}
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
