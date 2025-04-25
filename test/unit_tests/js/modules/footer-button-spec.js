@@ -6,7 +6,7 @@ let footerBtnDom;
 
 const HTML_SNIPPET = `
 <div class="skip-nav">
-    <a class="skip-nav__link" href="#main">
+    <a class="a-btn skip-nav__link" href="#main">
         Skip to main content
     </a>
 </div>
