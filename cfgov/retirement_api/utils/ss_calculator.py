@@ -38,6 +38,10 @@ from .ss_utilities import (
 )
 
 
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+)
 TIMEOUT_SECONDS = 20
 LOGGER = logging.getLogger(__name__)
 
@@ -514,7 +518,10 @@ def get_retire_data(params, language):
             return results
     try:
         req = requests.post(
-            RESULT_URL, data=results["data"]["params"], timeout=TIMEOUT_SECONDS
+            RESULT_URL,
+            data=results["data"]["params"],
+            timeout=TIMEOUT_SECONDS,
+            headers={"User-Agent": USER_AGENT},
         )
     except requests.exceptions.ConnectionError as e:
         results["error"] = f"connection error at SSA's website: {e}"
