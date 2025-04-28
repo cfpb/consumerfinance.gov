@@ -111,10 +111,12 @@ class UpdateSsStatsTests(TestCase):
             for key in sample_json_results[age]:
                 self.assertEqual(sample_json_results[age][key], data[age][key])
 
-    def test_make_soup(self):
-        """Given a url, make a request and return beautifulsoup for parsing."""
-        url = "https://www.ssa.gov/OACT/ProgData/nra.html"
-        soup = make_soup(url)
+    @mock.patch("requests.get")
+    def test_make_soup(self, mock_requests):
+        """Make a request and return a beautifulsoup instance wrapping it."""
+        mock_requests.return_value.reason = "OK"
+        mock_requests.return_value.text = "<h1>Social Security</h1>"
+        soup = make_soup("")
         self.assertTrue("Social Security" in soup.find("h1").text)
 
     @mock.patch("requests.get")
