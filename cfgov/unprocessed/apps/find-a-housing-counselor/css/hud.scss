@@ -16,7 +16,7 @@
 // Tablet and above.
 @include respond-to-min($bp-sm-min) {
   .hud-search-container__text {
-    max-width: math.div(480px, $base-font-size-px) + em;
+    max-width: 41.875rem;
   }
 }
 
@@ -29,8 +29,6 @@
   .hud-search-container__text {
     flex: 1;
 
-    // Magic number of 270px below keeps full input placeholder in view.
-    min-width: math.div(270px, $base-font-size-px) + em;
     padding: math.div($grid-gutter-width, $base-font-size-px) + em;
   }
 
