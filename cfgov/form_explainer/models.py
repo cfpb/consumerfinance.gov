@@ -47,7 +47,6 @@ class FormExplainerPage(CFGOVPage):
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
-            ObjectList(CFGOVPage.sidefoot_panels, heading="Sidebar"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
