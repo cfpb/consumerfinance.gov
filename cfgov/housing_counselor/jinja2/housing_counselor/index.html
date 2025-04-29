@@ -63,11 +63,9 @@
 
             <h2 class="h3">Search by ZIP code</h2>
             <p>
-                Using the search box below, you can find one
-                near you. <strong>Not every housing
-                counselor offers all services, so please
-                look at the list of services offered by
-                each agency.</strong>
+                Use the search box below to find a housing counselor near you.
+                Not every housing counselor offers all services,
+                so be sure to check the list of services offered by each agency.
             </p>
         </div>
 
@@ -84,7 +82,7 @@
 
                             <label class="a-label a-label--heading" for="hud-hca-api-query">
                                 ZIP code
-                                <small class="a-label__helper a-label__helper--block">Please enter a valid five-digit ZIP code</small>
+                                <small class="a-label__helper a-label__helper--block">Enter a valid 5-digit ZIP code.</small>
                             </label>
 
                             {% import 'v1/includes/organisms/search-input.html' as search_input %}
@@ -97,7 +95,8 @@
                                 "has_autocomplete": autocomplete,
                                 "placeholder": '',
                                 "submit_aria_label": 'Search by ZIP Code',
-                                "max_length": 5
+                                "max_length": 5,
+                                "has_error": True if zipcode and invalid_zip_error_message else False,
                             }) }}
 
                             {% if zipcode and invalid_zip_error_message %}
@@ -109,20 +108,47 @@
                             </div>
                             {% endif %}
                         </div>
-
                     </form>
 
-                    {% if zipcode and zipcode_valid %}
-                    <div class="skip-nav">
-                        <a class="a-btn
-                                  skip-nav__link
-                                  skip-nav__link--flush-left"
-                            href="#hud_results-list_container">
-                            Skip to results
-                        </a>
+                    {% if zipcode and failed_fetch_error_message %}
+                    <div class="u-mb20">
+                        <div class="m-notification
+                                    m-notification--error
+                                    m-notification--visible">
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification__content" role="alert">
+                                <div class="m-notification__message">
+                                    {{ failed_fetch_error_message }}
+                                </div>
+                                <div class="m-notification__explanation">
+                                    {{ failed_fetch_error_explanation }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {% endif %}
 
+                    <p>
+                        This tool is powered by
+                        <a class="a-link"
+                            href="https://data.hud.gov/housing_counseling.html">
+                            <span class="a-link__text">HUD's</span>
+                            {{ svg_icon('external-link') }}</a>
+                        official list of housing counselors.
+                        If you notice errors in the housing counselor data,
+                        contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                    </p>
+
+                    {% if zipcode and zipcode_valid %}
+                        <div class="skip-nav">
+                            <a class="a-btn
+                                    skip-nav__link
+                                    skip-nav__link--flush-left"
+                                href="#hud_results-list_container">
+                                Skip to results
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
                 {% if zipcode and zipcode_valid %}
                     <div class="hud-search-container__map">
@@ -136,24 +162,6 @@
                 {% endif %}
             </section>
         </div>
-
-        {% if zipcode and failed_fetch_error_message %}
-        <div class="u-mb20">
-            <div class="m-notification
-                        m-notification--error
-                        m-notification--visible">
-                {{ svg_icon('warning-round') }}
-                <div class="m-notification__content" role="alert">
-                    <div class="m-notification__message">
-                        {{ failed_fetch_error_message }}
-                    </div>
-                    <div class="m-notification__explanation">
-                        {{ failed_fetch_error_explanation }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
 
         {% if zipcode and zipcode_valid %}
         <div class="block" id="hud_results-list_container">
@@ -293,17 +301,6 @@
             </table>
         </div>
         {% endif %}
-
-    <p>
-        This tool is powered by
-        <a class="a-link"
-            href="https://data.hud.gov/housing_counseling.html">
-            <span class="a-link__text">HUD's</span>
-            {{ svg_icon('external-link') }}</a>
-        official list of housing counselors.<br>
-        If you notice errors in the housing counselor data,
-        contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-    </p>
 
     <div class="block
                 u-screen-only">

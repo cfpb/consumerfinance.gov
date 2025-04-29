@@ -62,8 +62,8 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     }
 
     failed_fetch_msg = {
-        "failed_fetch_error_message": "Sorry, there was an error retrieving \
-            your results.",
+        "failed_fetch_error_message": "There was a problem retrieving \
+            your results",
         "failed_fetch_error_explanation": "Please try again later.",
     }
 
