@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.template.defaultfilters import title
-from django.views.generic import TemplateView
 
 import requests
+
+from core.views import TranslatedTemplateView
 
 from .forms import SearchForm
 
@@ -10,11 +11,12 @@ from .forms import SearchForm
 API_ENDPOINT = f"https://api.gsa.gov/technology/searchgov/v2/results/i14y?affiliate=cfpb&access_key={settings.SEARCHGOV_API_KEY}&query="
 
 
-class SearchView(TemplateView):
+class SearchView(TranslatedTemplateView):
     template_name = "searchgov/index.html"
     heading = "Search for a page"
 
-    def get(self, request):
+    def get(self, request, **kwargs):
+        context = self.get_context_data(**kwargs)
         form = SearchForm(request.GET)
         query = ""
         results = []
@@ -26,7 +28,7 @@ class SearchView(TemplateView):
                 # Strip | CFPB suffix
                 res["title"] = res["title"][:-39]
 
-        return self.render_to_response(
+        context.update(
             {
                 "title": title(self.heading),
                 "heading": self.heading,
@@ -34,3 +36,5 @@ class SearchView(TemplateView):
                 "results": results,
             }
         )
+
+        return self.render_to_response(context)
