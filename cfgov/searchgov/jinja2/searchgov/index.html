@@ -18,14 +18,15 @@
 <style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)}</style>
     <h1>{{ _('Search consumerfinance.gov') }}</h1>
     {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {% set qs = "?q=" + query if query else "" %}
     {{ translation_links.render(
         links=[
         {
-            'href': url('searchgov'),
+        'href': url('searchgov') + qs,
             'language': 'en',
             'text': 'English'
         },{
-            'href': url('searchgov_es'),
+            'href': url('searchgov_es') + qs,
             'language': 'es',
             'text': 'Spanish'
         }]
