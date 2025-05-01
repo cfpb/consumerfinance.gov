@@ -331,6 +331,7 @@ WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference
 
 # Search api
 SEARCHGOV_API_KEY = os.environ.get("SEARCHGOV_API_KEY")
+SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
