@@ -17,6 +17,19 @@
 {% block content_main %}
 <style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)}</style>
     <h1>{{ _('Search consumerfinance.gov') }}</h1>
+    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {{ translation_links.render(
+        links=[
+        {
+            'href': url('searchgov'),
+            'language': 'en',
+            'text': 'English'
+        },{
+            'href': url('searchgov_es'),
+            'language': 'es',
+            'text': 'Spanish'
+        }]
+    ) }}
     <div class="block block--flush-top">
       {%- include './search.html' -%}
       {% for res in results -%}
