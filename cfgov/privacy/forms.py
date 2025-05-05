@@ -154,7 +154,7 @@ class PrivacyActForm(forms.Form):
         return loader.render_to_string(self.email_template, data)
 
     def format_subject(self):
-        name = self.cleaned_data.get("requestor_name", "")
+        name = self.cleaned_data["requestor_name"]
         truncated_name = (name[:20] + "...") if len(name) > 24 else name
         return self.email_subject + truncated_name
 
