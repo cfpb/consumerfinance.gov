@@ -99,11 +99,11 @@ class PrivacyActForm(forms.Form):
     def require_address_if_mailing(self):
         data = self.cleaned_data
         msg = "Mailing address is required if requesting records by mail."
-        if data["contact_channel"] == "mail" and not (
-            data["street_address"]
-            and data["city"]
-            and data["state"]
-            and data["zip_code"]
+        if data.get("contact_channel") == "mail" and not (
+            data.get("street_address")
+            and data.get("city")
+            and data.get("state")
+            and data.get("zip_code")
         ):
             self.add_error("street_address", forms.ValidationError(msg))
 
@@ -154,7 +154,7 @@ class PrivacyActForm(forms.Form):
         return loader.render_to_string(self.email_template, data)
 
     def format_subject(self):
-        name = self.cleaned_data["requestor_name"]
+        name = self.cleaned_data.get("requestor_name", "")
         truncated_name = (name[:20] + "...") if len(name) > 24 else name
         return self.email_subject + truncated_name
 
@@ -164,7 +164,7 @@ class PrivacyActForm(forms.Form):
             body=self.email_body(),
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[settings.PRIVACY_EMAIL_TARGET],
-            reply_to=[self.cleaned_data["requestor_email"]],
+            reply_to=[self.cleaned_data.get("requestor_email")],
         )
         email.content_subtype = "html"
 
