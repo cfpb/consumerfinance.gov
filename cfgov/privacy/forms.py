@@ -99,11 +99,11 @@ class PrivacyActForm(forms.Form):
     def require_address_if_mailing(self):
         data = self.cleaned_data
         msg = "Mailing address is required if requesting records by mail."
-        if data["contact_channel"] == "mail" and not (
-            data["street_address"]
-            and data["city"]
-            and data["state"]
-            and data["zip_code"]
+        if data.get("contact_channel") == "mail" and not (
+            data.get("street_address")
+            and data.get("city")
+            and data.get("state")
+            and data.get("zip_code")
         ):
             self.add_error("street_address", forms.ValidationError(msg))
 
