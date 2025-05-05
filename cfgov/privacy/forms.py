@@ -164,7 +164,7 @@ class PrivacyActForm(forms.Form):
             body=self.email_body(),
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[settings.PRIVACY_EMAIL_TARGET],
-            reply_to=[self.cleaned_data.get("requestor_email")],
+            reply_to=[self.cleaned_data["requestor_email"]],
         )
         email.content_subtype = "html"
 
