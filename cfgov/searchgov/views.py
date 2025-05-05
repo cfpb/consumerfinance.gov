@@ -52,7 +52,8 @@ class SearchView(TranslatedTemplateView):
             response = requests.get(
                 API_ENDPOINT.format(affiliate, api_key, query)
             )
-            results = response.json()["web"]["results"]
+            data = response.json()["web"]
+            results = data["results"]
             for res in results:
                 # Strip | CFPB suffix
                 res["title"] = res["title"][:-39]
@@ -62,6 +63,7 @@ class SearchView(TranslatedTemplateView):
                 "title": title(self.heading),
                 "heading": self.heading,
                 "query": query,
+                "count": data["total"],
                 "results": results,
             }
         )
