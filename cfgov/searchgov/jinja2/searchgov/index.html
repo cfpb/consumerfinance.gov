@@ -44,16 +44,19 @@
 
       {% if query %}
           {% if count == 0 %}
+            {% set msg_preamble = _('Sorry, there were no results found for') %}
+            {% set explanation = _('Try entering fewer or more general search terms.') %}
             {% do notification_opts.update({
               'type': 'warning',
               'is_visible': true,
-              'message': 'Sorry, there were no results found for "' + query + '".',
-              'explanation': 'Try entering fewer or more general search terms.'
+              'message': msg_preamble + ' "' + query + '".',
+              'explanation': explanation
              }) %}
           {% else %}
+            {% set result = _('result') %}
             {% do notification_opts.update({
               'is_visible': true,
-              'message': count ~ ' result' ~ count | pluralize('s')
+              'message': count ~ ' ' ~ result ~ count | pluralize('s')
             }) %}
         {% endif %}
         <div class="block
