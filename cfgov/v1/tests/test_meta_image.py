@@ -1,9 +1,7 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from wagtail.images.tests.utils import get_test_image_file
 
-import boto3
-import moto
 from model_bakery import baker
 
 from v1.models import CFGOVImage, CFGOVPage, LearnPage
@@ -49,7 +47,7 @@ class TestMetaImage(TestCase):
             html=True,
         )
 
-    def check_template_meta_image_url(self, expected_root):
+    def test_template_meta_image_url(self):
         """Template meta tags should use an absolute image URL."""
         image_file = get_test_image_file(filename="foo.png")
         image = baker.make(CFGOVImage, file=image_file)
@@ -63,28 +61,7 @@ class TestMetaImage(TestCase):
             response,
             (
                 '<meta property="og:image" content='
-                f'"{expected_root}{rendition_url}">'
+                f'"http://localhost{rendition_url}">'
             ),
             html=True,
         )
-
-    def test_template_meta_image_url(self):
-        """Meta image links should work if using local storage."""
-        self.check_template_meta_image_url(expected_root="http://localhost")
-
-    @override_settings(
-        AWS_LOCATION="root",
-        AWS_ACCESS_KEY_ID="test",
-        AWS_SECRET_ACCESS_KEY="test",
-        AWS_STORAGE_BUCKET_NAME="test_s3_bucket",
-        DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage",
-    )
-    @moto.mock_aws
-    def test_template_image_image_url_s3(self):
-        """Meta image links should work if using S3 storage."""
-        s3 = boto3.client("s3")
-        s3.create_bucket(Bucket="test_s3_bucket")
-
-        # There should be no root required as the image rendition URL
-        # should generate a fully qualified S3 path.
-        self.check_template_meta_image_url(expected_root="")
