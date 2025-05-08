@@ -378,10 +378,10 @@ OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
 )
 
 if os.getenv("S3_ENABLED"):
-    MEDIA_URL, storage_options = get_s3_media_config()
+    MEDIA_URL, _storage_options = get_s3_media_config()
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": storage_options,
+        "OPTIONS": _storage_options,
     }
 
 # This environment variable is also used in get_s3_media_config above.
