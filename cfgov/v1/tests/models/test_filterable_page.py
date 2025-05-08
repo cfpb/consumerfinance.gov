@@ -264,10 +264,9 @@ class FilterableResultsRenderingTests(
             response = page.render(request)
 
         # All data is fetched as part of the response context. No additional
-        # queries are needed to render the results themselves, but there are
-        # 2 additional queries for all pages:
+        # queries are needed to render the results themselves, but there is
+        # 1 additional query for all pages:
         #
-        #   1. Fetching the mega menu.
-        #   2. Fetching any banners associated with the page.
-        with self.assertNumQueries(2):
+        #   1. Fetching any banners associated with the page.
+        with self.assertNumQueries(1):
             response.render()

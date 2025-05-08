@@ -1,0 +1,339 @@
+{% set menu_items_by_language = {
+    "en": [
+        {
+            "overview": {"text": "Consumer Education"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/consumer-tools/", "text": "Resources for Yourself"},
+                        {
+                            "url": "/consumer-tools/educator-tools/",
+                            "text": "Resources for Helping Others",
+                        },
+                        {
+                            "text": "Consumer Complaint Database",
+                            "url": "/data-research/consumer-complaints/",
+                        },
+                    ],
+                },
+                {
+                    "title": "Money Topics",
+                    "title_hidden": False,
+                    "nav_items": [
+                        {"url": "/consumer-tools/auto-loans/", "text": "Auto Loans"},
+                        {
+                            "url": "/consumer-tools/bank-accounts/",
+                            "text": "Bank Accounts & Services",
+                        },
+                        {"url": "/consumer-tools/credit-cards/", "text": "Credit Cards"},
+                        {
+                            "url": "/consumer-tools/credit-reports-and-scores/",
+                            "text": "Credit Reports & Scores",
+                        },
+                        {
+                            "url": "/consumer-tools/debt-collection/",
+                            "text": "Debt Collection",
+                        },
+                        {"url": "/consumer-tools/fraud/", "text": "Fraud & Scams"},
+                    ],
+                },
+                {
+                    "title": "Money Topics",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/consumer-tools/money-transfers/",
+                            "text": "Money Transfers",
+                        },
+                        {"url": "/consumer-tools/mortgages/", "text": "Mortgages"},
+                        {"url": "/consumer-tools/payday-loans/", "text": "Payday Loans"},
+                        {"url": "/consumer-tools/prepaid-cards/", "text": "Prepaid Cards"},
+                        {
+                            "url": "/consumer-tools/reverse-mortgages/",
+                            "text": "Reverse Mortgages",
+                        },
+                        {"url": "/consumer-tools/student-loans/", "text": "Student Loans"},
+                    ],
+                },
+            ],
+            "featured_items": [
+                {
+                    "url": "/consumer-tools/",
+                    "text": "Explore guides to help you plan for big financial goals",
+                }
+            ],
+            "other_items": [
+                {"url": "/complaint/", "text": "Submit a Complaint", "icon": "complaint"},
+                {"text": "Tell Your Story", "url": "/your-story/", "icon": "open-quote"},
+                {
+                    "text": "Order free brochures",
+                    "url": "https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php",
+                    "icon": "document",
+                },
+                {"url": "/ask-cfpb/", "text": "Browse Ask CFPB", "icon": "lightbulb"},
+            ],
+        },
+        {
+            "overview": {"url": "/rules-policy/", "text": "Rules & Policy"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/rules-policy/final-rules/", "text": "Final Rules"},
+                        {
+                            "url": "/rules-policy/regulations/",
+                            "text": "Interactive Regulations",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/rules-policy/rules-under-development/",
+                            "text": "Rules Under Development",
+                        },
+                        {
+                            "url": "/rules-policy/notice-opportunities-comment/",
+                            "text": "Notices and Opportunities to Comment",
+                        },
+                        {
+                            "url": "/rules-policy/regulatory-agenda/",
+                            "text": "Regulatory Agenda",
+                        },
+                        {
+                            "text": "Petitions for Rulemaking",
+                            "url": "/rules-policy/petitions-rulemaking/",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/rules-policy/competition-innovation/",
+                            "text": "Competition and Innovation",
+                        },
+                        {
+                            "url": "/rules-policy/advisory-committees/",
+                            "text": "Advisory Committees",
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            "overview": {"url": "/enforcement/", "text": "Enforcement"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/enforcement/actions/", "text": "Enforcement Actions"},
+                        {
+                            "url": "/enforcement/enforcement-by-the-numbers/",
+                            "text": "Enforcement by the Numbers",
+                        },
+                        {
+                            "url": "/enforcement/investigatory-authority/",
+                            "text": "Investigatory Authority",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/enforcement/warning-letters/", "text": "Warning Letters"},
+                        {
+                            "url": "/enforcement/payments-harmed-consumers/",
+                            "text": "Payments to Harmed Consumers",
+                        },
+                        {
+                            "url": "/enforcement/information-industry-whistleblowers/",
+                            "text": "Industry Whistleblowers",
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            "overview": {"url": "/compliance/", "text": "Compliance"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/compliance/compliance-resources/",
+                            "text": "Compliance Resources",
+                        },
+                        {
+                            "url": "/compliance/advisory-opinion-program/",
+                            "text": "Advisory Opinion Program",
+                        },
+                        {
+                            "url": "/compliance/circulars/",
+                            "text": "Consumer Financial Protection Circulars",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/compliance/supervision-examinations/",
+                            "text": "Supervision and Examinations",
+                        },
+                        {
+                            "url": "/compliance/supervisory-highlights/",
+                            "text": "Supervisory Highlights",
+                        },
+                        {
+                            "url": "/compliance/supervisory-guidance/",
+                            "text": "Supervisory Guidance",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/compliance/registration-and-submission-programs/",
+                            "text": "Registration & Submission Programs",
+                        },
+                        {"url": "/compliance/amicus/", "text": "Amicus Program"},
+                        {
+                            "url": "/compliance/consumer-complaint-program/",
+                            "text": "Consumer Complaint Program",
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            "overview": {"url": "/data-research/", "text": "Data & Research"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/data-research/research-reports/", "text": "Reports"},
+                        {"url": "/data-research/research-hub/", "text": "Research Hub"},
+                        {
+                            "text": "Consumer Complaint Database",
+                            "url": "/data-research/consumer-complaints/",
+                        },
+                        {"url": "/data-research/hmda/", "text": "Mortgage Database (HMDA)"},
+                        {
+                            "url": "/data-research/small-business-lending/",
+                            "text": "Small Business Lending Database",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/data-research/public-data-inventory/",
+                            "text": "Public Data Inventory",
+                        },
+                        {
+                            "url": "/data-research/consumer-credit-trends/",
+                            "text": "Consumer Credit Trends",
+                        },
+                        {
+                            "url": "/data-research/mortgage-performance-trends/",
+                            "text": "Mortgage Performance Trends",
+                        },
+                        {
+                            "url": "/data-research/financial-well-being-survey-data/",
+                            "text": "Financial Well-Being Survey",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "url": "/data-research/credit-card-data/",
+                            "text": "Credit Card Surveys & Agreements",
+                        },
+                        {
+                            "url": "/data-research/prepaid-accounts/",
+                            "text": "Prepaid Account Agreements",
+                        },
+                        {
+                            "url": "/data-research/nbr-submission/",
+                            "text": "Nonbank Registry",
+                        },
+                    ],
+                },
+            ],
+            "featured_items": [
+                {
+                    "url": "/data-research/financial-well-being-survey-data/",
+                    "text": "Help advance financial well-being",
+                }
+            ],
+        },
+        {
+            "overview": {"text": "News"},
+            "nav_groups": [
+                {
+                    "title": None,
+                    "title_hidden": True,
+                    "nav_items": [
+                        {
+                            "text": "Press Releases",
+                            "url": "/about-us/newsroom/?categories=press-release",
+                        },
+                        {
+                            "text": "Speeches & Op-eds",
+                            "url": "/about-us/newsroom/?categories=op-ed&categories=speech",
+                        },
+                        {
+                            "text": "Testimony",
+                            "url": "/about-us/newsroom/?categories=testimony",
+                        },
+                        {
+                            "text": "Statements",
+                            "url": "/about-us/newsroom/?categories=directors-statement",
+                        },
+                    ],
+                },
+                {
+                    "title": "",
+                    "title_hidden": True,
+                    "nav_items": [
+                        {"url": "/about-us/blog/", "text": "Blog"},
+                        {
+                            "text": "Director’s Notebook",
+                            "url": "/about-us/blog/?categories=directors-notebook",
+                        },
+                        {"url": "/activity-log/", "text": "Recent Updates"},
+                        {
+                            "text": "Consumer Advisories",
+                            "url": "/about-us/newsroom/?categories=consumer-advisories",
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    "es": [
+        {"overview": {"url": "/es/herramientas-del-consumidor/", "text": "Para consumidores"}},
+        {"overview": {"url": "/es/obtener-respuestas/", "text": "Obtener respuestas"}},
+        {"overview": {"url": "/es/enviar-una-queja/", "text": "Enviar una queja"}},
+        {"overview": {"url": "/es/quienes-somos/", "text": "Qui\u00e9nes somos"}},
+    ],
+} %}
