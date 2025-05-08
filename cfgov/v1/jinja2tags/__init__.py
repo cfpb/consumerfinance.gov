@@ -1,7 +1,6 @@
 from jinja2 import pass_context
 from jinja2.ext import Extension
 
-from core.feature_flags import environment_is
 from v1.templatetags.app_urls import app_page_url, app_url
 from v1.util import ref
 from v1.util.util import get_unique_id
@@ -52,25 +51,6 @@ def unique_id_in_context(context):
         return get_unique_id()
 
 
-def search_gov_affiliate(context):
-    """Given a request, return the appropriate affiliate for Search.gov.
-
-    Our default affiliate code is "cfpb". We have a separate Spanish-language
-    index named "cfpb_es". We then have two additional indexes, "cfpb_beta"
-    and "cfpb_beta_es", for use on beta.consumerfinance.gov.
-    """
-    affiliate = "cfpb"
-
-    if environment_is("beta"):
-        affiliate += "_beta"
-
-    language = context.get("language")
-    if language == "es":
-        affiliate += "_es"
-
-    return affiliate
-
-
 class V1Extension(Extension):
     def __init__(self, environment):
         super().__init__(environment)
@@ -85,7 +65,6 @@ class V1Extension(Extension):
                 "unique_id_in_context": pass_context(unique_id_in_context),
                 "app_url": app_url,
                 "app_page_url": app_page_url,
-                "search_gov_affiliate": pass_context(search_gov_affiliate),
             }
         )
 

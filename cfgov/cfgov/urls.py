@@ -35,6 +35,7 @@ from housing_counselor.views import (
     HousingCounselorView,
 )
 from regulations3k.views import redirect_eregs
+from searchgov.views import SearchView
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -71,6 +72,10 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+    re_path(r"^search/", SearchView.as_view(), name="searchgov"),
+    re_path(
+        "^es/buscar/", SearchView.as_view(language="es"), name="searchgov_es"
+    ),
     re_path(
         r"^rural-or-underserved-tool/$",
         TemplateView.as_view(

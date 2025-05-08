@@ -14,11 +14,9 @@
 
 {% macro render( language='en' ) %}
 
-{%- set search_url_base = "https://search.consumerfinance.gov/search" -%}
 {%- set search_url = (
-    search_url_base
-    ~ "?affiliate=" ~ search_gov_affiliate()
-    ~ "&query="
+    "/es/buscar/" if language == 'es' else
+    "/search/"
 ) -%}
 
 <div class="m-global-search"
@@ -45,28 +43,17 @@
          data-js-hook="behavior_flyout-menu_content"
          role="search">
         <form class="m-global-search__content-form"
-              action="{{ search_url_base }}"
+              action="{{ search_url }}"
               method="get">
-            {#
-                The following two inputs are required by the search portal.
-                See: https://search.gov/manual/code.html
-            #}
-            <input type="hidden"
-                   name="utf8"
-                   value="✓">
-            <input type="hidden"
-                   id="affiliate"
-                   name="affiliate"
-                   value="{{ search_gov_affiliate() }}">
-
             {% import 'v1/includes/organisms/search-input.html' as search_input %}
             {% set placeholder_value = _('Search the CFPB') %}
             {{ search_input.render({
                 "input_id": "m-global-search_query",
-                "input_name": "query",
+                "input_name": "q",
                 "input_aria_label": _('Search for your question'),
                 "placeholder": placeholder_value,
-                "submit_aria_label": placeholder_value
+                "submit_aria_label": placeholder_value,
+                "max_length": 75
             }) }}
         </form>
     </div>
