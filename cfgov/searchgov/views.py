@@ -1,3 +1,5 @@
+import math
+
 from django.conf import settings
 from django.template.defaultfilters import title
 
@@ -9,7 +11,8 @@ from core.views import TranslatedTemplateView
 from .forms import SearchForm
 
 
-API_ENDPOINT = "https://api.gsa.gov/technology/searchgov/v2/results/i14y?affiliate={}&access_key={}&query={}"
+API_ENDPOINT = "https://api.gsa.gov/technology/searchgov/v2/results/i14y?affiliate={}&access_key={}&limit={}&offset={}&query={}"
+RESULTS_PER_PAGE = 20
 
 
 def get_affiliate(context):
@@ -43,27 +46,59 @@ class SearchView(TranslatedTemplateView):
         context = self.get_context_data(**kwargs)
         form = SearchForm(request.GET)
         results = []
+        total_pages = 1
+        current_page = 1
+        count = 0
+        offset = 0
+        start_index = 1
+        end_index = RESULTS_PER_PAGE
         query = ""
         affiliate = get_affiliate(context)
         api_key = get_api_key(context)
 
         if form.is_valid():
             query = form.cleaned_data["q"]
+            offset = (form.cleaned_data["page"] - 1) * RESULTS_PER_PAGE
             response = requests.get(
-                API_ENDPOINT.format(affiliate, api_key, query)
+                API_ENDPOINT.format(
+                    affiliate, api_key, RESULTS_PER_PAGE, offset, query
+                )
             )
-            data = response.json()["web"]
-            results = data["results"]
-            for res in results:
-                # Strip | CFPB suffix
-                res["title"] = res["title"][:-39]
 
+            if response.status_code == 200:
+                data = response.json()["web"]
+                results = data["results"]
+                count = data["total"]
+
+                if count > 999:
+                    count = 999
+
+                # Protect against page shenanigans
+                if offset < count:
+                    total_pages = math.ceil(count / RESULTS_PER_PAGE)
+                    current_page = form.cleaned_data["page"]
+
+                    start_index = offset + 1
+                    end_index = offset + RESULTS_PER_PAGE
+
+                    if end_index > count:
+                        end_index = count
+
+                    for res in results:
+                        # Strip | CFPB suffix
+                        res["title"] = res["title"][:-39]
+                else:
+                    count = 0
         context.update(
             {
                 "title": title(self.heading),
                 "heading": self.heading,
                 "query": query,
-                "count": data["total"],
+                "count": count,
+                "start_index": start_index,
+                "end_index": end_index,
+                "total_pages": total_pages,
+                "current_page": current_page,
                 "results": results,
             }
         )

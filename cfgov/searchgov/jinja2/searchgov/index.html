@@ -1,6 +1,7 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 {% from './result.html' import render as render_result %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 
 {% block title -%}
     {{ title }} | Consumer Financial Protection Bureau
@@ -53,10 +54,12 @@
               'explanation': explanation
              }) %}
           {% else %}
-            {% set result = _('result') %}
+            {% set en_results = _('Results ') %}
+            {% set en_of = _(' of ') %}
+            {% set en_for = _(' for ') %}
             {% do notification_opts.update({
               'is_visible': true,
-              'message': count ~ ' ' ~ result ~ count | pluralize('s')
+              'message':  en_results ~ start_index ~ '-' ~ end_index ~ en_of ~ count ~ en_for ~ '"' ~ query ~ '"'
             }) %}
         {% endif %}
         <div class="block
@@ -74,7 +77,13 @@
       {% for res in results -%}
         {{render_result(res)}}
       {%- endfor %}
-    </div>
+      </div>
+      <div class="block block--sub">
+        {{ pagination.render(
+             total_pages,
+             current_page
+        ) }}
+      </div>
 {% endblock content_main %}
 
 {% block content_sidebar %}
