@@ -1,12 +1,7 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
-/* "The `.print` class acts a styling hook. When using the
-  `@include respond-to-print()` mixin, all stlyes will be nested under both
-  `@media print` and `.print`."
- */
-
-@include respond-to-print {
+@media print {
   a {
     font-weight: 500;
   }
