@@ -161,7 +161,7 @@
       }
     }
 
-    @include respond-to-print {
+    @media print {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
@@ -205,7 +205,7 @@
       }
     }
 
-    @include respond-to-print {
+    @media print {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
@@ -237,7 +237,7 @@
       }
     }
 
-    @include respond-to-print {
+    @media print {
       // !important used here to avoid being overriden by a much more specific
       // selector that sets the display property for this element
       // and to avoid using a selector that specific here.
@@ -254,7 +254,7 @@
       border-top: 1px solid var(--gray-40);
     }
 
-    @include respond-to-print {
+    @media print {
       padding: 0;
       border: none;
       margin: 0;

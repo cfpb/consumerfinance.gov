@@ -1,6 +1,6 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
-@include respond-to-print {
+@media print {
   body {
     font-family: 'Avenir Next', Arial, sans-serif;
     color: #000 !important;

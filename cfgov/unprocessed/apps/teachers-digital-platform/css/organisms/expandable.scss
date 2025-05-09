@@ -158,7 +158,7 @@ $expandable-transition-speed: 0.25s;
     }
   }
 
-  @include respond-to-print {
+  @media print {
     // Hide the interactive expandable cues when printing
     &__target--expanded &__cue-close,
     &__target--collapsed &__cue-open {

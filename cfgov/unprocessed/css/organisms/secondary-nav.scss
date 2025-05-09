@@ -210,7 +210,7 @@
   }
 
   // Hide on print.
-  @include respond-to-print {
+  @media print {
     display: none;
   }
 }

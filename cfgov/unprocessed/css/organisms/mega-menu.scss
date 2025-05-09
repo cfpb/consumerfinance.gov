@@ -1017,7 +1017,7 @@ $menu-link-hover-bar-px: 5px;
 }
 
 // Hide on print.
-@include respond-to-print {
+@media print {
   .o-mega-menu {
     display: none;
   }
