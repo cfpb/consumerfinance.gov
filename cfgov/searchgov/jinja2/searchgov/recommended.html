@@ -3,7 +3,7 @@
 {%- macro render(recommended) -%}
 {% if recommended | length %}
   {% set rec_hed = _('Recommended') %}
-  <div class="block recommended">
+  <div class="block u-mb45 recommended">
     <h3 class="u-mt45">{{rec_hed}}</h3>
     {% for result in recommended %}
       {{ render_result(result, "description") }}
