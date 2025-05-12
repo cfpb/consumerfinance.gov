@@ -44,6 +44,7 @@ class SearchView(TranslatedTemplateView):
         context = self.get_context_data(**kwargs)
         form = SearchForm(request.GET)
         results = []
+        recommended = []
         total_pages = 1
         current_page = 1
         count = 0
@@ -64,8 +65,10 @@ class SearchView(TranslatedTemplateView):
             )
 
             if response.status_code == 200:
-                data = response.json()["web"]
+                json_data = response.json()
+                data = json_data["web"]
                 results = data["results"]
+                recommended = json_data["text_best_bets"]
                 count = data["total"]
 
                 if count > 999:
@@ -95,6 +98,7 @@ class SearchView(TranslatedTemplateView):
                 "end_index": end_index,
                 "total_pages": total_pages,
                 "current_page": current_page,
+                "recommended": recommended,
                 "results": results,
             }
         )

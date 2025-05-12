@@ -1,4 +1,5 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
+{% from './recommended.html' import render as render_recommended %}
 {% from './result.html' import render as render_result %}
 {% import 'v1/includes/molecules/notification.html' as notification %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
@@ -19,7 +20,7 @@
 
 
 {% block content_main %}
-<style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)}</style>
+<style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)} .recommended {border-top: 2px solid var(--black); border-bottom: 2px solid var(--black)}</style>
     {% set results_header = _('Search results') %}
     <h1>{{ results_header if query else search_header }}</h1>
     {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
@@ -76,6 +77,8 @@
             ) }}
         </div>
       {% endif %}
+
+      {{render_recommended(recommended)}}
 
       {% for res in results -%}
         {{render_result(res)}}

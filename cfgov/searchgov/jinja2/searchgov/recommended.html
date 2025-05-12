@@ -1,0 +1,14 @@
+{% from './result.html' import render as render_result %}
+
+{% set rec_hed = _('Recommended') %}
+
+{%- macro render(recommended) -%}
+{% if recommended | length %}
+  <div class="block recommended">
+    <h3 class="u-mt45">{{rec_hed}}</h3>
+    {% for result in recommended %}
+      {{ render_result(result, "description") }}
+    {% endfor %}
+  </div>
+{% endif %}
+{%- endmacro -%}

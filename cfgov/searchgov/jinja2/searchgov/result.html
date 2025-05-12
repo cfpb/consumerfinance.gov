@@ -10,12 +10,12 @@
   {% endfor %}
 {%- endmacro -%}
 
-{%- macro render(result) -%}
+{%- macro render(result, key="snippet") -%}
   <div class="block block--sub u-mb45">
     <a href="{{result.url}}">
       <article class="search-result">
-        <h2 class="h4 u-mb10">{{bold_matches(result.title)}}</h2>
-        <p>{{bold_matches(result.snippet)}}</p>
+        <h3 class="h4 u-mb10">{{bold_matches(result.title)}}</h3>
+        <p>{{bold_matches(result[key])}}</p>
       </article>
     </a>
   </div>
