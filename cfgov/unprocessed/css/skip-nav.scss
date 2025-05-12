@@ -33,4 +33,9 @@
       left: 0;
     }
   }
+
+  // Don't print the skip-nav.
+  @media print {
+    display: none;
+  }
 }

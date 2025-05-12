@@ -163,7 +163,7 @@ $mobile-trigger-ht-px: 54px;
   }
 
   // Hide on print.
-  @include respond-to-print {
+  @media print {
     & {
       // Important needed to override JS display settings.
       display: none !important;
