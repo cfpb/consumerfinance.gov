@@ -1,7 +1,6 @@
 import math
 
 from django.conf import settings
-from django.template.defaultfilters import title
 
 import requests
 
@@ -40,7 +39,6 @@ def get_api_key(context):
 
 class SearchView(TranslatedTemplateView):
     template_name = "searchgov/index.html"
-    heading = "Search for a page"
 
     def get(self, request, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -91,8 +89,6 @@ class SearchView(TranslatedTemplateView):
                     count = 0
         context.update(
             {
-                "title": title(self.heading),
-                "heading": self.heading,
                 "query": query,
                 "count": count,
                 "start_index": start_index,

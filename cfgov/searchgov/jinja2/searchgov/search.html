@@ -1,8 +1,9 @@
+{% set action = _('/search/') %}
 <div class="o-search-bar">
-    <form method="get" action="/search/">
+    <form method="get" action={{ action }}>
         <div>
             {% import 'v1/includes/organisms/search-input.html' as search_input %}
-            {% set placeholder_value = _('Search for a page') %}
+            {% set placeholder_value = _('Enter your search term(s)') %}
             {{ search_input.render({
                 "input_aria_describedby_id": "o-search-bar_error-message",
                 "input_id": "o-search-bar_query",
