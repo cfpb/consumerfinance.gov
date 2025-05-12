@@ -1,0 +1,30 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.search-result {
+  p {
+    color: var(--black);
+  }
+
+  &__url {
+    margin-top: math.div(4px, $base-font-size-px) + rem;
+    color: var(--gray-dark);
+    font-size: math.div(14px, $base-font-size-px) + rem;
+    max-width: math.div(670px, $base-font-size-px) + rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.recommended {
+  border-bottom: 2px solid $block-border;
+
+  > h2 {
+    margin-bottom: math.div(-10px, $base-font-size-px) + rem;
+  }
+
+  .block--sub.u-mb45 {
+    margin-bottom: math.div(30px, $base-font-size-px) + rem !important;
+  }
+}

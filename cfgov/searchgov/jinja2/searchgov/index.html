@@ -19,9 +19,13 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/searchgov/css/main.css') }}">
+{% endblock %}
+
 
 {% block content_main %}
-<style>.search-result > h2{font-weight:400} .search-result p {color: var(--black)} .recommended {border-top: 2px solid var(--black); border-bottom: 2px solid var(--black)}</style>
     {% set results_header = _('Search results') %}
     <h1>{{ results_header if query else search_header }}</h1>
     {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
