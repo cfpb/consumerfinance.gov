@@ -65,7 +65,7 @@ EXPOSE 8000
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:20-alpine AS node-builder
+FROM node:22-alpine AS node-builder
 
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
