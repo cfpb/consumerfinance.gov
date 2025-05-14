@@ -24,7 +24,7 @@
     margin-bottom: math.div(-10px, $base-font-size-px) + rem;
   }
 
-  .block--sub.u-mb45 {
+  .block--sub.u-mb45:last-child {
     margin-bottom: math.div(30px, $base-font-size-px) + rem !important;
   }
 }
