@@ -108,7 +108,9 @@
     display: inline-block;
 
     // Break the menu word when it is too wide to fit in the sidebar area.
-    word-break: break-word;
+    // These two values usurp the deprecated `word-break: break-word;`.
+    overflow-wrap: anywhere;
+    word-break: normal;
 
     border-style: solid;
     border-left-width: 5px;
