@@ -827,7 +827,7 @@ $menu-link-hover-bar-px: 5px;
       &-wrapper {
         background-color: var(--gray-5);
         border: 1px solid var(--gray-40);
-        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 20%);
+        box-shadow: 0 5px 5px 0 rgb(0, 0, 0, 20%);
 
         padding: math.div($grid-gutter-width, $base-font-size-px) + em;
         padding-top: math.div(20px, $base-font-size-px) + em;

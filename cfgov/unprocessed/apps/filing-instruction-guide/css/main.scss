@@ -67,7 +67,10 @@
 .o-fig__heading {
   a {
     color: var(--black);
-    word-break: break-word;
+
+    // These two values usurp the deprecated `word-break: break-word;`.
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 }
 

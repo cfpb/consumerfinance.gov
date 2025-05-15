@@ -9,7 +9,9 @@
 }
 
 .u-break-word {
-  word-break: break-word;
+  // These two values usurp the deprecated `word-break: break-word;`.
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .prepaid-agreements {
@@ -39,7 +41,9 @@
   padding-top: 0 !important;
 
   .o-multiselect__label {
-    word-break: break-word;
+    // These two values usurp the deprecated `word-break: break-word;`.
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 
   .filters {

@@ -204,7 +204,9 @@
 
   // Solving longstanding issue in Firefox of cutting off inline-block
   // elements after one page.
-  @document url-prefix() {
+  /* stylelint-disable at-rule-no-vendor-prefix */
+  @-moz-document url-prefix() {
+    /* stylelint-enable at-rule-no-vendor-prefix */
     html,
     body {
       margin: 0;
