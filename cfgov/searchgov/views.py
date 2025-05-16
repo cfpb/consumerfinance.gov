@@ -1,4 +1,5 @@
 import math
+from urllib.parse import urlencode
 
 from django.conf import settings
 
@@ -11,7 +12,7 @@ from .forms import SearchForm
 
 
 # Search.gov API docs: https://open.gsa.gov/api/searchgov-results/
-API_ENDPOINT = "https://api.gsa.gov/technology/searchgov/v2/results/i14y?affiliate={}&access_key={}&limit={}&offset={}&query={}"
+API_ENDPOINT = "https://api.gsa.gov/technology/searchgov/v2/results/i14y?{}"
 RESULTS_PER_PAGE = 20
 
 
@@ -61,7 +62,15 @@ class SearchView(TranslatedTemplateView):
             offset = (form.cleaned_data["page"] - 1) * RESULTS_PER_PAGE
             response = requests.get(
                 API_ENDPOINT.format(
-                    affiliate, api_key, RESULTS_PER_PAGE, offset, query
+                    urlencode(
+                        {
+                            "affiliate": affiliate,
+                            "access_key": api_key,
+                            "limit": RESULTS_PER_PAGE,
+                            "offset": offset,
+                            "query": query,
+                        }
+                    )
                 )
             )
 
