@@ -26,6 +26,7 @@ const styledApps = [
   'teachers-digital-platform',
   'filing-instruction-guide',
   'tccp',
+  'searchgov',
 ];
 
 const cssPaths = [

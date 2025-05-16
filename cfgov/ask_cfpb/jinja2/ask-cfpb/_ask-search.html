@@ -33,7 +33,7 @@
     autocomplete=True,
     placeholder='',
     is_subsection=True,
-    max_length=autocomplete_max_chars
+    max_length=75
 ) %}
 <div class="o-search-bar">
     <form method="get"
@@ -57,7 +57,7 @@
                 "has_autocomplete": autocomplete,
                 "placeholder": placeholder_value,
                 "submit_aria_label": placeholder_value,
-                "max_length": autocomplete_max_chars
+                "max_length": max_length
             }) }}
 
             <div class="u-mt15 a-form-alert a-form-alert--error u-hidden"
@@ -65,7 +65,7 @@
                  role="alert">
                 {{ svg_icon('error-round') }}
                 <p class="a-form-alert__text">
-                    Searches are limited to {{ autocomplete_max_chars }}
+                    Searches are limited to {{ max_length }}
                     characters.
                 </p>
             </div>
@@ -82,7 +82,7 @@
       value.autocomplete | default( True ),
       value.placeholder | default( '' ),
       value.is_subsection | default( True ),
-      value.max_length | default( autocomplete_max_chars )
+      value.max_length | default( 75 )
     )
   }}
 {% endif %}
