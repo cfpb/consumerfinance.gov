@@ -76,7 +76,30 @@ class AboutView(TemplateView):
         }
 
 
-class CardListView(ListAPIView):
+class DRFExceptionMixin:
+    def handle_exception(self, exc):
+        """When rendering HTML, don't use DRF exception handling.
+
+        The django-rest-framework package provides its own exception handling
+        that includes HTML error templates, for example for 404 Not Found. We
+        want to use our standard Django error templates even though this view
+        is being served by DRF.
+
+        If we're rendering JSON, we can use DRF's logic because it provides a
+        nicer error message to the user.
+
+        If the user specified an invalid or unsupported renderer (for example
+        with ?format=invalid), also show our standard Django error template.
+        """
+        renderer = getattr(self.request, "accepted_renderer", None)
+
+        if (renderer is None) or (renderer.format == "html"):
+            raise exc
+
+        return super().handle_exception(exc)
+
+
+class CardListView(DRFExceptionMixin, ListAPIView):
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
     serializer_class = CardSurveyDataListSerializer
@@ -190,7 +213,7 @@ class CardListView(ListAPIView):
         return rating_ranges
 
 
-class CardDetailView(RetrieveAPIView):
+class CardDetailView(DRFExceptionMixin, RetrieveAPIView):
     model = CardSurveyData
     lookup_field = "slug"
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
@@ -237,19 +260,3 @@ class CardDetailView(RetrieveAPIView):
             )
 
         return response
-
-    def handle_exception(self, exc):
-        """When rendering HTML, don't use DRF exception handling.
-
-        The django-rest-framework package provides its own exception handling
-        that includes HTML error templates, for example for 404 Not Found. We
-        want to use our standard Django error templates even though this view
-        is being served by DRF.
-
-        If we're rendering JSON, we can use DRF's logic because it provides a
-        nicer error message to the user.
-        """
-        if self.request.accepted_renderer.format == "html":
-            raise exc
-
-        return super().handle_exception(exc)
