@@ -3,7 +3,12 @@ from unittest.mock import patch
 from django.conf import settings
 from django.test import TestCase
 
-from searchgov.views import get_affiliate, get_api_key
+from searchgov.views import (
+    API_ENDPOINT,
+    encode_url,
+    get_affiliate,
+    get_api_key,
+)
 
 
 class GetAffiliateTestCase(TestCase):
@@ -40,3 +45,11 @@ class GetApiKeyTestCase(TestCase):
     @patch.object(settings, "SEARCHGOV_ES_API_KEY", "x")
     def test_spanish_key(self):
         self.assertEqual(get_api_key({"current_language": "es"}), "x")
+
+
+class EncodeUrlTestCase(TestCase):
+    def test_encodes_non_url_safe_chars(self):
+        self.assertEqual(
+            encode_url({"query": "term&does=encode"}),
+            API_ENDPOINT.format("query=term%26does%3Dencode"),
+        )
