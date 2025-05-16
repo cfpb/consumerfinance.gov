@@ -39,6 +39,10 @@ def get_api_key(context):
     return settings.SEARCHGOV_API_KEY
 
 
+def encode_url(params):
+    return API_ENDPOINT.format(urlencode(params))
+
+
 class SearchView(TranslatedTemplateView):
     template_name = "searchgov/index.html"
 
@@ -61,16 +65,14 @@ class SearchView(TranslatedTemplateView):
             query = form.cleaned_data["q"]
             offset = (form.cleaned_data["page"] - 1) * RESULTS_PER_PAGE
             response = requests.get(
-                API_ENDPOINT.format(
-                    urlencode(
-                        {
-                            "affiliate": affiliate,
-                            "access_key": api_key,
-                            "limit": RESULTS_PER_PAGE,
-                            "offset": offset,
-                            "query": query,
-                        }
-                    )
+                encode_url(
+                    {
+                        "affiliate": affiliate,
+                        "access_key": api_key,
+                        "limit": RESULTS_PER_PAGE,
+                        "offset": offset,
+                        "query": query,
+                    }
                 )
             )
 
