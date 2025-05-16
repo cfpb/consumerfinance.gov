@@ -5,9 +5,6 @@ class SearchForm(forms.Form):
     q = forms.CharField(strip=True)
     page = forms.IntegerField(required=False)
 
-    def clean_q(self):
-        return self.cleaned_data["q"]
-
     def clean_page(self):
         raw = self.cleaned_data["page"]
         if raw is None:
