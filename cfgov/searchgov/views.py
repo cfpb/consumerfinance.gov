@@ -10,6 +10,7 @@ from core.views import TranslatedTemplateView
 from .forms import SearchForm
 
 
+# Search.gov API docs: https://open.gsa.gov/api/searchgov-results/
 API_ENDPOINT = "https://api.gsa.gov/technology/searchgov/v2/results/i14y?affiliate={}&access_key={}&limit={}&offset={}&query={}"
 RESULTS_PER_PAGE = 20
 
