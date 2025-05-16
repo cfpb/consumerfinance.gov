@@ -1,0 +1,97 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-info-link-group {
+  display: flex;
+  flex-direction: column;
+  gap: math.div(10px, $base-font-size-px) + rem;
+}
+
+.m-info-link {
+  display: flex;
+  gap: math.div(5px, $base-font-size-px) + rem;
+
+  & > .cf-icon-svg {
+    flex: none;
+    fill: var(--gray);
+  }
+
+  // Only adding left padding if an icon is present.
+  .cf-icon-svg + &__link {
+    flex-grow: 1;
+  }
+
+  &__message {
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  &__link {
+    color: var(--pacific);
+    border-bottom: 1px dotted var(--pacific);
+  }
+}
+
+@media screen {
+  .u-print-only {
+    display: none;
+  }
+}
+
+@media print {
+  @page {
+    margin: 8mm 0;
+  }
+
+  // General reset defaults.
+  body {
+    margin: 0.5in;
+    background-color: #fff;
+    color: #000;
+    line-height: 1.5;
+    box-decoration-break: clone;
+  }
+
+  // Component specific adjustments.
+  .m-print-button__action {
+    display: none;
+  }
+
+  .skip-nav,
+  .o-header,
+  .o-footer,
+  .u-layout-grid__sidebar > * {
+    display: none;
+  }
+
+  // Show print button branding content.
+  .u-layout-grid__sidebar .block:has(.m-print-button) {
+    display: initial;
+  }
+
+  .u-layout-grid__main {
+    padding-top: 0;
+  }
+
+  .u-layout-grid__main > * {
+    columns: 2;
+    column-gap: 0.5in;
+    column-rule: 1px solid var(--gray-40);
+  }
+
+  .o-full-width-text-group .m-full-width-text,
+  .o-well,
+  .o-table,
+  h1 {
+    break-inside: avoid;
+  }
+
+  // Exclude heading from the columns.
+  h1 {
+    column-span: all;
+    border-bottom: 4px solid var(--green);
+    margin-bottom: math.div(30px, $base-font-size-px) + rem;
+    padding-bottom: math.div(30px, $base-font-size-px) + rem;
+  }
+}

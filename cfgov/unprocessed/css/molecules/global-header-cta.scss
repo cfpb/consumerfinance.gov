@@ -21,4 +21,9 @@
       var(--navy-dark)
     );
   }
+
+  // Don't print the submit a complaint global call to action.
+  @media print {
+    display: none;
+  }
 }

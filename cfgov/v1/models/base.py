@@ -146,6 +146,7 @@ class CFGOVPage(Page):
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock(ReusableText),
             ),
+            ("print_button", molecules.PrintButton()),
         ],
         blank=True,
     )
