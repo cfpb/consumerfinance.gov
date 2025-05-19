@@ -84,7 +84,7 @@ function handleSubmit(event) {
     event.preventDefault();
   }
   const filters = document.querySelectorAll('input:checked');
-  const searchField = document.querySelector('input[name=q]');
+  const searchField = document.getElementById('query');
   const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
   const searchParams = serializeFormFields(searchTerms);
@@ -108,7 +108,7 @@ function handleFilter(event) {
   } catch {}
   const searchContainer = document.querySelector('#regs3k-results');
   const filters = document.querySelectorAll('input:checked');
-  const searchField = document.querySelector('input[name=q]');
+  const searchField = document.getElementById('query');
   const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
   const searchParams = serializeFormFields(searchTerms);
