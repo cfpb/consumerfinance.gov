@@ -574,3 +574,12 @@ class FeatureCard(blocks.StructBlock):
 
     class Media:
         css = ["partially-styled-link.css"]
+
+
+class PrintButton(blocks.StructBlock):
+    class Meta:
+        icon = "print"
+        template = "v1/includes/molecules/print-button.html"
+
+    class Media:
+        css = ["print-button.css"]
