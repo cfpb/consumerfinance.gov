@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-12 16:19-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: searchgov/jinja2/searchgov/index.html:7
+msgid "Search the CFPB"
+msgstr "Buscar la CFPB"
+
+#: searchgov/jinja2/searchgov/index.html:25
+msgid "Search results"
+msgstr "Resultados de la búsqueda"
+
+#: searchgov/jinja2/searchgov/index.html:53
+msgid "Sorry, there were no results found for"
+msgstr "Lo sentimos, no se encontraron resultados para"
+
+#: searchgov/jinja2/searchgov/index.html:54
+msgid "Try entering fewer or more general search terms."
+msgstr "Intente introducir menos términos de búsqueda o más generales."
+
+#: searchgov/jinja2/searchgov/index.html:62
+msgid "Results "
+msgstr "Resultados "
+
+#: searchgov/jinja2/searchgov/index.html:63
+msgid " of "
+msgstr " de "
+
+#: searchgov/jinja2/searchgov/index.html:64
+msgid " for "
+msgstr " para "
+
+#: searchgov/jinja2/searchgov/recommended.html:5
+msgid "Recommended"
+msgstr "Recomendado"
+
+#: searchgov/jinja2/searchgov/search.html:1
+msgid "/search/"
+msgstr "/es/buscar/"
+
+#: searchgov/jinja2/searchgov/search.html:6
+msgid "Enter your search term(s)"
+msgstr "Ingrese sus término(s) de búsqueda"
+
+#: searchgov/jinja2/searchgov/sidebar.html:2
+msgid "About us"
+msgstr "Quiénes somos"
+
+#: searchgov/jinja2/searchgov/sidebar.html:4
+msgid ""
+"We're the Consumer Financial Protection Bureau (CFPB), a U.S. government "
+"agency that makes sure banks, lenders, and other financial companies treat "
+"you fairly."
+msgstr ""
+"Somos la Oficina de Protección Financiera del Consumidor (CFPB), una agencia "
+"del gobierno de EE. UU. que se asegura de que los bancos, prestamistas y "
+"otras compañías financieras lo traten de manera justa."
+
+#: searchgov/jinja2/searchgov/sidebar.html:7
+msgid "Learn how the CFPB can help you"
+msgstr "Aprende cómo la CFPB puede ayudarte"

@@ -8,8 +8,6 @@ from django.utils.translation import gettext, ngettext
 
 from jinja2 import Environment
 
-from search.models import AUTOCOMPLETE_MAX_CHARS
-
 
 class RelativeTemplatePathEnvironment(Environment):
     """Jinja2 environment that supports template loading with relative paths.
@@ -99,7 +97,6 @@ def environment(**options):
     # Expose various Django methods into the Jinja2 environment.
     env.globals.update(
         {
-            "autocomplete_max_chars": AUTOCOMPLETE_MAX_CHARS,
             "reverse": reverse,
             "static": staticfiles_storage.url,
             "url": reverse,

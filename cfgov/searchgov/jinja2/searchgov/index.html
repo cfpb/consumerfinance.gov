@@ -1,0 +1,103 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+{% from './recommended.html' import render as render_recommended %}
+{% from './result.html' import render as render_result %}
+{% import 'v1/includes/molecules/notification.html' as notification %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+
+{% set search_header = _('Search the CFPB') %}
+
+
+{% block title -%}
+    {{ search_header }} | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Search the CFPB
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/searchgov/css/main.css') }}">
+{% endblock %}
+
+
+{% block content_main %}
+    {% set results_header = _('Search results') %}
+    <h1>{{ results_header if query else search_header }}</h1>
+    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
+    {% set qs = "?q=" + query if query else "" %}
+    {{ translation_links.render(
+        links=[
+        {
+        'href': url('searchgov') + qs,
+            'language': 'en',
+            'text': 'English'
+        },{
+            'href': url('searchgov_es') + qs,
+            'language': 'es',
+            'text': 'Spanish'
+        }]
+    ) }}
+    <div class="block block--flush-top">
+      {%- include './search.html' -%}
+
+      {% set notification_opts = {
+        'type': 'success',
+        'is_visible': false,
+        'message': '',
+        'explanation': ''
+      } %}
+
+      {% if query %}
+          {% if count == 0 %}
+            {% set msg_preamble = _('Sorry, there were no results found for') %}
+            {% set explanation = _('Try entering fewer or more general search terms.') %}
+            {% do notification_opts.update({
+              'type': 'warning',
+              'is_visible': true,
+              'message': msg_preamble + ' "' + query + '".',
+              'explanation': explanation
+             }) %}
+          {% else %}
+            {% set en_results = _('Results ') %}
+            {% set en_of = _(' of ') %}
+            {% set en_for = _(' for ') %}
+            {% do notification_opts.update({
+              'is_visible': true,
+              'message':  en_results ~ start_index ~ '-' ~ end_index ~ en_of ~ count ~ en_for ~ '"' ~ query ~ '"'
+            }) %}
+        {% endif %}
+        <div class="block
+                    block--padded
+                    block--sub">
+            {{ notification.render(
+                notification_opts.type,
+                notification_opts.is_visible,
+                notification_opts.message,
+                notification_opts.explanation
+            ) }}
+        </div>
+      {% endif %}
+
+      {{render_recommended(recommended)}}
+
+      <h2 class="u-visually-hidden">Results</h2>
+      {% for res in results -%}
+        {{render_result(res)}}
+      {%- endfor %}
+      </div>
+      <div class="block block--sub">
+        {{ pagination.render(
+             total_pages,
+             current_page
+        ) }}
+      </div>
+{% endblock content_main %}
+
+{% block content_sidebar %}
+    {%- include "./sidebar.html" -%}
+{% endblock content_sidebar %}

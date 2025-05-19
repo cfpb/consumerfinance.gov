@@ -122,6 +122,10 @@ class CardListViewTests(TestCase):
         response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
 
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("?format=invalid")
+
 
 class CardDetailViewTests(TestCase):
     @classmethod
@@ -153,6 +157,10 @@ class CardDetailViewTests(TestCase):
     def test_get_invalid_uses_standard_404_handling(self):
         with self.assertRaises(Http404):
             self.make_request("invalid-card")
+
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("invalid-card", "?format=invalid")
 
     def test_get_invalid_json(self):
         response = self.make_request("invalid-card", "?format=json")
