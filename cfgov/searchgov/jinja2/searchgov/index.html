@@ -66,9 +66,10 @@
             {% set en_results = _('Results ') %}
             {% set en_of = _(' of ') %}
             {% set en_for = _(' for ') %}
+            {% set en_count = count if count < 999 else _('1,000+') %}
             {% do notification_opts.update({
               'is_visible': true,
-              'message':  en_results ~ start_index ~ '-' ~ end_index ~ en_of ~ count ~ en_for ~ '"' ~ query ~ '"'
+              'message':  en_results ~ start_index ~ '-' ~ end_index ~ en_of ~ en_count ~ en_for ~ '"' ~ query ~ '"'
             }) %}
         {% endif %}
         <div class="block
