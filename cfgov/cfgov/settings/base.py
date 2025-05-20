@@ -309,7 +309,8 @@ STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
 # Serve files under cfgov/root at the root of the website.
 WHITENOISE_ROOT = PROJECT_ROOT / "root"
 
-ALLOWED_HOSTS = ["*"]
+# To be overridden by other settings files.
+ALLOWED_HOSTS = []
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"

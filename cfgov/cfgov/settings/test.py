@@ -2,6 +2,7 @@ from .base import *
 
 
 SECRET_KEY = "not-secret-key-for-testing"
+ALLOWED_HOSTS = ["*"]
 
 LOGGING = {
     "version": 1,
