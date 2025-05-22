@@ -18,11 +18,11 @@
 
   // Adding an extra 5px to the top to account for the absolute positioned
   // social media icons.
-  padding-top: math.div(50px, $base-font-size-px) + em;
+  padding-top: math.div(50px, $base-font-size-px) + rem;
 
   // There is a 10px margin-bottom on the  last .o-footer__list li's, plus the
   // 50px bottom padding = 60px of total padding at the bottom of the footer.
-  padding-bottom: math.div(50px, $base-font-size-px) + em;
+  padding-bottom: math.div(50px, $base-font-size-px) + rem;
   border-top: 5px solid var(--green);
   background: var(--gray-5);
 
@@ -32,11 +32,14 @@
 
   // Mobile only.
   @include respond-to-max($bp-xs-max) {
+    // Tighten top spacing on mobile.
+    padding-top: math.div(30px, $base-font-size-px) + rem;
+
     .m-list__link {
       display: block;
       box-sizing: border-box;
-      padding-top: math.div(10px, $base-font-size-px) + em;
-      padding-bottom: math.div(10px, $base-font-size-px) + em;
+      padding-top: math.div(10px, $base-font-size-px) + rem;
+      padding-bottom: math.div(10px, $base-font-size-px) + rem;
       border-top-width: 1px;
       border-bottom-width: 1px;
 
@@ -120,17 +123,6 @@
     position: relative;
     margin-bottom: math.div(45px, $base-font-size-px) + em;
 
-    .o-footer__top-button {
-      display: block;
-      width: 100%;
-      text-align: center;
-
-      // There's a standard margin between the top
-      // of the footer and the links. The button comes between
-      // that margin in the wireframes.
-      margin: -2em auto 2em;
-    }
-
     .o-footer__nav-list {
       margin-bottom: 0;
     }
@@ -140,10 +132,6 @@
       padding-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
       margin-bottom: math.div($grid-gutter-width, $base-font-size-px) + em;
       border-bottom: 1px solid var(--gray-40);
-
-      .o-footer__top-button {
-        display: none;
-      }
 
       .o-footer__nav-list {
         padding-left: 0;
