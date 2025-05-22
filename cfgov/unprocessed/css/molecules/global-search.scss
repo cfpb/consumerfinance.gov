@@ -162,14 +162,6 @@ $mobile-trigger-ht-px: 54px;
     }
   }
 
-  // Hide on print.
-  @media print {
-    & {
-      // Important needed to override JS display settings.
-      display: none !important;
-    }
-  }
-
   // Hide fallback by default.
   &__fallback {
     display: none;
@@ -180,6 +172,12 @@ $mobile-trigger-ht-px: 54px;
     .no-js & {
       display: block;
     }
+  }
+
+  // Don't print the global search.
+  @media print {
+    // Important needed to override JS display settings.
+    display: none !important;
   }
 }
 

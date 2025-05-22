@@ -24,7 +24,7 @@
   }
 }
 
-// Hide on print.
+// Don't print the breadcrumbs.
 @media print {
   .m-breadcrumbs {
     display: none;

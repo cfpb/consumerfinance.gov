@@ -1016,7 +1016,7 @@ $menu-link-hover-bar-px: 5px;
   }
 }
 
-// Hide on print.
+// Don't print the mega menu.
 @media print {
   .o-mega-menu {
     display: none;
