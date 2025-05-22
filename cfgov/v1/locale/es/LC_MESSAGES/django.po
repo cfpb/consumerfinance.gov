@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 17:38-0400\n"
+"POT-Creation-Date: 2025-05-22 09:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,22 +85,22 @@ msgstr "Leer la respuesta"
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:28
-#: v1/jinja2/v1/includes/molecules/global-search.html:36
+#: v1/jinja2/v1/includes/molecules/global-search.html:26
+#: v1/jinja2/v1/includes/molecules/global-search.html:34
 #: v1/jinja2/v1/includes/organisms/search-input.html:65
 msgid "Search"
 msgstr "Buscar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:33
+#: v1/jinja2/v1/includes/molecules/global-search.html:31
 msgid "Search the consumerfinance.gov website"
 msgstr "Busque en el sitio web consumerfinance.gov"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:40
+#: v1/jinja2/v1/includes/molecules/global-search.html:38
 #: v1/jinja2/v1/includes/organisms/video-player.html:63
 msgid "Close"
 msgstr "Cerrar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:63
+#: v1/jinja2/v1/includes/molecules/global-search.html:49
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
@@ -124,6 +124,10 @@ msgstr "Ir"
 msgid "Next"
 msgstr "Siguiente"
 
+#: v1/jinja2/v1/includes/molecules/print-button.html:19
+msgid "Print as handout"
+msgstr "Imprimir como folleto"
+
 #: v1/jinja2/v1/includes/molecules/print-button.html:32
 msgid "About us"
 msgstr "Acerca de nosotros"
@@ -135,11 +139,11 @@ msgid ""
 "markets for consumer financial products are fair, transparent, and "
 "competitive."
 msgstr ""
-"La Oficina para la Protección Financiera del Consumidor "
-"(CFPB, por sus siglas en inglés) es una agencia del siglo XXI que aplica "
-"y hace cumplir la ley financiera federal del consumidor y garantiza que los "
-"mercados de productos financieros del consumidor sean justos, transparentes "
-"y competitivos"
+"La Oficina para la Protección Financiera del Consumidor (CFPB, por sus "
+"siglas en inglés) es una agencia del siglo XXI que aplica y hace cumplir la "
+"ley financiera federal del consumidor y garantiza que los mercados de "
+"productos financieros del consumidor sean justos, transparentes y "
+"competitivos"
 
 #: v1/jinja2/v1/includes/molecules/print-button.html:48
 msgid "Learn more at"
@@ -223,15 +227,15 @@ msgstr "Mostrar"
 msgid "Hide"
 msgstr "Ocultar"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:31
+#: v1/jinja2/v1/includes/organisms/footer.html:33
 msgid "Back to top"
 msgstr "Ir arriba"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:184
+#: v1/jinja2/v1/includes/organisms/footer.html:187
 msgid "https://www.usa.gov/"
 msgstr "https://www.usa.gov/es/"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:184
+#: v1/jinja2/v1/includes/organisms/footer.html:187
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
