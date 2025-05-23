@@ -125,11 +125,3 @@ $min-app-width-px: 320px;
     }
   }
 }
-
-// Move logo on print.
-@media print {
-  .o-header__logo {
-    // Mega menu is hidden, so we need to remove logo offset.
-    margin-left: 15px !important;
-  }
-}

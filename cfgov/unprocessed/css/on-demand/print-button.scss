@@ -1,6 +1,8 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
+$print-gap: 0.3125in;
+
 .o-info-link-group {
   display: flex;
   flex-direction: column;
@@ -46,11 +48,48 @@
 
   // General reset defaults.
   body {
-    margin: 0.5in;
+    margin: $print-gap;
+    margin-top: math.div($print-gap, 2);
     background-color: #fff;
     color: #000;
     line-height: 1.5;
     box-decoration-break: clone;
+    font-size: 11pt; // 14.6667px
+  }
+
+  h1,
+  .h1 {
+    font-size: 24pt; // 32px
+  }
+
+  h2,
+  .h2 {
+    font-size: 18pt; // 24px
+  }
+
+  h3,
+  .h3 {
+    font-size: 16pt; // 21.3333px
+  }
+
+  h4,
+  .h4 {
+    font-size: 12pt; // 16px
+  }
+
+  h5,
+  .h5 {
+    font-size: 10pt; // 13.3333px
+  }
+
+  h6,
+  .h6 {
+    font-size: 9pt; // 12px
+  }
+
+  .block {
+    margin-top: $print-gap;
+    margin-bottom: $print-gap;
   }
 
   // Component specific adjustments.
@@ -58,8 +97,6 @@
     display: none;
   }
 
-  .skip-nav,
-  .o-header,
   .o-footer,
   .u-layout-grid__sidebar > * {
     display: none;
@@ -76,7 +113,7 @@
 
   .u-layout-grid__main > * {
     columns: 2;
-    column-gap: 0.5in;
+    column-gap: $print-gap;
     column-rule: 1px solid var(--gray-40);
   }
 
@@ -87,11 +124,16 @@
     break-inside: avoid;
   }
 
-  // Exclude heading from the columns.
+  // Exclude main heading from the columns.
   h1 {
     column-span: all;
-    border-bottom: 4px solid var(--green);
-    margin-bottom: math.div(30px, $base-font-size-px) + rem;
-    padding-bottom: math.div(30px, $base-font-size-px) + rem;
+    border-bottom: 1px solid var(--gray-40);
+    margin-top: $print-gap;
+    margin-bottom: $print-gap;
+    padding-bottom: $print-gap;
+  }
+
+  wagtail-userbar {
+    display: none;
   }
 }

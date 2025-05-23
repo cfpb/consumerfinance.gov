@@ -211,7 +211,7 @@
     }
   }
 
-  // Hide on print.
+  // Don't print the secondary navigation.
   @media print {
     display: none;
   }
