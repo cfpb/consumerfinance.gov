@@ -126,6 +126,12 @@ class CardListViewTests(TestCase):
         with self.assertRaises(Http404):
             self.make_request("?format=invalid")
 
+    def test_post_handled_properly(self):
+        view = HtmxMiddleware(CardListView.as_view())
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)
+
 
 class CardDetailViewTests(TestCase):
     @classmethod
@@ -171,3 +177,9 @@ class CardDetailViewTests(TestCase):
             json.loads(response.content),
             {"detail": "No CardSurveyData matches the given query."},
         )
+
+    def test_post_handled_properly(self):
+        view = CardDetailView.as_view()
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)
