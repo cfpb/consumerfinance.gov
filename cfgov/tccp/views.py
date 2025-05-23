@@ -89,11 +89,14 @@ class DRFExceptionMixin:
         nicer error message to the user.
 
         If the user specified an invalid or unsupported renderer (for example
-        with ?format=invalid), also show our standard Django error template.
+        with ?format=invalid), also show our standard Django error template,
+        as long as this is a GET request.
         """
         renderer = getattr(self.request, "accepted_renderer", None)
 
-        if (renderer is None) or (renderer.format == "html"):
+        if (self.request.method == "GET") and (
+            (renderer is None) or (renderer.format == "html")
+        ):
             raise exc
 
         return super().handle_exception(exc)
