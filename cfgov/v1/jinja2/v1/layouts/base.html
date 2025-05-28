@@ -52,7 +52,6 @@ itemscope itemtype="https://schema.org/FAQPage"
             {{ _('Consumer Financial Protection Bureau') }}
         {%- endblock title -%}
     </title>
-    <meta name="searchgov_custom1" content="{{ language }}">
     <meta name="template" content="{{ self._TemplateReference__context.name }}">
     <meta name="description"
           content="
@@ -60,6 +59,8 @@ itemscope itemtype="https://schema.org/FAQPage"
                 {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
+    <meta name="searchgov_custom1" content="{{ language }}">
+    <meta name="searchgov_custom2" content="{{ self.desc() }}">
 
     {# Always open preview panel links in a new tab. #}
     {% if request.in_preview_panel %}
