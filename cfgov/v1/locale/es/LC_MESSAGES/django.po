@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 15:19-0400\n"
+"POT-Creation-Date: 2025-05-28 16:39-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,7 +127,7 @@ msgstr "Siguiente"
 #: v1/jinja2/v1/includes/molecules/print-button.html:17
 #: v1/jinja2/v1/includes/molecules/print-button.html:19
 msgid "Print as handout"
-msgstr "Version para imprimir"
+msgstr "Versión para imprimir"
 
 #: v1/jinja2/v1/includes/molecules/print-button.html:32
 msgid "About us"
@@ -282,7 +282,7 @@ msgstr ""
 "Intente con un navegador web más nuevo o confirme que JavaScript está "
 "habilitado."
 
-#: v1/jinja2/v1/layouts/base.html:262
+#: v1/jinja2/v1/layouts/base.html:263
 msgid "Skip to main content"
 msgstr "Ir al contenido principal"
 
