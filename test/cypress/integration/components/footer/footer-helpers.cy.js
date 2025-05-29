@@ -4,7 +4,7 @@ export class Footer {
   }
 
   topButton() {
-    return this.footer().get('.o-footer__top-button');
+    return this.footer().get('[data-cy=btn-back-to-top]');
   }
 
   navList() {

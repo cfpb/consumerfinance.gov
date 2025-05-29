@@ -9,7 +9,7 @@ import dj_database_url
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-from cfgov.util import admin_emails, environment_json
+from cfgov.util import admin_emails, environment_json, get_s3_media_config
 
 
 # Repository root is 4 levels above this file
@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     "wagtailflags",
     "ask_cfpb",
     "agreements",
+    "searchgov",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -308,7 +309,8 @@ STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
 # Serve files under cfgov/root at the root of the website.
 WHITENOISE_ROOT = PROJECT_ROOT / "root"
 
-ALLOWED_HOSTS = ["*"]
+# To be overridden by other settings files.
+ALLOWED_HOSTS = []
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
@@ -327,6 +329,10 @@ WAGTAILSEARCH_BACKENDS = {
 # This is the name of the template that will render a footnote citaiton
 # inline in rich text.
 WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
+
+# Search api
+SEARCHGOV_API_KEY = os.environ.get("SEARCHGOV_API_KEY")
+SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -377,26 +383,17 @@ OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
 
-# S3 Configuration
-# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
-AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
-AWS_S3_FILE_OVERWRITE = False
-AWS_S3_SECURE_URLS = True  # True = use https; False = use http
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
-
-if os.environ.get("S3_ENABLED", "False") == "True":
-    AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-    AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-    MEDIA_URL = os.path.join(
-        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
-    )
-
+if os.getenv("S3_ENABLED"):
+    MEDIA_URL, _storage_options = get_s3_media_config()
     STORAGES["default"] = {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _storage_options,
     }
+
+# This environment variable is also used in get_s3_media_config above.
+# This is defined here as its own setting to maintain existing functionality
+# in various applications that read/write data from/to S3.
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")

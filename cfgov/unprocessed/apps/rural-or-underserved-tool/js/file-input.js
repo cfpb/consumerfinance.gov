@@ -1,5 +1,8 @@
 import { changeElHTML, addClass, removeClass } from './dom-tools.js';
 
+/**
+ * Hide the uploaded file name section.
+ */
 function resetFileName() {
   addClass('#file-list-wrapper', 'u-hidden');
 }

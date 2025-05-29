@@ -19,30 +19,23 @@
     z-index: 11;
 
     &:focus {
-      @include a-btn;
-
-      // TODO: refactor a-btn mixin to allow overriding of values.
-      /* stylelint-disable no-duplicate-selectors */
-      & {
-        /* stylelint-enable */
-        // Adjustments to button to make it appear like a super button.
-        padding: (math.div(11px, 18px) + em) (math.div(29px, 18px) + em);
-        font-size: math.div(18px, $base-font-size-px) + em;
-
-        top: 15px;
-        left: 15px;
-        height: auto;
-        width: auto;
-        overflow: visible;
-        outline: 0;
-        transition:
-          transform 0.1s ease,
-          background 0.2s linear;
-      }
+      top: 15px;
+      left: 15px;
+      height: auto;
+      width: auto;
+      overflow: visible;
+      transition:
+        transform 0.1s ease,
+        background 0.2s linear;
     }
 
     &--flush-left:focus {
       left: 0;
     }
+  }
+
+  // Don't print the skip-nav.
+  @media print {
+    display: none;
   }
 }

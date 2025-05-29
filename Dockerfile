@@ -60,12 +60,22 @@ RUN \
     pip install -r requirements/deployment_container.txt && \
     apk del .build-deps
 
+# Remove setuptools to prevent the built image from triggering CVE-2025-47273,
+# which is present in setuptools<78.1.1:
+#
+# https://nvd.nist.gov/vuln/detail/CVE-2025-47273
+#
+# As long as cf.gov is on Python 3.8, we can't upgrade setuptools past v75.3:
+#
+# https://github.com/pypa/setuptools/blob/main/NEWS.rst#v7540
+RUN pip uninstall -y setuptools
+
 # The application will run on port 8000
 EXPOSE 8000
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:20-alpine AS node-builder
+FROM node:22-alpine AS node-builder
 
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
@@ -157,6 +167,14 @@ COPY test.sql.gz .
 
 # Copy our static build over from node-builder
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
+
+# Delete unprocessed frontend code, which was only needed by node-builder.
+# This avoids false positive image vulnerabilities in source Node packages.
+#
+# Also delete an unused test keyfile from the ndg-httpsclient Python package.
+# This avoids a false positive due to storing a private keyfile in the image.
+RUN rm -rf ./cfgov/unprocessed && \
+    rm /usr/local/lib/python3.8/site-packages/ndg/httpsclient/test/pki/localhost.key
 
 # Run Django's collectstatic to collect assets from the frontend build.
 #

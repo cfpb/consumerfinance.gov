@@ -1,12 +1,7 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
-/* "The `.print` class acts a styling hook. When using the
-  `@include respond-to-print()` mixin, all stlyes will be nested under both
-  `@media print` and `.print`."
- */
-
-@include respond-to-print {
+@media print {
   a {
     font-weight: 500;
   }
@@ -209,7 +204,9 @@
 
   // Solving longstanding issue in Firefox of cutting off inline-block
   // elements after one page.
-  @document url-prefix() {
+  /* stylelint-disable at-rule-no-vendor-prefix */
+  @-moz-document url-prefix() {
+    /* stylelint-enable at-rule-no-vendor-prefix */
     html,
     body {
       margin: 0;

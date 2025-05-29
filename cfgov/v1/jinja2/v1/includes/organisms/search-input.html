@@ -26,6 +26,8 @@
 
    value.max_length: The maximum length of characters for the input.
 
+   value.has_error: Whether to show the error styling for the input field.
+
    ========================================================================== #}
 
 {% macro render(value) %}
@@ -41,7 +43,7 @@
                id="{{ value.input_id }}"
                name="{{ value.input_name }}"
                value="{{ value.input_value or '' }}"
-               class="a-text-input"
+               class="a-text-input{% if value.has_error %} a-text-input--error{% endif %}"
                placeholder="{{ value.placeholder }}"
                title="{{ value.placeholder }}"
                autocomplete="off"

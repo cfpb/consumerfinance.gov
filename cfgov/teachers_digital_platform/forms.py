@@ -1,6 +1,6 @@
 from django import forms
 
-from search.elasticsearch_helpers import make_safe
+from core.utils import make_safe
 
 
 class SearchForm(forms.Form):

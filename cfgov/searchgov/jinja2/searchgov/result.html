@@ -1,0 +1,23 @@
+{%- macro bold_matches(text) -%}
+  {% for char in text -%}
+    {%- if char == "\ue000" -%}
+      <b>
+    {%- elif char == "\ue001" -%}
+      </b>
+    {%- else -%}
+      {{char}}
+    {%- endif -%}
+  {% endfor %}
+{%- endmacro -%}
+
+{%- macro render(result, key="snippet") -%}
+  <div class="search-result">
+    <a href="{{result.url}}">
+      <article>
+        <h3 class="h4 u-mb0">{{bold_matches(result.title)}}</h3>
+        <div class="search-result__url u-mb10">{{result.url}}</div>
+        <p>{{bold_matches(result[key])}}</p>
+      </article>
+    </a>
+  </div>
+{%- endmacro -%}

@@ -22,14 +22,17 @@
 
         <div class="o-footer__pre">
 
-            <a class="a-btn
-                      a-btn--secondary
-                      o-footer__top-button"
-                data-gtm_ignore="true"
-                data-js-hook="behavior_return-to-top"
-                href="#">
-                {{ _('Back to top') }} {{ svg_icon('arrow-up') }}
-            </a>
+            <div class="u-show-on-mobile">
+                <a class="a-btn
+                          a-btn--secondary
+                          a-btn--full-on-xs
+                          u-mb45"
+                    data-gtm_ignore="true"
+                    data-js-hook="behavior_return-to-top"
+                    href="#">
+                    <span>{{ _('Back to top') }}</span> {{ svg_icon('arrow-up') }}
+                </a>
+            </div>
 
             <ul class="o-footer__nav-list m-list">
                 {% if language == 'es' %}

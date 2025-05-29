@@ -1,0 +1,139 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+$print-gap: 0.3125in;
+
+.o-info-link-group {
+  display: flex;
+  flex-direction: column;
+  gap: math.div(10px, $base-font-size-px) + rem;
+}
+
+.m-info-link {
+  display: flex;
+  gap: math.div(5px, $base-font-size-px) + rem;
+
+  & > .cf-icon-svg {
+    flex: none;
+    fill: var(--gray);
+  }
+
+  // Only adding left padding if an icon is present.
+  .cf-icon-svg + &__link {
+    flex-grow: 1;
+  }
+
+  &__message {
+    font-size: math.div(16px, $base-font-size-px) + rem;
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  &__link {
+    color: var(--pacific);
+    border-bottom: 1px dotted var(--pacific);
+  }
+}
+
+@media screen {
+  .u-print-only {
+    display: none;
+  }
+}
+
+@media print {
+  @page {
+    margin: 8mm 0;
+  }
+
+  // General reset defaults.
+  body {
+    margin: $print-gap;
+    margin-top: math.div($print-gap, 2);
+    background-color: #fff;
+    color: #000;
+    line-height: 1.5;
+    box-decoration-break: clone;
+    font-size: 11pt; // 14.6667px
+  }
+
+  h1,
+  .h1 {
+    font-size: 24pt; // 32px
+  }
+
+  h2,
+  .h2 {
+    font-size: 18pt; // 24px
+  }
+
+  h3,
+  .h3 {
+    font-size: 16pt; // 21.3333px
+  }
+
+  h4,
+  .h4 {
+    font-size: 12pt; // 16px
+  }
+
+  h5,
+  .h5 {
+    font-size: 10pt; // 13.3333px
+  }
+
+  h6,
+  .h6 {
+    font-size: 9pt; // 12px
+  }
+
+  .block {
+    margin-top: $print-gap;
+    margin-bottom: $print-gap;
+  }
+
+  // Component specific adjustments.
+  .m-print-button__action {
+    display: none;
+  }
+
+  .o-footer,
+  .u-layout-grid__sidebar > * {
+    display: none;
+  }
+
+  // Show print button branding content.
+  .u-layout-grid__sidebar .block:has(.m-print-button) {
+    display: initial;
+  }
+
+  .u-layout-grid__main {
+    padding-top: 0;
+  }
+
+  .u-layout-grid__main > * {
+    columns: 2;
+    column-gap: $print-gap;
+    column-rule: 1px solid var(--gray-40);
+  }
+
+  .o-full-width-text-group .m-full-width-text,
+  .o-well,
+  .o-table,
+  h1 {
+    break-inside: avoid;
+  }
+
+  // Exclude main heading from the columns.
+  h1 {
+    column-span: all;
+    border-bottom: 1px solid var(--gray-40);
+    margin-top: $print-gap;
+    margin-bottom: $print-gap;
+    padding-bottom: $print-gap;
+  }
+
+  wagtail-userbar {
+    display: none;
+  }
+}

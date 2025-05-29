@@ -122,6 +122,16 @@ class CardListViewTests(TestCase):
         response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
 
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("?format=invalid")
+
+    def test_post_handled_properly(self):
+        view = HtmxMiddleware(CardListView.as_view())
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)
+
 
 class CardDetailViewTests(TestCase):
     @classmethod
@@ -154,6 +164,10 @@ class CardDetailViewTests(TestCase):
         with self.assertRaises(Http404):
             self.make_request("invalid-card")
 
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("invalid-card", "?format=invalid")
+
     def test_get_invalid_json(self):
         response = self.make_request("invalid-card", "?format=json")
         response.render()
@@ -163,3 +177,9 @@ class CardDetailViewTests(TestCase):
             json.loads(response.content),
             {"detail": "No CardSurveyData matches the given query."},
         )
+
+    def test_post_handled_properly(self):
+        view = CardDetailView.as_view()
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)

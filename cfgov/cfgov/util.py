@@ -24,3 +24,36 @@ def environment_json(variable_name, message=None, default=None):
         raise ImproperlyConfigured(message) from err
 
     return json_value
+
+
+def get_s3_media_config():
+    """Generate S3 file storage configuration from environment.
+
+    Returns tuple of (MEDIA_URL, storage options).
+    """
+    bucket_name = os.environ["AWS_STORAGE_BUCKET_NAME"]
+    location = os.getenv("AWS_S3_STORAGE_LOCATION") or "f"
+    custom_domain = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+
+    media_domain = custom_domain or f"{bucket_name}.s3.amazonaws.com"
+    media_url = f"https://{media_domain}/{location}/"
+
+    storage_options = {
+        # Bucket to use for file storage.
+        "bucket_name": bucket_name,
+        # Default to bucket ACL.
+        "default_acl": None,
+        # Do not add auth-related query parameters to S3 URLs.
+        # Assumes public access to bucket URLs.
+        "querystring_auth": False,
+        # Don't overwrite, instead add characters to duplicate filenames.
+        # Required by Wagtail, see:
+        # https://docs.wagtail.org/en/stable/deployment/under_the_hood.html#cloud-storage.
+        "file_overwrite": False,
+        # Where in the bucket files get written.
+        "location": location,
+        # Optionally specify a custom domain for S3 URLs.
+        "custom_domain": custom_domain,
+    }
+
+    return media_url, storage_options

@@ -70,6 +70,31 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
     "h6",
 ]
 
+UNSAFE_CHARACTERS = [
+    "#",
+    "%",
+    ";",
+    "^",
+    "~",
+    "`",
+    "|",
+    "<",
+    ">",
+    "[",
+    "]",
+    "{",
+    "}",
+    "\\",
+]
+
+MAX_CHARS = 75
+
+
+def make_safe(term):
+    for char in UNSAFE_CHARACTERS:
+        term = term.replace(char, "")
+    return term[:MAX_CHARS]
+
 
 def ask_short_url(url):
     match = ASK_CFPB_LINKS.search(url)
