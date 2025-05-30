@@ -36,6 +36,7 @@
 
   > h2 {
     margin-bottom: math.div(-10px, $base-font-size-px) + rem;
+
     @include respond-to-min($bp-sm-min) {
       margin-bottom: math.div(-25px, $base-font-size-px) + rem;
     }
