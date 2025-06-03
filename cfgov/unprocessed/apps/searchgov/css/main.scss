@@ -12,6 +12,7 @@
 
   a {
     display: block;
+
     // Give a little breathing room in outlined focus state
     padding: math.div(4px, $base-font-size-px) + rem;
     margin: math.div(-4px, $base-font-size-px) + rem;
