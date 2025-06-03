@@ -10,10 +10,13 @@ class CFGOVSitemapTestCase(TestCase):
         request = RequestFactory().get("/sitemap.xml")
         return CFGOVSitemap(request)
 
-    def test_site(self):
+    def test_get_wagtail_site(self):
         sitemap = self.make_sitemap()
         site = sitemap.get_wagtail_site()
         self.assertIsNotNone(site)
+
+        no_request_sitemap = CFGOVSitemap()
+        self.assertIsNotNone(no_request_sitemap.get_wagtail_site())
 
     def test_items(self):
         sitemap = self.make_sitemap()
