@@ -54,12 +54,12 @@
 
       {% if query %}
           {% if count == 0 %}
-            {% set msg_preamble = _('Sorry, there were no results found for') %}
-            {% set explanation = _('Try entering fewer or more general search terms.') %}
+            {% set msg_preamble = _('We\'re sorry, but nothing matched your search terms.') %}
+            {% set explanation = _('Please try again with different keywords.') %}
             {% do notification_opts.update({
               'type': 'warning',
               'is_visible': true,
-              'message': msg_preamble + ' "' + query + '".',
+              'message': msg_preamble,
               'explanation': explanation
              }) %}
           {% else %}
