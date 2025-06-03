@@ -1,10 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from functools import partial
 
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
@@ -37,26 +36,8 @@ from housing_counselor.views import (
 )
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
-from v1.models import CFGOVPage
 
-
-class CFGOVSitemap(Sitemap):
-    # Set a minimum lastmod date
-    # This is to bring in changes that don't
-    # propagate via publishing (metadata updates, etc)
-    min_date = datetime(2025, 6, 4, 0, 0, 0, 0, tzinfo=timezone.utc)
-
-    def items(self):
-        return CFGOVPage.objects.exclude(last_published_at=None)
-
-    def location(self, obj):
-        return obj.get_url_parts()[2]
-
-    def lastmod(self, obj):
-        pub = obj.last_published_at
-        if pub > self.min_date:
-            return pub
-        return self.min_date
+from .sitemap import CFGOVSitemap
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -426,7 +407,7 @@ urlpatterns = [
         r"^sitemap\.xml$",
         akamai_no_store(sitemap),
         {"sitemaps": {"site": CFGOVSitemap}},
-        name="django.contrib.sitemaps.views.sitemap",
+        name="sitemap",
     ),
     re_path(
         r"^regulations3k-service-worker.js$",
