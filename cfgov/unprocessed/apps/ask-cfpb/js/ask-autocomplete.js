@@ -33,6 +33,9 @@ function resetErrorMsg() {
   inputElm.setAttribute('aria-label', labelVal);
 }
 
+/**
+ * Show the input error message.
+ */
 function showError() {
   submitButton.setAttribute('disabled', 'true');
   errorMessage.classList.remove('u-hidden');
