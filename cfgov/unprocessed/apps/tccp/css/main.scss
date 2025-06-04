@@ -626,11 +626,6 @@ html.js form[hx-boost] {
   }
 }
 
-.a-form-alert__text {
-  display: block;
-  margin-left: math.div(20px, $base-font-size-px) + em;
-}
-
 // Our page has no sidebar but there are a handful of
 // elements that we want to cap at a width slightly longer
 // than our standard cf.gov line length.
