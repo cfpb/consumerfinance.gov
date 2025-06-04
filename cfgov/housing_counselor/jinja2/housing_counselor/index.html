@@ -87,9 +87,9 @@
 
                             {% import 'v1/includes/organisms/search-input.html' as search_input %}
                             {{ search_input.render({
-                                "input_aria_describedby_id": "o-search-bar_error-message",
-                                "input_id": "hud-hca-api-query",
-                                "input_name": "zipcode",
+                                "input_aria_describedby_id": 'o-search-bar_error-message' if zipcode and invalid_zip_error_message else '',
+                                "input_id": 'hud-hca-api-query',
+                                "input_name": 'zipcode',
                                 "input_value": zipcode if zipcode else '',
                                 "input_aria_label": _('Search by ZIP Code'),
                                 "has_autocomplete": autocomplete,
@@ -100,7 +100,7 @@
                             }) }}
 
                             {% if zipcode and invalid_zip_error_message %}
-                            <div class="a-form-alert a-form-alert--error" role="alert">
+                            <div id="o-search-bar_error-message" class="a-form-alert a-form-alert--error" role="alert">
                                 {{ svg_icon('error-round') }}
                                 <span class="a-form-alert__text">
                                     {{ invalid_zip_error_message }}
