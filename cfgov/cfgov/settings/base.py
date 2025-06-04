@@ -125,7 +125,6 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
-    "wagtail_deletion_archival",
 )
 
 MIDDLEWARE = (
@@ -282,15 +281,6 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
-
-if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
-    STORAGES["wagtail_deletion_archival"] = {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-        "OPTIONS": {
-            "location": WAGTAIL_DELETION_ARCHIVE_PATH,
-        }
-    }
-
 
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
