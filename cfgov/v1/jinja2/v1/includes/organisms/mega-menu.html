@@ -1,4 +1,5 @@
 {% set base_class = 'o-mega-menu' %}
+{% from './mega-menu-items.html' import menu_items_by_language %}
 
 {# =============================================================================
 
@@ -296,10 +297,15 @@
 
    Creates a mega menu primary navigation menu.
 
+   menu_items: python list of menu items
    language: The page's language. Defaults to English.
 
    ========================================================================== #}
-{% macro mega_menu( menu_items, language='en' ) %}
+{% macro mega_menu( language='en' ) %}
+{% set menu_items = menu_items_by_language['en'] %}
+{% if language in menu_items_by_language %}
+  {% set menu_items = menu_items_by_language[language] %}
+{% endif %}
 <nav class="{{ base_class }}
             u-hidden"
      data-js-hook="behavior_flyout-menu"
