@@ -29,10 +29,10 @@
                     {% include 'v1/layouts/_footnotes.html' %}
                     {% include 'v1/layouts/_last-modified.html' %}
                     {% if page.sidefoot %}
-                        <aside class="o-prefooter">
+                        <footer class="o-prefooter">
                             {{ streamfield_sidefoot.render(page.sidefoot) }}
                             {% block prefooter_more_content scoped -%}{%- endblock %}
-                        </aside>
+                        </footer>
                     {% endif %}
                 </div>
             {% endblock %}

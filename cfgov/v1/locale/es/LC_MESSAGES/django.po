@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-28 16:39-0400\n"
+"POT-Creation-Date: 2025-06-04 17:28-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,7 +87,7 @@ msgstr "Enviar una queja"
 
 #: v1/jinja2/v1/includes/molecules/global-search.html:26
 #: v1/jinja2/v1/includes/molecules/global-search.html:34
-#: v1/jinja2/v1/includes/organisms/search-input.html:65
+#: v1/jinja2/v1/includes/organisms/search-input.html:66
 msgid "Search"
 msgstr "Buscar"
 
@@ -240,8 +240,8 @@ msgstr "https://www.usa.gov/es/"
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
-#: v1/jinja2/v1/includes/organisms/search-input.html:56
 #: v1/jinja2/v1/includes/organisms/search-input.html:57
+#: v1/jinja2/v1/includes/organisms/search-input.html:58
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
@@ -253,8 +253,8 @@ msgid "Table of contents"
 msgstr "Ítem destacado"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:20
-msgid "Section navigation"
-msgstr "Navegación de la sección"
+msgid "Section"
+msgstr "Sección"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:24
 msgid "Navigate this section"
