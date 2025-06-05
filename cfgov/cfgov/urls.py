@@ -4,13 +4,13 @@ from functools import partial
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.sitemaps.views import sitemap
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
 from flags.urls import flagged_re_path
@@ -36,8 +36,7 @@ from housing_counselor.views import (
 )
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
-
-from .sitemap import CFGOVSitemap
+from v1.sitemap import Sitemap
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -406,7 +405,7 @@ urlpatterns = [
     re_path(
         r"^sitemap\.xml$",
         akamai_no_store(sitemap),
-        {"sitemaps": {"site": CFGOVSitemap}},
+        {"sitemaps": {"site": Sitemap}},
         name="sitemap",
     ),
     re_path(
