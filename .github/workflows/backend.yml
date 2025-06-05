@@ -68,6 +68,7 @@ jobs:
 
       - name: Run tox -e ${{ matrix.toxenv }}
         run: |
+          gettext --version
           tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
