@@ -74,9 +74,10 @@ jobs:
           pip install -r requirements/ci.txt
 
       - name: Run tox -e ${{ matrix.toxenv }}
+        # LD_LIBRARY_PATH is set so that validate-translations can find gettext.
         run: |
           gettext --version
-          tox -e ${{ matrix.toxenv }}
+          LD_LIBRARY_PATH=/usr/local/lib tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
           ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
