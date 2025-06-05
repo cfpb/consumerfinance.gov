@@ -283,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.10.0":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.10.0.tgz#2143c55b811a88dfda0b4ff8bee308830927123d"
-  integrity sha512-/hl5p9x2x9NpBGn0reLhjsee6+fIwSIHUwKaXNvHDeouM9T7EWm8sav3jtXnbx8xegTqBqDOGirYCnwt4GlKiA==
+"@cfpb/cfpb-design-system@3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.11.0.tgz#65dea638da1dfae7921169e1ac6b2aadf635afd5"
+  integrity sha512-iQUgWMx2JR/TUfkC5OQVCHNbrfSeyex5cDY4FqGClO57G3c7BlppbhPP4/py7SzCenYaYPsCzhpdxrqw1PWLnw==
   dependencies:
     tippy.js "6.3.7"
 
@@ -2461,10 +2461,10 @@ eslint-module-utils@^2.12.0:
   dependencies:
     debug "^3.2.7"
 
-eslint-plugin-cypress@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-5.0.1.tgz#776507d9d08d3c12a044327e43132ceb231fb9ea"
-  integrity sha512-m1OlIo/tqlCQmxLNC+FE/ObDEB4GuGZqu0dO3+XdwJVErmQC1Wlw2jlBSV+jOdsTRdhjpT0qz49vdlIFKyU4dg==
+eslint-plugin-cypress@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-5.1.0.tgz#348c63f2afb2b336ab2063bf27347c1219be64b6"
+  integrity sha512-tdLXm4aq9vX2hTtKJTUFD3gdNseMKqsf8+P6hI4TtOPdz1LU4xvTpQBd1++qPAsPZP2lyYh71B5mvzu2lBr4Ow==
   dependencies:
     globals "^16.2.0"
 
