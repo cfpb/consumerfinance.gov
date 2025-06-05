@@ -15,6 +15,10 @@ jobs:
   backend:
     runs-on: ubuntu-latest
 
+    env:
+      # LD_LIBRARY_PATH is set so that validate-translations can find gettext.
+      LD_LIBRARY_PATH: /usr/local/lib
+
     strategy:
       matrix:
         toxenv:
@@ -50,8 +54,8 @@ jobs:
       - name: Install gettext for translations
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential wget
-          wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
+          sudo apt-get install -y build-essential
+          curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
           tar xzvf gettext-0.25.tar.gz
           cd gettext-0.25
           ./configure --prefix=/usr/local
@@ -74,10 +78,8 @@ jobs:
           pip install -r requirements/ci.txt
 
       - name: Run tox -e ${{ matrix.toxenv }}
-        # LD_LIBRARY_PATH is set so that validate-translations can find gettext.
         run: |
-          gettext --version
-          LD_LIBRARY_PATH=/usr/local/lib tox -e ${{ matrix.toxenv }}
+          tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
           ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
