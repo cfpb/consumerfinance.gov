@@ -28,20 +28,6 @@
 {% block content_main %}
     {% set results_header = _('Search results') %}
     <h1>{{ results_header if query else search_header }}</h1>
-    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-    {% set qs = "?q=" + query if query else "" %}
-    {{ translation_links.render(
-        links=[
-        {
-        'href': url('searchgov') + qs,
-            'language': 'en',
-            'text': 'English'
-        },{
-            'href': url('searchgov_es') + qs,
-            'language': 'es',
-            'text': 'Spanish'
-        }]
-    ) }}
     <div class="block block--flush-top">
       {%- include './search.html' -%}
 
