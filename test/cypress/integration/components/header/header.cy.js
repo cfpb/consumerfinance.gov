@@ -11,7 +11,10 @@ describe('Header', () => {
   describe('on desktop', () => {
     beforeEach(() => {
       cy.viewport(1200, 800);
-      cy.visit('/');
+      // For now, we can't test this against the homepage
+      // TODO: Restore this line when the homepage is restored.
+      // cy.visit('/');
+      cy.visit('/data-research/consumer-complaints/')
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the first mega-menu trigger
@@ -29,7 +32,7 @@ describe('Header', () => {
       menuDesktop.secondPanel().should('not.be.visible');
     });
 
-    xit('clicking from the global search to the mega-menu', () => {
+    it('clicking from the global search to the mega-menu', () => {
       // When I click on the global search trigger.
       globalSearch.trigger().click();
       // Then the global search content should be visible.
@@ -64,7 +67,10 @@ describe('Header', () => {
   describe('on mobile', () => {
     beforeEach(() => {
       cy.viewport(480, 800);
-      cy.visit('/');
+      // For now, we can't test this against the homepage
+      // TODO: Restore this line when the homepage is restored.
+      // cy.visit('/');
+      cy.visit('/data-research/consumer-complaints/')
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the root hamburger menu.
@@ -80,7 +86,7 @@ describe('Header', () => {
       // Then the mega-menu content should not be visible.
       menuMobile.firstPanel().should('not.be.inViewport');
     });
-    xit('clicking from the global search to the mega-menu', () => {
+    it('clicking from the global search to the mega-menu', () => {
       // When I click on the global search trigger.
       globalSearch.trigger().click();
       // Then the header organism should display the overlay.
