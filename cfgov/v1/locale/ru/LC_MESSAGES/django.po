@@ -201,7 +201,7 @@ msgid "Table of contents"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:20
-msgid "Section navigation"
+msgid "Section"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:24
