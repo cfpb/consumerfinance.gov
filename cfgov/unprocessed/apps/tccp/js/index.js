@@ -132,12 +132,12 @@ function handleFormValidation(event) {
   const location = document.querySelector('#id_location');
   const locationError = document.querySelector('#location-required');
   if (location.value) {
-    location.classList.remove('a-select--error');
+    location.parentElement.classList.remove('a-select--error');
     locationError.classList.add('u-visually-hidden');
   } else {
     event.preventDefault();
     location.closest('.m-form-field').scrollIntoView({ behavior: 'smooth' });
-    location.classList.add('a-select--error');
+    location.parentElement.classList.add('a-select--error');
     locationError.classList.remove('u-visually-hidden');
   }
 }
