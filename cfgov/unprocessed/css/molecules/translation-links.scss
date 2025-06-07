@@ -61,10 +61,3 @@ html[lang='ar'] ul.m-translation-links {
     }
   }
 }
-
-// Don't print the translation links.
-@media print {
-  ul.m-translation-links {
-    display: none;
-  }
-}
