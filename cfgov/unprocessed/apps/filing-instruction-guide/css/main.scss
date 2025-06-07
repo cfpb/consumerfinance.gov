@@ -176,18 +176,15 @@
     appearance: none;
     display: inline-block;
     padding: math.div(7px, $base-font-size-px) + em;
-    border: 1px solid $input-border;
-    background: $input-bg;
-    color: $input-text;
+    border: 1px solid var(--gray-60);
+    background: var(--white);
+    color: var(--black);
 
     padding-left: math.div(32px, $base-font-size-px) + em;
     &:focus {
-      border-color: $input-border-focused;
-      box-shadow: 0 0 0 1px $input-border-focused;
-      outline: 1px dotted $input-border-focused;
-
-      // The outline-offset property is not supported everywhere (e.g. IE)
-      // but it adds a nice touch in browsers where it is.
+      border-color: var(--pacific);
+      box-shadow: 0 0 0 1px var(--pacific);
+      outline: 1px dotted var(--pacific);
       outline-offset: 2px;
     }
   }
@@ -196,17 +193,14 @@
     a {
       color: var(--black);
       &:focus {
-        border-color: $input-border-focused;
-        box-shadow: 0 0 0 1px $input-border-focused;
-        outline: 1px dotted $input-border-focused;
-
-        // The outline-offset property is not supported everywhere (e.g. IE)
-        // but it adds a nice touch in browsers where it is.
+        border-color: var(--pacific);
+        box-shadow: 0 0 0 1px var(--pacific);
+        outline: 1px dotted var(--pacific);
         outline-offset: 2px;
       }
       &:hover {
-        border-color: $input-border-hover;
-        outline: 1px solid $input-border-hover;
+        border-color: var(--pacific);
+        outline: 1px solid var(--pacific);
       }
     }
   }
