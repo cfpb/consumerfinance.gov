@@ -92,6 +92,10 @@ $print-gap: 0.3125in;
     margin-bottom: $print-gap;
   }
 
+  .eyebrow {
+    margin-top: $print-gap;
+  }
+
   // Component specific adjustments.
   .m-print-button__action {
     display: none;
@@ -122,6 +126,11 @@ $print-gap: 0.3125in;
   .o-table,
   h1 {
     break-inside: avoid;
+  }
+
+  // Make tables full width.
+  .o-table {
+    column-span: all;
   }
 
   // Exclude main heading from the columns.
