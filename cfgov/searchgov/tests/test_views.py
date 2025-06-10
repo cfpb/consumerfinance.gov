@@ -53,3 +53,13 @@ class EncodeUrlTestCase(TestCase):
             encode_url({"query": "term&does=encode"}),
             API_ENDPOINT.format("query=term%26does%3Dencode"),
         )
+
+
+class JsonTestCase(TestCase):
+    def test_json_response(self):
+        response = self.client.get("/search/?q=mortgage&format=json")
+        self.assertEqual(response["Content-Type"], "application/json")
+
+    def test_html_response(self):
+        response = self.client.get("/search/?q=mortgage")
+        self.assertEqual(response["Content-Type"], "text/html; charset=utf-8")

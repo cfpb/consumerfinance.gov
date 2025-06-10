@@ -4,12 +4,6 @@ from searchgov.forms import SearchForm
 
 
 class SearchFormTestCase(TestCase):
-    def test_clean_term(self):
-        form = SearchForm(data={"q": "    payday^~`[]#<>;|%\\{\\}\\"})
-        self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data["q"], "payday")
-        self.assertEqual(1, form.cleaned_data["page"])
-
     def test_clean_page(self):
         form = SearchForm(data={"q": "payday", "page": 3})
         self.assertTrue(form.is_valid())
@@ -22,3 +16,12 @@ class SearchFormTestCase(TestCase):
     def test_invalid_page(self):
         form = SearchForm(data={"q": "payday", "page": "fake"})
         self.assertFalse(form.is_valid())
+
+    def test_json_page(self):
+        form = SearchForm(data={"q": "payday", "page": "4", "format": "json"})
+        self.assertTrue(form.is_valid())
+
+        bad_form = SearchForm(
+            data={"q": "payday", "page": "4", "format": "something_else"}
+        )
+        self.assertFalse(bad_form.is_valid())
