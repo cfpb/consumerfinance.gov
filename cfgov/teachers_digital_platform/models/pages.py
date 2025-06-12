@@ -301,5 +301,12 @@ class ActivityPage(CFGOVPage):
             if topic_list:
                 return ", ".join(topic_list)
 
+    def get_meta_description(self):
+        return (
+            "Financial literacy activity where "
+            + self.summary[:1].lower()
+            + self.summary[1:]
+        )
+
     class Meta:
         verbose_name = "TDP Activity page"
