@@ -12,7 +12,7 @@ RUN \
 FROM centos7-py38 AS cfgov-artifact-builder
 
 RUN \
-    yum install -y gcc && \
+    yum install -y gcc git && \
     source /opt/rh/rh-python38/enable && \
     pip install --no-cache-dir -U pip setuptools wheel
 
