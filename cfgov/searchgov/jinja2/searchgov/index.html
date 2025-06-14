@@ -69,11 +69,13 @@
         </div>
       {% endif %}
 
-      {{render_recommended(recommended)}}
+      {%- set domain = '/'.join(request.build_absolute_uri().split('/')[:3]) -%}
+
+      {{render_recommended(recommended, domain)}}
 
       <h2 class="u-visually-hidden">Results</h2>
       {% for res in results -%}
-        {{render_result(res)}}
+        {{render_result(res, domain)}}
       {%- endfor %}
       </div>
       <div class="block block--sub">
