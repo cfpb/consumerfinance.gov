@@ -1,3 +1,6 @@
+from django.urls import path
+
+from wagtail.admin.viewsets.base import ViewSet
 from wagtail.snippets.views.snippets import SnippetViewSetGroup
 
 from ask_cfpb.views import GlossaryTermViewSet
@@ -9,6 +12,8 @@ from v1.views.snippets import (
     ReusableNotificationViewSet,
     ReusableTextViewSet,
 )
+
+from .search import SearchResultsView, SearchView
 
 
 class SnippetsViewSetGroup(SnippetViewSetGroup):
@@ -38,3 +43,16 @@ class SnippetsViewSetGroup(SnippetViewSetGroup):
     )
     menu_icon = "snippet"
     menu_label = "Snippets"
+
+
+class SearchViewSet(ViewSet):
+    add_to_admin_menu = True
+    menu_label = "Super search"
+    icon = "search"
+    name = "super-search"
+
+    def get_urlpatterns(self):
+        return [
+            path("", SearchView.as_view(), name="search"),
+            path("results/", SearchResultsView.as_view(), name="results"),
+        ]
