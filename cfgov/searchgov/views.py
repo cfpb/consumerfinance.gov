@@ -2,6 +2,7 @@ import math
 from urllib.parse import urlencode
 
 from django.conf import settings
+from django.http import JsonResponse
 
 import requests
 
@@ -102,17 +103,21 @@ class SearchView(TranslatedTemplateView):
                         res["title"] = res["title"][:-39]
                 else:
                     count = 0
-        context.update(
-            {
-                "query": query,
-                "count": count,
-                "start_index": start_index,
-                "end_index": end_index,
-                "total_pages": total_pages,
-                "current_page": current_page,
-                "recommended": recommended,
-                "results": results,
-            }
-        )
+
+        context_data = {
+            "query": query,
+            "count": count,
+            "start_index": start_index,
+            "end_index": end_index,
+            "total_pages": total_pages,
+            "current_page": current_page,
+            "recommended": recommended,
+            "results": results,
+        }
+
+        if form.cleaned_data.get("format") == "json":
+            return JsonResponse(context_data)
+
+        context.update(context_data)
 
         return self.render_to_response(context)
