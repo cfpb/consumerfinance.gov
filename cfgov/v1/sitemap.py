@@ -17,6 +17,8 @@ class Sitemap(WagtailSitemap):
     def get_urls(self, page=1, site=None, protocol=None):
         urls = super().get_urls(page=page, site=site, protocol=protocol)
 
+        self.latest_lastmod = max(self.latest_lastmod, self.MIN_SITEMAP_DATE)
+
         for url in urls:
             url["lastmod"] = _max_none(url["lastmod"], self.MIN_SITEMAP_DATE)
 
