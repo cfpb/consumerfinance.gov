@@ -129,7 +129,10 @@ $print-gap: 0.3125in;
   }
 
   // Make tables full width.
-  .o-table {
+  .o-table,
+  .m-table-heading,
+  .m-table-text-intro,
+  .m-table-caption {
     column-span: all;
   }
 
