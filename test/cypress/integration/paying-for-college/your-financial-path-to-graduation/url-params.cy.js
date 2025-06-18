@@ -6,7 +6,6 @@ const apiConstants =
 const apiSchoolOne =
   '/paying-for-college2/understanding-your-financial-aid-offer/api/school/166027/';
 
-
 describe('Your Financial Path to Graduation (url parameter functionality)', () => {
   beforeEach(() => {
     cy.intercept('GET', apiConstants, {
