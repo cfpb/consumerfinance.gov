@@ -283,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.13.0.tgz#e28648a27fc69440ce59b559b440aa111904ecbf"
-  integrity sha512-KbNAvazHq7NhSAXFhHu7BZiiw18ZYY5rN2dtHCyveq0FQIEiPspB7EssvTjoaT+0RuMVWsWjFqG4kEEpStAdVA==
+"@cfpb/cfpb-design-system@3.13.1":
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-3.13.1.tgz#e25e6dbc2e80f3ddabf0e6e979dc31b1a94289b0"
+  integrity sha512-jUs+aUgDF2pvW+ydDHMrWAxpY18KS2K0cmUOREGxRKMcSvkz912mKeQ6K8AyPaHzgCSxLYpv8eCc02YPjTnrew==
   dependencies:
     tippy.js "6.3.7"
 
@@ -1310,10 +1310,10 @@ arch@^2.2.0:
   resolved "https://registry.yarnpkg.com/arch/-/arch-2.2.0.tgz#1bc47818f305764f23ab3306b0bfc086c5a29d11"
   integrity sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==
 
-are-docs-informative@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/are-docs-informative/-/are-docs-informative-0.1.1.tgz#34fa1d621e6b8ab2bd33e219333c135b6655a2d0"
-  integrity sha512-sqRsNQBwbKLRX0jV5Cu5uzmtflf892n4Vukz7T659ebL4pz3mpOqCMU7lxMoBTFwnp10E3YB5ZcyHM41W5bcDA==
+are-docs-informative@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/are-docs-informative/-/are-docs-informative-0.0.2.tgz#387f0e93f5d45280373d387a59d34c96db321963"
+  integrity sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig==
 
 argparse@^1.0.7:
   version "1.0.10"
@@ -2673,13 +2673,13 @@ eslint-plugin-import@2.31.0:
     string.prototype.trimend "^1.0.8"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@51.0.1:
-  version "51.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-51.0.1.tgz#06f8742ad4ae151c85a825cf0edbd65e5b87d11f"
-  integrity sha512-nnH6O8uk0Wp5EvHlVEPESKdGWTlu5g1tfBUZmL/jMZLBpUtttxxW+9hPzTMCYmYsQ3HwDsJdHJAiaDRKsP6iUg==
+eslint-plugin-jsdoc@51.0.3:
+  version "51.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-51.0.3.tgz#acee7fa33aae1a7b977b6cb9d6a85a59e665be05"
+  integrity sha512-9BRR+b5nKwp6LGTffnrxKxduhzO/DzyBmRNqyt1wIlBFP+q9mq+sq1hIQCVetZAn1PaOl0Evo4PUOlT+xbtctQ==
   dependencies:
     "@es-joy/jsdoccomment" "~0.50.2"
-    are-docs-informative "^0.1.1"
+    are-docs-informative "^0.0.2"
     comment-parser "1.4.1"
     debug "^4.4.1"
     escape-string-regexp "^4.0.0"
@@ -5267,10 +5267,10 @@ postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@8.5.5:
-  version "8.5.5"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.5.tgz#04de7797f6911fb1c96550e96616d08681537ef3"
-  integrity sha512-d/jtm+rdNT8tpXuHY5MMtcbJFBkhXE6593XVR9UoGCH8jSFGci7jGvMGH5RYd5PBJW+00NZQt6gf7CbagJCrhg==
+postcss@8.5.6:
+  version "8.5.6"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.6.tgz#2825006615a619b4f62a9e7426cc120b349a8f3c"
+  integrity sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==
   dependencies:
     nanoid "^3.3.11"
     picocolors "^1.1.1"
@@ -5739,10 +5739,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1297.1:
-  version "1.1297.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1297.1.tgz#f55186f11bfed0f7747736ffaed2a65173ed8724"
-  integrity sha512-l4bQPu90DvIKHs5h4aCo6ie4WwFq5pEB9IrLHONJzRwCY7ukT/z7rj0abYxR+aot/tnsQXcM/LgGIzIyy+3DVw==
+snyk@1.1297.2:
+  version "1.1297.2"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1297.2.tgz#427bc4abfa8dfa038310da9789f21100bed3ea7c"
+  integrity sha512-E6+SeU8aTBwC7yrGRMpJ5bvXDiLfkZ1aC0h9yan4emFrA/dw1cpKa24OnDAyZLKX0iskFqAP1s+0QguVB7qJzA==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"
