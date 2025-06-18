@@ -17,13 +17,7 @@ import {
   removeClass,
   getParentEls,
 } from './dom-tools.js';
-import {
-  resetFileName,
-  resetError,
-  setError,
-  getUploadName,
-  isCSV,
-} from './file-input.js';
+import { resetError, setError } from './file-input.js';
 import Papaparse from 'papaparse';
 import getRuralCounties from './get-rural-counties.js';
 import * as textInputs from './text-inputs.js';
@@ -150,75 +144,57 @@ addressFormDom.addEventListener('submit', function (evt) {
 
 // when file upload is used
 const fileChangeDom = document.querySelector('#file');
-fileChangeDom.addEventListener('change', function () {
+fileChangeDom.addEventListener('input', function (event) {
   let rowCount = 0;
-  const fileElement = document.querySelector('#file');
-  const fileValue = fileElement.value;
+  const fileElement = event.target;
 
   textInputs.reset();
-  document.querySelector('#file-name').innerText = getUploadName(fileValue);
-  removeClass('#file-list-wrapper', 'u-hidden');
 
   resetError();
 
-  if (isCSV(fileValue)) {
-    // parse the csv to get the count
-    Papaparse.parse(fileElement.files[0], {
-      header: true,
-      step: function (results, parser) {
-        if (!addressUtils.isValid(results)) {
-          parser.abort();
-          setError(
-            'The header row of your CSV file does not match' +
-              ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-              ' title="Download CSV template">CSV template</a>.' +
-              ' Please adjust your CSV file and try again.',
-          );
-          return;
-        }
-        if (results.data['Street Address'] !== '') {
-          rowCount++;
-        }
-      },
-      error: function () {
-        console.log(arguments);
-      },
-      complete: function (/*results, file*/) {
-        if (rowCount === 0) {
-          setError(
-            'There are no rows in this csv. Please update and try again.',
-          );
-        }
-        if (rowCount >= MAX_CSV_ROWS) {
-          const leftOver = rowCount - MAX_CSV_ROWS;
-          setError(
-            'You entered ' +
-              rowCount +
-              ' addresses for ' +
-              document.querySelector('#year').value +
-              ' safe harbor designation. We have a limit of ' +
-              MAX_CSV_ROWS +
-              ' addresses. You can run the first ' +
-              MAX_CSV_ROWS +
-              ' now, but please recheck the remaining ' +
-              leftOver +
-              '.',
-          );
-        }
-      },
-    });
-  } else {
-    setError(
-      'The file uploaded is not a CSV file. ' +
-        'Please try again with a CSV file that uses ' +
-        'our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-        'title="Download CSV template">CSV template</a>.' +
-        ' For more information about CSV files, view our' +
-        ' Frequently Asked Questions below.',
-    );
-
-    resetFileName();
-  }
+  // parse the csv to get the count
+  Papaparse.parse(fileElement.files[0], {
+    header: true,
+    step: function (results, parser) {
+      if (!addressUtils.isValid(results)) {
+        parser.abort();
+        setError(
+          'The header row of your CSV file does not match' +
+            ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+            ' title="Download CSV template">CSV template</a>.' +
+            ' Please adjust your CSV file and try again.',
+        );
+        return;
+      }
+      if (results.data['Street Address'] !== '') {
+        rowCount++;
+      }
+    },
+    error: function () {
+      console.log(arguments);
+    },
+    complete: function (/*results, file*/) {
+      if (rowCount === 0) {
+        setError('There are no rows in this csv. Please update and try again.');
+      }
+      if (rowCount >= MAX_CSV_ROWS) {
+        const leftOver = rowCount - MAX_CSV_ROWS;
+        setError(
+          'You entered ' +
+            rowCount +
+            ' addresses for ' +
+            document.querySelector('#year').value +
+            ' safe harbor designation. We have a limit of ' +
+            MAX_CSV_ROWS +
+            ' addresses. You can run the first ' +
+            MAX_CSV_ROWS +
+            ' now, but please recheck the remaining ' +
+            leftOver +
+            '.',
+        );
+      }
+    },
+  });
 });
 
 // on file submission
@@ -236,9 +212,10 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   ) {
     setError(
       'You have not selected a file. ' +
-        'Use the "Select file" button to select the file with your addresses.',
+        'Use the "Select .csv file" button ' +
+        'to select the file with your addresses.',
     );
-  } else if (isCSV(fileValue)) {
+  } else {
     let pass = true;
     let rowCount = 0;
     let addresses = [];
@@ -301,15 +278,6 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
         }
       },
     });
-  } else {
-    setError(
-      'The file uploaded is not a CSV file.' +
-        ' Please try again with a CSV file that uses our' +
-        ' <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-        ' title="Download CSV template">CSV template</a>.' +
-        ' For more information about CSV files,' +
-        ' view our Frequently Asked Questions below.',
-    );
   }
 
   return false;
