@@ -14,7 +14,7 @@ describe('Header', () => {
       // For now, we can't test this against the homepage
       // TODO: Restore this line when the homepage is restored.
       // cy.visit('/');
-      cy.visit('/data-research/consumer-complaints/')
+      cy.visit('/data-research/consumer-complaints/');
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the first mega-menu trigger
@@ -70,7 +70,7 @@ describe('Header', () => {
       // For now, we can't test this against the homepage
       // TODO: Restore this line when the homepage is restored.
       // cy.visit('/');
-      cy.visit('/data-research/consumer-complaints/')
+      cy.visit('/data-research/consumer-complaints/');
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the root hamburger menu.
