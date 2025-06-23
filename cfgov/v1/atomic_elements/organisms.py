@@ -13,7 +13,6 @@ from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail_footnotes.blocks import RichTextBlockWithFootnotes
-from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
@@ -774,7 +773,9 @@ class VideoPlayer(blocks.StructBlock):
 class AudioPlayer(blocks.StructBlock):
     heading = v1_blocks.HeadingBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    audio_file = AbstractMediaChooserBlock(
+    audio_file = blocks.URLBlock(
+        required=True,
+        label="Media File URL",
         help_text=mark_safe(
             "Spoken word audio files should be in MP3 format with a 44.1 kHz "
             "sample rate, 96 kbps (CBR) bitrate, in mono. See "
@@ -782,7 +783,7 @@ class AudioPlayer(blocks.StructBlock):
             '360040796152-Recommended-Audio-File-Formats-Encoding">Libsyn’s '
             "guidance</a> for details. Note that the thumbnail and tag fields "
             "will not be used for audio files."
-        )
+        ),
     )
     additional_details = blocks.RichTextBlock(
         required=False,
