@@ -28,20 +28,6 @@
 {% block content_main %}
     {% set results_header = _('Search results') %}
     <h1>{{ results_header if query else search_header }}</h1>
-    {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
-    {% set qs = "?q=" + query if query else "" %}
-    {{ translation_links.render(
-        links=[
-        {
-        'href': url('searchgov') + qs,
-            'language': 'en',
-            'text': 'English'
-        },{
-            'href': url('searchgov_es') + qs,
-            'language': 'es',
-            'text': 'Spanish'
-        }]
-    ) }}
     <div class="block block--flush-top">
       {%- include './search.html' -%}
 
@@ -54,12 +40,12 @@
 
       {% if query %}
           {% if count == 0 %}
-            {% set msg_preamble = _('Sorry, there were no results found for') %}
-            {% set explanation = _('Try entering fewer or more general search terms.') %}
+            {% set msg_preamble = _('We\'re sorry, but nothing matched your search terms.') %}
+            {% set explanation = _('Please try again with different keywords.') %}
             {% do notification_opts.update({
               'type': 'warning',
               'is_visible': true,
-              'message': msg_preamble + ' "' + query + '".',
+              'message': msg_preamble,
               'explanation': explanation
              }) %}
           {% else %}
@@ -83,11 +69,13 @@
         </div>
       {% endif %}
 
-      {{render_recommended(recommended)}}
+      {%- set domain = '/'.join(request.build_absolute_uri().split('/')[:3]) -%}
+
+      {{render_recommended(recommended, domain)}}
 
       <h2 class="u-visually-hidden">Results</h2>
       {% for res in results -%}
-        {{render_result(res)}}
+        {{render_result(res, domain)}}
       {%- endfor %}
       </div>
       <div class="block block--sub">

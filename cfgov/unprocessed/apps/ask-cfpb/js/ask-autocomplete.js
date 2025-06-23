@@ -11,6 +11,7 @@ const URLS = {
 };
 
 const autocompleteContainer = document.querySelector('.m-autocomplete');
+const inputElm = document.querySelector('#o-search-bar_query');
 const errorMessage = document.querySelector('#o-search-bar_error-message');
 const submitButton = document.querySelector(
   '.o-search-bar button[type="submit"]',
@@ -18,6 +19,7 @@ const submitButton = document.querySelector(
 const resetButton = document.querySelector(
   '.o-search-bar button[type="reset"]',
 );
+const labelVal = inputElm.getAttribute('aria-label');
 
 resetButton.addEventListener('click', resetErrorMsg);
 
@@ -27,6 +29,18 @@ resetButton.addEventListener('click', resetErrorMsg);
 function resetErrorMsg() {
   submitButton.removeAttribute('disabled');
   errorMessage.classList.add('u-hidden');
+  inputElm.removeAttribute('aria-labelledby');
+  inputElm.setAttribute('aria-label', labelVal);
+}
+
+/**
+ * Show the input error message.
+ */
+function showError() {
+  submitButton.setAttribute('disabled', 'true');
+  errorMessage.classList.remove('u-hidden');
+  inputElm.removeAttribute('aria-label');
+  inputElm.setAttribute('aria-labelledby', 'o-search-bar_error-message');
 }
 
 /**
@@ -36,8 +50,7 @@ function resetErrorMsg() {
  */
 function handleMaxCharacters(event) {
   if (event.maxLengthExceeded) {
-    submitButton.setAttribute('disabled', 'true');
-    errorMessage.classList.remove('u-hidden');
+    showError();
     analyticsSendEvent({
       action: 'maxLimitReached',
       label: event.searchTerm,
