@@ -43,7 +43,7 @@ jobs:
         continue-on-error: true
         run: >
          java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
-         --file "/home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip" --fail_on_severity="Very High, High"
+         --file "**/veracode-auto-pack-consumerfinance-python-no-pm.zip" --fail_on_severity="Very High, High"
          --summary_output true
         
       - id: get-comment-body
