@@ -6,3 +6,7 @@
   version "2.14.8"
   resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.14.8.tgz#e7531304811bb1c23a167bbc68600d58f8b7a29a"
   integrity sha512-eWgyvZ2vsRV409Inr8npXTstRWSHJfNWPMX7uQ5HwdRuNu/bQEeMrbLt9qBqr1RwLuJ7mNriQK6lCzax1j09ow==
+
+"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#DATAP-1754-restore-zeroed-filters":
+  version "2.14.8"
+  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/72c05dafb1c9060bf47041c5d1039b6a68dc0a1d"
