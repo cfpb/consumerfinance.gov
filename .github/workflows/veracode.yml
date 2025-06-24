@@ -10,7 +10,7 @@ on:
       - veracode
 
 jobs:
-    Veracode_SAST_PR:
+  Veracode_SAST_PR:
     runs-on: [ubuntu-latest]
     steps:
    
