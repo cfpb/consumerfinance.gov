@@ -54,7 +54,7 @@ jobs:
           name: Veracode SAST Pipeline Results
           path: results.*
 
-    Veracode_SCA:
+  Veracode_SCA:
       runs-on: [ubuntu-latest]
       steps:
       - uses: actions/checkout@v4.1.3
