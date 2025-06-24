@@ -25,11 +25,11 @@ jobs:
 
       - name: SAST Scan
         continue-on-error: true
-      #  env:
-      #   VERACODE_API_KEY_ID: ${{ secrets.VERACODE_API_KEY_ID }}
-       #  VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_API_KEY_SECRET }}
+        env:
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_API_KEY_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_API_KEY_SECRET }}
         run: |
-         ./veracode static scan ./veracode-auto-pack-consumerfinance-python-no-pm.zip --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --summary-output sast-summary.txt
+         ./veracode static scan ./veracode-auto-pack-consumerfinance-python-no-pm.zip  --summary-output sast-summary.txt
       
       - name: Upload SAST issues artifact
         uses: actions/upload-artifact@v4.3.3
@@ -45,7 +45,7 @@ jobs:
       - name: SCA Scan
         env:
          SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-        working-directory: ./consumerfinance.gov
+        working-directory: /home/runner/work/consumerfinance.gov/consumerfinance.gov
         run: |
          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
 
