@@ -70,6 +70,6 @@ jobs:
       - name: Upload SCA issues artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-           name: SCA-App-Issues-${{ github.run_id }}
+           name: Veracode SCA Results-${{ github.run_id }}
            path: "SCA-App-Issues.json" 
            
