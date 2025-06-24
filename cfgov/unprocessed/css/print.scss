@@ -202,6 +202,14 @@
     }
   }
 
+  // Make tables full width.
+  .o-table,
+  .m-table-heading,
+  .m-table-text-intro,
+  .m-table-caption {
+    column-span: all;
+  }
+
   // Solving longstanding issue in Firefox of cutting off inline-block
   // elements after one page.
   /* stylelint-disable at-rule-no-vendor-prefix */
