@@ -36,6 +36,7 @@ from housing_counselor.views import (
 )
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
+from v1.sitemap import Sitemap
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -401,7 +402,12 @@ urlpatterns = [
             content_type="text/plain",
         ),
     ),
-    re_path(r"^sitemap\.xml$", akamai_no_store(sitemap), name="sitemap"),
+    re_path(
+        r"^sitemap\.xml$",
+        akamai_no_store(sitemap),
+        {"sitemaps": {"site": Sitemap}},
+        name="sitemap",
+    ),
     re_path(
         r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
