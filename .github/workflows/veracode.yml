@@ -15,7 +15,7 @@ jobs:
     steps:
    
 # Checkout code
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
       - name: Setup Veracode
         run: |
@@ -48,7 +48,7 @@ jobs:
         
 # Artifact the results for later use
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           # Artifact name
           name: Veracode SAST Pipeline Results
@@ -57,7 +57,7 @@ jobs:
   Veracode_SCA:
       runs-on: [ubuntu-latest]
       steps:
-      - uses: actions/checkout@v4.1.3
+      - uses: actions/checkout@v4.2.2
 
       - name: SCA Scan
         env:
@@ -68,8 +68,8 @@ jobs:
          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
 
       - name: Upload SCA issues artifact
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v4.6.2
         with:
-           name: Veracode SCA Results-${{ github.run_id }}
+           name: Veracode SCA Scan Results
            path: "SCA-App-Issues.json" 
            
