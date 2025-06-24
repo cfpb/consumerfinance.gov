@@ -61,7 +61,7 @@ jobs:
 
       - name: SCA Scan
         env:
-          SRCCLR_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
+          SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
         working-directory: ./
         run: |
          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
@@ -71,3 +71,4 @@ jobs:
         with:
            name: SCA-App-Issues-${{ github.run_id }}
            path: "SCA-App-Issues.json" 
+           
