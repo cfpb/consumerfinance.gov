@@ -25,11 +25,11 @@ jobs:
 
       - name: SAST Scan
         continue-on-error: true
-        env:
-         VERACODE_API_KEY_ID: ${{ secrets.VERACODE_API_KEY_ID }}
-         VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_API_KEY_SECRET }}
+      #  env:
+      #   VERACODE_API_KEY_ID: ${{ secrets.VERACODE_API_KEY_ID }}
+       #  VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_API_KEY_SECRET }}
         run: |
-         ./veracode static scan ./veracode-auto-pack-consumerfinance-python-no-pm.zip --summary-output sast-summary.txt
+         ./veracode static scan ./veracode-auto-pack-consumerfinance-python-no-pm.zip --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --summary-output sast-summary.txt
       
       - name: Upload SAST issues artifact
         uses: actions/upload-artifact@v4.3.3
