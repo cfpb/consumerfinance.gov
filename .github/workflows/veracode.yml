@@ -1,6 +1,6 @@
 name: veracode
 
-# This workflow will checkout the code and scan with the Veracode Static Pipeline Scanner.
+# This workflow will checkout the code, build the app, and scan with the Veracode Static Pipeline Scanner.
 on:
   push:
     branches:
@@ -10,10 +10,12 @@ on:
       - veracode
 
 jobs:
-  Veracode_SAST:
+    Veracode_SAST:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v4.1.3
+   
+# Checkout code
+      - uses: actions/checkout@v4
 
       - name: Setup Veracode
         run: |
@@ -23,34 +25,46 @@ jobs:
         run: |
          ./veracode package -s . -a
 
-      - name: SAST Scan
-        continue-on-error: true
-        env:
-          VERACODE_API_KEY_ID: ${{secrets.VERACODE_API_ID}}
-          VERACODE_API_KEY_SECRET: ${{secrets.VERACODE_API_KEY}}
+    
+# Download Veracode Static Pipeline Scanner     
+      - name: Download Veracode Static Pipeline Scanner
         run: |
-         ./veracode static scan ./veracode-auto-pack-consumerfinance-python-no-pm.zip  --summary-output sast-summary.txt
+          curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
+          unzip -o veracode.zip
       
-      - name: Upload SAST issues artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-           name: SAST-App-Issues-${{ github.run_id }}
-           path: "*.json"
-           
-  Veracode_SCA:
-    runs-on: [ubuntu-latest]
-    steps:
-      - uses: actions/checkout@v4.1.3
-
-      - name: SCA Scan
-        env:
-          SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
-        working-directory: ./
+      - name: Run Veracode Static Pipeline Scanner
+        continue-on-error: true
+        run: >  
+         echo ${{secrets.VERACODE_API_ID}}
+         
+# In this configuration, the Pipeline scanner will check against CFPB policy.
+      - name: Run Veracode Static Pipeline Scanner
+        continue-on-error: true
+        run: >
+         java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
+         --file "./veracode-auto-pack-consumerfinance-python-no-pm.zip" --fail_on_severity="Very High, High"
+         --summary_output true
+        
+      - id: get-comment-body
+        if: ${{ github.head_ref != '' }}
         run: |
-         curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
-
-      - name: Upload SCA issues artifact
-        uses: actions/upload-artifact@v4.3.3
+          body=$(cat results.txt)
+          body="${body//$'===\n---'/'===\n<details><summary>details</summary><p>\n---'}"
+          body="${body//$'---\n\n==='/'---\n</p></details>\n==='}"
+          body="${body//$'\n'/'<br>'}"
+          echo ::set-output name=body::$body
+      - name: Add comment to PR
+        if: ${{ github.head_ref != '' }}
+        uses: peter-evans/create-or-update-comment@v4
         with:
-           name: SCA-App-Issues-${{ github.run_id }}
-           path: "SCA-App-Issues.json"
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ steps.get-comment-body.outputs.body }}
+          reactions: rocket    
+        
+# Artifact the results for later use
+      - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
+        uses: actions/upload-artifact@v4
+        with:
+          # Artifact name
+          name: Pipeline Scanner Results
+          path: results.*
