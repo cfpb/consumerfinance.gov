@@ -25,6 +25,11 @@ jobs:
         run: |
          ./veracode package -s . -a
 
+      - uses: vimtor/action-zip@v1.2
+        with:
+          files: ./consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip ./consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip
+          dest: cfgov.zip   
+
     
 # Download Veracode Static Pipeline Scanner     
       - name: Download Veracode Static Pipeline Scanner
@@ -42,7 +47,7 @@ jobs:
         continue-on-error: true
         run: >
          java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
-         --file "./veracode-auto-pack-consumerfinance-python-no-pm.zip" --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
+         --file ".cfgov.zip" --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
          --summary_output true
            
         
@@ -72,4 +77,3 @@ jobs:
         with:
            name: Veracode SCA Scan Results
            path: "SCA-App-Issues.json" 
-           
