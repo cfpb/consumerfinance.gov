@@ -31,13 +31,13 @@ jobs:
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
       
-      - name: Veracode Static Pipeline Scanner
+      - name: Verify No-Secret Leak
         continue-on-error: true
         run: >  
          echo ${{secrets.VERACODE_API_ID}}
          
 # In this configuration, the Pipeline scanner will check against CFPB policy.
-      - name: Run Veracode Static Pipeline Scanner
+      - name: Veracode Static Pipeline Scanner
         continue-on-error: true
         run: >
          java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
