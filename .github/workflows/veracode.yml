@@ -25,10 +25,6 @@ jobs:
         run: |
          ./veracode package -s . -a
 
-      - name: zip python and javascript files 
-        run: |
-          zip cfgov-gha.zip /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip
-
     
 # Download Veracode Static Pipeline Scanner     
       - name: Download Veracode Static Pipeline Scanner
@@ -36,7 +32,6 @@ jobs:
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
       
-
       - name: Run Veracode Static Pipeline Scanner
         continue-on-error: true
         run: >  
@@ -47,7 +42,7 @@ jobs:
         continue-on-error: true
         run: >
          java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
-         --file "./cfgov-gha.zip" --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
+         --file "./veracode-auto-pack-consumerfinance-python-no-pm.zip ./veracode-auto-pack-consumerfinance-js.zip" --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
          --summary_output true
            
         
@@ -74,3 +69,6 @@ jobs:
 
       - name: Upload SCA issues artifact
         uses: actions/upload-artifact@v4.6.2
+        with:
+           name: Veracode SCA Scan Results
+           path: "SCA-App-Issues.json" 
