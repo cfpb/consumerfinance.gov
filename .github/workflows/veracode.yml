@@ -31,7 +31,9 @@ jobs:
         run: |
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
-      
+          
+# zip files for veracode upload and scan          
+      - uses: actions/checkout@v4.2.2
       - uses: vimtor/action-zip@v1.2
         with:
           files: ./consumerfinance.gov/cfgov/ ./consumerfinance.gov/package.json ./consumerfinance.gov/yarn.lock ./consumerfinance.gov/.github ./consumerfinance.gov/requirements
