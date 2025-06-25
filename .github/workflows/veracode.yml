@@ -31,7 +31,7 @@ jobs:
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
       
-      - name: Run Veracode Static Pipeline Scanner
+      - name: Veracode Static Pipeline Scanner
         continue-on-error: true
         run: >  
          echo ${{secrets.VERACODE_API_ID}}
@@ -58,7 +58,7 @@ jobs:
       steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: SCA Scan
+      - name: Veracode SCA Scan
         env:
           SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
           SRCCLR_REGION: FED
