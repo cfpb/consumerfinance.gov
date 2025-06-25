@@ -27,7 +27,7 @@ jobs:
 
       - name: zip python and javascript files 
         run: |
-          zip cfgov-gha.zip ./consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip ./consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip
+          zip cfgov-gha.zip /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip
 
     
 # Download Veracode Static Pipeline Scanner     
