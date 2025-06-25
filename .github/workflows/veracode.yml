@@ -25,11 +25,6 @@ jobs:
         run: |
          ./veracode package -s . -a
 
-      - uses: vimtor/action-zip@v1.2
-        with:
-          files: ./consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip ./consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip
-          dest: cfgov.zip   
-
     
 # Download Veracode Static Pipeline Scanner     
       - name: Download Veracode Static Pipeline Scanner
@@ -37,6 +32,11 @@ jobs:
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
       
+      - uses: vimtor/action-zip@v1.2
+        with:
+          files: /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-python-no-pm.zip /home/runner/work/consumerfinance.gov/consumerfinance.gov/veracode-auto-pack-consumerfinance-js.zip
+          dest: cfgov.zip 
+
       - name: Run Veracode Static Pipeline Scanner
         continue-on-error: true
         run: >  
