@@ -1,31 +1,7 @@
 from opensearchpy.exceptions import RequestError
 
 from ask_cfpb.documents import AnswerPageDocument
-from search.models import AUTOCOMPLETE_MAX_CHARS
-
-
-UNSAFE_CHARACTERS = [
-    "#",
-    "%",
-    ";",
-    "^",
-    "~",
-    "`",
-    "|",
-    "<",
-    ">",
-    "[",
-    "]",
-    "{",
-    "}",
-    "\\",
-]
-
-
-def make_safe(term):
-    for char in UNSAFE_CHARACTERS:
-        term = term.replace(char, "")
-    return term
+from core.utils import make_safe
 
 
 class AnswerPageSearch:
@@ -43,7 +19,7 @@ class AnswerPageSearch:
                 .filter("term", language=self.language)
                 .query(
                     "match",
-                    autocomplete=self.search_term[:AUTOCOMPLETE_MAX_CHARS],
+                    autocomplete=self.search_term,
                 )
             )
 

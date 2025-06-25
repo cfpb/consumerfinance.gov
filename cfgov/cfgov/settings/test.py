@@ -2,6 +2,7 @@ from .base import *
 
 
 SECRET_KEY = "not-secret-key-for-testing"
+ALLOWED_HOSTS = ["*"]
 
 LOGGING = {
     "version": 1,
@@ -40,9 +41,6 @@ ALWAYS_GENERATE_SLOW_REPORT = True
 BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 GOVDELIVERY_API = "core.govdelivery.MockGovDelivery"
-
-# Disable Wagtail deletion archive storage during testing.
-STORAGES.pop("wagtail_deletion_archival", None)
 
 STATICFILES_FINDERS += [
     "core.testutils.mock_staticfiles.MockStaticfilesFinder",

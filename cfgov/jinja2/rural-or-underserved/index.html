@@ -118,7 +118,7 @@ home price, down payment, and more can affect mortgage interest rates.
 
                 <div class="content-l__col content-l__col-1-2">
                     <div class="block block--border block--bg block--sub">
-                        <h4>Enter addresses manually</h4>
+                        <h3>Enter addresses manually</h3>
                         <form id="geocode">
                             <p>
                                 Include street address, city, state/territory
@@ -144,8 +144,11 @@ home price, down payment, and more can affect mortgage interest rates.
                                 </span>
                             </p>
                             <p>
-                                <a href="#" id="add-another" title="Add another address">
-                                    Add another address
+                                <a href="#" class="a-link"
+                                   id="add-another"
+                                   title="Add another address">
+                                   +
+                                   <span class="a-link__text">Add another address</span>
                                 </a>
                             </p>
                             <button class="a-btn" type="submit">
@@ -156,7 +159,7 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
                 <div class="content-l__col content-l__col-1-2">
                     <div class="block block--border block--bg block--sub">
-                        <h4>Upload a CSV file</h4>
+                        <h3>Upload a CSV file</h3>
                         <form id="geocode-csv">
                             <p>
                                 To check on more than one loan, upload a Comma Separated Values (CSV) file with addresses for up to 250 properties. The file must use our CSV template:
@@ -167,25 +170,29 @@ home price, down payment, and more can affect mortgage interest rates.
 
                             <p>
                                 <div class="m-form-field m-form-field--file-input">
+
                                     <!-- Actual hidden file upload component. -->
                                     <label>
                                         <input type="file" id="file">
                                         <span class="u-visually-hidden">Choose a file to upload</span>
                                     </label>
                                     <!-- Styled faux overlay component. -->
-                                    <button class="a-btn
-                                                   a-btn--secondary
-                                                   a-btn--flush-right">
-                                        Select file
-                                    </button>
-                                    <label class="u-visually-hidden"
-                                           for="file-name">
-                                        Choose a file to upload
-                                    </label>
-                                    <input id="file-name"
-                                           name="file-name"
-                                           class="a-text-input"
-                                           value="No file chosen">
+                                    <div>
+                                        <button class="a-btn
+                                                    a-btn--secondary"
+                                                aria-label="Choose a file to upload">
+                                            Select file
+                                        </button>
+                                    </div>
+                                    <div id="file-list-wrapper" class="u-hidden">
+                                        <h4>File added</h4>
+                                        <ul>
+                                            <li id="file-name">
+                                                No file chosen
+                                            </li>
+                                        </ul>
+                                        <p>To remove or replace your file, select a new file and upload again.</p>
+                                    </div>
                                 </div>
                             </p>
 
@@ -220,7 +227,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     </h2>
                 </div>
                 <p class="hide-print content-l__col content-l__col-1-4">
-                    <a class="a-btn a-btn--secondary" href="/rural-or-underserved-tool/">
+                    <a class="a-btn" href="/rural-or-underserved-tool/">
                         Start a new search
                     </a>
                 </p>
@@ -317,7 +324,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="rural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="ruralMore">View 10 more</button>
+                            <button data-table="rural" class="button-more u-hidden a-btn no-decoration" id="ruralMore">View 10 more</button>
                             <button data-table="rural" class="view-all u-hidden a-btn a-btn--link" id="ruralAll">View all</button>
                         </p>
                     </div>
@@ -350,7 +357,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notRural" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notRuralMore">View 10 more</button>
+                            <button data-table="notRural" class="button-more u-hidden a-btn no-decoration" id="notRuralMore">View 10 more</button>
                             <button data-table="notRural" class="view-all u-hidden a-btn a-btn--link" id="notRuralAll">View all</button>
                         </p>
                     </div>
@@ -386,7 +393,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="notFound" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="notFoundMore">View 10 more</button>
+                            <button data-table="notFound" class="button-more u-hidden a-btn no-decoration" id="notFoundMore">View 10 more</button>
                             <button data-table="notFound" class="view-all u-hidden a-btn a-btn--link" id="notFoundAll">View all</button>
                         </p>
                     </div>
@@ -422,7 +429,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                   block--padded-top
                                   block--padded-bottom
                                   m-btn-group">
-                            <button data-table="duplicate" class="button-more u-hidden a-btn a-btn--secondary no-decoration" id="duplicateMore">View 10 more</button>
+                            <button data-table="duplicate" class="button-more u-hidden a-btn no-decoration" id="duplicateMore">View 10 more</button>
                             <button data-table="duplicate" class="view-all u-hidden a-btn a-btn--link" id="duplicateAll">View all</button>
                         </p>
                     </div>

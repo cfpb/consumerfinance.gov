@@ -87,6 +87,7 @@ class PageMetadataReportView(PageReportView):
         "tags.names",
         "categories.all",
         "content_owners.names",
+        "authors.names",
     ]
     export_headings = dict(
         [
@@ -98,6 +99,7 @@ class PageMetadataReportView(PageReportView):
             ("tags.names", "Tags"),
             ("categories.all", "Categories"),
             ("content_owners.names", "Content Owner(s)"),
+            ("authors.names", "Authors"),
         ],
         **PageReportView.export_headings,
     )

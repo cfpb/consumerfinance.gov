@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 14:37-0400\n"
+"POT-Creation-Date: 2025-06-04 17:28-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: v1/jinja2/v1/blog/blog_page.html:26
-#: v1/jinja2/v1/includes/molecules/social-media.html:95
+#: v1/jinja2/v1/includes/molecules/social-media.html:101
 msgid "https://x.com/CFPB"
 msgstr "https://x.com/CFPBespanol"
 
@@ -28,7 +28,7 @@ msgid "(formerly Twitter)"
 msgstr "(anteriormente Twitter)"
 
 #: v1/jinja2/v1/blog/blog_page.html:30
-#: v1/jinja2/v1/includes/molecules/social-media.html:87
+#: v1/jinja2/v1/includes/molecules/social-media.html:93
 msgid "https://www.facebook.com/CFPB"
 msgstr "https://www.facebook.com/CFPBespanol"
 
@@ -39,9 +39,7 @@ msgid ""
 msgstr ""
 "Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
 
-#: v1/jinja2/v1/home_page/home_page.html:8
-#: v1/jinja2/v1/home_page/home_page_legacy.html:6
-#: v1/jinja2/v1/layouts/base.html:52
+#: v1/jinja2/v1/home_page/home_page.html:6 v1/jinja2/v1/layouts/base.html:52
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
@@ -62,16 +60,16 @@ msgstr "Un sitio web oficial del"
 msgid "Your browser does not support this audio player."
 msgstr ""
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:52
-#: v1/jinja2/v1/includes/blocks/email-signup.html:77
+#: v1/jinja2/v1/includes/blocks/email-signup.html:51
+#: v1/jinja2/v1/includes/blocks/email-signup.html:76
 msgid "Sign up"
 msgstr "Suscribir"
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:66
+#: v1/jinja2/v1/includes/blocks/email-signup.html:65
 msgid "Email address"
 msgstr "Dirección email"
 
-#: v1/jinja2/v1/includes/blocks/email-signup.html:82
+#: v1/jinja2/v1/includes/blocks/email-signup.html:81
 msgid "See Privacy Act statement"
 msgstr "Lea la declaración de privacidad"
 
@@ -87,22 +85,22 @@ msgstr "Leer la respuesta"
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:28
-#: v1/jinja2/v1/includes/molecules/global-search.html:36
-#: v1/jinja2/v1/includes/organisms/search-input.html:64
+#: v1/jinja2/v1/includes/molecules/global-search.html:26
+#: v1/jinja2/v1/includes/molecules/global-search.html:34
+#: v1/jinja2/v1/includes/organisms/search-input.html:66
 msgid "Search"
 msgstr "Buscar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:33
+#: v1/jinja2/v1/includes/molecules/global-search.html:31
 msgid "Search the consumerfinance.gov website"
 msgstr "Busque en el sitio web consumerfinance.gov"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:40
+#: v1/jinja2/v1/includes/molecules/global-search.html:38
 #: v1/jinja2/v1/includes/organisms/video-player.html:63
 msgid "Close"
 msgstr "Cerrar"
 
-#: v1/jinja2/v1/includes/molecules/global-search.html:63
+#: v1/jinja2/v1/includes/molecules/global-search.html:49
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
@@ -110,27 +108,87 @@ msgstr "Buscar la CFPB"
 msgid "Pagination"
 msgstr "Número de página"
 
-#: v1/jinja2/v1/includes/molecules/pagination.html:48
+#: v1/jinja2/v1/includes/molecules/pagination.html:47
 msgid "Previous"
 msgstr "Anterior"
 
 #: v1/jinja2/v1/includes/molecules/pagination.html:61
-msgid "Next"
-msgstr "Siguiente"
-
-#: v1/jinja2/v1/includes/molecules/pagination.html:69
 msgid "Page"
 msgstr "Página"
 
-#: v1/jinja2/v1/includes/molecules/pagination.html:100
+#: v1/jinja2/v1/includes/molecules/pagination.html:80
 msgid "Go"
 msgstr "Ir"
 
-#: v1/jinja2/v1/includes/molecules/related-posts.html:99
+#: v1/jinja2/v1/includes/molecules/pagination.html:95
+msgid "Next"
+msgstr "Siguiente"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:17
+#: v1/jinja2/v1/includes/molecules/print-button.html:19
+msgid "Print as handout"
+msgstr "Versión para imprimir"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:32
+msgid "About us"
+msgstr "Acerca de nosotros"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:36
+msgid ""
+"The Consumer Financial Protection Bureau is a 21st century agency that "
+"implements and enforces federal consumer financial law and ensures that "
+"markets for consumer financial products are fair, transparent, and "
+"competitive."
+msgstr ""
+"La Oficina para la Protección Financiera del Consumidor (CFPB, por sus "
+"siglas en inglés) es una agencia del siglo XXI que aplica y hace cumplir la "
+"ley financiera federal del consumidor y garantiza que los mercados de "
+"productos financieros del consumidor sean justos, transparentes y "
+"competitivos"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:48
+msgid "Learn more at"
+msgstr "Obtenga más información en"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:48
+msgid "consumerfinance.gov"
+msgstr "consumerfinance.gov/es"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:59
+msgid "Submit a complaint"
+msgstr "Enviar una queja"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:63
+msgid ""
+"Have an issue with a financial product or service? We’ll forward your "
+"complaint to the company and work to get you a response— generally within 15 "
+"days."
+msgstr ""
+"¿Tiene algún problema con un servicio o producto financiero? Enviaremos su "
+"queja a la empresa y haremos todo lo posible para que usted obtenga una "
+"respuesta, generalmente en un plazo de 15 días."
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:71
+msgid "Online at"
+msgstr "En línea"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:71
+msgid "consumerfinance.gov/complaint"
+msgstr "consumerfinance.gov/es/enviar-una-queja"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:74
+msgid "By phone (180+ languages)"
+msgstr "Por teléfono (más de 180 idiomas)"
+
+#: v1/jinja2/v1/includes/molecules/print-button.html:75
+msgid "M-F, 8 a.m. - 8 p.m. ET"
+msgstr "L-V, 8 a.m. - 8 p.m. Hora del este"
+
+#: v1/jinja2/v1/includes/molecules/related-posts.html:100
 msgid "View more related posts"
 msgstr "Ver más publicaciones relacionadas"
 
-#: v1/jinja2/v1/includes/molecules/related-posts.html:101
+#: v1/jinja2/v1/includes/molecules/related-posts.html:102
 msgid "View more"
 msgstr "Ver más"
 
@@ -138,27 +196,27 @@ msgstr "Ver más"
 msgid "Look what I found on the CFPB's site!"
 msgstr "¡Encuentre más información en la página del CFPB!"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:61
+#: v1/jinja2/v1/includes/molecules/social-media.html:66
 msgid "Check out this page from the CFPB"
 msgstr "Revise esta página del CFPB"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:75
+#: v1/jinja2/v1/includes/molecules/social-media.html:81
 msgid "Share & print"
 msgstr "Compartir e imprimir"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:77
+#: v1/jinja2/v1/includes/molecules/social-media.html:83
 msgid "Share this"
 msgstr "Compartir"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:128
+#: v1/jinja2/v1/includes/molecules/social-media.html:134
 msgid "Print this page"
 msgstr "Imprima esta página"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:159
+#: v1/jinja2/v1/includes/molecules/social-media.html:165
 msgid "Share on"
 msgstr "Comparta esta información en"
 
-#: v1/jinja2/v1/includes/molecules/social-media.html:167
+#: v1/jinja2/v1/includes/molecules/social-media.html:173
 msgid "Visit us on"
 msgstr "Visítenos en"
 
@@ -170,20 +228,20 @@ msgstr "Mostrar"
 msgid "Hide"
 msgstr "Ocultar"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:31
+#: v1/jinja2/v1/includes/organisms/footer.html:33
 msgid "Back to top"
 msgstr "Ir arriba"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:184
+#: v1/jinja2/v1/includes/organisms/footer.html:187
 msgid "https://www.usa.gov/"
 msgstr "https://www.usa.gov/es/"
 
-#: v1/jinja2/v1/includes/organisms/footer.html:184
+#: v1/jinja2/v1/includes/organisms/footer.html:187
 msgid "USA.gov"
 msgstr "USA.gov/es"
 
-#: v1/jinja2/v1/includes/organisms/search-input.html:55
-#: v1/jinja2/v1/includes/organisms/search-input.html:56
+#: v1/jinja2/v1/includes/organisms/search-input.html:57
+#: v1/jinja2/v1/includes/organisms/search-input.html:58
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
@@ -195,8 +253,8 @@ msgid "Table of contents"
 msgstr "Ítem destacado"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:20
-msgid "Section navigation"
-msgstr "Navegación de la sección"
+msgid "Section"
+msgstr "Sección"
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:24
 msgid "Navigate this section"
@@ -206,11 +264,11 @@ msgstr "Navegue por esta sección"
 msgid "Close video"
 msgstr "Cerrar video"
 
-#: v1/jinja2/v1/includes/organisms/video-player.html:95
+#: v1/jinja2/v1/includes/organisms/video-player.html:97
 msgid "Play video on YouTube"
 msgstr "Ver video en YouTube"
 
-#: v1/jinja2/v1/includes/organisms/video-player.html:107
+#: v1/jinja2/v1/includes/organisms/video-player.html:109
 msgid "Play video"
 msgstr "Ver video"
 
@@ -224,7 +282,7 @@ msgstr ""
 "Intente con un navegador web más nuevo o confirme que JavaScript está "
 "habilitado."
 
-#: v1/jinja2/v1/layouts/base.html:261
+#: v1/jinja2/v1/layouts/base.html:263
 msgid "Skip to main content"
 msgstr "Ir al contenido principal"
 
@@ -252,23 +310,14 @@ msgstr ""
 msgid "Content Owners"
 msgstr ""
 
-#: v1/templates/cdnadmin/index.html:5
-msgid "CDN Manager"
-msgstr ""
-
 #: v1/templates/v1/_list_translated_page.html:17
 #, fuzzy
 #| msgid "Print this page"
 msgid "Edit this page"
 msgstr "Imprima esta página"
 
-#: v1/templates/v1/export_feedback.html:3
-msgid "Export feedback"
-msgstr ""
-
 #: v1/templates/v1/page_draft_report.html:7
 #: v1/templates/v1/page_metadata_report.html:7
-#: v1/templates/v1/report_no-xlsx_base.html:7
 #, fuzzy
 #| msgid "Download CSV file"
 msgid "Download CSV"

@@ -110,7 +110,7 @@ $standard-btn-height-px: 36px;
 
 .o-video-player__duration {
   color: var(--white);
-  background: rgba(0, 0, 0, 40%);
+  background: rgb(0, 0, 0, 40%);
   z-index: 1;
   padding-left: 6px;
   padding-right: 6px;
@@ -134,7 +134,7 @@ $standard-btn-height-px: 36px;
   z-index: 3;
 
   // !important is needed for when this is applied to a link.
-  background-color: rgba(
+  background-color: rgb(
     16,
     24,
     32,
@@ -145,7 +145,7 @@ $standard-btn-height-px: 36px;
 
   &:hover {
     // !important is needed to override non-hover background.
-    background-color: rgba(
+    background-color: rgb(
       0,
       114,
       206,

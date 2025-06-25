@@ -33,7 +33,7 @@ export default `
         </div>
         <div class="o-email-signup__buttons">
             <button class="a-btn">Sign up</button>
-            <a class="a-btn a-btn--link a-btn--secondary"
+            <a class="a-btn a-btn--link"
                href="/owning-a-home/privacy-act-statement/"
                target="_blank"
                rel="noopener noreferrer">

@@ -26,8 +26,9 @@ body:before {
     padding: 0.5em;
     line-height: 1.5;
     transition-duration: 0.15s;
-    transition-property: inset-inline-start, padding-inline-start, width,
-      transform, margin-top, min-height;
+    transition-property:
+      inset-inline-start, padding-inline-start, width, transform, margin-top,
+      min-height;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   button.sidebar__collapse-toggle {

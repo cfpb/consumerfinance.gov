@@ -22,14 +22,18 @@
 
         <div class="o-footer__pre">
 
-            <a class="a-btn
-                      a-btn--secondary
-                      o-footer__top-button"
-                data-gtm_ignore="true"
-                data-js-hook="behavior_return-to-top"
-                href="#">
-                {{ _('Back to top') }} {{ svg_icon('arrow-up') }}
-            </a>
+            <div class="u-show-on-mobile">
+                <a class="a-btn
+                          a-btn--secondary
+                          a-btn--full-on-xs
+                          u-mb45"
+                    data-gtm_ignore="true"
+                    data-js-hook="behavior_return-to-top"
+                    data-cy="btn-back-to-top"
+                    href="#">
+                    <span>{{ _('Back to top') }}</span> {{ svg_icon('arrow-up') }}
+                </a>
+            </div>
 
             <ul class="o-footer__nav-list m-list">
                 {% if language == 'es' %}
@@ -186,6 +190,10 @@
                     <li class="m-list__item">
                         <a class="m-list__link"
                            href="https://oig.federalreserve.gov/">Office of Inspector General</a>
+                    </li>
+                    <li class="m-list__item">
+                        <a class="m-list__link"
+                           href="https://archive-it.org/organizations/2800">Public Archive</a>
                     </li>
                     {% if language == 'es'%}
                     <li class="m-list__item">

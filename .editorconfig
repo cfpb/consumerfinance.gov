@@ -11,12 +11,12 @@ trim_trailing_whitespace = true
 
 # Matches multiple files with brace expansion notation.
 # Set default charset and indent styles.
-[*.{js,jsx,less,css,html,py}]
+[*.{js,jsx,scss,css,html,py}]
 charset = utf-8
 indent_style = space
 
 # 2 space indentation.
-[*.{js,jsx,less,css,html}]
+[*.{js,jsx,scss,css,html}]
 indent_size = 2
 
 # 4 space indentation.

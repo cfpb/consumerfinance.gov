@@ -1,18 +1,10 @@
-import { changeElHTML, addClass, removeClass, getEl } from './dom-tools.js';
+import { changeElHTML, addClass, removeClass } from './dom-tools.js';
 
 /**
- * Reset the file input value.
+ * Hide the uploaded file name section.
  */
 function resetFileName() {
-  getEl('#file-name').value = 'No file chosen';
-}
-
-/**
- * Set a filename for a file input.
- * @param {string} fileName - A filename.
- */
-function setFileName(fileName) {
-  getEl('#file-name').value = fileName;
+  addClass('#file-list-wrapper', 'u-hidden');
 }
 
 /**
@@ -55,11 +47,4 @@ function isCSV(fileName) {
   return fileName.slice(fileName.lastIndexOf('.') + 1) === 'csv';
 }
 
-export {
-  resetFileName,
-  setFileName,
-  resetError,
-  setError,
-  getUploadName,
-  isCSV,
-};
+export { resetFileName, resetError, setError, getUploadName, isCSV };

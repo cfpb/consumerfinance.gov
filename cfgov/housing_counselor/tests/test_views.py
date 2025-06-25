@@ -35,7 +35,7 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn("pdf_url", response.context_data)
         self.assertContains(
             response,
-            HousingCounselorView.invalid_zip_msg["error_message"],
+            HousingCounselorView.invalid_zip_msg["invalid_zip_error_message"],
         )
 
     @mock.patch("housing_counselor.views.HousingCounselorView.get_counselors")
@@ -46,7 +46,10 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn("api_json", response.context_data)
         self.assertNotIn("pdf_url", response.context_data)
         self.assertContains(
-            response, HousingCounselorView.failed_fetch_msg["error_message"]
+            response,
+            HousingCounselorView.failed_fetch_msg[
+                "failed_fetch_error_message"
+            ],
         )
 
     @mock.patch("housing_counselor.views.HousingCounselorView.get_counselors")

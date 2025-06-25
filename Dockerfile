@@ -1,4 +1,4 @@
-FROM python:3.8-alpine as python
+FROM python:3.8-alpine AS python
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
@@ -14,22 +14,22 @@ RUN addgroup --gid ${USER_UID} ${USERNAME} && \
         ${USERNAME}
 
 # Ensure that the environment uses UTF-8 encoding by default
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 # Disable pip cache dir
-ENV PIP_NO_CACHE_DIR 1
+ENV PIP_NO_CACHE_DIR=1
 
 # Allow pip install as root.
-ENV PIP_ROOT_USER_ACTION ignore
+ENV PIP_ROOT_USER_ACTION=ignore
 
 # Stops Python default buffering to stdout, improving logging to the console
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # Set the APP_HOME, our working directory
-ENV APP_HOME /src/consumerfinance.gov
+ENV APP_HOME=/src/consumerfinance.gov
 
 # Add our top-level Python path to the PYTHONPATH
-ENV PYTHONPATH ${APP_HOME}/cfgov
+ENV PYTHONPATH=${APP_HOME}/cfgov
 
 # Set the working directory
 WORKDIR ${APP_HOME}
@@ -60,14 +60,24 @@ RUN \
     pip install -r requirements/deployment_container.txt && \
     apk del .build-deps
 
+# Remove setuptools to prevent the built image from triggering CVE-2025-47273,
+# which is present in setuptools<78.1.1:
+#
+# https://nvd.nist.gov/vuln/detail/CVE-2025-47273
+#
+# As long as cf.gov is on Python 3.8, we can't upgrade setuptools past v75.3:
+#
+# https://github.com/pypa/setuptools/blob/main/NEWS.rst#v7540
+RUN pip uninstall -y setuptools
+
 # The application will run on port 8000
 EXPOSE 8000
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:20-alpine as node-builder
+FROM node:22-alpine AS node-builder
 
-ENV APP_HOME /src/consumerfinance.gov
+ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
 
 # Install and update common OS packages and frontend dependencies
@@ -111,8 +121,8 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
 FROM python AS dev
 
 # Django Settings
-ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
-ENV ALLOWED_HOSTS '["*"]'
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.local
+ENV ALLOWED_HOSTS='["*"]'
 
 # Install dev/local Python requirements
 RUN pip install -r requirements/local.txt
@@ -142,10 +152,10 @@ CMD python ./cfgov/manage.py runserver 0.0.0.0:8000
 FROM python AS prod
 
 # Django Settings
-ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
-ENV STATIC_PATH ${APP_HOME}/cfgov/static/
-ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
-ENV ALLOWED_HOSTS '["*"]'
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
+ENV STATIC_PATH=${APP_HOME}/cfgov/static/
+ENV DJANGO_STATIC_ROOT=${STATIC_PATH}
+ENV ALLOWED_HOSTS='["*"]'
 
 # Copy the application code over
 COPY cfgov ./cfgov/
@@ -157,6 +167,14 @@ COPY test.sql.gz .
 
 # Copy our static build over from node-builder
 COPY --from=node-builder ${APP_HOME} ${APP_HOME}
+
+# Delete unprocessed frontend code, which was only needed by node-builder.
+# This avoids false positive image vulnerabilities in source Node packages.
+#
+# Also delete an unused test keyfile from the ndg-httpsclient Python package.
+# This avoids a false positive due to storing a private keyfile in the image.
+RUN rm -rf ./cfgov/unprocessed && \
+    rm /usr/local/lib/python3.8/site-packages/ndg/httpsclient/test/pki/localhost.key
 
 # Run Django's collectstatic to collect assets from the frontend build.
 #
@@ -174,4 +192,4 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 USER $USERNAME
 
 # Run Gunicorn
-CMD gunicorn --reload cfgov.wsgi:application -b :8000
+CMD ["gunicorn", "--reload", "cfgov.wsgi:application", "-b", ":8000"]

@@ -49,18 +49,9 @@
             </div>
         {% endif %}
 
-        <div class="block block--sub">
+        <div class="block block--sub answer-text">
 
-            <div class="o-summary o-summary--mobile">
-                <div class="o-summary__content answer-text">
-                    {% include_block page.answer_content %}
-                </div>
-
-                <button class="o-summary__btn u-hidden">
-                    {{ _('Read full answer') }}
-                    {{ svg_icon('plus-round') }}
-                </button>
-            </div>
+            {% include_block page.answer_content %}
 
             <div class="block related-questions">
                 <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>

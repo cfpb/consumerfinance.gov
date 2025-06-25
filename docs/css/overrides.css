@@ -83,8 +83,9 @@ a.btn {
 
 .rst-content tt,
 .rst-content code {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', Courier, monospace;
+  font-family:
+    SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    Courier, monospace;
 }
 
 .rst-content pre.literal-block,

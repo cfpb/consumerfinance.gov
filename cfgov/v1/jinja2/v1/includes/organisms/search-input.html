@@ -16,7 +16,7 @@
 
    value.input_aria_label: Hidden text for the input search label.
 
-   value.input_input_aria_describedby_id: ID for an error box that describes this element.
+   value.input_aria_describedby_id: ID for an error box that describes this element.
 
    value.has_autocomplete: Whether it has an autocomplete or not.
 
@@ -26,6 +26,8 @@
 
    value.max_length: The maximum length of characters for the input.
 
+   value.has_error: Whether to show the error styling for the input field.
+
    ========================================================================== #}
 
 {% macro render(value) %}
@@ -33,21 +35,22 @@
 <div class="o-search-input">
     <div class="o-search-input__input{% if value.has_autocomplete %} m-autocomplete{% endif %}">
         <label for="{{ value.input_id }}"
-               class="o-search-input__input-label"
-               aria-label="{{ value.input_aria_label }}">
+               class="o-search-input__input-label">
             {{ svg_icon('search') }}
         </label>
         <input type="search"
                id="{{ value.input_id }}"
                name="{{ value.input_name }}"
                value="{{ value.input_value or '' }}"
-               class="a-text-input"
+               class="a-text-input{% if value.has_error %} a-text-input--error{% endif %}"
                placeholder="{{ value.placeholder }}"
                title="{{ value.placeholder }}"
                autocomplete="off"
                maxlength="{{ value.max_length or '75' }}"
                {% if value.input_aria_describedby_id %}
                aria-describedby="{{ value.input_aria_describedby_id }}"
+               {% else %}
+               aria-label="{{ value.input_aria_label }}"
                {% endif %}>
         <button type="reset"
                 onclick="document.getElementById('{{ value.input_id }}').setAttribute('value','')"

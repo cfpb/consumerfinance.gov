@@ -593,7 +593,7 @@ Query.prototype.css = function (param, value) {
   }
   for (const key in obj) {
     this.elements.forEach((elem) => {
-      if (Object.prototype.hasOwnProperty.call(elem.style, key)) {
+      if (elem.style[key] !== undefined) {
         let val = obj[key];
         if (pixelStyles.indexOf(key) > -1) val = pixelator(val);
         elem.style[key] = val;
