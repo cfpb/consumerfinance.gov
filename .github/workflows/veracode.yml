@@ -24,7 +24,7 @@ jobs:
 
       - name: zip python and javascript files 
         run: |
-          zip -r cfgov-gha.zip ${{ github.workspace }}/consumerfinance.gov/cfgov/ ${{ github.workspace }}/consumerfinance.gov/package.json ${{ github.workspace }}/consumerfinance.gov/yarn.lock ${{ github.workspace }}/consumerfinance.gov/.github ${{ github.workspace }}/consumerfinance.gov/requirements
+          zip -r cfgov-gha.zip . -i ${{ github.workspace }}/*/cfgov/ ${{ github.workspace }}/*/package.json ${{ github.workspace }}/*/yarn.lock ${{ github.workspace }}/*/.github ${{ github.workspace }}/*/requirements
 
       - name: Setup Veracode
         run: |
