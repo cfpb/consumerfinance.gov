@@ -19,9 +19,7 @@ jobs:
           
       - name: Zip Scannable Files
         run: >
-          zip -r cfgov-gha.zip ${{ github.workspace
-          }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{
-          github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
+          zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
           
       - name: See Included Files
         run: |
@@ -29,8 +27,7 @@ jobs:
       
       - name: Download Veracode Static Pipeline Scanner
         run: >
-          curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-          -o veracode.zip
+          curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
           
       - name: Verify No Scret Leak
@@ -41,9 +38,7 @@ jobs:
         continue-on-error: true
         run: >+
           java -jar pipeline-scan.jar --veracode_api_id
-          "${{secrets.VERACODE_API_ID}}" --veracode_api_key
-          "${{secrets.VERACODE_API_KEY}}" --file "./cfgov-gha.zip"
-          --baseline_file baseline.json --app_id="cfgov"
+          "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "./cfgov-gha.zip" --baseline_file baseline.json --app_id="cfgov"
           --fail_on_severity="Very High, High" --summary_output true
             
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
