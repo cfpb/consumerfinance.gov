@@ -1,0 +1,26 @@
+name: test
+
+# Testing.
+on:
+  push:
+    branches:
+      - veracode
+  pull_request:
+    branches:
+      - veracode
+
+jobs:
+  Veracode_SAST:
+    runs-on: [ubuntu-latest]
+    steps:
+
+# Checkout code
+      - uses: actions/checkout@v4.2.2
+   
+      - name: Setup Veracode
+        run: |
+         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+
+      - name: Setup Veracode
+        run: |
+         ls -la
