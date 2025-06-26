@@ -24,3 +24,6 @@ jobs:
       - name: Setup Veracode
         run: |
          ls -la
+      - name: zip python and javascript files 
+        run: |
+          zip cfgov-gha.zip ${{ github.workspace }}/cfgov/ ${{ github.workspace }}/package.json ${{ github.workspace }}/yarn.lock ${{ github.workspace }}/.github ${{ github.workspace }}/requirements
