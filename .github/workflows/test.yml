@@ -17,12 +17,20 @@ jobs:
 # Checkout code
       - uses: actions/checkout@v4.2.2
 
-
-      - name: Zip Files 
+       - name: Setup Veracode
         run: |
-          zip -r cfgov-gha.zip ${{ github.workspace }}/cfgov/ ${{ github.workspace }}/package.json ${{ github.workspace }}/yarn.lock ${{ github.workspace }}/.github ${{ github.workspace }}/requirements
+         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
 
-      - name: See Files
+      - name: Package App
+        run: |
+         ./veracode package -s . -a
+
+
+      - name: Zip Scannable Files 
+        run: |
+          zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
+
+      - name: See Included Files
         run: |
          ls -la
 
