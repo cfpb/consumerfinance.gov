@@ -15,13 +15,13 @@ jobs:
     steps:
    
 # Checkout code
-      - uses: actions/checkout@v4.2.2
+       - uses: actions/checkout@v4.2.2
 
        - name: Setup Veracode
         run: |
          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
 
-      - name: Package App
+       - name: Package App
         run: |
          ./veracode package -s . -a
 
