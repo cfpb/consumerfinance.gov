@@ -31,12 +31,12 @@ jobs:
           zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
 
       - name: See Included Files
-         run: |
-          ls -la
+        run: |
+         ls -la
 
       - name: Setup Veracode
-         run: |
-           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        run: |
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
     
 # Download Veracode Static Pipeline Scanner     
       - name: Download Veracode Static Pipeline Scanner
