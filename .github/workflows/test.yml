@@ -19,7 +19,7 @@ jobs:
           
       - name: Zip Scannable Files
         run: |
-          zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
+          zip cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
           
       - name: See Included Files
         run: |
