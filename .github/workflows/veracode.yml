@@ -2,11 +2,11 @@ name: veracode
 
 # This workflow will checkout the code, build the app, and scan with the Veracode Static Pipeline Scanner.
 on:
-  push:
+ # push:
    # branches:
       #- veracode
-  pull_request:
-    branches:
+ # pull_request:
+  #  branches:
       - veracode
 
 jobs:
