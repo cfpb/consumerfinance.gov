@@ -13,10 +13,6 @@ We maintain several independent search indexes on Search.gov for various purpose
   [www.consumerfinance.gov](https://www.consumerfinance.gov).
 - `cfpb_es`: Spanish-language search for pages under
   [www.consumerfinance.gov/es/](https://www.consumerfinance.gov/es/).
-- `cfpb_beta`: An alternate English-language search index for
-  [beta.consumerfinance.gov](https://beta.consumerfinance.gov).
-- `cfpb_beta_es`: An alternate Spanish-language search index for
-  [beta.consumerfinance.gov/es/](https://beta.consumerfinance.gov/es/).
 
 These search indexes are hardcoded depending on the page being viewed.
 
