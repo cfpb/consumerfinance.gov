@@ -29,10 +29,10 @@ jobs:
       
       - name: Download Veracode Static Pipeline Scanner
         run: >
-          curl
-          https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+          curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
           -o veracode.zip
           unzip -o veracode.zip
+          
       - name: Verify No Scret Leak
         continue-on-error: true
         run: |
