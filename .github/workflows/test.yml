@@ -10,20 +10,23 @@ jobs:
       - ubuntu-latest
     steps:
       - uses: actions/checkout@v4.2.2
-      - name: Setup Veracode
+      - name: Setup Veracode-CLI
         run: |
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
       - name: Package App
         run: |
           ./veracode package -s . -a
+          
       - name: Zip Scannable Files
         run: >
           zip -r cfgov-gha.zip ${{ github.workspace
           }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{
           github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
+          
       - name: See Included Files
         run: |
           ls -la
+          
       - name: Setup Veracode
         run: |
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
@@ -32,7 +35,6 @@ jobs:
           curl
           https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
           -o veracode.zip
-
           unzip -o veracode.zip
       - name: Verify No Scret Leak
         continue-on-error: true
@@ -52,6 +54,7 @@ jobs:
         with:
           name: Veracode SAST Pipeline Results
           path: results.*
+          
   Veracode_SCA:
     runs-on:
       - ubuntu-latest
