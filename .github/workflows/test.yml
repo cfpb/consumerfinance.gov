@@ -1,87 +1,72 @@
 name: test
-
-# This workflow will checkout the code, build the app, and scan with the Veracode Static Pipeline Scanner.
 on:
-  push:
-   # branches:
-     # - veracode
+  push: null
   pull_request:
     branches:
       - veracode
-
 jobs:
   Veracode_SAST:
-    runs-on: [ubuntu-latest]
+    runs-on:
+      - ubuntu-latest
     steps:
-   
-# Checkout code
       - uses: actions/checkout@v4.2.2
-
-      - name: Setup Veracode
-        run: |
-         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-
-      - name: Package App
-        run: |
-           ./veracode package -s . -a
-
-
-      - name: Zip Scannable Files 
-        run: |
-          zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
-
-      - name: See Included Files
-        run: |
-         ls -la
-
       - name: Setup Veracode
         run: |
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-    
-# Download Veracode Static Pipeline Scanner     
-      - name: Download Veracode Static Pipeline Scanner
+      - name: Package App
         run: |
-           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
-          unzip -o veracode.zip
-      
+          ./veracode package -s . -a
+      - name: Zip Scannable Files
+        run: >
+          zip -r cfgov-gha.zip ${{ github.workspace
+          }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{
+          github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
+      - name: See Included Files
+        run: |
+          ls -la
+      - name: Setup Veracode
+        run: |
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+      - name: Download Veracode Static Pipeline Scanner
+        run: >
+          curl
+          https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+          -o veracode.zip
 
+          unzip -o veracode.zip
       - name: Verify No Scret Leak
         continue-on-error: true
-        run: >  
-         echo ${{secrets.VERACODE_API_ID}}
-         
-# In this configuration, the Pipeline scanner will check against CFPB policy.
+        run: |
+          echo ${{secrets.VERACODE_API_ID}}
       - name: Veracode Static Pipeline Scanner
         continue-on-error: true
-        run: >
-         java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
-         --file "./cfgov-gha.zip" --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
-         --summary_output true
-           
-        
-# Artifact the results for later use
+        run: >+
+          java -jar pipeline-scan.jar --veracode_api_id
+          "${{secrets.VERACODE_API_ID}}" --veracode_api_key
+          "${{secrets.VERACODE_API_KEY}}" --file "./cfgov-gha.zip"
+          --baseline_file baseline.json --app_id="cfgov"
+          --fail_on_severity="Very High, High" --summary_output true
+            
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
         uses: actions/upload-artifact@v4.6.2
         with:
-          # Artifact name
           name: Veracode SAST Pipeline Results
           path: results.*
-
   Veracode_SCA:
-      runs-on: [ubuntu-latest]
-      steps:
+    runs-on:
+      - ubuntu-latest
+    steps:
       - uses: actions/checkout@v4.2.2
-
       - name: SCA Scan
         env:
           SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
           SRCCLR_REGION: FED
         working-directory: ./
-        run: |
-         curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
-
+        run: >
+          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan
+          --json=SCA-App-Issues.json
       - name: Upload SCA issues artifact
         uses: actions/upload-artifact@v4.6.2
         with:
-           name: Veracode SCA Scan Results
-           path: "SCA-App-Issues.json" 
+          name: Veracode SCA Scan Results
+          path: SCA-App-Issues.json
