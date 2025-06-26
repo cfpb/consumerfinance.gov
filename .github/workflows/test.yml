@@ -26,10 +26,7 @@ jobs:
       - name: See Included Files
         run: |
           ls -la
-          
-      - name: Setup Veracode
-        run: |
-          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+      
       - name: Download Veracode Static Pipeline Scanner
         run: >
           curl
