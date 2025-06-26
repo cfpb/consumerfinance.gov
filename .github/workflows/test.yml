@@ -22,7 +22,7 @@ jobs:
         run: |
           zip -r cfgov-gha.zip ${{ github.workspace }}/cfgov/ ${{ github.workspace }}/package.json ${{ github.workspace }}/yarn.lock ${{ github.workspace }}/.github ${{ github.workspace }}/requirements
 
-      - name: See Files
+      - name: See Included Files
         run: |
          ls -la
 
@@ -37,7 +37,7 @@ jobs:
           unzip -o veracode.zip
       
 
-      - name: Verify No Secret Leak
+      - name: Verify No Scret Leak
         continue-on-error: true
         run: >  
          echo ${{secrets.VERACODE_API_ID}}
@@ -72,5 +72,8 @@ jobs:
         run: |
          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
 
-      - name: Veracode SCA Scan Results
+      - name: Upload SCA issues artifact
         uses: actions/upload-artifact@v4.6.2
+        with:
+           name: Veracode SCA Scan Results
+           path: "SCA-App-Issues.json" 
