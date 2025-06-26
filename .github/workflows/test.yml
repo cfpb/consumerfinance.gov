@@ -10,7 +10,7 @@ on:
       - veracode
 
 jobs:
-  Veracode_SAST:
+  Test-1:
     runs-on: [ubuntu-latest]
     steps:
 
@@ -21,9 +21,13 @@ jobs:
         run: |
          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
 
-      - name: Setup Veracode
+      - name: See Files
         run: |
          ls -la
       - name: zip python and javascript files 
         run: |
           zip -r cfgov-gha.zip ${{ github.workspace }}/cfgov/ ${{ github.workspace }}/package.json ${{ github.workspace }}/yarn.lock ${{ github.workspace }}/.github ${{ github.workspace }}/requirements
+
+      - name: See Files
+        run: |
+         ls -la
