@@ -18,7 +18,7 @@ jobs:
           ./veracode package -s . -a
           
       - name: Zip Scannable Files
-        run: >
+        run: |
           zip -r cfgov-gha.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-python-no-pm.zip ${{ github.workspace }}/veracode-auto-pack-consumerfinance-js.zip
           
       - name: See Included Files
@@ -26,7 +26,7 @@ jobs:
           ls -la
       
       - name: Download Veracode Static Pipeline Scanner
-        run: >
+        run: |
           curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
           unzip -o veracode.zip
           
@@ -36,9 +36,8 @@ jobs:
           echo ${{secrets.VERACODE_API_ID}}
       - name: Veracode Static Pipeline Scanner
         continue-on-error: true
-        run: >+
-          java -jar pipeline-scan.jar --veracode_api_id
-          "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "./cfgov-gha.zip" --baseline_file baseline.json --app_id="cfgov"
+        run: |
+          java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "./cfgov-gha.zip" --baseline_file baseline.json --app_id="cfgov"
           --fail_on_severity="Very High, High" --summary_output true
             
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
@@ -57,7 +56,7 @@ jobs:
           SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
           SRCCLR_REGION: FED
         working-directory: ./
-        run: >
+        run: |
           curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan
           --json=SCA-App-Issues.json
       - name: Upload SCA issues artifact
