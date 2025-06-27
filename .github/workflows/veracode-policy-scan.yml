@@ -31,9 +31,9 @@ jobs:
       - name: Zip Project
         run: zip -R cfgov-gha.zip '*.py' '*.js' '*.ts' '*.html' '*.htm' '*.lock' ${{ github.workspace }}/requirements
        
-      - uses: actions/upload-artifact@v3 # Copy files from repository to docker container so the next uploadandscan action can access them.
+      - uses: actions/upload-artifact@v4.6.2 # Copy files from repository to docker container so the next uploadandscan action can access them.
         with:
-          path: ./cfgov-gha.zip.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+          path: ./cfgov-gha.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
       - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
         with:
           appname: cfgov
