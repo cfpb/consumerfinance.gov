@@ -180,10 +180,12 @@ class BulkZipCodeGeocoder:
             yield zipcode, (latitude, longitude)
 
     def mapbox_geocode_url(self, *zipcodes):
+        # Country codes now refer to the US and all major territories. See
+        # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
         return (
             "https://api.mapbox.com"
             "/geocoding/v5/mapbox.places-permanent/{zipcodes}.json"
-            "?country=us,pr&types=postcode&autocomplete=false&limit=1"
+            "?country=us,pr,mp,as,gu,vi&types=postcode&autocomplete=false&limit=1"
             "&access_token={access_token}"
         ).format(zipcodes=";".join(zipcodes), access_token=self.access_token)
 
