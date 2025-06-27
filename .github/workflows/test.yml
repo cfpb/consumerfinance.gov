@@ -20,7 +20,7 @@ jobs:
 
       - name: Zip Scannable Files 
         run: |
-          zip -r cfgov-gha.zip ${{ github.workspace }}/cfgov/ ${{ github.workspace }}/package.json ${{ github.workspace }}/yarn.lock ${{ github.workspace }}/.github ${{ github.workspace }}/requirements
+          zip -R cfgov-gha.zip '*.py' '*.js' '*.ts' '*.html' '*.htm' '*.json' '*.lock' ${{ github.workspace }}/requirements
 
       - name: See Included Files
         run: |
