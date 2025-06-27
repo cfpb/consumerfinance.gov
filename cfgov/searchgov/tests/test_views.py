@@ -12,29 +12,13 @@ from searchgov.views import (
 
 
 class GetAffiliateTestCase(TestCase):
-    @patch("searchgov.views.environment_is")
-    def test_is_cfpb(self, test_patch):
-        test_patch.return_value = False
+    def test_is_cfpb(self):
         affiliate = get_affiliate({"current_language": "en"})
         self.assertEqual(affiliate, "cfpb")
 
-    @patch("searchgov.views.environment_is")
-    def test_is_cfpb_beta(self, test_patch):
-        test_patch.return_value = True
-        affiliate = get_affiliate({"current_language": "en"})
-        self.assertEqual(affiliate, "cfpb_beta")
-
-    @patch("searchgov.views.environment_is")
-    def test_is_cfpb_es(self, test_patch):
-        test_patch.return_value = False
+    def test_is_cfpb_es(self):
         affiliate = get_affiliate({"current_language": "es"})
         self.assertEqual(affiliate, "cfpb_es")
-
-    @patch("searchgov.views.environment_is")
-    def test_is_cfpb_beta_es(self, test_patch):
-        test_patch.return_value = True
-        affiliate = get_affiliate({"current_language": "es"})
-        self.assertEqual(affiliate, "cfpb_beta_es")
 
 
 class GetApiKeyTestCase(TestCase):

@@ -6,7 +6,6 @@ from django.http import JsonResponse
 
 import requests
 
-from core.feature_flags import environment_is
 from core.views import TranslatedTemplateView
 
 from .forms import SearchForm
@@ -20,18 +19,12 @@ RESULTS_PER_PAGE = 20
 def get_affiliate(context):
     """Given a request, return the appropriate affiliate for Search.gov.
     Our default affiliate code is "cfpb". We have a separate Spanish-language
-    index named "cfpb_es". We then have two additional indexes, "cfpb_beta"
-    and "cfpb_beta_es", for use on beta.consumerfinance.gov.
+    index named "cfpb_es".
     """
-    affiliate = "cfpb"
-
-    if environment_is("beta"):
-        affiliate += "_beta"
-
     if context.get("current_language") == "es":
-        affiliate += "_es"
+        return "cfpb_es"
 
-    return affiliate
+    return "cfpb"
 
 
 def get_api_key(context):
