@@ -169,31 +169,9 @@ home price, down payment, and more can affect mortgage interest rates.
                             </p>
 
                             <p>
-                                <div class="m-form-field m-form-field--file-input">
-
-                                    <!-- Actual hidden file upload component. -->
-                                    <label>
-                                        <input type="file" id="file">
-                                        <span class="u-visually-hidden">Choose a file to upload</span>
-                                    </label>
-                                    <!-- Styled faux overlay component. -->
-                                    <div>
-                                        <button class="a-btn
-                                                    a-btn--secondary"
-                                                aria-label="Choose a file to upload">
-                                            Select file
-                                        </button>
-                                    </div>
-                                    <div id="file-list-wrapper" class="u-hidden">
-                                        <h4>File added</h4>
-                                        <ul>
-                                            <li id="file-name">
-                                                No file chosen
-                                            </li>
-                                        </ul>
-                                        <p>To remove or replace your file, select a new file and upload again.</p>
-                                    </div>
-                                </div>
+                                <cfpb-file-upload id="file" accept="text/csv">
+                                    Select .csv file
+                                </cfpb-file-upload>
                             </p>
 
                             <p>
