@@ -5,9 +5,9 @@ on:
   push:
    # branches:
      # - veracode
-  pull_request:
-    branches:
-      - veracode
+ # pull_request:
+  #  branches:
+   #   - veracode
 
 jobs:
   Veracode_SAST:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Zip Scannable Files 
         run: |
-          zip -R cfgov-gha.zip '*.py' '*.js' '*.ts' '*.html' '*.htm' '*.json' '*.lock' ${{ github.workspace }}/requirements
+          zip -R cfgov-gha.zip '*.py' '*.js' '*.html' '*.htm' '*.lock' ${{ github.workspace }}/requirements
 
       - name: See Included Files
         run: |
