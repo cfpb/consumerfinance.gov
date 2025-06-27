@@ -49,23 +49,3 @@ jobs:
           # Artifact name
           name: Veracode SAST Pipeline Results
           path: results.*
-
-
-  Veracode_SCA:
-    runs-on: [ubuntu-latest]
-    steps:
-    - uses: actions/checkout@v4.2.2
-
-    - name: SCA Scan
-        env:
-          SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
-          SRCCLR_REGION: FED
-        working-directory: ./
-        run: |
-         curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
-
-    - name: Upload SCA issues artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-           name: Veracode SCA Scan Results
-           path: "SCA-App-Issues.json" 
