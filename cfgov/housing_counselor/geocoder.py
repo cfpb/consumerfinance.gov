@@ -183,7 +183,7 @@ class BulkZipCodeGeocoder:
         return (
             "https://api.mapbox.com"
             "/geocoding/v5/mapbox.places-permanent/{zipcodes}.json"
-            "?country=us&types=postcode&autocomplete=false&limit=1"
+            "?country=us,pr&types=postcode&autocomplete=false&limit=1"
             "&access_token={access_token}"
         ).format(zipcodes=";".join(zipcodes), access_token=self.access_token)
 
