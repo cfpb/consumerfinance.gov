@@ -37,7 +37,7 @@ jobs:
           unzip -o veracode.zip
       
 
-      - name: Verify No Scret Leak
+      - name: Verify No Secret Leak
         continue-on-error: true
         run: >  
          echo ${{secrets.VERACODE_API_ID}}
