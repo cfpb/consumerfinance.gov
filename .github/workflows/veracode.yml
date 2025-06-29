@@ -7,7 +7,7 @@ on:
       #- veracode
  # pull_request:
   #  branches:
-      - veracode
+     # - veracode
 
 jobs:
   Veracode_SAST:
