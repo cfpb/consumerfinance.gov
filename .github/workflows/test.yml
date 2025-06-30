@@ -1,6 +1,6 @@
 name: test
 
-# This workflow will checkout the code, build the app, and scan with the Veracode Static Pipeline Scanner.
+# This workflow will checkout the code then scan every pull request (PR) with the Veracode Static Pipeline Scanner.
 on:
   push:
    # branches:
