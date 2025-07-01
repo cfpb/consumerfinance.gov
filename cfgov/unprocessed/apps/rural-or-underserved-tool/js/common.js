@@ -142,7 +142,7 @@ addressFormDom.addEventListener('submit', function (evt) {
   processAddresses(addresses);
 });
 
-// when file upload is used
+// When file upload is used.
 const fileChangeDom = document.querySelector('#file');
 fileChangeDom.addEventListener('input', function (event) {
   let rowCount = 0;
@@ -152,7 +152,13 @@ fileChangeDom.addEventListener('input', function (event) {
 
   resetError();
 
-  // parse the csv to get the count
+  const file = fileElement.files[0];
+
+  if (typeof file === 'undefined') {
+    return undefined;
+  }
+
+  // Parse the csv to get the count.
   Papaparse.parse(fileElement.files[0], {
     header: true,
     step: function (results, parser) {
@@ -205,6 +211,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   window.location.hash = 'rural-or-underserved';
   let fileElement = document.querySelector('#file');
   const fileValue = fileElement.value;
+
   if (
     fileValue === '' ||
     fileValue === 'No file chosen' ||
@@ -222,7 +229,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
     fileElement = document.querySelector('#file');
     textInputs.reset();
 
-    // Parse the csv to get the
+    // Parse the csv to get the files.
     Papaparse.parse(fileElement.files[0], {
       header: true,
       step: function (results, parser) {
