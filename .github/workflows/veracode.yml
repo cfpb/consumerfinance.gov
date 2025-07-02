@@ -25,6 +25,14 @@ jobs:
       - name: Setup Veracode
         run: |
          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+
+# Pull Baseline file from private repo
+      - name: Get baseline from private repo
+
+      - uses: valitydev/action-download-file@v1.0.6
+        with:
+          url: https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
+          target-path: .  
     
 # Download Veracode Static Pipeline Scanner     
       - name: Download Veracode Static Pipeline Scanner
@@ -68,8 +76,4 @@ jobs:
         run: |
          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
 
-      - name: Upload SCA issues artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-           name: Veracode SCA Scan Results
-           path: "SCA-App-Issues.json" 
+      - name: Upload SCA issues artifa 
