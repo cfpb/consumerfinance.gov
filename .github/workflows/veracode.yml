@@ -23,7 +23,7 @@ jobs:
       - name: Get baseline from private repo
         run: |
           gh api repos/cfpb/veracode-baselines/contents/cfgov/baseline.json \
-            -- jq '.content' | base64 -d > baseline.json
+            --jq '.content' | base64 -d > baseline.json
 
       - name: Download Veracode Static Pipeline Scanner
         run: >
