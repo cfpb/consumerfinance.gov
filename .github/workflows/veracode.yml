@@ -1,8 +1,8 @@
 name: veracode
 on:
-  workflow_dispatch: 
-  pull_request: 
-  merge_group: 
+  workflow_dispatch:
+  pull_request:
+  merge_group:
 jobs:
   Veracode_SAST:
     runs-on:
@@ -21,11 +21,10 @@ jobs:
         run: |
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
       - name: Get baseline from private repo
-        run: >
-          curl
-          https://raw.githubusercontent.com/cfpb/veracode-baselines/refs/heads/main/cfgov/baseline.json?token=GHSAT0AAAAAADEC46MP4QADAWLPTNMHXECS2DGTMYQ
-          -o baseline.json
- 
+        run: |
+          gh api repos/cfpb/veracode-baselines/contents/cfgov/baseline.json \
+            -- jq '.content' | base64 -d > baseline.json
+
       - name: Download Veracode Static Pipeline Scanner
         run: >
           curl
@@ -45,7 +44,7 @@ jobs:
           "${{secrets.VERACODE_API_KEY}}" --file
           "./cfgov-gha.zip"  --baseline_file baseline.json --app_id="cfgov"
           --fail_on_severity="Very High, High" --summary_output true
-            
+
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
         uses: actions/upload-artifact@v4.6.2
         with:
