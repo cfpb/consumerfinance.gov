@@ -1,4 +1,0 @@
-# This file is deliberately empty.
-# In order to pass "helm lint", a values.yaml file must exist.
-# Per https://helm.sh/docs/topics/charts/#values-files,
-# "The default values file included inside of a chart must be named values.yaml."
