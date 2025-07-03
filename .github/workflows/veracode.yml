@@ -25,6 +25,7 @@ jobs:
           curl
           https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
           -o baseline.json
+          working-directory: ${{ github.workspace }}
 
       - name: Download Veracode Static Pipeline Scanner
         run: >
