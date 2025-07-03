@@ -1,83 +1,70 @@
 name: veracode
-
-# This workflow will checkout the code then scan every pull request (PR) with the Veracode Static Pipeline Scanner.
 on:
-  workflow_dispatch:
-  pull_request:
-  merge_group:
-
+  workflow_dispatch: 
+  pull_request: 
+  merge_group: 
 jobs:
   Veracode_SAST:
-    runs-on: [ubuntu-latest]
+    runs-on:
+      - ubuntu-latest
     steps:
-   
-# Checkout code
       - uses: actions/checkout@v4.2.2
-
-
-      - name: Zip Scannable Files 
-        run: |
-          find . -path '*test*' -prune -o \( -name '*.py' -o -name '*.js' -o -name '*.ts' -o -name '*.htm*' -o -name '*.json' -o -name '*.yml' \) -print | zip cfgov-gha.zip -@
+      - name: Zip Scannable Files
+        run: >
+          find . -path '*test*' -prune -o \( -name '*.py' -o -name '*.js' -o
+          -name '*.ts' -o -name '*.htm*' -o -name '*.json' -o -name '*.yml' \)
+          -print | zip cfgov-gha.zip -@
       - name: See Included Files
         run: |
-         ls -la
-
+          ls -la
       - name: Setup Veracode
         run: |
-         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-
-# Pull Baseline file from private repo
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
       - name: Get baseline from private repo
-
       - uses: valitydev/action-download-file@v1.0.6
         with:
           url: https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
-          target-path: .  
-    
-# Download Veracode Static Pipeline Scanner     
+          target-path: .
       - name: Download Veracode Static Pipeline Scanner
-        run: |
-          curl https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip -o veracode.zip
-          unzip -o veracode.zip
-      
+        run: >
+          curl
+          https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+          -o veracode.zip
 
+          unzip -o veracode.zip
       - name: Verify No Secret Leak
         continue-on-error: true
-        run: >  
-         echo ${{secrets.VERACODE_API_ID}}
-         
-# In this configuration, the Pipeline scanner will check against CFPB policy.
+        run: |
+          echo ${{secrets.VERACODE_API_ID}}
       - name: Veracode Static Pipeline Scanner
         continue-on-error: true
         run: >
-         java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}"
-         --file "./cfgov-gha.zip"  --baseline_file baseline.json --app_id="cfgov" --fail_on_severity="Very High, High"
-         --summary_output true
-           
-        
-# Artifact the results for later use
+          java -jar pipeline-scan.jar --veracode_api_id
+          "${{secrets.VERACODE_API_ID}}" --veracode_api_key
+          "${{secrets.VERACODE_API_KEY}}" --file
+          "./cfgov-gha.zip"  --baseline_file baseline.json --app_id="cfgov"
+          --fail_on_severity="Very High, High" --summary_output true
+            
       - name: Archive Results.json & Results.txt from Veracode Static Pipeline Scanner
         uses: actions/upload-artifact@v4.6.2
         with:
-          # Artifact name
           name: Veracode SAST Pipeline Results
           path: results.*
-
   Veracode_SCA:
-      runs-on: [ubuntu-latest]
-      steps:
+    runs-on:
+      - ubuntu-latest
+    steps:
       - uses: actions/checkout@v4.2.2
-
       - name: SCA Scan
         env:
           SRCCLR_API_TOKEN: ${{secrets.SRCCLR_API_TOKEN}}
           SRCCLR_REGION: FED
         working-directory: ./
-        run: |
-         curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --json=SCA-App-Issues.json
-
+        run: >
+          curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan
+          --json=SCA-App-Issues.json
       - name: Upload SCA issues artifact
         uses: actions/upload-artifact@v4.6.2
         with:
-           name: Veracode SCA Scan Results
-           path: "SCA-App-Issues.json"
+          name: Veracode SCA Scan Results
+          path: SCA-App-Issues.json
