@@ -23,11 +23,9 @@ jobs:
       - name: Get baseline from private repo
         run: >
           curl
-          https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
+          https://raw.githubusercontent.com/cfpb/veracode-baselines/refs/heads/main/cfgov/baseline.json?token=GHSAT0AAAAAADEC46MP4QADAWLPTNMHXECS2DGTMYQ
           -o baseline.json
-      - name: See baseline file
-        run: |
-          ls -la
+ 
       - name: Download Veracode Static Pipeline Scanner
         run: >
           curl
