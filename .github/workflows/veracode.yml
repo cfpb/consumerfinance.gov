@@ -24,6 +24,8 @@ jobs:
         run: |
           gh api repos/cfpb/veracode-baselines/contents/cfgov/baseline.json \
             --jq '.content' | base64 -d > baseline.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download Veracode Static Pipeline Scanner
         run: >
