@@ -21,10 +21,11 @@ jobs:
         run: |
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
       - name: Get baseline from private repo
-      - uses: valitydev/action-download-file@v1.0.6
-        with:
-          url: https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
-          target-path: .
+        run: >
+          curl
+          https://github.com/cfpb/veracode-baselines/blob/main/cfgov/baseline.json
+          -o baseline.json
+
       - name: Download Veracode Static Pipeline Scanner
         run: >
           curl
