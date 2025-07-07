@@ -1,5 +1,0 @@
-{{- if .Values.localDeployment }}
-{{ .Files.Get "notes/NOTES-local.txt" }}
-{{- else }}
-{{ .Files.Get "notes/NOTES-production.txt" }}
-{{- end }}
