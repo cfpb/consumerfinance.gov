@@ -610,10 +610,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # Google Optimize code snippets for A/B testing
-    # When enabled this flag will add various Google Optimize code snippets.
-    # Intended for use with path conditions.
-    "AB_TESTING": [],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
