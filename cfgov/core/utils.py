@@ -186,7 +186,7 @@ def add_link_markup(tag, request_path):
     original_tag = str(tag)
 
     if text_matches_href(tag.get_text(), href):
-        tag["class"].append("u-link-text-url")
+        tag["class"].append("u-link-text-is-url")
 
     if request_path is not None:
         # Strips the path of the current page from hrefs that are internal page
