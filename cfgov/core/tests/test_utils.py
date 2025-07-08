@@ -386,3 +386,23 @@ class TextMatchesHrefTests(SimpleTestCase):
         self.assertFalse(
             text_matches_href("https://Example.com", "https://example.com")
         )
+
+    def test_naked_domain_matches_www_domain(self):
+        for text, href in [
+            ("example.com", "https://www.example.com"),
+            ("example.com/foo", "https://www.example.com/foo"),
+            ("https://example.com", "https://www.example.com"),
+            ("https://www.example.com", "https://example.com"),
+            ("www.example.com", "https://example.com"),
+            ("www.example.com", "https://www.example.com"),
+            ("www.example.com/foo", "https://example.com/foo"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertTrue(text_matches_href(text, href))
+
+        for text, href in [
+            ("example.com", "https://www.other.com"),
+            ("www.example.com", "https://other.com"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertFalse(text_matches_href(text, href))

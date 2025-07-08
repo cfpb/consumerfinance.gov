@@ -138,7 +138,6 @@ def text_matches_href(text, href):
     """
     internal_domains = [
         "consumerfinance.gov",
-        "www.consumerfinance.gov",
     ]
 
     def parse_potential_url(url):
@@ -149,13 +148,22 @@ def text_matches_href(text, href):
 
         return urlparse(url)
 
+    def normalize_domain(domain):
+        if domain.startswith("www."):
+            return domain[4:]
+        return domain
+
     def normalize(url):
         parsed = parse_potential_url(url)
         netloc = parsed.netloc or "RELATIVE"
         path = parsed.path.rstrip("/")
 
-        if netloc in internal_domains or netloc == "RELATIVE":
+        if netloc == "RELATIVE":
             netloc = "INTERNAL"
+        else:
+            netloc = normalize_domain(netloc)
+            if netloc in internal_domains:
+                netloc = "INTERNAL"
 
         return f"{netloc}{path}"
 
