@@ -128,11 +128,6 @@ $print-gap: 0.3125in;
     break-inside: avoid;
   }
 
-  // Make tables full width.
-  .o-table {
-    column-span: all;
-  }
-
   // Exclude main heading from the columns.
   h1 {
     column-span: all;

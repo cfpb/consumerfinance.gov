@@ -22,3 +22,7 @@
     }
   }
 }
+
+.m-table-text-intro {
+  margin-bottom: math.div(30px, $base-font-size-px) + rem;
+}
