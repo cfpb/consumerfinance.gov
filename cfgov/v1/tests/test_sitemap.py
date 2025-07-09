@@ -29,13 +29,13 @@ class SitemapTests(WagtailPageTreeTestCase):
             (
                 b'<?xml version="1.0" encoding="UTF-8"?>\n'
                 b'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-                b"<url><loc>http://localhost/</loc><lastmod>2025-06-03</lastmod></url>"
-                b"<url><loc>http://localhost/old/</loc><lastmod>2025-06-03</lastmod></url>\n"
+                b"<url><loc>http://localhost/</loc><lastmod>2025-07-08</lastmod></url>"
+                b"<url><loc>http://localhost/old/</loc><lastmod>2025-07-08</lastmod></url>\n"
                 b"</urlset>\n"
             ),
         )
 
         # The Last-Modified header should also be set appropriately.
         self.assertEqual(
-            response["Last-Modified"], "Wed, 04 Jun 2025 00:00:00 GMT"
+            response["Last-Modified"], "Wed, 09 Jul 2025 00:00:00 GMT"
         )

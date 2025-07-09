@@ -11,7 +11,7 @@ class Sitemap(WagtailSitemap):
     # Used to set a minimum modified date for all pages in the sitemap.
     # This can be updated to trigger sitemap updates that are not reflected
     # in Wagtail page publish events.
-    MIN_SITEMAP_DATE = datetime(2025, 6, 4, tzinfo=timezone.utc)
+    MIN_SITEMAP_DATE = datetime(2025, 7, 9, tzinfo=timezone.utc)
     latest_lastmod = MIN_SITEMAP_DATE
 
     def get_urls(self, page=1, site=None, protocol=None):
