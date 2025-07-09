@@ -501,8 +501,6 @@ CSP_SCRIPT_SRC = (
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -524,7 +522,6 @@ CSP_STYLE_SRC = (
     "'unsafe-inline'",
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
     "www.ssa.gov/accessibility/andi/",
@@ -539,7 +536,6 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -557,8 +553,6 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
@@ -572,7 +566,6 @@ CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
@@ -610,10 +603,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # Google Optimize code snippets for A/B testing
-    # When enabled this flag will add various Google Optimize code snippets.
-    # Intended for use with path conditions.
-    "AB_TESTING": [],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
