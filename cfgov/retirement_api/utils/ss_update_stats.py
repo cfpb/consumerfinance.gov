@@ -100,7 +100,7 @@ def output_json(filepath, headings, bs_rows):
 def make_soup(url):
     req = requests.get(url)
     if req.reason != "OK":
-        log.warn(f"request to {url} failed: {req.status_code} {req.reason}")
+        log.warning(f"request to {url} failed: {req.status_code} {req.reason}")
         return ""
     else:
         soup = bs(req.text, "html.parser")

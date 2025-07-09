@@ -131,7 +131,10 @@ function updateMap(data) {
 
     data.counseling_agencies.forEach((val, i) => {
       const lat = val.agc_ADDR_LATITUDE;
-      const lng = val.agc_ADDR_LONGITUDE;
+      let lng = val.agc_ADDR_LONGITUDE;
+      //Operate only on negative longitudes
+      //So Guam will be left of HI on the map
+      if (lng > 0) lng = lng - 360;
       const position = new window.L.LatLng(lat, lng);
 
       if (lat > ymax) ymax = lat;

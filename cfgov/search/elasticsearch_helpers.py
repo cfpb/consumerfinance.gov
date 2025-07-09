@@ -32,30 +32,6 @@ def strip_html(markup):
     return re.sub(clean, " ", markup).strip().replace("\xa0", "")
 
 
-UNSAFE_CHARACTERS = [
-    "#",
-    "%",
-    ";",
-    "^",
-    "~",
-    "`",
-    "|",
-    "<",
-    ">",
-    "[",
-    "]",
-    "{",
-    "}",
-    "\\",
-]
-
-
-def make_safe(term):
-    for char in UNSAFE_CHARACTERS:
-        term = term.replace(char, "")
-    return term
-
-
 ngram_tokenizer = analyzer(
     "ngram_tokenizer",
     tokenizer=tokenizer(

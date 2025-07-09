@@ -1,5 +1,5 @@
+from core.utils import make_safe
 from paying_for_college.documents import SchoolDocument
-from search.elasticsearch_helpers import make_safe
 
 
 class SchoolSearch:

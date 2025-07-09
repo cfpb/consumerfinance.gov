@@ -106,7 +106,7 @@ function clearFilters(event) {
  * Trigger a form submit after Clear Search is clicked.
  */
 function clearSearch() {
-  document.querySelector('input[name=q]').value = '';
+  document.getElementById('search-text').value = '';
   handleSubmit(event);
 }
 
@@ -135,7 +135,7 @@ function fetchSearchResults(filters = []) {
     '#tdp-search-facets-and-results',
   );
   const baseUrl = window.location.href.split('?')[0];
-  const searchField = document.querySelector('input[name=q]');
+  const searchField = document.getElementById('search-text');
   const searchTerms = getSearchValues(searchField, filters);
   const searchParams = serializeFormFields(searchTerms);
 

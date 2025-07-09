@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import datetime
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -47,7 +48,12 @@ def run():
         logger.info("Creating new cfgov home page")
 
         # Create the new home page instance.
-        home_page = HomePage(title="CFGov", slug="cfgov", live=True)
+        home_page = HomePage(
+            title="CFGov",
+            slug="cfgov",
+            live=True,
+            last_published_at=datetime(2010, 7, 21),
+        )
 
         # Add the new home page as a child to the Wagtail root page.
         root_page = Page.objects.get(slug="root")
