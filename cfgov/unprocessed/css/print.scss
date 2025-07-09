@@ -13,19 +13,19 @@
     white-space: normal;
   }
 
-  a[href*="://"]:after
+  a[href*="://"]:not(.u-link-text-is-url)::after
   {
     // Output href in parentheses for links with a protocol already there.
     content: ' (' attr(href) ')';
   }
 
-  a[href^='/']::after {
+  a[href^='/']:not(.u-link-text-is-url)::after {
     // Output root-relative hrefs in parentheses with our domain prepended.
     content: ' (cfpb.gov' attr(href) ')';
   }
 
-  a[href^='/ask-cfpb/']::after,
-  a[href*='consumerfinance.gov/ask-cfpb']::after {
+  a[href^='/ask-cfpb/']:not(.u-link-text-is-url)::after,
+  a[href*='consumerfinance.gov/ask-cfpb']:not(.u-link-text-is-url)::after {
     // Use short URL when printing Ask CFPB links.
     content: ' (' attr(data-pretty-href) ')';
   }
@@ -34,7 +34,7 @@
   a.m-info-unit__heading-link::after,
   .m-info-unit__content h4 a::after {
     // Do not append hrefs to the logo or info unit headings.
-    content: none;
+    content: none !important;
   }
 
   a[href^='#'] {
