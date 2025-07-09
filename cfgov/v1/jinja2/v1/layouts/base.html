@@ -60,7 +60,7 @@ itemscope itemtype="https://schema.org/FAQPage"
             {%- endblock -%}
           ">
     <meta name="searchgov_custom1" content="{{ language }}">
-    <meta name="searchgov_custom2" content="{{ self.desc() }}">
+    <meta name="searchgov_custom2" content="{{ b32encode(self.desc()) }}">
 
     {# Always open preview panel links in a new tab. #}
     {% if request.in_preview_panel %}
