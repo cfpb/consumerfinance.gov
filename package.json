@@ -24,7 +24,7 @@
     "@csstools/sass-import-resolve": "1.0.0",
     "autoprefixer": "10.4.21",
     "cssnano": "7.0.7",
-    "esbuild": "0.25.5",
+    "esbuild": "0.25.6",
     "fancy-log": "2.0.0",
     "highcharts": "7.2.2",
     "lit": "3.3.0",
@@ -47,7 +47,7 @@
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-cypress": "5.1.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "51.3.3",
+    "eslint-plugin-jsdoc": "51.3.4",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "globals": "16.3.0",
@@ -57,7 +57,7 @@
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.6.2",
     "snyk": "1.1297.3",
-    "stylelint": "16.21.0",
+    "stylelint": "16.21.1",
     "stylelint-config-standard-scss": "15.0.1"
   },
   "scripts": {
