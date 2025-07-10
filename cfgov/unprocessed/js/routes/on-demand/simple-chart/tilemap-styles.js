@@ -44,7 +44,7 @@ const tilemap = {
   },
   tooltip: {
     style: {
-      fontFamily: 'Avenir Next',
+      fontFamily: 'Source Sans 3 Variable',
       fontSize: '16px',
       lineHeight: '24px',
     },
