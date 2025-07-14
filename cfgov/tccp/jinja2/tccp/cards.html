@@ -31,10 +31,6 @@
 <link rel="stylesheet" href="{{ static('apps/tccp/css/main.css') }}">
 {% endblock %}
 
-{% block content_modifiers -%}
-    {{ super() }} u-layout-grid--full-width-breadcrumbs
-{%- endblock %}
-
 {% block content_main_modifiers -%}
     {{ super() }} htmx-container
 {%- endblock %}
