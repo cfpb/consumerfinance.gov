@@ -60,7 +60,8 @@ itemscope itemtype="https://schema.org/FAQPage"
             {%- endblock -%}
           ">
     <meta name="searchgov_custom1" content="{{ language }}">
-    <meta name="searchgov_custom2" content="{{ self.desc() }}">
+    {# Base32 encoding used to avoid an issue with Search.gov custom fields losing capitalization. -#} 
+    <meta name="searchgov_custom2" content="{{ encode_b32_string(self.desc()) }}">
 
     {# Always open preview panel links in a new tab. #}
     {% if request.in_preview_panel %}

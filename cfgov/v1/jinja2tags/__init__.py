@@ -1,3 +1,5 @@
+from base64 import b32encode
+
 from jinja2 import pass_context
 from jinja2.ext import Extension
 
@@ -51,6 +53,10 @@ def unique_id_in_context(context):
         return get_unique_id()
 
 
+def encode_b32_string(s):
+    return b32encode(s.encode("utf-8")).decode("utf-8")
+
+
 class V1Extension(Extension):
     def __init__(self, environment):
         super().__init__(environment)
@@ -63,6 +69,7 @@ class V1Extension(Extension):
                 "get_unique_id": get_unique_id,
                 "is_filter_selected": pass_context(is_filter_selected),
                 "unique_id_in_context": pass_context(unique_id_in_context),
+                "encode_b32_string": encode_b32_string,
                 "app_url": app_url,
                 "app_page_url": app_page_url,
             }
