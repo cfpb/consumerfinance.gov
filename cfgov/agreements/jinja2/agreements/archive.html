@@ -1,10 +1,12 @@
-{% set manual_desc="Access all Credit Card agreements collected from the most recent or earlier quarterly collection periods." %}
-
 {% extends "agreements/base_agreements.html" %}
 
 {% block title -%}
     Credit card agreement database archive | Consumer Financial Protection Bureau
 {%- endblock %}
+
+{%- block desc -%}
+    Access all Credit Card agreements collected from the most recent or earlier quarterly collection periods.
+{%- endblock -%}
 
 {% set breadcrumb_items = [
   ({'href':'/','title':'Home'}),

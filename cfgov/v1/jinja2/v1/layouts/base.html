@@ -56,13 +56,7 @@ itemscope itemtype="https://schema.org/FAQPage"
     <meta name="description"
           content="
             {%- block desc -%}
-                {% if page %}
-                {{- meta_description -}}
-                {% elif manual_desc %}
-                {{- manual_desc -}}
-                {% else %}
-                {{- '' -}}
-                {%- endif -%}
+                {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
     <meta name="searchgov_custom1" content="{{ language }}">

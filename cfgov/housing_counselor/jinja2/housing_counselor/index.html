@@ -1,10 +1,14 @@
-{% set manual_desc="Use our tool to find a HUD-approved housing counseling agency near you. Housing counselors throughout the country can provide advice on buying a home, renting, defaults, forbearances, foreclosures, and credit issues." %}
 {% extends "v1/layouts/layout-full.html" %}
+
 {% import "v1/includes/molecules/social-media.html" as social_media with context %}
 
 {% block title %}
     Find a Housing Counselor | Consumer Financial Protection Bureau
 {% endblock %}
+
+{%- block desc -%}
+    Use our tool to find a HUD-approved housing counseling agency near you. Housing counselors throughout the country can provide advice on buying a home, renting, defaults, forbearances, foreclosures, and credit issues.
+{%- endblock -%}
 
 {% block css %}
 {{ super() }}

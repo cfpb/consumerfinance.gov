@@ -1,10 +1,12 @@
-{% set manual_desc="Learn how our Planning for Retirement tool works and how we generate estimates based on age and work income." %}
-
 {% extends 'v1/layouts/layout-2-1.html' %}
 
 {% block title %}
     {{ _('About this tool') }} | {{ _('Consumer Financial Protection Bureau') }}
 {% endblock %}
+
+{%- block desc -%}
+    Learn how our Planning for Retirement tool works and how we generate estimates based on age and work income.
+{%- endblock -%}
 
 {% block content_main %}
     <div class="block block--flush-top">

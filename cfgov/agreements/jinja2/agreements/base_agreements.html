@@ -1,6 +1,8 @@
-{% set manual_desc="We maintain a database of credit card agreements from more than 600 card issuers. Using the database, you can search for an agreement by the name of the issuer." %}
-
 {% extends "v1/layouts/layout-2-1.html" %}
+
+{%- block desc -%}
+    We maintain a database of credit card agreements from more than 600 card issuers. Using the database, you can search for an agreement by the name of the issuer.
+{%- endblock -%}
 
 {% block javascript scoped %}
   {{ super() }}
