@@ -19,7 +19,7 @@
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.4",
     "@cfpb/cfpb-analytics": "0.3.2",
-    "@cfpb/cfpb-design-system": "4.0.0",
+    "@cfpb/cfpb-design-system": "4.0.1",
     "@csstools/postcss-sass": "5.1.1",
     "@csstools/sass-import-resolve": "1.0.0",
     "autoprefixer": "10.4.21",

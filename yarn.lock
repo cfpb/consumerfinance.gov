@@ -283,11 +283,12 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-4.0.0.tgz#de95ee39e2409e2f525b9ea5fa20ca4e19da0372"
-  integrity sha512-XRyeN5gappLx9kIKItTR+9OeV3vnI32xxckRcfEU2wG47HAJAGwDULpn45JzEQRVJ93dbAC7Hi0BSD3DqdOmEA==
+"@cfpb/cfpb-design-system@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-4.0.1.tgz#16451f78159a5f053aa29ef631ebbbad037039df"
+  integrity sha512-PRhss6Th6tojDsMw+Qi7I7y1BnnesRuLVQ8htkTJKcaesmCAzeJIQKchEfCEljm8jv4nUDZJh7xcWV5q5qtsCg==
   dependencies:
+    "@fontsource-variable/source-sans-3" "5.2.8"
     tippy.js "6.3.7"
 
 "@colors/colors@1.5.0":
@@ -572,6 +573,11 @@
   dependencies:
     "@eslint/core" "^0.14.0"
     levn "^0.4.1"
+
+"@fontsource-variable/source-sans-3@5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/source-sans-3/-/source-sans-3-5.2.8.tgz#28c8389b55bb5bb38431de8aec24d52168b2d915"
+  integrity sha512-iRQD4k06Wxm1668+AbPBoVo+CbgRsOz2E0/XibDJ7kAm9UhdhmNmsMTvs9KEl/mQxUj/487tr9w47NoM/TMhZQ==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
