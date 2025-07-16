@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 FONT_VARIABLE="source-sans-3-latin-wght-normal.woff2"
 BASE_DIR="./static.in/cfgov-fonts/fonts"

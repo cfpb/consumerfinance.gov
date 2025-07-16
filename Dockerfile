@@ -83,7 +83,6 @@ WORKDIR ${APP_HOME}
 # Install and update common OS packages and frontend dependencies
 RUN apk update --no-cache && apk upgrade --no-cache && \
     apk add --no-cache --virtual .frontend-deps \
-        bash \
         jpeg-dev \
         yarn \
         zlib-dev
