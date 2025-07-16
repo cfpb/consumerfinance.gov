@@ -2,7 +2,6 @@
 # yarn lockfile v1
 
 
-"@cfpb/ccdb5-ui@2.14.9":
+"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#remove-avenir":
   version "2.14.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.14.9.tgz#8ac52372c72cf7a547cc68e26f14110e4e123a13"
-  integrity sha512-mMXIlncYMNx+DaWpTa4Z1oH9k8PiNjSH49ZtpX1YEFXldQJ2B3tbvy4VXCNVUKm9iXe+HhNdV3y+UQb4gLH1GQ==
+  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/cd0a2d9df53fe80dc827831010d35d0950157fb9"
