@@ -98,3 +98,16 @@ class TestGetCategoryIcon(SimpleTestCase):
         self.checkRender(
             "{{ get_category_icon('Invalid category name') }}", "None"
         )
+
+
+class TestEncodeB32String(SimpleTestCase):
+    def setUp(self):
+        self.jinja_engine = engines["wagtail-env"]
+
+    def test_encode_b32_string(self):
+        s = (
+            "{%- block desc -%}cfpb{%- endblock -%}"
+            "{{encode_b32_string(self.desc())}}"
+        )
+        template = self.jinja_engine.from_string(s)
+        self.assertEqual(template.render(), "cfpbMNTHAYQ=")
