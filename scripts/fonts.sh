@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Set script to exit on any errors.
+set -e
+
 FONT_VARIABLE="source-sans-3-latin-wght-normal.woff2"
 BASE_DIR="./static.in/cfgov-fonts/fonts"
 
