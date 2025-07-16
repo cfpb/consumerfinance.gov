@@ -572,7 +572,7 @@ CSP_CONNECT_SRC = (
     "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
-    "n2.mouseflow.com",
+    "*.mouseflow.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
