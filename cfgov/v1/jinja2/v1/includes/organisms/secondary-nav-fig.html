@@ -19,10 +19,7 @@
 {% macro render(version_status=none, effective_start_date=none, effective_end_date=none) %}
 <div class="o-fig__sidebar">
     <div class="u-hide-on-tablet">
-        {% if version_status %}
-            <div class="a-tag-filter u-mb20">
-                {{ version_status }}
-            </div>
+        {% if version_status and effective_start_date and effective_end_date %}
             <p>
                 Effective {{ effective_start_date }} to {{ effective_end_date }}
             </p>
