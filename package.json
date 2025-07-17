@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=22.x"
+    "node": ">=24.x"
   },
   "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
@@ -23,11 +23,11 @@
     "@csstools/postcss-sass": "5.1.1",
     "@csstools/sass-import-resolve": "1.0.0",
     "autoprefixer": "10.4.21",
-    "cssnano": "7.0.7",
+    "cssnano": "7.1.0",
     "esbuild": "0.25.6",
     "fancy-log": "2.0.0",
     "highcharts": "7.2.2",
-    "lit": "3.3.0",
+    "lit": "3.3.1",
     "lodash.clonedeep": "4.5.0",
     "lodash.throttle": "4.1.1",
     "number-to-words": "1.2.4",
@@ -38,16 +38,16 @@
   },
   "devDependencies": {
     "@cypress/skip-test": "2.6.1",
-    "@eslint/js": "9.30.1",
+    "@eslint/js": "9.31.0",
     "axe-core": "4.10.3",
     "cypress": "13.17.0",
     "cypress-axe": "1.5.0",
     "cypress-fail-fast": "7.1.1",
-    "eslint": "9.30.1",
+    "eslint": "9.31.0",
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-cypress": "5.1.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "51.3.4",
+    "eslint-plugin-jsdoc": "51.4.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "globals": "16.3.0",
@@ -56,7 +56,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.6.2",
-    "snyk": "1.1297.3",
+    "snyk": "1.1298.0",
     "stylelint": "16.21.1",
     "stylelint-config-standard-scss": "15.0.1"
   },
