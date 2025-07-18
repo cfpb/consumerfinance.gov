@@ -1,7 +1,7 @@
 const HIGHCHARTS_SETTINGS = {
   colors: ['#ADDC91'],
   style: {
-    fontFamily: '"Avenir Next", Arial, sans-serif',
+    fontFamily: '"Source Sans 3 Variable", Arial, sans-serif',
     fontSize: '13px',
   },
   chart: {
@@ -34,7 +34,7 @@ const HIGHCHARTS_SETTINGS = {
         color: '#101820',
         fontSize: '16px',
         fontWeight: 'normal',
-        fontFamily: '"Avenir Next", Arial, sans-serif',
+        fontFamily: '"Source Sans 3 Variable", Arial, sans-serif',
       },
     },
     plotLines: [
@@ -56,7 +56,7 @@ const HIGHCHARTS_SETTINGS = {
         color: '#BABBBD',
         fontSize: '12px',
         fontWeight: 'normal',
-        fontFamily: '"Avenir Next", Arial, sans-serif',
+        fontFamily: '"Source Sans 3 Variable", Arial, sans-serif',
       },
     },
   },
