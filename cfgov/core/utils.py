@@ -146,7 +146,10 @@ def text_matches_href(text, href):
         elif "://" not in url:
             url = "https://RELATIVE/" + url.lstrip("/")
 
-        return urlparse(url)
+        try:
+            return urlparse(url)
+        except ValueError:
+            return None
 
     def normalize_domain(domain):
         if domain.startswith("www."):
@@ -155,6 +158,10 @@ def text_matches_href(text, href):
 
     def normalize(url):
         parsed = parse_potential_url(url)
+
+        if parsed is None:
+            return url
+
         netloc = parsed.netloc or "RELATIVE"
         path = parsed.path.rstrip("/")
 
