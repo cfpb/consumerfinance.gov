@@ -406,3 +406,9 @@ class TextMatchesHrefTests(SimpleTestCase):
         ]:
             with self.subTest(text=text, href=href):
                 self.assertFalse(text_matches_href(text, href))
+
+    def test_urlparse_exceptions(self):
+        # https://discuss.python.org/t/urlparse-can-sometimes-raise-an-exception-should-it/44465
+        self.assertFalse(text_matches_href("https://\uff03", "https://foo"))
+        self.assertFalse(text_matches_href("https://\uff03", "https://\uff1a"))
+        self.assertTrue(text_matches_href("https://\uff03", "https://\uff03"))
