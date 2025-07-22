@@ -8,7 +8,6 @@ nav:
   - Running this Project:
       - Running in a Virtual Environment: running-virtualenv.md
       - Running in Docker: running-docker.md
-      - Running in Kubernetes: running-k8s.md
       - Running documentation site locally: running-docs.md
       - Debugging and Monitoring: debugging-monitoring.md
       - Artifacts and Deployment: deployment.md
