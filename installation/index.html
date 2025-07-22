@@ -70,8 +70,6 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../running-docker/">Running in Docker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../running-k8s/">Running in Kubernetes</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../running-docs/">Running documentation site locally</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../debugging-monitoring/">Debugging and Monitoring</a>
@@ -262,18 +260,19 @@ to assist developers with linting without thinking.</p>
 <h3 id="build-the-frontend">Build the frontend<a class="headerlink" href="#build-the-frontend" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Our frontend requires <a href="https://nodejs.org/en/">Node.js 20</a>
+<p>Our frontend requires <a href="https://nodejs.org/en/">Node</a>
 with
 <a href="https://yarnpkg.com/">Yarn</a>.
 We prefer
 <a href="https://github.com/nvm-sh/nvm">nvm</a>
 for Node.js version management.
-nvm can be installed using:</p>
+The latest stable Node.js release is published <a href="https://nodejs.org/en/about/previous-releases#nodejs-releases">here</a>.</p>
+<p>nvm can be installed using:</p>
 <pre class="highlight"><code class="language-sh">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | sh</code></pre>
 <p>Node must then be installed once nvm is installed:</p>
-<pre class="highlight"><code class="language-sh">nvm install 20</code></pre>
+<pre class="highlight"><code class="language-sh">nvm install stable</code></pre>
 <p>Node can then be used in any sh using:</p>
-<pre class="highlight"><code class="language-sh">nvm use 20</code></pre>
+<pre class="highlight"><code class="language-sh">nvm use stable</code></pre>
 <p>Yarn must then be installed:</p>
 <pre class="highlight"><code class="language-sh">curl -o- -L https://yarnpkg.com/install.sh | sh</code></pre>
 </div>
