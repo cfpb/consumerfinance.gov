@@ -1,4 +1,4 @@
-FROM httpd:2.4-alpine
+FROM httpd:2.4.65-alpine
 
 # Define default Apache ENV variables.
 ENV APACHE_PORT="8080"
@@ -28,32 +28,6 @@ RUN rm -f "$APACHE_SERVER_ROOT/htdocs/index.html"
 # the www-data user acccess to this directory.
 RUN mkdir -p "$APACHE_SERVER_ROOT/logs" \
     && chown www-data:www-data "$APACHE_SERVER_ROOT/logs"
-
-# libxml2 versions below 2.13.4-r5 suffer from HIGH CVE-2025-27113:
-# https://nvd.nist.gov/vuln/detail/CVE-2025-27113
-# Upstream httpd:2.4-alpine includes 2.13.4-r3 (at the time this image is
-# being tested). This may be fixed upstream in future. Until then, we can
-# upgrade to a newer fixed version from Alpine edge.
-RUN CURRENT_LIBXML2=$( \
-        apk version --no-cache libxml2 | \
-        grep "^libxml2" | \
-        awk '{print $1}' | \
-        cut -d '-' -f2- \
-    ) && \
-    TARGET_LIBXML2="2.13.4-r5" && \
-    LOWEST_LIBXML2=$( \
-        printf '%s\n' "$CURRENT_LIBXML2" "$TARGET_LIBXML2" | \
-        sort -V | \
-        head -n1 \
-    ) && \
-    if \
-        [ "$LOWEST_LIBXML2" = "$CURRENT_LIBXML2" ] && \
-        [ "$CURRENT_LIBXML2" != "$TARGET_LIBXML2" ] \
-    ; then \
-        echo "Patching libxml2 due to CVE-2025-27113 as $CURRENT_LIBXML2 < $TARGET_LIBXML2" && \
-        echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories && \
-        apk upgrade --no-cache libxml2; \
-    fi
 
 EXPOSE 8080
 
