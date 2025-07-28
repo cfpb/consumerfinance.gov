@@ -433,11 +433,14 @@ Query.prototype.slideUp = function (duration = 500) {
   return this;
 };
 
-Query.prototype.slideDown = function (duration = 500) {
+Query.prototype.slideDown = function (
+  defaultDisplay = 'block',
+  duration = 500,
+) {
   this.elements.forEach((elem) => {
     elem.style.removeProperty('display');
     let display = document.defaultView.getComputedStyle(elem).display;
-    if (display === 'none') display = 'block';
+    if (display === 'none') display = defaultDisplay;
     elem.style.display = display;
     const height = elem.offsetHeight;
     for (const key in slideDownVars.styles) {
