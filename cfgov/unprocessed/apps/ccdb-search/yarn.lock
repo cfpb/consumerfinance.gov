@@ -5,4 +5,3 @@
 "@cfpb/ccdb5-ui@cfpb/ccdb5-ui#DATAP-1622-matched-company-filter":
   version "2.14.11"
   resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/e9075b93c2061a6e19b4c29b00df420cd374cd7d"
-
