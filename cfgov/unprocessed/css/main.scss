@@ -100,8 +100,9 @@ body {
 }
 
 // Make Arial the first-line font in Vietnamese pages' main content area.
-// This is used because Avenir Next does not contain all Vietnamese diacritics.
+// This is used because Source Sans 3 doesn't contain all Vietnamese diacritics.
 // See https://[GHE]/Design-Development/Design-and-Content-Team/issues/175
+// TODO: deliver source-sans-3-vietnamese-wght-normal.woff2 to Vietnamese pages.
 html[lang='vi'] body main {
-  font-family: Arial, 'Avenir Next', sans-serif;
+  font-family: Arial, 'Source Sans 3 Variable', sans-serif;
 }

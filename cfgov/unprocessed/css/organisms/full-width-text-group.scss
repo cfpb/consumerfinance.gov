@@ -72,7 +72,7 @@
 
     .m-full-width-text + .m-inset__image {
       // 19px value optically aligns top of image
-      // with adjacent Avenir Next cap height
+      // with adjacent Source Sans 3 Variable cap height
       margin-top: math.div(19px, $base-font-size-px) + em;
     }
 

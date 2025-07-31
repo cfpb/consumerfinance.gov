@@ -420,7 +420,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
-            "min_length": 12,
+            "min_length": 14,
         },
     },
     {
@@ -572,7 +572,7 @@ CSP_CONNECT_SRC = (
     "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
-    "n2.mouseflow.com",
+    "*.mouseflow.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
