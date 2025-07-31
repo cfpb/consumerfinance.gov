@@ -49,7 +49,6 @@ global.console = { error: jest.fn(), log: jest.fn() };
 
 /**
  * Create a mock for the window.location object, for testing purposes.
- */
 function mockWindowLocation() {
   delete window.location;
   window.location = {
@@ -60,6 +59,7 @@ function mockWindowLocation() {
     assign: jest.fn(),
   };
 }
+ */
 
 describe('The Regs3K search page', () => {
   beforeEach(() => {

@@ -1,9 +1,9 @@
-import financialView from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/views/financial-view.js';
+//import financialView from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/views/financial-view.js';
 import financialModel from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/models/financial-model.js';
 import expensesModel from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/models/expenses-model.js';
 import schoolModel from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/models/school-model.js';
-import { getUrlValues } from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/dispatchers/get-url-values.js';
-import publishUpdate from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/dispatchers/publish-update.js';
+//import { getUrlValues } from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/dispatchers/get-url-values.js';
+//import publishUpdate from '../../../../../../cfgov/unprocessed/apps/paying-for-college/js/disclosures/dispatchers/publish-update.js';
 import HTML_SNIPPET from '../fixtures/overview.js';
 import {
   constants,
