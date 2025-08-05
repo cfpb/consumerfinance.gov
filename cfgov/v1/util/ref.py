@@ -142,6 +142,7 @@ categories = [
             ),
             ("info-collect-activity", "Information collection activities"),
             ("notice-privacy-act", "Notice related to Privacy Act"),
+            ("other", "Other"),
         ),
     ),
     (
