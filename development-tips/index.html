@@ -205,7 +205,7 @@ ready to be served by Django.</p>
   <code>yarn cache clean</code>.</li>
 </ul>
 <h2 id="watching-files-for-changes">Watching files for changes<a class="headerlink" href="#watching-files-for-changes" title="Permanent link">¶</a></h2>
-<p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>yarn watch</code>.</p>
+<p>Any JavaScript or SASS file that is included as an entrypoint in esbuild can automatically trigger rebuilds with <code>yarn watch</code>.</p>
 <h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>
 <p>Some projects can sit inside consumerfinance.gov, but manage their own asset
 dependencies. These projects have their own <code>package.json</code> and base templates.</p>
