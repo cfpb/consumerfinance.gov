@@ -37,7 +37,7 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 ## Watching files for changes
 
-Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `yarn watch`.
+Any JavaScript or SASS file that is included as an entrypoint in esbuild can automatically trigger rebuilds with `yarn watch`.
 
 ## Developing on nested satellite apps
 
