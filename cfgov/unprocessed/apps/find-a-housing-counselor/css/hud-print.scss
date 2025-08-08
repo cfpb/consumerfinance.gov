@@ -99,8 +99,13 @@
   /* Hide unneeded content */
   .o-header,
   .o-footer,
-  .hud-hca-api-results-actions,
+  #hud_print-page-link,
   svg {
     display: none !important;
+  }
+
+  .no-js .u-hide-if-js {
+    visibility: hidden;
+    margin-bottom: -130px;
   }
 }
