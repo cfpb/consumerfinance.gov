@@ -9,6 +9,10 @@
   padding: math.div(math.div($grid-gutter-width, 2), $base-font-size-px) + em;
 }
 
+#hud_print-page-link {
+  float: right;
+}
+
 #hud-hca-api-map-canvas {
   height: 320px;
 }
@@ -48,23 +52,6 @@
 
 #hud-hca-api-map-canvas img {
   max-width: none;
-}
-
-.hud-hca-api-results-actions {
-  @include respond-to-min($bp-xs-max) {
-    & {
-      // Margin makes a gap between result header links and result text.
-      margin-left: 20px;
-      float: right;
-    }
-  }
-
-  // Remove underline from PDF abbreviation and icons in links.
-  & abbr,
-  & svg {
-    border-bottom: none;
-    text-decoration: none;
-  }
 }
 
 // Top-align entries in the table.
