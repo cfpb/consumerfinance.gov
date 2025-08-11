@@ -56,6 +56,9 @@ RUN \
         curl \
         postgresql \
     && \
+    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
+      sqlite \
+    && \
     pip install --upgrade pip setuptools wheel && \
     pip install -r requirements/deployment_container.txt && \
     apk del .build-deps
