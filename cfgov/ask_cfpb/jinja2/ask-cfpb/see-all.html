@@ -43,28 +43,6 @@
             {{ page.overview }}
         </p>
         {% endif %}
-        <aside class="search-bar">
-            <form method="get" action=".">
-                <label for="ask-search" class="a-label h4">
-                    {{ _('Narrow your results') }}
-                </label>
-                <div class="m-form-field">
-                    <input
-                        class="a-text-input a-text-input--full"
-                        type="text"
-                        aria-label="{{ _('Search term') }}"
-                        name="search_term"
-                        value="{{ search_term }}">
-                        <button class="a-btn" id="ask-search" type="submit">
-                            {{ _('Search') }}
-                        </button>
-                        <a class="a-btn a-btn--link a-btn--warning"
-                           href=".">
-                            {{ _('Clear search') }}
-                        </a>
-                </div>
-            </form>
-        </aside>
 
         <p class="results-message">{{ results_message }}</p>
 
