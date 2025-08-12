@@ -14,13 +14,13 @@ class HousingCounselorS3URLMixinTestCase(TestCase):
     def test_s3_json_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_json_url(20001),
-            "https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/jsons/20001.json",  # noqa: E501
+            "https://files.consumerfinance.gov/a/assets/hud/jsons/20001.json",  # noqa: E501
         )
 
     def test_s3_pdf_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_pdf_url(20009),
-            "https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/pdfs/20009.pdf",  # noqa: E501
+            "https://files.consumerfinance.gov/a/assets/hud/pdfs/20009.pdf",  # noqa: E501
         )
 
 

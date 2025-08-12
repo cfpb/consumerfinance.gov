@@ -327,7 +327,7 @@ SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    "https://s3.amazonaws.com/files.consumerfinance.gov"
+    "https://files.consumerfinance.gov"
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
 
