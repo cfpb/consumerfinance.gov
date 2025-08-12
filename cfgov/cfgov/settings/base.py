@@ -326,11 +326,6 @@ SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
-HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    "https://files.consumerfinance.gov"
-    "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
-)
-
 # ElasticSearch 7 Configuration
 TESTING = False
 ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
@@ -379,10 +374,11 @@ if os.getenv("S3_ENABLED"):
         "OPTIONS": _storage_options,
     }
 
-# This environment variable is also used in get_s3_media_config above.
-# This is defined here as its own setting to maintain existing functionality
+# These environment variables are also used in get_s3_media_config above.
+# They are defined here to maintain existing functionality
 # in various applications that read/write data from/to S3.
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")

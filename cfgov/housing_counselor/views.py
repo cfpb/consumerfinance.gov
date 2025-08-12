@@ -2,18 +2,16 @@ import logging
 import re
 
 from django.conf import settings
-from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView
 
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from housing_counselor.forms import HousingCounselorForm
-
 
 logger = logging.getLogger(__name__)
+
+S3_PATH_TEMPLATE = "https://{bucket_location}/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 
 
 def requests_retry_session(
@@ -37,20 +35,21 @@ def requests_retry_session(
 
 
 class HousingCounselorS3URLMixin:
-    @staticmethod
-    def s3_url(file_format, zipcode):
-        path = settings.HOUSING_COUNSELOR_S3_PATH_TEMPLATE.format(
-            file_format=file_format, zipcode=zipcode
-        )
-        return path
-
     @classmethod
     def s3_json_url(cls, zipcode):
-        return cls.s3_url(file_format="json", zipcode=zipcode)
+        return S3_PATH_TEMPLATE.format(
+            bucket_location=f"s3.amazonaws.com/{settings.AWS_STORAGE_BUCKET_NAME}",
+            file_format="json",
+            zipcode=zipcode,
+        )
 
     @classmethod
     def s3_pdf_url(cls, zipcode):
-        return cls.s3_url(file_format="pdf", zipcode=zipcode)
+        return S3_PATH_TEMPLATE.format(
+            bucket_location=settings.AWS_S3_CUSTOM_DOMAIN,
+            file_format="pdf",
+            zipcode=zipcode,
+        )
 
 
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
@@ -111,14 +110,3 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
         response.raise_for_status()
 
         return response.json()
-
-
-class HousingCounselorPDFView(View, HousingCounselorS3URLMixin):
-    def get(self, request):
-        form = HousingCounselorForm(request.GET)
-
-        if not form.is_valid():
-            return HttpResponseBadRequest("invalid zip code")
-
-        zipcode = form.cleaned_data["zip"]
-        return redirect(self.s3_pdf_url(zipcode))

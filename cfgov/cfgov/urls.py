@@ -30,10 +30,7 @@ from ask_cfpb.views import (
 )
 from core.decorators import akamai_no_store
 from core.views import CacheTaggedTemplateView, govdelivery_subscribe
-from housing_counselor.views import (
-    HousingCounselorPDFView,
-    HousingCounselorView,
-)
+from housing_counselor.views import HousingCounselorView
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
 from v1.sitemap import Sitemap
@@ -278,11 +275,6 @@ urlpatterns = [
         r"^find-a-housing-counselor/$",
         HousingCounselorView.as_view(),
         name="housing-counselor",
-    ),
-    re_path(
-        r"^save-hud-counselors-list/$",
-        HousingCounselorPDFView.as_view(),
-        name="housing-counselor-pdf",
     ),
     # Report redirects
     re_path(

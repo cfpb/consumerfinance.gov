@@ -65,16 +65,3 @@ class HousingCounselorViewTestCase(TestCase):
         )
         self.assertTrue(response.context_data["zipcode_valid"])
         self.assertIn("12345.pdf", response.context_data["pdf_url"])
-
-
-@override_settings(AWS_STORAGE_BUCKET_NAME="foo.bucket")
-class HousingCounselorPDFViewTestCase(TestCase):
-    def test_get_invalid_form(self):
-        response = self.client.get("/save-hud-counselors-list/", {})
-        self.assertEqual(response.status_code, 400)
-
-    def test_get_valid_form(self):
-        response = self.client.get(
-            "/save-hud-counselors-list/", {"zip": "12345"}
-        )
-        self.assertEqual(response.status_code, 302)
