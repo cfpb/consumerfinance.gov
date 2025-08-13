@@ -9,7 +9,6 @@ Disallow: /
 
 User-agent: usasearch
 {% endif -%}
-Disallow: /save-hud-counselors-list
 Disallow: /about-us/the-bureau/leadership-calendar/pdf
 Disallow: /es/obtener-respuestas/*.imprimir.html
 Disallow: /*?success
