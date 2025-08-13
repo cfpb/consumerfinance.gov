@@ -10,14 +10,12 @@ from housing_counselor.views import (
 )
 
 
-@override_settings(
-    AWS_STORAGE_BUCKET_NAME="foo.bucket", AWS_S3_CUSTOM_DOMAIN="bar.bucket"
-)
+@override_settings(AWS_S3_CUSTOM_DOMAIN="bar.bucket")
 class HousingCounselorS3URLMixinTestCase(TestCase):
     def test_s3_json_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_json_url(20001),
-            "https://s3.amazonaws.com/foo.bucket/a/assets/hud/jsons/20001.json",
+            "https://bar.bucket/a/assets/hud/jsons/20001.json",
         )
 
     def test_s3_pdf_url(self):

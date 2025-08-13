@@ -35,21 +35,21 @@ def requests_retry_session(
 
 
 class HousingCounselorS3URLMixin:
-    @classmethod
-    def s3_json_url(cls, zipcode):
+    @staticmethod
+    def s3_url(file_format, zipcode):
         return S3_PATH_TEMPLATE.format(
-            bucket_location=f"s3.amazonaws.com/{settings.AWS_STORAGE_BUCKET_NAME}",
-            file_format="json",
+            bucket_location=settings.AWS_S3_CUSTOM_DOMAIN,
+            file_format=file_format,
             zipcode=zipcode,
         )
 
     @classmethod
+    def s3_json_url(cls, zipcode):
+        return cls.s3_url(file_format="json", zipcode=zipcode)
+
+    @classmethod
     def s3_pdf_url(cls, zipcode):
-        return S3_PATH_TEMPLATE.format(
-            bucket_location=settings.AWS_S3_CUSTOM_DOMAIN,
-            file_format="pdf",
-            zipcode=zipcode,
-        )
+        return cls.s3_url(file_format="pdf", zipcode=zipcode)
 
 
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
