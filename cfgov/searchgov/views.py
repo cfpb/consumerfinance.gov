@@ -1,5 +1,6 @@
 import math
 from base64 import b32decode
+from binascii import Error
 from html import unescape
 from urllib.parse import urlencode
 
@@ -109,13 +110,14 @@ class SearchView(TranslatedTemplateView):
                         encoded_list = res.get("searchgov_custom2")
                         if encoded_list:
                             # Hack due to search.gov caching old data
-                            if len(encoded_list) > 1:
-                                res["description"] = recreate_unencoded(
-                                    encoded_list
-                                )
-                            else:
+                            try:
                                 res["description"] = decode_meta(
                                     encoded_list[0]
+                                )
+                            # binascii Error points to likely unencoded data
+                            except Error:
+                                res["description"] = recreate_unencoded(
+                                    encoded_list
                                 )
                         else:
                             res["description"] = res["snippet"]
