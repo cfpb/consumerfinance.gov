@@ -6,7 +6,7 @@
   <div class="block block--flush-top u-mb45 recommended">
     <h2 class="h5 u-mt45">{{rec_hed}}</h2>
     {% for result in recommended %}
-      {{ render_result(result, domain, "description") }}
+      {{ render_result(result, domain) }}
     {% endfor %}
   </div>
 {% endif %}

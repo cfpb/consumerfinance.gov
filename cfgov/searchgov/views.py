@@ -1,4 +1,6 @@
 import math
+from base64 import b32decode
+from html import unescape
 from urllib.parse import urlencode
 
 from django.conf import settings
@@ -37,6 +39,14 @@ def encode_url(params):
     return API_ENDPOINT.format(urlencode(params))
 
 
+def recreate_unencoded(parts):
+    return ", ".join(parts).capitalize()
+
+
+def decode_meta(encoded):
+    return unescape(b32decode(encoded.upper()).decode("utf-8"))
+
+
 class SearchView(TranslatedTemplateView):
     template_name = "searchgov/index.html"
 
@@ -61,6 +71,7 @@ class SearchView(TranslatedTemplateView):
             response = requests.get(
                 encode_url(
                     {
+                        "include_facets": "true",
                         "affiliate": affiliate,
                         "access_key": api_key,
                         "limit": RESULTS_PER_PAGE,
@@ -91,9 +102,24 @@ class SearchView(TranslatedTemplateView):
                     if end_index > count:
                         end_index = count
 
+                    # Post proprocess results
                     for res in results:
                         # Strip | CFPB suffix
                         res["title"] = res["title"][:-39]
+                        encoded_list = res.get("searchgov_custom2")
+                        if encoded_list:
+                            # Hack due to search.gov caching old data
+                            if len(encoded_list) > 1:
+                                res["description"] = recreate_unencoded(
+                                    encoded_list
+                                )
+                            else:
+                                res["description"] = decode_meta(
+                                    encoded_list[0]
+                                )
+                        else:
+                            res["description"] = res["snippet"]
+
                 else:
                     count = 0
 
