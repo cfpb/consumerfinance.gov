@@ -20,4 +20,4 @@ jobs:
         run: yarn
 
       - name: Test Javascript
-        run: yarn jest --clearCache && yarn run test
+        run: yarn run test
