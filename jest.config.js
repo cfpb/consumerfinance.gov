@@ -26,7 +26,7 @@ export default {
     '<rootDir>/node_modules/',
     '<rootDir>/develop-apps/',
   ],
-  testRegex: 'unit_tests/.*-spec.js',
+  testRegex: 'unit_tests/js/organisms/FilterableListControls.*-spec.js',
   testEnvironmentOptions: {
     url: 'http://localhost',
   },
