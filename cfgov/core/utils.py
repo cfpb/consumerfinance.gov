@@ -1,4 +1,5 @@
 import re
+from urllib.parse import urlparse
 
 from django.template.defaultfilters import slugify
 
@@ -130,6 +131,52 @@ def get_link_tags(html):
     return A_TAG_RE.findall(html)
 
 
+def text_matches_href(text, href):
+    """Compare link text with link URL.
+
+    Returns true if link text is functionally equivalent to the link href.
+    """
+    internal_domains = [
+        "consumerfinance.gov",
+    ]
+
+    def parse_potential_url(url):
+        if "://" not in url and "." in url.split("/")[0]:
+            url = "https://" + url
+        elif "://" not in url:
+            url = "https://RELATIVE/" + url.lstrip("/")
+
+        try:
+            return urlparse(url)
+        except ValueError:
+            return None
+
+    def normalize_domain(domain):
+        if domain.startswith("www."):
+            return domain[4:]
+        return domain
+
+    def normalize(url):
+        parsed = parse_potential_url(url)
+
+        if parsed is None:
+            return url
+
+        netloc = parsed.netloc or "RELATIVE"
+        path = parsed.path.rstrip("/")
+
+        if netloc == "RELATIVE":
+            netloc = "INTERNAL"
+        else:
+            netloc = normalize_domain(netloc)
+            if netloc in internal_domains:
+                netloc = "INTERNAL"
+
+        return f"{netloc}{path}"
+
+    return normalize((text or "").strip()) == normalize((href or "").strip())
+
+
 def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
@@ -151,6 +198,10 @@ def add_link_markup(tag, request_path):
 
     href = tag["href"]
     class_attrs = tag.attrs.setdefault("class", [])
+    original_tag = str(tag)
+
+    if text_matches_href(tag.get_text(), href):
+        tag["class"].append("u-link-text-is-url")
 
     if request_path is not None:
         # Strips the path of the current page from hrefs that are internal page
@@ -193,8 +244,10 @@ def add_link_markup(tag, request_path):
         # be an external link and modified accordingly above.
         return str(tag)
 
+    # If we're not adding an icon, there's nothing more to do.
     if not icon:
-        return
+        str_tag = str(tag)
+        return str_tag if str_tag != original_tag else None
 
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll("span", icon_classes)

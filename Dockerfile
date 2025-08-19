@@ -75,7 +75,7 @@ EXPOSE 8000
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:22-alpine AS node-builder
+FROM node:24-alpine AS node-builder
 
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
@@ -115,6 +115,7 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
         scripts \
         npm-packages-offline-cache \
         node_modules
+
 
 #######################################################################
 # Dev runs with Django runserver with cfgov.settings.local

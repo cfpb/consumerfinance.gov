@@ -326,11 +326,6 @@ SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
-HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    "https://s3.amazonaws.com/files.consumerfinance.gov"
-    "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
-)
-
 # ElasticSearch 7 Configuration
 TESTING = False
 ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
@@ -379,10 +374,11 @@ if os.getenv("S3_ENABLED"):
         "OPTIONS": _storage_options,
     }
 
-# This environment variable is also used in get_s3_media_config above.
-# This is defined here as its own setting to maintain existing functionality
+# These environment variables are also used in get_s3_media_config above.
+# They are defined here to maintain existing functionality
 # in various applications that read/write data from/to S3.
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -420,7 +416,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
-            "min_length": 12,
+            "min_length": 14,
         },
     },
     {
@@ -501,8 +497,6 @@ CSP_SCRIPT_SRC = (
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -524,7 +518,6 @@ CSP_STYLE_SRC = (
     "'unsafe-inline'",
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
     "www.ssa.gov/accessibility/andi/",
@@ -539,7 +532,6 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -557,8 +549,6 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
@@ -572,14 +562,13 @@ CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
-    "n2.mouseflow.com",
+    "*.mouseflow.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
@@ -610,10 +599,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # Google Optimize code snippets for A/B testing
-    # When enabled this flag will add various Google Optimize code snippets.
-    # Intended for use with path conditions.
-    "AB_TESTING": [],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.

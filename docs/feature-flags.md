@@ -30,7 +30,7 @@ FLAGS = {
 }
 ```
 
-By convention our flag names are all uppercase, with underscores instead of whitespace. A comment is expected above each flag with a short description fo what happens when it is enabled.
+By convention our flag names are all uppercase, with underscores instead of whitespace. A comment is expected above each flag with a short description of what happens when it is enabled.
 
 ## Checking a flag
 
