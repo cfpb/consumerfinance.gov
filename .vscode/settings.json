@@ -5,6 +5,5 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "ruff.importStrategy": "useBundled",
-  "ruff.lint.run": "onSave"
+  "ruff.importStrategy": "useBundled"
 }
