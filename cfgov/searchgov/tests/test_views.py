@@ -5,9 +5,11 @@ from django.test import TestCase
 
 from searchgov.views import (
     API_ENDPOINT,
+    decode_meta,
     encode_url,
     get_affiliate,
     get_api_key,
+    recreate_unencoded,
 )
 
 
@@ -36,6 +38,21 @@ class EncodeUrlTestCase(TestCase):
         self.assertEqual(
             encode_url({"query": "term&does=encode"}),
             API_ENDPOINT.format("query=term%26does%3Dencode"),
+        )
+
+
+class RecreateUnencodedTestCase(TestCase):
+    def test_combines_lowercased_split(self):
+        self.assertEqual(recreate_unencoded(["abc", "def"]), "Abc, def")
+
+
+class DecodeMetaTestCase(TestCase):
+    def test_decodes_encoded(self):
+        self.assertEqual(decode_meta("mfrggzdf"), "abcde")
+
+    def test_decodes_and_unescapes(self):
+        self.assertEqual(
+            decode_meta("MFRCM4LVN52DWYZGOF2W65B3MQ======"), 'ab"c"d'
         )
 
 

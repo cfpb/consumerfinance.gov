@@ -48,7 +48,7 @@ describe('MegaMenuMobile', () => {
         isExpanded = firstPanel.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
 
-        window.setTimeout(resolveSecondClick, 1000);
+        window.setTimeout(resolveSecondClick, 200);
       }
 
       /**
@@ -71,7 +71,7 @@ describe('MegaMenuMobile', () => {
 
       simulateEvent('click', menuTrigger);
 
-      window.setTimeout(resolveFirstClick, 1000);
+      window.setTimeout(resolveFirstClick, 200);
     });
 
     it('should not be expanded by default', () => {
@@ -98,7 +98,7 @@ describe('MegaMenuMobile', () => {
 
       simulateEvent('click', menuTrigger);
 
-      window.setTimeout(resolveFirstClick, 1000);
+      window.setTimeout(resolveFirstClick, 200);
     });
 
     it('should collapse on the first level sub-menu back button click', (done) => {
@@ -118,7 +118,7 @@ describe('MegaMenuMobile', () => {
       function resolveFirstClick() {
         simulateEvent('click', subTrigger);
 
-        window.setTimeout(resolveSecondClick, 1000);
+        window.setTimeout(resolveSecondClick, 200);
       }
 
       /**
@@ -127,7 +127,7 @@ describe('MegaMenuMobile', () => {
       function resolveSecondClick() {
         simulateEvent('click', subAltTrigger);
 
-        window.setTimeout(resolveThirdClick, 1000);
+        window.setTimeout(resolveThirdClick, 200);
       }
 
       /**
@@ -142,7 +142,7 @@ describe('MegaMenuMobile', () => {
 
       simulateEvent('click', menuTrigger);
 
-      window.setTimeout(resolveFirstClick, 1000);
+      window.setTimeout(resolveFirstClick, 200);
     });
   });
 });

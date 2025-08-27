@@ -65,7 +65,7 @@
     "postinstall": "node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "fonts": "./scripts/fonts.sh",
     "lint": "./scripts/lint.sh",
-    "jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "jest": "node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
     "watch": "yarn build watch",
