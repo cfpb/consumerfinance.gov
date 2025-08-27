@@ -57,11 +57,22 @@
             </div>
         </section>
         {% if not page.portal_category %}
-        <div class="block block--flush-bottom block--padded-bottom">
-            <p class="ask-search-link h4">
-                <span>{{ _("Don't see what you're looking for?") }}</span>
-                <a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a>
-            </p>
+        <div class="m-notification
+            m-notification--visible
+            m-notification--success">
+            {{ svg_icon('help-round') }}
+            <div class="m-notification__content">
+                <div class="m-notification__message">{{ _('Can't find what you're looking for?') }}</div>
+                <ul class="m-list m-list--links">
+                    <li class="m-list__item">
+                        <a class="a-link a-link--jump" href="/search/">
+                            <span class="a-link__text">
+                              Search all of consumerfinance.gov
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         {% endif %}
     {% endif %}

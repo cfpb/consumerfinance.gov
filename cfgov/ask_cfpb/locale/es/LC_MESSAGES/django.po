@@ -20,11 +20,11 @@ msgstr ""
 
 #: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:50
 msgid "Search all of consumerfinance.gov"
-msgstr ""
+msgstr "Buscar la CFPB"
 
 #: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:56
 msgid "Enter your search term(s)"
-msgstr ""
+msgstr "Ingrese sus término(s) de búsqueda"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:7
 msgid "Consumer Financial Protection Bureau"
@@ -89,6 +89,10 @@ msgstr "Por favor escriba su búsqueda arriba"
 #: ask_cfpb/jinja2/ask-cfpb/landing-page.html:5
 msgid "Read answer"
 msgstr "Leer la respuesta"
+
+#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:40
+msgid "Can't find what you're looking for?"
+msgstr "¿No encuentra lo que busca?"
 
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:34
 msgid "Read more"
