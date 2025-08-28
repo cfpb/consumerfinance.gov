@@ -9,6 +9,9 @@ from django.core.management.base import CommandError
 from django.test import TestCase
 
 from agreements.management.commands import _util
+from agreements.management.commands.import_agreements import (
+    fetch_agreements_zip,
+)
 from agreements.models import Issuer
 
 
@@ -34,6 +37,22 @@ class TestValidations(unittest.TestCase):
             )
 
 
+class TestFetchAgreements(unittest.TestCase):
+    def test_fetching_path(self):
+        with fetch_agreements_zip(utf8_zip) as agreements_zip_path:
+            self.assertEqual(agreements_zip_path, utf8_zip)
+
+    def test_fetching_url(self):
+        url_path = f"file://{utf8_zip}"
+        with fetch_agreements_zip(url_path) as agreements_zip_path:
+            self.assertNotEqual(agreements_zip_path, utf8_zip)
+            # Path exists within the context
+            self.assertTrue(os.path.exists(agreements_zip_path))
+
+        # Path is removed when the context closes
+        self.assertFalse(os.path.exists(agreements_zip_path))
+
+
 class TestDataLoad(TestCase):
     def test_import_no_s3_utf8(self):
         management.call_command(
@@ -47,12 +66,14 @@ class TestDataLoad(TestCase):
         )
         self.assertEqual(Issuer.objects.all().count(), 1)
 
-    @mock.patch.dict(os.environ, {"AGREEMENTS_S3_UPLOAD_ENABLED": "yes"})
     @mock.patch("agreements.management.commands._util.upload_to_s3")
     def test_import_with_s3_calls_print_statement(self, _):
         buf = io.StringIO()
         management.call_command(
-            "import_agreements", "--path=" + utf8_zip, stdout=buf
+            "import_agreements",
+            f"--path={utf8_zip}",
+            "--upload-to-s3",
+            stdout=buf,
         )
         self.assertIn("uploaded", buf.getvalue())
 
