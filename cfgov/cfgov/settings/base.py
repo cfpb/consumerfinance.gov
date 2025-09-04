@@ -788,3 +788,6 @@ if ENABLE_SSO:
 
     # Require manual Wagtail user creation.
     OIDC_CREATE_USER = False
+
+if WAGTAILSHARING_HOST := os.getenv("WAGTAILSHARING_HOST"):
+    WAGTAILSHARING_ROUTER = "wagtailsharing.routers.settings.SettingsHostRouter"
