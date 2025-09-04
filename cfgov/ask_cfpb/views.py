@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 from wagtail.snippets.views.snippets import SnippetViewSet
 
-from wagtailsharing.models import SharingSite
+from wagtailsharing.routers import get_router
 from wagtailsharing.views import ServeView
 
 from ask_cfpb.forms import AutocompleteForm, SearchForm, legacy_facet_validator
@@ -26,10 +26,7 @@ def view_answer(request, slug, language, answer_id):
     # We can't call answer_page.serve(request) yet because that would bypass
     # wagtail-sharing, which provides views of unpublished revisions.
     # First, we see if a sharing site is present in the request:
-    try:
-        sharing_site = SharingSite.find_for_request(request)
-    except SharingSite.DoesNotExist:
-        sharing_site = None
+    sharing_site, _ = get_router().route(request, request.path)
     # handle draft pages first
     if answer_page.live is False:
         if sharing_site is None:

@@ -231,10 +231,6 @@ and then does the following:
 - Updates the default Wagtail site to use the port defined by the
   `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
   set to 80.
-- If it doesn't already exist, creates a new
-  [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-  a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
-  `DJANGO_HTTP_PORT` environment variables.
 
 This script must be run inside the Docker `python` container:
 
