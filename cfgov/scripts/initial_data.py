@@ -8,8 +8,6 @@ from django.db import transaction
 
 from wagtail.models import Page, Site
 
-from wagtailsharing.models import SharingSite
-
 from v1.models import HomePage
 
 
@@ -24,8 +22,6 @@ def run():
     admin_username = os.getenv("DJANGO_ADMIN_USERNAME")
     admin_password = os.getenv("DJANGO_ADMIN_PASSWORD")
     http_port = int(os.getenv("DJANGO_HTTP_PORT", default_site.port))
-
-    wagtail_sharing_hostname = os.getenv("WAGTAIL_SHARING_HOSTNAME")
 
     # If specified in the environment, create or activate superuser.
     if admin_username and admin_password:
@@ -80,15 +76,3 @@ def run():
         default_site.port = http_port
         default_site.save()
         logger.info(f"Configured default Wagtail Site: {default_site}")
-
-    # Setup a sharing site for the default Wagtail site if a sharing hostname
-    # has been configured in the environment.
-    if wagtail_sharing_hostname:
-        sharing_site, _ = SharingSite.objects.update_or_create(
-            site=default_site,
-            defaults={
-                "hostname": wagtail_sharing_hostname,
-                "port": http_port,
-            },
-        )
-        logger.info(f"Configured wagtail-sharing site: {sharing_site}")
