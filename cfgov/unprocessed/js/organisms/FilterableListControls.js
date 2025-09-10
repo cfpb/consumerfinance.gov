@@ -77,7 +77,7 @@ function FilterableListControls(element) {
    * @param {string} label - DOM element label.
    * @param {string} event - Type of event.
    * @param {Function} [callback] - Function to call on GTM submission.
-   * @param {number} [timeout] -
+   * @param {number} [timeout]
    *   Callback invocation fallback time. Default is 500 milliseconds.
    * @returns {object} Data layer object.
    */
