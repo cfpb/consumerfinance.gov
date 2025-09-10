@@ -186,6 +186,14 @@ const HTML_SNIPPET = `
 const xhr = global.XMLHttpRequest;
 
 describe('The TDP custom analytics', () => {
+  beforeAll(() => {
+    // Suppress
+    // Error: Not implemented: HTMLFormElement.prototype.requestSubmit
+    window.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+  });
+
   beforeEach(() => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;

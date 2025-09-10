@@ -1,7 +1,7 @@
 /**
  * Returns an object with the UTC timestamp number in milliseconds
  * and human-friendly month and year for a given date in either format.
- * @param {number|string} date -
+ * @param {number|string} date
  *   UTC timestamp in milliseconds representing the month
  *   and year for a given data point, e.g. 1477958400000,
  *   OR a string in Month + YYYY format for a given data point,
