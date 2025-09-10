@@ -1,4 +1,5 @@
 {% extends "v1/layouts/layout-full.html" %}
+{% import 'v1/includes/molecules/notification.html' as notification with context %}
 
 {% set breadcrumb_items = [{
     "title": "Buying a House",
@@ -63,8 +64,15 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </div>
                 <!-- /.content-l__col-1-3 -->
+                <div class="page-intro__alert">
+                    {{ notification.render(
+                        'warning',
+                        true,
+                        'Data not currently being updated',
+                        'The interest rates used in this tool reflect data from April 1, 2025. Further updates to the data aren\'t currently scheduled.' 
+                    ) }}
+                </div>
             </section>
-
             <div class="rc-results content__main" id="rate-results" aria-live="polite">
                 <h2 id="rc-summary" class="rate-checker-heading data-enabled clear">In <strong class="location"></strong>, most lenders in our data are offering rates at or below <strong class="rate" id="median-rate"></strong>.</h2>
                 <div id="accessible-data-results" class="u-visually-hidden">
@@ -553,7 +561,7 @@ home price, down payment, and more can affect mortgage interest rates.
             <div class="block">
                 {% import 'v1/includes/molecules/notification.html' as notification %}
                 {{- notification.render(
-                    'warning',
+                    'information',
                     true,
                     'Check your credit',
                     'If you haven’t checked your credit report recently, do so now. ' ~
