@@ -401,16 +401,16 @@
   resolved "https://registry.yarnpkg.com/@dual-bundle/import-meta-resolve/-/import-meta-resolve-4.1.0.tgz#519c1549b0e147759e7825701ecffd25e5819f7b"
   integrity sha512-+nxncfwHM5SgAtrVzgpzJOI1ol0PkumhVo469KCf9lUi21IGcY90G98VuHm9VRrUypmAzawAHO9bs6hqeADaVg==
 
-"@es-joy/jsdoccomment@~0.57.0":
-  version "0.57.0"
-  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.57.0.tgz#8b959b783920ce44518104c01d73bd521c2a96f4"
-  integrity sha512-M4isJXgy+ZLXvt9EFLHuG5+6Q8hl1iSn3ZnO5R+DiPLUBvsTOh93fZ9X/X1z3l6/pmq3STZtqrEAi6SaPzB4AQ==
+"@es-joy/jsdoccomment@~0.58.0":
+  version "0.58.0"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.58.0.tgz#2f8771754369bfa02688cd593a0d688e15fb3449"
+  integrity sha512-smMc5pDht/UVsCD3hhw/a/e/p8m0RdRYiluXToVfd+d4yaQQh7nn9bACjkk6nXJvat7EWPAxuFkMEFfrxeGa3Q==
   dependencies:
     "@types/estree" "^1.0.8"
-    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/types" "^8.43.0"
     comment-parser "1.4.1"
     esquery "^1.6.0"
-    jsdoc-type-pratt-parser "~5.2.0"
+    jsdoc-type-pratt-parser "~5.4.0"
 
 "@esbuild/aix-ppc64@0.25.9":
   version "0.25.9"
@@ -1290,7 +1290,7 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/types@^8.42.0":
+"@typescript-eslint/types@^8.43.0":
   version "8.43.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.43.0.tgz#00d34a5099504eb1b263e022cc17c4243ff2302e"
   integrity sha512-vQ2FZaxJpydjSZJKiSW/LJsabFFvV7KgLC5DiLhkBcykhQj8iK9BOaDmQt74nnKdLvceM5xmhaTF+pLekrxEkw==
@@ -2669,12 +2669,12 @@ eslint-plugin-import@2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@55.2.0:
-  version "55.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-55.2.0.tgz#5e0f7813bd678e0295f0801168665948960d8368"
-  integrity sha512-WAmUy+MdkNEqbMeyTFUED4+LfgeuP9sDQ3Ad19VE6c6ZXOjBdyG9BGDpYKf37LPMvwppoSapZFp4ry82MdJePA==
+eslint-plugin-jsdoc@56.1.2:
+  version "56.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-56.1.2.tgz#89507a53b96142b5b2c7bc50b5efb835230c0893"
+  integrity sha512-g30LmgNkpKsKNge4NKtoARCvGvGYHeCQjEWCs5xlNwHxdwVvd0rZaovHmD/D0of0H1bqcyFYv6WXDVAezndstw==
   dependencies:
-    "@es-joy/jsdoccomment" "~0.57.0"
+    "@es-joy/jsdoccomment" "~0.58.0"
     are-docs-informative "^0.0.2"
     comment-parser "1.4.1"
     debug "^4.4.1"
@@ -4251,10 +4251,10 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==
 
-jsdoc-type-pratt-parser@~5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-5.2.0.tgz#74af238fce0a003774b606827fa4a69a2f7e72d5"
-  integrity sha512-qJmErzgL4DLj4lyRkDWnEXZRNu3X3CJxVKKhuUPwqPFMiJV6K7/6O//D2Uf+rRi6+qTPgHWxDAgfGllEXoGkMA==
+jsdoc-type-pratt-parser@~5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-5.4.0.tgz#8f14a44286a8f50205e1bb67ee6626d2c4652903"
+  integrity sha512-F9GQ+F1ZU6qvSrZV8fNFpjDNf614YzR2eF6S0+XbDjAcUI28FSoXnYZFjQmb1kFx3rrJb5PnxUH3/Yti6fcM+g==
 
 jsdom@^26.1.0:
   version "26.1.0"
@@ -5931,36 +5931,36 @@ stylehacks@^7.0.5:
     browserslist "^4.25.1"
     postcss-selector-parser "^7.1.0"
 
-stylelint-config-recommended-scss@^15.0.1:
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-config-recommended-scss/-/stylelint-config-recommended-scss-15.0.1.tgz#87646e7b0645dbe40abb2c63c594e94501a7451f"
-  integrity sha512-V24bxkNkFGggqPVJlP9iXaBabwSGEG7QTz+PyxrRtjPkcF+/NsWtB3tKYvFYEmczRkWiIEfuFMhGpJFj9Fxe6Q==
+stylelint-config-recommended-scss@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended-scss/-/stylelint-config-recommended-scss-16.0.1.tgz#10ac6dab288832695a4f96f4cdc77a68aa7eca9f"
+  integrity sha512-wfpU6kmTUwPEHMACYdpt5wLM/aS44+sqE8yk82LkOkA7yVpAuTZDwd3m9762d0mRnNCn0JMUx4XfDVDmbb8hTA==
   dependencies:
     postcss-scss "^4.0.9"
-    stylelint-config-recommended "^16.0.0"
-    stylelint-scss "^6.12.0"
+    stylelint-config-recommended "^17.0.0"
+    stylelint-scss "^6.12.1"
 
-stylelint-config-recommended@^16.0.0:
+stylelint-config-recommended@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-17.0.0.tgz#4f77c70609b2d7093cc60bb48adfabdde434aa5d"
+  integrity sha512-WaMSdEiPfZTSFVoYmJbxorJfA610O0tlYuU2aEwY33UQhSPgFbClrVJYWvy3jGJx+XW37O+LyNLiZOEXhKhJmA==
+
+stylelint-config-standard-scss@16.0.0:
   version "16.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-16.0.0.tgz#0221f19902816fe7d53d9a01eb0be4cc7b4fe80a"
-  integrity sha512-4RSmPjQegF34wNcK1e1O3Uz91HN8P1aFdFzio90wNK9mjgAI19u5vsU868cVZboKzCaa5XbpvtTzAAGQAxpcXA==
-
-stylelint-config-standard-scss@15.0.1:
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-config-standard-scss/-/stylelint-config-standard-scss-15.0.1.tgz#3b549bc2bf4be0daa25e2ba979fe0de0712cd638"
-  integrity sha512-8pmmfutrMlPHukLp+Th9asmk21tBXMVGxskZCzkRVWt1d8Z0SrXjUUQ3vn9KcBj1bJRd5msk6yfEFM0UYHBRdg==
+  resolved "https://registry.yarnpkg.com/stylelint-config-standard-scss/-/stylelint-config-standard-scss-16.0.0.tgz#55462a58223b4b9dc9174925fbc7dcf5a3296c30"
+  integrity sha512-/FHECLUu+med/e6OaPFpprG86ShC4SYT7Tzb2PTVdDjJsehhFBOioSlWqYFqJxmGPIwO3AMBxNo+kY3dxrbczA==
   dependencies:
-    stylelint-config-recommended-scss "^15.0.1"
-    stylelint-config-standard "^38.0.0"
+    stylelint-config-recommended-scss "^16.0.1"
+    stylelint-config-standard "^39.0.0"
 
-stylelint-config-standard@^38.0.0:
-  version "38.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-38.0.0.tgz#9d673ec1f35d7569476ee4b0582e7dd5faebf036"
-  integrity sha512-uj3JIX+dpFseqd/DJx8Gy3PcRAJhlEZ2IrlFOc4LUxBX/PNMEQ198x7LCOE2Q5oT9Vw8nyc4CIL78xSqPr6iag==
+stylelint-config-standard@^39.0.0:
+  version "39.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-39.0.0.tgz#9635554a9c42e7e89dadc024afac372d18e3e776"
+  integrity sha512-JabShWORb8Bmc1A47ZyJstran60P3yUdI1zWMpGYPeFiC6xzHXJMkpKAd8EjIhq3HPUplIWWMDJ/xu0AiPd+kA==
   dependencies:
-    stylelint-config-recommended "^16.0.0"
+    stylelint-config-recommended "^17.0.0"
 
-stylelint-scss@^6.12.0:
+stylelint-scss@^6.12.1:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-6.12.1.tgz#7de9980a7c9acb7a3f203498e7296526cb52ffa0"
   integrity sha512-UJUfBFIvXfly8WKIgmqfmkGKPilKB4L5j38JfsDd+OCg2GBdU0vGUV08Uw82tsRZzd4TbsUURVVNGeOhJVF7pA==
