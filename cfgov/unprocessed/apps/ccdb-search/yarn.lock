@@ -2,6 +2,7 @@
 # yarn lockfile v1
 
 
-"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#DATAP-1824-update-modal-text":
-  version "2.15.1"
-  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/1b49e7c70fa24e8c5e07b0c1899a9c3c5e447b07"
+"@cfpb/ccdb5-ui@2.15.3":
+  version "2.15.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.15.3.tgz#b07750f9a59ba0a2b85cdab7ec125675bf45ba82"
+  integrity sha512-5M2xELEO/VyXX2rljYfrx4ZfQfrsm5H4g79xRqgUm2BSYDK6KG+TpHx9LciBMFqrWwjmulqHTKGJx+o+wLY+XQ==
