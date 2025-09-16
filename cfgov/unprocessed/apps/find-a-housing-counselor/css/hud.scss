@@ -52,6 +52,9 @@
 
 .hud-hca-api-results-actions {
   @include respond-to-min($bp-xs-max) {
+    /* TODO: check if nested rule can be removed. */
+
+    /* stylelint-disable-next-line block-no-redundant-nested-style-rules */
     & {
       // Margin makes a gap between result header links and result text.
       margin-left: 20px;

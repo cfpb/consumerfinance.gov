@@ -30,7 +30,8 @@
   }
 
   .skip-filters:focus {
-    clip: initial;
+    /* TODO: check if deprecated 'clip' can be removed. */
+    clip: initial; /* stylelint-disable-line property-no-deprecated */
     height: initial;
     margin-top: math.div(-30px, $base-font-size-px) + em;
     width: initial;

@@ -45,6 +45,9 @@ $menu-link-hover-bar-px: 5px;
 
 // Focus item appearance.
 @mixin u-focus-rectangle() {
+  /* TODO: check if nested rule can be removed. */
+
+  /* stylelint-disable-next-line block-no-redundant-nested-style-rules */
   & {
     // Position focus rectangle relative to parent container.
     position: relative;
