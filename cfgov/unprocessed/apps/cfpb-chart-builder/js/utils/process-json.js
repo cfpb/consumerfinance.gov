@@ -28,11 +28,11 @@ function processDelinquencies(datasets) {
 
 /**
  * @param {number} data - response from requested JSON file.
- * @param {string} [group] -
+ * @param {string} [group]
  *   Optional parameter for specifying if the chart requires use of a "group"
  *   property in the JSON, for example the charts with a group of "Younger
  *   than 30" will filter data to only include values matching that group.
- * @param {string} [source] -
+ * @param {string} [source]
  *   Optional parameter for the file url and name. Used for inquiry index files
  *   which have 4 months of projected data instead of 6.
  * @returns {object} data -
@@ -82,7 +82,7 @@ function processNumOriginationsData(data, group, source) {
 
 /**
  * @param {number} data - response from requested JSON file.
- * @param {string} [group] -
+ * @param {string} [group]
  *   Optional parameter for specifying if the chart requires use of a "group"
  *   property in the JSON, for example the charts with a group of "Younger
  *   than 30" will filter data to only include values matching that group.
@@ -118,11 +118,11 @@ function processYoyData(data, group) {
  * For Consumer Credit Trends data, projected data is for the last 6 months,
  * except for inquiry index data, which is for the last 4 months, and credit
  * tightness index data, which has no projected data.
- * @param {Array} valuesList -
+ * @param {Array} valuesList
  *   List of values from the data, containing an array with timestamp
  *   representing the month and year at index 0, and the value at index 1.
  *   Requires at least six months of data (six array items).
- * @param {string} projectedRange -
+ * @param {string} projectedRange
  *   Number of months in the data that is to be labeled projected.
  *   The default is 6 months, inquiry index charts are 4 months, etc.
  * @returns {number} A timestamp.
@@ -140,7 +140,7 @@ function getProjectedTimestamp(valuesList, projectedRange = 6) {
 /**
  * Returns a human-readable string representing the month and year after,
  * which data in each graph is projected.
- * @param {number} timestamp -
+ * @param {number} timestamp
  *   UTC timestamp representing the milliseconds elapsed since the UNIX epoch,
  *   for the month when each graph begins displaying projected data.
  * @returns {string}
