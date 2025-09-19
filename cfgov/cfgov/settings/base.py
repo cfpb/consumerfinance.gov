@@ -561,6 +561,7 @@ CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
