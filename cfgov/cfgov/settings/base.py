@@ -526,6 +526,7 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.cfpb.gov",
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
