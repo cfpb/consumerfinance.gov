@@ -13,6 +13,9 @@ class DeletePageCacheTestCase(TestCase):
                 "CLIENT_TOKEN": "fake",
                 "CLIENT_SECRET": "fake",
                 "ACCESS_TOKEN": "fake",
+                "OBJECT_ID": "fake",
+                "PURGE_ALL_URL": "fake",
+                "FAST_PURGE_URL": "fake",
             }
         }
     )
@@ -29,6 +32,9 @@ class DeletePageCacheTestCase(TestCase):
                     "CLIENT_TOKEN": "fake",
                     "CLIENT_SECRET": "fake",
                     "ACCESS_TOKEN": "fake",
+                    "OBJECT_ID": "fake",
+                    "PURGE_ALL_URL": "fake",
+                    "FAST_PURGE_URL": "fake",
                 }
             },
             backends=["akamai_deleting"],
