@@ -11,6 +11,9 @@ from django.test import TestCase, override_settings
             "CLIENT_TOKEN": "fake",
             "CLIENT_SECRET": "fake",
             "ACCESS_TOKEN": "fake",
+            "OBJECT_ID": "fake",
+            "PURGE_ALL_URL": "fake",
+            "FAST_PURGE_URL": "fake",
         }
     }
 )

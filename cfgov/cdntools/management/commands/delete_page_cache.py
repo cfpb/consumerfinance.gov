@@ -33,6 +33,9 @@ class Command(BaseCommand):
                 "CLIENT_TOKEN": global_settings["akamai"]["CLIENT_TOKEN"],
                 "CLIENT_SECRET": global_settings["akamai"]["CLIENT_SECRET"],
                 "ACCESS_TOKEN": global_settings["akamai"]["ACCESS_TOKEN"],
+                "OBJECT_ID": global_settings["akamai"]["OBJECT_ID"],
+                "PURGE_ALL_URL": global_settings["akamai"]["PURGE_ALL_URL"],
+                "FAST_PURGE_URL": global_settings["akamai"]["FAST_PURGE_URL"],
             }
         }
 

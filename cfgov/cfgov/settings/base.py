@@ -469,6 +469,9 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
         "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
         "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "OBJECT_ID": os.environ["AKAMAI_OBJECT_ID"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
         "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
