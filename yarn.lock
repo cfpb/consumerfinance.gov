@@ -299,10 +299,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.3.2.tgz#3d1e8da7c05cd0d312ae86a3b64e88bc3c3fc12b"
   integrity sha512-0rjHPdAi4emgjMmzKSBHwwRhztxyEk3X8Zay0qRK9pATApsHqBjEJmTn5Npd1ponQQ1m5KEPo3g9kPequOQXSg==
 
-"@cfpb/cfpb-design-system@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-4.0.2.tgz#ad6583536cd7084ca9173327aa3dcf84bfa16a1e"
-  integrity sha512-erQUSK0Vbtx3jNykfzy1L49vJbaVGJbeWxlXdm3zBXVIuMEYCz06mJqXXu0HhzZQTxHl5VKVFWlOmDS8VFoYKA==
+"@cfpb/cfpb-design-system@4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-design-system/-/cfpb-design-system-4.0.4.tgz#5a106ba3707ffd574954ff5c3dc504299635451b"
+  integrity sha512-dr0VVrnOFaJ6bkJXp3x/MQdrWMObrTSC9g77lbSxbeAWA1d2qHIMWI8YVKRoJ/+XMsrnL68Kmx8qSNfNw7tAew==
   dependencies:
     "@fontsource-variable/source-sans-3" "5.2.8"
     tippy.js "6.3.7"
