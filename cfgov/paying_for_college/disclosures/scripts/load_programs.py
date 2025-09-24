@@ -9,19 +9,25 @@ from paying_for_college.views import validate_pid
 
 
 NO_DATA_ENTRIES_LOWER = ("", "blank", "no grads", "no data", "none")
+VALIDATED_S3_DATA_URL = (
+    "https://files.consumerfinance.gov"
+    "/pb/paying_for_college/csv/validated_program_data/{}"
+)
 
 """
-# Program Data Processing Steps
+Program data processing steps:
 
-This script was used to process program data from schools.
+This script loads program data provided by schools.
+It takes in a CSV file with column labels as specified in ProgramSerializer.
+The following manage.py commands will load local or S3 data:
 
-It takes in a csv file with column labels as described in ProgramSerializer.
+To load a local CSV file:
+./manage.py load_programs <PATH TO CSV>
 
-To run the script, use this manage.py command:
+To load a CSV from S3:
+./manage.py load_programs <CSV FILENAME> --s3 true
 
-```
-./manage.py load_programs [PATH TO CSV or s3 filename]
-```
+This allows for local testing and loading on servers.
 """
 
 
@@ -180,27 +186,17 @@ def clean(data):
 
 
 def load(source, s3=False):
-    """
-    Loads program data from a local or S3 file.
-    For a local file, 'source' should be a CSV file path.
-    For an s3 file, 'source' should be the file name of a CSV
-    in the 'validated_program_data' folder on s3.
-    """
+    """Loads program data from a local file or from S3."""
     test_program = False
     new_programs = 0
     updated_programs = 0
-    FAILED = []  # failed messages
+    FAILED = []  # failure messages
     if s3:
-        s3_url = (
-            "https://files.consumerfinance.gov"
-            "/pb/paying_for_college/csv/validated_program_data/{}"
-        )
-        raw_data = read_in_s3(s3_url.format(source))
+        raw_data = read_in_s3(VALIDATED_S3_DATA_URL.format(source))
     else:
         raw_data = read_in_data(source)
     if not raw_data[0]:
         return ([f"ERROR: could not read data from {source}"], "")
-
     for row in raw_data:
         if "test" in row and row["test"].lower() == "true":
             test_program = True
