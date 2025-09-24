@@ -13,7 +13,7 @@ from paying_for_college.views import validate_pid
 NO_DATA_ENTRIES_LOWER = ("", "blank", "no grads", "no data", "none")
 S3_URL_BASE = settings.AWS_S3_CUSTOM_DOMAIN
 VALIDATED_S3_DATA_URL = (
-    "https://{S3_URL_BASE}/pb/paying_for_college/csv/validated_program_data"
+    f"https://{S3_URL_BASE}/pb/paying_for_college/csv/validated_program_data"
 )
 
 """
