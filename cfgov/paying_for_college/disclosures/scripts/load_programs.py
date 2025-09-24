@@ -1,6 +1,8 @@
 import io
 from csv import DictReader as cdr
 
+from django.conf import settings
+
 import requests
 from rest_framework import serializers
 
@@ -9,9 +11,9 @@ from paying_for_college.views import validate_pid
 
 
 NO_DATA_ENTRIES_LOWER = ("", "blank", "no grads", "no data", "none")
+S3_URL_BASE = settings.AWS_S3_CUSTOM_DOMAIN
 VALIDATED_S3_DATA_URL = (
-    "https://files.consumerfinance.gov"
-    "/pb/paying_for_college/csv/validated_program_data/{}"
+    f"https://{S3_URL_BASE}/pb/paying_for_college/csv/validated_program_data"
 )
 
 """
@@ -192,7 +194,7 @@ def load(source, s3=False):
     updated_programs = 0
     FAILED = []  # failure messages
     if s3:
-        raw_data = read_in_s3(VALIDATED_S3_DATA_URL.format(source))
+        raw_data = read_in_s3(f"{VALIDATED_S3_DATA_URL}/{source}")
     else:
         raw_data = read_in_data(source)
     if not raw_data[0]:
