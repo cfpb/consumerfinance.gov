@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=24.x"
   },
-  "browserslist": "> 1% in @cfpb/browserslist-config stats",
+  "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.5",
     "@cfpb/cfpb-analytics": "0.3.2",
