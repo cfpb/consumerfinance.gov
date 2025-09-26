@@ -15,9 +15,9 @@
   "engines": {
     "node": ">=24.x"
   },
-  "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
+  "browserslist": "> 1% in @cfpb/browserslist-config stats",
   "dependencies": {
-    "@cfpb/browserslist-config": "0.0.4",
+    "@cfpb/browserslist-config": "0.0.5",
     "@cfpb/cfpb-analytics": "0.3.2",
     "@cfpb/cfpb-design-system": "4.1.0",
     "@csstools/postcss-sass": "5.1.1",
@@ -40,14 +40,14 @@
     "@cypress/skip-test": "2.6.1",
     "@eslint/js": "9.36.0",
     "axe-core": "4.10.3",
-    "cypress": "15.2.0",
+    "cypress": "15.3.0",
     "cypress-axe": "1.7.0",
     "cypress-fail-fast": "7.1.1",
     "eslint": "9.36.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-cypress": "5.1.1",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "60.2.0",
+    "eslint-plugin-jsdoc": "60.4.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "globals": "16.4.0",
@@ -56,7 +56,7 @@
     "jest-environment-jsdom": "30.1.2",
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.6.2",
-    "snyk": "1.1299.0",
+    "snyk": "1.1299.1",
     "stylelint": "16.24.0",
     "stylelint-config-standard-scss": "16.0.0"
   },
