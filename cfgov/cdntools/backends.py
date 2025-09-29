@@ -118,12 +118,20 @@ class AkamaiDeletingBackend(AkamaiBackend):
         )
 
 
-# This global will hold URLs that were purged by the MockCacheBackend for
+# This global will hold URLs that were purged by the MockAkamaiBackend for
 # inspection.
 MOCK_PURGED = []
 
 
-class MockCacheBackend(BaseBackend):
+class MockBackend(BaseBackend):
+    def __init__(self, params):
+        super().__init__(params)
+
+    def purge(self, url):
+        MOCK_PURGED.append(url)
+
+
+class MockAkamaiBackend(BaseBackend):
     def __init__(self, params):
         super().__init__(params)
 
