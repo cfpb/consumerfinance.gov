@@ -139,7 +139,7 @@ class TestAkamaiDeletingBackend(TestCase):
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "files": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
         },
     },
 )

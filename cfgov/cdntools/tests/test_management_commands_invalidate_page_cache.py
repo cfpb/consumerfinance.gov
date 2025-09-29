@@ -7,7 +7,7 @@ from cdntools.backends import MOCK_PURGED
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
         }
     }
 )
