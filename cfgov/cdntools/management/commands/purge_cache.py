@@ -13,17 +13,17 @@ class Command(BaseCommand):
         parser.add_argument(
             "--backend",
             nargs="+",
-            help="Limit the purge the given frontend cache backend name",
+            help="Limit the purge to the given frontend cache backend name",
         )
         parser.add_argument(
             "--all",
             action="store_true",
-            help="Purge all URLs for all backends. ",
+            help="Purge all URLs for all backends.",
         )
         parser.add_argument(
-            "--cache_tag",
+            "--cache-tag",
             nargs="+",
-            help="The cache tag to invalidate (can specify multiple). ",
+            help="The cache tag to invalidate (can specify multiple).",
         )
         parser.add_argument(
             "--url",
@@ -46,7 +46,7 @@ class Command(BaseCommand):
         if not any((all, urls, cache_tags)):
             self.stderr.write(
                 self.style.ERROR(
-                    "Please provide one or more of --all/--url/--cache_tag"
+                    "Please provide one or more of --all/--url/--cache-tag"
                 )
             )
 
