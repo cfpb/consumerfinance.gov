@@ -35,7 +35,7 @@ class AkamaiBackend(BaseBackend):
         ):
             raise ImproperlyConfigured(
                 "Akamai CLIENT_TOKEN, CLIENT_SECRET, ACCESS_TOKEN, "
-                "OBJECT_ID, and PURGE_ALL_URL, and FAST_PURGE_URL "
+                "OBJECT_ID, PURGE_ALL_URL, and FAST_PURGE_URL "
                 "must be configured."
             )
         self.auth = self.get_auth()

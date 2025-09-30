@@ -86,6 +86,6 @@ class PurgeCacheTestCase(TestCase):
             stderr=err,
         )
         self.assertIn(
-            "Please provide one or more of --all/--url/--cache_tag",
+            "Please provide one or more of --all/--url/--cache-tag",
             err.getvalue(),
         )
