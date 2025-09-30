@@ -118,7 +118,7 @@ class AkamaiDeletingBackend(AkamaiBackend):
         )
 
 
-# This global will hold URLs that were purged by the MockAkamaiBackend for
+# This global will hold URLs that were purged by mock backends for
 # inspection.
 MOCK_PURGED = []
 
