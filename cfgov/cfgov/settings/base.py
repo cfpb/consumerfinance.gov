@@ -219,10 +219,18 @@ if ALLOW_ADMIN_URL:
 # Database name cfgov, username cfpb, password cfpb.
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jazzband/dj-database-url for URL formatting.
+_db_config = {
+    "default": "postgres://cfpb:cfpb@localhost/cfgov",
+}
+
+if _db_conn_max_age := os.getenv("CONN_MAX_AGE"):
+    _db_config.update({
+        "conn_max_age": int(_db_conn_max_age),
+        "conn_health_checks": True,
+    })
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": dj_database_url.config(**_db_config)
 }
 
 # Internationalization
