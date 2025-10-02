@@ -367,7 +367,7 @@ else:
                 os.getenv("ES_PASS", "admin"),
             ),
             "use_ssl": True,
-            "verify_certs": False,
+            "verify_certs": True,
         }
     }
 
