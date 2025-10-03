@@ -1,6 +1,7 @@
 import json
 import logging
-import os
+
+from django.core.exceptions import ImproperlyConfigured
 
 from wagtail.contrib.frontend_cache.backends import BaseBackend
 
@@ -19,16 +20,23 @@ class AkamaiBackend(BaseBackend):
         self.client_token = params.get("CLIENT_TOKEN")
         self.client_secret = params.get("CLIENT_SECRET")
         self.access_token = params.get("ACCESS_TOKEN")
+        self.object_id = params.get("OBJECT_ID")
+        self.purge_all_url = params.get("PURGE_ALL_URL")
+        self.fast_purge_url = params.get("FAST_PURGE_URL")
         if not all(
             (
                 self.client_token,
                 self.client_secret,
                 self.access_token,
+                self.object_id,
+                self.purge_all_url,
+                self.fast_purge_url,
             )
         ):
-            raise ValueError(
-                "AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, "
-                "AKAMAI_ACCESS_TOKEN must be configured."
+            raise ImproperlyConfigured(
+                "Akamai CLIENT_TOKEN, CLIENT_SECRET, ACCESS_TOKEN, "
+                "OBJECT_ID, PURGE_ALL_URL, and FAST_PURGE_URL "
+                "must be configured."
             )
         self.auth = self.get_auth()
         self.headers = {"content-type": "application/json"}
@@ -44,9 +52,9 @@ class AkamaiBackend(BaseBackend):
         return {"action": action, "objects": [obj]}
 
     def post_all(self, action):
-        obj = os.environ["AKAMAI_OBJECT_ID"]
+        obj = self.object_id
         resp = requests.post(
-            os.environ["AKAMAI_PURGE_ALL_URL"],
+            self.purge_all_url,
             headers=self.headers,
             data=json.dumps(self.get_payload(obj=obj, action=action)),
             auth=self.auth,
@@ -59,7 +67,7 @@ class AkamaiBackend(BaseBackend):
 
     def post(self, url, action):
         resp = requests.post(
-            os.environ["AKAMAI_FAST_PURGE_URL"],
+            self.fast_purge_url,
             headers=self.headers,
             data=json.dumps(self.get_payload(obj=url, action=action)),
             auth=self.auth,
@@ -72,13 +80,7 @@ class AkamaiBackend(BaseBackend):
 
     def post_tags(self, tags, action):
         """Request a purge by cache_tags."""
-        _url = os.getenv("AKAMAI_FAST_PURGE_URL")
-        if not _url:
-            logger.info(
-                "Can't purge cache. No value set for 'AKAMAI_FAST_PURGE_URL'"
-            )
-            return
-        url = _url.replace("url", "tag")
+        url = self.fast_purge_url.replace("url", "tag")
         resp = requests.post(
             url,
             headers=self.headers,
@@ -116,12 +118,20 @@ class AkamaiDeletingBackend(AkamaiBackend):
         )
 
 
-# This global will hold URLs that were purged by the MockCacheBackend for
+# This global will hold URLs that were purged by mock backends for
 # inspection.
 MOCK_PURGED = []
 
 
-class MockCacheBackend(BaseBackend):
+class MockBackend(BaseBackend):
+    def __init__(self, params):
+        super().__init__(params)
+
+    def purge(self, url):
+        MOCK_PURGED.append(url)
+
+
+class MockAkamaiBackend(BaseBackend):
     def __init__(self, params):
         super().__init__(params)
 

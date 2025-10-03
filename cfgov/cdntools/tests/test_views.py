@@ -38,13 +38,13 @@ def create_admin_access_permissions():
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
             "HOSTNAMES": [
                 "www.fake.gov",
             ],
         },
         "files": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
             "HOSTNAMES": [
                 "files.fake.gov",
             ],
