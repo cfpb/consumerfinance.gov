@@ -71,6 +71,7 @@ const financialView = {
     this.continueStep2Listener();
     this.termToggleListener();
     this.financialInputChangeListener();
+    this.enumeratePrivateLoanIDs();
   },
 
   /**

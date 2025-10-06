@@ -28,6 +28,7 @@ class FormExplainerPage(CFGOVPage):
         [
             ("hero", molecules.Hero()),
             ("text_introduction", molecules.TextIntroduction()),
+            ("notification", molecules.Notification()),
         ],
         blank=True,
     )
@@ -46,7 +47,6 @@ class FormExplainerPage(CFGOVPage):
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
-            ObjectList(CFGOVPage.sidefoot_panels, heading="Sidebar"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )

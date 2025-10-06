@@ -181,7 +181,7 @@ const navigationView = {
    * init - Initialize the navigation view.
    * @param {object} body - The body element of the page.
    * @param { string } iped - String representing the chosen school.
-   * @param {Function} updateViewCallback -
+   * @param {Function} updateViewCallback
    *   A function called when the view updates.
    */
   init: function (body, iped, updateViewCallback) {

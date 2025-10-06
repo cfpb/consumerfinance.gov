@@ -1,10 +1,12 @@
 import json
 import logging
 import os
+from datetime import datetime
 
 from django.core.management.base import BaseCommand
 
 from v1.models.browse_page import BrowsePage
+from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_changes
 
 
@@ -52,12 +54,38 @@ class Command(BaseCommand):
             if snapshot[0]["value"]["market_key"] == market_key:
                 return snapshot
 
+    def update_landing_page(self, date):
+        landing_page = SublandingPage.objects.get(
+            title="Consumer Credit Trends"
+        )
+        dt = datetime.strptime(date, "%Y-%m-%d")
+        processed_date = dt.strftime("%B %d, %Y")
+
+        new_note = {
+            "type": "full_width_text",
+            "value": [
+                {
+                    "type": "content",
+                    "value": (
+                        "<h2 id='market-dashboards'>Market dashboards</h2>"
+                        "<p>These dashboards were last updated on "
+                        f"{processed_date}.<br/></p>"
+                    ),
+                }
+            ],
+        }
+        landing_page.content.raw_data[0] = new_note
+        landing_page.save_revision().publish()
+
     def handle(self, *args, **options):
         """Read markets from file into update dicts."""
         with open(self.expand_path(options["snapshot_file"])) as json_data:
             data = json.load(json_data)
         markets = data["markets"]
         snapshots = self.get_data_snapshots()
+
+        self.update_landing_page(data["date_published"])
+
         for market in markets:
             key = market["market_key"]
             snapshot_data = self.find_data_snapshot(key, snapshots)

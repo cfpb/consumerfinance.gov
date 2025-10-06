@@ -114,19 +114,21 @@ const expensesView = {
   keyupListener: function () {
     this.$reviewAndEvaluate.each(() => {
       $('[data-expenses]').each((elmo) => {
-        elmo.addEventListener('keyup focusout', function () {
-          clearTimeout(expensesView.keyupDelay);
-          expensesView.currentInput = $(this).attr('id');
-          if ($(this).is(':focus')) {
-            expensesView.keyupDelay = setTimeout(function () {
+        ['keyup', 'focusout'].forEach((eventName) => {
+          elmo.addEventListener(eventName, function () {
+            clearTimeout(expensesView.keyupDelay);
+            expensesView.currentInput = this.id;
+            if (this === document.activeElement) {
+              expensesView.keyupDelay = setTimeout(function () {
+                expensesView.inputHandler(expensesView.currentInput);
+                expensesView.updateView(getExpenses.values());
+              }, 500);
+            } else {
               expensesView.inputHandler(expensesView.currentInput);
+              expensesView.currentInput = 'none';
               expensesView.updateView(getExpenses.values());
-            }, 500);
-          } else {
-            expensesView.inputHandler(expensesView.currentInput);
-            expensesView.currentInput = 'none';
-            expensesView.updateView(getExpenses.values());
-          }
+            }
+          });
         });
       });
     });
@@ -138,7 +140,7 @@ const expensesView = {
   expenseInputChangeListener: function () {
     $('[data-expenses]').each((elmo) => {
       elmo.addEventListener('change', function () {
-        const expenses = $(this).data('expenses');
+        const expenses = this.dataset.expenses;
         if (expenses) {
           analyticsSendEvent({ action: 'Value Edited', label: expenses });
         }

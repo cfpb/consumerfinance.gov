@@ -31,6 +31,7 @@ class StoryContent(StreamBlock):
     text_introduction = molecules.TextIntroduction()
     video_player = organisms.VideoPlayer()
     simple_chart = organisms.SimpleChart()
+    notification = molecules.Notification()
 
 
 class StoryPage(CFGOVPage):

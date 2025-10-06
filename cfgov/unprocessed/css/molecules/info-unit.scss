@@ -81,7 +81,7 @@ $m-info-unit-img-lg: 150px;
   }
 
   // Hide image on print.
-  @include respond-to-print {
+  @media print {
     &__image {
       display: none;
     }

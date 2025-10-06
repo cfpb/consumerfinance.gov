@@ -21,8 +21,9 @@
                 <div class="u-layout-grid__main">
                     {% block content_main scoped -%}{%- endblock %}
                     {% include 'v1/layouts/_footnotes.html' %}
+                    {% include 'v1/layouts/_last-modified.html' %}
                 </div>
-                <aside class="u-layout-grid__sidebar">
+                <aside class="u-layout-grid__sidebar" role="complementary">
                     {% block content_sidebar scoped -%}{%- endblock %}
                 </aside>
             {% endblock %}

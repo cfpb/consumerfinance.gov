@@ -139,15 +139,15 @@ def yob_test(yob=None):
     try:
         birth_year = int(yob)
     except (TypeError, ValueError):
-        log.warn("birth year should be a number")
+        log.warning("birth year should be a number")
         return None
     else:
         b_string = str(birth_year)
         if birth_year > today.year:
-            log.warn("can't work with birth dates in the future")
+            log.warning("can't work with birth dates in the future")
             return None
         elif len(b_string) != 4:
-            log.warn("please supply a 4-digit birth year")
+            log.warning("please supply a 4-digit birth year")
             return None
         else:
             return b_string

@@ -6,11 +6,14 @@ from core.templatetags.svg_icon import svg_icon
 from core.utils import (
     ASK_CFPB_LINKS,
     NON_CFPB_LINKS,
+    UNSAFE_CHARACTERS,
     add_link_markup,
     extract_answers_from_request,
     format_file_size,
     get_body_html,
     get_link_tags,
+    make_safe,
+    text_matches_href,
 )
 
 
@@ -18,6 +21,19 @@ class FakeRequest:
     # Quick way to simulate a request object with a POST attribute
     def __init__(self, params):
         self.POST = params
+
+
+class TestSearchMakeSafe(SimpleTestCase):
+    def test_make_safe(self):
+        term = "What is a mortgage"
+        unsafe_term = term + "".join(UNSAFE_CHARACTERS)
+        self.assertEqual(term, make_safe(unsafe_term))
+
+    def test_make_safe_max_length(self):
+        term = """We're the Consumer Financial Protection Bureau (CFPB),
+            a U.S. government agency that makes sure banks,
+            lenders, and other financial companies treat you fairly."""
+        self.assertEqual(75, len(make_safe(term)))
 
 
 class ExtractAnswersTest(SimpleTestCase):
@@ -308,3 +324,91 @@ class LinkUtilsTests(SimpleTestCase):
         for url in non_cfpb_urls:
             with self.subTest(url=url):
                 self.assertTrue(NON_CFPB_LINKS.match(url))
+
+
+class TextMatchesHrefTests(SimpleTestCase):
+    def test_text_matchs_href(self):
+        self.assertTrue(
+            text_matches_href("http://example.com", "https://example.com")
+        )
+        self.assertTrue(
+            text_matches_href("https://example.com/", "http://example.com")
+        )
+
+    def test_trailing_slash(self):
+        self.assertTrue(
+            text_matches_href("https://example.com", "https://example.com/")
+        )
+        self.assertTrue(text_matches_href("/foo/bar/", "/foo/bar"))
+        self.assertTrue(text_matches_href("/foo/bar", "/foo/bar/"))
+
+    def test_relative_urls(self):
+        self.assertTrue(text_matches_href("/about", "/about/"))
+        self.assertTrue(text_matches_href("/about/", "/about"))
+
+    def test_domains_and_paths(self):
+        for text, href in [
+            (
+                "https://consumerfinance.gov/foo",
+                "http://www.consumerfinance.gov/foo",
+            ),
+            (
+                "consumerfinance.gov/bar/baz",
+                "https://www.consumerfinance.gov/bar/baz/",
+            ),
+            (
+                "consumerfinance.gov/bar/baz",
+                "/bar/baz/",
+            ),
+            ("https://example.com/about", "https://example.com/about"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertTrue(text_matches_href(text, href))
+
+        for text, href in [
+            (
+                "https://www.consumerfinance.gov/foo",
+                "https://example.com/foo",
+            ),
+            ("https://example.com/about", "https://example.com/contact"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertFalse(text_matches_href(text, href))
+
+    def test_whitespace(self):
+        self.assertTrue(
+            text_matches_href(
+                "  https://example.com  ", "https://example.com/"
+            )
+        )
+
+    def test_case_sensitivity(self):
+        self.assertFalse(
+            text_matches_href("https://Example.com", "https://example.com")
+        )
+
+    def test_naked_domain_matches_www_domain(self):
+        for text, href in [
+            ("example.com", "https://www.example.com"),
+            ("example.com/foo", "https://www.example.com/foo"),
+            ("https://example.com", "https://www.example.com"),
+            ("https://www.example.com", "https://example.com"),
+            ("www.example.com", "https://example.com"),
+            ("www.example.com", "https://www.example.com"),
+            ("www.example.com/foo", "https://example.com/foo"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertTrue(text_matches_href(text, href))
+
+        for text, href in [
+            ("example.com", "https://www.other.com"),
+            ("www.example.com", "https://other.com"),
+        ]:
+            with self.subTest(text=text, href=href):
+                self.assertFalse(text_matches_href(text, href))
+
+    def test_urlparse_exceptions(self):
+        # https://discuss.python.org/t/urlparse-can-sometimes-raise-an-exception-should-it/44465
+        self.assertFalse(text_matches_href("https://\uff03", "https://foo"))
+        self.assertFalse(text_matches_href("https://\uff03", "https://\uff1a"))
+        self.assertTrue(text_matches_href("https://\uff03", "https://\uff03"))

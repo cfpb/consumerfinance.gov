@@ -47,20 +47,6 @@ const HTML_SNIPPET = `
 
 global.console = { error: jest.fn(), log: jest.fn() };
 
-/**
- * Create a mock for the window.location object, for testing purposes.
- */
-function mockWindowLocation() {
-  delete window.location;
-  window.location = {
-    protocol: 'http:',
-    host: 'localhost',
-    pathname: '/',
-    href: 'http://localhost/',
-    assign: jest.fn(),
-  };
-}
-
 describe('The Regs3K search page', () => {
   beforeEach(() => {
     fetch.resetMocks();
@@ -72,14 +58,21 @@ describe('The Regs3K search page', () => {
   });
 
   it('should handle search form submissions', () => {
-    mockWindowLocation();
-    const form = document.querySelector('form');
+    const implSymbol = Object.getOwnPropertySymbols(window.location)[0];
 
-    simulateEvent('submit', form);
+    const assign = jest
+      .spyOn(window.location[implSymbol], 'assign')
+      .mockImplementation(() => {});
 
-    expect(global.location.assign).toBeCalledWith(
-      'http://localhost/?q=money&regs=1002',
-    );
+    try {
+      const form = document.querySelector('form');
+
+      simulateEvent('submit', form);
+
+      expect(assign).toBeCalledWith('http://localhost/?q=money&regs=1002');
+    } finally {
+      assign.mockRestore();
+    }
   });
 
   it('should clear a filter when its X icon is clicked', () => {

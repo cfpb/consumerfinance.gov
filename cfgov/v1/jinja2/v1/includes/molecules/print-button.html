@@ -1,0 +1,114 @@
+{# ==========================================================================
+
+    print_button.render()
+
+    ==========================================================================
+
+    Description:
+
+    Creates markup for Print Button molecule.
+
+    ========================================================================== #}
+
+<div class="m-print-button">
+    <div class="m-print-button__action">
+        <button class="a-btn a-btn--secondary"
+                onclick="window.print();"
+                aria-label="{{ _('Print as handout') }}"
+                type="button">
+                <span class="a-btn__text">{{ _('Print as handout') }}</span>
+                    {{ svg_icon("print") }}
+        </button>
+    </div>
+
+    <div class="u-print-only">
+
+        <div class="o-well">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    <div class="content-l__col content-l__col-1-2">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit__heading-text">
+                                <h3>{{ _('About us') }}</h3>
+                            </div>
+                            <div class="m-info-unit__content">
+                                <p>
+                                    {% trans trimmed %}
+                                    The Consumer Financial Protection Bureau is
+                                    a 21st century agency that implements and
+                                    enforces federal consumer financial law and
+                                    ensures that markets for consumer financial
+                                    products are fair, transparent,
+                                    and competitive.
+                                    {% endtrans %}
+                                </p>
+
+
+                                <p>
+                                    {{ _('Learn more at') }} <strong>{{ _('consumerfinance.gov') }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-l__col content-l__col-1-2">
+
+                        <div class="m-info-unit">
+
+                            <div class="m-info-unit__heading-text">
+                                <h3>{{ _('Submit a complaint') }}</h3>
+                            </div>
+                            <div class="m-info-unit__content">
+                                <p>
+                                    {% trans trimmed %}
+                                    Have an issue with a financial product or service?
+                                    We’ll forward your complaint to the company and work
+                                    to get you a response— generally within 15 days.
+                                    {% endtrans %}
+                                </p>
+
+                                <p>
+                                    {{ _('Online at') }} <strong>{{ _('consumerfinance.gov/complaint') }}</strong>
+                                </p>
+                                <p>
+                                    {{ _('By phone (180+ languages)') }}<br>
+                                    {{ _('M-F, 8 a.m. - 8 p.m. ET') }}<br>
+                                    (855) 411-CFPB (2372)<br>
+                                    (855) 729-CFPB (2372) TTY/TDD
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="u-mt30">
+        {% if page.language == 'es' %}
+            <img class="o-header__logo-img"
+                 src="{{ static('img/logo_es_286x50.png') }}"
+                 srcset="{{ static('img/logo_es_228x40.png') }} 228w,
+                         {{ static('img/logo_es_228x40@2x.png') }} 456w,
+                         {{ static('img/logo_es_228x40@3x.png') }} 684w,
+                         {{ static('img/logo_es_228x40@4x.png') }} 912w,
+                         {{ static('img/logo_es_286x50.png') }} 286w,
+                         {{ static('img/logo_es_286x50@2x.png') }} 572w"
+                 sizes="(max-width: 900px) 228px, 286px"
+                 alt="Oficina para la Protección Financiera del Consumidor">
+        {% else %}
+            <img class="o-header__logo-img"
+                 src="{{ static('img/logo_237x50.png') }}"
+                 srcset="{{ static('img/logo_161x34.png') }} 161w,
+                         {{ static('img/logo_161x34@2x.png') }} 322w,
+                         {{ static('img/logo_161x34@3x.png') }} 483w,
+                         {{ static('img/logo_161x34@4x.png') }} 644w,
+                         {{ static('img/logo_237x50.png') }} 237w,
+                         {{ static('img/logo_237x50@2x.png') }} 474w"
+                 sizes="(max-width: 900px) 161px, 237px"
+                 alt="Consumer Financial Protection Bureau"
+                 width="237"
+                 height="50">
+        {% endif %}
+        </p>
+    </div>
+</div>

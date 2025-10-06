@@ -30,11 +30,10 @@ from ask_cfpb.views import (
 )
 from core.decorators import akamai_no_store
 from core.views import CacheTaggedTemplateView, govdelivery_subscribe
-from housing_counselor.views import (
-    HousingCounselorPDFView,
-    HousingCounselorView,
-)
+from housing_counselor.views import HousingCounselorView
 from regulations3k.views import redirect_eregs
+from searchgov.views import SearchView
+from v1.sitemap import Sitemap
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -71,6 +70,10 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+    re_path(r"^search/", SearchView.as_view(), name="searchgov"),
+    re_path(
+        "^es/buscar/", SearchView.as_view(language="es"), name="searchgov_es"
+    ),
     re_path(
         r"^rural-or-underserved-tool/$",
         TemplateView.as_view(
@@ -273,11 +276,6 @@ urlpatterns = [
         HousingCounselorView.as_view(),
         name="housing-counselor",
     ),
-    re_path(
-        r"^save-hud-counselors-list/$",
-        HousingCounselorPDFView.as_view(),
-        name="housing-counselor-pdf",
-    ),
     # Report redirects
     re_path(
         r"^reports/(?P<path>.*)$",
@@ -396,7 +394,12 @@ urlpatterns = [
             content_type="text/plain",
         ),
     ),
-    re_path(r"^sitemap\.xml$", akamai_no_store(sitemap), name="sitemap"),
+    re_path(
+        r"^sitemap\.xml$",
+        akamai_no_store(sitemap),
+        {"sitemaps": {"site": Sitemap}},
+        name="sitemap",
+    ),
     re_path(
         r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
@@ -619,10 +622,16 @@ def handle_error(code, request, exception=None):
             context={"request": request},
             status=code,
         )
-    except AttributeError:
-        # for certain URL's, it seems like our middleware doesn't run
-        # Thankfully, these are probably not errors real users see -- usually
-        # the results of a security scan, or a malformed static file reference.
+    except Exception:
+        # If we encounter an exception when rendering a 500 error page, we
+        # want to handle it so that we don't trigger infinite recursion
+        # (error -> try rendering error page -> another error -> etc).
+        # In that case, we fall back to a plain text error HTTP response.
+        #
+        # For other errors (like 404s), we do want to raise the exception,
+        # so that we (hopefully correctly) log and render the 500 page.
+        if code != 500:
+            raise
 
         return HttpResponse(
             f"This request could not be processed, HTTP Error {str(code)}.",

@@ -45,11 +45,13 @@
 {%- set stack_on_mobile = 'stack_on_mobile' in (value.options or []) -%}
 
 {% if value.heading -%}
-    {% include_block value.heading %}
+    <div class="m-table-heading">
+        {% include_block value.heading %}
+    </div>
 {%- endif %}
 
 {% if value.text_introduction -%}
-    <p class="u-mb30">{{ value.text_introduction }}</p>
+    <p class="m-table-text-intro">{{ value.text_introduction }}</p>
 {%- endif %}
 
 <table class="o-table
@@ -99,5 +101,7 @@
 </table>
 
 {% if value.caption -%}
+<div class="m-table-caption">
     {{ value.caption | richtext }}
+</div>
 {%- endif %}

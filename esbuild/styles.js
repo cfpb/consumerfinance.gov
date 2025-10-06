@@ -1,5 +1,4 @@
 import { pluginPostCssSass } from './plugins/plugin-postcss-sass.js';
-import autoprefixer from 'autoprefixer';
 import { getAll } from './utils.js';
 
 import environment from '../config/environment.js';
@@ -26,6 +25,7 @@ const styledApps = [
   'teachers-digital-platform',
   'filing-instruction-guide',
   'tccp',
+  'searchgov',
 ];
 
 const cssPaths = [
@@ -42,11 +42,7 @@ function styles(baseConfig) {
   return {
     ...baseConfig,
     entryPoints: cssPaths,
-    plugins: [
-      pluginPostCssSass({
-        plugins: [autoprefixer],
-      }),
-    ],
+    plugins: [pluginPostCssSass()],
   };
 }
 

@@ -15,6 +15,10 @@ jobs:
   backend:
     runs-on: ubuntu-latest
 
+    env:
+      # LD_LIBRARY_PATH is set so that validate-translations can find gettext.
+      LD_LIBRARY_PATH: /usr/local/lib
+
     strategy:
       matrix:
         toxenv:
@@ -47,9 +51,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install gettext for translation validation
+      - name: Install gettext for translations
         if: matrix.toxenv == 'validate-translations'
-        run: sudo apt-get install gettext
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+          curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
+          tar xzvf gettext-0.25.tar.gz
+          cd gettext-0.25
+          ./configure --prefix=/usr/local
+          make -j$(nproc)
+          sudo make install
 
       - name: Install lxml dependencies
         run: sudo apt-get install libxml2-dev libxslt-dev
@@ -62,7 +74,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-            node-version: '20.x'
+            node-version: '24.x'
 
       - name: Install dependencies
         run: |

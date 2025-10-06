@@ -30,20 +30,31 @@ class ZipCodeBasedCounselorGeocoder:
         self.zipcodes = zipcodes
 
     def geocode(self, counselors):
-        return list(map(self.geocode_counselor, counselors))
+        return list(
+            map(
+                self.geocode_counselor,
+                filter(
+                    self.filter_zipcodes, map(lambda c: dict(c), counselors)
+                ),
+            )
+        )
+
+    def filter_zipcodes(self, counselor):
+        zipcode = counselor["zipcd"][:5]
+
+        if zipcode not in self.zipcodes:
+            logger.warning(f"{zipcode} not in zipcodes")
+            return False
+
+        return True
 
     def geocode_counselor(self, counselor):
-        counselor = dict(counselor)
-
         lat_lng_keys = ("agc_ADDR_LATITUDE", "agc_ADDR_LONGITUDE")
         if all(counselor.get(k) for k in lat_lng_keys):
             return counselor
 
         zipcode = counselor["zipcd"][:5]
         logger.warning("need to geocode counselor with zipcode %s", zipcode)
-
-        if zipcode not in self.zipcodes:
-            raise KeyError(f"{zipcode} not in zipcodes")
 
         coordinates = self.zipcodes[zipcode]
         counselor.update(zip(lat_lng_keys, coordinates))
@@ -169,10 +180,12 @@ class BulkZipCodeGeocoder:
             yield zipcode, (latitude, longitude)
 
     def mapbox_geocode_url(self, *zipcodes):
+        # Country codes now refer to the US and all major territories. See
+        # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
         return (
             "https://api.mapbox.com"
             "/geocoding/v5/mapbox.places-permanent/{zipcodes}.json"
-            "?country=us&types=postcode&autocomplete=false&limit=1"
+            "?country=us,pr,mp,as,gu,vi&types=postcode&autocomplete=false&limit=1"
             "&access_token={access_token}"
         ).format(zipcodes=";".join(zipcodes), access_token=self.access_token)
 

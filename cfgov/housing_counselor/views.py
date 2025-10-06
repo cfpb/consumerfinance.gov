@@ -2,18 +2,16 @@ import logging
 import re
 
 from django.conf import settings
-from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView
 
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from housing_counselor.forms import HousingCounselorForm
-
 
 logger = logging.getLogger(__name__)
+
+S3_PATH_TEMPLATE = "https://{bucket_location}/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 
 
 def requests_retry_session(
@@ -39,10 +37,11 @@ def requests_retry_session(
 class HousingCounselorS3URLMixin:
     @staticmethod
     def s3_url(file_format, zipcode):
-        path = settings.HOUSING_COUNSELOR_S3_PATH_TEMPLATE.format(
-            file_format=file_format, zipcode=zipcode
+        return S3_PATH_TEMPLATE.format(
+            bucket_location=settings.AWS_S3_CUSTOM_DOMAIN,
+            file_format=file_format,
+            zipcode=zipcode,
         )
-        return path
 
     @classmethod
     def s3_json_url(cls, zipcode):
@@ -57,13 +56,14 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     template_name = "housing_counselor/index.html"
 
     invalid_zip_msg = {
-        "error_message": "Sorry, you have entered an invalid ZIP code.",
-        "error_help": "Please enter a valid five-digit ZIP code below.",
+        "invalid_zip_error_message": "You must enter a valid 5-digit ZIP \
+            code.",
     }
 
     failed_fetch_msg = {
-        "error_message": "Sorry, there was an error retrieving your results.",
-        "error_help": "Please try again later.",
+        "failed_fetch_error_message": "There was a problem retrieving \
+            your results",
+        "failed_fetch_error_explanation": "Please try again later.",
     }
 
     def get_context_data(self, **kwargs):
@@ -110,14 +110,3 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
         response.raise_for_status()
 
         return response.json()
-
-
-class HousingCounselorPDFView(View, HousingCounselorS3URLMixin):
-    def get(self, request):
-        form = HousingCounselorForm(request.GET)
-
-        if not form.is_valid():
-            return HttpResponseBadRequest("invalid zip code")
-
-        zipcode = form.cleaned_data["zip"]
-        return redirect(self.s3_pdf_url(zipcode))

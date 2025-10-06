@@ -2,13 +2,28 @@ import { PfcFinancialPathToGraduation } from './financial-path-helpers.cy.js';
 
 const page = new PfcFinancialPathToGraduation();
 
+const apiConstants =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/';
+const apiSchoolOne =
+  '/paying-for-college2/understanding-your-financial-aid-offer/api/school/166027/';
+
 /**
  *
  */
 describe('Paying For College', () => {
   beforeEach(() => {
+    cy.intercept('GET', apiConstants, {
+      host: 'localhost',
+      fixture: 'paying-for-college/constants.json',
+    });
+    cy.intercept('GET', apiSchoolOne, {
+      host: 'localhost',
+      fixture: 'paying-for-college/school-166027.json',
+    });
+
     cy.visit('/paying-for-college/your-financial-path-to-graduation/');
   });
+
   describe('Your Financial Path To Graduation', () => {
     it('college search should show results only for 3+ chars', () => {
       page.clickGetStarted();
@@ -49,7 +64,7 @@ describe('Paying For College', () => {
       );
       cy.get('span[data-financial-item="total_costOfProgram"]').should(
         'contain',
-        '$12,596',
+        '$2,152',
       );
     });
     it('does not advance without valid selections', () => {
@@ -91,7 +106,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$138',
+        '$26',
       );
     });
 
@@ -108,7 +123,7 @@ describe('Paying For College', () => {
 
       cy.get('[data-financial-item="debt_tenYearMonthly"]').should(
         'contain',
-        '$2,998',
+        '$3,518',
       );
     });
   });

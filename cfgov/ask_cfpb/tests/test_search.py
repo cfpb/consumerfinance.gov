@@ -1,5 +1,4 @@
 import json
-import unittest
 from io import StringIO
 from unittest import mock
 
@@ -12,9 +11,7 @@ from ask_cfpb.forms import AutocompleteForm
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.django import Answer
 from ask_cfpb.models.search import (
-    UNSAFE_CHARACTERS,
     AnswerPageSearch,
-    make_safe,
 )
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 
@@ -23,13 +20,6 @@ def make_answer():
     test_answer = Answer()
     test_answer.save()
     return test_answer
-
-
-class TestSearchMakeSafe(unittest.TestCase):
-    def test_make_safe(self):
-        term = "What is a mortgage"
-        unsafe_term = term + "".join(UNSAFE_CHARACTERS)
-        self.assertEqual(term, make_safe(unsafe_term))
 
 
 class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):

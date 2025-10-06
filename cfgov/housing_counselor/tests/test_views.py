@@ -10,17 +10,18 @@ from housing_counselor.views import (
 )
 
 
+@override_settings(AWS_S3_CUSTOM_DOMAIN="bar.bucket")
 class HousingCounselorS3URLMixinTestCase(TestCase):
     def test_s3_json_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_json_url(20001),
-            "https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/jsons/20001.json",  # noqa: E501
+            "https://bar.bucket/a/assets/hud/jsons/20001.json",
         )
 
     def test_s3_pdf_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_pdf_url(20009),
-            "https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/pdfs/20009.pdf",  # noqa: E501
+            "https://bar.bucket/a/assets/hud/pdfs/20009.pdf",
         )
 
 
@@ -35,7 +36,7 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn("pdf_url", response.context_data)
         self.assertContains(
             response,
-            HousingCounselorView.invalid_zip_msg["error_message"],
+            HousingCounselorView.invalid_zip_msg["invalid_zip_error_message"],
         )
 
     @mock.patch("housing_counselor.views.HousingCounselorView.get_counselors")
@@ -46,7 +47,10 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn("api_json", response.context_data)
         self.assertNotIn("pdf_url", response.context_data)
         self.assertContains(
-            response, HousingCounselorView.failed_fetch_msg["error_message"]
+            response,
+            HousingCounselorView.failed_fetch_msg[
+                "failed_fetch_error_message"
+            ],
         )
 
     @mock.patch("housing_counselor.views.HousingCounselorView.get_counselors")
@@ -62,16 +66,3 @@ class HousingCounselorViewTestCase(TestCase):
         )
         self.assertTrue(response.context_data["zipcode_valid"])
         self.assertIn("12345.pdf", response.context_data["pdf_url"])
-
-
-@override_settings(AWS_STORAGE_BUCKET_NAME="foo.bucket")
-class HousingCounselorPDFViewTestCase(TestCase):
-    def test_get_invalid_form(self):
-        response = self.client.get("/save-hud-counselors-list/", {})
-        self.assertEqual(response.status_code, 400)
-
-    def test_get_valid_form(self):
-        response = self.client.get(
-            "/save-hud-counselors-list/", {"zip": "12345"}
-        )
-        self.assertEqual(response.status_code, 302)

@@ -153,12 +153,14 @@ to assist developers with linting without thinking.
 
 !!! note
 
-    Our frontend requires [Node.js 20](https://nodejs.org/en/)
+    Our frontend requires [Node](https://nodejs.org/en/)
     with
     [Yarn](https://yarnpkg.com/).
     We prefer
     [nvm](https://github.com/nvm-sh/nvm)
     for Node.js version management.
+    The latest stable Node.js release is published [here](https://nodejs.org/en/about/previous-releases#nodejs-releases).
+
     nvm can be installed using:
 
     ```sh
@@ -168,13 +170,13 @@ to assist developers with linting without thinking.
     Node must then be installed once nvm is installed:
 
     ```sh
-    nvm install 20
+    nvm install stable
     ```
 
     Node can then be used in any sh using:
 
     ```sh
-    nvm use 20
+    nvm use stable
     ```
 
     Yarn must then be installed:
@@ -229,10 +231,6 @@ and then does the following:
 - Updates the default Wagtail site to use the port defined by the
   `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
   set to 80.
-- If it doesn't already exist, creates a new
-  [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-  a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
-  `DJANGO_HTTP_PORT` environment variables.
 
 This script must be run inside the Docker `python` container:
 

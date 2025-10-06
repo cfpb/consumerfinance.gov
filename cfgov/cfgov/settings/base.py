@@ -9,7 +9,7 @@ import dj_database_url
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-from cfgov.util import admin_emails, environment_json
+from cfgov.util import admin_emails, environment_json, get_s3_media_config
 
 
 # Repository root is 4 levels above this file
@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     "wagtailflags",
     "ask_cfpb",
     "agreements",
+    "searchgov",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -100,7 +101,6 @@ INSTALLED_APPS = (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
-    "wagtailmedia",
     "django_opensearch_dsl",
     "corsheaders",
     "login",
@@ -124,7 +124,6 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
-    "wagtail_deletion_archival",
 )
 
 MIDDLEWARE = (
@@ -220,10 +219,18 @@ if ALLOW_ADMIN_URL:
 # Database name cfgov, username cfpb, password cfpb.
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jazzband/dj-database-url for URL formatting.
+_db_config = {
+    "default": "postgres://cfpb:cfpb@localhost/cfgov",
+}
+
+if _db_conn_max_age := os.getenv("CONN_MAX_AGE"):
+    _db_config.update({
+        "conn_max_age": int(_db_conn_max_age),
+        "conn_health_checks": True,
+    })
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": dj_database_url.config(**_db_config)
 }
 
 # Internationalization
@@ -282,15 +289,6 @@ STORAGES = {
     },
 }
 
-if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
-    STORAGES["wagtail_deletion_archival"] = {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-        "OPTIONS": {
-            "location": WAGTAIL_DELETION_ARCHIVE_PATH,
-        }
-    }
-
-
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
@@ -308,7 +306,8 @@ STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
 # Serve files under cfgov/root at the root of the website.
 WHITENOISE_ROOT = PROJECT_ROOT / "root"
 
-ALLOWED_HOSTS = ["*"]
+# To be overridden by other settings files.
+ALLOWED_HOSTS = []
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
@@ -328,13 +327,12 @@ WAGTAILSEARCH_BACKENDS = {
 # inline in rich text.
 WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
 
+# Search api
+SEARCHGOV_API_KEY = os.environ.get("SEARCHGOV_API_KEY")
+SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
+
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
-
-HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    "https://s3.amazonaws.com/files.consumerfinance.gov"
-    "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
-)
 
 # ElasticSearch 7 Configuration
 TESTING = False
@@ -368,8 +366,8 @@ else:
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
             ),
-            "use_ssl": True, 
-            "verify_certs": False,
+            "use_ssl": True,
+            "verify_certs": True,
         }
     }
 
@@ -377,26 +375,18 @@ OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
 
-# S3 Configuration
-# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
-AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
-AWS_S3_FILE_OVERWRITE = False
-AWS_S3_SECURE_URLS = True  # True = use https; False = use http
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
-
-if os.environ.get("S3_ENABLED", "False") == "True":
-    AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-    AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-    MEDIA_URL = os.path.join(
-        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
-    )
-
+if os.getenv("S3_ENABLED"):
+    MEDIA_URL, _storage_options = get_s3_media_config()
     STORAGES["default"] = {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _storage_options,
     }
+
+# These environment variables are also used in get_s3_media_config above.
+# They are defined here to maintain existing functionality
+# in various applications that read/write data from/to S3.
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -434,7 +424,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
-            "min_length": 12,
+            "min_length": 14,
         },
     },
     {
@@ -515,8 +505,6 @@ CSP_SCRIPT_SRC = (
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -538,7 +526,6 @@ CSP_STYLE_SRC = (
     "'unsafe-inline'",
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
     "www.ssa.gov/accessibility/andi/",
@@ -547,13 +534,13 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.cfpb.gov",
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -571,8 +558,6 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
@@ -585,15 +570,15 @@ CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
-    "n2.mouseflow.com",
+    "*.mouseflow.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
@@ -624,12 +609,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # Google Optimize code snippets for A/B testing
-    # When enabled this flag will add various Google Optimize code snippets.
-    # Intended for use with path conditions.
-    "AB_TESTING": [],
-    # Ping google on page publication in production only
-    "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
@@ -638,18 +617,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-    # TCCP credit card finder
-    "TCCP": [
-        ("environment is", "dev4"),
-        ("environment is", "local"),
-        ("environment is", "test"),
-    ],
-    # Spanish homepage
-    "SPANISH_HOMEPAGE": [
-        ("environment is", "dev5"),
-        ("environment is", "local"),
-        ("environment is", "test"),
-    ],
 }
 
 REGULATIONS_REFERENCE_MAPPING = [
@@ -828,3 +795,9 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
+
+    # Require manual Wagtail user creation.
+    OIDC_CREATE_USER = False
+
+if WAGTAILSHARING_HOST := os.getenv("WAGTAILSHARING_HOST"):
+    WAGTAILSHARING_ROUTER = "wagtailsharing.routers.settings.SettingsHostRouter"

@@ -433,11 +433,14 @@ Query.prototype.slideUp = function (duration = 500) {
   return this;
 };
 
-Query.prototype.slideDown = function (duration = 500) {
+Query.prototype.slideDown = function (
+  defaultDisplay = 'block',
+  duration = 500,
+) {
   this.elements.forEach((elem) => {
     elem.style.removeProperty('display');
     let display = document.defaultView.getComputedStyle(elem).display;
-    if (display === 'none') display = 'block';
+    if (display === 'none') display = defaultDisplay;
     elem.style.display = display;
     const height = elem.offsetHeight;
     for (const key in slideDownVars.styles) {
@@ -593,7 +596,7 @@ Query.prototype.css = function (param, value) {
   }
   for (const key in obj) {
     this.elements.forEach((elem) => {
-      if (Object.prototype.hasOwnProperty.call(elem.style, key)) {
+      if (elem.style[key] !== undefined) {
         let val = obj[key];
         if (pixelStyles.indexOf(key) > -1) val = pixelator(val);
         elem.style[key] = val;

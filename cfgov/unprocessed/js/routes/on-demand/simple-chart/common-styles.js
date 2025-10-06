@@ -16,7 +16,7 @@ const styles = {
   chart: {
     height: 500,
     style: {
-      fontFamily: '"Avenir Next", Arial, sans-serif',
+      fontFamily: '"Source Sans 3 Variable", Arial, sans-serif',
       fontSize: '16px',
       color: colorMap['var(--gray)'],
       lineHeight: 1.375,
@@ -52,7 +52,7 @@ const styles = {
     itemMarginBottom: 4,
     itemStyle: {
       color: colorMap['var(--gray)'],
-      fontFamily: '"Avenir Next", Arial, sans-serif',
+      fontFamily: '"Source Sans 3 Variable", Arial, sans-serif',
       fontSize: 16,
     },
     itemHiddenStyle: {

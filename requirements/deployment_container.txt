@@ -1,3 +1,5 @@
 -r base.txt
 
-gunicorn==23.0.0
+gunicorn[gevent]==23.0.0
+newrelic
+psycogreen==1.0.2

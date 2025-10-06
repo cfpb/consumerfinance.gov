@@ -1,4 +1,6 @@
 import FilterableListControls from '../../../../cfgov/unprocessed/js/organisms/FilterableListControls.js';
+import { jest } from '@jest/globals';
+jest.useFakeTimers();
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const HTML_SNIPPET = `

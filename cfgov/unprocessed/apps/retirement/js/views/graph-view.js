@@ -242,13 +242,15 @@ function getYourEstimates() {
   const salaryInputElm = document.querySelector('#salary-input');
   const salary = convertStringToNumber(salaryInputElm.value);
 
-  // Hide warnings, show loading indicator
-  $('.m-notification').slideUp();
-  highlightAgeFields(false);
+  //show loading indicator
   const loadIndDom = document.querySelector('#get-your-estimates');
   loadIndDom.classList.remove('a-btn--hide-icon');
   fetchApiData(dates.concat, salary).then((resp) => {
     if (resp.error === '') {
+      // Hide warnings
+      $('.m-notification').slideUp();
+      highlightAgeFields(false);
+
       updateDataFromApi(resp);
       $('.step-two .question').css('display', 'inline-block');
       $(
@@ -277,7 +279,7 @@ function getYourEstimates() {
         );
       }
     } else {
-      $('.m-notification').slideDown();
+      $('.m-notification').slideDown('flex');
       $('.m-notification .m-notification__content').html(resp.note);
       if (resp.current_age >= 71 || resp.current_age < 21) {
         highlightAgeFields(true);

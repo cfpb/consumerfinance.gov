@@ -36,12 +36,12 @@
     }
   }
 
-  // Hide on print.
-  @include respond-to-print {
+  // Don't print the social media icons.
+  @media print {
     display: none;
   }
 
-  // Hide print when JS is off.
+  // Hide print button when JS is off.
   .no-js &__print {
     display: none;
   }

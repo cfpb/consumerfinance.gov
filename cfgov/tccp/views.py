@@ -5,8 +5,8 @@ from django.shortcuts import redirect, reverse
 from django.template.defaultfilters import title
 from django.urls import reverse_lazy
 from django.utils.functional import cached_property
+from django.views.generic import TemplateView
 
-from flags.views import FlaggedTemplateView, FlaggedViewMixin
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
@@ -22,8 +22,7 @@ from .serializers import CardSurveyDataListSerializer, CardSurveyDataSerializer
 from .situations import Situation, SituationSpeedBumps
 
 
-class LandingPageView(FlaggedTemplateView):
-    flag_name = "TCCP"
+class LandingPageView(TemplateView):
     template_name = "tccp/landing_page.html"
     heading = "Explore credit cards for your situation"
 
@@ -57,8 +56,7 @@ class LandingPageView(FlaggedTemplateView):
         )
 
 
-class AboutView(FlaggedTemplateView):
-    flag_name = "TCCP"
+class AboutView(TemplateView):
     template_name = "tccp/about.html"
     breadcrumb_items = [
         {
@@ -78,8 +76,33 @@ class AboutView(FlaggedTemplateView):
         }
 
 
-class CardListView(FlaggedViewMixin, ListAPIView):
-    flag_name = "TCCP"
+class DRFExceptionMixin:
+    def handle_exception(self, exc):
+        """When rendering HTML, don't use DRF exception handling.
+
+        The django-rest-framework package provides its own exception handling
+        that includes HTML error templates, for example for 404 Not Found. We
+        want to use our standard Django error templates even though this view
+        is being served by DRF.
+
+        If we're rendering JSON, we can use DRF's logic because it provides a
+        nicer error message to the user.
+
+        If the user specified an invalid or unsupported renderer (for example
+        with ?format=invalid), also show our standard Django error template,
+        as long as this is a GET request.
+        """
+        renderer = getattr(self.request, "accepted_renderer", None)
+
+        if (self.request.method == "GET") and (
+            (renderer is None) or (renderer.format == "html")
+        ):
+            raise exc
+
+        return super().handle_exception(exc)
+
+
+class CardListView(DRFExceptionMixin, ListAPIView):
     model = CardSurveyData
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
     serializer_class = CardSurveyDataListSerializer
@@ -193,8 +216,7 @@ class CardListView(FlaggedViewMixin, ListAPIView):
         return rating_ranges
 
 
-class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
-    flag_name = "TCCP"
+class CardDetailView(DRFExceptionMixin, RetrieveAPIView):
     model = CardSurveyData
     lookup_field = "slug"
     renderer_classes = [TemplateHTMLRenderer, JSONRenderer]
@@ -241,19 +263,3 @@ class CardDetailView(FlaggedViewMixin, RetrieveAPIView):
             )
 
         return response
-
-    def handle_exception(self, exc):
-        """When rendering HTML, don't use DRF exception handling.
-
-        The django-rest-framework package provides its own exception handling
-        that includes HTML error templates, for example for 404 Not Found. We
-        want to use our standard Django error templates even though this view
-        is being served by DRF.
-
-        If we're rendering JSON, we can use DRF's logic because it provides a
-        nicer error message to the user.
-        """
-        if self.request.accepted_renderer.format == "html":
-            raise exc
-
-        return super().handle_exception(exc)
