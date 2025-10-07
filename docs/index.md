@@ -15,7 +15,7 @@ The standard technology stack for development of consumerfinance.gov within the 
 - [Python 3.8](https://docs.python.org/3.8/) and [pip (Python package manager)](https://pip.pypa.io/en/stable/user_guide/)
 - [Jinja2 templates](https://jinja.palletsprojects.com/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for version.
 - [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/wagtail.txt) for version.
-- [PostgreSQL 13.13](https://www.postgresql.org/) is the database we use in production and locally.
+- [PostgreSQL 17](https://www.postgresql.org/) is the database we use in production and locally.
 - [Psycopg](https://www.psycopg.org/) is the Python library that lets Python talk to Postgres. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for current version.
 - Additional dependencies, listed below.
 
