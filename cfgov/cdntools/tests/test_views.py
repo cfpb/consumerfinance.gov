@@ -112,7 +112,7 @@ class TestCDNManagementView(TestCase):
             MOCK_PURGED,
         )
 
-    def test_submission_with_url_cloudfront(self):
+    def test_submission_with_url_files(self):
         self.client.login(username="cdn", password="password")
         self.client.post(
             reverse("manage-cdn"),

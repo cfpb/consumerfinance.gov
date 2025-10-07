@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from wagtail.contrib.frontend_cache.utils import get_backends
 from wagtail.signals import page_published, page_unpublished
 
-from cdntools.signals import cloudfront_cache_invalidation
+from cdntools.signals import files_cache_invalidation
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage,
     ActivitySetUp,
@@ -18,7 +18,7 @@ from v1.models.images import CFGOVRendition
 from v1.util.ref import get_category_children
 
 
-post_save.connect(cloudfront_cache_invalidation, sender=CFGOVRendition)
+post_save.connect(files_cache_invalidation, sender=CFGOVRendition)
 
 
 def invalidate_filterable_list_caches(sender, **kwargs):

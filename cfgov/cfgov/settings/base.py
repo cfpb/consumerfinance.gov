@@ -469,20 +469,27 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
         "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
         "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
-        "OBJECT_ID": os.environ["AKAMAI_OBJECT_ID"],
         "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
         "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to www cache
+        "OBJECT_ID": os.environ["AKAMAI_OBJECT_ID"],
         "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
-ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
-    "ENABLE_CLOUDFRONT_CACHE_PURGE", False
+ENABLE_FILES_CACHE_PURGE = os.environ.get(
+    "ENABLE_FILES_CACHE_PURGE", False
 )
-if ENABLE_CLOUDFRONT_CACHE_PURGE:
+if ENABLE_FILES_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
-        "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
-        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to files cache
+        "OBJECT_ID": os.environ["AKAMAI_FILES_OBJECT_ID"],
+        "HOSTNAMES": environment_json("AKAMAI_FILES_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists

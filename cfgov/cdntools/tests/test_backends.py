@@ -11,7 +11,7 @@ from cdntools.backends import (
     AkamaiBackend,
     AkamaiDeletingBackend,
 )
-from cdntools.signals import cloudfront_cache_invalidation
+from cdntools.signals import files_cache_invalidation
 
 
 class TestAkamaiBackend(TestCase):
@@ -140,10 +140,16 @@ class TestAkamaiDeletingBackend(TestCase):
     WAGTAILFRONTENDCACHE={
         "files": {
             "BACKEND": "cdntools.backends.MockAkamaiBackend",
+            "CLIENT_TOKEN": "token",
+            "CLIENT_SECRET": "secret",
+            "ACCESS_TOKEN": "access token",
+            "OBJECT_ID": "12345",
+            "PURGE_ALL_URL": "https://purge/all/cpcode/production",
+            "FAST_PURGE_URL": "https://fast/purge/url/production",
         },
     },
 )
-class CloudfrontInvalidationTest(TestCase):
+class FilesInvalidationTest(TestCase):
     def setUp(self):
         self.document = Document(title="Test document")
         self.document_without_file = Document(title="Document without file")
@@ -156,15 +162,15 @@ class CloudfrontInvalidationTest(TestCase):
         self.document.file.delete()
 
     def test_document_saved_cache_purge_disabled(self):
-        cloudfront_cache_invalidation(None, self.document)
+        files_cache_invalidation(None, self.document)
         self.assertEqual(MOCK_PURGED, [])
 
-    @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
+    @override_settings(ENABLE_FILES_CACHE_PURGE=True)
     def test_document_saved_cache_purge_without_file(self):
-        cloudfront_cache_invalidation(None, self.document_without_file)
+        files_cache_invalidation(None, self.document_without_file)
         self.assertEqual(MOCK_PURGED, [])
 
-    @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
+    @override_settings(ENABLE_FILES_CACHE_PURGE=True)
     def test_document_saved_cache_invalidation(self):
-        cloudfront_cache_invalidation(None, self.document)
+        files_cache_invalidation(None, self.document)
         self.assertIn(self.document.file.url, MOCK_PURGED)
