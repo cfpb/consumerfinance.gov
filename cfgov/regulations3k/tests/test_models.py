@@ -633,7 +633,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "cdntools.backends.MockCacheBackend",
+                "BACKEND": "cdntools.backends.MockAkamaiBackend",
             },
         }
     )
@@ -649,7 +649,7 @@ class RegModelTests(DjangoTestCase):
     @override_settings(
         WAGTAILFRONTENDCACHE={
             "varnish": {
-                "BACKEND": "cdntools.backends.MockCacheBackend",
+                "BACKEND": "cdntools.backends.MockAkamaiBackend",
             },
         }
     )

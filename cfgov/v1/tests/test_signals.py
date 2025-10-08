@@ -20,7 +20,7 @@ from v1.signals import invalidate_filterable_list_caches
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
         },
     }
 )

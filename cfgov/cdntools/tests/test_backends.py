@@ -1,6 +1,6 @@
-import os
 from unittest import mock
 
+from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
@@ -11,7 +11,7 @@ from cdntools.backends import (
     AkamaiBackend,
     AkamaiDeletingBackend,
 )
-from cdntools.signals import cloudfront_cache_invalidation
+from cdntools.signals import files_cache_invalidation
 
 
 class TestAkamaiBackend(TestCase):
@@ -20,6 +20,9 @@ class TestAkamaiBackend(TestCase):
             "CLIENT_TOKEN": "token",
             "CLIENT_SECRET": "secret",
             "ACCESS_TOKEN": "access token",
+            "OBJECT_ID": "12345",
+            "PURGE_ALL_URL": "https://purge/all/cpcode/production",
+            "FAST_PURGE_URL": "https://fast/purge/url/production",
         }
 
     def test_no_credentials_raises(self):
@@ -27,8 +30,11 @@ class TestAkamaiBackend(TestCase):
             "CLIENT_TOKEN": None,
             "CLIENT_SECRET": None,
             "ACCESS_TOKEN": None,
+            "OBJECT_ID": None,
+            "PURGE_ALL_URL": None,
+            "FAST_PURGE_URL": None,
         }
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ImproperlyConfigured):
             AkamaiBackend(credentials)
 
     def test_some_credentials_raises(self):
@@ -36,8 +42,11 @@ class TestAkamaiBackend(TestCase):
             "CLIENT_TOKEN": "some-arbitrary-token",
             "CLIENT_SECRET": None,
             "ACCESS_TOKEN": None,
+            "OBJECT_ID": None,
+            "PURGE_ALL_URL": None,
+            "FAST_PURGE_URL": None,
         }
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ImproperlyConfigured):
             AkamaiBackend(credentials)
 
     def test_all_credentials_get_set(self):
@@ -47,40 +56,26 @@ class TestAkamaiBackend(TestCase):
         self.assertEqual(akamai_backend.access_token, "access token")
 
     @mock.patch("requests.post")
-    @mock.patch.dict(
-        os.environ,
-        {
-            "AKAMAI_OBJECT_ID": "12345",
-            "AKAMAI_PURGE_ALL_URL": "http://purge",
-        },
-    )
     def test_post_all(self, mock_post):
         mock_post.return_value.status_code.return_value = 200
         mock_post.return_value.text = "response text"
         akamai_backend = AkamaiBackend(self.credentials)
         akamai_backend.post_all("invalidate")
         mock_post.assert_called_once_with(
-            "http://purge",
+            "https://purge/all/cpcode/production",
             headers=akamai_backend.headers,
             data='{"action": "invalidate", "objects": ["12345"]}',
             auth=akamai_backend.auth,
         )
 
     @mock.patch("requests.post")
-    @mock.patch.dict(
-        os.environ,
-        {
-            "AKAMAI_OBJECT_ID": "12345",
-            "AKAMAI_FAST_PURGE_URL": "http://fast_purge",
-        },
-    )
     def test_post(self, mock_post):
         mock_post.return_value.status_code.return_value = 200
         mock_post.return_value.text = "response text"
         akamai_backend = AkamaiBackend(self.credentials)
         akamai_backend.post("http://my/url", "invalidate")
         mock_post.assert_called_once_with(
-            "http://fast_purge",
+            "https://fast/purge/url/production",
             headers=akamai_backend.headers,
             data='{"action": "invalidate", "objects": ["http://my/url"]}',
             auth=akamai_backend.auth,
@@ -106,30 +101,12 @@ class TestAkamaiBackend(TestCase):
             ["test_slug"], action="invalidate"
         )
 
-    @mock.patch.dict(
-        os.environ,
-        {
-            "AKAMAI_FAST_PURGE_URL": "",
-        },
-    )
-    def test_post_tags_no_url_config(self):
-        akamai_backend = AkamaiBackend(self.credentials)
-        self.assertIs(
-            akamai_backend.post_tags(["test_slug"], action="delete"), None
-        )
-
-    @mock.patch.dict(
-        os.environ,
-        {
-            "AKAMAI_FAST_PURGE_URL": "http://my/url/",
-        },
-    )
     @mock.patch("requests.post")
     def test_post_tags_with_url_config(self, mock_post):
         akamai_backend = AkamaiBackend(self.credentials)
         akamai_backend.post_tags(["test_slug"], action="delete")
         mock_post.assert_called_once_with(
-            "http://my/tag/",
+            "https://fast/purge/tag/production",
             headers=akamai_backend.headers,
             data='{"action": "delete", "objects": ["test_slug"]}',
             auth=akamai_backend.auth,
@@ -142,6 +119,9 @@ class TestAkamaiDeletingBackend(TestCase):
             "CLIENT_TOKEN": "token",
             "CLIENT_SECRET": "secret",
             "ACCESS_TOKEN": "access token",
+            "OBJECT_ID": "1234",
+            "PURGE_ALL_URL": "https://purge/all/cpcode/production",
+            "FAST_PURGE_URL": "https://fast/purge/url/production",
         }
 
     def test_purge(self):
@@ -159,11 +139,17 @@ class TestAkamaiDeletingBackend(TestCase):
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "files": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
+            "CLIENT_TOKEN": "token",
+            "CLIENT_SECRET": "secret",
+            "ACCESS_TOKEN": "access token",
+            "OBJECT_ID": "12345",
+            "PURGE_ALL_URL": "https://purge/all/cpcode/production",
+            "FAST_PURGE_URL": "https://fast/purge/url/production",
         },
     },
 )
-class CloudfrontInvalidationTest(TestCase):
+class FilesInvalidationTest(TestCase):
     def setUp(self):
         self.document = Document(title="Test document")
         self.document_without_file = Document(title="Document without file")
@@ -176,15 +162,15 @@ class CloudfrontInvalidationTest(TestCase):
         self.document.file.delete()
 
     def test_document_saved_cache_purge_disabled(self):
-        cloudfront_cache_invalidation(None, self.document)
+        files_cache_invalidation(None, self.document)
         self.assertEqual(MOCK_PURGED, [])
 
-    @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
+    @override_settings(ENABLE_FILES_CACHE_PURGE=True)
     def test_document_saved_cache_purge_without_file(self):
-        cloudfront_cache_invalidation(None, self.document_without_file)
+        files_cache_invalidation(None, self.document_without_file)
         self.assertEqual(MOCK_PURGED, [])
 
-    @override_settings(ENABLE_CLOUDFRONT_CACHE_PURGE=True)
+    @override_settings(ENABLE_FILES_CACHE_PURGE=True)
     def test_document_saved_cache_invalidation(self):
-        cloudfront_cache_invalidation(None, self.document)
+        files_cache_invalidation(None, self.document)
         self.assertIn(self.document.file.url, MOCK_PURGED)
