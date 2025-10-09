@@ -4,12 +4,7 @@ from urllib.parse import quote
 from django.utils import timezone
 
 import requests
-
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
+import zoneinfo
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
