@@ -13,6 +13,9 @@ RUN addgroup --gid ${USER_UID} ${USERNAME} && \
         --disabled-password \
         ${USERNAME}
 
+# set python version for pathing
+ENV PYTHON_VERSION python3.13
+
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG=en_US.UTF-8
 
@@ -164,10 +167,13 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 # Delete unprocessed frontend code, which was only needed by node-builder.
 # This avoids false positive image vulnerabilities in source Node packages.
 #
-# Also delete an unused test keyfile from the ndg-httpsclient Python package.
-# This avoids a false positive due to storing a private keyfile in the image.
+# Also delete an unused test keyfiles from the gevent and ndg-httpsclient
+# Python packages. This avoids a false positive due to storing private
+# keyfiles in the image.
 RUN rm -rf ./cfgov/unprocessed && \
-    rm /usr/local/lib/python3.13/site-packages/ndg/httpsclient/test/pki/localhost.key
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/gevent/tests/*.key && \
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/gevent/tests/*.pem && \
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/ndg/httpsclient/test/pki/localhost.key
 
 # Run Django's collectstatic to collect assets from the frontend build.
 #
