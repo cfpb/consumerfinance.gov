@@ -55,17 +55,11 @@
         {%- else -%}
             {%- set link_text = link.text if link.text else 'Learn More' -%}
             {%- set link -%}
-                <a class="a_link a-link--partially-styled"
-                   href="{{ link.url }}"
+                <a href="{{ link.url }}"
                    {%- if link.aria_label -%}
                    aria-label="{{ link.aria_label }}"
                    {%- endif %}>
-                    <span class="a-link__plain">
-                        {{ link_text }}
-                    </span>
-                    <span class="a-link__underlined">
-                        {{ _('Read answer') }}
-                    </span>
+                    {{ link_text }}
                 </a>
             {%- endset -%}
             {{ link | safe }}

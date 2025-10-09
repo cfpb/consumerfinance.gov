@@ -77,10 +77,6 @@ msgstr "Lea la declaración de privacidad"
 msgid "Breadcrumbs"
 msgstr "Guía de navegación"
 
-#: v1/jinja2/v1/includes/molecules/feature-card.html:67
-msgid "Read answer"
-msgstr "Leer la respuesta"
-
 #: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
