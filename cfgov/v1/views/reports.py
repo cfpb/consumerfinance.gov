@@ -316,11 +316,13 @@ class AskReportView(ReportView):
         "search_description",
         "url",
         "live",
+        "first_published_at",
         "last_edited",
         "portal_topic.all",
         "primary_portal_topic",
         "portal_category.all",
         "related_questions.all",
+        "schema",
         "language",
     ]
     export_headings = {
@@ -333,11 +335,13 @@ class AskReportView(ReportView):
         "search_description": "Meta description",
         "url": "URL",
         "live": "Live",
+        "first_published_at": "First published",
         "last_edited": "Last edited",
         "portal_topic.all": "Portal topics",
         "primary_portal_topic": "Primary portal topic",
         "portal_category.all": "Portal categories",
         "related_questions.all": "Related questions",
+        "schema": "Schema used",
         "language": "Language",
     }
 
@@ -366,6 +370,27 @@ class AskReportView(ReportView):
                 answer = ""
         return strip_html(answer)
 
+    def determine_schema(answer_content):
+        has_faq_schema = list(
+            filter(
+                lambda item: item["type"] == "faq_schema",
+                answer_content.raw_data,
+            )
+        )
+        has_how_to_schema = list(
+            filter(
+                lambda item: item["type"] == "how_to_schema",
+                answer_content.raw_data,
+            )
+        )
+
+        if has_faq_schema:
+            return "FAQ"
+        elif has_how_to_schema:
+            return "How To"
+        else:
+            return "None"
+
     custom_field_preprocess = {
         "answer_base": {"csv": partial(process_related_item, key="id")},
         "short_answer": {"csv": strip_html},
@@ -379,6 +404,7 @@ class AskReportView(ReportView):
         "related_questions.all": {
             "csv": partial(join_values_with_pipe, key="id")
         },
+        "schema": {"csv": determine_schema},
     }
 
     index_url_name = "ask_report"
