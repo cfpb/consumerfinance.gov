@@ -1,6 +1,5 @@
 # These packages are installed from PyPI.
 base36==0.1.1
-backports.zoneinfo==0.2.1;python_version<"3.9"
 beautifulsoup4==4.11.2
 boto3==1.34.144
 dj-database-url==2.2.0
