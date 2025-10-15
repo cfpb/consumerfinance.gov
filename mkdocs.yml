@@ -41,7 +41,6 @@ nav:
   - APIs and Data:
       - Ask CFPB: ask-cfpb.md
       - Consumer Complaints: consumer-complaint-database.md
-      - Find a Housing Counselor Tool: housing-counselor-tool.md
 
 theme:
   name: readthedocs
