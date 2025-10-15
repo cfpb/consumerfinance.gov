@@ -66,13 +66,6 @@ LOGGING = {
     },
 }
 
-if os.environ.get("SQS_QUEUE_ENABLED"):
-    LOGGING["handlers"]["sqs"] = {
-        "level": "ERROR",
-        "class": "alerts.logging_handlers.CFGovErrorHandler",
-    }
-    LOGGING["loggers"]["django.request"]["handlers"].append("sqs")
-
 # Only add syslog to LOGGING if it's in default_loggers
 if "syslog" in default_loggers:
     LOGGING["handlers"]["syslog"] = {
