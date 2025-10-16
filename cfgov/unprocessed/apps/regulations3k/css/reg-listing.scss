@@ -7,11 +7,27 @@
    ========================================================================== */
 
 #regulations-listing {
-  > ul {
-    .new-version {
+  // TODO - Standardize a nested list link pattern.
+  .new-version {
+    h5 {
+      margin-top: math.div(10px, $base-font-size-px) + rem;
+      margin-bottom: math.div(10px, $base-font-size-px) + rem;
+    }
+
+    a {
+      margin-left: math.div(-30px, $base-font-size-px) + rem;
+      padding-left: math.div(30px, $base-font-size-px) + rem;
+
+      &:hover:before {
+        border: none;
+      }
+    }
+
+    li {
       font-size: math.div($size-v, $base-font-size-px) + em;
       font-weight: normal;
       list-style-type: square;
+      margin-left: math.div(30px, $base-font-size-px) + rem;
     }
   }
 }
