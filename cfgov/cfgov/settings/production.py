@@ -25,8 +25,6 @@ if syslog_device:
 if not (sys.argv and sys.argv[0] == "mod_wsgi"):
     default_loggers.append("console")
 
-# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
-#
 # in the formatter, "django: " is an rsyslog tag. This is equivalent to:
 #     logger -t django "my log message"
 # on the server, the tag will be used to route the message to the desired
@@ -38,11 +36,6 @@ LOGGING = {
         "tagged": {"format": "django: %(message)s"},
     },
     "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": [],
-            "class": "django.utils.log.AdminEmailHandler",
-        },
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
