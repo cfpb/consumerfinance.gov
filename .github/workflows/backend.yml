@@ -10,6 +10,9 @@ on:
       - "**.mo"
       - "**.po"
   merge_group:
+  push:
+    branches:
+      - main
 
 jobs:
   backend:
