@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -811,3 +810,37 @@ if ENABLE_SSO:
 
 if WAGTAILSHARING_HOST := os.getenv("WAGTAILSHARING_HOST"):
     WAGTAILSHARING_ROUTER = "wagtailsharing.routers.settings.SettingsHostRouter"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": "DEBUG" if os.getenv("ENABLE_SQL_LOGGING") else "INFO",
+            "propagate": False,
+        },
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+if os.getenv("ENABLE_ES_LOGGING"):
+    LOGGING["loggers"]["opensearchpy.trace"] = {
+        "handlers": ["console"],
+        "level": "INFO",
+        "propagate": False,
+    }

@@ -11,40 +11,6 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-        }
-    },
-    "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": True,
-        }
-    },
-}
-
-# Log database queries
-if os.environ.get("ENABLE_SQL_LOGGING"):
-    LOGGING["loggers"]["django.db.backends"] = {
-        "handlers": ["console"],
-        "level": "DEBUG",
-        "propagate": False,
-    }
-
-# Log Elasticsearch queries
-if os.environ.get("ENABLE_ES_LOGGING"):
-    LOGGING["loggers"]["elasticsearch.trace"] = {
-        "handlers": ["console"],
-        "level": "INFO",
-        "propagate": False,
-    }
-
 # Django Debug Toolbar
 if os.environ.get("ENABLE_DEBUG_TOOLBAR"):
     INSTALLED_APPS += ("debug_toolbar",)
