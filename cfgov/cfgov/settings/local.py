@@ -2,7 +2,6 @@ from .base import *
 
 
 DEBUG = True
-ALLOW_ADMIN_URL = True
 SECRET_KEY = "not-secret-key-for-testing"
 ALLOWED_HOSTS = ["*"]
 

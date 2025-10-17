@@ -569,16 +569,13 @@ category_redirects = [
 ]
 urlpatterns = urlpatterns + category_redirects
 
-if settings.ALLOW_ADMIN_URL:
-    patterns = [
-        # Include our login URL patterns
-        re_path(r"", include("login.urls")),
-        re_path(r"^django-admin/", admin.site.urls),
-        re_path(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
-        re_path(r"^admin/", include(wagtailadmin_urls)),
-    ]
-
-    urlpatterns = patterns + urlpatterns
+# Admin views
+urlpatterns += [
+    re_path(r"", include("login.urls")),
+    re_path(r"^django-admin/", admin.site.urls),
+    re_path(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
+    re_path(r"^admin/", include(wagtailadmin_urls)),
+]
 
 if settings.DEBUG:
     urlpatterns += static(
