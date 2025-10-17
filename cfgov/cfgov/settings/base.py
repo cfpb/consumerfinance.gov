@@ -5,8 +5,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import dj_database_url
-from opensearchpy import RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails, environment_json, get_s3_media_config
 
@@ -333,42 +331,24 @@ SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
-# ElasticSearch 7 Configuration
-TESTING = False
+# OpenSearch configuration
 ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
+
 OPENSEARCH_BIGINT = 50000
 OPENSEARCH_DEFAULT_ANALYZER = "snowball"
-
-if os.environ.get("USE_AWS_ES", False):
-    awsauth = AWS4Auth(
-        os.environ.get("AWS_ES_ACCESS_KEY"),
-        os.environ.get("AWS_ES_SECRET_KEY"),
-        "us-east-1",
-        "es",
-    )
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": [{"host": ES_HOST, "port": 443}],
-            "http_auth": awsauth,
-            "use_ssl": True,
-            "connection_class": RequestsHttpConnection,
-            "timeout": 60,
-        },
+OPENSEARCH_DSL = {
+    "default": {
+        "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+        "http_auth": (
+            os.getenv("ES_USER", "admin"),
+            os.getenv("ES_PASS", "admin"),
+        ),
+        "use_ssl": True,
+        "verify_certs": True,
     }
-else:
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
-            "http_auth": (
-                os.getenv("ES_USER", "admin"),
-                os.getenv("ES_PASS", "admin"),
-            ),
-            "use_ssl": True,
-            "verify_certs": True,
-        }
-    }
+}
 
 OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
