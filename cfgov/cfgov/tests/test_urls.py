@@ -1,4 +1,3 @@
-from importlib import reload
 from unittest import mock
 
 import django
@@ -61,40 +60,6 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=""):
         else:
             raise TypeError(f"{p} does not appear to be a urlpattern object")
     return regexes
-
-
-class AdminURLSTestCase(TestCase):
-    def setUp(self):
-        with override_settings(ALLOW_ADMIN_URL=False):
-            # Reload cfgov.urls with the new ALLOW_ADMIN_URL
-            reload(urls)
-            without_admin = extract_regexes_from_urlpatterns(urls.urlpatterns)
-
-        with override_settings(ALLOW_ADMIN_URL=True):
-            # Reload cfgov.urls with the new ALLOW_ADMIN_URL
-            reload(urls)
-            with_admin = extract_regexes_from_urlpatterns(urls.urlpatterns)
-
-        self.admin_urls = set(with_admin) - set(without_admin)
-
-    def test_admin_url_allowlist(self):
-        """Test to ensure admin urls match our allowlist"""
-        non_matching_urls = [
-            u
-            for u in self.admin_urls
-            if not any(u.startswith(w) for w in ADMIN_URL_ALLOWLIST)
-        ]
-        self.assertEqual(
-            len(non_matching_urls),
-            0,
-            msg="Non-allowlisted admin URLs:\n\t{}\n".format(
-                ",\n\t".join(non_matching_urls)
-            ),
-        )
-
-    def tearDown(self):
-        # Reload cfgov.urls with the default ALLOW_ADMIN_URLs
-        reload(urls)
 
 
 urlpatterns = [

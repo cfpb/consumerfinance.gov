@@ -29,7 +29,6 @@ opensearch-py==2.6.0
 psycopg2-binary==2.9.6
 python-dateutil==2.9.0
 regdown==1.0.7
-requests-aws4auth==1.2.3
 s3transfer==0.10.2
 setuptools>=65.5.1
 tailslide==0.2.0

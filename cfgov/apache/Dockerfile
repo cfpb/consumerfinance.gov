@@ -11,7 +11,6 @@ ENV ERROR_LOG="/proc/self/fd/2"
 ENV ACCESS_LOG="/proc/self/fd/1"
 ENV LIMIT_REQUEST_BODY="0"
 ENV APACHE_STATUS_ALLOW_FROM="127.0.0.1"
-ENV APACHE_PROCESS_COUNT="4"
 
 # Copy Apache configuration files.
 COPY ./conf "$APACHE_SERVER_ROOT/conf"

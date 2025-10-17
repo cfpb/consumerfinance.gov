@@ -1,78 +1,8 @@
-import os
-import sys
-from os.path import exists
-
 from django.core.exceptions import ImproperlyConfigured
-from django.urls import reverse_lazy
-from django.utils.text import format_lazy
 
 from cfgov.settings.base import *
 from cfgov.util import environment_json
 
-
-default_loggers = []
-
-# Is there a syslog device available?
-# selects first of these locations that exist, or None
-syslog_device = next(
-    (l for l in ["/dev/log", "/var/run/syslog"] if exists(l)), None
-)
-
-if syslog_device:
-    default_loggers.append("syslog")
-
-# if not running in mod_wsgi, add console logger
-if not (sys.argv and sys.argv[0] == "mod_wsgi"):
-    default_loggers.append("console")
-
-# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
-#
-# in the formatter, "django: " is an rsyslog tag. This is equivalent to:
-#     logger -t django "my log message"
-# on the server, the tag will be used to route the message to the desired
-# logfile
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "tagged": {"format": "django: %(message)s"},
-    },
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": [],
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": ["console"],
-            "level": "WARNING",
-            "propagate": True,
-        },
-        "django": {
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "": {
-            "handlers": default_loggers,
-            "level": "INFO",
-            "propagate": True,
-        },
-    },
-}
-
-# Only add syslog to LOGGING if it's in default_loggers
-if "syslog" in default_loggers:
-    LOGGING["handlers"]["syslog"] = {
-        "address": syslog_device,
-        "class": "logging.handlers.SysLogHandler",
-        "formatter": "tagged",
-    }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")

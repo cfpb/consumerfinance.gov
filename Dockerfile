@@ -57,7 +57,7 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements/deployment_container.txt && \
+    pip install -r requirements/deployment.txt && \
     apk del .build-deps
 
 # Remove setuptools to prevent the built image from triggering CVE-2025-47273,
