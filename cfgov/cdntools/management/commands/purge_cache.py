@@ -69,7 +69,7 @@ class Command(BaseCommand):
                     f"{','.join(missing_backends)}"
                 )
             )
-            sys.exit(1)
+            sys.exit()
 
     def handle_urls(self, urls, backends=None):
         batch = PurgeBatch()
