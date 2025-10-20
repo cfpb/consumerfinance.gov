@@ -1,7 +1,12 @@
 from unittest import mock
 
 import django
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import (
+    RequestFactory,
+    SimpleTestCase,
+    TestCase,
+    override_settings,
+)
 
 from cfgov import urls
 from cfgov.urls.views import flagged_wagtail_only_view
@@ -130,3 +135,12 @@ class TestBetaRefreshEndpoint(TestCase):
     def test_beta_testing_endpoint_is_no_cache_when_enabled(self):
         response = self.client.get("/beta_external_testing/")
         self.assertEqual(response["Akamai-Cache-Control"], "no-store")
+
+
+class RedirectTests(SimpleTestCase):
+    def test_f_redirect(self):
+        response = self.client.get("/f/foo/bar?baz=1")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"], "https://files.consumerfinance.gov/f/foo/bar"
+        )
