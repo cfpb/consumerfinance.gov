@@ -4,6 +4,7 @@ import django
 from django.test import RequestFactory, TestCase, override_settings
 
 from cfgov import urls
+from cfgov.urls.views import flagged_wagtail_only_view
 
 
 try:
@@ -63,7 +64,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=""):
 
 
 urlpatterns = [
-    urls.flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
+    flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
 ]
 
 
@@ -90,7 +91,7 @@ class HandleErrorTestCase(TestCase):
         self.request = RequestFactory().get("/")
 
     def test_handle_error(self):
-        with mock.patch("cfgov.urls.render") as mock_render:
+        with mock.patch("cfgov.urls.views.render") as mock_render:
             urls.handle_error(404, self.request)
 
         mock_render.assert_called_with(
@@ -102,12 +103,12 @@ class HandleErrorTestCase(TestCase):
 
     def test_error_while_handling_404_should_be_raised(self):
         with mock.patch(
-            "cfgov.urls.render", side_effect=RuntimeError
+            "cfgov.urls.views.render", side_effect=RuntimeError
         ), self.assertRaises(RuntimeError):
             urls.handler404(self.request)
 
     def test_error_while_handling_500_should_log_plain_text_response(self):
-        with mock.patch("cfgov.urls.render", side_effect=RuntimeError):
+        with mock.patch("cfgov.urls.views.render", side_effect=RuntimeError):
             result = urls.handler500(self.request)
             self.assertIn(
                 b"This request could not be processed", result.content
