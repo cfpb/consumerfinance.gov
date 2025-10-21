@@ -196,7 +196,7 @@
 <ul>
 <li><code>base.txt</code>: shortcut for <code>django.txt</code> + <code>wagtail.txt</code> + <code>libraries.txt</code></li>
 <li><code>ci.txt</code>: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?</li>
-<li><code>deployment.txt</code>: requirements for deployment, includes <code>base.txt</code> and a New Relic library that we don't install anywhere else.</li>
+<li><code>deployment.txt</code>: requirements for deployment via container, includes <code>base.txt</code>, Gunicorn, and a New Relic library that we don't install anywhere else.</li>
 <li><code>django.txt</code>: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.</li>
 <li><code>docs.txt</code>: requirements to build the consumerfinance.gov docs.</li>
 <li><code>libraries.txt</code>: Python libraries.</li>
@@ -256,5 +256,5 @@
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2025-10-17 13:39:54.091252+00:00
+Build Date UTC : 2025-10-21 14:40:37.489535+00:00
 -->
