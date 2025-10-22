@@ -35,6 +35,7 @@ services:
 
   python:
     image: cfgov-python:local
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
