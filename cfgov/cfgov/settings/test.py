@@ -29,8 +29,6 @@ CACHES = {
     }
 }
 
-ALLOW_ADMIN_URL = True
-
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 
 TEST_RUNNER = os.environ.get(
