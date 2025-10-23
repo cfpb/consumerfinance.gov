@@ -31,7 +31,7 @@ from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
 from v1.sitemap import Sitemap
 
-from .redirects import urlpatterns as redirect_urlpatterns
+from .redirect_helpers import urlpatterns as redirect_urlpatterns
 from .views import empty_200_response, handle_error
 
 

@@ -9,6 +9,7 @@ from django.test import (
 )
 
 from cfgov import urls
+from cfgov.urls.redirect_helpers import perm, temp
 from cfgov.urls.views import flagged_wagtail_only_view
 
 
@@ -137,10 +138,63 @@ class TestBetaRefreshEndpoint(TestCase):
         self.assertEqual(response["Akamai-Cache-Control"], "no-store")
 
 
-class RedirectTests(SimpleTestCase):
-    def test_f_redirect(self):
-        response = self.client.get("/f/foo/bar?baz=1")
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response["Location"], "https://files.consumerfinance.gov/f/foo/bar"
-        )
+class RedirectHelperTests(SimpleTestCase):
+    def setUp(self):
+        self.redirects = []
+
+    def test_perm(self):
+        pattern = perm(r"old", "new", append_to=self.redirects)
+        self.assertEqual(self.redirects, [pattern])
+        self.assertEqual(pattern.pattern.regex.pattern, "^old$")
+        self.assertTrue(pattern.callback.view_initkwargs["permanent"])
+
+    def test_temp(self):
+        pattern = temp(r"old", "new", append_to=self.redirects)
+        self.assertEqual(self.redirects, [pattern])
+        self.assertEqual(pattern.pattern.regex.pattern, "^old$")
+        self.assertFalse(pattern.callback.view_initkwargs["permanent"])
+
+
+class TestAFewRedirects(SimpleTestCase):
+    def test_redirects(self):
+        for url, code, target in [
+            (
+                "/f/foo/bar?baz=1",
+                302,
+                "https://files.consumerfinance.gov/f/foo/bar",
+            ),
+            (
+                "/payments/foo/bar",
+                301,
+                "/enforcement/payments-harmed-consumers/payments-by-case/foo/bar",
+            ),
+            (
+                "/eregulations/a/b/c/2015-26607_20180101/d/e/f",
+                302,
+                "/eregulations/a/b/c/2017-18284_20180101/d/e/f",
+            ),
+            (
+                "/policy-compliance/guidance/consumer-cards-resources/foo/bar",
+                301,
+                "/compliance/consumer-cards-resources/foo/bar",
+            ),
+            (
+                "/blog/category/jobs/foo/bar",
+                301,
+                "/about-us/blog/?filter1_topics=careers",
+            ),
+            (
+                "/owning-a-home/process/foo/bar",
+                301,
+                "/owning-a-home/foo/bar",
+            ),
+            (
+                "/rules-policy/regulations/1234/5678/foo/bar",
+                301,
+                "/rules-policy/regulations/5678/foo/bar",
+            ),
+        ]:
+            with self.subTest(url=url, code=code, target=target):
+                response = self.client.get(url)
+                self.assertEqual(response.status_code, code)
+                self.assertEqual(response["Location"], target)
