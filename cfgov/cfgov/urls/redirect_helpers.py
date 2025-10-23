@@ -29,7 +29,7 @@ def make_redirect(pattern, target, permanent=True, append_to=None):
         nonlocal arg_count, url
 
         # Ignore non-capturing groups.
-        if match.group(0).startswith("(?)"):
+        if match.group(0).startswith("?"):
             return match.group(0)
 
         url = url.replace(f"${arg_count}", f"%(arg{arg_count})s")

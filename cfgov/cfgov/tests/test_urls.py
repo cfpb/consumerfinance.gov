@@ -7,10 +7,14 @@ from django.test import (
     TestCase,
     override_settings,
 )
+from django.urls import re_path
 
 from cfgov import urls
 from cfgov.urls.redirect_helpers import perm, temp
-from cfgov.urls.views import flagged_wagtail_only_view
+from cfgov.urls.views import (
+    flagged_wagtail_only_view,
+    flagged_wagtail_template_view,
+)
 
 
 try:
@@ -71,11 +75,18 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=""):
 
 urlpatterns = [
     flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
+    re_path(
+        "^template$",
+        flagged_wagtail_template_view(
+            "MY_TEST_FLAG",
+            "tccp/about.html",
+        ),
+    ),
 ]
 
 
 @override_settings(ROOT_URLCONF=__name__)
-class FlaggedWagtailOnlyViewTests(TestCase):
+class FlaggedWagtailViewTests(TestCase):
     @override_settings(FLAGS={"MY_TEST_FLAG": [("boolean", True)]})
     def test_flag_set_returns_view_that_calls_wagtail_serve_view(self):
         """When flag is set, request should be routed to Wagtail.
@@ -90,6 +101,9 @@ class FlaggedWagtailOnlyViewTests(TestCase):
     def test_flag_not_set_returns_view_that_raises_http404(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 404)
+
+        response = self.client.get("/template")
+        self.assertContains(response, "About this tool")
 
 
 class HandleErrorTestCase(TestCase):
@@ -192,6 +206,11 @@ class TestAFewRedirects(SimpleTestCase):
                 "/rules-policy/regulations/1234/5678/foo/bar",
                 301,
                 "/rules-policy/regulations/5678/foo/bar",
+            ),
+            (
+                "/leadership-calendar/",
+                301,
+                "/about-us/the-bureau/leadership-calendar/",
             ),
         ]:
             with self.subTest(url=url, code=code, target=target):
