@@ -1101,10 +1101,7 @@ perm(
 perm(r"ILSA", "/compliance/interstate-land-sales-registration/")
 
 # Link from payday lending disclosures
-perm(
-    r"payday",
-    "/askcfpb/search/?selected_facets=category_exact:payday-loans",
-)
+perm(r"payday", "/consumer-tools/payday-loans/answers/")
 
 # Link from Meals on Wheels placemats; now with tracking querystring (as of 9/12/2016)
 perm(
