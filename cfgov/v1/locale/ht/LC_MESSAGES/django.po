@@ -73,10 +73,6 @@ msgstr "Gade Privacy Act Statement (Lwa sou Pwoteksyon Vi Prive a)"
 msgid "Breadcrumbs"
 msgstr ""
 
-#: v1/jinja2/v1/includes/molecules/feature-card.html:68
-msgid "Read answer"
-msgstr ""
-
 #: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
 msgid "Submit a Complaint"
 msgstr ""

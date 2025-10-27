@@ -11,7 +11,6 @@ services:
     build:
       target: prod
     environment:
-      ALLOW_ADMIN_URL: 'True'
       DJANGO_ADMIN_USERNAME: admin
       DJANGO_ADMIN_PASSWORD: admin
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz

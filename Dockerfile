@@ -60,7 +60,7 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements/deployment_container.txt && \
+    pip install -r requirements/deployment.txt && \
     apk del .build-deps
 
 RUN pip uninstall -y setuptools
@@ -157,6 +157,7 @@ ENV ALLOWED_HOSTS='["*"]'
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
 COPY refresh-data.sh .
+COPY dump-data.sh .
 COPY initial-data.sh .
 COPY index.sh .
 COPY test.sql.gz .

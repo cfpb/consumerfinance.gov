@@ -37,11 +37,10 @@ https://github.com/cfpb/consumerfinance.gov/tree/main/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
 - `ci.txt`: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?
-- `deployment.txt`: requirements for deployment, includes `base.txt` and a New Relic library that we don't install anywhere else.
+- `deployment.txt`: requirements for deployment via container, includes `base.txt`, Gunicorn, and a New Relic library that we don't install anywhere else.
 - `django.txt`: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.
 - `docs.txt`: requirements to build the consumerfinance.gov docs.
 - `libraries.txt`: Python libraries.
 - `local.txt`: includes `base.txt` and some useful libraries when developing locally.
-- `scripts.txt`: Requirements for running certain jobs on Jenkins, so scripts can run in Jenkins without having to install all the other requirements.
 - `test.txt`: requirements for running Python tests.
 - `wagtail.txt`: specifies Wagtail version. In its own file to make it easier to test multiple versions, same as with `django.txt`.
