@@ -167,428 +167,428 @@ perm(
 )
 
 perm(
-    r"the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers",
+    r"the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers/",
     "/blog/the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers/",
 )
 perm(
-    r"financial-education-for-moms-and-all-women",
+    r"financial-education-for-moms-and-all-women/",
     "/blog/financial-education-for-moms-and-all-women/",
 )
 perm(
-    r"know-before-you-owe-help-us-make-your-mortgage-forms-better",
+    r"know-before-you-owe-help-us-make-your-mortgage-forms-better/",
     "/blog/know-before-you-owe-help-us-make-your-mortgage-forms-better/",
 )
 perm(
-    r"know-before-you-owe-designing-a-new-disclosure",
+    r"know-before-you-owe-designing-a-new-disclosure/",
     "/blog/know-before-you-owe-designing-a-new-disclosure/",
 )
 perm(
-    r"independent-research-at-the-cfpb",
+    r"independent-research-at-the-cfpb/",
     "/blog/independent-research-at-the-cfpb/",
 )
-perm(r"know-before-you-owe-go", "/blog/know-before-you-owe-go/")
+perm(r"know-before-you-owe-go/", "/blog/know-before-you-owe-go/")
 perm(
-    r"working-to-give-consumers-the-transparency-they-deserve",
+    r"working-to-give-consumers-the-transparency-they-deserve/",
     "/blog/working-to-give-consumers-the-transparency-they-deserve/",
 )
-perm(r"older-americans-and-the-cfpb", "/blog/older-americans-and-the-cfpb/")
-perm(r"remembering", "/blog/remembering/")
+perm(r"older-americans-and-the-cfpb/", "/blog/older-americans-and-the-cfpb/")
+perm(r"remembering/", "/blog/remembering/")
 perm(
-    r"know-before-you-owe-where-did-the-online-participants-come-from",
+    r"know-before-you-owe-where-did-the-online-participants-come-from/",
     "/blog/know-before-you-owe-where-did-the-online-participants-come-from/",
 )
 perm(
-    r"know-before-you-owe-credit-unions-community-banks",
+    r"know-before-you-owe-credit-unions-community-banks/",
     "/blog/know-before-you-owe-credit-unions-community-banks/",
 )
 perm(
-    r"explainer-what-is-a-nonbank-and-what-makes-one-larger",
+    r"explainer-what-is-a-nonbank-and-what-makes-one-larger/",
     "/blog/explainer-what-is-a-nonbank-and-what-makes-one-larger/",
 )
-perm(r"13000-lessons-learned", "/blog/13000-lessons-learned/")
+perm(r"13000-lessons-learned/", "/blog/13000-lessons-learned/")
 perm(
-    r"mortgage-disclosure-is-heating-up",
+    r"mortgage-disclosure-is-heating-up/",
     "/blog/mortgage-disclosure-is-heating-up/",
 )
-perm(r"know-before-you-owe-were-back", "/blog/know-before-you-owe-were-back/")
+perm(r"know-before-you-owe-were-back/", "/blog/know-before-you-owe-were-back/")
 perm(
-    r"get-ready-to-conquer-your-student-loans",
+    r"get-ready-to-conquer-your-student-loans/",
     "/blog/get-ready-to-conquer-your-student-loans/",
 )
 perm(
-    r"reaching-out-for-input-help-us-define-larger-participants",
+    r"reaching-out-for-input-help-us-define-larger-participants/",
     "/blog/reaching-out-for-input-help-us-define-larger-participants/",
 )
 perm(
-    r"the-cfpb-and-jags-partnering-to-protect-servicemembers",
+    r"the-cfpb-and-jags-partnering-to-protect-servicemembers/",
     "/blog/the-cfpb-and-jags-partnering-to-protect-servicemembers/",
 )
 perm(
-    r"making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad",
+    r"making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad/",
     "/blog/making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad/",
 )
 perm(
-    r"joining-the-financial-literacy-and-education-commission",
+    r"joining-the-financial-literacy-and-education-commission/",
     "/blog/joining-the-financial-literacy-and-education-commission/",
 )
 perm(
-    r"a-model-form-for-mortgage-statements",
+    r"a-model-form-for-mortgage-statements/",
     "/blog/a-model-form-for-mortgage-statements/",
 )
-perm(r"vita", "/blog/vita/")
-perm(r"save-the-date-new-york", "/blog/save-the-date-new-york/")
+perm(r"vita/", "/blog/vita/")
+perm(r"save-the-date-new-york/", "/blog/save-the-date-new-york/")
 perm(
-    r"your-thoughts-on-private-student-loans",
+    r"your-thoughts-on-private-student-loans/",
     "/blog/your-thoughts-on-private-student-loans/",
 )
 perm(
-    r"five-ways-to-keep-more-of-your-tax-refund",
+    r"five-ways-to-keep-more-of-your-tax-refund/",
     "/blog/five-ways-to-keep-more-of-your-tax-refund/",
 )
 perm(
-    r"your-feedback-on-know-before-you-owe-student-loans",
+    r"your-feedback-on-know-before-you-owe-student-loans/",
     "/blog/your-feedback-on-know-before-you-owe-student-loans/",
 )
 perm(r"oped/(.*)", "/opeds/$1")
 perm(
-    r"a-new-tool-for-protecting-the-military-community",
+    r"a-new-tool-for-protecting-the-military-community/",
     "/blog/a-new-tool-for-protecting-the-military-community/",
 )
 perm(
-    r"know-before-you-owe-something-new-for-the-new-year",
+    r"know-before-you-owe-something-new-for-the-new-year/",
     "/blog/know-before-you-owe-something-new-for-the-new-year/",
 )
 perm(r"speech/(.*)", "/speeches/$1")
 perm(
-    r"getting-a-complete-picture-of-the-payday-market",
+    r"getting-a-complete-picture-of-the-payday-market/",
     "/blog/getting-a-complete-picture-of-the-payday-market/",
 )
 perm(
-    r"hearing-your-stories-on-payday-lending",
+    r"hearing-your-stories-on-payday-lending/",
     "/blog/hearing-your-stories-on-payday-lending/",
 )
 perm(
-    r"fulfilling-our-commitment-to-diversity",
+    r"fulfilling-our-commitment-to-diversity/",
     "/blog/fulfilling-our-commitment-to-diversity/",
 )
 perm(
-    r"the-cfpb-launches-its-nonbank-supervision-program",
+    r"the-cfpb-launches-its-nonbank-supervision-program/",
     "/blog/the-cfpb-launches-its-nonbank-supervision-program/",
 )
 perm(
-    r"a-video-message-from-rich-cordray",
+    r"a-video-message-from-rich-cordray/",
     "/blog/a-video-message-from-rich-cordray/",
 )
 perm(
-    r"cfpb-mortgage-complaint-system-is-up-and-running",
+    r"cfpb-mortgage-complaint-system-is-up-and-running/",
     "/blog/cfpb-mortgage-complaint-system-is-up-and-running/",
 )
-perm(r"standing-up-for-consumers", "/blog/standing-up-for-consumers/")
-perm(r"destination-portland-me-2", "/blog/destination-portland-me-2/")
-perm(r"financial-fitness-forum", "/blog/financial-fitness-forum/")
+perm(r"standing-up-for-consumers/", "/blog/standing-up-for-consumers/")
+perm(r"destination-portland-me-2/", "/blog/destination-portland-me-2/")
+perm(r"financial-fitness-forum/", "/blog/financial-fitness-forum/")
 perm(
-    r"a-conversation-with-the-south-florida-latino-community",
+    r"a-conversation-with-the-south-florida-latino-community/",
     "/blog/a-conversation-with-the-south-florida-latino-community/",
 )
 perm(
-    r"the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers",
+    r"the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers/",
     "/blog/the-cfpb-wants-you-to-blow-the-whistle-on-lawbreakers/",
 )
 perm(
-    r"addressing-credit-discrimination",
+    r"addressing-credit-discrimination/",
     "/blog/addressing-credit-discrimination/",
 )
 perm(
-    r"know-before-you-owe-closer-to-closing-mortgage-disclosure-that-is",
+    r"know-before-you-owe-closer-to-closing-mortgage-disclosure-that-is/",
     "/blog/know-before-you-owe-closer-to-closing-mortgage-disclosure-that-is/",
 )
 perm(
-    r"live-holly-petraeus-kicks-off-our-financial-fitness-forum",
+    r"live-holly-petraeus-kicks-off-our-financial-fitness-forum/",
     "/blog/live-holly-petraeus-kicks-off-our-financial-fitness-forum/",
 )
 perm(
-    r"the-cfpb-ombudsmans-office-an-independent-impartial-confidential-resource",
+    r"the-cfpb-ombudsmans-office-an-independent-impartial-confidential-resource/",
     "/blog/the-cfpb-ombudsmans-office-an-independent-impartial-confidential-resource/",
 )
 perm(
-    r"how-do-i-shop-for-a-credit-card",
+    r"how-do-i-shop-for-a-credit-card/",
     "/blog/how-do-i-shop-for-a-credit-card/",
 )
 perm(
-    r"know-before-you-owe-making-credit-card-agreements-readable",
+    r"know-before-you-owe-making-credit-card-agreements-readable/",
     "/blog/know-before-you-owe-making-credit-card-agreements-readable/",
 )
-perm(r"live-from-cleveland", "/blog/live-from-cleveland/")
+perm(r"live-from-cleveland/", "/blog/live-from-cleveland/")
 perm(
-    r"tips-for-avoiding-mortgage-modification-scams",
+    r"tips-for-avoiding-mortgage-modification-scams/",
     "/blog/tips-for-avoiding-mortgage-modification-scams/",
 )
 perm(
-    r"credit-card-complaints-by-the-numbers",
+    r"credit-card-complaints-by-the-numbers/",
     "/blog/credit-card-complaints-by-the-numbers/",
 )
-perm(r"cleveland-save-the-date", "/blog/cleveland-save-the-date/")
-perm(r"lessons-from-the-road", "/blog/lessons-from-the-road/")
+perm(r"cleveland-save-the-date/", "/blog/cleveland-save-the-date/")
+perm(r"lessons-from-the-road/", "/blog/lessons-from-the-road/")
 perm(
-    r"chime-in-on-private-student-loans",
+    r"chime-in-on-private-student-loans/",
     "/blog/chime-in-on-private-student-loans/",
 )
-perm(r"honoring-veterans", "/blog/honoring-veterans/")
+perm(r"honoring-veterans/", "/blog/honoring-veterans/")
 perm(
-    r"plan-your-spending-to-avoid-holiday-debt",
+    r"plan-your-spending-to-avoid-holiday-debt/",
     "/blog/plan-your-spending-to-avoid-holiday-debt/",
 )
 perm(
-    r"know-before-you-owe-its-closing-time",
+    r"know-before-you-owe-its-closing-time/",
     "/blog/know-before-you-owe-its-closing-time/",
 )
 perm(
-    r"protecting-military-members-from-predatory-lending",
+    r"protecting-military-members-from-predatory-lending/",
     "/blog/protecting-military-members-from-predatory-lending/",
 )
 perm(
-    r"know-before-you-owe-lets-tackle-student-loans",
+    r"know-before-you-owe-lets-tackle-student-loans/",
     "/blog/know-before-you-owe-lets-tackle-student-loans/",
 )
 perm(
-    r"know-your-student-loan-repayment-options",
+    r"know-your-student-loan-repayment-options/",
     "/blog/know-your-student-loan-repayment-options/",
 )
-perm(r"live-from-minneapolis", "/blog/live-from-minneapolis/")
-perm(r"from-day-one", "/blog/from-day-one/")
+perm(r"live-from-minneapolis/", "/blog/live-from-minneapolis/")
+perm(r"from-day-one/", "/blog/from-day-one/")
 perm(
-    r"know-before-you-owe-whats-next",
+    r"know-before-you-owe-whats-next/",
     "/blog/know-before-you-owe-whats-next/",
 )
-perm(r"guide-cfpb-supervision", "/blog/guide-cfpb-supervision/")
-perm(r"were-listening", "/blog/were-listening/")
-perm(r"meet-us-in-minnesota", "/blog/meet-us-in-minnesota/")
+perm(r"guide-cfpb-supervision/", "/blog/guide-cfpb-supervision/")
+perm(r"were-listening/", "/blog/were-listening/")
+perm(r"meet-us-in-minnesota/", "/blog/meet-us-in-minnesota/")
 perm(
-    r"help-for-struggling-military-homeowners",
+    r"help-for-struggling-military-homeowners/",
     "/blog/help-for-struggling-military-homeowners/",
 )
 perm(
-    r"seeing-servicemembers-as-dollar-signs-in-uniform",
+    r"seeing-servicemembers-as-dollar-signs-in-uniform/",
     "/blog/seeing-servicemembers-as-dollar-signs-in-uniform/",
 )
-perm(r"lessons-weve-learned", "/blog/lessons-weve-learned/")
-perm(r"live-from-philadelphia", "/blog/live-from-philadelphia/")
+perm(r"lessons-weve-learned/", "/blog/lessons-weve-learned/")
+perm(r"live-from-philadelphia/", "/blog/live-from-philadelphia/")
 perm(
-    r"the-cfpb-applying-the-lessons-of-the-financial-crisis",
+    r"the-cfpb-applying-the-lessons-of-the-financial-crisis/",
     "/blog/the-cfpb-applying-the-lessons-of-the-financial-crisis/",
 )
 perm(
-    r"know-before-you-owe-and-now-for-something-completely-different",
+    r"know-before-you-owe-and-now-for-something-completely-different/",
     "/blog/know-before-you-owe-and-now-for-something-completely-different/",
 )
 perm(
-    r"avoiding-loan-scams-after-a-natural-disaster",
+    r"avoiding-loan-scams-after-a-natural-disaster/",
     "/blog/avoiding-loan-scams-after-a-natural-disaster/",
 )
-perm(r"co-signing-on-campus", "/blog/co-signing-on-campus/")
+perm(r"co-signing-on-campus/", "/blog/co-signing-on-campus/")
 perm(
-    r"coordinating-consumer-complaints",
+    r"coordinating-consumer-complaints/",
     "/blog/coordinating-consumer-complaints/",
 )
 perm(
-    r"promoting-openness-in-cfpb-rulemaking",
+    r"promoting-openness-in-cfpb-rulemaking/",
     "/blog/promoting-openness-in-cfpb-rulemaking/",
 )
-perm(r"on-our-way", "/blog/on-our-way/")
-perm(r"military-advocates-on-duty", "/blog/military-advocates-on-duty/")
+perm(r"on-our-way/", "/blog/on-our-way/")
+perm(r"military-advocates-on-duty/", "/blog/military-advocates-on-duty/")
 perm(
-    r"know-before-you-owe-weigh-in-now",
+    r"know-before-you-owe-weigh-in-now/",
     "/blog/know-before-you-owe-weigh-in-now/",
 )
 perm(
-    r"mortgage-disclosures-are-getting-better-thanks-to-you",
+    r"mortgage-disclosures-are-getting-better-thanks-to-you/",
     "/blog/mortgage-disclosures-are-getting-better-thanks-to-you/",
 )
 perm(
-    r"get-and-keep-a-good-credit-score",
+    r"get-and-keep-a-good-credit-score/",
     "/blog/get-and-keep-a-good-credit-score/",
 )
 perm(
-    r"preserving-a-level-playing-field-and-access-to-mortgages",
+    r"preserving-a-level-playing-field-and-access-to-mortgages/",
     "/blog/preserving-a-level-playing-field-and-access-to-mortgages/",
 )
 perm(
-    r"a-consumer-centered-supervision-program",
+    r"a-consumer-centered-supervision-program/",
     "/blog/a-consumer-centered-supervision-program/",
 )
-perm(r"a-strong-foundation", "/blog/a-strong-foundation/")
+perm(r"a-strong-foundation/", "/blog/a-strong-foundation/")
 perm(
-    r"cfpb-spending-update-second-quarter-2011",
+    r"cfpb-spending-update-second-quarter-2011/",
     "/blog/cfpb-spending-update-second-quarter-2011/",
 )
 perm(
-    r"continuing-our-work-with-community-banks-and-credit-unions",
+    r"continuing-our-work-with-community-banks-and-credit-unions/",
     "/blog/continuing-our-work-with-community-banks-and-credit-unions/",
 )
 perm(
-    r"talking-to-our-daughters-and-sons-about-personal-finance",
+    r"talking-to-our-daughters-and-sons-about-personal-finance/",
     "/blog/talking-to-our-daughters-and-sons-about-personal-finance/",
 )
 perm(
-    r"consumer-education-and-engagement-at-the-cfpb",
+    r"consumer-education-and-engagement-at-the-cfpb/",
     "/blog/consumer-education-and-engagement-at-the-cfpb/",
 )
 perm(
-    r"national-financial-literacy-month",
+    r"national-financial-literacy-month/",
     "/blog/national-financial-literacy-month/",
 )
-perm(r"fulfilling-a-commitment", "/blog/fulfilling-a-commitment/")
-perm(r"keeping-it-sunny-at-the-cfpb", "/blog/keeping-it-sunny-at-the-cfpb/")
+perm(r"fulfilling-a-commitment/", "/blog/fulfilling-a-commitment/")
+perm(r"keeping-it-sunny-at-the-cfpb/", "/blog/keeping-it-sunny-at-the-cfpb/")
 perm(
-    r"cfpb-spending-update-first-quarter-2011",
+    r"cfpb-spending-update-first-quarter-2011/",
     "/blog/cfpb-spending-update-first-quarter-2011/",
 )
 perm(
-    r"so-how-do-we-put-elizabeth-warrens-calendar-online",
+    r"so-how-do-we-put-elizabeth-warrens-calendar-online/",
     "/blog/so-how-do-we-put-elizabeth-warrens-calendar-online/",
 )
 perm(
-    r"be-a-part-of-our-supervision-team",
+    r"be-a-part-of-our-supervision-team/",
     "/blog/be-a-part-of-our-supervision-team/",
 )
 perm(
-    r"an-accountable-consumer-bureau",
+    r"an-accountable-consumer-bureau/",
     "/blog/an-accountable-consumer-bureau/",
 )
 perm(
-    r"the-card-act-conference-what-we-learned",
+    r"the-card-act-conference-what-we-learned/",
     "/blog/the-card-act-conference-what-we-learned/",
 )
-perm(r"its-always-sunny-at-the-cfpb", "/blog/its-always-sunny-at-the-cfpb/")
-perm(r"a-new-voice-for-students", "/blog/a-new-voice-for-students/")
+perm(r"its-always-sunny-at-the-cfpb/", "/blog/its-always-sunny-at-the-cfpb/")
+perm(r"a-new-voice-for-students/", "/blog/a-new-voice-for-students/")
 perm(
-    r"a-ray-of-hope-for-american-consumers",
+    r"a-ray-of-hope-for-american-consumers/",
     "/blog/a-ray-of-hope-for-american-consumers/",
 )
 perm(
-    r"better-together-how-ncpw-partner-agencies-are-protecting-consumers",
+    r"better-together-how-ncpw-partner-agencies-are-protecting-consumers/",
     "/blog/better-together-how-ncpw-partner-agencies-are-protecting-consumers/",
 )
 perm(
-    r"december-2010-cfpb-implementation-team-reaches-100-employees",
+    r"december-2010-cfpb-implementation-team-reaches-100-employees/",
     "/blog/december-2010-cfpb-implementation-team-reaches-100-employees/",
 )
 perm(
-    r"february-2011-cfpbs-hr-system-comes-online",
+    r"february-2011-cfpbs-hr-system-comes-online/",
     "/blog/february-2011-cfpbs-hr-system-comes-online/",
 )
 perm(
-    r"september-2010-transfer-date-announced",
+    r"september-2010-transfer-date-announced/",
     "/blog/september-2010-transfer-date-announced/",
 )
 perm(
-    r"open-for-suggestions-our-favorite-videos",
+    r"open-for-suggestions-our-favorite-videos/",
     "/blog/open-for-suggestions-our-favorite-videos/",
 )
-perm(r"finding-a-home", "/blog/finding-a-home/")
-perm(r"the-credit-card-act-turns-one", "/blog/the-credit-card-act-turns-one/")
+perm(r"finding-a-home/", "/blog/finding-a-home/")
+perm(r"the-credit-card-act-turns-one/", "/blog/the-credit-card-act-turns-one/")
 perm(
-    r"asking-the-public-about-the-card-act",
+    r"asking-the-public-about-the-card-act/",
     "/blog/asking-the-public-about-the-card-act/",
 )
 perm(
-    r"professor-warren-speaks-with-americas-credit-unions",
+    r"professor-warren-speaks-with-americas-credit-unions/",
     "/blog/professor-warren-speaks-with-americas-credit-unions/",
 )
 perm(
-    r"talking-to-small-financial-service-providers",
+    r"talking-to-small-financial-service-providers/",
     "/blog/talking-to-small-financial-service-providers/",
 )
 perm(
-    r"at-the-podium-with-americas-credit-unions",
+    r"at-the-podium-with-americas-credit-unions/",
     "/blog/at-the-podium-with-americas-credit-unions/",
 )
-perm(r"one-teachers-challenge", "/blog/one-teachers-challenge/")
+perm(r"one-teachers-challenge/", "/blog/one-teachers-challenge/")
 perm(
-    r"a-level-playing-field-for-consumer-financial-products-and-services",
+    r"a-level-playing-field-for-consumer-financial-products-and-services/",
     "/blog/a-level-playing-field-for-consumer-financial-products-and-services/",
 )
 perm(
-    r"building-better-consumer-protection",
+    r"building-better-consumer-protection/",
     "/blog/building-better-consumer-protection/",
 )
-perm(r"consumer-scams", "/blog/consumer-scams/")
+perm(r"consumer-scams/", "/blog/consumer-scams/")
 perm(
-    r"professor-warren-speaks-to-consumers-union",
+    r"professor-warren-speaks-to-consumers-union/",
     "/blog/professor-warren-speaks-to-consumers-union/",
 )
 perm(
-    r"october-2010-cfpb-implementation-team-moves-into-temporary-headquarters",
+    r"october-2010-cfpb-implementation-team-moves-into-temporary-headquarters/",
     "/blog/october-2010-cfpb-implementation-team-moves-into-temporary-headquarters/",
 )
-perm(r"the-cfpbs-budget", "/blog/the-cfpbs-budget/")
+perm(r"the-cfpbs-budget/", "/blog/the-cfpbs-budget/")
 perm(
-    r"february-2011-cfpb-website-launches",
+    r"february-2011-cfpb-website-launches/",
     "/blog/february-2011-cfpb-website-launches/",
 )
-perm(r"holly-petraeus-testifies", "/blog/holly-petraeus-testifies/")
+perm(r"holly-petraeus-testifies/", "/blog/holly-petraeus-testifies/")
 perm(
-    r"calendars-credit-cards-and-consumer-education",
+    r"calendars-credit-cards-and-consumer-education/",
     "/blog/calendars-credit-cards-and-consumer-education/",
 )
 perm(
-    r"the-cfpb-and-the-religious-community",
+    r"the-cfpb-and-the-religious-community/",
     "/blog/the-cfpb-and-the-religious-community/",
 )
-perm(r"robins-story-andrews-story", "/blog/robins-story-andrews-story/")
+perm(r"robins-story-andrews-story/", "/blog/robins-story-andrews-story/")
 perm(
-    r"responding-to-your-suggestions",
+    r"responding-to-your-suggestions/",
     "/blog/responding-to-your-suggestions/",
 )
-perm(r"openforsuggestions", "/blog/openforsuggestions/")
-perm(r"welcometothewebsite", "/blog/welcometothewebsite/")
-perm(r"off-topic-blog-comments", "/blog/off-topic-blog-comments/")
+perm(r"openforsuggestions/", "/blog/openforsuggestions/")
+perm(r"welcometothewebsite/", "/blog/welcometothewebsite/")
+perm(r"off-topic-blog-comments/", "/blog/off-topic-blog-comments/")
 perm(
-    r"hearing-directly-from-our-servicemembers",
+    r"hearing-directly-from-our-servicemembers/",
     "/blog/hearing-directly-from-our-servicemembers/",
 )
-perm(r"welcominghollypetraeus", "/blog/welcominghollypetraeus/")
+perm(r"welcominghollypetraeus/", "/blog/welcominghollypetraeus/")
 perm(
-    r"notice-about-possibly-malicious-emails",
+    r"notice-about-possibly-malicious-emails/",
     "/blog/notice-about-possibly-malicious-emails/",
 )
 perm(
-    r"set-a-goal-and-start-a-savings-habit",
+    r"set-a-goal-and-start-a-savings-habit/",
     "/blog/set-a-goal-and-start-a-savings-habit/",
 )
 perm(
-    r"were-taking-nominations-for-our-consumer-advisory-board",
+    r"were-taking-nominations-for-our-consumer-advisory-board/",
     "/blog/were-taking-nominations-for-our-consumer-advisory-board/",
 )
-perm(r"live-from-new-york-city", "/blog/live-from-new-york-city/")
+perm(r"live-from-new-york-city/", "/blog/live-from-new-york-city/")
 perm(
-    r"whats-your-status-when-it-comes-to-overdraft-coverage",
+    r"whats-your-status-when-it-comes-to-overdraft-coverage/",
     "/blog/whats-your-status-when-it-comes-to-overdraft-coverage/",
 )
 perm(
-    r"sbrefa-small-providers-and-mortgage-disclosure",
+    r"sbrefa-small-providers-and-mortgage-disclosure/",
     "/blog/sbrefa-small-providers-and-mortgage-disclosure/",
 )
 perm(
-    r"know-before-you-owe-the-last-dance-or-is-it",
+    r"know-before-you-owe-the-last-dance-or-is-it/",
     "/blog/know-before-you-owe-the-last-dance-or-is-it/",
 )
 perm(
-    r"office-of-financial-education-begins-listening-tour-in-new-york",
+    r"office-of-financial-education-begins-listening-tour-in-new-york/",
     "/blog/office-of-financial-education-begins-listening-tour-in-new-york/",
 )
 perm(
-    r"we-want-to-make-it-easier-for-you-to-submit-comments-on-streamlining-regulations",
+    r"we-want-to-make-it-easier-for-you-to-submit-comments-on-streamlining-regulations/",
     "/blog/we-want-to-make-it-easier-for-you-to-submit-comments-on-streamlining-regulations/",
 )
 perm(
-    r"making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad",
+    r"making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad/",
     "/blog/making-a-difference-in-the-lives-of-immigrants-and-others-who-send-money-abroad/",
 )
-temp(r"hbd", "/about-us/blog/four-years-working-for-you/")
-perm(r"studentdebtstress", "/blog/tell-us-about-your-student-debt-stress/")
+temp(r"hbd/", "/about-us/blog/four-years-working-for-you/")
+perm(r"studentdebtstress/", "/blog/tell-us-about-your-student-debt-stress/")
 perm(
-    r"managing-someone-elses-money-virginia",
+    r"managing-someone-elses-money-virginia/",
     "/blog/managing-someone-elses-money-virginia/",
 )
 temp(r"HMDA", "/data-research/hmda/")
@@ -604,7 +604,7 @@ perm(r"project", "/projectcatalyst")
 perm(r"kbyo(.*)", "/know-before-you-owe$1")
 perm(r"knowbeforeyouowe(.*)", "/know-before-you-owe$1")
 perm(r"(.*)/realestateprofessionals(.*)", "$1/real-estate-professionals$2")
-perm(r"real-estate", "/know-before-you-owe/real-estate-professionals/")
+perm(r"real-estate/", "/know-before-you-owe/real-estate-professionals/")
 
 # Retirement redirects
 perm(
@@ -612,10 +612,10 @@ perm(
     "/consumer-tools/retirement/before-you-claim/",
 )
 perm(
-    r"jubilacion",
+    r"jubilacion/",
     "/es/herramientas-del-consumidor/jubilacion/antes-de-solicitar/",
 )
-perm(r"retirement", "/consumer-tools/retirement/before-you-claim/")
+perm(r"retirement/", "/consumer-tools/retirement/before-you-claim/")
 
 # Redirect from /es/ suffix urls
 perm(
@@ -630,7 +630,7 @@ perm(
 # Owning a Home redirects
 perm(r"owningahome", "/owning-a-home")
 perm(
-    r"owning-a-home/monthly-payment-worksheet[/]*",
+    r"owning-a-home/monthly-payment-worksheet/*",
     "/owning-a-home/resources/monthly_payment_worksheet.pdf",
 )
 
@@ -641,7 +641,7 @@ perm(
 )
 perm(r"jobs/detail/.*", "/careers/current-openings/")
 perm(r"jobs/(?!supervision/)", "/about-us/careers/")
-perm(r"retirement", "/retirement/before-you-claim")
+perm(r"retirement/", "/retirement/before-you-claim")
 
 # Legacy /credit-cards pages
 #   Redirect most to data-research
@@ -650,29 +650,29 @@ perm(
     "/data-research/credit-card-data/",
 )
 perm(
-    r"credit-cards/knowbeforeyouowe",
+    r"credit-cards/knowbeforeyouowe/",
     "/data-research/credit-card-data/know-you-owe-credit-cards/",
 )
 perm(
-    r"credit-cards/definitions",
+    r"credit-cards/definitions/",
     "/data-research/credit-card-data/know-you-owe-credit-cards/credit-card-contract-definitions/",
 )
 perm(
-    r"credit-cards/credit-card-act",
+    r"credit-cards/credit-card-act/",
     "/data-research/credit-card-data/",
 )
 perm(
-    r"credit-cards/credit-card-act/card-act-conference-key-findings",
+    r"credit-cards/credit-card-act/card-act-conference-key-findings/",
     "/data-research/research-reports/card-act-conference-key-findings/",
 )
 perm(
-    r"credit-cards/credit-card-act/feb2011-factsheet",
+    r"credit-cards/credit-card-act/feb2011-factsheet/",
     "/data-research/research-reports/card-act-conference-key-findings/",
 )
 
 # regulatory-implementation
 perm(
-    r"regulatory-implementation",
+    r"regulatory-implementation/",
     "/compliance/implementation-guidance/",
 )
 
@@ -1098,13 +1098,13 @@ perm(
 )
 
 # ILSA vanity URL
-perm(r"ILSA", "/compliance/interstate-land-sales-registration/")
+perm(r"ILSA/", "/compliance/interstate-land-sales-registration/")
 
 # Link from payday lending disclosures
-perm(r"payday", "/consumer-tools/payday-loans/answers/")
+perm(r"payday/", "/consumer-tools/payday-loans/answers/")
 
 # Auto Loans vanity URL
-perm(r"auto-?loans?", "/consumer-tools/auto-loans/")
+perm(r"auto-?loans?/", "/consumer-tools/auto-loans/")
 
 # Elder Abuse short URLs, requested 9/12/2016
 perm(
@@ -1118,24 +1118,24 @@ perm(
 
 # Prepaid consumer resource page vanity URL
 perm(
-    r"prepaids?",
+    r"prepaids?/",
     "/consumer-tools/prepaid-cards/?utm_source=prepaid&utm_medium=redirect&utm_campaign=PrepaidRedirects",
 )
 
 # Prepaid disclosure files redirect
 perm(
-    r"prepaid-?disclosure-?files",
+    r"prepaid-?disclosure-?files/",
     "https://github.com/cfpb/prepaid-disclosure-files",
 )
 
 # Short URL for giving over the phone to callers, requested by CR in Nov. 2016
 perm(
-    r"CreditReportingDisputeLetter",
+    r"CreditReportingDisputeLetter/",
     "https://files.consumerfinance.gov/f/documents/092016_cfpb_CreditReportingDisputeLetter.docx",
 )
 
 # Money as You Grow
-perm(r"parents?", "/consumer-tools/money-as-you-grow/")
+perm(r"parents?/", "/consumer-tools/money-as-you-grow/")
 perm(
     r"money-?as-?you-?grow(.*)",
     "/consumer-tools/money-as-you-grow$1",
@@ -1143,7 +1143,7 @@ perm(
 
 # Youth Financial Education
 perm(
-    r"youth-financial-education",
+    r"youth-financial-education/",
     "/consumer-tools/educator-tools/youth-financial-education/",
 )
 perm(
@@ -1165,39 +1165,39 @@ perm(
 
 # Adult Financial Education
 perm(
-    r"adult-financial-education",
+    r"adult-financial-education/",
     "/consumer-tools/educator-tools/adult-financial-education/",
 )
 
 # MAYG Spanish, redirecting from the "just add /es" model to the real address
-perm(r"money-as-you-grow/es", "/es/el-dinero-mientras-creces/")
+perm(r"money-as-you-grow/es/", "/es/el-dinero-mientras-creces/")
 perm(
-    r"money-as-you-grow/early-childhood/es",
+    r"money-as-you-grow/early-childhood/es/",
     "/es/el-dinero-mientras-creces/ninez-temprana/",
 )
 perm(
-    r"money-as-you-grow/middle-childhood/es",
+    r"money-as-you-grow/middle-childhood/es/",
     "/es/el-dinero-mientras-creces/ninez-media/",
 )
 perm(
-    r"money-as-you-grow/young-adulthood/es",
+    r"money-as-you-grow/young-adulthood/es/",
     "/es/el-dinero-mientras-creces/la-adolescencia-y-la-juventud/",
 )
 perm(
-    r"money-as-you-grow/how-kids-develop-money-skills/es",
+    r"money-as-you-grow/how-kids-develop-money-skills/es/",
     "/es/el-dinero-mientras-creces/como-los-jovenes-forman-habilidades-financieras/",
 )
 
 # "From here to homeowner" roadmap short URLs for printed worksheet, requested 12/13/16
-perm(r"mile1", "/owning-a-home/prepare/#credit")
-perm(r"mile2", "/owning-a-home/prepare/#price")
-perm(r"mile3", "/owning-a-home/explore/")
-perm(r"mile4", "/owning-a-home/explore/#preapproval")
-perm(r"mile5", "/owning-a-home/explore/#home")
-perm(r"mile6", "/owning-a-home/compare/")
-perm(r"mile7", "/owning-a-home/compare/#choose")
-perm(r"mile8", "/owning-a-home/close/#services")
-perm(r"mile9", "/owning-a-home/close/#review")
+perm(r"mile1/", "/owning-a-home/prepare/#credit")
+perm(r"mile2/", "/owning-a-home/prepare/#price")
+perm(r"mile3/", "/owning-a-home/explore/")
+perm(r"mile4/", "/owning-a-home/explore/#preapproval")
+perm(r"mile5/", "/owning-a-home/explore/#home")
+perm(r"mile6/", "/owning-a-home/compare/")
+perm(r"mile7/", "/owning-a-home/compare/#choose")
+perm(r"mile8/", "/owning-a-home/close/#services")
+perm(r"mile9/", "/owning-a-home/close/#review")
 
 # We have URLs at the end of sentences on printed material and occasionally people type the period that follows the URL as part of it.
 perm(r"(.*)\\.", "/$1")
@@ -1234,7 +1234,7 @@ perm(
 # Redirects associated with moving Older Americans and MSEM to Wagtail
 ## This one specific page got moved to another specific page
 perm(
-    r"older-americans/protecting-whats-yours",
+    r"older-americans/protecting-whats-yours/",
     "/consumer-tools/educator-tools/resources-for-older-adults/protecting-whats-yours/",
 )
 
@@ -1246,13 +1246,13 @@ perm(
 
 ## MSEM moved under Resources for Older Adults
 perm(
-    r"managing-someone-elses-money",
+    r"managing-someone-elses-money/",
     "/consumer-tools/managing-someone-elses-money/",
 )
 
 # Redirect old Tax Preparers URL to its new Wagtail home
 perm(
-    r"tax-preparer-resources",
+    r"tax-preparer-resources/",
     "/consumer-tools/educator-tools/resources-for-tax-preparers/",
 )
 
@@ -1266,11 +1266,11 @@ temp(
 # Redirects associated with moving Library Resources to Wagtail
 ## Specific redirects for changed pages
 perm(
-    r"library-resources/marketing-materials",
+    r"library-resources/marketing-materials/",
     "/consumer-tools/educator-tools/library-resources/outreach-materials-to-use-in-the-library/",
 )
 perm(
-    r"library-resources/websites-videos-courses",
+    r"library-resources/websites-videos-courses/",
     "/consumer-tools/educator-tools/library-resources/online-resources/",
 )
 
@@ -1285,7 +1285,7 @@ perm(r"sending-money(.*)", "/consumer-tools/sending-money$1")
 
 ## Servicemembers redirects
 perm(
-    r"servicemembers/on-demand-forums-and-tools",
+    r"servicemembers/on-demand-forums-and-tools/",
     "/consumer-tools/educator-tools/servicemembers/webinars/",
 )
 perm(
@@ -1293,19 +1293,19 @@ perm(
     "/consumer-tools/educator-tools/servicemembers/$1",
 )
 perm(
-    r"practitioner-resources/servicemembers/additionalresources",
+    r"practitioner-resources/servicemembers/additionalresources/",
     "/consumer-tools/military-financial-lifecycle/",
 )
 perm(
-    r"practitioner-resources/servicemembers/planning",
+    r"practitioner-resources/servicemembers/planning/",
     "/consumer-tools/military-financial-lifecycle/",
 )
 perm(
-    r"practitioner-resources/servicemembers/planning/creativesavingsstrategies",
+    r"practitioner-resources/servicemembers/planning/creativesavingsstrategies/",
     "/consumer-tools/military-financial-lifecycle/",
 )
 perm(
-    r"practitioner-resources/servicemembers/protecting",
+    r"practitioner-resources/servicemembers/protecting/",
     "/consumer-tools/military-financial-lifecycle/",
 )
 
