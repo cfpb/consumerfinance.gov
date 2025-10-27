@@ -162,6 +162,7 @@ ENV ALLOWED_HOSTS='["*"]'
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
 COPY refresh-data.sh .
+COPY dump-data.sh .
 COPY initial-data.sh .
 COPY index.sh .
 COPY test.sql.gz .
