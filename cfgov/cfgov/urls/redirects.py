@@ -1103,12 +1103,6 @@ perm(r"ILSA", "/compliance/interstate-land-sales-registration/")
 # Link from payday lending disclosures
 perm(r"payday", "/consumer-tools/payday-loans/answers/")
 
-# Link from Meals on Wheels placemats; now with tracking querystring (as of 9/12/2016)
-perm(
-    r"oa",
-    "/askcfpb/1935/how-can-i-protect-myself-and-others-i-care-about-from-fraud-and-scams.html?utm_source=print&utm_medium=placemat&utm_campaign=OAMealsOnWheelsFall2016",
-)
-
 # Auto Loans vanity URL
 perm(r"auto-?loans?", "/consumer-tools/auto-loans/")
 
