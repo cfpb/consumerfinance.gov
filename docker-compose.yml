@@ -47,6 +47,7 @@ services:
       DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
       ES_HOST: elasticsearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
+      COMPLAINT_ES_INDEX: complaint-public
 
   apache:
     image: httpd:2.4-alpine
