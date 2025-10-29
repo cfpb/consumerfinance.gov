@@ -8,8 +8,11 @@ services:
 
   python:
     image: cfgov_python:prod
+    platform: linux/amd64
     build:
       target: prod
+      args:
+        REQUIREMENTS: deployment.txt
     environment:
       DJANGO_ADMIN_USERNAME: admin
       DJANGO_ADMIN_PASSWORD: admin

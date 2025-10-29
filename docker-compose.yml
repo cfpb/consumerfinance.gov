@@ -35,10 +35,11 @@ services:
 
   python:
     image: cfgov-python:local
-    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        REQUIREMENTS: local.txt
     depends_on:
       - elasticsearch
       - postgres
