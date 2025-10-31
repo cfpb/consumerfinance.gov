@@ -1,4 +1,5 @@
 import json
+import unittest
 from urllib.parse import quote_plus
 
 from django.http import Http404
@@ -13,6 +14,9 @@ from tccp.views import CardDetailView, CardListView, LandingPageView
 from .baker import baker
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class LandingPageViewTests(TestCase):
     def make_request(self, querystring=""):
         view = LandingPageView.as_view()
@@ -54,12 +58,18 @@ class LandingPageViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class AboutViewTests(TestCase):
     def test_get(self):
         response = self.client.get(reverse("tccp:about"))
         self.assertContains(response, "About this tool")
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class CardListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -133,6 +143,9 @@ class CardListViewTests(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class CardDetailViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):

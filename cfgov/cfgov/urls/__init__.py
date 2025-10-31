@@ -211,7 +211,11 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^consumer-tools/credit-cards/explore-cards/", include("tccp.urls")
+        r"^consumer-tools/credit-cards/explore-cards/.*$",
+        RedirectView.as_view(
+            url="/data-research/credit-card-data/terms-credit-card-plans-survey/",
+            permanent=True,
+        ),
     ),
     re_path(
         r"^consumer-tools/retirement/",
