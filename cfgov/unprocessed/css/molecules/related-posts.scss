@@ -25,10 +25,6 @@ $gap-half: math.div(15px, $base-font-size-px) + rem;
       var(--pacific),
       var(--navy)
     );
-
-    &:hover {
-      border-bottom: 1px dotted;
-    }
   }
 
   .m-list__item .a-date {
