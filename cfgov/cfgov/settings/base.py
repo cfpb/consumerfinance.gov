@@ -342,7 +342,7 @@ OPENSEARCH_DSL = {
             os.getenv("ES_PASS", "admin"),
         ),
         "use_ssl": True,
-        "verify_certs": True,
+        "verify_certs": not os.getenv("OPENSEARCH_DSL_SKIP_CERT_VERIFICATION"),
     }
 }
 
