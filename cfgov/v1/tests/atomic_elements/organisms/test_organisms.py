@@ -1,7 +1,6 @@
 from datetime import date
 
 from django.core.exceptions import ValidationError
-from django.templatetags.static import static
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.blocks import StreamValue
@@ -506,7 +505,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         # Default no-JS image is used if no thumbnail is provided.
         self.assertIn(
-            f'src="{static("img/cfpb_video_cover_card_954x200.png")}"', html
+            'src="/static/img/cfpb_video_cover_card_954x200.png"', html
         )
 
         # Default behavior doesn't render as FCM.

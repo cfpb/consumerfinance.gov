@@ -1,4 +1,3 @@
-from django.templatetags.static import static
 from django.test import TestCase
 
 from wagtail.images.tests.utils import get_test_image_file
@@ -29,11 +28,12 @@ class TestMetaImage(TestCase):
         page = LearnPage(social_sharing_image=None)
         response = page.make_preview_request()
         response.render()
+
         self.assertContains(
             response,
             (
-                '<meta property="og:image" content="http://localhost'
-                f'{static("img/logo_open-graph_facebook.png")}">'
+                '<meta property="og:image" content='
+                '"http://localhost/static/img/logo_open-graph_facebook.png">'
             ),
             html=True,
         )
@@ -41,8 +41,8 @@ class TestMetaImage(TestCase):
         self.assertContains(
             response,
             (
-                '<meta property="twitter:image" content="http://localhost'
-                f'{static("img/logo_open-graph_twitter.png")}">'
+                '<meta property="twitter:image" content='
+                '"http://localhost/static/img/logo_open-graph_twitter.png">'
             ),
             html=True,
         )
