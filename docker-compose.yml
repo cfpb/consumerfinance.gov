@@ -11,7 +11,7 @@ services:
       - 127.0.0.1:9300:9300
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.0
@@ -21,7 +21,7 @@ services:
       - 127.0.0.1:5601:5601
 
   postgres:
-    image: postgres:13-alpine
+    image: postgres:17-alpine
     user: postgres
     restart: always
     volumes:
@@ -67,4 +67,4 @@ services:
       - ./cfgov/apache/conf/:/usr/local/apache2/conf/
       - ./cfgov/apache/conf.modules.d/:/usr/local/apache2/conf.modules.d/
     ports:
-      - "8080:80"
+      - '8080:80'
