@@ -1,4 +1,5 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.templatetags.static import static
 from django.test import RequestFactory, SimpleTestCase
 
 from v1.views.template_debug import TemplateDebugView
@@ -52,8 +53,8 @@ class TemplateDebugViewTests(SimpleTestCase):
         view = TemplateDebugView.as_view(
             debug_template_name=debug_template_name,
             debug_test_cases={},
-            extra_js=["template-debug-extra.js"],
+            extra_js=["chart.js"],
         )
         response = view(self.request)
 
-        self.assertContains(response, "template-debug-extra.js")
+        self.assertContains(response, static("js/routes/on-demand/chart.js"))
