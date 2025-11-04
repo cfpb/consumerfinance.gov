@@ -24,7 +24,7 @@
         {% for regulation in regulations %}
         <li class="m-list__item">
             <a class="a-link a-link--jump" href="{{ regulation.url }}">
-                {{ regulation.title }}
+                <span class="a-link__text">{{ regulation.title }}</span>
             </a>
             {% if regulation.regulation.future_versions %}
             <div class="new-version">
@@ -33,7 +33,7 @@
                 {% for version in regulation.regulation.future_versions %}
                     <li class="m-list__item">
                         <a class="a-link a-link--jump" href="{{ regulation.url }}{{ version.effective_date|string }}/">
-                        {{ ap_date(version.effective_date) }}
+                            <span class="a-link__text">{{ ap_date(version.effective_date) }}</span>
                         </a>
                     </li>
                 {% endfor %}

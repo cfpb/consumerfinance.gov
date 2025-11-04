@@ -9,8 +9,9 @@
 #regulations-listing {
   // TODO - Standardize a nested list link pattern.
   .new-version {
+    margin-top: math.div(10px, $base-font-size-px) + rem;
+
     h5 {
-      margin-top: math.div(10px, $base-font-size-px) + rem;
       margin-bottom: math.div(10px, $base-font-size-px) + rem;
     }
 
