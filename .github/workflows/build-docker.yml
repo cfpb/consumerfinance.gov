@@ -2,19 +2,71 @@ name: Build cf.gov Docker images
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
   merge_group:
   workflow_dispatch:
 
 jobs:
   build-docker-images:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Extract metadata
+        id: meta
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "repo_lower=$REPO_LOWER" >> $GITHUB_OUTPUT
+
+      - name: Determine if we should push to GHCR
+        id: should_push
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "pull_request" && "${{ github.event.pull_request.head.repo.full_name }}" == "${{ github.repository }}" ]]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+          else
+            echo "result=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build cfgov image
-        run: docker build -t cfgov:latest .
+        run: docker build -t cfgov:local .
+
+      - name: Log in to GHCR
+        if: steps.should_push.outputs.result == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to GHCR on pushes to main
+        if: github.ref == 'refs/heads/main' && steps.should_push.outputs.result == 'true'
+        run: |
+          IMAGE_NAME="ghcr.io/${{ steps.meta.outputs.repo_lower }}/cfgov/cfgov"
+          docker tag cfgov:local $IMAGE_NAME:latest
+          docker tag cfgov:local $IMAGE_NAME:sha-${{ steps.meta.outputs.short_sha }}
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:sha-${{ steps.meta.outputs.short_sha }}
+
+      - name: Push on PRs
+        if: github.event_name == 'pull_request' && steps.should_push.outputs.result == 'true'
+        run: |
+          IMAGE_NAME="ghcr.io/${{ steps.meta.outputs.repo_lower }}/cfgov/cfgov"
+          docker tag cfgov:local $IMAGE_NAME:pr-${{ github.event.pull_request.number }}
+          docker tag cfgov:local $IMAGE_NAME:pr-${{ github.event.pull_request.number }}-${{ steps.meta.outputs.short_sha }}
+          docker push $IMAGE_NAME:pr-${{ github.event.pull_request.number }}
+          docker push $IMAGE_NAME:pr-${{ github.event.pull_request.number }}-${{ steps.meta.outputs.short_sha }}
 
       - name: Build cfgov-apache image
         run: docker build -t cfgov-apache:latest cfgov/apache
