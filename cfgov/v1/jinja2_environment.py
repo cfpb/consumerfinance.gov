@@ -1,8 +1,8 @@
 import os.path
 
 from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
 
@@ -98,7 +98,7 @@ def environment(**options):
     env.globals.update(
         {
             "reverse": reverse,
-            "static": staticfiles_storage.url,
+            "static": static,
             "url": reverse,
         }
     )
