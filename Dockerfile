@@ -14,7 +14,7 @@ RUN addgroup --gid ${USER_UID} ${USERNAME} && \
         ${USERNAME}
 
 # set python version for pathing
-ENV PYTHON_VERSION python3.13
+ENV PYTHON_VERSION=python3.13
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG=en_US.UTF-8
