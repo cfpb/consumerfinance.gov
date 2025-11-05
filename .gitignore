@@ -145,11 +145,6 @@ cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js.map
 cfgov/regulations3k/jinja2/regulations3k/workbox-*.js
 cfgov/regulations3k/jinja2/regulations3k/workbox-*.js.map
 
-# Apache #
-##########
-cfgov/apache/logs
-cfgov/apache/modules
-
 # Local Docker-Compose Files #
 ##############################
 docker-compose.pgadmin.yml
