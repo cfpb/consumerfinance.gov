@@ -38,6 +38,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        REQUIREMENTS: local.txt
     depends_on:
       - elasticsearch
       - postgres
