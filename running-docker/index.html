@@ -180,7 +180,7 @@
 <a href="../installation/#docker-based-installation">the Docker installation instructions</a>
 to setup your Docker environment and create the project Docker containers.</p>
 <p>We use <a href="https://docs.docker.com/compose/reference/overview/"><code>docker-compose</code></a>
-to run an Elasticsearch container, a PostgreSQL container, an Apache container,
+to run an Elasticsearch container, a PostgreSQL container,
 and Django in a Python container.</p>
 <p>All of these containers are configured in our
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
@@ -189,7 +189,6 @@ for more about the format and use of this file.</p>
 <p>The following URLs are mapped to your host from the containers:</p>
 <ul>
 <li>Access consumerfinance.gov directly running in the Python container: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
-<li>Access Apache proxying to the Python container: <a href="http://localhost:8080/">http://localhost:8080/</a></li>
 <li>Access Elasticsearch: <a href="http://localhost:9200/">http://localhost:9200/</a></li>
 </ul>
 <p>To build and run the containers for the first time, run:</p>
@@ -266,9 +265,7 @@ to get the Python container's full name or ID.</p>
   will build any of our configured containers.</li>
 </ul>
 <h2 id="production-like-docker-image">Production-like Docker Image<a class="headerlink" href="#production-like-docker-image" title="Permanent link">¶</a></h2>
-<p>This repository includes a "production-like" Docker image, created for
-experimenting with how cf.gov <em>could</em> be built and run as a Docker
-container in production.</p>
+<p>This repository includes a "production-like" Docker image used when running cf.gov in AWS EKS.</p>
 <p>This includes:</p>
 <ul>
 <li>all relevant <code>consumerfinance.gov</code> source code</li>
@@ -280,10 +277,7 @@ container in production.</p>
 <p>If you just want to build the image:</p>
 <pre class="highlight"><code class="language-bash">docker build . -t your-desired-image-name</code></pre>
 <h4 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
-<p>You can also launch the full cf.gov stack locally via <code>docker-compose</code>. This setup is
-a nice way to test out new Apache config changes. It includes volumes that mount your
-local checkout <code>cfgov/apache</code> config directories into the container, allowing you to
-change configs locally without having to rebuild the image each time.</p>
+<p>You can launch the full cf.gov stack locally via <code>docker-compose</code>.</p>
 <ol>
 <li>Launch the stack.</li>
 </ol>
@@ -302,14 +296,7 @@ export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 <ol>
 <li>Browse to your new local cf.gov site:</li>
 </ol>
-<p><a href="http://localhost:8080">http://localhost:8080</a> (Apache)</p>
-<p>Or directly to Gunicorn running Django:</p>
 <p><a href="http://localhost:8000">http://localhost:8000</a> (Gunicorn)</p>
-<ol>
-<li>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
-   config and restart the Apache container.</li>
-</ol>
-<pre class="highlight"><code class="language-bash">docker-compose restart apache</code></pre>
 <ol>
 <li>Switch back to the development Compose setup.</li>
 </ol>
