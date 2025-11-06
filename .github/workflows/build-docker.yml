@@ -67,6 +67,3 @@ jobs:
           docker tag cfgov:local $IMAGE_NAME:pr-${{ github.event.pull_request.number }}-${{ steps.meta.outputs.short_sha }}
           docker push $IMAGE_NAME:pr-${{ github.event.pull_request.number }}
           docker push $IMAGE_NAME:pr-${{ github.event.pull_request.number }}-${{ steps.meta.outputs.short_sha }}
-
-      - name: Build cfgov-apache image
-        run: docker build -t cfgov-apache:latest cfgov/apache
