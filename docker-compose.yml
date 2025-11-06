@@ -1,5 +1,6 @@
 volumes:
   postgres_data:
+  es_data:
 
 services:
   elasticsearch:
@@ -9,6 +10,8 @@ services:
     ports:
       - 127.0.0.1:9200:9200
       - 127.0.0.1:9300:9300
+    volumes:
+      - es_data:/var/lib/elasticsearch/data/
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: '-Xms512m -Xmx512m'
