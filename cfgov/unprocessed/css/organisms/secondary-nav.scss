@@ -114,6 +114,19 @@
 
     border-style: solid;
     border-left-width: 5px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-color: transparent;
+
+    &:hover {
+      border-color: var(--green);
+    }
+
+    &:focus {
+      display: block;
+      outline-offset: -1px;
+    }
 
     @include u-link-colors(
       var(--pacific),
@@ -148,6 +161,8 @@
     }
 
     &--current {
+      border-color: var(--black);
+
       @include u-link-colors(
         var(--black),
         var(--black),

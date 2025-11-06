@@ -14,7 +14,7 @@ services:
       - es_data:/var/lib/elasticsearch/data/
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.0
@@ -41,6 +41,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        REQUIREMENTS: local.txt
     depends_on:
       - elasticsearch
       - postgres
@@ -51,25 +53,3 @@ services:
       ES_HOST: elasticsearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       COMPLAINT_ES_INDEX: complaint-public
-
-  apache:
-    image: httpd:2.4-alpine
-    depends_on:
-      - python
-    environment:
-      APACHE_PORT: 80
-      APACHE_USER: www-data
-      APACHE_GROUP: www-data
-      APACHE_SERVER_ROOT: /usr/local/apache2/
-      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
-      STATIC_PATH: /tmp
-      ERROR_LOG: /proc/self/fd/2
-      ACCESS_LOG: /proc/self/fd/1
-      LIMIT_REQUEST_BODY: 0
-      CFGOV_APPLICATION_PROXY: http://python
-    volumes:
-      - ./cfgov/apache/conf.d/:/usr/local/apache2/conf.d/
-      - ./cfgov/apache/conf/:/usr/local/apache2/conf/
-      - ./cfgov/apache/conf.modules.d/:/usr/local/apache2/conf.modules.d/
-    ports:
-      - '8080:80'

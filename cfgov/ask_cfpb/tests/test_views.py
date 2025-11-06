@@ -141,5 +141,5 @@ class AnswerPagePreviewTestCase(TestCase):
         self.assertEqual(mock_serve.call_count, 1)
 
     def test_redirect_view_with_no_recognized_facet(self):
-        response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
+        response = self.client.get("/ask-cfpb/search/?selected_facets=hoodoo")
         self.assertEqual(response.status_code, 404)

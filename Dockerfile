@@ -3,6 +3,10 @@ FROM python:3.13-alpine AS python
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
 
+# The requirements file to install.
+# Can be overriden to install local.txt
+ARG REQUIREMENTS=deployment.txt
+
 # Create a non-root user
 ARG USERNAME=cfgov
 ARG USER_UID=1000
@@ -60,9 +64,10 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements/deployment.txt
+    pip install -r requirements/${REQUIREMENTS} && \
+    apk del .build-deps
 
-RUN pip uninstall -y setuptools && apk del .build-deps
+RUN pip uninstall -y setuptools
 
 # The application will run on port 8000
 EXPOSE 8000
