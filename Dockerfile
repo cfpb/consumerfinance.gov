@@ -60,10 +60,9 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements/deployment.txt && \
-    apk del .build-deps
+    pip install -r requirements/deployment.txt
 
-RUN pip uninstall -y setuptools
+RUN pip uninstall -y setuptools && apk del .build-deps
 
 # The application will run on port 8000
 EXPOSE 8000
@@ -121,6 +120,7 @@ ENV DJANGO_SETTINGS_MODULE=cfgov.settings.local
 ENV ALLOWED_HOSTS='["*"]'
 
 # Install dev/local Python requirements
+RUN apk add git
 RUN pip install -r requirements/local.txt
 
 # Copy the necessary files and directories into the dev container
