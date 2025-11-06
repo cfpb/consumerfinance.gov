@@ -280,8 +280,25 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {
+            "location": os.getenv("DJANGO_STATIC_ROOT", f"{REPOSITORY_ROOT}/collectstatic"),
+            "base_url": "/static/",
+        },
     },
 }
+
+if os.getenv("S3_ENABLED"):
+    MEDIA_URL, _storage_options = get_s3_media_config()
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _storage_options,
+    }
+
+# These environment variables are also used in get_s3_media_config above.
+# They are defined here to maintain existing functionality
+# in various applications that read/write data from/to S3.
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
@@ -293,12 +310,9 @@ STATICFILES_DIRS += [
     d for d in REPOSITORY_ROOT.joinpath("static.in").iterdir() if d.is_dir()
 ]
 
-# Collect static files into, and serve them from, cfgov/collectstatic,
-# unless otherwise specified via DJANGO_STATIC_ROOT.
-STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
-
 # Serve files under cfgov/root at the root of the website.
 WHITENOISE_ROOT = PROJECT_ROOT / "root"
+
 
 # To be overridden by other settings files.
 ALLOWED_HOSTS = []
@@ -350,19 +364,6 @@ OPENSEARCH_DSL = {
 OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
-
-if os.getenv("S3_ENABLED"):
-    MEDIA_URL, _storage_options = get_s3_media_config()
-    STORAGES["default"] = {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": _storage_options,
-    }
-
-# These environment variables are also used in get_s3_media_config above.
-# They are defined here to maintain existing functionality
-# in various applications that read/write data from/to S3.
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
