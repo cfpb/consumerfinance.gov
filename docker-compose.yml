@@ -41,6 +41,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
       args:
         REQUIREMENTS: local.txt
     depends_on:
@@ -49,6 +50,8 @@ services:
     stdin_open: true
     tty: true
     environment:
+      DEBUG: "True"
+      ENABLE_DEBUG_TOOLBAR: "True"
       DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
       ES_HOST: elasticsearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
