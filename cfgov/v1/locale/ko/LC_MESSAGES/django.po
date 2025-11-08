@@ -74,10 +74,6 @@ msgstr "개인정보보호법 안내문 보기"
 msgid "Breadcrumbs"
 msgstr ""
 
-#: v1/jinja2/v1/includes/molecules/feature-card.html:68
-msgid "Read answer"
-msgstr ""
-
 #: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
 msgid "Submit a Complaint"
 msgstr ""
@@ -199,7 +195,7 @@ msgid "Table of contents"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:20
-msgid "Section navigation"
+msgid "Section"
 msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/secondary-nav.html:24

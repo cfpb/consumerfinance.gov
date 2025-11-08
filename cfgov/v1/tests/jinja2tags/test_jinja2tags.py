@@ -2,7 +2,7 @@ import re
 
 from django.http import HttpRequest
 from django.template import engines
-from django.test import RequestFactory, SimpleTestCase, override_settings
+from django.test import RequestFactory, SimpleTestCase
 
 
 class TestIsFilterSelected(SimpleTestCase):
@@ -83,27 +83,6 @@ class TestUniqueIdInContext(SimpleTestCase):
             )
 
 
-class SearchGovAffiliateTests(SimpleTestCase):
-    def render(self, context):
-        engine = engines["wagtail-env"]
-        template = engine.from_string("{{ search_gov_affiliate() }}")
-        return template.render(context=context)
-
-    def test_default_cfpb(self):
-        self.assertEqual(self.render({}), "cfpb")
-
-    def test_spanish(self):
-        self.assertEqual(self.render({"language": "es"}), "cfpb_es")
-
-    @override_settings(DEPLOY_ENVIRONMENT="beta")
-    def test_beta(self):
-        self.assertEqual(self.render({}), "cfpb_beta")
-
-    @override_settings(DEPLOY_ENVIRONMENT="beta")
-    def test_beta_spanish(self):
-        self.assertEqual(self.render({"language": "es"}), "cfpb_beta_es")
-
-
 class TestGetCategoryIcon(SimpleTestCase):
     def checkRender(self, template, expected):
         tmpl = engines["wagtail-env"].from_string(template)
@@ -119,3 +98,16 @@ class TestGetCategoryIcon(SimpleTestCase):
         self.checkRender(
             "{{ get_category_icon('Invalid category name') }}", "None"
         )
+
+
+class TestEncodeB32String(SimpleTestCase):
+    def setUp(self):
+        self.jinja_engine = engines["wagtail-env"]
+
+    def test_encode_b32_string(self):
+        s = (
+            "{%- block desc -%}cfpb{%- endblock -%}"
+            "{{encode_b32_string(self.desc())}}"
+        )
+        template = self.jinja_engine.from_string(s)
+        self.assertEqual(template.render(), "cfpbMNTHAYQ=")

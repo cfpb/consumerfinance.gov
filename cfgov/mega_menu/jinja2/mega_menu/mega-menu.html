@@ -125,6 +125,7 @@
 
 {% macro _nav_level( nav_depth, nav_item, overview_link=none, language='en' ) %}
 <div class="{{- _content_classes( nav_depth ) -}}"
+     aria-label="{{ _('Main menu submenu') }}"
      role="navigation"
      data-js-hook="behavior_flyout-menu_content">
 

@@ -1,4 +1,5 @@
 import json
+import unittest
 from urllib.parse import quote_plus
 
 from django.http import Http404
@@ -13,6 +14,9 @@ from tccp.views import CardDetailView, CardListView, LandingPageView
 from .baker import baker
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class LandingPageViewTests(TestCase):
     def make_request(self, querystring=""):
         view = LandingPageView.as_view()
@@ -54,12 +58,18 @@ class LandingPageViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class AboutViewTests(TestCase):
     def test_get(self):
         response = self.client.get(reverse("tccp:about"))
         self.assertContains(response, "About this tool")
 
 
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class CardListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -122,7 +132,20 @@ class CardListViewTests(TestCase):
         response = self.make_request("?credit_tier=foo")
         self.assertContains(response, "There are no results for your search.")
 
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("?format=invalid")
 
+    def test_post_handled_properly(self):
+        view = HtmxMiddleware(CardListView.as_view())
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)
+
+
+@unittest.skip(
+    "Disabling due to sunsetting of TCCP, see https://github.com/cfpb/consumerfinance.gov/pull/8940"
+)
 class CardDetailViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -154,6 +177,10 @@ class CardDetailViewTests(TestCase):
         with self.assertRaises(Http404):
             self.make_request("invalid-card")
 
+    def test_unsupported_formatter_uses_standard_404_handling(self):
+        with self.assertRaises(Http404):
+            self.make_request("invalid-card", "?format=invalid")
+
     def test_get_invalid_json(self):
         response = self.make_request("invalid-card", "?format=json")
         response.render()
@@ -163,3 +190,9 @@ class CardDetailViewTests(TestCase):
             json.loads(response.content),
             {"detail": "No CardSurveyData matches the given query."},
         )
+
+    def test_post_handled_properly(self):
+        view = CardDetailView.as_view()
+        request = RequestFactory().post("/")
+        response = view(request)
+        self.assertEqual(response.status_code, 405)

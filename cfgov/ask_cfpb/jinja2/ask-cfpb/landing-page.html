@@ -25,11 +25,22 @@
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
         {{ translation_links.render(modifier_classes='block--flush-top') }}
 
-        <section class="ask-search block block--sub block--flush-top">
+        {% for block in page.content %}
+            {% if block.block_type == 'notification' %}
+                {% set has_notification = true %}
+                {% include_block block %}
+            {% endif %}
+        {% endfor %}
+
+        <section class="ask-search block block--sub{% if has_notification == false %} block--flush-top{% endif %}">
             {{ ask_search.render( language=page.language, is_subsection=False ) }}
         </section>
 
-        {% include_block page.content %}
+        {% for block in page.content %}
+            {% if block.block_type != 'notification' %}
+                {% include_block block %}
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock %}

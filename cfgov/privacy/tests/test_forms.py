@@ -22,6 +22,10 @@ class RecordsAccessFormTests(TestCase):
         )
         self.assertTrue(form.is_valid())
 
+    def test_invalid_data_has_errors(self):
+        form = RecordsAccessForm(data={}, files=self.minimum_files)
+        self.assertFalse(form.is_valid())
+
     def test_mailing_address_required(self):
         data = self.minimum_data.copy()
         data.update({"contact_channel": "mail"})
@@ -64,7 +68,7 @@ class RecordsAccessFormTests(TestCase):
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),
-            "Records request from consumerfinance.gov: Rufus Xavier Sarsapa…",
+            "Records request from consumerfinance.gov: Rufus Xavier Sarsapa...",  # noqa E501
         )
 
     def test_email_body(self):

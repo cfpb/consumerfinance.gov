@@ -26,4 +26,5 @@
 !yarn.lock
 
 # ...but DO ignore these others
+cfgov/f
 cfgov/static_built

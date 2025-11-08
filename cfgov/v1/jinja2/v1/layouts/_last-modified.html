@@ -1,0 +1,15 @@
+{%- import 'v1/includes/macros/time.html' as time -%}
+
+{% if page and page.last_published_at %}
+<div class="block u-screen-only">
+    <p><hr></p>
+    <p>Page last modified {{ time.render( page.last_published_at, { 'date': true, 'time': true, 'timezone': true }, text_format=True ) }}</p>
+    <p>
+        <a class="a-link a-link--jump" href="https://wayback.archive-it.org/23481/*/https://www.consumerfinance.gov{{ request.path }}">
+            <span class="a-link__text">
+                View older versions of this page at our public archive.
+            </span>
+        </a>
+    </p>
+ </div>
+ {% endif %}

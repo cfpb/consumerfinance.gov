@@ -23,10 +23,17 @@
                     {% import 'v1/includes/organisms/secondary-nav.html' as secondary_nav with context %}
                     {{ secondary_nav.render() }}
                 </aside>
-                <div class="u-layout-grid__main"
-                        id="content__main">
+                <div id="content__main"
+                     class="u-layout-grid__main">
                     {% block content_main scoped -%}{%- endblock %}
                     {% include 'v1/layouts/_footnotes.html' %}
+                    {% include 'v1/layouts/_last-modified.html' %}
+                    {% if page.sidefoot %}
+                        <footer class="o-prefooter">
+                            {{ streamfield_sidefoot.render(page.sidefoot) }}
+                            {% block prefooter_more_content scoped -%}{%- endblock %}
+                        </footer>
+                    {% endif %}
                 </div>
             {% endblock %}
         </div>

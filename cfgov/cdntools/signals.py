@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=Document)
-def cloudfront_cache_invalidation(sender, instance, **kwargs):
-    if not settings.ENABLE_CLOUDFRONT_CACHE_PURGE:
+def files_cache_invalidation(sender, instance, **kwargs):
+    if not settings.ENABLE_FILES_CACHE_PURGE:
         return
 
     if not instance.file:

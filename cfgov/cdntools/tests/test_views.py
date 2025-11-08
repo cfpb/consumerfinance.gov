@@ -38,13 +38,13 @@ def create_admin_access_permissions():
 @override_settings(
     WAGTAILFRONTENDCACHE={
         "akamai": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
             "HOSTNAMES": [
                 "www.fake.gov",
             ],
         },
         "files": {
-            "BACKEND": "cdntools.backends.MockCacheBackend",
+            "BACKEND": "cdntools.backends.MockAkamaiBackend",
             "HOSTNAMES": [
                 "files.fake.gov",
             ],
@@ -112,7 +112,7 @@ class TestCDNManagementView(TestCase):
             MOCK_PURGED,
         )
 
-    def test_submission_with_url_cloudfront(self):
+    def test_submission_with_url_files(self):
         self.client.login(username="cdn", password="password")
         self.client.post(
             reverse("manage-cdn"),

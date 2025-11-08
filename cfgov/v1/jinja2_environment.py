@@ -1,14 +1,12 @@
 import os.path
 
 from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
 
 from jinja2 import Environment
-
-from search.models import AUTOCOMPLETE_MAX_CHARS
 
 
 class RelativeTemplatePathEnvironment(Environment):
@@ -99,9 +97,8 @@ def environment(**options):
     # Expose various Django methods into the Jinja2 environment.
     env.globals.update(
         {
-            "autocomplete_max_chars": AUTOCOMPLETE_MAX_CHARS,
             "reverse": reverse,
-            "static": staticfiles_storage.url,
+            "static": static,
             "url": reverse,
         }
     )

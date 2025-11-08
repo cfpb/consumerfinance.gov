@@ -31,7 +31,7 @@
     {% set language = (language or page.language) | default( 'en' ) %}
 
     {%- if links and links | length > 1 %}
-    <div class="block block--sub {{ modifier_classes }}">
+    <div class="block block--sub u-screen-only {{ modifier_classes }}">
         <ul dir="ltr" class="m-translation-links">
             {%- for link in links %}
                 {# language is set by the context in the base template. #}

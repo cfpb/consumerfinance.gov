@@ -1,15 +1,12 @@
 import os
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import dj_database_url
-from opensearchpy import RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
 
-from cfgov.util import admin_emails, environment_json
+from cfgov.util import admin_emails, environment_json, get_s3_media_config
 
 
 # Repository root is 4 levels above this file
@@ -66,6 +63,7 @@ INSTALLED_APPS = (
     "wagtailflags",
     "ask_cfpb",
     "agreements",
+    "searchgov",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -100,7 +98,6 @@ INSTALLED_APPS = (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
-    "wagtailmedia",
     "django_opensearch_dsl",
     "corsheaders",
     "login",
@@ -124,11 +121,11 @@ INSTALLED_APPS = (
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
-    "wagtail_deletion_archival",
 )
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -210,20 +207,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cfgov.wsgi.application"
 
-# Admin Url Access
-ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
-
-if ALLOW_ADMIN_URL:
-    DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  # For heavy Wagtail pages
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  # For heavy Wagtail pages
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jazzband/dj-database-url for URL formatting.
+_db_config = {
+    "default": "postgres://cfpb:cfpb@localhost/cfgov",
+}
+
+if _db_conn_max_age := os.getenv("CONN_MAX_AGE"):
+    _db_config.update({
+        "conn_max_age": int(_db_conn_max_age),
+        "conn_health_checks": True,
+    })
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": dj_database_url.config(**_db_config)
 }
 
 # Internationalization
@@ -282,15 +283,6 @@ STORAGES = {
     },
 }
 
-if WAGTAIL_DELETION_ARCHIVE_PATH := os.getenv("WAGTAIL_DELETION_ARCHIVE_PATH"):
-    STORAGES["wagtail_deletion_archival"] = {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-        "OPTIONS": {
-            "location": WAGTAIL_DELETION_ARCHIVE_PATH,
-        }
-    }
-
-
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
@@ -308,7 +300,8 @@ STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", REPOSITORY_ROOT / "collectstatic")
 # Serve files under cfgov/root at the root of the website.
 WHITENOISE_ROOT = PROJECT_ROOT / "root"
 
-ALLOWED_HOSTS = ["*"]
+# To be overridden by other settings files.
+ALLOWED_HOSTS = []
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
@@ -328,75 +321,48 @@ WAGTAILSEARCH_BACKENDS = {
 # inline in rich text.
 WAGTAIL_FOOTNOTES_REFERENCE_TEMPLATE = "v1/includes/rich-text/footnote-reference.html"
 
+# Search api
+SEARCHGOV_API_KEY = os.environ.get("SEARCHGOV_API_KEY")
+SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
+
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
-HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    "https://s3.amazonaws.com/files.consumerfinance.gov"
-    "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
-)
-
-# ElasticSearch 7 Configuration
-TESTING = False
+# OpenSearch configuration
 ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
+
 OPENSEARCH_BIGINT = 50000
 OPENSEARCH_DEFAULT_ANALYZER = "snowball"
-
-if os.environ.get("USE_AWS_ES", False):
-    awsauth = AWS4Auth(
-        os.environ.get("AWS_ES_ACCESS_KEY"),
-        os.environ.get("AWS_ES_SECRET_KEY"),
-        "us-east-1",
-        "es",
-    )
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": [{"host": ES_HOST, "port": 443}],
-            "http_auth": awsauth,
-            "use_ssl": True,
-            "connection_class": RequestsHttpConnection,
-            "timeout": 60,
-        },
+OPENSEARCH_DSL = {
+    "default": {
+        "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+        "http_auth": (
+            os.getenv("ES_USER", "admin"),
+            os.getenv("ES_PASS", "admin"),
+        ),
+        "use_ssl": True,
+        "verify_certs": not os.getenv("OPENSEARCH_DSL_SKIP_CERT_VERIFICATION"),
     }
-else:
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
-            "http_auth": (
-                os.getenv("ES_USER", "admin"),
-                os.getenv("ES_PASS", "admin"),
-            ),
-            "use_ssl": True, 
-            "verify_certs": False,
-        }
-    }
+}
 
 OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
 
-# S3 Configuration
-# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
-AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
-AWS_S3_FILE_OVERWRITE = False
-AWS_S3_SECURE_URLS = True  # True = use https; False = use http
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
-
-if os.environ.get("S3_ENABLED", "False") == "True":
-    AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-    AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-    MEDIA_URL = os.path.join(
-        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
-    )
-
+if os.getenv("S3_ENABLED"):
+    MEDIA_URL, _storage_options = get_s3_media_config()
     STORAGES["default"] = {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _storage_options,
     }
+
+# These environment variables are also used in get_s3_media_config above.
+# They are defined here to maintain existing functionality
+# in various applications that read/write data from/to S3.
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "files.consumerfinance.gov")
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -434,7 +400,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
-            "min_length": 12,
+            "min_length": 14,
         },
     },
     {
@@ -479,17 +445,27 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
         "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
         "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to www cache
+        "OBJECT_ID": os.environ["AKAMAI_OBJECT_ID"],
         "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
-ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
-    "ENABLE_CLOUDFRONT_CACHE_PURGE", False
+ENABLE_FILES_CACHE_PURGE = os.environ.get(
+    "ENABLE_FILES_CACHE_PURGE", False
 )
-if ENABLE_CLOUDFRONT_CACHE_PURGE:
+if ENABLE_FILES_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
-        "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
-        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to files cache
+        "OBJECT_ID": os.environ["AKAMAI_FILES_OBJECT_ID"],
+        "HOSTNAMES": environment_json("AKAMAI_FILES_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists
@@ -515,8 +491,6 @@ CSP_SCRIPT_SRC = (
     "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -538,7 +512,6 @@ CSP_STYLE_SRC = (
     "'unsafe-inline'",
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "fonts.googleapis.com",
     "api.mapbox.com",
     "www.ssa.gov/accessibility/andi/",
@@ -547,13 +520,13 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.cfpb.gov",
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -571,8 +544,6 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
-    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
@@ -585,15 +556,15 @@ CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.google-analytics.com",
-    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
-    "n2.mouseflow.com",
+    "*.mouseflow.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
@@ -624,12 +595,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # Google Optimize code snippets for A/B testing
-    # When enabled this flag will add various Google Optimize code snippets.
-    # Intended for use with path conditions.
-    "AB_TESTING": [],
-    # Ping google on page publication in production only
-    "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
@@ -816,3 +781,48 @@ if ENABLE_SSO:
     # Now we do some role/group-mapping for admins and regular users
     # Upstream "role" for users who get is_superuser
     OIDC_OP_ADMIN_ROLE = os.environ.get("OIDC_OP_ADMIN_ROLE")
+
+    # Require manual Wagtail user creation.
+    OIDC_CREATE_USER = False
+
+if WAGTAILSHARING_HOST := os.getenv("WAGTAILSHARING_HOST"):
+    WAGTAILSHARING_ROUTER = "wagtailsharing.routers.settings.SettingsHostRouter"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": "DEBUG" if os.getenv("ENABLE_SQL_LOGGING") else "INFO",
+            "propagate": False,
+        },
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+if os.getenv("ENABLE_ES_LOGGING"):
+    LOGGING["loggers"]["opensearchpy.trace"] = {
+        "handlers": ["console"],
+        "level": "INFO",
+        "propagate": False,
+    }
+
+# Opt out of Google's Federated Learning of Cohorts approach to tracking
+PERMISSIONS_POLICY = {
+    "interest-cohort": [],
+}

@@ -15,11 +15,9 @@ import {
   addClass,
   hasClass,
   removeClass,
-  getEl,
-  getEls,
   getParentEls,
 } from './dom-tools.js';
-import { resetError, setError, getUploadName, isCSV } from './file-input.js';
+import { resetError, setError } from './file-input.js';
 import Papaparse from 'papaparse';
 import getRuralCounties from './get-rural-counties.js';
 import * as textInputs from './text-inputs.js';
@@ -75,7 +73,7 @@ function censusAPI(data, ruralCounties) {
       .catch(function (err) {
         console.log(err);
         const addressElement = createEl('<li>' + result.address + '</li>');
-        addEl(getEl('#process-error-desc'), addressElement);
+        addEl(document.querySelector('#process-error-desc'), addressElement);
         removeClass('#process-error', 'u-hidden');
       });
   } else {
@@ -95,25 +93,27 @@ function censusAPI(data, ruralCounties) {
 function processAddresses(addresses) {
   const processed = [];
 
-  getRuralCounties(getEl('#year').value).then(function (ruralCounties) {
-    addresses.forEach(function (address) {
-      if (addressUtils.isDup(address, processed)) {
-        // setup the result to render
-        const result = {};
-        result.input = address;
-        result.address = 'Duplicate';
-        result.countyName = '-';
-        result.block = '-';
-        result.type = 'duplicate';
-        addressUtils.render(result);
-        updateCount(result.type);
-      } else {
-        // if its not dup
-        callCensus(address, ruralCounties, censusAPI);
-        processed.push(address);
-      }
-    });
-  });
+  getRuralCounties(document.querySelector('#year').value).then(
+    function (ruralCounties) {
+      addresses.forEach(function (address) {
+        if (addressUtils.isDup(address, processed)) {
+          // setup the result to render
+          const result = {};
+          result.input = address;
+          result.address = 'Duplicate';
+          result.countyName = '-';
+          result.block = '-';
+          result.type = 'duplicate';
+          addressUtils.render(result);
+          updateCount(result.type);
+        } else {
+          // if its not dup
+          callCensus(address, ruralCounties, censusAPI);
+          processed.push(address);
+        }
+      });
+    },
+  );
 }
 
 // On submit of address entered manually.
@@ -126,11 +126,13 @@ addressFormDom.addEventListener('submit', function (evt) {
 
   contentControl.setup();
 
-  [].slice.call(getEls('.input-address')).forEach(function (element) {
-    if (element.value !== '') {
-      addresses.push(element.value);
-    }
-  });
+  [].slice
+    .call(document.querySelectorAll('.input-address'))
+    .forEach(function (element) {
+      if (element.value !== '') {
+        addresses.push(element.value);
+      }
+    });
 
   if (addresses.length > 1) {
     removeClass('#results-total', 'u-hidden');
@@ -140,74 +142,65 @@ addressFormDom.addEventListener('submit', function (evt) {
   processAddresses(addresses);
 });
 
-// when file upload is used
+// When file upload is used.
 const fileChangeDom = document.querySelector('#file');
-fileChangeDom.addEventListener('change', function () {
+fileChangeDom.addEventListener('input', function (event) {
   let rowCount = 0;
-  const fileElement = getEl('#file');
-  const fileValue = fileElement.value;
+  const fileElement = event.target;
 
   textInputs.reset();
-  getEl('#file-name').value = getUploadName(fileValue);
 
   resetError();
 
-  if (isCSV(fileValue)) {
-    // parse the csv to get the count
-    Papaparse.parse(fileElement.files[0], {
-      header: true,
-      step: function (results, parser) {
-        if (!addressUtils.isValid(results)) {
-          parser.abort();
-          setError(
-            'The header row of your CSV file does not match' +
-              ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-              ' title="Download CSV template">CSV template</a>.' +
-              ' Please adjust your CSV file and try again.',
-          );
-          return;
-        }
-        if (results.data['Street Address'] !== '') {
-          rowCount++;
-        }
-      },
-      error: function () {
-        console.log(arguments);
-      },
-      complete: function (/*results, file*/) {
-        if (rowCount === 0) {
-          setError(
-            'There are no rows in this csv. Please update and try again.',
-          );
-        }
-        if (rowCount >= MAX_CSV_ROWS) {
-          const leftOver = rowCount - MAX_CSV_ROWS;
-          setError(
-            'You entered ' +
-              rowCount +
-              ' addresses for ' +
-              getEl('#year').value +
-              ' safe harbor designation. We have a limit of ' +
-              MAX_CSV_ROWS +
-              ' addresses. You can run the first ' +
-              MAX_CSV_ROWS +
-              ' now, but please recheck the remaining ' +
-              leftOver +
-              '.',
-          );
-        }
-      },
-    });
-  } else {
-    setError(
-      'The file uploaded is not a CSV file. ' +
-        'Please try again with a CSV file that uses ' +
-        'our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-        'title="Download CSV template">CSV template</a>.' +
-        ' For more information about CSV files, view our' +
-        ' Frequently Asked Questions below.',
-    );
+  const file = fileElement.files[0];
+
+  if (typeof file === 'undefined') {
+    return undefined;
   }
+
+  // Parse the csv to get the count.
+  Papaparse.parse(fileElement.files[0], {
+    header: true,
+    step: function (results, parser) {
+      if (!addressUtils.isValid(results)) {
+        parser.abort();
+        setError(
+          'The header row of your CSV file does not match' +
+            ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+            ' title="Download CSV template">CSV template</a>.' +
+            ' Please adjust your CSV file and try again.',
+        );
+        return;
+      }
+      if (results.data['Street Address'] !== '') {
+        rowCount++;
+      }
+    },
+    error: function () {
+      console.log(arguments);
+    },
+    complete: function (/*results, file*/) {
+      if (rowCount === 0) {
+        setError('There are no rows in this csv. Please update and try again.');
+      }
+      if (rowCount >= MAX_CSV_ROWS) {
+        const leftOver = rowCount - MAX_CSV_ROWS;
+        setError(
+          'You entered ' +
+            rowCount +
+            ' addresses for ' +
+            document.querySelector('#year').value +
+            ' safe harbor designation. We have a limit of ' +
+            MAX_CSV_ROWS +
+            ' addresses. You can run the first ' +
+            MAX_CSV_ROWS +
+            ' now, but please recheck the remaining ' +
+            leftOver +
+            '.',
+        );
+      }
+    },
+  });
 });
 
 // on file submission
@@ -216,8 +209,9 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   evt.preventDefault();
 
   window.location.hash = 'rural-or-underserved';
-  let fileElement = getEl('#file-name');
+  let fileElement = document.querySelector('#file');
   const fileValue = fileElement.value;
+
   if (
     fileValue === '' ||
     fileValue === 'No file chosen' ||
@@ -225,16 +219,17 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
   ) {
     setError(
       'You have not selected a file. ' +
-        'Use the "Select file" button to select the file with your addresses.',
+        'Use the "Select .csv file" button ' +
+        'to select the file with your addresses.',
     );
-  } else if (isCSV(fileValue)) {
+  } else {
     let pass = true;
     let rowCount = 0;
     let addresses = [];
-    fileElement = getEl('#file');
+    fileElement = document.querySelector('#file');
     textInputs.reset();
 
-    // Parse the csv to get the
+    // Parse the csv to get the files.
     Papaparse.parse(fileElement.files[0], {
       header: true,
       step: function (results, parser) {
@@ -270,7 +265,7 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
             'You entered ' +
               rowCount +
               ' addresses for ' +
-              getEl('#year').value +
+              document.querySelector('#year').value +
               ' safe harbor designation. We have a limit of ' +
               MAX_CSV_ROWS +
               ' addresses. You can run the first ' +
@@ -290,15 +285,6 @@ geocodeCSVDom.addEventListener('submit', function (evt) {
         }
       },
     });
-  } else {
-    setError(
-      'The file uploaded is not a CSV file.' +
-        ' Please try again with a CSV file that uses our' +
-        ' <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-        ' title="Download CSV template">CSV template</a>.' +
-        ' For more information about CSV files,' +
-        ' view our Frequently Asked Questions below.',
-    );
   }
 
   return false;
@@ -322,7 +308,7 @@ bindEvents('.button-more', 'click', function (evt) {
   const moreButton = evt.target;
   evt.preventDefault();
   const tableID = getElData(moreButton, 'table');
-  const tableRows = getEls('#' + tableID + ' tbody tr.data');
+  const tableRows = document.querySelectorAll('#' + tableID + ' tbody tr.data');
   const tableRowsLength = tableRows.length;
   const lengthShown = Array.prototype.filter.call(tableRows, function (item) {
     return !item.classList.contains('u-hidden');
@@ -340,9 +326,9 @@ bindEvents('.button-more', 'click', function (evt) {
 bindEvents('.view-all', 'click', function (evt) {
   evt.preventDefault();
   const tableID = getElData(evt.target, 'table');
-  removeClass('#' + tableID + ' tbody tr.data', 'u-hidden');
-  addClass('#' + tableID + 'More', 'u-hidden');
-  addClass('#' + tableID + 'All', 'u-hidden');
+  removeClass(`#${tableID} tbody tr.data`, 'u-hidden');
+  addClass(`#${tableID}More`, 'u-hidden');
+  addClass(`#${tableID}All`, 'u-hidden');
 });
 
 // print
@@ -430,7 +416,7 @@ function generateCSV() {
 
   // loop through each row
   [].slice
-    .call(getEls('.rout-results-table tbody tr td'))
+    .call(document.querySelectorAll('.rout-results-table tbody tr td'))
     .forEach(_loopHandler);
 
   return theCSV;

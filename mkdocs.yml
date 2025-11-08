@@ -8,10 +8,8 @@ nav:
   - Running this Project:
       - Running in a Virtual Environment: running-virtualenv.md
       - Running in Docker: running-docker.md
-      - Running in Kubernetes: running-k8s.md
       - Running documentation site locally: running-docs.md
       - Debugging and Monitoring: debugging-monitoring.md
-      - Artifacts and Deployment: deployment.md
   - Pages and Components:
       - Atomic Structure and Design: atomic-structure.md
       - Creating and Editing Components: editing-components.md
@@ -42,7 +40,6 @@ nav:
   - APIs and Data:
       - Ask CFPB: ask-cfpb.md
       - Consumer Complaints: consumer-complaint-database.md
-      - Find a Housing Counselor Tool: housing-counselor-tool.md
 
 theme:
   name: readthedocs

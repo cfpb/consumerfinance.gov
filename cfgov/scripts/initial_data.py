@@ -1,13 +1,12 @@
 import logging
 import os
+from datetime import datetime
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import transaction
 
 from wagtail.models import Page, Site
-
-from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
 
@@ -23,8 +22,6 @@ def run():
     admin_username = os.getenv("DJANGO_ADMIN_USERNAME")
     admin_password = os.getenv("DJANGO_ADMIN_PASSWORD")
     http_port = int(os.getenv("DJANGO_HTTP_PORT", default_site.port))
-
-    wagtail_sharing_hostname = os.getenv("WAGTAIL_SHARING_HOSTNAME")
 
     # If specified in the environment, create or activate superuser.
     if admin_username and admin_password:
@@ -47,7 +44,12 @@ def run():
         logger.info("Creating new cfgov home page")
 
         # Create the new home page instance.
-        home_page = HomePage(title="CFGov", slug="cfgov", live=True)
+        home_page = HomePage(
+            title="CFGov",
+            slug="cfgov",
+            live=True,
+            last_published_at=datetime(2010, 7, 21),
+        )
 
         # Add the new home page as a child to the Wagtail root page.
         root_page = Page.objects.get(slug="root")
@@ -74,15 +76,3 @@ def run():
         default_site.port = http_port
         default_site.save()
         logger.info(f"Configured default Wagtail Site: {default_site}")
-
-    # Setup a sharing site for the default Wagtail site if a sharing hostname
-    # has been configured in the environment.
-    if wagtail_sharing_hostname:
-        sharing_site, _ = SharingSite.objects.update_or_create(
-            site=default_site,
-            defaults={
-                "hostname": wagtail_sharing_hostname,
-                "port": http_port,
-            },
-        )
-        logger.info(f"Configured wagtail-sharing site: {sharing_site}")

@@ -108,10 +108,25 @@
     display: inline-block;
 
     // Break the menu word when it is too wide to fit in the sidebar area.
-    word-break: break-word;
+    // These two values usurp the deprecated `word-break: break-word;`.
+    overflow-wrap: anywhere;
+    word-break: normal;
 
     border-style: solid;
     border-left-width: 5px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-color: transparent;
+
+    &:hover {
+      border-color: var(--green);
+    }
+
+    &:focus {
+      display: block;
+      outline-offset: -1px;
+    }
 
     @include u-link-colors(
       var(--pacific),
@@ -146,6 +161,8 @@
     }
 
     &--current {
+      border-color: var(--black);
+
       @include u-link-colors(
         var(--black),
         var(--black),
@@ -173,7 +190,7 @@
     border-bottom: 1px solid var(--gray-40);
 
     // Add drop-shadow.
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 20%);
+    box-shadow: 0 5px 5px rgb(0, 0, 0, 20%);
 
     &--no-children {
       display: none;
@@ -209,8 +226,8 @@
     }
   }
 
-  // Hide on print.
-  @include respond-to-print {
+  // Don't print the secondary navigation.
+  @media print {
     display: none;
   }
 }
