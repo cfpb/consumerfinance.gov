@@ -1,4 +1,5 @@
 import copy
+import datetime
 import json
 import unittest
 from decimal import Decimal
@@ -609,6 +610,23 @@ class TestScripts(django.test.TestCase):
         n.save()
         notifications.send_stale_notifications()
         self.assertTrue(mock_mail.call_count == 2)
+
+    @patch(
+        "paying_for_college.disclosures.scripts.notifications"
+        ".Notification.notify_school"
+    )
+    def test_retry_notifications(self, mock_notify):
+        # day_old = timezone.now() - datetime.timedelta(days=1)
+        mock_notify.return_value = "notified"
+        n = Notification.objects.first()
+        n.timestamp = timezone.now()
+        n.save()
+        msg = notifications.retry_notifications()
+        self.assertTrue(mock_notify.call_count == 1)
+        n.timestamp = n.timestamp - datetime.timedelta(days=4)
+        n.save()
+        msg = notifications.retry_notifications()
+        self.assertTrue("found" in msg)
 
     @patch(
         "paying_for_college.disclosures.scripts."
