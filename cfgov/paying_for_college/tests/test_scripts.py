@@ -742,9 +742,13 @@ class BlockedNotification(django.test.TestCase):
         no_failed_msg = "No failed notifications found"
         no_stale_msg = "No stale notifications found"
         for school_id in excluded_school_ids:
-            self.create_notification(school_id)
+            test_noti = self.create_notification(school_id)
             self.assertTrue(Notification.objects.filter(sent=False).exists())
             retry_msg = notifications.retry_notifications()
             self.assertEqual(retry_msg, no_failed_msg)
+            test_noti.timestamp = test_noti.timestamp - datetime.timedelta(
+                days=4
+            )
+            test_noti.save()
             send_stale_msg = notifications.send_stale_notifications()
             self.assertEqual(send_stale_msg, no_stale_msg)
