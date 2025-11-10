@@ -17,6 +17,8 @@ NOTE_TEMPLATE = Template(
     "    app errors: $errors\n"
     "SEND LOG:\n$log\n"
 )
+# active schools that no longer particpate in EFIP
+EXCLUDED_IDS = [154022]  # Ashford, as of Feb. 2024
 
 
 def retry_notifications(days=1):
@@ -26,7 +28,7 @@ def retry_notifications(days=1):
     days_old = timezone.now() - datetime.timedelta(days=int(days))
     failed_notifications = Notification.objects.filter(
         sent=False, timestamp__gt=days_old
-    )
+    ).exclude(institution_id__in=EXCLUDED_IDS)
     for each in failed_notifications:
         endmsg += f"{each.notify_school()}\n"
     if not endmsg:
@@ -43,7 +45,7 @@ def send_stale_notifications(add_email=None):
     stale_date = timezone.now() - datetime.timedelta(days=1)
     stale_notifications = Notification.objects.filter(
         sent=False, timestamp__lt=stale_date
-    )
+    ).exclude(institution_id__in=EXCLUDED_IDS)
     if not stale_notifications:
         return "No stale notifications found"
     contacts = {

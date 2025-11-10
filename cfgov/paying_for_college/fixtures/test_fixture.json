@@ -59,6 +59,27 @@
     "fields": {
         "city": "Fort Wayne",
         "accreditor": "",
+        "control": "Private",
+        "url": "",
+        "degrees_predominant": "3",
+        "degrees_highest": "4",
+        "grad_rate": "0.070",
+        "grad_rate_4yr": "0.070",
+        "grad_rate_lt4": null,
+        "repay_3yr": "0.3447138700",
+        "median_total_debt": "30500.0",
+        "state": "IN",
+        "operating": true,
+        "data_json": "{}",
+        "KBYOSS": true
+    },
+    "model": "paying_for_college.school",
+    "pk": 154022
+},
+{
+    "fields": {
+        "city": "Fort Wayne",
+        "accreditor": "",
         "control": "Public",
         "url": "",
         "degrees_predominant": "3",
