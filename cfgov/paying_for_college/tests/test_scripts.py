@@ -702,7 +702,7 @@ class TestScripts(django.test.TestCase):
 
 
 class BlockedNotification(django.test.TestCase):
-    """Confirm that former EFIP schools don't generate notifications."""
+    """Confirm that former EFIP schools don't trigger notification retries."""
 
     fixtures = ["test_fixture.json"]
 
