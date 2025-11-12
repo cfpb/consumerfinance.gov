@@ -1,4 +1,4 @@
-coverage==7.4.3
+coverage==7.11.3
 diff_cover==8.0.3
 django-slowtests==1.1.1
 freezegun==1.5.1
