@@ -43,5 +43,6 @@ wagtailcharts==0.6.2
 whitenoise==6.7.0
 
 # These packages are installed from GitHub.
-https://github.com/cfpb/ccdb5-api/releases/download/1.8.0/ccdb5_api-1.8.0-py3-none-any.whl
+# https://github.com/cfpb/ccdb5-api/releases/download/1.8.0/ccdb5_api-1.8.0-py3-none-any.whl
+git+https://github.com/cfpb/owning-a-home-api.git@upgrade-to-py313-and-dj51
 https://github.com/cfpb/owning-a-home-api/releases/download/0.19.0/owning_a_home_api-0.19.0-py3-none-any.whl
