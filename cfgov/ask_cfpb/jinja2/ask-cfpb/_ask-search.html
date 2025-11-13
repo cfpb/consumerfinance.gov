@@ -35,25 +35,30 @@
     is_subsection=True,
     max_length=75
 ) %}
+
+{%- set search_url = (
+    "/es/buscar/" if language == 'es' else
+    "/search/"
+) -%}
+
 <div class="o-search-bar">
     <form method="get"
-          action="{{ _('/ask-cfpb/search/') }}"
+          action="{{ search_url }}"
           data-cy="ask-search-form">
         {% if show_label %}
         <{{ 'h3' if is_subsection else 'h2' }}>
-            {{ _('Search for your question') }}
+            {{ _('Search all of consumerfinance.gov') }}
         </{{ 'h3' if is_subsection else 'h2' }}>
         {% endif %}
 
         <div>
             {% import 'v1/includes/organisms/search-input.html' as search_input %}
-            {% set placeholder_value = _('Search Ask CFPB for your question') %}
+            {% set placeholder_value = _('Enter your search term(s)') %}
             {{ search_input.render({
                 "input_id": "o-search-bar_query",
                 "input_name": "q",
                 "input_value": ask_query,
-                "input_aria_label": _('Search for your question'),
-                "has_autocomplete": autocomplete,
+                "input_aria_label": _('Enter your search term(s)'),
                 "placeholder": placeholder_value,
                 "submit_aria_label": placeholder_value,
                 "max_length": max_length
