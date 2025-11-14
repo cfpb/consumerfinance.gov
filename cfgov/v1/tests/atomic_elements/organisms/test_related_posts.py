@@ -5,11 +5,7 @@ from django.test import RequestFactory, TestCase
 
 from wagtail.models import Page, Site
 
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
+import zoneinfo
 
 from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory

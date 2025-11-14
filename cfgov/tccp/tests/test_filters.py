@@ -19,7 +19,7 @@ class CardOrderingFilterTests(TestCase):
             )
 
         qs = self.get_queryset().for_credit_tier("Credit score 619 or less")
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             CardOrderingFilter()
             .filter(qs, ["purchase_apr"])
             .values_list("purchase_apr_for_tier_max", flat=True),
@@ -41,7 +41,7 @@ class CardOrderingFilterTests(TestCase):
             )
 
         qs = self.get_queryset().for_credit_tier("Credit score 619 or less")
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             CardOrderingFilter()
             .filter(qs, ["transfer_apr"])
             .values_list(
@@ -59,7 +59,7 @@ class CardOrderingFilterTests(TestCase):
             )
 
         qs = self.get_queryset()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             CardOrderingFilter()
             .filter(qs, ["product_name"])
             .values_list("product_name", flat=True),

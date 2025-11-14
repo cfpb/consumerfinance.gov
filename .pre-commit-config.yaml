@@ -1,18 +1,18 @@
 exclude: .+\/migrations\/.+\.py
 default_language_version:
-  python: python3.8
+  python: python3.13
 repos:
--  repo: https://github.com/charliermarsh/ruff-pre-commit
-   rev: v0.4.5
-   hooks:
-     # Run the linter.
-     - id: ruff
-       args: ['--fix']
-     # Run the formatter.
-     - id: ruff-format
-- repo: https://github.com/PyCQA/bandit
-  rev: 1.7.8
-  hooks:
-    - id: bandit
-      args: ['-c', 'pyproject.toml', '--recursive']
-      additional_dependencies: ['bandit[toml]']
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.4.5
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: ['--fix']
+      # Run the formatter.
+      - id: ruff-format
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8
+    hooks:
+      - id: bandit
+        args: ['-c', 'pyproject.toml', '--recursive']
+        additional_dependencies: ['bandit[toml]']

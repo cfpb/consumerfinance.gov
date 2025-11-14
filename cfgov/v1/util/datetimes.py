@@ -3,14 +3,9 @@ from datetime import date, datetime
 
 from django.utils.timezone import is_aware, make_aware
 
+import zoneinfo
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
 
 
 # This utility file exists to support date input fields that are typeable

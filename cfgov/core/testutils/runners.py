@@ -26,11 +26,11 @@ class TestRunner(DiscoverSlowestTestsRunner):
         # to disk. We want to clean up that location after the tests run.
         shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
 
-    def run_tests(self, test_labels, extra_tests=None, **kwargs):
+    def run_tests(self, test_labels, **kwargs):
         # Disable logging below CRITICAL during tests.
         logging.disable(logging.CRITICAL)
 
-        return super().run_tests(test_labels, extra_tests, **kwargs)
+        return super().run_tests(test_labels, **kwargs)
 
     def setup_databases(self, **kwargs):
         dbs = super().setup_databases(**kwargs)
