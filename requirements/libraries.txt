@@ -23,11 +23,11 @@ Jinja2==3.1.6
 lxml==5.3.1
 mozilla-django-oidc==4.0.1
 opensearch-py==3.0.0
-psycopg2-binary==2.9.11
+psycopg2-binary==2.9.10
 python-dateutil==2.9.0
 regdown==1.0.7
 s3transfer==0.10.2
-setuptools>=65.5.1
+setuptools==80.9.0
 tailslide==0.2.0
 wagtail-autocomplete==0.12.0
 wagtail-content-audit==0.1
