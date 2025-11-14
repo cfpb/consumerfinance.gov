@@ -67,8 +67,6 @@ RUN \
     pip install -r requirements/${REQUIREMENTS} && \
     apk del .build-deps
 
-RUN pip uninstall -y setuptools
-
 # The application will run on port 8000
 EXPOSE 8000
 
