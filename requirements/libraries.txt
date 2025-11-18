@@ -30,7 +30,7 @@ s3transfer==0.10.2
 setuptools==80.9.0
 tailslide==0.2.0
 wagtail-autocomplete==0.12.0
-wagtail-content-audit==0.1
+wagtail-content-audit==0.2
 wagtail_draftail_anchors==0.6.0
 wagtail-flags==5.3.1
 wagtail-footnotes==0.13.0
