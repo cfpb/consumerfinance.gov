@@ -30,14 +30,14 @@ s3transfer==0.10.2
 setuptools==80.9.0
 tailslide==0.2.0
 wagtail-autocomplete==0.12.0
-wagtail-content-audit==0.2
+wagtail-content-audit==0.2.1
 wagtail_draftail_anchors==0.6.0
 wagtail-flags==5.3.1
 wagtail-footnotes==0.13.0
 wagtail-inventory==3.2
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.15
-wagtail-treemodeladmin==1.9.2
+wagtail-treemodeladmin==1.10
 wagtailmedia==0.15.2
 wagtailcharts==0.6.2
 whitenoise==6.7.0
