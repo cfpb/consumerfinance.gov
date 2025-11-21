@@ -194,5 +194,4 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 # Run the application with the user we created
 USER $USERNAME
 
-# Run Gunicorn
-CMD ["gunicorn", "--reload", "cfgov.wsgi:application", "-b", ":8000"]
+CMD ["gunicorn", "-c", "cfgov/gunicorn.conf.py"]
