@@ -57,7 +57,7 @@
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.6.2",
     "snyk": "1.1301.0",
-    "stylelint": "16.25.0",
+    "stylelint": "16.26.0",
     "stylelint-config-standard-scss": "16.0.0"
   },
   "scripts": {
