@@ -18,5 +18,6 @@ services:
       DJANGO_ADMIN_PASSWORD: admin
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
+      GUNICORN_RELOAD: 1
     ports:
       - '8000:8000'
