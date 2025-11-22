@@ -3,7 +3,7 @@ import datetime
 from django.test import TestCase, override_settings
 
 from model_bakery import baker
-from regdown import DEFAULT_RENDER_BLOCK_REFERENCE, regdown
+from regdown import _default_block_reference, regdown
 
 from regulations3k.models import (
     EffectiveVersion,
@@ -107,7 +107,7 @@ class ReferenceResolutionTestCase(TestCase):
         result = regdown(
             self.section_2.contents,
             contents_resolver=contents_resolver,
-            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE,
+            render_block_reference=_default_block_reference,
         )
         self.assertIn("Interpreting adverse action", result)
 
@@ -118,7 +118,7 @@ class ReferenceResolutionTestCase(TestCase):
         result = regdown(
             self.section_3.contents,
             contents_resolver=contents_resolver,
-            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE,
+            render_block_reference=_default_block_reference,
         )
         self.assertEqual(
             result,

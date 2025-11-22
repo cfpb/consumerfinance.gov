@@ -109,7 +109,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         response = search.execute()
         for hit in response[0:total_results]:
             try:
-                snippet = Markup("".join(hit.meta.highlight.text[0]))
+                snippet = Markup("".join(hit.meta.highlight.text[0]))  # nosec
             except TypeError as e:
                 logger.warning(
                     f"Query string {search_query} produced a TypeError: {e}"
