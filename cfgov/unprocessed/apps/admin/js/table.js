@@ -1,5 +1,6 @@
-class TableDefinition extends window.wagtailStreamField.blocks
-  .StructBlockDefinition {
+class TableDefinition
+  extends window.wagtailStreamField.blocks.StructBlockDefinition
+{
   render(placeholder, prefix, initialState, initialError) {
     const block = super.render(placeholder, prefix, initialState, initialError);
     const table = block.childBlocks.data;
