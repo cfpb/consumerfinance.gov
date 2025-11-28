@@ -13,8 +13,7 @@
     white-space: normal;
   }
 
-  a[href*="://"]:not(.u-link-text-is-url)::after
-  {
+  a[href*='://']:not(.u-link-text-is-url)::after {
     // Output href in parentheses for links with a protocol already there.
     content: ' (' attr(href) ')';
   }
