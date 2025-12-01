@@ -37,7 +37,7 @@ wagtail-footnotes==0.13.0
 wagtail-inventory==3.2
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.15
-wagtail-treemodeladmin==1.10
+wagtail-treemodeladmin==1.10.1
 wagtailmedia==0.15.2
 wagtailcharts==0.6.2
 whitenoise==6.7.0
