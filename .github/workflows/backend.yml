@@ -134,4 +134,9 @@ jobs:
 
       - name: Check backend test coverage
         run: |
-          diff-cover backend_coverage/coverage.xml --compare-branch=origin/main --fail-under=100
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            COMPARE_BRANCH="origin/main"
+          else
+            COMPARE_BRANCH="HEAD~1"
+          fi
+          diff-cover backend_coverage/coverage.xml --compare-branch=$COMPARE_BRANCH --fail-under=100
