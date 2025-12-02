@@ -118,6 +118,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -138,8 +140,9 @@ jobs:
       - name: Check backend test coverage
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            COMPARE_BRANCH="origin/main"
+            COMPARE_FLAG="--compare-branch=origin/main"
           else
-            COMPARE_BRANCH="HEAD~1"
+            git diff HEAD~1 HEAD > diff.txt
+            COMPARE_FLAG="--diff-file=diff.txt"
           fi
-          diff-cover backend_coverage/coverage.xml --compare-branch=$COMPARE_BRANCH --fail-under=100
+          diff-cover backend_coverage/coverage.xml $COMPARE_FLAG --fail-under=100
