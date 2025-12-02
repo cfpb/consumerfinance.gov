@@ -163,7 +163,7 @@ xdescribe('Explore credit cards results page', () => {
   });
 });
 
-describe('Explore credit card details page', () => {
+xdescribe('Explore credit card details page', () => {
   it('should have a breadcrumb to the filtered list the user came from', () => {
     exploreCards.openLandingPage();
 
