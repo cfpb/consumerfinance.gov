@@ -137,6 +137,7 @@ jobs:
       - name: Check backend test coverage
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
+            git fetch origin main
             COMPARE_FLAG="--compare-branch=origin/main"
           else
             git diff HEAD~1 HEAD > diff.txt
