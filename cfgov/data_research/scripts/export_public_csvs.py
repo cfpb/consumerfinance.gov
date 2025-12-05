@@ -1,6 +1,7 @@
 import csv
 import datetime
 import logging
+import os
 from io import StringIO
 
 from dateutil import parser
@@ -27,6 +28,7 @@ from data_research.mortgage_utilities.s3_utils import (
 
 NATION_QUERYSET = NationalMortgageData.objects.all()
 STATES_TO_IGNORE = ["72"]  # Excluding Puerto Rico from project launch
+LOCAL_FILEPATH = os.getenv("LOCAL_MORTGAGE_FILEPATH")
 
 
 NATION_STARTER = {
@@ -45,6 +47,13 @@ LATE_VALUE_TITLE = {
 
 
 logger = logging.getLogger(__name__)
+
+
+def bake_local(slug, csvfile):
+    with open(f"develop-apps/{slug}.csv", "w") as f:
+        # Rewind the file to its beginning.
+        csvfile.seek(0)
+        f.write(csvfile.getvalue())
 
 
 def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
@@ -123,9 +132,11 @@ def fill_nation_row_date_values(date_set):
                 )
 
 
-def export_downloadable_csv(geo_type, late_value):
+def export_downloadable_csv(geo_type, late_value, local=False):
     """
-    Export a dataset to S3 as a UTF-8 CSV file.
+    Prep download metadata and either:
+    - if local is False, export public CSVs to s3 for downloading
+    - if local is True, download the dataset locally to develop-apps
 
     We add single quotes to FIPS codes so Excel doesn't strip leading zeros.
 
@@ -135,7 +146,7 @@ def export_downloadable_csv(geo_type, late_value):
 
     Each CSV is to start with a National row for comparison.
 
-    CSVs are posted at
+    Public CSVs are posted at
     https://files.consumerfinance.gov/data/mortgage-performance/downloads/
 
     The script also stores URLs and file sizes for use in page footnotes.
@@ -208,25 +219,30 @@ def export_downloadable_csv(geo_type, late_value):
                 round_pct(getattr(record, late_value)) for record in records
             ]
             writer.writerow(record_starter + record_ender)
-    bake_csv_to_s3(
-        slug, csvfile, sub_bucket=f"{MORTGAGE_SUB_BUCKET}/downloads"
-    )
-    logger.info(f"Baked {slug} to S3")
+    if local:
+        bake_local(slug, csvfile)
+        logger.info(f"Baked {slug}.csv to {local}")
+    else:
+        bake_csv_to_s3(
+            slug, csvfile, sub_bucket=f"{MORTGAGE_SUB_BUCKET}/downloads"
+        )
+        logger.info(f"Baked {slug} to S3")
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_file_size(bytecount)
     save_metadata(csv_size, slug, thru_month, late_value, geo_type)
 
 
-def run(prep_only=False):
+def run():
     load_fips_meta()
     date_set = [parser.parse(date).date() for date in FIPS.dates]
     fill_nation_row_date_values(date_set)
-
-    if prep_only is False:
+    if LOCAL_FILEPATH:
+        logger.info(f"Exporting public CSVs locally to {LOCAL_FILEPATH} ...")
+    else:
         logger.info("Exporting public CSVs to S3 ...")
-        for geo in ["County", "MetroArea", "State"]:
-            export_downloadable_csv(geo, "percent_30_60")
-            logger.info(f"Exported 30-89-day {geo} CSV")
-            export_downloadable_csv(geo, "percent_90")
-            logger.info(f"Exported 90-day {geo} CSV")
+    for geo in ["County", "MetroArea", "State"]:
+        export_downloadable_csv(geo, "percent_30_60", local=LOCAL_FILEPATH)
+        logger.info(f"Exported 30-89-day {geo} CSV")
+        export_downloadable_csv(geo, "percent_90", local=LOCAL_FILEPATH)
+        logger.info(f"Exported 90-day {geo} CSV")
