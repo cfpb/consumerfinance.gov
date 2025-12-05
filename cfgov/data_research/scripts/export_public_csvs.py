@@ -49,8 +49,8 @@ LATE_VALUE_TITLE = {
 logger = logging.getLogger(__name__)
 
 
-def bake_local(slug, csvfile):
-    with open(f"develop-apps/{slug}.csv", "w") as f:
+def bake_local(local_path, slug, csvfile):
+    with open(f"{local_path}/{slug}.csv", "w") as f:
         # Rewind the file to its beginning.
         csvfile.seek(0)
         f.write(csvfile.getvalue())
@@ -220,7 +220,7 @@ def export_downloadable_csv(geo_type, late_value, local=False):
             ]
             writer.writerow(record_starter + record_ender)
     if local:
-        bake_local(slug, csvfile)
+        bake_local(local, slug, csvfile)
         logger.info(f"Baked {slug}.csv to {local}")
     else:
         bake_csv_to_s3(
