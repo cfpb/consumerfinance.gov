@@ -68,7 +68,7 @@ class CardSurveyDataQuerySetTests(TestCase):
             "Credit score 619 or less"
         )
         self.assertEqual(qs_poor.count(), 1)
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             qs_poor.values_list(
                 "purchase_apr_for_tier_max",
                 "purchase_apr_for_tier_rating",
@@ -81,7 +81,7 @@ class CardSurveyDataQuerySetTests(TestCase):
             "Credit score of 720 or greater"
         )
         self.assertEqual(qs_great.count(), 1)
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             qs_great.values_list(
                 "purchase_apr_for_tier_max",
                 "purchase_apr_for_tier_rating",

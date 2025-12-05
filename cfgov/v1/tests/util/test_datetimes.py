@@ -2,11 +2,7 @@ from datetime import date, datetime
 
 from django.test import TestCase
 
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
+import zoneinfo
 
 from v1.util.datetimes import convert_date, end_of_time_period
 

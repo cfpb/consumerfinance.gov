@@ -8,6 +8,8 @@ from django.db import transaction
 
 from wagtail.models import Page, Site
 
+from zoneinfo import ZoneInfo
+
 from v1.models import HomePage
 
 
@@ -48,7 +50,9 @@ def run():
             title="CFGov",
             slug="cfgov",
             live=True,
-            last_published_at=datetime(2010, 7, 21),
+            last_published_at=datetime(
+                2010, 7, 21, tzinfo=ZoneInfo("US/Eastern")
+            ),
         )
 
         # Add the new home page as a child to the Wagtail root page.

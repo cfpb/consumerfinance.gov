@@ -13,7 +13,7 @@ describe('Admin', () => {
   });
 
   it('should login', () => {
-    cy.contains('Welcome');
+    cy.contains('Your most recent edits');
   });
 
   it('should be able to open the Images library', () => {
