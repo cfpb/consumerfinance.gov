@@ -135,8 +135,8 @@ def fill_nation_row_date_values(date_set):
 def export_downloadable_csv(geo_type, late_value, local=False):
     """
     Prep download metadata and either:
-    - if local is False, export public CSVs to s3 for downloading
-    - if local is True, download the dataset locally to develop-apps
+    - if local is False (no path), export the public CSVs to s3
+    - if a local path is passed, download the CSVs to the local path
 
     We add single quotes to FIPS codes so Excel doesn't strip leading zeros.
 
@@ -144,12 +144,12 @@ def export_downloadable_csv(geo_type, late_value, local=False):
     late_values are percent_30_60 or percent_90.
     Non-Metro areas are added to the MetroArea CSV.
 
-    Each CSV is to start with a National row for comparison.
+    Each CSV starts with a National row for comparison.
 
     Public CSVs are posted at
     https://files.consumerfinance.gov/data/mortgage-performance/downloads/
 
-    The script also stores URLs and file sizes for use in page footnotes.
+    The script also stores URLs and file sizes for use on the downloads page.
     """
     date_list = FIPS.short_dates
     thru_date = FIPS.dates[-1]
