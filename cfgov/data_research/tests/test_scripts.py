@@ -25,7 +25,7 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import validate_fips
 from data_research.scripts.export_public_csvs import (
-    export_downloadable_csv,
+    bake_local,
     round_pct,
     row_starter,
     save_metadata,
@@ -446,21 +446,38 @@ class DataExportTest(django.test.TestCase):
             total=2540000,
         )
 
+        self.csvlines = [
+            "RegionType,Name,CBSACode,2008-01,2008-02",
+            "National,United States,-----,1.5,1.6",
+            "MetroArea,Akron,10420,1.8,1.9",
+        ]
+
     @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
     def test_export_downloadable_csv(self, mock_bake):
-        run_export(prep_only=True)
-        export_downloadable_csv("County", "percent_30_60")
-        self.assertEqual(mock_bake.call_count, 1)
-        export_downloadable_csv("County", "percent_90")
-        self.assertEqual(mock_bake.call_count, 2)
-        export_downloadable_csv("MetroArea", "percent_30_60")
-        self.assertEqual(mock_bake.call_count, 3)
-        export_downloadable_csv("MetroArea", "percent_90")
-        self.assertEqual(mock_bake.call_count, 4)
-        export_downloadable_csv("State", "percent_30_60")
-        self.assertEqual(mock_bake.call_count, 5)
-        export_downloadable_csv("State", "percent_90")
+        """The absence of LOCAL_FILEPATH should enable s3 exports."""
+        run_export()
         self.assertEqual(mock_bake.call_count, 6)
+
+    @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
+    @mock.patch("data_research.scripts.export_public_csvs.bake_local")
+    def test_export_downloadable_csv_local(
+        self, mock_bake_local, mock_path="/tmp"
+    ):
+        """A LOCAL_FILEPATH value should trigger local exports."""
+        run_export()
+        self.assertEqual(mock_bake_local.call_count, 6)
+
+    def test_bake_local(self):
+        """Confirm that bake_local writes a StringIO obj to a local file."""
+        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
+            csvfile = StringIO()
+            for line in self.csvlines:
+                csvfile.write(line)
+            # bake_local appends .csv to the destination file.
+            bake_local("", tf.name[:-4], csvfile)
+            with open(tf.name) as f:
+                local_content = f.read()
+            self.assertEqual(local_content, csvfile.getvalue())
 
     def test_row_starter(self):
         """
@@ -510,19 +527,6 @@ class DataExportTest(django.test.TestCase):
             non_metro_starter,
             ["NonMetroArea", non_metro_data.state.name, non_metro_data.fips],
         )
-
-
-class RunExportTest(django.test.TestCase):
-    """Test the export runner."""
-
-    fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
-
-    @mock.patch(
-        "data_research.scripts.export_public_csvs.export_downloadable_csv"
-    )
-    def test_run_export(self, mock_export):
-        run_export()
-        self.assertEqual(mock_export.call_count, 6)
 
 
 class DataLoadTest(django.test.TestCase):
