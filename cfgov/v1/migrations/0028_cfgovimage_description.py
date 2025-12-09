@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0026_alter_learnpage_content'),
+        ('v1', '0027_archived_rule_category'),
     ]
 
     operations = [
