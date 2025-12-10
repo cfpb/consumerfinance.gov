@@ -1,5 +1,6 @@
-class FigSectionDefinition extends window.wagtailStreamField.blocks
-  .StructBlockDefinition {
+class FigSectionDefinition
+  extends window.wagtailStreamField.blocks.StructBlockDefinition
+{
   render(placeholder, prefix, initialState, initialError) {
     const block = super.render(placeholder, prefix, initialState, initialError);
 

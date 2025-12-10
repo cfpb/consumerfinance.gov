@@ -1,8 +1,9 @@
-coverage==7.4.3
-diff_cover==8.0.3
+coverage==7.11.3
+diff_cover==9.7.2
 django-slowtests==1.1.1
-freezegun==1.4.0
-model-bakery==1.17.0
-moto==5.0.2
+freezegun==1.5.1
+github3.py==4.0.1
+model-bakery==1.20.5
+moto==5.1.16
 pip
 responses==0.25.0

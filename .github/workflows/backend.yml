@@ -74,10 +74,13 @@ jobs:
           echo "${{ github.workspace }}/gettext-install/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=${{ github.workspace }}/gettext-install/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
+      - name: Install lxml dependencies
+        run: sudo apt-get install libxml2-dev libxslt-dev
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -116,12 +119,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Install dependencies
         run: |
@@ -136,4 +139,11 @@ jobs:
 
       - name: Check backend test coverage
         run: |
-          diff-cover backend_coverage/coverage.xml --compare-branch=origin/main --fail-under=100
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            git fetch origin main
+            COMPARE_FLAG="--compare-branch=origin/main"
+          else
+            git diff HEAD~1 HEAD > diff.txt
+            COMPARE_FLAG="--diff-file=diff.txt"
+          fi
+          diff-cover backend_coverage/coverage.xml $COMPARE_FLAG --fail-under=100

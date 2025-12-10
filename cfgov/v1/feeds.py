@@ -1,14 +1,9 @@
 from datetime import datetime
 
 from django.contrib.syndication.views import Feed
-
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
-
 from django.utils.timezone import make_aware
+
+import zoneinfo
 
 
 eastern = zoneinfo.ZoneInfo("US/Eastern")

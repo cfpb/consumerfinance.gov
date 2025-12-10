@@ -348,8 +348,12 @@ class MortgagePerformancePage(BrowsePage):
         thru_date = parser.parse(meta["sampling_dates"][-1])
         from_date = parser.parse(meta["sampling_dates"][0])
         meta["thru_month"] = thru_date.strftime("%Y-%m")
-        meta["thru_month_formatted"] = Markup(thru_date.strftime("%B&nbsp;%Y"))
-        meta["from_month_formatted"] = Markup(from_date.strftime("%B&nbsp;%Y"))
+        meta["thru_month_formatted"] = Markup(  # nosec
+            thru_date.strftime("%B&nbsp;%Y")
+        )
+        meta["from_month_formatted"] = Markup(  # nosec
+            from_date.strftime("%B&nbsp;%Y")
+        )
         meta["pub_date_formatted"] = meta.get("download_files")[
             meta["thru_month"]
         ]["pub_date"]

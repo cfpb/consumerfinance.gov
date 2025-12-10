@@ -1,6 +1,12 @@
+import json
+
 from django.test import TestCase, override_settings
 
-from search.elasticsearch_helpers import environment_specific_index
+from search.elasticsearch_helpers import (
+    _LazyQuerySetList,
+    environment_specific_index,
+)
+from search.models import Synonym
 
 
 class TestEnvironmentSpecificIndex(TestCase):
@@ -34,3 +40,21 @@ class TestEnvironmentSpecificIndex(TestCase):
     def test_environment_specific_index_lowercases_index(self):
         name = environment_specific_index("index")
         self.assertEqual(name, "test-index")
+
+
+class TestLazyQuerySetList(TestCase):
+    def test_db_query_deferred(self):
+        Synonym.objects.bulk_create(
+            [Synonym(synonym=synonym) for synonym in ["foo", "bar", "baz"]]
+        )
+
+        with self.assertNumQueries(0):
+            qs = Synonym.objects.values_list("synonym", flat=True).order_by(
+                "pk"
+            )
+            lazy = _LazyQuerySetList(qs)
+
+        with self.assertNumQueries(1):
+            self.assertTrue(lazy)
+            self.assertEqual(len(lazy), 3)
+            self.assertEqual(json.dumps(lazy), '["foo", "bar", "baz"]')
