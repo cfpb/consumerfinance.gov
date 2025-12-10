@@ -3,11 +3,7 @@ from unittest import TestCase
 
 from django.template import engines
 
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
+import zoneinfo
 
 
 class DatetimesExtensionTests(TestCase):

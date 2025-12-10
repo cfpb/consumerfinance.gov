@@ -45,11 +45,23 @@ ngram_tokenizer = analyzer(
 )
 
 
+class _LazyQuerySetList(list):
+    def __init__(self, queryset):
+        self._queryset = queryset
+        super().__init__()
+
+    def __iter__(self):
+        return iter(self._queryset)
+
+    def __bool__(self):
+        return bool(self._queryset)
+
+    def __len__(self):
+        return len(self._queryset)
+
+
 def get_synonyms():
-    try:
-        return list(Synonym.objects.values_list("synonym", flat=True))
-    except Exception:
-        return []
+    return _LazyQuerySetList(Synonym.objects.values_list("synonym", flat=True))
 
 
 synonym_filter = token_filter(

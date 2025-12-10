@@ -9,6 +9,8 @@ from django.utils import timezone
 from wagtail.models import Site
 from wagtail.test.utils import WagtailTestUtils
 
+import zoneinfo
+
 from jobmanager.models.django import (
     Grade,
     JobCategory,
@@ -19,12 +21,6 @@ from jobmanager.models.django import (
 )
 from jobmanager.models.pages import JobListingPage
 from v1.models.snippets import ReusableText
-
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
 
 
 class JobListingPageQuerySetTests(TestCase):

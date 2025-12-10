@@ -1,3 +1,5 @@
+import contextlib
+
 from django import forms
 from django.conf import settings
 from django.db import models
@@ -18,14 +20,7 @@ from wagtail.admin.panels import (
 from wagtail.fields import RichTextField
 from wagtail.models import PageManager, PageQuerySet
 
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
-
-import contextlib
-
+import zoneinfo
 from modelcluster.fields import ParentalManyToManyField
 
 from jobmanager.models.django import (

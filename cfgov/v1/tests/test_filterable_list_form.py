@@ -5,6 +5,8 @@ from django.test import TestCase, override_settings
 
 from wagtail.models import Site
 
+import zoneinfo
+
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
@@ -25,12 +27,6 @@ from v1.models import (
 )
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
-
-
-try:
-    import zoneinfo
-except ImportError:
-    from backports import zoneinfo
 
 
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):

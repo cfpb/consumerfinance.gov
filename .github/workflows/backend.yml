@@ -74,10 +74,13 @@ jobs:
           echo "${{ github.workspace }}/gettext-install/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=${{ github.workspace }}/gettext-install/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
+      - name: Install lxml dependencies
+        run: sudo apt-get install libxml2-dev libxslt-dev
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -121,7 +124,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Install dependencies
         run: |
