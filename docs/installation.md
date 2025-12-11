@@ -86,13 +86,13 @@ outside of the Docker container, we rely on a local Python environment.
     Python 3.13 must then be installed once pyenv is installed:
 
     ```sh
-    pyenv install 3.13.10
+    pyenv install 3.13
     ```
 
 First we need to create a Python virtualenv for consumerfinance.gov:
 
 ```sh
-pyenv virtualenv 3.13.10 consumerfinance.gov
+pyenv virtualenv 3.13 consumerfinance.gov
 ```
 
 Then we'll need to activate it.
