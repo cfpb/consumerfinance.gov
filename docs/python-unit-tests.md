@@ -75,7 +75,7 @@ tox
 
 Tox runs different isolated Python environments with different versions of dependencies.
 We use it to format and lint our Python files, check out import sorting, and run unit tests
-in Python 3.8.
+in Python 3.13.
 
 To recreate the virtualenv for testing, run
 
