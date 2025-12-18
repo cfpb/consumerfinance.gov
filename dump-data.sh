@@ -26,5 +26,6 @@ pg_dump \
     --no-privileges \
     --clean \
     --if-exists \
+    --schema cfpb \
     $DATABASE_URL \
 | gzip > $dump_filename
