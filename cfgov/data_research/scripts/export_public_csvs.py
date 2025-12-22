@@ -4,6 +4,9 @@ import logging
 import os
 from io import StringIO
 
+from django.conf import settings
+
+from botocore.exceptions import ClientError
 from dateutil import parser
 
 from core.utils import format_file_size
@@ -20,12 +23,12 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 from data_research.mortgage_utilities.s3_utils import (
-    MORTGAGE_SUB_BUCKET,
-    S3_MORTGAGE_DOWNLOADS_BASE,
+    DOWNLOAD_KEY,  # "data/mortgage-performance/downloads"
     bake_csv_to_s3,
 )
 
 
+PUBLIC_DOWNLOAD_BUCKET = settings.AWS_S3_CUSTOM_DOMAIN
 NATION_QUERYSET = NationalMortgageData.objects.all()
 STATES_TO_IGNORE = ["72"]  # Excluding Puerto Rico from project launch
 LOCAL_FILEPATH = os.getenv("LOCAL_MORTGAGE_FILEPATH")
@@ -60,7 +63,7 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = datetime.date.today().strftime("%B %Y")
     thru_month_formatted = parser.parse(thru_month).strftime("%B %Y")
-    csv_url = f"{S3_MORTGAGE_DOWNLOADS_BASE}/{slug}.csv"
+    csv_url = f"{PUBLIC_DOWNLOAD_BUCKET}/{DOWNLOAD_KEY}/{slug}.csv"
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name="download_files"
     )
@@ -223,10 +226,12 @@ def export_downloadable_csv(geo_type, late_value, local=False):
         bake_local(local, slug, csvfile)
         logger.info(f"Baked {slug}.csv to {local}")
     else:
-        bake_csv_to_s3(
-            slug, csvfile, sub_bucket=f"{MORTGAGE_SUB_BUCKET}/downloads"
-        )
-        logger.info(f"Baked {slug} to S3")
+        try:
+            bake_csv_to_s3(slug, csvfile)
+        except ClientError:
+            logger.info("Baking to s3 failed; skipping export")
+        else:
+            logger.info(f"Baked {slug} to s3")
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_file_size(bytecount)

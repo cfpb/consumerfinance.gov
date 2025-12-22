@@ -44,7 +44,6 @@ from data_research.scripts.load_mortgage_aggregates import (
 )
 from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.process_mortgage_data import (
-    dump_as_csv,
     process_source,
     update_through_date_constant,
 )
@@ -125,23 +124,10 @@ class SourceToTableTest(django.test.TestCase):
             new_date,
         )
 
-    def test_dump_as_csv(self):
-        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
-            # dump_as_csv appends .csv to the destination file.
-            dump_as_csv([self.data_row], tf.name[:-4])
-
-            with open(tf.name) as f:
-                content = f.read()
-
-            self.assertEqual(content.strip(), ",".join(self.data_row))
-
-    @mock.patch("data_research.scripts.process_mortgage_data.read_in_s3_csv")
-    @mock.patch("data_research.scripts.process_mortgage_data.dump_as_csv")
+    @mock.patch("data_research.scripts.process_mortgage_data.read_source_csv")
     @mock.patch("data_research.scripts.process_mortgage_data.load_counties")
     @mock.patch("data_research.scripts.process_mortgage_data.load_states")
-    def test_process_source(
-        self, mock_states, mock_counties, mock_dump, mock_read
-    ):
+    def test_process_source(self, mock_states, mock_counties, mock_read):
         test_data_dict = [
             {
                 "date": "01/01/10",
@@ -171,7 +157,6 @@ class SourceToTableTest(django.test.TestCase):
         )
         self.assertEqual(CountyMortgageData.objects.count(), 2)
         self.assertEqual(mock_read.call_count, 1)
-        self.assertEqual(mock_dump.call_count, 1)
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
 
