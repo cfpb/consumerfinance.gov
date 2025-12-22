@@ -30,8 +30,8 @@ $regs-wayfinder-padding-top: math.div(15px, $base-font-size-px) + rem;
   }
 
   &__link:visited {
-    border-color: $link-underline;
-    color: $link-text;
+    border-color: var(--link-underline);
+    color: var(--link-text);
   }
 
   &__sidebar {

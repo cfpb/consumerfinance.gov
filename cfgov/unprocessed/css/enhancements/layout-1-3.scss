@@ -78,7 +78,7 @@
 
           &::after {
             content: '';
-            border-left: 1px solid $content-main-border;
+            border-left: 1px solid var(--content-main-border);
             position: absolute;
             top: math.div(30px, $base-font-size-px) + rem;
             bottom: 0;
@@ -104,7 +104,7 @@
 
           &::after {
             content: '';
-            border-left: 1px solid $content-main-border;
+            border-left: 1px solid var(--content-main-border);
             position: absolute;
             top: math.div(30px, $base-font-size-px) + rem;
             bottom: 0;
