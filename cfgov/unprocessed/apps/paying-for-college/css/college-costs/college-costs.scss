@@ -39,7 +39,7 @@
   }
 
   .u-border-bottom {
-    border-bottom: 1px solid $block-border-bottom;
+    border-bottom: 1px solid var(--block-border-bottom);
   }
 
   .block.block--mid {

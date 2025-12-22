@@ -35,7 +35,7 @@
 }
 
 .recommended {
-  border-bottom: 2px solid $block-border;
+  border-bottom: 2px solid var(--block-border);
 
   > h2 {
     margin-bottom: math.div(-10px, $base-font-size-px) + rem;

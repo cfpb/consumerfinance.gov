@@ -37,7 +37,7 @@
   }
 
   &--border-top {
-    border-top: 1px solid $block-border;
+    border-top: 1px solid var(--block-border);
     padding-top: math.div(10px, $base-font-size-px) + em;
     margin-top: math.div(30px, $base-font-size-px) + em;
   }
