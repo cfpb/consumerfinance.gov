@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 .college-costs {
   // remove border between sidebar and main content
@@ -39,7 +39,7 @@
   }
 
   .u-border-bottom {
-    border-bottom: 1px solid $block-border-bottom;
+    border-bottom: 1px solid var(--block-border-bottom);
   }
 
   .block.block--mid {
