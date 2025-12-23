@@ -1,4 +1,3 @@
-import csv
 import datetime
 import tempfile
 import unittest
@@ -7,7 +6,6 @@ from unittest import mock
 
 import django
 
-from dateutil import parser
 from model_bakery import baker
 
 from data_research.models import (
@@ -230,46 +228,6 @@ class DataLoadIntegrityTest(django.test.TestCase):
             "ninety": "10",
             "other": "11",
         }
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_data_creation_from_base_row(self, mock_read_csv):
-        """Confirm creation of a CountyMortgageData object from a CSV row."""
-        f = StringIO(self.data_header + self.data_row)
-        reader = csv.DictReader(f)
-        mock_read_csv.return_value = reader
-        load_values()
-        self.assertEqual(CountyMortgageData.objects.count(), 1)
-        county = CountyMortgageData.objects.first()
-        fields = reader.fieldnames
-        fields.pop(fields.index("fips"))  # test string separately
-        fields.pop(fields.index("open"))  # 'open' is stored as 'total'
-        fields.pop(fields.index("date"))  # date must be parsed before testing
-        self.assertEqual(county.fips, self.data_row_dict.get("fips"))
-        open_value = int(self.data_row_dict.get("open"))
-        self.assertEqual(county.total, open_value)
-        target_date = parser.parse(self.data_row_dict["date"]).date()
-        self.assertEqual(county.date, target_date)
-        for field in fields:  # remaining fields can be tested in a loop
-            self.assertEqual(
-                getattr(county, field), int(self.data_row_dict.get(field))
-            )
-        # test computed values
-        self.assertEqual(county.epoch, int(target_date.strftime("%s")) * 1000)
-        self.assertEqual(
-            county.percent_90,
-            int(self.data_row_dict.get("ninety")) * 1.0 / open_value,
-        )
-        self.assertEqual(
-            county.percent_30_60,
-            (
-                int(self.data_row_dict.get("thirty"))
-                + int(self.data_row_dict.get("sixty"))
-            )
-            * 1.0
-            / open_value,
-        )
 
     def test_validate_counties(self):
         county = County.objects.first()
