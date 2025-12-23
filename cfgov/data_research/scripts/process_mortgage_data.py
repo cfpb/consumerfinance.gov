@@ -52,7 +52,7 @@ def process_source(starting_date, source_file):
     """
     Re-generate aggregated data from the latest source CSV posted to S3.
 
-    This operation has four steps
+    This operation has four main steps:
     - Wipe and regenerate the base county_mortgage_data table.
     - Regenerate aggregated data for MSAs, non-MSAs, states and national.
     - Update metadata values and files.
@@ -141,11 +141,15 @@ def run(*args):
             "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
         )
         return
-    source_file = args[0]
-    starting_date = MortgageDataConstant.objects.get(
-        name="starting_date"
-    ).date_value
-    process_source(starting_date, source_file)
-    load_mortgage_aggregates.run()
-    update_county_msa_meta.run()
-    export_public_csvs.run()
+    arg = args[0]
+    if arg == "export-csvs-only":
+        export_public_csvs.run()
+    else:
+        source_file = arg
+        starting_date = MortgageDataConstant.objects.get(
+            name="starting_date"
+        ).date_value
+        process_source(starting_date, source_file)
+        load_mortgage_aggregates.run()
+        update_county_msa_meta.run()
+        export_public_csvs.run()
