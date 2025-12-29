@@ -55,19 +55,21 @@ class MockStaticfilesFinder(BaseFinder):
 
         return patterns
 
-    def find(self, path, all=False):
+    def find(self, path, find_all=False):
         for pattern, replacement in self.patterns.items():
             if not fnmatch(path, pattern):
                 continue
 
-            result = self._find_in_other_finders(replacement, all=all)
+            result = self._find_in_other_finders(
+                replacement, find_all=find_all
+            )
 
             if result:
                 return result
 
         return []
 
-    def _find_in_other_finders(self, path, all=False):
+    def _find_in_other_finders(self, path, find_all=False):
         """Look for one or more matches in finders besides this one.
 
         Unfortunately much of this logic has to be duplicated from
@@ -80,9 +82,9 @@ class MockStaticfilesFinder(BaseFinder):
             if isinstance(finder, self.__class__):
                 continue
 
-            result = finder.find(path, all=all)
+            result = finder.find(path, find_all=find_all)
 
-            if not all and result:
+            if not find_all and result:
                 return result
 
             if not isinstance(result, (list, tuple)):
