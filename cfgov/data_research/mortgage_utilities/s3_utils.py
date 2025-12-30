@@ -8,7 +8,7 @@ import requests
 
 
 # We want the process to be able to succeed in stgpub but default to prodpub
-ALTO_ENV = os.getenv("ACCOUNT_NAME_SHORT", "prodpub")
+ALTO_ENV = os.getenv("ALTO_ENV", "prodpub")
 ALTO_DOWNLOAD_BUCKET = f"cfpb-{ALTO_ENV}-cfgov-files-main"
 DOWNLOAD_KEY = "data/mortgage-performance/downloads"
 
