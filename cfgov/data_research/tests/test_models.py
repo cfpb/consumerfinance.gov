@@ -399,7 +399,7 @@ class MortgageModelTests(django.test.TestCase):
         data_record = self.base_data
         self.assertEqual(data_record.percent_30_60, 0.047244094488188976)
         self.assertEqual(data_record.percent_90, 0.0)
-        self.assertEqual(data_record.epoch, 1472702400000)
+        self.assertEqual(data_record.epoch, 1472688000000)
 
     def test_base_data_properties_total_zero(self):
         """No divide-by-zeroes up in here."""
@@ -415,7 +415,7 @@ class MortgageModelTests(django.test.TestCase):
         )
         self.assertEqual(
             sorted(data_record.time_series("90").values()),
-            [0.0, 1472702400000],
+            [0.0, 1472688000000],
         )
 
     def test_msa_data_properties(self):
