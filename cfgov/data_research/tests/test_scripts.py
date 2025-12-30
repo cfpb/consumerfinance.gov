@@ -40,7 +40,6 @@ from data_research.scripts.load_mortgage_aggregates import (
 from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates,
 )
-from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.process_mortgage_data import (
     process_source,
     update_through_date_constant,
@@ -66,7 +65,7 @@ class SourceToTableTest(django.test.TestCase):
     ]
 
     start_date = datetime.date(2008, 1, 1)
-    through_date = datetime.date(2018, 6, 1)
+    source_file = "delinquency_county_0925.csv"
     data_row = [
         "1",
         "01001",
@@ -150,19 +149,24 @@ class SourceToTableTest(django.test.TestCase):
         ]
         mock_reader = (row for row in test_data_dict)
         mock_read.return_value = mock_reader
-        process_source(
-            self.start_date, self.through_date, dump_slug="mock_csv_slug"
-        )
+        process_source(self.source_file)
         self.assertEqual(CountyMortgageData.objects.count(), 2)
         self.assertEqual(mock_read.call_count, 1)
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
 
     @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "update_through_date_constant"
-    )
+    def test_run_command_no_args(self, mock_process):
+        run_process_mortgage_data()
+        self.assertEqual(mock_process.call_count, 0)
+
+    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
+    def test_run_command_no_env_source(self, mock_process):
+        """Test finds no MORTGAGE_PERFORMANCE_SOURCE repo value."""
+        run_process_mortgage_data(self.source_file)
+        self.assertEqual(mock_process.call_count, 0)
+
+    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
     @mock.patch(
         "data_research.scripts.process_mortgage_data."
         "load_mortgage_aggregates.run"
@@ -174,25 +178,24 @@ class SourceToTableTest(django.test.TestCase):
     @mock.patch(
         "data_research.scripts.process_mortgage_data.export_public_csvs.run"
     )
+    @mock.patch(
+        "data_research.scripts.process_mortgage_data."
+        "MORTGAGE_PERFORMANCE_SOURCE"
+    )
     def test_run_command(
         self,
+        mock_csv_source,
         mock_export,
         mock_meta_update,
         mock_aggregates,
-        mock_update_constants,
-        mock_process,
+        mock_process_source,
     ):
-        run_process_mortgage_data("2018-06-01", "mock_slug")
-        self.assertEqual(mock_export.call_count, 1)
-        self.assertEqual(mock_meta_update.call_count, 1)
+        mock_csv_source.value = "mock_repo_source"
+        run_process_mortgage_data(self.source_file)
+        self.assertEqual(mock_process_source.call_count, 1)
         self.assertEqual(mock_aggregates.call_count, 1)
-        self.assertEqual(mock_update_constants.call_count, 1)
-        self.assertEqual(mock_process.call_count, 1)
-
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    def test_run_command_no_args(self, mock_process):
-        run_process_mortgage_data()
-        self.assertEqual(mock_process.call_count, 0)
+        self.assertEqual(mock_meta_update.call_count, 1)
+        self.assertEqual(mock_export.call_count, 1)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -578,48 +581,6 @@ class DataLoadTest(django.test.TestCase):
         self.assertEqual(NationalMortgageData.objects.count(), 1)
         load_national_values("2016-09-01")
         self.assertEqual(NationalMortgageData.objects.count(), 1)
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_load_values(self, mock_read_in):
-        mock_read_in.return_value = [
-            {
-                "thirty": "4",
-                "month": "1",
-                "current": "262",
-                "sixty": "1",
-                "ninety": "0",
-                "date": "01/01/2008",
-                "open": "270",
-                "other": "3",
-                "fips": "12081",
-            }
-        ]
-        load_values()
-        self.assertEqual(mock_read_in.call_count, 1)
-        self.assertEqual(CountyMortgageData.objects.count(), 1)
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_load_values_return_fips(self, mock_read_in):
-        mock_read_in.return_value = [
-            {
-                "thirty": "4",
-                "month": "1",
-                "current": "262",
-                "sixty": "1",
-                "ninety": "0",
-                "date": "01/01/2008",
-                "open": "270",
-                "other": "3",
-                "fips": "12081",
-            }
-        ]
-        fips_list = load_values(return_fips=True)
-        self.assertEqual(mock_read_in.call_count, 1)
-        self.assertEqual(fips_list, ["12081"])
 
     @mock.patch(
         "data_research.scripts.load_mortgage_aggregates.update_sampling_dates"
