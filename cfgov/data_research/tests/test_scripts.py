@@ -54,18 +54,22 @@ from data_research.scripts.update_county_msa_meta import (
 )
 
 
-STARTING_DATE = datetime.date(2008, 1, 1)
-THROUGH_DATE = datetime.date(2016, 12, 1)
-
-
 class ThruDateTest(unittest.TestCase):
+    this_year = datetime.date.today().year
+    short_year = this_year % 100
+
     def test_thrudate_generation(self):
-        latest_file = "delinquency_county_0925.csv"
+        latest_file = f"delinquency_county_09{self.short_year}.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-06-01")
+        self.assertEqual(new_thrudate, f"{self.this_year}-06-01")
+
+    def test_thrudate_generation_turn_of_year(self):
+        latest_file = f"delinquency_county_03{self.short_year}.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, f"{self.this_year - 1}-12-01")
 
     def test_thrudate_generation_invalid_thru_month(self):
-        latest_file = "delinquency_county_0725.csv"
+        latest_file = f"delinquency_county_07{self.short_year}.csv"
         new_thrudate = get_thrudate(latest_file)
         self.assertIs(new_thrudate, None)
 
