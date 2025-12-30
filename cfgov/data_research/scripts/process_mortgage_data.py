@@ -48,7 +48,7 @@ def read_source_csv(source_file):
     return reader
 
 
-def process_source(starting_date, source_file):
+def process_source(source_file):
     """
     Re-generate aggregated data from the latest source CSV posted to S3.
 
@@ -70,6 +70,9 @@ def process_source(starting_date, source_file):
     01/01/08,1001,268,260,4,1,0,3
     """
     starter = datetime.datetime.now()
+    starting_date = MortgageDataConstant.objects.get(
+        name="starting_date"
+    ).date_value
     thru_date_string = thrudate.get_thrudate(source_file)
     logger.info(f"Using through_date of {thru_date_string}")
     through_date = parser.parse(thru_date_string).date()
@@ -136,6 +139,7 @@ def run(*args):
         logger.error(
             "Pass a source file with the form 'delinquency_county_{MMYY}.csv'"
         )
+        return
     if not MORTGAGE_PERFORMANCE_SOURCE:
         logger.error(
             "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
@@ -146,10 +150,7 @@ def run(*args):
         export_public_csvs.run()
     else:
         source_file = arg
-        starting_date = MortgageDataConstant.objects.get(
-            name="starting_date"
-        ).date_value
-        process_source(starting_date, source_file)
+        process_source(source_file)
         load_mortgage_aggregates.run()
         update_county_msa_meta.run()
         export_public_csvs.run()
