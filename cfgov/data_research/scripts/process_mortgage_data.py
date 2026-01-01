@@ -40,8 +40,10 @@ def update_through_date_constant(date):
     constant.save()
 
 
-def read_source_csv(source_file):
-    raw_source_url = f"{MORTGAGE_PERFORMANCE_SOURCE}/{source_file}"
+def read_source_csv(source_file, repo=None):
+    if repo is None:
+        repo = MORTGAGE_PERFORMANCE_SOURCE
+    raw_source_url = f"{repo}/{source_file}"
     response = requests.get(raw_source_url)
     f = StringIO(response.content.decode("utf-8"))
     reader = csv.DictReader(f)
@@ -56,11 +58,7 @@ def process_source(source_file):
     - Wipe and regenerate the base county_mortgage_data table.
     - Regenerate aggregated data for MSAs, non-MSAs, states and national.
     - Update metadata values and files.
-    - Export new downloadable public CSV files to s3, or dump them locally.
-
-    To dump the six CSV downloads locally, add this env var before starting,
-    and specify a local path for the files; develop-apps is just an example:
-    export LOCAL_MORTGAGE_FILEPATH=develop-apps
+    - Export 6 downloadable public CSV files to s3 and update CSV metadata.
 
     The input filename should have this form: delinquency_county_{MMYY}.csv
     Expected quarterly month values are 03, 06, 09, and 12.
@@ -126,14 +124,22 @@ def run(*args):
     """
     Process the latest data source and optionally dump CSV downloads locally.
 
-    You must pass a source filename in the form delinquency_county_{MMYY}.csv
+    This process depends on an env var: MORTGAGE_PERFORMANCE_SOURCE
+    It provides the URL for the GHE repo that stores the app's source data.
+    The URL can't be exposed publicly, which is why it's delivered via env.
+    The var is made available in the app's env during Alto deployments.
+
+    You must also pass the latest source filename in the form of:
+        delinquency_county_{MMYY}.csv
     Sample command:
         manage.py runscript process_mortgage_data \
-            --script-args delinquency_county_0625.csv
+            --script-args delinquency_county_0925.csv
 
-    Local downloads can be triggered by an env var specifying a location:
-    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps`
-    That will dump the six export CSVs locally instead of pushing them to s3.
+    Optionally, local downloads can be triggered by an env var location:
+    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps` will dump the
+    six public CSV payloads to /develop-apps/ instead of pushing them to s3.
+    CSV metadata won't be generated, because it's not valid until CSVs are
+    posted to s3.
     """
     if not args:
         logger.error(

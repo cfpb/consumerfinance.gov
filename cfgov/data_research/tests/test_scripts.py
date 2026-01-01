@@ -6,6 +6,7 @@ from unittest import mock
 
 import django
 
+import responses
 from model_bakery import baker
 
 from data_research.models import (
@@ -42,6 +43,7 @@ from data_research.scripts.load_mortgage_aggregates import (
 )
 from data_research.scripts.process_mortgage_data import (
     process_source,
+    read_source_csv,
     update_through_date_constant,
 )
 from data_research.scripts.process_mortgage_data import (
@@ -56,6 +58,9 @@ from data_research.scripts.update_county_msa_meta import (
 
 this_year = datetime.date.today().year
 short_year = this_year % 100
+repo_env_var_to_mock = (
+    "data_research.scripts.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE"
+)
 
 
 class ThruDateTest(unittest.TestCase):
@@ -78,6 +83,65 @@ class ThruDateTest(unittest.TestCase):
         latest_file = "delinquency_county_0922.csv"
         new_thrudate = get_thrudate(latest_file)
         self.assertIs(new_thrudate, None)
+
+
+class CsvProcessingTest(unittest.TestCase):
+    csvlines = [
+        "RegionType,Name,CBSACode,2008-01,2008-02",
+        "National,United States,-----,1.5,1.6",
+        "MetroArea,Akron,10420,1.8,1.9",
+    ]
+
+    def test_bake_local(self):
+        """Confirm that bake_local writes a StringIO obj to a local file."""
+        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
+            csvfile = StringIO()
+            for line in self.csvlines:
+                csvfile.write(line)
+            # bake_local appends .csv to the destination file.
+            bake_local("", tf.name[:-4], csvfile)
+            with open(tf.name) as f:
+                local_content = f.read()
+            self.assertEqual(local_content, csvfile.getvalue())
+
+    @responses.activate
+    def test_read_source_csv(self):
+        mock_repo_path = "https://github.com/repo"
+        source_file = "delinquency_county_0999.csv"
+        url = f"{mock_repo_path}/{source_file}"
+        responses.add(responses.GET, url, body="a,b,c\nd,e,f")
+        reader = read_source_csv(source_file, repo=mock_repo_path)
+        self.assertEqual(reader.fieldnames, ["a", "b", "c"])
+        self.assertEqual(sorted(next(reader).values()), ["d", "e", "f"])
+
+    @mock.patch(
+        "data_research.scripts.process_mortgage_data.export_public_csvs.run"
+    )  # noqa
+    @mock.patch(repo_env_var_to_mock)
+    def test_export_public_csvs_run(self, mock_repo_var, mock_csv_run):
+        mock_repo_var.value = "data.repo.gov/mock/"
+        run_process_mortgage_data("export-csvs-only")
+        self.assertEqual(mock_csv_run.call_count, 1)
+
+    @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
+    @mock.patch("data_research.scripts.export_public_csvs.bake_local")
+    @mock.patch("data_research.scripts.export_public_csvs.save_metadata")
+    def test_bake_csvs_locally_no_meta(
+        self, mock_metadata, mock_bake_local, mock_path="/tmp"
+    ):
+        """Trying to bake locally should save no meta"""
+        run_process_mortgage_data("export-csvs-only")
+        self.assertEqual(mock_metadata.call_count, 0)
+
+    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
+    def test_run_command_no_args(self, mock_process):
+        run_process_mortgage_data()
+        self.assertEqual(mock_process.call_count, 0)
+
+    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
+    def test_run_command_no_env_source(self, mock_process):
+        run_process_mortgage_data("delinquency_county_0999")
+        self.assertEqual(mock_process.call_count, 0)
 
 
 class SourceToTableTest(django.test.TestCase):
@@ -178,16 +242,15 @@ class SourceToTableTest(django.test.TestCase):
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
 
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    def test_run_command_no_args(self, mock_process):
-        run_process_mortgage_data()
-        self.assertEqual(mock_process.call_count, 0)
-
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    def test_run_command_no_env_source(self, mock_process):
-        """Test finds no MORTGAGE_PERFORMANCE_SOURCE repo value."""
-        run_process_mortgage_data(self.source_file)
-        self.assertEqual(mock_process.call_count, 0)
+    # @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
+    # @mock.patch("data_research.scripts.export_public_csvs.save_metadata")
+    # @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
+    # def test_bake_csv_to_s3_credential_failure(
+    #         self, mock_s3, mock_metadata, mock_path=None):
+    #     """S3 failure should not save metadata"""
+    #     mock_s3.side_effect = Exception("s3 exception")
+    #     run_export()
+    #     self.assertEqual(mock_metadata.call_count, 0)
 
     @mock.patch("data_research.scripts.process_mortgage_data.process_source")
     @mock.patch(
@@ -415,17 +478,11 @@ class DataExportTest(django.test.TestCase):
             total=2540000,
         )
 
-        self.csvlines = [
-            "RegionType,Name,CBSACode,2008-01,2008-02",
-            "National,United States,-----,1.5,1.6",
-            "MetroArea,Akron,10420,1.8,1.9",
-        ]
-
     @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
-    def test_export_downloadable_csv(self, mock_bake):
+    def test_export_downloadable_csv(self, mock_bake_s3):
         """The absence of LOCAL_FILEPATH should enable s3 exports."""
         run_export()
-        self.assertEqual(mock_bake.call_count, 6)
+        self.assertEqual(mock_bake_s3.call_count, 6)
 
     @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
     @mock.patch("data_research.scripts.export_public_csvs.bake_local")
@@ -435,18 +492,6 @@ class DataExportTest(django.test.TestCase):
         """A LOCAL_FILEPATH value should trigger local exports."""
         run_export()
         self.assertEqual(mock_bake_local.call_count, 6)
-
-    def test_bake_local(self):
-        """Confirm that bake_local writes a StringIO obj to a local file."""
-        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
-            csvfile = StringIO()
-            for line in self.csvlines:
-                csvfile.write(line)
-            # bake_local appends .csv to the destination file.
-            bake_local("", tf.name[:-4], csvfile)
-            with open(tf.name) as f:
-                local_content = f.read()
-            self.assertEqual(local_content, csvfile.getvalue())
 
     def test_row_starter(self):
         """
