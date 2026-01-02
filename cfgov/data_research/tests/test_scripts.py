@@ -75,7 +75,7 @@ class ThruDateTest(unittest.TestCase):
         new_thrudate = get_thrudate(latest_file)
         self.assertEqual(new_thrudate, "2025-03-01")
 
-    def test_thrudate_generation(self):
+    def test_thrudate_generation_09(self):
         latest_file = "delinquency_county_0925.csv"
         new_thrudate = get_thrudate(latest_file)
         self.assertEqual(new_thrudate, "2025-06-01")
@@ -150,7 +150,7 @@ class CsvProcessingTest(unittest.TestCase):
 
     @mock.patch("data_research.scripts.process_mortgage_data.process_source")
     def test_run_command_no_env_source(self, mock_process):
-        run_process_mortgage_data("delinquency_county_0999")
+        run_process_mortgage_data("delinquency_county_0925")
         self.assertEqual(mock_process.call_count, 0)
 
 

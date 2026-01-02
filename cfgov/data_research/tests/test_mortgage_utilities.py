@@ -25,7 +25,8 @@ class LoadConstantsTest(django.test.TestCase):
 
 
 class GeoLoadTest(django.test.TestCase):
-    def test_state_loader(self):
+    def test_state_county_loading(self):
+        """County loading depends on States, so testing together."""
         State.objects.all().delete()
         self.assertEqual(State.objects.count(), 0)
         load_states()
