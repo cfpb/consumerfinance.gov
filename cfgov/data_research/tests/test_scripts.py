@@ -249,16 +249,6 @@ class SourceToTableTest(django.test.TestCase):
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
 
-    # @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
-    # @mock.patch("data_research.scripts.export_public_csvs.save_metadata")
-    # @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
-    # def test_bake_csv_to_s3_credential_failure(
-    #         self, mock_s3, mock_metadata, mock_path=None):
-    #     """S3 failure should not save metadata"""
-    #     mock_s3.side_effect = Exception("s3 exception")
-    #     run_export()
-    #     self.assertEqual(mock_metadata.call_count, 0)
-
     @mock.patch("data_research.scripts.process_mortgage_data.process_source")
     @mock.patch(
         "data_research.scripts.process_mortgage_data."
