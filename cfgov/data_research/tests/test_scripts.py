@@ -59,31 +59,34 @@ from data_research.scripts.update_county_msa_meta import (
 )
 
 
-this_year = datetime.date.today().year
-short_year = this_year % 100
 repo_env_var_to_mock = (
     "data_research.scripts.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE"
 )
 
 
 class ThruDateTest(unittest.TestCase):
-    def test_thrudate_generation(self):
-        latest_file = f"delinquency_county_09{short_year}.csv"
+    def test_thrudate_generation_03(self):
+        latest_file = "delinquency_county_0325.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, f"{this_year}-06-01")
+        self.assertEqual(new_thrudate, "2024-12-01")
 
-    def test_thrudate_generation_turn_of_year(self):
-        latest_file = f"delinquency_county_03{short_year}.csv"
+    def test_thrudate_generation_06(self):
+        latest_file = "delinquency_county_0625.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, f"{this_year - 1}-12-01")
+        self.assertEqual(new_thrudate, "2025-03-01")
+
+    def test_thrudate_generation(self):
+        latest_file = "delinquency_county_0925.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, "2025-06-01")
+
+    def test_thrudate_generation_12(self):
+        latest_file = "delinquency_county_1225.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, "2025-09-01")
 
     def test_thrudate_generation_invalid_thru_month(self):
-        latest_file = f"delinquency_county_07{short_year}.csv"
-        new_thrudate = get_thrudate(latest_file)
-        self.assertIs(new_thrudate, None)
-
-    def test_thrudate_generation_invalid_thru_year(self):
-        latest_file = "delinquency_county_0922.csv"
+        latest_file = "delinquency_county_0725.csv"
         new_thrudate = get_thrudate(latest_file)
         self.assertIs(new_thrudate, None)
 
@@ -159,7 +162,7 @@ class SourceToTableTest(django.test.TestCase):
     ]
 
     start_date = datetime.date(2008, 1, 1)
-    source_file = f"delinquency_county_09{short_year}.csv"
+    source_file = "delinquency_county_0925.csv"
     data_row = [
         "1",
         "01001",
@@ -207,8 +210,8 @@ class SourceToTableTest(django.test.TestCase):
         )
 
     def test_update_thru_date(self):
-        new_val = f"{this_year}-12-01"
-        new_date = datetime.date(this_year, 12, 1)
+        new_val = "2025-12-01"
+        new_date = datetime.date(2025, 12, 1)
         update_through_date_constant(new_val)
         self.assertEqual(
             MortgageDataConstant.objects.get(name="through_date").date_value,
@@ -477,7 +480,7 @@ class DataExportTest(django.test.TestCase):
 
     def test_export_downloadable_csv_no_credentials(self):
         with mock.patch.object(FIPS, "dates"):
-            FIPS.dates.extend([f"{this_year}-12-01"])
+            FIPS.dates.extend(["2025-12-01"])
             FIPS.nation_row["percent_90"] = [5]
             result = export_downloadable_csv("County", "percent_90")
             self.assertIn("Unable to locate credentials", result)
@@ -626,7 +629,7 @@ class DataLoadTest(django.test.TestCase):
         )
 
     def test_update_through_date_constant(self):
-        new_date = datetime.date(this_year, 9, 1)
+        new_date = datetime.date(2025, 9, 1)
         update_through_date_constant(new_date)
         self.assertEqual(
             new_date,
