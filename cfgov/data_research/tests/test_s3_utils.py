@@ -70,23 +70,16 @@ class S3UtilsTests(TestCase):
         bucket_name = ALTO_DOWNLOAD_BUCKET
         bucket = s3.Bucket(bucket_name)
         bucket.create(ACL="private")
-
-        # In Python 3, csv.writer expects a file opened in text mode, which is
-        # a StringIO.
         csvfile = StringIO()
         writer = csv.writer(csvfile)
         writer.writerow(["a", "b", "c"])
         writer.writerow(["1", "2", "3"])
-
-        # But boto3 expects a regular file object,
-        # so we need to convert to BytesIO.
         bake_csv_to_s3("foo", BytesIO(csvfile.getvalue().encode("utf-8")))
 
         key = bucket.Object(f"{DOWNLOAD_KEY}/foo.csv")
         response = key.get()
         self.assertEqual(response["Body"].read(), b"a,b,c\r\n1,2,3\r\n")
 
-        # bake_csv_to_s3 sets 'public-read' on the item.
         acl = key.Acl()
         self.assertIn(
             {
