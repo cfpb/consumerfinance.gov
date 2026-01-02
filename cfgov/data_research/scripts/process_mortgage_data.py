@@ -2,10 +2,13 @@ import csv
 import datetime
 import logging
 import os
+import re
+from datetime import date
 from io import StringIO
 
 import requests
 from dateutil import parser
+from dateutil.relativedelta import relativedelta
 
 from data_research.models import (
     County,
@@ -22,7 +25,6 @@ from data_research.mortgage_utilities.fips_meta import (
 from data_research.scripts import (
     export_public_csvs,
     load_mortgage_aggregates,
-    thrudate,
     update_county_msa_meta,
 )
 
@@ -33,14 +35,6 @@ SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
 
 
-def update_through_date_constant(date):
-    constant, cr = MortgageDataConstant.objects.get_or_create(
-        name="through_date"
-    )
-    constant.date_value = date
-    constant.save()
-
-
 def read_source_csv(source_file, repo=None):
     if repo is None:
         repo = MORTGAGE_PERFORMANCE_SOURCE
@@ -49,6 +43,26 @@ def read_source_csv(source_file, repo=None):
     f = StringIO(response.content.decode("utf-8"))
     reader = csv.DictReader(f)
     return reader
+
+
+def get_thrudate(filename: str) -> date:
+    """Use the latest filename to derive a through_date for processing.
+
+    The source file ends with a MMYY date suffix that we can use.
+    A typical source file name: delinquency_county_0625.csv
+    We exclude the latest 3 months of data because the most recent
+    reports are incomplete and can show misleading results. For that reason,
+    the thru_date year needs to be pushed back a year for 03 data.
+    """
+    match = re.search(r"_(03|06|09|12)(\d{2})\.csv$", filename)
+    if not match:
+        raise ValueError(
+            "Filename must match *_MMYY.csv, where MM is 03, 06, 09, or 12"
+        )
+
+    month = int(match.group(1))
+    year = (date.today().year // 100) * 100 + int(match.group(2))
+    return date(year, month, 1) - relativedelta(months=3)
 
 
 def process_source(source_file):
@@ -72,10 +86,10 @@ def process_source(source_file):
     starting_date = MortgageDataConstant.objects.get(
         name="starting_date"
     ).date_value
-    thru_date_string = thrudate.get_thrudate(source_file)
-    logger.info(f"Using through_date of {thru_date_string}")
-    through_date = parser.parse(thru_date_string).date()
-    update_through_date_constant(through_date)
+
+    through_date = get_thrudate(source_file)
+    logger.info(f"Using through_date of {through_date}")
+
     raw_data = read_source_csv(source_file)
     counter = 0
     pk = 1

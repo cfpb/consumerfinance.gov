@@ -1,6 +1,7 @@
 import datetime
 import tempfile
 import unittest
+from datetime import date
 from io import StringIO
 from unittest import mock
 
@@ -14,7 +15,6 @@ from data_research.models import (
     County,
     CountyMortgageData,
     MetroArea,
-    MortgageDataConstant,
     MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
@@ -44,14 +44,13 @@ from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates,
 )
 from data_research.scripts.process_mortgage_data import (
+    get_thrudate,
     process_source,
     read_source_csv,
-    update_through_date_constant,
 )
 from data_research.scripts.process_mortgage_data import (
     run as run_process_mortgage_data,
 )
-from data_research.scripts.thrudate import get_thrudate
 from data_research.scripts.update_county_msa_meta import run as run_update
 from data_research.scripts.update_county_msa_meta import (
     update_state_to_geo_meta,
@@ -65,31 +64,35 @@ repo_env_var_to_mock = (
 )
 
 
-class ThruDateTest(unittest.TestCase):
+class ThruDateTests(unittest.TestCase):
     def test_thrudate_generation_03(self):
         latest_file = "delinquency_county_0325.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2024-12-01")
+        self.assertEqual(new_thrudate, date(2024, 12, 1))
 
     def test_thrudate_generation_06(self):
         latest_file = "delinquency_county_0625.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-03-01")
+        self.assertEqual(new_thrudate, date(2025, 3, 1))
 
     def test_thrudate_generation_09(self):
         latest_file = "delinquency_county_0925.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-06-01")
+        self.assertEqual(new_thrudate, date(2025, 6, 1))
 
     def test_thrudate_generation_12(self):
         latest_file = "delinquency_county_1225.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-09-01")
+        self.assertEqual(new_thrudate, date(2025, 9, 1))
 
     def test_thrudate_generation_invalid_thru_month(self):
         latest_file = "delinquency_county_0725.csv"
-        new_thrudate = get_thrudate(latest_file)
-        self.assertIs(new_thrudate, None)
+        with self.assertRaises(ValueError):
+            get_thrudate(latest_file)
+
+    def test_thrudate_generation_invalid_filename(self):
+        with self.assertRaises(ValueError):
+            get_thrudate("bad_filename.txt")
 
 
 class CsvProcessingTest(unittest.TestCase):
@@ -199,15 +202,6 @@ class SourceToTableTest(django.test.TestCase):
             ninety=4,
             other=2,
             county=Autauga,
-        )
-
-    def test_update_thru_date(self):
-        new_val = "2025-12-01"
-        new_date = datetime.date(2025, 12, 1)
-        update_through_date_constant(new_val)
-        self.assertEqual(
-            MortgageDataConstant.objects.get(name="through_date").date_value,
-            new_date,
         )
 
     @mock.patch(f"{DRS}.process_mortgage_data.read_source_csv")
@@ -627,14 +621,6 @@ class DataLoadTest(django.test.TestCase):
             sixty=2758,
             thirty=6766,
             total=26748,
-        )
-
-    def test_update_through_date_constant(self):
-        new_date = datetime.date(2025, 9, 1)
-        update_through_date_constant(new_date)
-        self.assertEqual(
-            new_date,
-            MortgageDataConstant.objects.get(name="through_date").date_value,
         )
 
     def test_load_msa_values(self):
