@@ -8,6 +8,7 @@ import django
 
 import responses
 from model_bakery import baker
+from requests.exceptions import MissingSchema
 
 from data_research.models import (
     County,
@@ -24,7 +25,9 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import validate_fips
 from data_research.scripts.export_public_csvs import (
+    FIPS,
     bake_local,
+    export_downloadable_csv,
     round_pct,
     row_starter,
     save_metadata,
@@ -114,9 +117,13 @@ class CsvProcessingTest(unittest.TestCase):
         self.assertEqual(reader.fieldnames, ["a", "b", "c"])
         self.assertEqual(sorted(next(reader).values()), ["d", "e", "f"])
 
+    def test_read_source_csv_no_source_repo_raises_MissingSchema(self):
+        source_file = "delinquency_county_0999.csv"
+        self.assertRaises(MissingSchema, read_source_csv, source_file)
+
     @mock.patch(
         "data_research.scripts.process_mortgage_data.export_public_csvs.run"
-    )  # noqa
+    )
     @mock.patch(repo_env_var_to_mock)
     def test_export_public_csvs_run(self, mock_repo_var, mock_csv_run):
         mock_repo_var.value = "data.repo.gov/mock/"
@@ -477,6 +484,13 @@ class DataExportTest(django.test.TestCase):
             thirty=10000,
             total=2540000,
         )
+
+    def test_export_downloadable_csv_no_credentials(self):
+        with mock.patch.object(FIPS, "dates"):
+            FIPS.dates.extend([f"{this_year}-12-01"])
+            FIPS.nation_row["percent_90"] = [5]
+            result = export_downloadable_csv("County", "percent_90")
+            self.assertIn("Unable to locate credentials", result)
 
     @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
     def test_export_downloadable_csv(self, mock_bake_s3):

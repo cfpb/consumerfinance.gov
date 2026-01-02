@@ -22,7 +22,7 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 from data_research.mortgage_utilities.s3_utils import (
-    DOWNLOAD_KEY,  # "data/mortgage-performance/downloads"
+    DOWNLOAD_KEY,
     bake_csv_to_s3,
 )
 
