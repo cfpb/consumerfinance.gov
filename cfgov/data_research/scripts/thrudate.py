@@ -35,5 +35,4 @@ def get_thrudate(latest_file):
         return
     thru_year = this_year - 1 if thru_month == "12" else this_year
     thru_date = f"{thru_year}-{thru_month}-01"
-    # os.environ["THRU_DATE"] = thru_date
     return thru_date
