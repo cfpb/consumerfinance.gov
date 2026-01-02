@@ -1,15 +1,16 @@
 import csv
 import datetime
 import logging
-import os
 import re
-import sys
 from datetime import date
 from io import StringIO
+
+from django.db import transaction
 
 import requests
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
+from tqdm import tqdm
 
 from data_research.models import (
     County,
@@ -22,26 +23,17 @@ from data_research.mortgage_utilities.fips_meta import (
     validate_fips,
 )
 from data_research.scripts import (
-    export_public_csvs,
     load_mortgage_aggregates,
-    update_county_msa_meta,
 )
 
 
-MORTGAGE_PERFORMANCE_SOURCE = os.getenv("MORTGAGE_PERFORMANCE_SOURCE")
-DATAFILE = StringIO()
-SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
 
 
-def read_source_csv(source_file, repo=None):
-    if repo is None:
-        repo = MORTGAGE_PERFORMANCE_SOURCE
-    raw_source_url = f"{repo}/{source_file}"
+def read_source_csv(raw_source_url: str) -> StringIO:
     response = requests.get(raw_source_url)
-    f = StringIO(response.content.decode("utf-8"))
-    reader = csv.DictReader(f)
-    return reader
+    response.raise_for_status()
+    return StringIO(response.content.decode("utf-8"))
 
 
 def get_thrudate(filename: str) -> date:
@@ -62,6 +54,62 @@ def get_thrudate(filename: str) -> date:
     month = int(match.group(1))
     year = (date.today().year // 100) * 100 + int(match.group(2))
     return date(year, month, 1) - relativedelta(months=3)
+
+
+def peek_num_lines(data: StringIO) -> int:
+    num_lines = sum(1 for line in data)
+    data.seek(0)
+    return num_lines
+
+
+@transaction.atomic
+def load_county_mortgage_data(
+    raw_data: StringIO, starting_date: date, through_date: date
+) -> int:
+    """Rebuild county mortgage data table.
+
+    Returns number of CountyMortgageData objects created.
+    """
+    CountyMortgageData.objects.all().delete()
+
+    batch = []
+    total_created = 0
+    batch_size = 1000
+
+    # Cache county FIPS codes.
+    fips_county_pks = dict(County.objects.values_list("fips", "pk"))
+
+    for row in tqdm(csv.DictReader(raw_data), total=peek_num_lines(raw_data)):
+        sampling_date = parser.parse(row.get("date")).date()
+        if sampling_date < starting_date or sampling_date > through_date:
+            continue
+
+        valid_fips = validate_fips(row.get("fips"))
+        if valid_fips:
+            batch.append(
+                CountyMortgageData(
+                    fips=valid_fips,
+                    date=sampling_date,
+                    total=row.get("open"),
+                    current=row.get("current"),
+                    thirty=row.get("thirty"),
+                    sixty=row.get("sixty"),
+                    ninety=row.get("ninety"),
+                    other=row.get("other"),
+                    county_id=fips_county_pks[valid_fips],
+                )
+            )
+
+        if len(batch) >= batch_size:
+            CountyMortgageData.objects.bulk_create(batch)
+            total_created += len(batch)
+            batch = []
+
+    if batch:
+        CountyMortgageData.objects.bulk_create(batch)
+        total_created += len(batch)
+
+    return total_created
 
 
 def process_source(source_file):
@@ -89,88 +137,36 @@ def process_source(source_file):
     through_date = get_thrudate(source_file)
     logger.info(f"Using through_date of {through_date}")
 
-    raw_data = read_source_csv(source_file)
-    counter = 0
-    pk = 1
-    new_objects = []
+    source_data = read_source_csv(source_file)
 
     load_states()
     logger.info("States loaded")
     load_counties()
     logger.info("Counties loaded")
+
     logger.info("Now rebuilding the county mortgage table")
-    CountyMortgageData.objects.all().delete()
-    for row in raw_data:
-        sampling_date = parser.parse(row.get("date")).date()
-        if sampling_date >= starting_date and sampling_date <= through_date:
-            valid_fips = validate_fips(row.get("fips"))
-            if valid_fips:
-                county = County.objects.get(fips=valid_fips)
-                new_objects.append(
-                    CountyMortgageData(
-                        pk=pk,
-                        fips=valid_fips,
-                        date=sampling_date,
-                        total=row.get("open"),
-                        current=row.get("current"),
-                        thirty=row.get("thirty"),
-                        sixty=row.get("sixty"),
-                        ninety=row.get("ninety"),
-                        other=row.get("other"),
-                        county=county,
-                    )
-                )
-                pk += 1
-                counter += 1
-                if counter % 10000 == 0:  # pragma: no cover
-                    sys.stdout.write(".")
-                    sys.stdout.flush()
-                if counter % 100000 == 0:  # pragma: no cover
-                    logger.info(f"\n{counter}:,")
-    CountyMortgageData.objects.bulk_create(new_objects)
+    new_objects = load_county_mortgage_data(
+        source_data, starting_date=starting_date, through_date=through_date
+    )
     logger.info(
-        f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
-        f"to create {len(new_objects):,} countymortgage records"
+        f"\nTook {datetime.datetime.now() - starter} "
+        f"to create {new_objects:,} countymortgage records"
     )
 
 
 def run(*args):
-    """
-    Process the latest data source and optionally dump CSV downloads locally.
+    """Process the latest data source and dump CSV outputs locally.
 
-    This process depends on an env var: MORTGAGE_PERFORMANCE_SOURCE
-    It provides the URL for the GHE repo that stores the app's source data.
-    The URL can't be exposed publicly, which is why it's delivered via env.
-    The var is made available in the app's env during Alto deployments.
-
-    You must also pass the latest source filename in the form of:
+    Requires one argument, the URL of the latest source filename, which must
+    match the pattern:
         delinquency_county_{MMYY}.csv
     Sample command:
         manage.py runscript process_mortgage_data \
-            --script-args delinquency_county_0925.csv
-
-    Optionally, local downloads can be triggered by an env var location:
-    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps` will dump the
-    six public CSV payloads to /develop-apps/ instead of pushing them to s3.
-    CSV metadata won't be generated, because it's not valid until CSVs are
-    posted to s3.
+            --script-args https://raw.github.local/org/repo/path/to/data/delinquency_county_0925.csv
     """
     if not args:
-        logger.error(
-            "Pass a source file with the form 'delinquency_county_{MMYY}.csv'"
-        )
-        return
-    if not MORTGAGE_PERFORMANCE_SOURCE:
-        logger.error(
-            "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
-        )
-        return
-    arg = args[0]
-    if arg == "export-csvs-only":
-        export_public_csvs.run()
-    else:
-        source_file = arg
-        process_source(source_file)
-        load_mortgage_aggregates.run()
-        update_county_msa_meta.run()
-        export_public_csvs.run()
+        logger.error("Pass the URL to the latest input CSV file")
+        exit(1)
+
+    process_source(args[0])
+    load_mortgage_aggregates.run()
