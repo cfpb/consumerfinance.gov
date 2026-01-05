@@ -112,7 +112,7 @@ def process_source(source_file):
                     sys.stdout.write(".")
                     sys.stdout.flush()
                 if counter % 100000 == 0:  # pragma: no cover
-                    logger.info(f"\n{counter}:,")
+                    logger.info(f"\n{counter:,}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
         f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
