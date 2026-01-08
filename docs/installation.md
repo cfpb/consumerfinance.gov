@@ -242,18 +242,18 @@ docker-compose exec python sh
 ### Load a database dump
 
 Alternatively, one of our database dumps can be installed using our
-`refresh-data.sh` script. You can get a database dump by defining
-`CFGOV_PROD_DB_LOCATION` in your `.env` file as described in
-GitHub Enterprise at
-[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
+`refresh-data.sh` script, either locally or
 inside a Docker `python` container sh immediately before running
 `refresh-data.sh`:
 
 ```sh
 docker-compose exec python sh
-CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh
 ```
+
+You can get a database dump as described in
+GitHub Enterprise at
+[GHE]/Design-Development/cfgov/wiki/Database-Backups-and-Restoration
 
 `refresh-data.sh` can also be given a path to a gziped database dump:
 
