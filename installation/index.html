@@ -308,15 +308,16 @@ and then does the following:</p>
 ./initial-data.sh</code></pre>
 <h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
 <p>Alternatively, one of our database dumps can be installed using our
-<code>refresh-data.sh</code> script. You can get a database dump by defining
-<code>CFGOV_PROD_DB_LOCATION</code> in your <code>.env</code> file as described in
-GitHub Enterprise at
-[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
-inside a Docker <code>python</code> container sh immediately before running
-<code>refresh-data.sh</code>:</p>
+<code>refresh-data.sh</code> script.</p>
+<p>First you must get a database dump as described in GitHub Enterprise at
+[GHE]/Design-Development/cfgov/wiki/Database-Backups-and-Restoration</p>
+<p>If you are running in Docker, you will need to execute a shell in the
+<code>python</code> container and then run the <code>refresh-data.sh</code> script:</p>
 <pre class="highlight"><code class="language-sh">docker compose exec python sh
-CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh</code></pre>
+<p>If you are running a local Python environment, you can run the
+<code>refresh-data.sh</code> script directly:</p>
+<pre class="highlight"><code class="language-sh">./refresh-data.sh</code></pre>
 <p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
 <pre class="highlight"><code class="language-sh">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
 <p>This automatically <a href="../page-search/#building-the-index">(re)builds the Elasticsearch index</a>,

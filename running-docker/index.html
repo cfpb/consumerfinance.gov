@@ -286,12 +286,12 @@ to get the Python container's full name or ID.</p>
    Postgres and Elasticsearch containers, much like the development environment.</p>
 <ol>
 <li>Load the <code>cfgov</code> database (optional). If you do not already have a running
-   <code>cfgov</code> database, you will need to download and load it from within the container.</li>
+   <code>cfgov</code> database, you will need to download before you try to load it
+   from within the container.</li>
 </ol>
 <pre class="highlight"><code class="language-bash">docker-compose exec python sh
 
 # Once in the container...
-export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 ./refresh-data.sh</code></pre>
 <ol>
 <li>Browse to your new local cf.gov site:</li>
