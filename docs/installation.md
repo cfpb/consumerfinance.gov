@@ -242,18 +242,25 @@ docker-compose exec python sh
 ### Load a database dump
 
 Alternatively, one of our database dumps can be installed using our
-`refresh-data.sh` script, either locally or
-inside a Docker `python` container sh immediately before running
-`refresh-data.sh`:
+`refresh-data.sh` script.
+
+First you must get a database dump as described in GitHub Enterprise at
+[GHE]/Design-Development/cfgov/wiki/Database-Backups-and-Restoration
+
+If you are running in Docker, you will need to execute a shell in the
+`python` container and then run the `refresh-data.sh` script:
 
 ```sh
 docker-compose exec python sh
 ./refresh-data.sh
 ```
 
-You can get a database dump as described in
-GitHub Enterprise at
-[GHE]/Design-Development/cfgov/wiki/Database-Backups-and-Restoration
+If you are running a local Python environment, you can run the
+`refresh-data.sh` script directly:
+
+```sh
+./refresh-data.sh
+```
 
 `refresh-data.sh` can also be given a path to a gziped database dump:
 
