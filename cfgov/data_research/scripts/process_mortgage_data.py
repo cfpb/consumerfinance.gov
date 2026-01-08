@@ -15,7 +15,9 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import (
     load_counties,
+    load_metros,
     load_states,
+    update_geo_meta,
     validate_fips,
 )
 from data_research.scripts import (
@@ -83,8 +85,11 @@ def process_source(source_file):
     load_states()
     logger.info("States loaded")
     load_counties()
+    update_geo_meta("county")
     logger.info("Counties loaded")
-    logger.info("Now rebuilding the county mortgage table")
+    load_metros()
+    update_geo_meta("metro")
+    logger.info("Metros loaded \nNow aggregating county mortgage data")
     CountyMortgageData.objects.all().delete()
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()

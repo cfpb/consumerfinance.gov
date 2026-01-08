@@ -23,9 +23,8 @@ from data_research.models import (
     StateMortgageData,
     validate_counties,
 )
-from data_research.mortgage_utilities.fips_meta import validate_fips
+from data_research.mortgage_utilities.fips_meta import FIPS, validate_fips
 from data_research.scripts.export_public_csvs import (
-    FIPS,
     bake_local,
     export_downloadable_csv,
     round_pct,
@@ -59,8 +58,10 @@ from data_research.scripts.update_county_msa_meta import (
 )
 
 
+DRS = "data_research.scripts"
+DRM = "data_research.mortgage_utilities"
 repo_env_var_to_mock = (
-    "data_research.scripts.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE"
+    f"{DRS}.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE"
 )
 
 
@@ -124,18 +125,16 @@ class CsvProcessingTest(unittest.TestCase):
         source_file = "delinquency_county_0999.csv"
         self.assertRaises(MissingSchema, read_source_csv, source_file)
 
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data.export_public_csvs.run"
-    )
+    @mock.patch(f"{DRS}.process_mortgage_data.export_public_csvs.run")
     @mock.patch(repo_env_var_to_mock)
     def test_export_public_csvs_run(self, mock_repo_var, mock_csv_run):
         mock_repo_var.value = "data.repo.gov/mock/"
         run_process_mortgage_data("export-csvs-only")
         self.assertEqual(mock_csv_run.call_count, 1)
 
-    @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
-    @mock.patch("data_research.scripts.export_public_csvs.bake_local")
-    @mock.patch("data_research.scripts.export_public_csvs.save_metadata")
+    @mock.patch(f"{DRS}.export_public_csvs.LOCAL_FILEPATH")
+    @mock.patch(f"{DRS}.export_public_csvs.bake_local")
+    @mock.patch(f"{DRS}.export_public_csvs.save_metadata")
     def test_bake_csvs_locally_no_meta(
         self, mock_metadata, mock_bake_local, mock_path="/tmp"
     ):
@@ -143,12 +142,12 @@ class CsvProcessingTest(unittest.TestCase):
         run_process_mortgage_data("export-csvs-only")
         self.assertEqual(mock_metadata.call_count, 0)
 
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
+    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
     def test_run_command_no_args(self, mock_process):
         run_process_mortgage_data()
         self.assertEqual(mock_process.call_count, 0)
 
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
+    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
     def test_run_command_no_env_source(self, mock_process):
         run_process_mortgage_data("delinquency_county_0925")
         self.assertEqual(mock_process.call_count, 0)
@@ -218,10 +217,14 @@ class SourceToTableTest(django.test.TestCase):
             new_date,
         )
 
-    @mock.patch("data_research.scripts.process_mortgage_data.read_source_csv")
-    @mock.patch("data_research.scripts.process_mortgage_data.load_counties")
-    @mock.patch("data_research.scripts.process_mortgage_data.load_states")
-    def test_process_source(self, mock_states, mock_counties, mock_read):
+    @mock.patch(f"{DRS}.process_mortgage_data.read_source_csv")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_counties")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_states")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_metros")
+    @mock.patch(f"{DRS}.process_mortgage_data.update_geo_meta")
+    def test_process_source(
+        self, mock_geo_meta, mock_metros, mock_states, mock_counties, mock_read
+    ):
         test_data_dict = [
             {
                 "date": "01/01/10",
@@ -251,23 +254,14 @@ class SourceToTableTest(django.test.TestCase):
         self.assertEqual(mock_read.call_count, 1)
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
+        self.assertEqual(mock_metros.call_count, 1)
+        self.assertEqual(mock_geo_meta.call_count, 2)
 
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "load_mortgage_aggregates.run"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "update_county_msa_meta.run"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data.export_public_csvs.run"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "MORTGAGE_PERFORMANCE_SOURCE"
-    )
+    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_mortgage_aggregates.run")
+    @mock.patch(f"{DRS}.process_mortgage_data.update_county_msa_meta.run")
+    @mock.patch(f"{DRS}.process_mortgage_data.export_public_csvs.run")
+    @mock.patch(f"{DRS}.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE")
     def test_run_command(
         self,
         mock_csv_source,
@@ -485,18 +479,32 @@ class DataExportTest(django.test.TestCase):
             result = export_downloadable_csv("County", "percent_90")
             self.assertIn("Unable to locate credentials", result)
 
-    @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
-    def test_export_downloadable_csv(self, mock_bake_s3):
+    @mock.patch(f"{DRS}.export_public_csvs.bake_csv_to_s3")
+    @mock.patch(f"{DRM}.fips_meta.load_fips_meta")
+    @mock.patch(f"{DRM}.fips_meta.load_county_mappings")
+    @mock.patch.object(FIPS, "dates")
+    def test_export_downloadable_csv(
+        self, mock_dates, mock_load_county, mock_load_fips, mock_bake_s3
+    ):
         """The absence of LOCAL_FILEPATH should enable s3 exports."""
         run_export()
         self.assertEqual(mock_bake_s3.call_count, 6)
 
-    @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
-    @mock.patch("data_research.scripts.export_public_csvs.bake_local")
+    @mock.patch(f"{DRS}.export_public_csvs.LOCAL_FILEPATH")
+    @mock.patch(f"{DRS}.export_public_csvs.bake_local")
+    @mock.patch(f"{DRM}.fips_meta.load_fips_meta")
+    @mock.patch(f"{DRM}.fips_meta.load_county_mappings")
+    @mock.patch.object(FIPS, "dates")
     def test_export_downloadable_csv_local(
-        self, mock_bake_local, mock_path="/tmp"
+        self,
+        mock_dates,
+        mock_load_county,
+        mock_load_fips,
+        mock_bake_local,
+        mock_path="/xxx/fakepath",
     ):
         """A LOCAL_FILEPATH value should trigger local exports."""
+        mock_dates.return_value = ["2026-02-012026-03-01"]
         run_export()
         self.assertEqual(mock_bake_local.call_count, 6)
 
@@ -657,12 +665,8 @@ class DataLoadTest(django.test.TestCase):
         load_national_values("2016-09-01")
         self.assertEqual(NationalMortgageData.objects.count(), 1)
 
-    @mock.patch(
-        "data_research.scripts.load_mortgage_aggregates.update_sampling_dates"
-    )
-    @mock.patch(
-        "data_research.scripts.load_mortgage_aggregates.validate_counties"
-    )
+    @mock.patch(f"{DRS}.load_mortgage_aggregates.update_sampling_dates")
+    @mock.patch(f"{DRS}.load_mortgage_aggregates.validate_counties")
     def test_run_aggregates(self, mock_validate_counties, mock_update_dates):
         dates = MortgageMetaData.objects.get(name="sampling_dates")
         dates.json_value = ["2016-01-01"]
@@ -820,8 +824,9 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         mock_obj.county_fips = self.counties
         return mock_obj
 
-    @mock.patch("data_research.scripts.update_county_msa_meta.FIPS")
-    def test_update_msa_meta(self, mock_FIPS):
+    @mock.patch(f"{DRS}.update_county_msa_meta.FIPS")
+    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
+    def test_update_msa_meta(self, mock_state_to_geo, mock_FIPS):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name="state_msa_meta").exists()
@@ -835,8 +840,9 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         ).json_value
         self.assertEqual(len(test_json), 2)
 
-    @mock.patch("data_research.scripts.update_county_msa_meta.FIPS")
-    def test_update_county_meta(self, mock_FIPS):
+    @mock.patch(f"{DRS}.update_county_msa_meta.FIPS")
+    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
+    def test_update_county_meta(self, mock_state_to_geo, mock_FIPS):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name="state_county_meta").exists()
@@ -851,9 +857,7 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
 class UpdateStateMsaDropdownTests(django.test.TestCase):
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
-    @mock.patch(
-        "data_research.scripts.update_county_msa_meta.update_state_to_geo_meta"
-    )
+    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
     def test_run_rebuild(self, mock_update):
         run_update()
         self.assertEqual(mock_update.call_count, 2)

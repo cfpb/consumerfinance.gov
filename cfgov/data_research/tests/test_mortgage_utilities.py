@@ -5,9 +5,11 @@ import django
 from data_research.models import MortgageDataConstant
 from data_research.mortgage_utilities.fips_meta import (
     County,
+    MetroArea,
     State,
     load_constants,
     load_counties,
+    load_metros,
     load_states,
 )
 
@@ -35,3 +37,9 @@ class GeoLoadTest(django.test.TestCase):
         self.assertEqual(County.objects.count(), 0)
         load_counties()
         self.assertEqual(County.objects.count(), 3148)
+
+    def test_metro_loading(self):
+        MetroArea.objects.all().delete()
+        self.assertEqual(MetroArea.objects.count(), 0)
+        load_metros()
+        self.assertEqual(MetroArea.objects.count(), 925)
