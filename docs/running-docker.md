@@ -156,13 +156,13 @@ You can launch the full cf.gov stack locally via `docker-compose`.
    Postgres and Elasticsearch containers, much like the development environment.
 
 1. Load the `cfgov` database (optional). If you do not already have a running
-   `cfgov` database, you will need to download and load it from within the container.
+   `cfgov` database, you will need to download before you try to load it
+   from within the container.
 
    ```bash
    docker-compose exec python sh
 
    # Once in the container...
-   export CFGOV_PROD_DB_LOCATION=<database-dump-url>
    ./refresh-data.sh
    ```
 
