@@ -173,9 +173,9 @@
 <pre class="highlight"><code class="language-sh">git clone https://github.com/cfpb/consumerfinance.gov.git
 cd consumerfinance.gov</code></pre>
 <ul>
-<li><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers via docker-compose</a>:</li>
+<li><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers via docker compose</a>:</li>
 </ul>
-<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+<pre class="highlight"><code class="language-sh">docker compose up</code></pre>
 <p>This may take some time, as it will also
 <a href="#load-initial-data">load initial data</a>
 and
@@ -285,11 +285,11 @@ building and
 <h3 id="set-up-and-run-the-docker-containers">Set up and run the Docker containers<a class="headerlink" href="#set-up-and-run-the-docker-containers" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
 You can use
-<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a>
+<a href="https://docs.docker.com/compose/"><code>docker compose</code></a>
 to run these services along side the consumerfinance.gov Django site.</p>
 <p>To build and run our Docker containers for the first time, run:</p>
-<h4 id="docker-compose">docker-compose:<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+<h4 id="docker-compose">docker compose:<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-sh">docker compose up</code></pre>
 <h3 id="load-initial-data">Load initial data<a class="headerlink" href="#load-initial-data" title="Permanent link">¶</a></h3>
 <p>Our <code>initial-data.sh</code> script can be used to initialize a new database to make
 it easy to get started working on consumerfinance.gov.
@@ -304,7 +304,7 @@ and then does the following:</p>
   set to 80.</li>
 </ul>
 <p>This script must be run inside the Docker <code>python</code> container:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python sh
+<pre class="highlight"><code class="language-sh">docker compose exec python sh
 ./initial-data.sh</code></pre>
 <h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
 <p>Alternatively, one of our database dumps can be installed using our
@@ -314,7 +314,7 @@ GitHub Enterprise at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
 inside a Docker <code>python</code> container sh immediately before running
 <code>refresh-data.sh</code>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python sh
+<pre class="highlight"><code class="language-sh">docker compose exec python sh
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh</code></pre>
 <p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
@@ -328,16 +328,16 @@ convenient way to ensure consistent versioning and running of these services
 along with the consumerfinance.gov Django site.</p>
 <p>The consumerfinance.gov Django site can be run locally in a virtualenv and can
 use PostgreSQL and Elasticsearch from either
-our <a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> file
+our <a href="https://docs.docker.com/compose/"><code>docker compose</code></a> file
 or from Homebrew.</p>
 <h3 id="postgresql-and-elasticsearch-from-docker">PostgreSQL and Elasticsearch from Docker<a class="headerlink" href="#postgresql-and-elasticsearch-from-docker" title="Permanent link">¶</a></h3>
 <p>To build and start only
 the PostgreSQL (<code>postgres</code>)
 and Elasticsearch (<code>elasticsearch</code>)
 containers from our
-<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> file,
-explicitly specify them as arguments to <code>docker-compose</code>:</p>
-<pre class="highlight"><code>docker-compose up postgres elasticsearch</code></pre>
+<a href="https://docs.docker.com/compose/"><code>docker compose</code></a> file,
+explicitly specify them as arguments to <code>docker compose</code>:</p>
+<pre class="highlight"><code>docker compose up postgres elasticsearch</code></pre>
 <p>This will expose
 PostgreSQL on port <code>5432</code> on <code>localhost</code>
 and
