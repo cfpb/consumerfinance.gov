@@ -29,7 +29,7 @@ regdown==1.1
 s3transfer==0.10.2
 setuptools==80.9.0
 tailslide==0.2.0
-urllib3==2.6.1
+urllib3==2.6.3
 wagtail-autocomplete==0.12.0
 wagtail-content-audit==0.2.1
 wagtail_draftail_anchors==0.6.0
@@ -44,7 +44,5 @@ wagtailcharts==0.6.2
 whitenoise==6.7.0
 
 # These packages are installed from GitHub.
-https://github.com/cfpb/ccdb5-api/releases/download/1.8.2/ccdb5_api-1.8.2-py3-none-any.whl
-
-
-https://github.com/cfpb/owning-a-home-api/releases/download/0.20.0/owning_a_home_api-0.20.0-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.9/ccdb5_api-1.9-py3-none-any.whl
+https://github.com/cfpb/owning-a-home-api/releases/download/0.21/owning_a_home_api-0.21-py3-none-any.whl
