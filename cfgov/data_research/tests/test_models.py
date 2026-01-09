@@ -319,29 +319,6 @@ class MortgagePerformancePageTests(django.test.TestCase):
         )
 
 
-# class ModelStringTest(django.test.TestCase):
-#     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
-
-#     def test_county_string_max_length(self):
-#         """
-#         Test that no MSA county-list string (a string of FIPS codes)
-#         will exceed the 255-char limit for `MSAMortgageData.county`
-#         """
-#         load_fips_meta()
-#         county_string_lengths = sorted(
-#             set(
-#                 [
-#                     len(lister)
-#                     for lister in [
-#                         ", ".join(FIPS.msa_fips[each]["county_list"])
-#                         for each in FIPS.msa_fips
-#                     ]
-#                 ]
-#             )
-#         )
-#         self.assertTrue(county_string_lengths[-1] <= 255)
-
-
 class MortgageModelTests(django.test.TestCase):
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
