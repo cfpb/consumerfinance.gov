@@ -2,9 +2,9 @@ import csv
 import datetime
 import logging
 import os
-import sys
 from io import StringIO
 
+import requests
 from dateutil import parser
 
 from data_research.models import (
@@ -14,21 +14,20 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import (
     load_counties,
+    load_metros,
     load_states,
+    update_geo_meta,
     validate_fips,
-)
-from data_research.mortgage_utilities.s3_utils import (
-    S3_SOURCE_BUCKET,
-    S3_SOURCE_FILE,
-    read_in_s3_csv,
 )
 from data_research.scripts import (
     export_public_csvs,
     load_mortgage_aggregates,
+    thrudate,
     update_county_msa_meta,
 )
 
 
+MORTGAGE_PERFORMANCE_SOURCE = os.getenv("MORTGAGE_PERFORMANCE_SOURCE")
 DATAFILE = StringIO()
 SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
@@ -42,55 +41,55 @@ def update_through_date_constant(date):
     constant.save()
 
 
-def dump_as_csv(rows_out, dump_slug):
-    """
-    Drops a headerless CSV to `/tmp/mp_countydata.csv
-
-    Sample output row:
-    1,01001,2008-01-01,268,260,4,1,0,3,2891
-    """
-    with open(f"{dump_slug}.csv", "w") as f:
-        writer = csv.writer(f)
-        for row in rows_out:
-            writer.writerow(row)
+def read_source_csv(source_file, repo=None):
+    if repo is None:
+        repo = MORTGAGE_PERFORMANCE_SOURCE
+    raw_source_url = f"{repo}/{source_file}"
+    response = requests.get(raw_source_url)
+    f = StringIO(response.content.decode("utf-8"))
+    reader = csv.DictReader(f)
+    return reader
 
 
-def process_source(starting_date, through_date, dump_slug=None):
+def process_source(source_file):
     """
     Re-generate aggregated data from the latest source CSV posted to S3.
 
-    This operation has three steps
+    This operation has four main steps:
     - Wipe and regenerate the base county_mortgage_data table.
     - Regenerate aggregated data for MSAs, non-MSAs, states and national.
     - Update metadata values and files.
-    - Export new downloadable public CSV files.
+    - Export 6 downloadable public CSV files to s3 and update CSV metadata.
 
-    If dump_slug is provided, a CSV the base county tables will be dumped.
-
+    The input filename should have this form: delinquency_county_{MMYY}.csv
+    Expected quarterly month values are 03, 06, 09, and 12.
     The input CSV has the following field_names and row form:
+
     date,fips,open,current,thirty,sixty,ninety,other
     01/01/08,1001,268,260,4,1,0,3
-
     """
     starter = datetime.datetime.now()
+    starting_date = MortgageDataConstant.objects.get(
+        name="starting_date"
+    ).date_value
+    thru_date_string = thrudate.get_thrudate(source_file)
+    logger.info(f"Using through_date of {thru_date_string}")
+    through_date = parser.parse(thru_date_string).date()
+    update_through_date_constant(through_date)
+    raw_data = read_source_csv(source_file)
     counter = 0
     pk = 1
     new_objects = []
 
-    # truncate table
-    CountyMortgageData.objects.all().delete()
-
-    source_url = f"{S3_SOURCE_BUCKET}/{S3_SOURCE_FILE}"
-    raw_data = read_in_s3_csv(source_url)
-
-    # Ensure state objects are up to date
     load_states()
     logger.info("States loaded")
-
-    # Ensure county objects are up to date
     load_counties()
+    update_geo_meta("county")
     logger.info("Counties loaded")
-
+    load_metros()
+    update_geo_meta("metro")
+    logger.info("Metros loaded \nNow loading county mortgage data")
+    CountyMortgageData.objects.all().delete()
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()
         if sampling_date >= starting_date and sampling_date <= through_date:
@@ -113,63 +112,52 @@ def process_source(starting_date, through_date, dump_slug=None):
                 )
                 pk += 1
                 counter += 1
-                if counter % 10000 == 0:  # pragma: no cover
-                    sys.stdout.write(".")
-                    sys.stdout.flush()
                 if counter % 100000 == 0:  # pragma: no cover
-                    logger.info(f"\n{counter}")
+                    logger.info(f"{counter:,}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
         f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
-        f"to create {len(new_objects)} countymortgage records"
+        f"to create {len(new_objects):,} CountyMortgageData records"
     )
-    if dump_slug:
-        dump_as_csv(
-            (
-                (
-                    obj.pk,
-                    obj.fips,
-                    f"{obj.date}",
-                    obj.total,
-                    obj.current,
-                    obj.thirty,
-                    obj.sixty,
-                    obj.ninety,
-                    obj.other,
-                    obj.county.pk,
-                )
-                for obj in new_objects
-            ),
-            dump_slug,
-        )
 
 
 def run(*args):
     """
-    Proces latest data source and optionally drop a CSV of result.
+    Process the latest data source and optionally dump CSV downloads locally.
 
-    The script ingests a through-date (YYYY-MM-DD) and dump location/slug.
+    This process depends on an env var: MORTGAGE_PERFORMANCE_SOURCE
+    It provides the URL for the GHE repo that stores the app's source data.
+    The URL can't be exposed publicly, which is why it's delivered via env.
+    The var is made available in the app's env during Alto deployments.
+
+    You must also pass the latest source filename in the form of:
+        delinquency_county_{MMYY}.csv
     Sample command:
-
         manage.py runscript process_mortgage_data \
-            --script-args 2017-03-01 /tmp/mp_countydata`
+            --script-args delinquency_county_0925.csv
+
+    Optionally, local downloads can be triggered by an env var location:
+    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps` will dump the
+    six public CSV payloads to /develop-apps/ instead of pushing them to s3.
+    CSV metadata won't be generated, because it's not valid until CSVs are
+    posted to s3.
     """
-    dump_slug = None
-    starting_date = MortgageDataConstant.objects.get(
-        name="starting_date"
-    ).date_value
-    if args:
-        through_date = parser.parse(args[0]).date()
-        update_through_date_constant(through_date)
-        if len(args) > 1:
-            dump_slug = args[1]
-        process_source(starting_date, through_date, dump_slug=dump_slug)
+    if not args:
+        logger.error(
+            "Pass a source file with the form 'delinquency_county_{MMYY}.csv'"
+        )
+        return
+    if not MORTGAGE_PERFORMANCE_SOURCE:
+        logger.error(
+            "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
+        )
+        return
+    arg = args[0]
+    if arg == "export-csvs-only":
+        export_public_csvs.run()
+    else:
+        source_file = arg
+        process_source(source_file)
         load_mortgage_aggregates.run()
         update_county_msa_meta.run()
         export_public_csvs.run()
-    else:
-        logger.info(
-            "Please provide a through-date (YYYY-MM-DD).\n"
-            "Optionally, you may also provide a dump location/slug, "
-            "such as '/tmp/mp_countydata.csv', if you want a CSV dumped.\n"
-        )

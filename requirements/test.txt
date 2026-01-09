@@ -6,4 +6,4 @@ github3.py==4.0.1
 model-bakery==1.20.5
 moto==5.1.16
 pip
-responses==0.25.0
+responses==0.25.8

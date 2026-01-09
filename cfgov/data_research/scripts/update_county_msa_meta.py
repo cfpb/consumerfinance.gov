@@ -3,22 +3,21 @@ import logging
 from data_research.models import County, MetroArea, MortgageMetaData, State
 from data_research.mortgage_utilities.fips_meta import (
     FIPS,
-    NON_STATES,
     load_fips_meta,
 )
 
 
 logger = logging.getLogger(__name__)
 
-NON_STATE_FIPS = NON_STATES.values()
+
+def get_state_fips():
+    return [obj.fips for obj in State.objects.all()]
 
 
 def update_allowlist():
     county_list = [county.fips for county in County.objects.filter(valid=True)]
     msa_list = [msa.fips for msa in MetroArea.objects.filter(valid=True)]
-    state_list = [
-        state.fips for state in State.objects.exclude(fips__in=NON_STATE_FIPS)
-    ]
+    state_list = get_state_fips()
     non_msa_list = [
         f"{state.fips}-non"
         for state in State.objects.filter(fips__in=state_list)
@@ -99,6 +98,7 @@ def update_state_to_geo_meta(geo):
     }
     ```
     """
+    STATE_FIPS = get_state_fips()
     non_msa_fips_output = []
     geo_dict = {
         "county": {
@@ -121,8 +121,7 @@ def update_state_to_geo_meta(geo):
             "state_name": FIPS.state_fips[fips]["name"],
             geo_list: [],
         }
-        for fips in FIPS.state_fips
-        if fips not in NON_STATE_FIPS
+        for fips in STATE_FIPS
     }
     for fips in fips_dict:
         _dict = fips_dict[fips]
@@ -146,10 +145,7 @@ def update_state_to_geo_meta(geo):
         for state_abbr in setup:
             setup[state_abbr][geo_list].sort(key=lambda entry: entry["fips"])
     if geo == "msa":
-        live_fips = [
-            fips for fips in FIPS.state_fips if fips not in NON_STATE_FIPS
-        ]
-        for state_fips in live_fips:
+        for state_fips in STATE_FIPS:
             non_fips = f"{state_fips}-non"
             s_dict = FIPS.state_fips[state_fips]
             state_abbr = s_dict["abbr"]
@@ -177,7 +173,7 @@ def update_state_to_geo_meta(geo):
     meta_obj, cr = MortgageMetaData.objects.get_or_create(name=slug)
     meta_obj.json_value = setup
     meta_obj.save()
-    logger.info(f"Saved metadata object '{slug}.'")
+    logger.info(f"Saved metadata object '{slug}'")
     if non_msa_fips_output:
         non_msa_fips_output.sort(key=lambda k: k["state_name"])
         non_meta_obj, cr = MortgageMetaData.objects.get_or_create(
@@ -185,7 +181,7 @@ def update_state_to_geo_meta(geo):
         )
         non_meta_obj.json_value = non_msa_fips_output
         non_meta_obj.save()
-        logger.info("Saved non_msa_fips")
+        logger.info("Saved metadata object 'non_msa_fips'")
 
 
 def run():
