@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 .search-result {
   margin-top: math.div(30px, $base-font-size-px) + rem;
@@ -35,7 +35,7 @@
 }
 
 .recommended {
-  border-bottom: 2px solid $block-border;
+  border-bottom: 2px solid var(--block-border);
 
   > h2 {
     margin-bottom: math.div(-10px, $base-font-size-px) + rem;

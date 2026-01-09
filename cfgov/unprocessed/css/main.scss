@@ -87,7 +87,7 @@
    ========================================================================== */
 
 @use 'print' as *;
-@include define-custom-props;
+
 @include licensed-font('/static/fonts');
 
 // TODO: Move to Design System.

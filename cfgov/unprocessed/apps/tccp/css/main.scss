@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 @include respond-to-min($bp-sm-min) {
@@ -160,8 +160,8 @@
     -webkit-tap-highlight-color: transparent;
 
     &:visited .m-card__link {
-      border-bottom: 1px dotted $link-underline;
-      color: $link-text;
+      border-bottom: 1px dotted var(--link-underline);
+      color: var(--link-text);
     }
 
     @include respond-to-min($bp-sm-min) {
@@ -210,8 +210,8 @@
 
   .m-card__link {
     display: inline;
-    border-bottom: 1px dotted $link-underline;
-    color: $link-text;
+    border-bottom: 1px dotted var(--link-underline);
+    color: var(--link-text);
   }
 
   .m-card__footer {
