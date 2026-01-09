@@ -774,27 +774,27 @@ class SaveMetadataTests(django.test.TestCase):
 
 
 class BuildStateMsaDropdownTests(django.test.TestCase):
-    fixtures = ["mortgage_constants.json"]
+    fixtures = ["mortgage_constants.json", "geo_meta.json"]
 
     def setUp(self):
         self.states = {
             "10": {
-                "AP": "Del.",
                 "fips": "10",
                 "name": "Delaware",
-                "msa_counties": [],
-                "non_msa_counties": [],
-                "msas": [],
                 "abbr": "DE",
+                "counties": ["10001", "10003", "10005"],
+                "non_msa_counties": [],
+                "msas": ["20100", "37980", "41540"],
+                "non_msa_valid": False,
             },
             "15": {
-                "AP": "Hawaii",
                 "fips": "15",
                 "name": "Hawaii",
-                "msa_counties": ["15007"],
-                "non_msa_counties": ["155005"],
-                "msas": [],
                 "abbr": "HI",
+                "counties": ["15001", "15003", "15005", "15007", "15009"],
+                "non_msa_counties": ["15005"],
+                "msas": ["27980", "46520"],
+                "non_msa_valid": True,
             },
         }
         self.msas = {
@@ -824,9 +824,9 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         mock_obj.county_fips = self.counties
         return mock_obj
 
+    # @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
     @mock.patch(f"{DRS}.update_county_msa_meta.FIPS")
-    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
-    def test_update_msa_meta(self, mock_state_to_geo, mock_FIPS):
+    def test_update_msa_meta(self, mock_FIPS):  # mock_state_to_geo, ):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name="state_msa_meta").exists()
