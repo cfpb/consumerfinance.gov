@@ -89,7 +89,7 @@ def process_source(source_file):
     logger.info("Counties loaded")
     load_metros()
     update_geo_meta("metro")
-    logger.info("Metros loaded \nNow aggregating county mortgage data")
+    logger.info("Metros loaded \nNow loading county mortgage data")
     CountyMortgageData.objects.all().delete()
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()
@@ -121,7 +121,7 @@ def process_source(source_file):
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
         f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
-        f"to create {len(new_objects):,} countymortgage records"
+        f"to create {len(new_objects):,} CountyMortgageData records"
     )
 
 
