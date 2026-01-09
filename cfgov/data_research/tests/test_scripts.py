@@ -477,7 +477,7 @@ class DataExportTest(django.test.TestCase):
             FIPS.dates.extend(["2025-12-01"])
             FIPS.nation_row["percent_90"] = [5]
             result = export_downloadable_csv("County", "percent_90")
-            self.assertIn("Unable to locate credentials", result)
+            self.assertIn("s3 failed", result)
 
     @mock.patch(f"{DRS}.export_public_csvs.bake_csv_to_s3")
     @mock.patch(f"{DRM}.fips_meta.load_fips_meta")
