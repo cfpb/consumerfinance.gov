@@ -1,7 +1,6 @@
 import datetime
 import logging
 import os
-import sys
 
 from dateutil import parser
 
@@ -120,12 +119,10 @@ def run():
     merge_the_dades()
     validate_counties()
     dates = MortgageMetaData.objects.get(name="sampling_dates").json_value
-    logger.info("Rebuilding geo time_series data by month")
+    logger.info("Rebuilding geo time_series data for each sampling month")
     for i, date_string in enumerate(dates, 1):
-        sys.stdout.write(".")
-        sys.stdout.flush()
-        if i % 100 == 0:  # pragma: no cover
-            logger.info(f"\n{i:,}")
+        if i % 50 == 0:  # pragma: no cover
+            logger.info(f"{i:,}")
         date = parser.parse(date_string).date()
         load_msa_values(date)
         load_state_values(date)

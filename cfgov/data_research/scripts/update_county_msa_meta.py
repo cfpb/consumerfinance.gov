@@ -173,7 +173,7 @@ def update_state_to_geo_meta(geo):
     meta_obj, cr = MortgageMetaData.objects.get_or_create(name=slug)
     meta_obj.json_value = setup
     meta_obj.save()
-    logger.info(f"Saved metadata object '{slug}.'")
+    logger.info(f"Saved metadata object '{slug}'")
     if non_msa_fips_output:
         non_msa_fips_output.sort(key=lambda k: k["state_name"])
         non_meta_obj, cr = MortgageMetaData.objects.get_or_create(
@@ -181,7 +181,7 @@ def update_state_to_geo_meta(geo):
         )
         non_meta_obj.json_value = non_msa_fips_output
         non_meta_obj.save()
-        logger.info("Saved non_msa_fips")
+        logger.info("Saved metadata object 'non_msa_fips'")
 
 
 def run():

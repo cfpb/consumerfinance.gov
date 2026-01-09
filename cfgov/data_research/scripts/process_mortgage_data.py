@@ -2,7 +2,6 @@ import csv
 import datetime
 import logging
 import os
-import sys
 from io import StringIO
 
 import requests
@@ -113,11 +112,8 @@ def process_source(source_file):
                 )
                 pk += 1
                 counter += 1
-                if counter % 10000 == 0:  # pragma: no cover
-                    sys.stdout.write(".")
-                    sys.stdout.flush()
                 if counter % 100000 == 0:  # pragma: no cover
-                    logger.info(f"\n{counter:,}")
+                    logger.info(f"{counter:,}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
         f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
