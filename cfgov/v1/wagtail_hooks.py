@@ -1,5 +1,6 @@
 import logging
 import re
+from datetime import date
 
 from django.conf import settings
 from django.shortcuts import redirect
@@ -9,6 +10,9 @@ from django.utils.html import format_html_join
 from wagtail import hooks
 from wagtail.admin import messages, widgets
 from wagtail.admin.menu import MenuItem
+from wagtail.admin.views.pages.bulk_actions.page_bulk_action import (
+    PageBulkAction,
+)
 from wagtail.snippets.models import register_snippet
 
 from v1.admin_views import (
@@ -45,6 +49,54 @@ from v1.views.snippets import BannerViewSet
 logger = logging.getLogger(__name__)
 
 languages = dict(settings.LANGUAGES)
+
+
+@hooks.register("register_bulk_action")
+class ReviewDateBulkAction(PageBulkAction):
+    display_name = "Set review date"
+    aria_label = "Set review date on selected pages"
+    action_type = "set-review-date"
+    action_priority = 30
+    template_name = "wagtailadmin_overrides/confirmation.html"
+
+    def __init__(self, request, model):
+        super().__init__(request, model)
+        r = request.GET
+        next_url = r.get("next")
+        q = f"?q={r.get('q')}"
+        ct = ""
+        if r.get("content_type"):
+            ct = f"&content_type={r.get('content_type')}"
+
+        self.next_url = next_url + q + ct
+
+    def check_perm(self, page):
+        return page.permissions_for_user(self.request.user).can_edit()
+
+    def get_success_message(self, updated, failed):
+        suffix = f". {failed} failed to update." if failed else ""
+        if updated == 1:
+            return "1 page updated" + suffix
+        return f"{updated} pages updated" + suffix
+
+    @classmethod
+    def execute_action(cls, objects, user=None, **kwargs):
+        today = date.today()
+        count = 0
+        failed = 0
+        for page in objects:
+            try:
+                sp = page.specific
+                logger.warning(
+                    f"Updating last reviewed date on {sp.last_edited}"
+                )
+                sp.last_edited = today
+                sp.save_revision(user=user).publish()
+                count += 1
+            except AttributeError:
+                failed += 1
+                pass
+        return count, failed
 
 
 @hooks.register("register_page_header_buttons")
