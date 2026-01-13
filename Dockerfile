@@ -1,7 +1,11 @@
-FROM python:3.8-alpine AS python
+FROM python:3.13-alpine AS python
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
+
+# The requirements file to install.
+# Can be overriden to install local.txt
+ARG REQUIREMENTS=deployment.txt
 
 # Create a non-root user
 ARG USERNAME=cfgov
@@ -12,6 +16,9 @@ RUN addgroup --gid ${USER_UID} ${USERNAME} && \
         --ingroup ${USERNAME} \
         --disabled-password \
         ${USERNAME}
+
+# set python version for pathing
+ENV PYTHON_VERSION=python3.13
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG=en_US.UTF-8
@@ -57,18 +64,8 @@ RUN \
         postgresql \
     && \
     pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements/deployment_container.txt && \
+    pip install -r requirements/${REQUIREMENTS} && \
     apk del .build-deps
-
-# Remove setuptools to prevent the built image from triggering CVE-2025-47273,
-# which is present in setuptools<78.1.1:
-#
-# https://nvd.nist.gov/vuln/detail/CVE-2025-47273
-#
-# As long as cf.gov is on Python 3.8, we can't upgrade setuptools past v75.3:
-#
-# https://github.com/pypa/setuptools/blob/main/NEWS.rst#v7540
-RUN pip uninstall -y setuptools
 
 # The application will run on port 8000
 EXPOSE 8000
@@ -126,6 +123,7 @@ ENV DJANGO_SETTINGS_MODULE=cfgov.settings.local
 ENV ALLOWED_HOSTS='["*"]'
 
 # Install dev/local Python requirements
+RUN apk add git
 RUN pip install -r requirements/local.txt
 
 # Copy the necessary files and directories into the dev container
@@ -162,6 +160,7 @@ ENV ALLOWED_HOSTS='["*"]'
 COPY cfgov ./cfgov/
 COPY static.in ./static.in/
 COPY refresh-data.sh .
+COPY dump-data.sh .
 COPY initial-data.sh .
 COPY index.sh .
 COPY test.sql.gz .
@@ -172,10 +171,13 @@ COPY --from=node-builder ${APP_HOME} ${APP_HOME}
 # Delete unprocessed frontend code, which was only needed by node-builder.
 # This avoids false positive image vulnerabilities in source Node packages.
 #
-# Also delete an unused test keyfile from the ndg-httpsclient Python package.
-# This avoids a false positive due to storing a private keyfile in the image.
+# Also delete an unused test keyfiles from the gevent and ndg-httpsclient
+# Python packages. This avoids a false positive due to storing private
+# keyfiles in the image.
 RUN rm -rf ./cfgov/unprocessed && \
-    rm /usr/local/lib/python3.8/site-packages/ndg/httpsclient/test/pki/localhost.key
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/gevent/tests/*.key && \
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/gevent/tests/*.pem && \
+    rm -f /usr/local/lib/${PYTHON_VERSION}/site-packages/ndg/httpsclient/test/pki/localhost.key
 
 # Run Django's collectstatic to collect assets from the frontend build.
 #
@@ -192,5 +194,4 @@ RUN chown -R ${USERNAME}:${USERNAME} ${APP_HOME}
 # Run the application with the user we created
 USER $USERNAME
 
-# Run Gunicorn
-CMD ["gunicorn", "--reload", "cfgov.wsgi:application", "-b", ":8000"]
+CMD ["gunicorn", "-c", "cfgov/gunicorn.conf.py"]

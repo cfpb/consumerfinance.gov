@@ -12,13 +12,7 @@ usage() {
     cat << EOF
 Please download a recent database dump before running this script:
 
-  ./refresh-data.sh production_django.sql.gz
-
-Or you can define the location of a dump and this script will
-download it for you:
-
-  export CFGOV_PROD_DB_LOCATION=https://example.com/production_django.sql.gz
-  ./refresh-data.sh
+  ./refresh-data.sh prodpub_main_django.sql.gz
 
 Additional options:
 
@@ -26,25 +20,6 @@ Additional options:
 
 EOF
     exit 1;
-}
-
-download_data() {
-    echo 'Downloading database dump...'
-    skip_download=0
-
-    # If the file already exists, check its timestamp, and skip the download
-    # if it matches the timestamp of the remote file.
-    if test -e "$refresh_dump_name"; then
-        timestamp_check=$(curl -s -I -R -L -z "$refresh_dump_name" "${CFGOV_PROD_DB_LOCATION:-$DB_DUMP_URL}")
-        if [[ "$timestamp_check" == *"304 Not Modified"* ]]; then
-            echo 'Skipping download as local timestamp matches remote timestamp'
-            skip_download=1
-        fi
-    fi
-
-    if [[ "$skip_download" == 0 ]]; then
-        curl -RL -o "$refresh_dump_name" "${CFGOV_PROD_DB_LOCATION:-$DB_DUMP_URL}"
-    fi
 }
 
 check_data() {
@@ -67,16 +42,7 @@ update_index() {
 
 get_data() {
     if [[ -z "$refresh_dump_name" ]]; then
-        if [[ -z "$CFGOV_PROD_DB_LOCATION" ]] && [[ -z "$DB_DUMP_URL" ]]; then
-            usage
-        fi
-        if [[ ! -z "$CFGOV_PROD_DB_LOCATION" ]]; then
-          refresh_dump_name='production_django.sql.gz'
-        else
-          # Split URL, and get the file name.
-          refresh_dump_name="$(echo $DB_DUMP_URL | tr '/' '\n' | tail -1)"
-        fi
-        download_data
+        refresh_dump_name='prodpub_main_django.sql.gz'
     else
         if [[ $refresh_dump_name != *.sql.gz ]]; then
             echo "Input dump '$refresh_dump_name' expected to end with .sql.gz."

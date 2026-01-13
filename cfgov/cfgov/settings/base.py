@@ -1,13 +1,10 @@
 import os
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import dj_database_url
-from opensearchpy import RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails, environment_json, get_s3_media_config
 
@@ -128,6 +125,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -209,20 +207,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cfgov.wsgi.application"
 
-# Admin Url Access
-ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
-
-if ALLOW_ADMIN_URL:
-    DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  # For heavy Wagtail pages
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  # For heavy Wagtail pages
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jazzband/dj-database-url for URL formatting.
+_db_config = {
+    "default": "postgres://cfpb:cfpb@localhost/cfgov",
+}
+
+if _db_conn_max_age := os.getenv("CONN_MAX_AGE"):
+    _db_config.update({
+        "conn_max_age": int(_db_conn_max_age),
+        "conn_health_checks": True,
+    })
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": dj_database_url.config(**_db_config)
 }
 
 # Internationalization
@@ -326,42 +328,24 @@ SEARCHGOV_ES_API_KEY = os.environ.get("SEARCHGOV_ES_API_KEY")
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
-# ElasticSearch 7 Configuration
-TESTING = False
+# OpenSearch configuration
 ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
+
 OPENSEARCH_BIGINT = 50000
 OPENSEARCH_DEFAULT_ANALYZER = "snowball"
-
-if os.environ.get("USE_AWS_ES", False):
-    awsauth = AWS4Auth(
-        os.environ.get("AWS_ES_ACCESS_KEY"),
-        os.environ.get("AWS_ES_SECRET_KEY"),
-        "us-east-1",
-        "es",
-    )
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": [{"host": ES_HOST, "port": 443}],
-            "http_auth": awsauth,
-            "use_ssl": True,
-            "connection_class": RequestsHttpConnection,
-            "timeout": 60,
-        },
+OPENSEARCH_DSL = {
+    "default": {
+        "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+        "http_auth": (
+            os.getenv("ES_USER", "admin"),
+            os.getenv("ES_PASS", "admin"),
+        ),
+        "use_ssl": True,
+        "verify_certs": not os.getenv("OPENSEARCH_DSL_SKIP_CERT_VERIFICATION"),
     }
-else:
-    OPENSEARCH_DSL = {
-        "default": {
-            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
-            "http_auth": (
-                os.getenv("ES_USER", "admin"),
-                os.getenv("ES_PASS", "admin"),
-            ),
-            "use_ssl": True,
-            "verify_certs": False,
-        }
-    }
+}
 
 OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
@@ -461,17 +445,27 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
         "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
         "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to www cache
+        "OBJECT_ID": os.environ["AKAMAI_OBJECT_ID"],
         "HOSTNAMES": environment_json("AKAMAI_PURGE_HOSTNAMES")
     }
 
-ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
-    "ENABLE_CLOUDFRONT_CACHE_PURGE", False
+ENABLE_FILES_CACHE_PURGE = os.environ.get(
+    "ENABLE_FILES_CACHE_PURGE", False
 )
-if ENABLE_CLOUDFRONT_CACHE_PURGE:
+if ENABLE_FILES_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
-        "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
-        "DISTRIBUTION_ID": os.environ["CLOUDFRONT_DISTRIBUTION_ID_FILES"],
-        "HOSTNAMES": environment_json("CLOUDFRONT_PURGE_HOSTNAMES")
+        "BACKEND": "cdntools.backends.AkamaiBackend",
+        "CLIENT_TOKEN": os.environ["AKAMAI_CLIENT_TOKEN"],
+        "CLIENT_SECRET": os.environ["AKAMAI_CLIENT_SECRET"],
+        "ACCESS_TOKEN": os.environ["AKAMAI_ACCESS_TOKEN"],
+        "PURGE_ALL_URL": os.environ["AKAMAI_PURGE_ALL_URL"],
+        "FAST_PURGE_URL": os.environ["AKAMAI_FAST_PURGE_URL"],
+        # Unique to files cache
+        "OBJECT_ID": os.environ["AKAMAI_FILES_OBJECT_ID"],
+        "HOSTNAMES": environment_json("AKAMAI_FILES_PURGE_HOSTNAMES")
     }
 
 # CSP Allowlists
@@ -526,6 +520,7 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.cfpb.gov",
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
@@ -561,6 +556,7 @@ CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "dap.digitalgov.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
@@ -788,3 +784,45 @@ if ENABLE_SSO:
 
     # Require manual Wagtail user creation.
     OIDC_CREATE_USER = False
+
+if WAGTAILSHARING_HOST := os.getenv("WAGTAILSHARING_HOST"):
+    WAGTAILSHARING_ROUTER = "wagtailsharing.routers.settings.SettingsHostRouter"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": "DEBUG" if os.getenv("ENABLE_SQL_LOGGING") else "INFO",
+            "propagate": False,
+        },
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+if os.getenv("ENABLE_ES_LOGGING"):
+    LOGGING["loggers"]["opensearchpy.trace"] = {
+        "handlers": ["console"],
+        "level": "INFO",
+        "propagate": False,
+    }
+
+# Opt out of Google's Federated Learning of Cohorts approach to tracking
+PERMISSIONS_POLICY = {
+    "interest-cohort": [],
+}

@@ -1,6 +1,6 @@
 @use 'sass:math';
 @use './vars' as *;
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 /* ==========================================================================
@@ -41,6 +41,11 @@
 
     &__cols-first {
       flex-basis: fit-content;
+    }
+
+    &__alert {
+      padding: math.div(30px, $base-font-size-px) + em;
+      padding-bottom: 0;
     }
   }
 

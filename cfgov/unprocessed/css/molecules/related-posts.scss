@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 $gap: math.div(30px, $base-font-size-px) + rem;
@@ -25,10 +25,6 @@ $gap-half: math.div(15px, $base-font-size-px) + rem;
       var(--pacific),
       var(--navy)
     );
-
-    &:hover {
-      border-bottom: 1px dotted;
-    }
   }
 
   .m-list__item .a-date {

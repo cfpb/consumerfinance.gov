@@ -1,6 +1,6 @@
 @use 'sass:math';
 @use '../misc' as *;
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
 
 // Each content level adds a depth-specific class, such as o-mega-menu__content-1, o-mega-menu__content-2, etc.
@@ -45,6 +45,9 @@ $menu-link-hover-bar-px: 5px;
 
 // Focus item appearance.
 @mixin u-focus-rectangle() {
+  /* TODO: check if nested rule can be removed. */
+
+  /* stylelint-disable-next-line block-no-redundant-nested-style-rules */
   & {
     // Position focus rectangle relative to parent container.
     position: relative;

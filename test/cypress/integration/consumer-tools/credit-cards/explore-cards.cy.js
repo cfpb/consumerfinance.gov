@@ -1,8 +1,13 @@
+/**
+ * NOTE: THESE ARE DISABLED BECAUSE THE TCCP TOOL WAS REMOVED IN
+ * https://github.com/cfpb/consumerfinance.gov/pull/8940
+ */
+
 import { ExploreCreditCards } from './explore-cards-helpers.cy.js';
 
 const exploreCards = new ExploreCreditCards();
 
-describe('Explore credit cards landing page', () => {
+xdescribe('Explore credit cards landing page', () => {
   it('should show results tailored to the selected situation', () => {
     exploreCards.openLandingPage();
 
@@ -33,7 +38,7 @@ describe('Explore credit cards landing page', () => {
   });
 });
 
-describe('Explore credit cards results page', () => {
+xdescribe('Explore credit cards results page', () => {
   it('should update results when user changes filters', () => {
     exploreCards.openResultsPage();
 
@@ -158,7 +163,7 @@ describe('Explore credit cards results page', () => {
   });
 });
 
-describe('Explore credit card details page', () => {
+xdescribe('Explore credit card details page', () => {
   it('should have a breadcrumb to the filtered list the user came from', () => {
     exploreCards.openLandingPage();
 

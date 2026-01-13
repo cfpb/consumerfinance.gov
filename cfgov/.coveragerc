@@ -4,7 +4,7 @@ omit =
     */admin/*
     */migrations/*
     */site-packages*
-    */python2.7/*
+    */python3.13/*
     *setup.py
     *settings/*
     */ask_cfpb/scripts/*

@@ -1,5 +1,7 @@
 import os
-from contextlib import nullcontext
+import tempfile
+import urllib
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -46,6 +48,32 @@ def validate_no_empty_folders(zipfile, pdf_list):
         raise CommandError(error_msg)
 
 
+@contextmanager
+def fetch_agreements_zip(path_or_url):
+    """Yield a path to the agreements zip file
+
+    If the path_or_url is a URL, this will download it to a temporary
+    file, yield that path, and when the context manager closes, remove
+    the temporary file.
+
+    If the path_or_url is just a path, it will be returned as-is, with
+    no file management.
+
+    No validation of the file is done here.
+    """
+    # If it's just a path, return it.
+    if urllib.parse.urlparse(path_or_url).scheme == "":
+        yield path_or_url
+    else:
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            # Bandit will flag this for taking file:// URLs, but in this
+            # context, file:// URLs are not necessarily unexpected.
+            agreements_zip_path, headers = urllib.request.urlretrieve(
+                path_or_url, Path(tmpdirname) / Path("agreements.zip")
+            )  # nosec B310
+            yield agreements_zip_path
+
+
 class Command(BaseCommand):
     """
     imports credit card agreement data from provided zip file.
@@ -62,7 +90,7 @@ class Command(BaseCommand):
             "--path",
             action="store",
             required=True,
-            help="path to a zip file",
+            help="path or URL to a zip file",
         )
         parser.add_argument(
             "--windows",
@@ -70,31 +98,35 @@ class Command(BaseCommand):
             help="DEPRECATED. Will process a zip file created via Windows, "
             "assuming windows-1252 encoding.",
         )
+        parser.add_argument(
+            "--upload-to-s3",
+            action="store_true",
+            help="Will upload the agreements files to S3 if configured.",
+        )
 
     def handle(self, *args, **options):
-        # maybe this should be replaced with a CLI options:
-        do_upload = os.environ.get("AGREEMENTS_S3_UPLOAD_ENABLED", False)
+        do_upload = options["upload_to_s3"]
 
-        agreements_zip = ZipFile(options["path"])
+        with fetch_agreements_zip(options["path"]) as agreements_zip_path:
+            agreements_zip = ZipFile(agreements_zip_path)
+            all_pdfs = [
+                _util.filename_in_zip(info)
+                for info in agreements_zip.infolist()
+                if info.filename.upper().endswith(".PDF")
+            ]
 
-        all_pdfs = [
-            _util.filename_in_zip(info)
-            for info in agreements_zip.infolist()
-            if info.filename.upper().endswith(".PDF")
-        ]
+            validate_contains_pdfs(all_pdfs)
+            validate_no_empty_folders(agreements_zip, all_pdfs)
 
-        validate_contains_pdfs(all_pdfs)
-        validate_no_empty_folders(agreements_zip, all_pdfs)
+            Agreement.objects.all().delete()
+            Issuer.objects.all().delete()
 
-        Agreement.objects.all().delete()
-        Issuer.objects.all().delete()
-
-        with (
-            nullcontext(self.stdout)
-            if options["verbosity"] >= 1
-            else open(os.devnull, "a")
-        ) as output_file:
-            for pdf_path in all_pdfs:
-                _util.save_agreement(
-                    agreements_zip, pdf_path, output_file, upload=do_upload
-                )
+            with (
+                nullcontext(self.stdout)
+                if options["verbosity"] >= 1
+                else open(os.devnull, "a")
+            ) as output_file:
+                for pdf_path in all_pdfs:
+                    _util.save_agreement(
+                        agreements_zip, pdf_path, output_file, upload=do_upload
+                    )

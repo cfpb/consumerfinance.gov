@@ -1,6 +1,7 @@
-#To Submit a Cybersecurity Vulnerability Disclosure Report:         
-Contact: mailto:security@cfpb.gov
-
+#To Submit a Cybersecurity Vulnerability Disclosure Report:
+Contact: security@cfpb.gov
+Contact: https://bugcrowd.com/engagements/cfpb-vdp
+ 
 #Vulnerability Disclosure Policy
 Policy: https://www.consumerfinance.gov/vulnerability-disclosure-policy/
  
@@ -8,4 +9,5 @@ Policy: https://www.consumerfinance.gov/vulnerability-disclosure-policy/
 Hiring: https://www.consumerfinance.gov/about-us/careers/
  
 #Security.txt Information Expiration
-Expires: 2025-10-01T00:00:00.000Z
+Expires: 2026-10-01T00:00:00.000Z
+

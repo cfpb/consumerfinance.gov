@@ -2,13 +2,10 @@ import json
 from unittest import mock
 
 from django.http import Http404
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 from django.utils import timezone
 
-from wagtail.models import Site
-
 from model_bakery import baker
-from wagtailsharing.models import SharingSite
 
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG,
@@ -21,6 +18,10 @@ from ask_cfpb.models import (
 now = timezone.now()
 
 
+@override_settings(
+    WAGTAILSHARING_ROUTER="wagtailsharing.routers.settings.SettingsHostRouter",
+    WAGTAILSHARING_HOST="preview.localhost:8000",
+)
 class AnswerPagePreviewTestCase(TestCase):
     def setUp(self):
         from ask_cfpb.models import Answer
@@ -88,19 +89,6 @@ class AnswerPagePreviewTestCase(TestCase):
         )
         self.english_parent_page.add_child(instance=self.english_answer_page2)
         self.english_answer_page2.save_revision().publish()
-        self.site = baker.make(
-            Site,
-            root_page=self.ROOT_PAGE,
-            hostname="localhost",
-            port=8000,
-            is_default_site=True,
-        )
-        self.sharing_site = baker.make(
-            SharingSite,
-            site=self.site,
-            hostname="preview.localhost",
-            port=8000,
-        )
 
     @mock.patch("ask_cfpb.views.ServeView.serve")
     def test_live_plus_draft_with_sharing(self, mock_serve):
@@ -153,5 +141,5 @@ class AnswerPagePreviewTestCase(TestCase):
         self.assertEqual(mock_serve.call_count, 1)
 
     def test_redirect_view_with_no_recognized_facet(self):
-        response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
+        response = self.client.get("/ask-cfpb/search/?selected_facets=hoodoo")
         self.assertEqual(response.status_code, 404)

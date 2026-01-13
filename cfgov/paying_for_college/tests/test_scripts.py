@@ -20,7 +20,6 @@ from paying_for_college.disclosures.scripts import (
     notifications,
     process_cohorts,
     purge_objects,
-    tag_settlement_schools,
     update_colleges,
     update_ipeds,
 )
@@ -109,44 +108,6 @@ class ProgamDataTest(django.test.TestCase):
             single_school=test_pk, store_programs=True
         )
         self.assertEqual(Program.objects.count(), program_count + 1)
-
-
-class TaggingTests(django.test.TestCase):
-    """Test functions for tagging settlement schools via CSV."""
-
-    fixtures = ["test_fixture.json"]
-    mock_csv_data = [{"ipeds_unit_id": "243197", "flag": "mock_university"}]
-    bad_csv_data = [{"ipeds_unit_id": "243197", "floog": "mock_university"}]
-
-    @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
-    )
-    def test_tag_schools(self, mock_read_in):
-        mock_read_in.return_value = self.mock_csv_data
-        msg = tag_settlement_schools.tag_schools("mock_s3URL")
-        self.assertIn("mock_university", msg)
-        self.assertIn("tagged as", msg)
-        flagged = School.objects.filter(settlement_school="mock_university")
-        self.assertTrue(flagged.count() == 1)
-
-    @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
-    )
-    def test_tag_schools_no_data(self, mock_read_in):
-        mock_read_in.return_value = [{}]
-        msg = tag_settlement_schools.tag_schools("mock_s3URL")
-        self.assertIn("ERROR", msg)
-
-    @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
-    )
-    def test_tag_schools_bad_heading(self, mock_read_in):
-        mock_read_in.return_value = self.bad_csv_data
-        msg = tag_settlement_schools.tag_schools("mock_s3URL")
-        self.assertIn("ERROR", msg)
 
 
 class PurgeTests(django.test.TestCase):
@@ -239,12 +200,12 @@ class TestScripts(django.test.TestCase):
         base_query = process_cohorts.build_base_cohorts()
         cohort = process_cohorts.DEGREE_COHORTS.get(school.degrees_highest)
         metric = "grad_rate"
-        self.assertEqual(base_query.count(), 6)
+        self.assertEqual(base_query.count(), 7)
         self.assertEqual(
             process_cohorts.rank_by_metric(school, cohort, metric).get(
                 "percentile_rank"
             ),
-            80,
+            83,
         )
 
     def test_percentile_rank_blank_array(self):
@@ -756,3 +717,36 @@ class TestScripts(django.test.TestCase):
         test_payload = api_utils.compile_school_programs({})
         self.assertEqual(mock_requests.call_count, 0)
         self.assertEqual(test_payload.get("program_count"), 0)
+
+
+class BlockedNotification(django.test.TestCase):
+    """Confirm that former EFIP schools don't trigger notification retries."""
+
+    fixtures = ["test_fixture.json"]
+
+    def create_notification(
+        self, school_id, oid="4D87C7E7F061578F53C777C658B4337BC7B4E254"
+    ):
+        return Notification.objects.create(
+            institution_id=school_id,
+            oid=oid,
+            timestamp=timezone.now(),
+            errors="none",
+            sent=False,
+        )
+
+    def test_no_notifications_for_withdrawn_schools(self):
+        """Shouldn't notify withdrawn schools, such as Ashford University."""
+        Notification.objects.filter(sent=False).delete()
+        excluded_school_ids = notifications.EXCLUDED_IDS
+        no_failed_msg = "No failed notifications found"
+        no_stale_msg = "No stale notifications found"
+        for school_id in excluded_school_ids:
+            noti = self.create_notification(school_id)
+            self.assertTrue(Notification.objects.filter(sent=False).exists())
+            retry_msg = notifications.retry_notifications()
+            self.assertEqual(retry_msg, no_failed_msg)
+            noti.timestamp = noti.timestamp - datetime.timedelta(days=4)
+            noti.save()
+            send_stale_msg = notifications.send_stale_notifications()
+            self.assertEqual(send_stale_msg, no_stale_msg)

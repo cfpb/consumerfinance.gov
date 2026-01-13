@@ -3,7 +3,7 @@
    Main SCSS file
    ========================================================================== */
 
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 // Select menu inside the h2 header on the search tool view.
 .u-inline-select {
@@ -159,7 +159,9 @@ tr.data + tr[class=''] {
   tbody tr.data.hide {
     position: relative;
     overflow: visible;
-    clip: auto;
+
+    /* TODO: check if deprecated 'clip' can be removed. */
+    clip: auto; /* stylelint-disable-line property-no-deprecated */
     height: auto;
     width: auto;
     margin: 0;

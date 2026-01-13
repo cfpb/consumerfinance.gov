@@ -1,5 +1,5 @@
 coverage==7.4.3
-diff_cover==8.0.3
+diff_cover==9.2.0
 # tox and diff_cover both depend on pluggy, but tox>=4.7 has a higher
 # minimum version than diff_cover allows.
 tox>=4.6.0,<5

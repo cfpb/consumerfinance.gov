@@ -74,10 +74,6 @@ msgstr "請參見《隱私法》聲明"
 msgid "Breadcrumbs"
 msgstr ""
 
-#: v1/jinja2/v1/includes/molecules/feature-card.html:68
-msgid "Read answer"
-msgstr ""
-
 #: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
 msgid "Submit a Complaint"
 msgstr ""

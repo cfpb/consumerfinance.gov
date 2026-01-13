@@ -5,7 +5,7 @@ First, follow
 to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
-to run an Elasticsearch container, a PostgreSQL container, an Apache container,
+to run an Elasticsearch container, a PostgreSQL container,
 and Django in a Python container.
 
 All of these containers are configured in our
@@ -16,7 +16,6 @@ for more about the format and use of this file.
 The following URLs are mapped to your host from the containers:
 
 - Access consumerfinance.gov directly running in the Python container: http://localhost:8000/
-- Access Apache proxying to the Python container: http://localhost:8080/
 - Access Elasticsearch: http://localhost:9200/
 
 To build and run the containers for the first time, run:
@@ -125,9 +124,7 @@ For `docker` commands, `[CONTAINER]` is the container name displayed with `docke
 
 ## Production-like Docker Image
 
-This repository includes a "production-like" Docker image, created for
-experimenting with how cf.gov _could_ be built and run as a Docker
-container in production.
+This repository includes a "production-like" Docker image used when running cf.gov in AWS EKS.
 
 This includes:
 
@@ -147,10 +144,7 @@ docker build . -t your-desired-image-name
 
 #### Docker Compose
 
-You can also launch the full cf.gov stack locally via `docker-compose`. This setup is
-a nice way to test out new Apache config changes. It includes volumes that mount your
-local checkout `cfgov/apache` config directories into the container, allowing you to
-change configs locally without having to rebuild the image each time.
+You can launch the full cf.gov stack locally via `docker-compose`.
 
 1. Launch the stack.
 
@@ -162,30 +156,19 @@ change configs locally without having to rebuild the image each time.
    Postgres and Elasticsearch containers, much like the development environment.
 
 1. Load the `cfgov` database (optional). If you do not already have a running
-   `cfgov` database, you will need to download and load it from within the container.
+   `cfgov` database, you will need to download before you try to load it
+   from within the container.
 
    ```bash
    docker-compose exec python sh
 
    # Once in the container...
-   export CFGOV_PROD_DB_LOCATION=<database-dump-url>
    ./refresh-data.sh
    ```
 
 1. Browse to your new local cf.gov site:
 
-   http://localhost:8080 (Apache)
-
-   Or directly to Gunicorn running Django:
-
    http://localhost:8000 (Gunicorn)
-
-1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache)
-   config and restart the Apache container.
-
-   ```bash
-   docker-compose restart apache
-   ```
 
 1. Switch back to the development Compose setup.
 

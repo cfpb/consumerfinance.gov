@@ -4,20 +4,19 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - '**.py'
-      - 'requirements/**.txt'
-      - '**.html'
-      - '**.mo'
-      - '**.po'
+      - "**.py"
+      - "requirements/**.txt"
+      - "**.html"
+      - "**.mo"
+      - "**.po"
   merge_group:
+  push:
+    branches:
+      - main
 
 jobs:
   backend:
     runs-on: ubuntu-latest
-
-    env:
-      # LD_LIBRARY_PATH is set so that validate-translations can find gettext.
-      LD_LIBRARY_PATH: /usr/local/lib
 
     strategy:
       matrix:
@@ -32,46 +31,63 @@ jobs:
       postgres:
         # https://help.github.com/en/actions/configuring-and-managing-workflows/creating-postgresql-service-containers
         # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
-        image: postgres:13
+        image: postgres:17
         env:
           POSTGRES_USER: cfpb
           POSTGRES_PASSWORD: cfpb
           POSTGRES_DB: cfgov
         ports:
-        - 5432:5432
+          - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
       elasticsearch:
         image: elasticsearch:7.10.1
         ports:
-        - 9200/tcp
+          - 9200/tcp
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check cache for gettext
+        id: cache-gettext
+        if: matrix.toxenv == 'validate-translations'
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/gettext-install
+          key: ${{ runner.os }}-gettext-0.25
+
       - name: Install gettext for translations
         if: matrix.toxenv == 'validate-translations'
         run: |
+          if [ "${{ steps.cache-gettext.outputs.cache-hit }}" != "true" ]; then
+            curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
+            tar xzvf gettext-0.25.tar.gz
+            cd gettext-0.25
+            ./configure --prefix=${{ github.workspace }}/gettext-install
+            make -j$(nproc)
+            make install
+          fi
+
+          # Always add gettext to path, whether built or restored from cache.
+          echo "${{ github.workspace }}/gettext-install/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=${{ github.workspace }}/gettext-install/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Install lxml dependencies
+        run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential
-          curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
-          tar xzvf gettext-0.25.tar.gz
-          cd gettext-0.25
-          ./configure --prefix=/usr/local
-          make -j$(nproc)
-          sudo make install
+          sudo apt-get install python3.12-dev libxml2-dev libxslt-dev
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-            node-version: '24.x'
+          node-version: "24.x"
 
       - name: Install dependencies
         run: |
@@ -105,12 +121,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.13
 
       - name: Install dependencies
         run: |
@@ -125,4 +141,11 @@ jobs:
 
       - name: Check backend test coverage
         run: |
-          diff-cover backend_coverage/coverage.xml --compare-branch=origin/main --fail-under=100
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            git fetch origin main
+            COMPARE_FLAG="--compare-branch=origin/main"
+          else
+            git diff HEAD~1 HEAD > diff.txt
+            COMPARE_FLAG="--diff-file=diff.txt"
+          fi
+          diff-cover backend_coverage/coverage.xml $COMPARE_FLAG --fail-under=100
