@@ -40,7 +40,7 @@
     "@cypress/skip-test": "2.6.1",
     "@eslint/js": "9.39.2",
     "axe-core": "4.11.1",
-    "cypress": "15.8.2",
+    "cypress": "15.9.0",
     "cypress-axe": "1.7.0",
     "cypress-fail-fast": "7.1.1",
     "eslint": "9.39.2",
