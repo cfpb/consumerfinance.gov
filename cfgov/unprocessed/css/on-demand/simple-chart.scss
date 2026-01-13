@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @import 'highcharts/css/highcharts.css';
 
 .o-simple-chart {
@@ -8,7 +8,7 @@
   .chart-anchor,
   &:hover,
   &:visited {
-    color: $text;
+    color: var(--text);
   }
   h2 {
     margin-top: 0;
@@ -198,7 +198,7 @@
     }
 
     .a-link {
-      color: $link-text;
+      color: var(--link-text);
       border-width: 0 0 1px;
       border-style: dotted;
       display: inline-block;
@@ -206,17 +206,17 @@
       overflow: hidden;
 
       &:visited {
-        color: $link-text-visited;
+        color: var(--link-text)-visited;
       }
 
       &:hover {
         border-style: solid;
-        color: $link-text-hover;
+        color: var(--link-text)-hover;
       }
 
       &:active {
         border-style: solid;
-        color: $link-text-active;
+        color: var(--link-text)-active;
       }
     }
     b {

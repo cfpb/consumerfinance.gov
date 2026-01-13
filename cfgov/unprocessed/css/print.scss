@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 @media print {
   a {
@@ -48,8 +48,8 @@
     &:visited {
       // Replace Design System button link stylings with some generic styling
       all: unset;
-      border-bottom: 1px dotted $link-underline;
-      color: $link-text;
+      border-bottom: 1px dotted var(--link-underline);
+      color: var(--link-text);
       display: inline;
       font-weight: 500;
       text-decoration: none;

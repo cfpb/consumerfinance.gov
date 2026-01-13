@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 .number-callout {
   &__header {
@@ -37,7 +37,7 @@
   }
 
   &--border-top {
-    border-top: 1px solid $block-border;
+    border-top: 1px solid var(--block-border);
     padding-top: math.div(10px, $base-font-size-px) + em;
     margin-top: math.div(30px, $base-font-size-px) + em;
   }
