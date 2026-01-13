@@ -75,7 +75,9 @@ jobs:
           echo "LD_LIBRARY_PATH=${{ github.workspace }}/gettext-install/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
       - name: Install lxml dependencies
-        run: sudo apt-get install libxml2-dev libxslt-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3.12-dev libxml2-dev libxslt-dev
 
       - name: Set up Python
         uses: actions/setup-python@v5
