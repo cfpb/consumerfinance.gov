@@ -153,11 +153,8 @@ def run(*args):
         )
         return
     arg = args[0]
-    if arg == "export-csvs-only":
-        export_public_csvs.run()
-    else:
-        source_file = arg
-        process_source(source_file)
-        load_mortgage_aggregates.run()
-        update_county_msa_meta.run()
-        export_public_csvs.run()
+    source_file = arg
+    process_source(source_file)
+    load_mortgage_aggregates.run()
+    update_county_msa_meta.run()
+    export_public_csvs.run()

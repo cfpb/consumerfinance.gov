@@ -125,13 +125,6 @@ class CsvProcessingTest(unittest.TestCase):
         source_file = "delinquency_county_0999.csv"
         self.assertRaises(MissingSchema, read_source_csv, source_file)
 
-    @mock.patch(f"{DRS}.process_mortgage_data.export_public_csvs.run")
-    @mock.patch(repo_env_var_to_mock)
-    def test_export_public_csvs_run(self, mock_repo_var, mock_csv_run):
-        mock_repo_var.value = "data.repo.gov/mock/"
-        run_process_mortgage_data("export-csvs-only")
-        self.assertEqual(mock_csv_run.call_count, 1)
-
     @mock.patch(f"{DRS}.export_public_csvs.LOCAL_FILEPATH")
     @mock.patch(f"{DRS}.export_public_csvs.bake_local")
     @mock.patch(f"{DRS}.export_public_csvs.save_metadata")
