@@ -27,20 +27,16 @@ from data_research.scripts import (
 )
 
 
-MORTGAGE_PERFORMANCE_SOURCE = os.getenv("MORTGAGE_PERFORMANCE_SOURCE")
 DATAFILE = StringIO()
 SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
 
 
-def read_source_csv(source_file, repo=None):
-    if repo is None:
-        repo = MORTGAGE_PERFORMANCE_SOURCE
-    raw_source_url = f"{repo}/{source_file}"
+def read_source_csv(raw_source_url: str) -> StringIO:
     response = requests.get(raw_source_url)
+    response.raise_for_status()
     f = StringIO(response.content.decode("utf-8"))
-    reader = csv.DictReader(f)
-    return reader
+    return csv.DictReader(f)
 
 
 def get_thrudate(filename: str) -> date:
@@ -134,39 +130,24 @@ def process_source(source_file):
 
 
 def run(*args):
-    """
-    Process the latest data source and optionally dump CSV downloads locally.
+    """Process the latest data source and dump CSV outputs locally.
 
-    This process depends on an env var: MORTGAGE_PERFORMANCE_SOURCE
-    It provides the URL for the GHE repo that stores the app's source data.
-    The URL can't be exposed publicly, which is why it's delivered via env.
-    The var is made available in the app's env during Alto deployments.
+    Requires one argument, the URL of the latest source filename,
+    which must match the pattern delinquency_county_{MMYY}.csv.
 
-    You must also pass the latest source filename in the form of:
-        delinquency_county_{MMYY}.csv
     Sample command:
         manage.py runscript process_mortgage_data \
-            --script-args delinquency_county_0925.csv
+            --script-args https://raw.github.local/org/repo/path/to/data/delinquency_county_0925.csv
 
-    Optionally, local downloads can be triggered by an env var location:
-    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps` will dump the
-    six public CSV payloads to /develop-apps/ instead of pushing them to s3.
-    CSV metadata won't be generated, because it's not valid until CSVs are
-    posted to s3.
+    This script will fetch input data, populate the database, and export
+    public CSVs. The LOCAL_MORTGAGE_FILEPATH environment variable can be
+    used to dump public CSVs locally instead of to S3.
     """
     if not args:
-        logger.error(
-            "Pass a source file with the form 'delinquency_county_{MMYY}.csv'"
-        )
-        return
-    if not MORTGAGE_PERFORMANCE_SOURCE:
-        logger.error(
-            "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
-        )
-        return
-    arg = args[0]
-    source_file = arg
-    process_source(source_file)
+        logger.error("Pass the URL to the latest input CSV file")
+        exit(1)
+
+    process_source(args[0])
     load_mortgage_aggregates.run()
     update_county_msa_meta.run()
     export_public_csvs.run()
