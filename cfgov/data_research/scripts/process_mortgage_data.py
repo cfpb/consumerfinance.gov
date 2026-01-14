@@ -1,13 +1,11 @@
 import csv
-import datetime
 import logging
 import os
 import re
-from datetime import date
+from datetime import date, datetime
 from io import StringIO
 
 import requests
-from dateutil import parser
 from dateutil.relativedelta import relativedelta
 
 from data_research.models import (
@@ -82,7 +80,7 @@ def process_source(source_file):
     date,fips,open,current,thirty,sixty,ninety,other
     01/01/08,1001,268,260,4,1,0,3
     """
-    starter = datetime.datetime.now()
+    starter = datetime.now()
     starting_date = MortgageDataConstant.objects.get(
         name="starting_date"
     ).date_value
@@ -105,7 +103,7 @@ def process_source(source_file):
     logger.info("Metros loaded \nNow loading county mortgage data")
     CountyMortgageData.objects.all().delete()
     for row in raw_data:
-        sampling_date = parser.parse(row.get("date")).date()
+        sampling_date = datetime.strptime(row.get("date"), "%m/%d/%y").date()
         if sampling_date >= starting_date and sampling_date <= through_date:
             valid_fips = validate_fips(row.get("fips"))
             if valid_fips:
@@ -130,7 +128,7 @@ def process_source(source_file):
                     logger.info(f"{counter:,}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
-        f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
+        f"\n{SCRIPT_NAME} took {datetime.now() - starter} "
         f"to create {len(new_objects):,} CountyMortgageData records"
     )
 
