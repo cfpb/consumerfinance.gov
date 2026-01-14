@@ -41,6 +41,10 @@ ENV PYTHONPATH=${APP_HOME}/cfgov
 # Set the working directory
 WORKDIR ${APP_HOME}
 
+# Add Zscaler CA certificate
+ADD https://raw.githubusercontent.com/cfpb/zscaler-cert/refs/heads/main/zscaler_root_ca.pem /usr/local/share/ca-certificates/zscaler_root_ca.crt
+RUN update-ca-certificates
+
 # Copy the application requirements, needed to build the Python environment
 # below
 # Note: by specifying specific files we enable this layer to be cached if
@@ -77,12 +81,20 @@ FROM node:24-alpine AS node-builder
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
 
+# Add Zscaler CA certificate
+ADD https://raw.githubusercontent.com/cfpb/zscaler-cert/refs/heads/main/zscaler_root_ca.pem /usr/local/share/ca-certificates/zscaler_root_ca.crt
+
 # Install and update common OS packages and frontend dependencies
-RUN apk update --no-cache && apk upgrade --no-cache && \
+RUN apk add --no-cache --no-check-certificate ca-certificates && \
+    update-ca-certificates && \
+    apk update --no-cache && apk upgrade --no-cache && \
     apk add --no-cache --virtual .frontend-deps \
         jpeg-dev \
         yarn \
         zlib-dev
+
+# Configure Node to use system CA certificates
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 
 # Target a production frontend build
 ARG FRONTEND_TARGET=production
