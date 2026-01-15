@@ -1,11 +1,12 @@
 import csv
-import datetime
 import logging
 import os
+import re
+from datetime import date, datetime
 from io import StringIO
 
 import requests
-from dateutil import parser
+from dateutil.relativedelta import relativedelta
 
 from data_research.models import (
     County,
@@ -22,33 +23,40 @@ from data_research.mortgage_utilities.fips_meta import (
 from data_research.scripts import (
     export_public_csvs,
     load_mortgage_aggregates,
-    thrudate,
     update_county_msa_meta,
 )
 
 
-MORTGAGE_PERFORMANCE_SOURCE = os.getenv("MORTGAGE_PERFORMANCE_SOURCE")
 DATAFILE = StringIO()
 SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
 
 
-def update_through_date_constant(date):
-    constant, cr = MortgageDataConstant.objects.get_or_create(
-        name="through_date"
-    )
-    constant.date_value = date
-    constant.save()
-
-
-def read_source_csv(source_file, repo=None):
-    if repo is None:
-        repo = MORTGAGE_PERFORMANCE_SOURCE
-    raw_source_url = f"{repo}/{source_file}"
+def read_source_csv(raw_source_url: str) -> csv.DictReader:
     response = requests.get(raw_source_url)
+    response.raise_for_status()
     f = StringIO(response.content.decode("utf-8"))
-    reader = csv.DictReader(f)
-    return reader
+    return csv.DictReader(f)
+
+
+def get_thrudate(filename: str) -> date:
+    """Use the latest filename to derive a through_date for processing.
+
+    The source file ends with a MMYY date suffix that we can use.
+    A typical source file name: delinquency_county_0625.csv
+    We exclude the latest 3 months of data because the most recent
+    reports are incomplete and can show misleading results. For that reason,
+    the thru_date year needs to be pushed back a year for 03 data.
+    """
+    match = re.search(r"_(03|06|09|12)(\d{2})\.csv$", filename)
+    if not match:
+        raise ValueError(
+            "Filename must match *_MMYY.csv, where MM is 03, 06, 09, or 12"
+        )
+
+    month = int(match.group(1))
+    year = (date.today().year // 100) * 100 + int(match.group(2))
+    return date(year, month, 1) - relativedelta(months=3)
 
 
 def process_source(source_file):
@@ -68,14 +76,14 @@ def process_source(source_file):
     date,fips,open,current,thirty,sixty,ninety,other
     01/01/08,1001,268,260,4,1,0,3
     """
-    starter = datetime.datetime.now()
+    starter = datetime.now()
     starting_date = MortgageDataConstant.objects.get(
         name="starting_date"
     ).date_value
-    thru_date_string = thrudate.get_thrudate(source_file)
-    logger.info(f"Using through_date of {thru_date_string}")
-    through_date = parser.parse(thru_date_string).date()
-    update_through_date_constant(through_date)
+
+    through_date = get_thrudate(source_file)
+    logger.info(f"Using through_date of {through_date}")
+
     raw_data = read_source_csv(source_file)
     counter = 0
     pk = 1
@@ -91,7 +99,7 @@ def process_source(source_file):
     logger.info("Metros loaded \nNow loading county mortgage data")
     CountyMortgageData.objects.all().delete()
     for row in raw_data:
-        sampling_date = parser.parse(row.get("date")).date()
+        sampling_date = datetime.strptime(row.get("date"), "%m/%d/%y").date()
         if sampling_date >= starting_date and sampling_date <= through_date:
             valid_fips = validate_fips(row.get("fips"))
             if valid_fips:
@@ -116,45 +124,30 @@ def process_source(source_file):
                     logger.info(f"{counter:,}")
     CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
-        f"\n{SCRIPT_NAME} took {datetime.datetime.now() - starter} "
+        f"\n{SCRIPT_NAME} took {datetime.now() - starter} "
         f"to create {len(new_objects):,} CountyMortgageData records"
     )
 
 
 def run(*args):
-    """
-    Process the latest data source and optionally dump CSV downloads locally.
+    """Process the latest data source and dump CSV outputs locally.
 
-    This process depends on an env var: MORTGAGE_PERFORMANCE_SOURCE
-    It provides the URL for the GHE repo that stores the app's source data.
-    The URL can't be exposed publicly, which is why it's delivered via env.
-    The var is made available in the app's env during Alto deployments.
+    Requires one argument, the URL of the latest source filename,
+    which must match the pattern delinquency_county_{MMYY}.csv.
 
-    You must also pass the latest source filename in the form of:
-        delinquency_county_{MMYY}.csv
     Sample command:
         manage.py runscript process_mortgage_data \
-            --script-args delinquency_county_0925.csv
+            --script-args https://raw.github.local/org/repo/path/to/data/delinquency_county_0925.csv
 
-    Optionally, local downloads can be triggered by an env var location:
-    Example: `export LOCAL_MORTGAGE_FILEPATH=develop-apps` will dump the
-    six public CSV payloads to /develop-apps/ instead of pushing them to s3.
-    CSV metadata won't be generated, because it's not valid until CSVs are
-    posted to s3.
+    This script will fetch input data, populate the database, and export
+    public CSVs. The LOCAL_MORTGAGE_FILEPATH environment variable can be
+    used to dump public CSVs locally instead of to S3.
     """
     if not args:
-        logger.error(
-            "Pass a source file with the form 'delinquency_county_{MMYY}.csv'"
-        )
-        return
-    if not MORTGAGE_PERFORMANCE_SOURCE:
-        logger.error(
-            "Processing requires a MORTGAGE_PERFORMANCE_SOURCE env value."
-        )
-        return
-    arg = args[0]
-    source_file = arg
-    process_source(source_file)
+        logger.error("Pass the URL to the latest input CSV file")
+        exit(1)
+
+    process_source(args[0])
     load_mortgage_aggregates.run()
     update_county_msa_meta.run()
     export_public_csvs.run()

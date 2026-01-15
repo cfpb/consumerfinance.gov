@@ -1,6 +1,7 @@
 import datetime
 import tempfile
 import unittest
+from datetime import date
 from io import StringIO
 from unittest import mock
 
@@ -8,13 +9,11 @@ import django
 
 import responses
 from model_bakery import baker
-from requests.exceptions import MissingSchema
 
 from data_research.models import (
     County,
     CountyMortgageData,
     MetroArea,
-    MortgageDataConstant,
     MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
@@ -44,14 +43,13 @@ from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates,
 )
 from data_research.scripts.process_mortgage_data import (
+    get_thrudate,
     process_source,
     read_source_csv,
-    update_through_date_constant,
 )
 from data_research.scripts.process_mortgage_data import (
     run as run_process_mortgage_data,
 )
-from data_research.scripts.thrudate import get_thrudate
 from data_research.scripts.update_county_msa_meta import run as run_update
 from data_research.scripts.update_county_msa_meta import (
     update_state_to_geo_meta,
@@ -60,36 +58,37 @@ from data_research.scripts.update_county_msa_meta import (
 
 DRS = "data_research.scripts"
 DRM = "data_research.mortgage_utilities"
-repo_env_var_to_mock = (
-    f"{DRS}.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE"
-)
 
 
-class ThruDateTest(unittest.TestCase):
+class ThruDateTests(unittest.TestCase):
     def test_thrudate_generation_03(self):
         latest_file = "delinquency_county_0325.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2024-12-01")
+        self.assertEqual(new_thrudate, date(2024, 12, 1))
 
     def test_thrudate_generation_06(self):
         latest_file = "delinquency_county_0625.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-03-01")
+        self.assertEqual(new_thrudate, date(2025, 3, 1))
 
     def test_thrudate_generation_09(self):
         latest_file = "delinquency_county_0925.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-06-01")
+        self.assertEqual(new_thrudate, date(2025, 6, 1))
 
     def test_thrudate_generation_12(self):
         latest_file = "delinquency_county_1225.csv"
         new_thrudate = get_thrudate(latest_file)
-        self.assertEqual(new_thrudate, "2025-09-01")
+        self.assertEqual(new_thrudate, date(2025, 9, 1))
 
     def test_thrudate_generation_invalid_thru_month(self):
         latest_file = "delinquency_county_0725.csv"
-        new_thrudate = get_thrudate(latest_file)
-        self.assertIs(new_thrudate, None)
+        with self.assertRaises(ValueError):
+            get_thrudate(latest_file)
+
+    def test_thrudate_generation_invalid_filename(self):
+        with self.assertRaises(ValueError):
+            get_thrudate("bad_filename.txt")
 
 
 class CsvProcessingTest(unittest.TestCase):
@@ -113,36 +112,17 @@ class CsvProcessingTest(unittest.TestCase):
 
     @responses.activate
     def test_read_source_csv(self):
-        mock_repo_path = "https://github.com/repo"
-        source_file = "delinquency_county_0999.csv"
-        url = f"{mock_repo_path}/{source_file}"
-        responses.add(responses.GET, url, body="a,b,c\nd,e,f")
-        reader = read_source_csv(source_file, repo=mock_repo_path)
+        source_url = "https://github.local/path/to/delinquency_county_0999.csv"
+        responses.add(responses.GET, source_url, body="a,b,c\nd,e,f")
+        reader = read_source_csv(source_url)
         self.assertEqual(reader.fieldnames, ["a", "b", "c"])
         self.assertEqual(sorted(next(reader).values()), ["d", "e", "f"])
 
-    def test_read_source_csv_no_source_repo_raises_MissingSchema(self):
-        source_file = "delinquency_county_0999.csv"
-        self.assertRaises(MissingSchema, read_source_csv, source_file)
-
-    @mock.patch(f"{DRS}.export_public_csvs.LOCAL_FILEPATH")
-    @mock.patch(f"{DRS}.export_public_csvs.bake_local")
-    @mock.patch(f"{DRS}.export_public_csvs.save_metadata")
-    def test_bake_csvs_locally_no_meta(
-        self, mock_metadata, mock_bake_local, mock_path="/tmp"
-    ):
-        """Trying to bake locally should save no meta"""
-        run_process_mortgage_data("export-csvs-only")
-        self.assertEqual(mock_metadata.call_count, 0)
-
     @mock.patch(f"{DRS}.process_mortgage_data.process_source")
     def test_run_command_no_args(self, mock_process):
-        run_process_mortgage_data()
-        self.assertEqual(mock_process.call_count, 0)
+        with self.assertRaises(SystemExit):
+            run_process_mortgage_data()
 
-    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
-    def test_run_command_no_env_source(self, mock_process):
-        run_process_mortgage_data("delinquency_county_0925")
         self.assertEqual(mock_process.call_count, 0)
 
 
@@ -154,7 +134,7 @@ class SourceToTableTest(django.test.TestCase):
     ]
 
     start_date = datetime.date(2008, 1, 1)
-    source_file = "delinquency_county_0925.csv"
+    source_url = "https://github.local/path/to/delinquency_county_0925.csv"
     data_row = [
         "1",
         "01001",
@@ -201,15 +181,6 @@ class SourceToTableTest(django.test.TestCase):
             county=Autauga,
         )
 
-    def test_update_thru_date(self):
-        new_val = "2025-12-01"
-        new_date = datetime.date(2025, 12, 1)
-        update_through_date_constant(new_val)
-        self.assertEqual(
-            MortgageDataConstant.objects.get(name="through_date").date_value,
-            new_date,
-        )
-
     @mock.patch(f"{DRS}.process_mortgage_data.read_source_csv")
     @mock.patch(f"{DRS}.process_mortgage_data.load_counties")
     @mock.patch(f"{DRS}.process_mortgage_data.load_states")
@@ -242,7 +213,7 @@ class SourceToTableTest(django.test.TestCase):
         ]
         mock_reader = (row for row in test_data_dict)
         mock_read.return_value = mock_reader
-        process_source(self.source_file)
+        process_source(self.source_url)
         self.assertEqual(CountyMortgageData.objects.count(), 2)
         self.assertEqual(mock_read.call_count, 1)
         self.assertEqual(mock_counties.call_count, 1)
@@ -254,17 +225,14 @@ class SourceToTableTest(django.test.TestCase):
     @mock.patch(f"{DRS}.process_mortgage_data.load_mortgage_aggregates.run")
     @mock.patch(f"{DRS}.process_mortgage_data.update_county_msa_meta.run")
     @mock.patch(f"{DRS}.process_mortgage_data.export_public_csvs.run")
-    @mock.patch(f"{DRS}.process_mortgage_data.MORTGAGE_PERFORMANCE_SOURCE")
     def test_run_command(
         self,
-        mock_csv_source,
         mock_export,
         mock_meta_update,
         mock_aggregates,
         mock_process_source,
     ):
-        mock_csv_source.value = "mock_repo_source"
-        run_process_mortgage_data(self.source_file)
+        run_process_mortgage_data(self.source_url)
         self.assertEqual(mock_process_source.call_count, 1)
         self.assertEqual(mock_aggregates.call_count, 1)
         self.assertEqual(mock_meta_update.call_count, 1)
@@ -627,14 +595,6 @@ class DataLoadTest(django.test.TestCase):
             sixty=2758,
             thirty=6766,
             total=26748,
-        )
-
-    def test_update_through_date_constant(self):
-        new_date = datetime.date(2025, 9, 1)
-        update_through_date_constant(new_date)
-        self.assertEqual(
-            new_date,
-            MortgageDataConstant.objects.get(name="through_date").date_value,
         )
 
     def test_load_msa_values(self):
