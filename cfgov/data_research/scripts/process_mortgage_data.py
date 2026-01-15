@@ -32,7 +32,7 @@ SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
 
 
-def read_source_csv(raw_source_url: str) -> StringIO:
+def read_source_csv(raw_source_url: str) -> csv.DictReader:
     response = requests.get(raw_source_url)
     response.raise_for_status()
     f = StringIO(response.content.decode("utf-8"))
@@ -86,8 +86,8 @@ def process_source(source_file):
 
     raw_data = read_source_csv(source_file)
     counter = 0
+    pk = 1
     new_objects = []
-    batch_size = 50000
 
     load_states()
     logger.info("States loaded")
@@ -97,18 +97,16 @@ def process_source(source_file):
     load_metros()
     update_geo_meta("metro")
     logger.info("Metros loaded \nNow loading county mortgage data")
-
-    # Cache county PKs to optimize CountyMortgageData creation.
-    county_pks = dict(County.objects.values_list("fips", "pk"))
-
     CountyMortgageData.objects.all().delete()
     for row in raw_data:
         sampling_date = datetime.strptime(row.get("date"), "%m/%d/%y").date()
         if sampling_date >= starting_date and sampling_date <= through_date:
             valid_fips = validate_fips(row.get("fips"))
             if valid_fips:
+                county = County.objects.get(fips=valid_fips)
                 new_objects.append(
                     CountyMortgageData(
+                        pk=pk,
                         fips=valid_fips,
                         date=sampling_date,
                         total=row.get("open"),
@@ -117,19 +115,14 @@ def process_source(source_file):
                         sixty=row.get("sixty"),
                         ninety=row.get("ninety"),
                         other=row.get("other"),
-                        county_id=county_pks[valid_fips],
+                        county=county,
                     )
                 )
+                pk += 1
                 counter += 1
-
-                if counter % batch_size == 0:
-                    CountyMortgageData.objects.bulk_create(new_objects)
-                    new_objects.clear()
-                    logger.info(f"{counter: ,} records processed")
-
-    if new_objects:
-        CountyMortgageData.objects.bulk_create(new_objects)
-
+                if counter % 100000 == 0:  # pragma: no cover
+                    logger.info(f"{counter:,}")
+    CountyMortgageData.objects.bulk_create(new_objects)
     logger.info(
         f"\n{SCRIPT_NAME} took {datetime.now() - starter} "
         f"to create {len(new_objects):,} CountyMortgageData records"
