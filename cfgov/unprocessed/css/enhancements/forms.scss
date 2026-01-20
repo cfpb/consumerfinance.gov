@@ -11,3 +11,8 @@
 .m-form-field .a-label--heading + .a-text-input {
   margin-top: 0;
 }
+
+// GovDelivery sign-up is suspended, so we hide the email sign-up.
+.o-email-signup {
+  display: none !important;
+}
