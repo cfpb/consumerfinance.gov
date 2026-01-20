@@ -1,0 +1,257 @@
+[
+{
+  "model": "data_research.mortgagemetadata",
+  "pk": 3,
+  "fields": {
+    "name": "state_msa_meta",
+    "json_value": {
+      "NH": {
+        "metros": [
+          {
+            "fips": "14460",
+            "name": "Boston-Cambridge-Newton, MA-NH",
+            "valid": true
+          },
+          {
+            "fips": "31700",
+            "name": "Manchester-Nashua, NH",
+            "valid": true
+          },
+          {
+            "fips": "33-non",
+            "name": "Non-metro area of New Hampshire",
+            "valid": true
+          }
+        ],
+        "state_fips": "33",
+        "state_name": "New Hampshire"
+      }
+    },
+    "note": "",
+    "updated": "2025-12-10"
+  }
+},
+{
+  "model": "data_research.mortgagemetadata",
+  "pk": 8,
+  "fields": {
+    "name": "state_meta",
+    "json_value": {
+      "33": {
+        "AP": "N.H.",
+        "abbr": "NH",
+        "fips": "33",
+        "name": "New Hampshire"
+      }
+    },
+    "note": "",
+    "updated": "2025-12-10"
+  }
+},
+{
+  "model": "data_research.state",
+  "pk": 439,
+  "fields": {
+    "fips": "33",
+    "name": "New Hampshire",
+    "abbr": "NH",
+    "counties": [
+      "33001",
+      "33003",
+      "33005",
+      "33007",
+      "33009",
+      "33011",
+      "33013",
+      "33015",
+      "33017",
+      "33019"
+    ],
+    "non_msa_counties": [
+      "33001",
+      "33003",
+      "33005",
+      "33007",
+      "33009",
+      "33013",
+      "33019"
+    ],
+    "msas": [
+      "14460",
+      "31700"
+    ],
+    "non_msa_valid": true
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30324,
+  "fields": {
+    "fips": "33001",
+    "name": "Belknap County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30325,
+  "fields": {
+    "fips": "33003",
+    "name": "Carroll County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30326,
+  "fields": {
+    "fips": "33005",
+    "name": "Cheshire County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30327,
+  "fields": {
+    "fips": "33007",
+    "name": "Coos County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30328,
+  "fields": {
+    "fips": "33009",
+    "name": "Grafton County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30329,
+  "fields": {
+    "fips": "33011",
+    "name": "Hillsborough County",
+    "state": 439,
+    "valid": true
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30330,
+  "fields": {
+    "fips": "33013",
+    "name": "Merrimack County",
+    "state": 439,
+    "valid": true
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30331,
+  "fields": {
+    "fips": "33015",
+    "name": "Rockingham County",
+    "state": 439,
+    "valid": true
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30332,
+  "fields": {
+    "fips": "33017",
+    "name": "Strafford County",
+    "state": 439,
+    "valid": true
+  }
+},
+{
+  "model": "data_research.county",
+  "pk": 30333,
+  "fields": {
+    "fips": "33019",
+    "name": "Sullivan County",
+    "state": 439,
+    "valid": false
+  }
+},
+{
+  "model": "data_research.metroarea",
+  "pk": 305,
+  "fields": {
+    "fips": "14460",
+    "name": "Boston-Cambridge-Newton, MA-NH",
+    "counties": [
+      "25009",
+      "25017",
+      "25021",
+      "25023",
+      "25025",
+      "33015",
+      "33017"
+    ],
+    "states": [
+      "25",
+      "33"
+    ],
+    "valid": true
+  }
+},
+{
+  "model": "data_research.metroarea",
+  "pk": 354,
+  "fields": {
+    "fips": "31700",
+    "name": "Manchester-Nashua, NH",
+    "counties": [
+      "33011"
+    ],
+    "states": [
+      "33"
+    ],
+    "valid": true
+  }
+},
+{
+  "model": "data_research.mortgagemetadata",
+  "pk": 15,
+  "fields": {
+    "name": "msa_fips",
+    "json_value": [
+        "14460",
+        "31700"
+    ],
+    "note": "",
+    "updated": "2017-08-31"
+  }
+},
+{
+  "model": "data_research.mortgagemetadata",
+  "pk": 11,
+  "fields": {
+    "name": "county_fips",
+    "json_value": [
+      "33001",
+      "33003",
+      "33005",
+      "33007",
+      "33009",
+      "33011",
+      "33013",
+      "33015",
+      "33017",
+      "33019"
+    ],
+    "note": "",
+    "updated": "2017-08-31"
+  }
+}
+]

@@ -1,20 +1,19 @@
-import csv
 import datetime
 import tempfile
 import unittest
+from datetime import date
 from io import StringIO
 from unittest import mock
 
 import django
 
-from dateutil import parser
+import responses
 from model_bakery import baker
 
 from data_research.models import (
     County,
     CountyMortgageData,
     MetroArea,
-    MortgageDataConstant,
     MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
@@ -23,9 +22,10 @@ from data_research.models import (
     StateMortgageData,
     validate_counties,
 )
-from data_research.mortgage_utilities.fips_meta import validate_fips
+from data_research.mortgage_utilities.fips_meta import FIPS, validate_fips
 from data_research.scripts.export_public_csvs import (
     bake_local,
+    export_downloadable_csv,
     round_pct,
     row_starter,
     save_metadata,
@@ -42,11 +42,10 @@ from data_research.scripts.load_mortgage_aggregates import (
 from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates,
 )
-from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.process_mortgage_data import (
-    dump_as_csv,
+    get_thrudate,
     process_source,
-    update_through_date_constant,
+    read_source_csv,
 )
 from data_research.scripts.process_mortgage_data import (
     run as run_process_mortgage_data,
@@ -57,8 +56,74 @@ from data_research.scripts.update_county_msa_meta import (
 )
 
 
-STARTING_DATE = datetime.date(2008, 1, 1)
-THROUGH_DATE = datetime.date(2016, 12, 1)
+DRS = "data_research.scripts"
+DRM = "data_research.mortgage_utilities"
+
+
+class ThruDateTests(unittest.TestCase):
+    def test_thrudate_generation_03(self):
+        latest_file = "delinquency_county_0325.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, date(2024, 12, 1))
+
+    def test_thrudate_generation_06(self):
+        latest_file = "delinquency_county_0625.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, date(2025, 3, 1))
+
+    def test_thrudate_generation_09(self):
+        latest_file = "delinquency_county_0925.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, date(2025, 6, 1))
+
+    def test_thrudate_generation_12(self):
+        latest_file = "delinquency_county_1225.csv"
+        new_thrudate = get_thrudate(latest_file)
+        self.assertEqual(new_thrudate, date(2025, 9, 1))
+
+    def test_thrudate_generation_invalid_thru_month(self):
+        latest_file = "delinquency_county_0725.csv"
+        with self.assertRaises(ValueError):
+            get_thrudate(latest_file)
+
+    def test_thrudate_generation_invalid_filename(self):
+        with self.assertRaises(ValueError):
+            get_thrudate("bad_filename.txt")
+
+
+class CsvProcessingTest(unittest.TestCase):
+    csvlines = [
+        "RegionType,Name,CBSACode,2008-01,2008-02",
+        "National,United States,-----,1.5,1.6",
+        "MetroArea,Akron,10420,1.8,1.9",
+    ]
+
+    def test_bake_local(self):
+        """Confirm that bake_local writes a StringIO obj to a local file."""
+        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
+            csvfile = StringIO()
+            for line in self.csvlines:
+                csvfile.write(line)
+            # bake_local appends .csv to the destination file.
+            bake_local("", tf.name[:-4], csvfile)
+            with open(tf.name) as f:
+                local_content = f.read()
+            self.assertEqual(local_content, csvfile.getvalue())
+
+    @responses.activate
+    def test_read_source_csv(self):
+        source_url = "https://github.local/path/to/delinquency_county_0999.csv"
+        responses.add(responses.GET, source_url, body="a,b,c\nd,e,f")
+        reader = read_source_csv(source_url)
+        self.assertEqual(reader.fieldnames, ["a", "b", "c"])
+        self.assertEqual(sorted(next(reader).values()), ["d", "e", "f"])
+
+    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
+    def test_run_command_no_args(self, mock_process):
+        with self.assertRaises(SystemExit):
+            run_process_mortgage_data()
+
+        self.assertEqual(mock_process.call_count, 0)
 
 
 class SourceToTableTest(django.test.TestCase):
@@ -69,7 +134,7 @@ class SourceToTableTest(django.test.TestCase):
     ]
 
     start_date = datetime.date(2008, 1, 1)
-    through_date = datetime.date(2018, 6, 1)
+    source_url = "https://github.local/path/to/delinquency_county_0925.csv"
     data_row = [
         "1",
         "01001",
@@ -116,31 +181,13 @@ class SourceToTableTest(django.test.TestCase):
             county=Autauga,
         )
 
-    def test_update_thru_date(self):
-        new_val = "2018-12-01"
-        new_date = datetime.date(2018, 12, 1)
-        update_through_date_constant(new_val)
-        self.assertEqual(
-            MortgageDataConstant.objects.get(name="through_date").date_value,
-            new_date,
-        )
-
-    def test_dump_as_csv(self):
-        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
-            # dump_as_csv appends .csv to the destination file.
-            dump_as_csv([self.data_row], tf.name[:-4])
-
-            with open(tf.name) as f:
-                content = f.read()
-
-            self.assertEqual(content.strip(), ",".join(self.data_row))
-
-    @mock.patch("data_research.scripts.process_mortgage_data.read_in_s3_csv")
-    @mock.patch("data_research.scripts.process_mortgage_data.dump_as_csv")
-    @mock.patch("data_research.scripts.process_mortgage_data.load_counties")
-    @mock.patch("data_research.scripts.process_mortgage_data.load_states")
+    @mock.patch(f"{DRS}.process_mortgage_data.read_source_csv")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_counties")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_states")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_metros")
+    @mock.patch(f"{DRS}.process_mortgage_data.update_geo_meta")
     def test_process_source(
-        self, mock_states, mock_counties, mock_dump, mock_read
+        self, mock_geo_meta, mock_metros, mock_states, mock_counties, mock_read
     ):
         test_data_dict = [
             {
@@ -166,50 +213,30 @@ class SourceToTableTest(django.test.TestCase):
         ]
         mock_reader = (row for row in test_data_dict)
         mock_read.return_value = mock_reader
-        process_source(
-            self.start_date, self.through_date, dump_slug="mock_csv_slug"
-        )
+        process_source(self.source_url)
         self.assertEqual(CountyMortgageData.objects.count(), 2)
         self.assertEqual(mock_read.call_count, 1)
-        self.assertEqual(mock_dump.call_count, 1)
         self.assertEqual(mock_counties.call_count, 1)
         self.assertEqual(mock_states.call_count, 1)
+        self.assertEqual(mock_metros.call_count, 1)
+        self.assertEqual(mock_geo_meta.call_count, 2)
 
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "update_through_date_constant"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "load_mortgage_aggregates.run"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data."
-        "update_county_msa_meta.run"
-    )
-    @mock.patch(
-        "data_research.scripts.process_mortgage_data.export_public_csvs.run"
-    )
+    @mock.patch(f"{DRS}.process_mortgage_data.process_source")
+    @mock.patch(f"{DRS}.process_mortgage_data.load_mortgage_aggregates.run")
+    @mock.patch(f"{DRS}.process_mortgage_data.update_county_msa_meta.run")
+    @mock.patch(f"{DRS}.process_mortgage_data.export_public_csvs.run")
     def test_run_command(
         self,
         mock_export,
         mock_meta_update,
         mock_aggregates,
-        mock_update_constants,
-        mock_process,
+        mock_process_source,
     ):
-        run_process_mortgage_data("2018-06-01", "mock_slug")
-        self.assertEqual(mock_export.call_count, 1)
-        self.assertEqual(mock_meta_update.call_count, 1)
+        run_process_mortgage_data(self.source_url)
+        self.assertEqual(mock_process_source.call_count, 1)
         self.assertEqual(mock_aggregates.call_count, 1)
-        self.assertEqual(mock_update_constants.call_count, 1)
-        self.assertEqual(mock_process.call_count, 1)
-
-    @mock.patch("data_research.scripts.process_mortgage_data.process_source")
-    def test_run_command_no_args(self, mock_process):
-        run_process_mortgage_data()
-        self.assertEqual(mock_process.call_count, 0)
+        self.assertEqual(mock_meta_update.call_count, 1)
+        self.assertEqual(mock_export.call_count, 1)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -245,46 +272,6 @@ class DataLoadIntegrityTest(django.test.TestCase):
             "ninety": "10",
             "other": "11",
         }
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_data_creation_from_base_row(self, mock_read_csv):
-        """Confirm creation of a CountyMortgageData object from a CSV row."""
-        f = StringIO(self.data_header + self.data_row)
-        reader = csv.DictReader(f)
-        mock_read_csv.return_value = reader
-        load_values()
-        self.assertEqual(CountyMortgageData.objects.count(), 1)
-        county = CountyMortgageData.objects.first()
-        fields = reader.fieldnames
-        fields.pop(fields.index("fips"))  # test string separately
-        fields.pop(fields.index("open"))  # 'open' is stored as 'total'
-        fields.pop(fields.index("date"))  # date must be parsed before testing
-        self.assertEqual(county.fips, self.data_row_dict.get("fips"))
-        open_value = int(self.data_row_dict.get("open"))
-        self.assertEqual(county.total, open_value)
-        target_date = parser.parse(self.data_row_dict["date"]).date()
-        self.assertEqual(county.date, target_date)
-        for field in fields:  # remaining fields can be tested in a loop
-            self.assertEqual(
-                getattr(county, field), int(self.data_row_dict.get(field))
-            )
-        # test computed values
-        self.assertEqual(county.epoch, int(target_date.strftime("%s")) * 1000)
-        self.assertEqual(
-            county.percent_90,
-            int(self.data_row_dict.get("ninety")) * 1.0 / open_value,
-        )
-        self.assertEqual(
-            county.percent_30_60,
-            (
-                int(self.data_row_dict.get("thirty"))
-                + int(self.data_row_dict.get("sixty"))
-            )
-            * 1.0
-            / open_value,
-        )
 
     def test_validate_counties(self):
         county = County.objects.first()
@@ -446,38 +433,41 @@ class DataExportTest(django.test.TestCase):
             total=2540000,
         )
 
-        self.csvlines = [
-            "RegionType,Name,CBSACode,2008-01,2008-02",
-            "National,United States,-----,1.5,1.6",
-            "MetroArea,Akron,10420,1.8,1.9",
-        ]
+    def test_export_downloadable_csv_no_credentials(self):
+        with mock.patch.object(FIPS, "dates"):
+            FIPS.dates.extend(["2025-12-01"])
+            FIPS.nation_row["percent_90"] = [5]
+            result = export_downloadable_csv("County", "percent_90")
+            self.assertIn("s3 failed", result)
 
-    @mock.patch("data_research.scripts.export_public_csvs.bake_csv_to_s3")
-    def test_export_downloadable_csv(self, mock_bake):
+    @mock.patch(f"{DRS}.export_public_csvs.bake_csv_to_s3")
+    @mock.patch(f"{DRM}.fips_meta.load_fips_meta")
+    @mock.patch(f"{DRM}.fips_meta.load_county_mappings")
+    @mock.patch.object(FIPS, "dates")
+    def test_export_downloadable_csv(
+        self, mock_dates, mock_load_county, mock_load_fips, mock_bake_s3
+    ):
         """The absence of LOCAL_FILEPATH should enable s3 exports."""
         run_export()
-        self.assertEqual(mock_bake.call_count, 6)
+        self.assertEqual(mock_bake_s3.call_count, 6)
 
-    @mock.patch("data_research.scripts.export_public_csvs.LOCAL_FILEPATH")
-    @mock.patch("data_research.scripts.export_public_csvs.bake_local")
+    @mock.patch(f"{DRS}.export_public_csvs.LOCAL_FILEPATH")
+    @mock.patch(f"{DRS}.export_public_csvs.bake_local")
+    @mock.patch(f"{DRM}.fips_meta.load_fips_meta")
+    @mock.patch(f"{DRM}.fips_meta.load_county_mappings")
+    @mock.patch.object(FIPS, "dates")
     def test_export_downloadable_csv_local(
-        self, mock_bake_local, mock_path="/tmp"
+        self,
+        mock_dates,
+        mock_load_county,
+        mock_load_fips,
+        mock_bake_local,
+        mock_path="/xxx/fakepath",
     ):
         """A LOCAL_FILEPATH value should trigger local exports."""
+        mock_dates.return_value = ["2026-02-012026-03-01"]
         run_export()
         self.assertEqual(mock_bake_local.call_count, 6)
-
-    def test_bake_local(self):
-        """Confirm that bake_local writes a StringIO obj to a local file."""
-        with tempfile.NamedTemporaryFile(suffix=".csv") as tf:
-            csvfile = StringIO()
-            for line in self.csvlines:
-                csvfile.write(line)
-            # bake_local appends .csv to the destination file.
-            bake_local("", tf.name[:-4], csvfile)
-            with open(tf.name) as f:
-                local_content = f.read()
-            self.assertEqual(local_content, csvfile.getvalue())
 
     def test_row_starter(self):
         """
@@ -607,14 +597,6 @@ class DataLoadTest(django.test.TestCase):
             total=26748,
         )
 
-    def test_update_through_date_constant(self):
-        new_date = datetime.date(2016, 9, 1)
-        update_through_date_constant(new_date)
-        self.assertEqual(
-            new_date,
-            MortgageDataConstant.objects.get(name="through_date").date_value,
-        )
-
     def test_load_msa_values(self):
         self.assertEqual(MSAMortgageData.objects.count(), 1)
         load_msa_values("2009-12-01")
@@ -636,54 +618,8 @@ class DataLoadTest(django.test.TestCase):
         load_national_values("2016-09-01")
         self.assertEqual(NationalMortgageData.objects.count(), 1)
 
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_load_values(self, mock_read_in):
-        mock_read_in.return_value = [
-            {
-                "thirty": "4",
-                "month": "1",
-                "current": "262",
-                "sixty": "1",
-                "ninety": "0",
-                "date": "01/01/2008",
-                "open": "270",
-                "other": "3",
-                "fips": "12081",
-            }
-        ]
-        load_values()
-        self.assertEqual(mock_read_in.call_count, 1)
-        self.assertEqual(CountyMortgageData.objects.count(), 1)
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv"
-    )
-    def test_load_values_return_fips(self, mock_read_in):
-        mock_read_in.return_value = [
-            {
-                "thirty": "4",
-                "month": "1",
-                "current": "262",
-                "sixty": "1",
-                "ninety": "0",
-                "date": "01/01/2008",
-                "open": "270",
-                "other": "3",
-                "fips": "12081",
-            }
-        ]
-        fips_list = load_values(return_fips=True)
-        self.assertEqual(mock_read_in.call_count, 1)
-        self.assertEqual(fips_list, ["12081"])
-
-    @mock.patch(
-        "data_research.scripts.load_mortgage_aggregates.update_sampling_dates"
-    )
-    @mock.patch(
-        "data_research.scripts.load_mortgage_aggregates.validate_counties"
-    )
+    @mock.patch(f"{DRS}.load_mortgage_aggregates.update_sampling_dates")
+    @mock.patch(f"{DRS}.load_mortgage_aggregates.validate_counties")
     def test_run_aggregates(self, mock_validate_counties, mock_update_dates):
         dates = MortgageMetaData.objects.get(name="sampling_dates")
         dates.json_value = ["2016-01-01"]
@@ -791,27 +727,27 @@ class SaveMetadataTests(django.test.TestCase):
 
 
 class BuildStateMsaDropdownTests(django.test.TestCase):
-    fixtures = ["mortgage_constants.json"]
+    fixtures = ["mortgage_constants.json", "geo_meta.json"]
 
     def setUp(self):
         self.states = {
             "10": {
-                "AP": "Del.",
                 "fips": "10",
                 "name": "Delaware",
-                "msa_counties": [],
-                "non_msa_counties": [],
-                "msas": [],
                 "abbr": "DE",
+                "counties": ["10001", "10003", "10005"],
+                "non_msa_counties": [],
+                "msas": ["20100", "37980", "41540"],
+                "non_msa_valid": False,
             },
             "15": {
-                "AP": "Hawaii",
                 "fips": "15",
                 "name": "Hawaii",
-                "msa_counties": ["15007"],
-                "non_msa_counties": ["155005"],
-                "msas": [],
                 "abbr": "HI",
+                "counties": ["15001", "15003", "15005", "15007", "15009"],
+                "non_msa_counties": ["15005"],
+                "msas": ["27980", "46520"],
+                "non_msa_valid": True,
             },
         }
         self.msas = {
@@ -841,8 +777,9 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         mock_obj.county_fips = self.counties
         return mock_obj
 
-    @mock.patch("data_research.scripts.update_county_msa_meta.FIPS")
-    def test_update_msa_meta(self, mock_FIPS):
+    # @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
+    @mock.patch(f"{DRS}.update_county_msa_meta.FIPS")
+    def test_update_msa_meta(self, mock_FIPS):  # mock_state_to_geo, ):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name="state_msa_meta").exists()
@@ -856,8 +793,9 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         ).json_value
         self.assertEqual(len(test_json), 2)
 
-    @mock.patch("data_research.scripts.update_county_msa_meta.FIPS")
-    def test_update_county_meta(self, mock_FIPS):
+    @mock.patch(f"{DRS}.update_county_msa_meta.FIPS")
+    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
+    def test_update_county_meta(self, mock_state_to_geo, mock_FIPS):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name="state_county_meta").exists()
@@ -872,9 +810,7 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
 class UpdateStateMsaDropdownTests(django.test.TestCase):
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
-    @mock.patch(
-        "data_research.scripts.update_county_msa_meta.update_state_to_geo_meta"
-    )
+    @mock.patch(f"{DRS}.update_county_msa_meta.update_state_to_geo_meta")
     def test_run_rebuild(self, mock_update):
         run_update()
         self.assertEqual(mock_update.call_count, 2)

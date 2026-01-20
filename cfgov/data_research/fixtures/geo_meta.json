@@ -1,0 +1,49 @@
+[
+{
+  "model": "data_research.state",
+  "pk": 417,
+  "fields": {
+    "fips": "10",
+    "name": "Delaware",
+    "abbr": "DE",
+    "counties": [
+      "10001",
+      "10003",
+      "10005"
+    ],
+    "non_msa_counties": [],
+    "msas": [
+      "20100",
+      "37980",
+      "41540"
+    ],
+    "non_msa_valid": false
+  }
+},
+{
+  "model": "data_research.state",
+  "pk": 421,
+  "fields": {
+    "fips": "15",
+    "name": "Hawaii",
+    "abbr": "HI",
+    "counties": [
+      "15001",
+      "15003",
+      "15005",
+      "15007",
+      "15009"
+    ],
+    "non_msa_counties": [
+      "15001",
+      "15005",
+      "15007"
+    ],
+    "msas": [
+      "27980",
+      "46520"
+    ],
+    "non_msa_valid": true
+  }
+}
+]
