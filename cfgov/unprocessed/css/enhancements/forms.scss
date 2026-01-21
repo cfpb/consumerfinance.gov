@@ -13,6 +13,7 @@
 }
 
 // GovDelivery sign-up is suspended, so we hide the email sign-up.
+.m-inset--email,
 .o-email-signup {
   display: none !important;
 }
