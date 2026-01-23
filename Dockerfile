@@ -85,7 +85,7 @@ FROM node:24-alpine AS node-builder
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
 
-# Add ZScalar cert from the python stage above
+# Add ZScaler cert from the python stage above
 COPY --from=python ${APP_HOME}/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=python ${APP_HOME}/zscaler-root-public.cert ${APP_HOME}/zscaler-root-public.cert
 ARG NODE_EXTRA_CA_CERTS=${APP_HOME}/zscaler-root-public.cert
