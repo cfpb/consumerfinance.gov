@@ -20,7 +20,8 @@ if [ ! -z "$RUN_MIGRATIONS" ]; then
   # Check the DB if it needs refresh or migrations (initial-data.sh)
   if ! psql "$DATABASE_URL" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1 || [ ! -z $FORCE_DB_REBUILD ]; then
     echo "Doing first-time database and search index setup..."
-    if [ -n "$CFGOV_PROD_DB_LOCATION" ] || [ -n "$DB_DUMP_FILE" ] || [ -n "$DB_DUMP_URL" ]; then
+    DB_DUMP_FILE="${DB_DUMP_FILE:=prodpub_main_django.sql.gz}"
+    if [ -f  "$DB_DUMP_FILE" ]; then
       echo "Running refresh-data.sh... $DB_DUMP_FILE"
       ./refresh-data.sh "$DB_DUMP_FILE"
 
@@ -31,7 +32,8 @@ if [ ! -z "$RUN_MIGRATIONS" ]; then
     else
       # Detected the database is empty, or force rebuild was requested,
       # but we have no valid data sources to load data.
-      echo "WARNING: Database rebuild request detected, but missing CFGOV_PROD_DB_LOCATION/DB_DUMP_FILE variable (one or the other is needed). Unable to load data!!"
+      echo "ERROR: Unable to load data! Database rebuild request detected, but missing $DB_DUMP_FILE. Ensure that file exists or set the DB_DUMP_FILE variable to one that does."
+      exit 1
     fi
   else
     echo "Data detected, FORCE_DB_REBUILD not requested. Skipping data load!"

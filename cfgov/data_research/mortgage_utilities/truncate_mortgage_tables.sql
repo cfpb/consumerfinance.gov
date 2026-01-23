@@ -1,0 +1,1 @@
+TRUNCATE data_research_county, data_research_countymortgagedata, data_research_metroarea, data_research_mortgagedataconstant, data_research_mortgagemetadata, data_research_msamortgagedata, data_research_nationalmortgagedata, data_research_nonmsamortgagedata, data_research_state, data_research_statemortgagedata RESTART IDENTITY;

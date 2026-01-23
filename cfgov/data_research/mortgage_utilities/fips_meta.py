@@ -5,7 +5,7 @@ import logging
 from django.conf import settings
 from django.db import transaction
 
-from data_research.models import County, State
+from data_research.models import County, MetroArea, MortgageMetaData, State
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT
@@ -196,7 +196,7 @@ def validate_fips(raw_fips, keep_outdated=False):
         return new_fips
 
 
-def assemble_msa_mapping(msa_data):
+def assemble_msa_mapping():
     """
     Builds a dictionary of MSA IDs that are mapped to a list of county FIPS
     codes that belong to the MSA and to the MSA's name and included states.
@@ -205,49 +205,32 @@ def assemble_msa_mapping(msa_data):
     consistent when handling counties, MSAs and states.
     """
 
-    def clean_name(data_row):
-        raw_msa = data_row.get("msa_name")
-        return raw_msa.replace("(Metropolitan Statistical Area)", "").strip()
-
     mapping = {
-        row.get("msa_id").strip(): {
-            "county_list": [],
-            "msa": clean_name(row),
-            "name": clean_name(row),
+        obj.fips: {
+            "county_list": obj.counties,
+            "msa": obj.name,
+            "name": obj.name,
+            "fips": obj.fips,
         }  # dupe is for backward-compatibility
-        for row in msa_data
-        if row.get("msa_id").strip()
+        for obj in MetroArea.objects.all()
     }
-    for msa_id in mapping:
-        mapping[msa_id]["fips"] = msa_id
-        mapping[msa_id]["county_list"] += [
-            row.get("county_fips")
-            for row in msa_data
-            if row.get("msa_id") == msa_id
-        ]
     return mapping
 
 
 def load_county_mappings():
     """Add lists of counties and non-MSA counties to state_fips attribute."""
-    from data_research.models import MortgageMetaData
-
+    MSA_FIPS = MortgageMetaData.objects.get(name="msa_fips").json_value
     msa_meta = MortgageMetaData.objects.get(name="state_msa_meta").json_value
-    live_fips = [
-        fips for fips in FIPS.state_fips if fips not in NON_STATES.values()
-    ]
-    for each in live_fips:
+    state_fips = [obj.fips for obj in State.objects.all()]
+    county_fips = [obj.fips for obj in County.objects.all()]
+    for each in state_fips:
         _attr = FIPS.state_fips[each]
         abbr = _attr["abbr"]
-        _attr["counties"] = [
-            county_fips
-            for county_fips in FIPS.county_fips
-            if county_fips[:2] == each
-        ]
+        _attr["counties"] = [fip for fip in county_fips if fip[:2] == each]
         _attr["msas"] = [
             entry["fips"]
             for entry in msa_meta[abbr]["metros"]
-            if "non" not in entry["fips"]
+            if (entry["fips"] in MSA_FIPS and "non" not in entry["fips"])
         ]
         _attr["msa_counties"] = []
         for msa in _attr["msas"]:
@@ -265,8 +248,6 @@ def load_county_mappings():
 
 
 def load_fips_lists():
-    from data_research.models import MortgageMetaData
-
     for attr in ["allowlist", "all_fips"]:
         setattr(FIPS, attr, MortgageMetaData.objects.get(name=attr).json_value)
     FIPS.state_fips = MortgageMetaData.objects.get(
@@ -322,7 +303,7 @@ def load_fips_meta(counties=True):
                     if row["state"] not in NON_STATES
                 }
             else:
-                FIPS.msa_fips = assemble_msa_mapping(fips_data)
+                FIPS.msa_fips = assemble_msa_mapping()
     load_fips_lists()
     if counties is True:
         load_county_mappings()
@@ -392,3 +373,51 @@ def load_counties():
             if row["state"] not in NON_STATES
         ]
         County.objects.bulk_create(counties)
+
+
+@transaction.atomic
+def load_metros():
+    """
+    Load MetroArea objects from msa_county_crosswalk.csv
+    """
+    MetroArea.objects.all().delete()
+    with open(f"{FIPS_DATA_PATH}/msa_county_crosswalk.csv") as f:
+        reader = csv.DictReader(f)
+        fips_data = list(reader)
+        msa_ids = sorted(
+            set([(row["msa_name"], row["msa_id"]) for row in fips_data])
+        )
+        msas = []
+        for tup in msa_ids:
+            counties = [
+                row["county_fips"]
+                for row in fips_data
+                if row["msa_id"] == tup[1]
+            ]
+            states = sorted(set(fip[:2] for fip in counties))
+            MA = MetroArea(
+                fips=tup[1],
+                name=tup[0],
+                counties=counties,
+                states=states,
+                valid=False,
+            )
+            msas.append(MA)
+    MetroArea.objects.bulk_create(msas)
+
+
+def update_geo_meta(geo):
+    """Update metadata for newly rebuilt geo tables."""
+    geo_map = {
+        "metro": {"name": "msa_fips", "model": MetroArea},
+        "county": {"name": "county_fips", "model": County},
+    }
+    if geo not in geo_map:
+        logger.info(f"update_geo_meta called with unknown arg: {geo}")
+        return
+    geo_model = geo_map[geo]["model"]
+    meta_name = geo_map[geo]["name"]
+    meta = MortgageMetaData.objects.get(name=meta_name)
+    meta.json_value = [obj.fips for obj in geo_model.objects.all()]
+    meta.save()
+    return f"{geo} meta updated"

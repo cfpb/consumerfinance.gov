@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 @use '@cfpb/cfpb-design-system/src/utilities' as *;
 @use '../enhancements/typography' as *;
 
@@ -25,10 +25,6 @@
   padding-bottom: math.div(50px, $base-font-size-px) + rem;
   border-top: 5px solid var(--green);
   background: var(--gray-5);
-
-  .m-list__link {
-    font-weight: 500;
-  }
 
   // Mobile only.
   @include respond-to-max($bp-xs-max) {
@@ -234,6 +230,7 @@
   }
 
   &-post {
+    font-weight: 400;
     margin-top: math.div($grid-gutter-width, $base-font-size-px) + em;
 
     // Tablet and above.

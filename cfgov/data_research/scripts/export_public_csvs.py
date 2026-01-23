@@ -4,6 +4,8 @@ import logging
 import os
 from io import StringIO
 
+from django.conf import settings
+
 from dateutil import parser
 
 from core.utils import format_file_size
@@ -20,12 +22,12 @@ from data_research.models import (
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 from data_research.mortgage_utilities.s3_utils import (
-    MORTGAGE_SUB_BUCKET,
-    S3_MORTGAGE_DOWNLOADS_BASE,
+    DOWNLOAD_KEY,
     bake_csv_to_s3,
 )
 
 
+PUBLIC_DOWNLOAD_BUCKET = settings.AWS_S3_CUSTOM_DOMAIN
 NATION_QUERYSET = NationalMortgageData.objects.all()
 STATES_TO_IGNORE = ["72"]  # Excluding Puerto Rico from project launch
 LOCAL_FILEPATH = os.getenv("LOCAL_MORTGAGE_FILEPATH")
@@ -60,7 +62,7 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = datetime.date.today().strftime("%B %Y")
     thru_month_formatted = parser.parse(thru_month).strftime("%B %Y")
-    csv_url = f"{S3_MORTGAGE_DOWNLOADS_BASE}/{slug}.csv"
+    csv_url = f"{PUBLIC_DOWNLOAD_BUCKET}/{DOWNLOAD_KEY}/{slug}.csv"
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name="download_files"
     )
@@ -219,30 +221,32 @@ def export_downloadable_csv(geo_type, late_value, local=False):
                 round_pct(getattr(record, late_value)) for record in records
             ]
             writer.writerow(record_starter + record_ender)
+    # Only save metadata on a successful bake to s3:
     if local:
         bake_local(local, slug, csvfile)
-        logger.info(f"Baked {slug}.csv to {local}")
+        return f"Baked {slug}.csv to {local}"
     else:
-        bake_csv_to_s3(
-            slug, csvfile, sub_bucket=f"{MORTGAGE_SUB_BUCKET}/downloads"
-        )
-        logger.info(f"Baked {slug} to S3")
+        try:
+            bake_csv_to_s3(slug, csvfile)
+        except Exception as e:
+            return f"Baking {slug} to s3 failed ({e}); skipping export"
+        else:
+            logger.info(f"Baked {slug} to s3; updating metadata")
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_file_size(bytecount)
     save_metadata(csv_size, slug, thru_month, late_value, geo_type)
+    return f"Baked {slug} to s3 and updated metadata"
 
 
 def run():
     load_fips_meta()
     date_set = [parser.parse(date).date() for date in FIPS.dates]
     fill_nation_row_date_values(date_set)
-    if LOCAL_FILEPATH:
-        logger.info(f"Exporting public CSVs locally to {LOCAL_FILEPATH} ...")
-    else:
-        logger.info("Exporting public CSVs to S3 ...")
     for geo in ["County", "MetroArea", "State"]:
-        export_downloadable_csv(geo, "percent_30_60", local=LOCAL_FILEPATH)
-        logger.info(f"Exported 30-89-day {geo} CSV")
-        export_downloadable_csv(geo, "percent_90", local=LOCAL_FILEPATH)
-        logger.info(f"Exported 90-day {geo} CSV")
+        logger.info(
+            export_downloadable_csv(geo, "percent_30_60", local=LOCAL_FILEPATH)
+        )
+        logger.info(
+            export_downloadable_csv(geo, "percent_90", local=LOCAL_FILEPATH)
+        )

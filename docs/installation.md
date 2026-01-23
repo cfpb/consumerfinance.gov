@@ -11,10 +11,10 @@ This quickstart requires a working Docker Desktop installation and git:
   cd consumerfinance.gov
   ```
 
-- [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
+- [Set up and run the Docker containers via docker compose](#set-up-and-run-the-docker-containers):
 
   ```sh
-  docker-compose up
+  docker compose up
   ```
 
 This may take some time, as it will also
@@ -207,15 +207,15 @@ yarn build
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
 You can use
-[`docker-compose`](https://docs.docker.com/compose/)
+[`docker compose`](https://docs.docker.com/compose/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
 
-#### docker-compose:
+#### docker compose:
 
 ```sh
-docker-compose up
+docker compose up
 ```
 
 ### Load initial data
@@ -235,23 +235,30 @@ and then does the following:
 This script must be run inside the Docker `python` container:
 
 ```sh
-docker-compose exec python sh
+docker compose exec python sh
 ./initial-data.sh
 ```
 
 ### Load a database dump
 
 Alternatively, one of our database dumps can be installed using our
-`refresh-data.sh` script. You can get a database dump by defining
-`CFGOV_PROD_DB_LOCATION` in your `.env` file as described in
-GitHub Enterprise at
-[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
-inside a Docker `python` container sh immediately before running
-`refresh-data.sh`:
+`refresh-data.sh` script.
+
+First you must get a database dump as described in GitHub Enterprise at
+[GHE]/Design-Development/cfgov/wiki/Database-Backups-and-Restoration
+
+If you are running in Docker, you will need to execute a shell in the
+`python` container and then run the `refresh-data.sh` script:
 
 ```sh
-docker-compose exec python sh
-CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
+docker compose exec python sh
+./refresh-data.sh
+```
+
+If you are running a local Python environment, you can run the
+`refresh-data.sh` script directly:
+
+```sh
 ./refresh-data.sh
 ```
 
@@ -273,7 +280,7 @@ along with the consumerfinance.gov Django site.
 
 The consumerfinance.gov Django site can be run locally in a virtualenv and can
 use PostgreSQL and Elasticsearch from either
-our [`docker-compose`](https://docs.docker.com/compose/) file
+our [`docker compose`](https://docs.docker.com/compose/) file
 or from Homebrew.
 
 ### PostgreSQL and Elasticsearch from Docker
@@ -282,11 +289,11 @@ To build and start only
 the PostgreSQL (`postgres`)
 and Elasticsearch (`elasticsearch`)
 containers from our
-[`docker-compose`](https://docs.docker.com/compose/) file,
-explicitly specify them as arguments to `docker-compose`:
+[`docker compose`](https://docs.docker.com/compose/) file,
+explicitly specify them as arguments to `docker compose`:
 
 ```
-docker-compose up postgres elasticsearch
+docker compose up postgres elasticsearch
 ```
 
 This will expose

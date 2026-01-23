@@ -177,8 +177,8 @@ msgid "By phone (180+ languages)"
 msgstr "Por teléfono (más de 180 idiomas)"
 
 #: v1/jinja2/v1/includes/molecules/print-button.html:75
-msgid "M-F, 8 a.m. - 8 p.m. ET"
-msgstr "L-V, 8 a.m. - 8 p.m. Hora del este"
+msgid "M-F, 9 a.m. - 6 p.m. ET"
+msgstr "L-V, 9 a.m. - 6 p.m. Hora del este"
 
 #: v1/jinja2/v1/includes/molecules/related-posts.html:100
 msgid "View more related posts"

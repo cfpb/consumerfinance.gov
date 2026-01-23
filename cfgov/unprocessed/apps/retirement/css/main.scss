@@ -6,7 +6,7 @@
 // Project-specific SCSS rules go after the imports.
 
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 #claiming-social-security {
   .input-labels__block .cf-icon-svg {

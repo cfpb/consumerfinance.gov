@@ -74,8 +74,13 @@ jobs:
           echo "${{ github.workspace }}/gettext-install/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=${{ github.workspace }}/gettext-install/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
+      - name: Update apt
+        run: sudo apt-get update
+
       - name: Install lxml dependencies
-        run: sudo apt-get install libxml2-dev libxslt-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3.12-dev libxml2-dev libxslt-dev
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -140,8 +145,8 @@ jobs:
       - name: Check backend test coverage
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            git fetch origin main
-            COMPARE_FLAG="--compare-branch=origin/main"
+            git fetch origin ${{ github.base_ref }}
+            COMPARE_FLAG="--compare-branch=origin/${{ github.base_ref }}"
           else
             git diff HEAD~1 HEAD > diff.txt
             COMPARE_FLAG="--diff-file=diff.txt"

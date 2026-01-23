@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
 
 /*
  * Removes top margin from text input when it follows
@@ -10,4 +10,10 @@
  */
 .m-form-field .a-label--heading + .a-text-input {
   margin-top: 0;
+}
+
+// GovDelivery sign-up is suspended, so we hide the email sign-up.
+.m-inset--email,
+.o-email-signup {
+  display: none !important;
 }

@@ -33,7 +33,8 @@ def update_sampling_dates():
     date_list_obj.json_value = date_list
     date_list_obj.save()
     logger.info(
-        f"Sampling dates updated; the {len(date_list)} dates now range from "
+        "Monthly sampling dates updated; "
+        f"the {len(date_list)} dates now range from "
         f"{date_list[0]} to {date_list[-1]}"
     )
 
@@ -118,14 +119,16 @@ def run():
     merge_the_dades()
     validate_counties()
     dates = MortgageMetaData.objects.get(name="sampling_dates").json_value
-    for date_string in dates:
+    logger.info("Rebuilding geo time_series data for each sampling month")
+    for i, date_string in enumerate(dates, 1):
+        if i % 50 == 0:  # pragma: no cover
+            logger.info(f"{i:,}")
         date = parser.parse(date_string).date()
-        logger.info(f"Aggregating data for {date}")
         load_msa_values(date)
         load_state_values(date)
         load_non_msa_state_values(date)
         load_national_values(date)
-    logger.info("Validating MSAs and non-MSAs")
+    logger.info("\nValidating MSAs and non-MSAs")
     for metro in MetroArea.objects.all():
         metro.validate()
     for state in State.objects.all():
