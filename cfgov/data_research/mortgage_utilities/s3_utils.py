@@ -35,7 +35,6 @@ def bake_csv_to_s3(slug, csv_file_obj, bucket=None, key=None):
     s3.put_object(
         Bucket=bucket,
         Key=f"{key}/{slug}.csv",
-        ACL="public-read",
         ContentType="text/csv",
         Body=csv_file_obj.getvalue(),
         CacheControl="max-age=2592000,public",

@@ -374,12 +374,13 @@ class MortgagePerformancePage(BrowsePage):
 
 
 def validate_counties():
+    thresh_year = MortgageDataConstant.get_thresholds()[1]
     for each in County.objects.all():
         each.validate()
     total = County.objects.count()
     valid = County.objects.filter(valid=True).count()
     if total != 0:
         logger.info(
-            f"{valid} counties of {total} were found to be valid -- "
-            f"{round((valid * 100.0 / total), 1)}%)"
+            f"{round((valid * 100.0 / total), 1)}% of {total:,} counties "
+            f"are valid for display based on the threshold year {thresh_year}"
         )
