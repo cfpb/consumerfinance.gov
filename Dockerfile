@@ -47,6 +47,14 @@ WORKDIR ${APP_HOME}
 # these files do not change.
 COPY requirements ./requirements
 
+# Add Zscaler Root CA certificate, rebuild CA certificates, and both the root
+# cert and the rebuilt ca-certificates cert to APP_HOME for reuse.
+ADD https://raw.githubusercontent.com/cfpb/zscaler-cert/refs/heads/main/zscaler_root_ca.pem ${APP_HOME}/zscaler-root-public.cert
+RUN cp ${APP_HOME}/zscaler-root-public.cert /usr/local/share/ca-certificates/zscaler-root-public.cert && \
+    apk add ca-certificates --no-cache --no-check-certificate && \
+    update-ca-certificates && \
+    cp /etc/ssl/certs/ca-certificates.crt ${APP_HOME}/ca-certificates.crt
+
 # Build the Python environment
 RUN \
     apk update --no-cache && apk upgrade --no-cache && \
@@ -76,6 +84,11 @@ FROM node:24-alpine AS node-builder
 
 ENV APP_HOME=/src/consumerfinance.gov
 WORKDIR ${APP_HOME}
+
+# Add ZScalar cert from the python stage above
+COPY --from=python ${APP_HOME}/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=python ${APP_HOME}/zscaler-root-public.cert ${APP_HOME}/zscaler-root-public.cert
+ARG NODE_EXTRA_CA_CERTS=${APP_HOME}/zscaler-root-public.cert
 
 # Install and update common OS packages and frontend dependencies
 RUN apk update --no-cache && apk upgrade --no-cache && \
