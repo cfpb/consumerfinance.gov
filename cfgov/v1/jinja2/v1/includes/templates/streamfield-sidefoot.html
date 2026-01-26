@@ -3,7 +3,8 @@
 
 
 {% macro render(streamfield) %}
-    {% for block in streamfield %}
+    {# TEMPORARILY FILTER OUT EMAIL-SIGNUP WHILE IT IS DISABLED #}
+    {% for block in streamfield | selectattr('block_type', '!=', 'email_signup') %}
         {% if 'related_posts' in block.block_type %}
             <div class="block{{ ' block--flush-top' if loop.first else '' }}">
                 {% include_block block %}
