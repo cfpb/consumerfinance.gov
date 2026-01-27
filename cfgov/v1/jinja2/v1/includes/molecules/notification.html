@@ -11,7 +11,7 @@
    type:        The type of notification to display.
                 Values may be: 'information',
                 'success', 'error', 'warning',
-                'money-tips', or 'caution'.
+                'money-tips', 'caution', or 'help'.
 
    is_visible:  Whether the notification is initially shown or not.
                 Default is false.
@@ -40,7 +40,8 @@
         'warning':     [' m-notification--warning', 'warning-round'],
         'error':       [' m-notification--error', 'error-round'],
         'money-tips':  [' m-notification--success', 'dollar-round'],
-        'caution':     [' m-notification--error', 'information-round']
+        'caution':     [' m-notification--error', 'information-round'],
+        'help':        [' m-notification--success', 'help-round']
       }
   %}
   {% set icon = type_lookup[type | default( 'information' )][1] %}
