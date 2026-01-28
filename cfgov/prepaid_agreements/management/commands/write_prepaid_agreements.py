@@ -1,9 +1,17 @@
 import csv
+import logging
+from pathlib import Path
+
+from django.core.management.base import BaseCommand
 
 from prepaid_agreements.models import PrepaidAgreement
 
 
+logger = logging.getLogger(__name__)
+
+
 def write_agreements_data(path=""):
+    path = Path(path)
     agreements_fieldnames = [
         "issuer_name",
         "product_name",
@@ -38,8 +46,8 @@ def write_agreements_data(path=""):
         "direct_download",
     ]
 
-    agreements_location = path + "prepaid_metadata_all_agreements.csv"
-    products_location = path + "prepaid_metadata_recent_agreements.csv"
+    agreements_location = path / "prepaid_metadata_all_agreements.csv"
+    products_location = path / "prepaid_metadata_recent_agreements.csv"
 
     with open(
         agreements_location, "w", encoding="utf-8"
@@ -70,6 +78,8 @@ def write_agreements_data(path=""):
             ),
         )
 
+        agreements_counter = 0
+        products_counter = 0
         for agreement in agreements:
             product = agreement.product
             # CSV should only includes data that has not been marked for
@@ -110,13 +120,38 @@ def write_agreements_data(path=""):
                 # such that there is one row per product ID
                 if agreement.is_most_recent:
                     products_writer.writerow(data)
+                    products_counter += 1
 
                 data["most_recent_agreement"] = most_recent
                 agreements_writer.writerow(data)
+                agreements_counter += 1
+
+        logger.info(
+            f"Wrote {agreements_counter} agreements, "
+            f"{products_counter} products"
+        )
 
 
-def run(*args):
-    if args:
-        write_agreements_data(path=args[0])
-    else:
-        write_agreements_data()
+class Command(BaseCommand):
+    """
+    Write prepaid card agreement and product data to CSV files
+    """
+
+    help = "Write prepaid card agreement and product data to CSV files"
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "-p",
+            "--path",
+            action="store",
+            required=True,
+            help=(
+                "Directory into which two CSV files of prepaid agreements "
+                "and product data will be written."
+            ),
+        )
+
+    def handle(self, *args, **options):
+        path = options["path"]
+        logger.info(f"Writing prepaid agreements CSV to {path}")
+        write_agreements_data(path)

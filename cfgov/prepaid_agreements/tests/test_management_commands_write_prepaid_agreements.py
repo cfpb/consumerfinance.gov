@@ -1,13 +1,15 @@
 from datetime import date, datetime, timedelta
+from pathlib import PosixPath
 from unittest import mock
 
+from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import make_aware
 
-from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
-from prepaid_agreements.scripts.write_prepaid_agreements_data_to_csv import (
+from prepaid_agreements.management.commands.write_prepaid_agreements import (
     write_agreements_data,
 )
+from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
 S3_PATH = "https://files.consumerfinance.gov/a/assets/prepaid-agreements/"
@@ -217,4 +219,20 @@ class TestViews(TestCase):
             + ","
             + self.direct_download3
             + "\r\n"
+        )
+
+    @mock.patch("builtins.open", new_callable=mock.mock_open)
+    def test_command(self, mock_open):
+        call_command("write_prepaid_agreements", path="/export/path")
+        mock_open.assert_any_call(
+            PosixPath("/export/path/prepaid_metadata_all_agreements.csv"),
+            "w",
+            encoding="utf-8",
+        )
+        (
+            mock_open.assert_any_call(
+                PosixPath("/export/path/prepaid_metadata_all_agreements.csv"),
+                "w",
+                encoding="utf-8",
+            ),
         )
