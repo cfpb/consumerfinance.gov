@@ -1,4 +1,5 @@
 import json
+import unittest
 from unittest import mock
 
 from django.test import TestCase
@@ -8,6 +9,9 @@ from v1.models.snippets import EmailSignUp
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
 
 
+@unittest.skip(
+    "Disabling due to disabling of email signup, see https://github.com/cfpb/consumerfinance.gov/pull/8988"
+)
 class TestEmailSignup(TestCase):
     def check_page_content(self, page_cls, field):
         email_signup = EmailSignUp(
