@@ -106,7 +106,6 @@ class SearchView(TranslatedTemplateView):
                     # Post proprocess results
                     for res in results:
                         # Strip | CFPB suffix
-                        res["title"] = res["title"][:-39]
                         encoded_list = res.get("searchgov_custom2")
                         if encoded_list:
                             # Hack due to search.gov caching old data

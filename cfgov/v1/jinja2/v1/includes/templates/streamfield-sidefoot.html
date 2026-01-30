@@ -3,23 +3,18 @@
 
 
 {% macro render(streamfield) %}
-    {# TEMPORARILY FILTER OUT EMAIL-SIGNUP WHILE IT IS DISABLED #}
+    {# 
+       TEMPORARILY FILTER OUT EMAIL-SIGNUP WHILE IT IS DISABLED, 
+       see https://github.com/cfpb/consumerfinance.gov/pull/8988
+    #}
     {% for block in streamfield | selectattr('block_type', '!=', 'email_signup') %}
-        {% if 'related_posts' in block.block_type %}
-            <div class="block{{ ' block--flush-top' if loop.first else '' }}">
-                {% include_block block %}
-            </div>
-        {% elif 'related_metadata' in block.block_type %}
+        {% if 'related_metadata' in block.block_type %}
             <div class="block{{ ' block--flush-top' if loop.first else '' }}">
                 {{ related_metadata.render(block.value) }}
             </div>
         {% elif 'social_media' in block.block_type %}
             <div class="block{{ ' block--flush-top' if loop.first else '' }}">
                 {{ social_media.render(block.value) }}
-            </div>
-        {% elif 'rss_feed' in block.block_type %}
-            <div class="block{{ ' block--flush-top' if loop.first else '' }}">
-                {% include_block block %}
             </div>
         {% else %}
             {% import 'v1/includes/templates/render_block.html' as render_block with context %}

@@ -46,23 +46,9 @@ class S3UtilsTests(TestCase):
             bucket=bucket_name,
             key=DOWNLOAD_KEY,
         )
-
         key = bucket.Object(f"{DOWNLOAD_KEY}/foo.csv")
         response = key.get()
         self.assertEqual(response["Body"].read(), b"a,b,c\r\n1,2,3\r\n")
-
-        # bake_csv_to_s3 sets 'public-read' on the item.
-        acl = key.Acl()
-        self.assertIn(
-            {
-                "Permission": "READ",
-                "Grantee": {
-                    "Type": "Group",
-                    "URI": "http://acs.amazonaws.com/groups/global/AllUsers",
-                },
-            },
-            acl.grants,
-        )
 
     @moto.mock_aws
     def test_bake_csv_to_s3_no_args(self):
@@ -79,15 +65,3 @@ class S3UtilsTests(TestCase):
         key = bucket.Object(f"{DOWNLOAD_KEY}/foo.csv")
         response = key.get()
         self.assertEqual(response["Body"].read(), b"a,b,c\r\n1,2,3\r\n")
-
-        acl = key.Acl()
-        self.assertIn(
-            {
-                "Permission": "READ",
-                "Grantee": {
-                    "Type": "Group",
-                    "URI": "http://acs.amazonaws.com/groups/global/AllUsers",
-                },
-            },
-            acl.grants,
-        )

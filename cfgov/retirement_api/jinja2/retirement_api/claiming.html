@@ -39,7 +39,7 @@
                 {{ translation_links.render(
                     links=[
                     {
-                        'href': url('retirement_api_en:claiming'),
+                        'href': '/consumer-tools/retirement/before-you-claim/',
                         'language': 'en',
                         'text': 'English'
                     },{
@@ -199,7 +199,7 @@
             </div>
 
             <p class="learn-how">
-            <a href="{{url('retirement_api_' + current_language + ':about')}}"
+            <a href="{{url('retirement_api_es:about')}}"
                     target="_blank" rel="noopener noreferrer">
                     {{ _("Where do these numbers come from?") }}
                 </a>

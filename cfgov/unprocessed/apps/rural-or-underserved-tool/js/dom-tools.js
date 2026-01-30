@@ -194,6 +194,7 @@ function removeClass(selector, className) {
  * @param {HTMLElement} element - An element.
  * @param {string} propName - An HTML element property to select for.
  * @param {string} filter - The string to filter by.
+ * @returns {Array} List of filtered nodes.
  */
 function _filter(element, propName, filter) {
   const _propName = propName || '';
