@@ -75,7 +75,7 @@ def alpha_to_int(alpha):
     double_range = list(range(27, 53))
     double_map = dict(zip(double_letters, double_range))
     alpha_map.update(double_map)
-    return alpha_map.get(alpha.lower(), None)
+    return alpha_map.get(alpha.lower())
 
 
 def int_to_alpha(num):
