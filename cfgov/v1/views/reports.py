@@ -354,8 +354,10 @@ class AskReportView(ReportView):
             # Both define a description field, so we'll use that here.
             answer_schema = list(
                 filter(
-                    lambda item: item["type"] == "how_to_schema"
-                    or item["type"] == "faq_schema",
+                    lambda item: (
+                        item["type"] == "how_to_schema"
+                        or item["type"] == "faq_schema"
+                    ),
                     answer_streamfield,
                 )
             )
