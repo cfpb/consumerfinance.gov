@@ -40,7 +40,7 @@
     "@cypress/skip-test": "2.6.1",
     "@eslint/js": "9.39.2",
     "axe-core": "4.11.1",
-    "cypress": "15.9.0",
+    "cypress": "15.10.0",
     "cypress-axe": "1.7.0",
     "cypress-fail-fast": "7.1.1",
     "eslint": "9.39.2",
@@ -56,7 +56,8 @@
     "jest-environment-jsdom": "30.2.0",
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.8.1",
-    "stylelint": "17.1.0",
+    "snyk": "1.1302.1",
+    "stylelint": "17.1.1",
     "stylelint-config-standard-scss": "17.0.0"
   },
   "scripts": {
