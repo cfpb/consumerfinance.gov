@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 from urllib.parse import quote, urljoin
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -11,7 +12,9 @@ import zoneinfo
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
-S3_URL = "https://files.consumerfinance.gov/a/assets/prepaid-agreements/"
+S3_URL = (
+    f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/a/assets/prepaid-agreements/"
+)
 METADATA_FILENAME = "prepaid_metadata.json"
 
 logger = logging.getLogger(__name__)
