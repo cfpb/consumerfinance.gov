@@ -17,7 +17,7 @@
   },
   "browserslist": "> 0.2% in @cfpb/browserslist-config stats",
   "dependencies": {
-    "@cfpb/browserslist-config": "0.0.5",
+    "@cfpb/browserslist-config": "0.0.6",
     "@cfpb/cfpb-analytics": "0.3.2",
     "@cfpb/cfpb-design-system": "4.3.2",
     "@csstools/postcss-sass": "5.1.1",
