@@ -6,8 +6,11 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import make_aware
 
+import boto3
+import moto
+
 from prepaid_agreements.management.commands.write_prepaid_agreements import (
-    write_agreements_data,
+    generate_agreements_data,
 )
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
@@ -95,31 +98,29 @@ class TestViews(TestCase):
         )
         self.agreement_newer.save()
 
-    @mock.patch("builtins.open", new_callable=mock.mock_open)
-    def test_write_agreements_data(self, mock_open):
+    def test_write_agreements_data(self):
         # Run the write function
-        write_agreements_data()
+        agreements_csv, products_csv = generate_agreements_data()
 
-        mock_file_handle = mock_open()
-
-        # Make sure each file's headers exist
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             "issuer_name,product_name,product_id,"
             "agreement_effective_date,agreement_id,most_recent_agreement,"
             "created_date,current_status,withdrawal_date,"
             "prepaid_product_type,program_manager_exists,program_manager,"
-            "other_relevant_parties,path,direct_download\r\n"
+            "other_relevant_parties,path,direct_download",
+            agreements_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             "issuer_name,product_name,product_id,"
             "agreement_effective_date,agreement_id,"
             "created_date,current_status,withdrawal_date,"
             "prepaid_product_type,program_manager_exists,program_manager,"
-            "other_relevant_parties,path,direct_download\r\n"
+            "other_relevant_parties,path,direct_download",
+            products_csv,
         )
 
         # Make sure expected data rows exist
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name1
             + ","
             + self.product_name1
@@ -132,9 +133,10 @@ class TestViews(TestCase):
             + self.path1
             + ","
             + self.direct_download1
-            + "\r\n"
+            + "\r\n",
+            agreements_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name1
             + ","
             + self.product_name1
@@ -147,9 +149,10 @@ class TestViews(TestCase):
             + self.path1
             + ","
             + self.direct_download1
-            + "\r\n"
+            + "\r\n",
+            products_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name1
             + ","
             + self.product_name1
@@ -162,9 +165,10 @@ class TestViews(TestCase):
             + self.path1
             + ","
             + self.direct_download1
-            + "\r\n"
+            + "\r\n",
+            agreements_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name2
             + ","
             + self.product_name2
@@ -176,9 +180,10 @@ class TestViews(TestCase):
             + self.path2
             + ","
             + self.direct_download2
-            + "\r\n"
+            + "\r\n",
+            products_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name2
             + ","
             + self.product_name2
@@ -190,9 +195,10 @@ class TestViews(TestCase):
             + self.path2
             + ","
             + self.direct_download2
-            + "\r\n"
+            + "\r\n",
+            agreements_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name3
             + ","
             + self.product_name3
@@ -204,9 +210,10 @@ class TestViews(TestCase):
             + self.path3
             + ","
             + self.direct_download3
-            + "\r\n"
+            + "\r\n",
+            products_csv,
         )
-        mock_file_handle.write.assert_any_call(
+        self.assertIn(
             self.issuer_name3
             + ","
             + self.product_name3
@@ -218,21 +225,37 @@ class TestViews(TestCase):
             + self.path3
             + ","
             + self.direct_download3
-            + "\r\n"
+            + "\r\n",
+            agreements_csv,
         )
 
     @mock.patch("builtins.open", new_callable=mock.mock_open)
-    def test_command(self, mock_open):
+    def test_command_local_files(self, mock_open):
         call_command("write_prepaid_agreements", path="/export/path")
         mock_open.assert_any_call(
             PosixPath("/export/path/prepaid_metadata_all_agreements.csv"),
             "w",
             encoding="utf-8",
         )
-        (
-            mock_open.assert_any_call(
-                PosixPath("/export/path/prepaid_metadata_all_agreements.csv"),
-                "w",
-                encoding="utf-8",
-            ),
+        mock_open.assert_any_call(
+            PosixPath("/export/path/prepaid_metadata_recent_agreements.csv"),
+            "w",
+            encoding="utf-8",
         )
+
+    @moto.mock_aws
+    def test_command_s3_files(self):
+        s3 = boto3.client("s3")
+        s3.create_bucket(Bucket="testbucket")
+
+        response = s3.list_objects_v2(Bucket="testbucket", Prefix="export/")
+        keys = [o["Key"] for o in response.get("Contents", [])]
+        self.assertNotIn("export/prepaid_metadata_all_agreements.csv", keys)
+        self.assertNotIn("export/prepaid_metadata_recent_agreements.csv", keys)
+
+        call_command("write_prepaid_agreements", path="s3://testbucket/export")
+
+        response = s3.list_objects_v2(Bucket="testbucket", Prefix="export/")
+        keys = [o["Key"] for o in response.get("Contents", [])]
+        self.assertIn("export/prepaid_metadata_all_agreements.csv", keys)
+        self.assertIn("export/prepaid_metadata_recent_agreements.csv", keys)
