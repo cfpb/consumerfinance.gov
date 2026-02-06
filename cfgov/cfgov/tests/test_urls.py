@@ -1,27 +1,14 @@
 from unittest import mock
 
-import django
 from django.test import (
     RequestFactory,
     SimpleTestCase,
     TestCase,
     override_settings,
 )
-from django.urls import re_path
 
 from cfgov import urls
 from cfgov.urls.redirect_helpers import perm, temp
-from cfgov.urls.views import (
-    flagged_wagtail_only_view,
-    flagged_wagtail_template_view,
-)
-
-
-try:
-    from django.urls import URLPattern, URLResolver
-except ImportError:
-    from django.core.urlresolvers import RegexURLPattern as URLPattern
-    from django.core.urlresolvers import RegexURLResolver as URLResolver
 
 
 # Allowlist is a list of *strings* that match the beginning of a regex string.
@@ -38,72 +25,6 @@ ADMIN_URL_ALLOWLIST = [
     "^password/",
     "^tasks/",
 ]
-
-
-# Based on django_extensions's show_urls command.
-def extract_regexes_from_urlpatterns(urlpatterns, base=""):
-    """Extract a list of all regexes from the given urlpatterns"""
-    regexes = []
-    for p in urlpatterns:
-        if isinstance(p, URLPattern) or hasattr(p, "_get_callback"):
-            if django.VERSION < (2, 0):
-                regexes.append(base + p.regex.pattern)
-            else:
-                regexes.append(base + p.pattern.regex.pattern)
-        elif (
-            isinstance(p, URLResolver)
-            or hasattr(p, "url_patterns")
-            or hasattr(p, "_get_url_patterns")
-        ):
-            patterns = p.url_patterns
-            if django.VERSION < (2, 0):
-                regexes.extend(
-                    extract_regexes_from_urlpatterns(
-                        patterns, base + p.regex.pattern
-                    )
-                )
-            else:
-                regexes.extend(
-                    extract_regexes_from_urlpatterns(
-                        patterns, base + p.pattern.regex.pattern
-                    )
-                )
-        else:
-            raise TypeError(f"{p} does not appear to be a urlpattern object")
-    return regexes
-
-
-urlpatterns = [
-    flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
-    re_path(
-        "^template$",
-        flagged_wagtail_template_view(
-            "MY_TEST_FLAG",
-            "tccp/about.html",
-        ),
-    ),
-]
-
-
-@override_settings(ROOT_URLCONF=__name__)
-class FlaggedWagtailViewTests(TestCase):
-    @override_settings(FLAGS={"MY_TEST_FLAG": [("boolean", True)]})
-    def test_flag_set_returns_view_that_calls_wagtail_serve_view(self):
-        """When flag is set, request should be routed to Wagtail.
-
-        This test checks for text that is known to exist in the template for
-        the Wagtail page that gets served from the site root.
-        """
-        response = self.client.get("/")
-        self.assertContains(response, "Consumer Financial Protection Bureau")
-
-    @override_settings(FLAGS={"MY_TEST_FLAG": [("boolean", False)]})
-    def test_flag_not_set_returns_view_that_raises_http404(self):
-        response = self.client.get("/")
-        self.assertEqual(response.status_code, 404)
-
-        response = self.client.get("/template")
-        self.assertContains(response, "About this tool")
 
 
 class HandleErrorTestCase(TestCase):
