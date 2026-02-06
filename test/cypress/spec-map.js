@@ -38,11 +38,7 @@ const directories = [
     'consumer-tools/before-you-claim',
   ],
   [
-    [
-      'cfgov/unprocessed/apps/tccp',
-      'cfgov/tccp',
-      'cfgov/unprocessed/js/modules/util/web-storage-proxy',
-    ],
+    ['cfgov/unprocessed/js/modules/util/web-storage-proxy'],
     'consumer-tools/credit-cards',
   ],
   [
