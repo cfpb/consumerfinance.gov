@@ -114,7 +114,6 @@ INSTALLED_APPS = (
     "rest_framework",
     "wagtail_modeladmin",
     "wagtail_draftail_anchors",
-    "tccp",
     "django_filters",
     "django_htmx",
     "wagtail_content_audit",
