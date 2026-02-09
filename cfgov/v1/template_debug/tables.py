@@ -36,27 +36,6 @@ table_test_cases = {
     "Stack on mobile, directory table": {
         "options": ["directory_table"],
     },
-    # The hybrid stack on mobile CSS currently lives within the TCCP app.
-    # It will eventually be made more generally available.
-    "Hybrid stack on mobile": {
-        "options": ["stack_on_mobile"],
-        "data": {
-            "columns": [
-                {"heading": "Column 1", "preserve_column_on_mobile": True},
-                {"heading": "Column 2", "preserve_column_on_mobile": True},
-                {"heading": "Column 3"},
-                {"heading": "Column 4"},
-                {"heading": "Column 5"},
-            ],
-            "rows": [
-                ["0,0", "0,1", "0,2", "0,3", "0,4"],
-                ["1,0", "1,1", "1,2", "1,3", "1,4"],
-                ["2,0", "2,1", "2,2", "2,3", "2,4"],
-                ["3,0", "3,1", "3,2", "3,3", "3,4"],
-                ["4,0", "4,1", "4,2", "4,3", "4,4"],
-            ],
-        },
-    },
     "Right-align specific table rows": {
         "data": {
             "columns": [
