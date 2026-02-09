@@ -45,25 +45,19 @@ However, for what we actively aim to support and test, we use a higher cutoff
 of 1%. The current 1% cutoff list is:
 
 ```
-and_chr 139
+and_chr 144
+chrome 143
+chrome 142
+chrome 141
+chrome 140
+chrome 139
+chrome 138
 chrome 137
-chrome 136
-chrome 135
-chrome 134
-chrome 133
-chrome 132
-chrome 131
-edge 137
-edge 136
-edge 135
-edge 134
-edge 133
-edge 132
-edge 131
-ios_saf 18.5
-ios_saf 18.4
-ios_saf 18.3
-ios_saf 18.2
-ios_saf 18.1
-ios_saf 17.6-17.7
+edge 143
+edge 142
+edge 141
+edge 140
+edge 139
+edge 138
+ios_saf 18.5-18.7
 ```
