@@ -72,5 +72,3 @@ if SKIP_DJANGO_MIGRATIONS:
         _db.setdefault("TEST", {})["MIGRATE"] = False
 
 DEPLOY_ENVIRONMENT = "test"
-
-INSTALLED_APPS += ("tccp.tests.testapp",)
