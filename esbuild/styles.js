@@ -24,7 +24,6 @@ const styledApps = [
   'rural-or-underserved-tool',
   'teachers-digital-platform',
   'filing-instruction-guide',
-  'tccp',
   'searchgov',
 ];
 

@@ -1,38 +1,5 @@
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render
-
-from flags.urls import flagged_re_path
-from flags.views import FlaggedTemplateView
-from wagtailsharing.views import ServeView
-
-
-def flagged_wagtail_template_view(flag_name, template_name):
-    """View that serves Wagtail if a flag is set, and a template if not.
-
-    This uses the wagtail-sharing ServeView to ensure that sharing works
-    properly when viewing the page in Wagtail behind a flag.
-    """
-    return FlaggedTemplateView.as_view(
-        fallback=lambda request: ServeView.as_view()(request, request.path),
-        flag_name=flag_name,
-        template_name=template_name,
-        condition=False,
-    )
-
-
-def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
-    """If flag is set, serve page from Wagtail, otherwise raise 404."""
-
-    def this_view_always_raises_http404(request, *args, **kwargs):
-        raise Http404(f"flag {flag_name} not set")
-
-    return flagged_re_path(
-        flag_name,
-        regex_path,
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=this_view_always_raises_http404,
-        name=url_name,
-    )
 
 
 def empty_200_response(request, *args, **kwargs):
