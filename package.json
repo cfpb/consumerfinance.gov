@@ -56,7 +56,6 @@
     "jest-environment-jsdom": "30.2.0",
     "jest-fetch-mock": "3.0.3",
     "prettier": "3.8.1",
-    "snyk": "1.1302.1",
     "stylelint": "17.1.0",
     "stylelint-config-standard-scss": "17.0.0"
   },
@@ -67,7 +66,6 @@
     "lint": "./scripts/lint.sh",
     "jest": "node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
-    "snyk": "snyk test",
     "watch": "yarn build watch",
     "build": "node ./esbuild/build.js",
     "cy": "./scripts/cypress.sh"
@@ -75,7 +73,6 @@
   "prettier": {
     "singleQuote": true
   },
-  "snyk": true,
   "type": "module",
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

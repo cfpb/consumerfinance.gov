@@ -124,7 +124,6 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-.snyk
 test/cypress/screenshots/
 cypress.config.mjs
 
