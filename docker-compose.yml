@@ -1,27 +1,31 @@
 volumes:
   postgres_data:
-  es_data:
+  opensearch_data:
 
 services:
-  elasticsearch:
-    build:
-      context: ./
-      dockerfile: ./docker/elasticsearch/Dockerfile
+  opensearch:
+    image: opensearchproject/opensearch:2.19.4
     ports:
       - 127.0.0.1:9200:9200
       - 127.0.0.1:9300:9300
     volumes:
-      - es_data:/var/lib/elasticsearch/data/
+      - opensearch_data:/usr/share/opensearch/data/
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      OPENSEARCH_JAVA_OPTS: '-Xms512m -Xmx512m'
+      # Disables the need for an admin password and TLS.
+      # We only ever run this locally in development.
+      DISABLE_SECURITY_PLUGIN: true
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.16.0
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.19.4
     depends_on:
-      - elasticsearch
+      - opensearch
     ports:
       - 127.0.0.1:5601:5601
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
 
   postgres:
     image: postgres:17-alpine
@@ -45,12 +49,12 @@ services:
       args:
         REQUIREMENTS: local.txt
     depends_on:
-      - elasticsearch
+      - opensearch
       - postgres
     stdin_open: true
     tty: true
     environment:
       DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
-      ES_HOST: elasticsearch
+      ES_HOST: opensearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       COMPLAINT_ES_INDEX: complaint-public
