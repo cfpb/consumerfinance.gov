@@ -1,6 +1,13 @@
 import unittest
+from urllib.parse import urljoin
 
-from prepaid_agreements.scripts.import_prepaid_agreements_data import (
+from django.core.management import call_command
+
+import responses
+
+from prepaid_agreements.management.commands.import_prepaid_agreements import (
+    METADATA_FILENAME,
+    S3_URL,
     import_agreements_data,
     import_products_data,
 )
@@ -137,5 +144,38 @@ class TestImports(unittest.TestCase):
         imported_products = import_products_data(data["products"])
         self.assertEqual(imported_products, ["1", "2", "3", "4", "5", "6"])
 
-        imported_agreements = import_agreements_data(data["agreements"])
+        imported_agreements = import_agreements_data(
+            data["agreements"],
+            "https://files.consumerfinance.gov/a/assets/prepaid-agreements/",
+        )
         self.assertEqual(imported_agreements, None)
+
+    @responses.activate
+    def test_command_without_args(self):
+        response = responses.get(
+            urljoin(S3_URL, METADATA_FILENAME),
+            status=200,
+            json={"agreements": [], "products": []},
+        )
+
+        # Test that the default URL and filename are fetched
+        call_command("import_prepaid_agreements")
+        self.assertEqual(response.call_count, 1)
+
+    @responses.activate
+    def test_command_with_arguments(self):
+        base_url = "https://example.com/prepaid/"
+        metadata_filename = "new_metadata.json"
+        response = responses.get(
+            urljoin(base_url, metadata_filename),
+            status=200,
+            json={"agreements": [], "products": []},
+        )
+
+        # Test that the custom URL and filename are fetched
+        call_command(
+            "import_prepaid_agreements",
+            base_url=base_url,
+            metadata_filename=metadata_filename,
+        )
+        self.assertEqual(response.call_count, 1)
