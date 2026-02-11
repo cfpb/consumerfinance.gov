@@ -162,7 +162,9 @@ def detail(request, product_id):
         request,
         "prepaid_agreements/detail.html",
         {
-            "product": get_object_or_404(PrepaidProduct, pk=product_id),
+            "product": get_object_or_404(
+                PrepaidProduct.objects.valid(), pk=product_id
+            ),
             "disclaimer_text": get_disclaimer_text(),
             "support_text": get_support_text(),
         },

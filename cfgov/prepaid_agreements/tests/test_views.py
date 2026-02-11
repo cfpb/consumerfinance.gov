@@ -2,6 +2,7 @@ import unittest
 
 from django.db import connection
 from django.test import TestCase
+from django.utils import timezone
 
 from prepaid_agreements.models import PrepaidProduct
 from prepaid_agreements.views import (
@@ -32,6 +33,13 @@ class TestViews(TestCase):
             status="Active",
         )
         self.product3.save()
+        self.product4 = PrepaidProduct(
+            name="Old Product",
+            prepaid_type="Payroll",
+            status="Active",
+            deleted_at=timezone.now(),
+        )
+        self.product4.save()
 
     def test_get_available_filters(self):
         products = PrepaidProduct.objects
@@ -67,7 +75,7 @@ class TestViews(TestCase):
         results = search_products(
             search_term="cfpb",
             search_field=[],
-            products=PrepaidProduct.objects.all(),
+            products=PrepaidProduct.objects.valid(),
         )
         self.assertIn(self.product1, results)
         self.assertIn(self.product2, results)
@@ -100,3 +108,15 @@ class TestViews(TestCase):
         )
         self.assertEqual(3, response.context_data["total_count"])
         self.assertEqual(2, response.context_data["current_count"])
+
+    def test_detail_view_valid_products(self):
+        response = self.client.get(
+            f"/data-research/prepaid-accounts/search-agreements/detail/{self.product1.pk}/"
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_detail_view_invalid_products(self):
+        response = self.client.get(
+            f"/data-research/prepaid-accounts/search-agreements/detail/{self.product4.pk}/"
+        )
+        self.assertEqual(response.status_code, 404)
