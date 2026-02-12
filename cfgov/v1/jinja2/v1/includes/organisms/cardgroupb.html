@@ -1,0 +1,38 @@
+{# ==========================================================================
+
+   CardGroup
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a Card Group organism, which displays a set of cards
+   with an optional heading.
+
+   value.group_type:                  The group type. Can be:
+                                      flow, column-2, column-3,
+                                      count-2, count-3, count-4
+
+   value.has_well                     (Optional) Whether the cards should
+                                      be in a well
+
+   value.heading:                     (Optional) Group heading.
+
+   value.cards:                       List of card molecules
+
+   ========================================================================== #}
+
+{% import "v1/includes/molecules/cardb.html" as card with context %}
+
+<div class="o-card-group o-card-group--{{value.group_type}}">
+    <div class="block u-text-centered">
+    {% if value.heading %}<h2 class="h1">{{ value.heading }}</h2>{% endif %}
+    </div>
+    {% if value.has_well %}<div class="o-well u-text-centered">{% endif %}
+      <div class="o-card-group__cards">
+      {% for _card in value.cards %}
+        {% include_block _card %}
+      {% endfor %}
+      </div>
+    {% if value.has_well %}</div>{% endif %}
+</div>

@@ -27,6 +27,28 @@ from v1.atomic_elements.tables import (  # noqa: F401
 from v1.util import ref
 
 
+class CardBlockGroup(blocks.StructBlock):
+    group_type = blocks.ChoiceBlock(
+        choices=[
+            ("flow", "Natural flow"),
+            ("column-2", "Two columns"),
+            ("column-3", "Three columns"),
+            ("count-2", "Two cards"),
+            ("count-3", "Three cards"),
+            ("count-4", "Four cards"),
+        ],
+        default="flow",
+        help_text="Choose how to group the cards",
+    )
+    has_well = blocks.BooleanBlock(required=False)
+    heading = blocks.CharBlock(required=False)
+    cards = blocks.ListBlock(molecules.CardBlock(), default=list())
+
+    class Meta:
+        icon = "form"
+        template = "v1/includes/organisms/cardgroupb.html"
+
+
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label="Well")
 
