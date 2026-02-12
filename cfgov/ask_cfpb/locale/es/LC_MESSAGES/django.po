@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 17:28-0400\n"
+"POT-Creation-Date: 2025-08-25 15:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:40
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:87
-msgid "/ask-cfpb/search/"
-msgstr "/es/obtener-respuestas/buscar/"
-
-#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:44
-msgid "Search for your question"
-msgstr "Busque su pregunta"
-
 #: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:50
-msgid "Search Ask CFPB for your question"
-msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
+msgid "Search all of consumerfinance.gov"
+msgstr "Buscar la CFPB"
+
+#: ask_cfpb/jinja2/ask-cfpb/_ask-search.html:56
+msgid "Enter your search term(s)"
+msgstr "Ingrese sus término(s) de búsqueda"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:7
 msgid "Consumer Financial Protection Bureau"
@@ -40,7 +35,7 @@ msgid "last reviewed"
 msgstr "revisado"
 
 #: ask_cfpb/jinja2/ask-cfpb/answer-page.html:57
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:86
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:62
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
@@ -95,27 +90,19 @@ msgstr "Por favor escriba su búsqueda arriba"
 msgid "Read answer"
 msgstr "Leer la respuesta"
 
+#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:40
+msgid "Can't find what you're looking for?"
+msgstr "¿No encuentra lo que busca?"
+
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:34
 msgid "Read more"
 msgstr "Leer más"
 
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:49
-msgid "Narrow your results"
-msgstr "Búsqueda especial"
-
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:55
-msgid "Search term"
-msgstr "Palabra a buscar"
-
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:59
-msgid "Search"
-msgstr "Buscar"
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:63
+msgid "/ask-cfpb/search/"
+msgstr "/es/obtener-respuestas/buscar/"
 
 #: ask_cfpb/jinja2/ask-cfpb/see-all.html:63
-msgid "Clear search"
-msgstr "Borrar búsqueda"
-
-#: ask_cfpb/jinja2/ask-cfpb/see-all.html:87
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
 
@@ -151,3 +138,21 @@ msgstr "Ver todos los resultados para"
 #: ask_cfpb/templates/admin/export.html:3
 msgid "Export Ask data"
 msgstr ""
+
+#~ msgid "Search for your question"
+#~ msgstr "Busque su pregunta"
+
+#~ msgid "Search Ask CFPB for your question"
+#~ msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
+
+#~ msgid "Narrow your results"
+#~ msgstr "Búsqueda especial"
+
+#~ msgid "Search term"
+#~ msgstr "Palabra a buscar"
+
+#~ msgid "Search"
+#~ msgstr "Buscar"
+
+#~ msgid "Clear search"
+#~ msgstr "Borrar búsqueda"
