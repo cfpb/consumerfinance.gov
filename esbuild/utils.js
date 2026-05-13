@@ -16,7 +16,7 @@ function getAll(path, regex = /.js$/) {
 // Files that should not be copied and directories that should not be walked
 const blocklist = [
   'node_modules',
-  'npm-packages-offline-cache',
+  '.yarn/cache',
   '.yarnrc',
   'yarn.lock',
   'package.json',

@@ -7,7 +7,7 @@
 !esbuild
 !requirements
 !scripts
-!npm-packages-offline-cache
+!.yarn/cache
 
 # ...and these files
 !.npmrc
