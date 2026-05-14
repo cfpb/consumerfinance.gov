@@ -17,7 +17,7 @@ function getAll(path, regex = /.js$/) {
 const blocklist = [
   'node_modules',
   '.yarn/cache',
-  '.yarnrc',
+  '.yarnrc.yml',
   'yarn.lock',
   'package.json',
   '.gitkeep',

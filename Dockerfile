@@ -109,6 +109,7 @@ COPY cfgov/unprocessed ./cfgov/unprocessed
 COPY config  ./config/
 COPY esbuild  ./esbuild/
 COPY scripts ./scripts/
+COPY .yarnrc.yml ./.yarnrc.yml
 COPY .yarn/cache ./.yarn/cache
 
 # Build the front-end

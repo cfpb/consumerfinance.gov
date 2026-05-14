@@ -28,9 +28,6 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 - Use `yarn add new_dep@se.m.ver` to install new dependencies
   or update existing dependencies.
-- If you can't do this for some reason or are looking to freshen all dependencies,
-  you will need to edit `.yarnrc`, temporarily commenting out the `--install.pure-lockfile true`
-  and `--install.offline true` flags before proceeding with your installation or update.
 - In the rare but observed case that `yarn add new_dep@se.m.ver` doesn't add
   every needed package to the offline cache, you likely need to first run
   `yarn cache clean`.
