@@ -50,7 +50,7 @@ install() {
   else
     echo "Installing frontend production dependencies…"
     yarn install --immutable --immutable-cache
-    yarn workspaces focus --production
+    yarn workspaces focus --all --production
   fi
 }
 
