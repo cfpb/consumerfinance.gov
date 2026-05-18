@@ -46,10 +46,11 @@ clean() {
 install() {
   if [ "$NODE_ENV" = "development" ]; then
     echo "Installing frontend development dependencies…"
-    yarn install
+    yarn install --immutable --immutable-cache
   else
     echo "Installing frontend production dependencies…"
-    yarn install --production
+    yarn install --immutable --immutable-cache
+    yarn workspaces focus --all --production
   fi
 }
 

@@ -40,17 +40,19 @@ jobs:
       with:
         fetch-depth: 2
 
+    - run: corepack enable
     - name: Set up Node
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
           node-version: '26.x'
+          cache: yarn
 
     - name: Set up Python
       uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
       with:
         python-version: 3.13
 
-    - name: Install dependencies
+    - name: Install backend dependencies
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements/local.txt
@@ -69,9 +71,27 @@ jobs:
       #  CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: ./scripts/cypress-fast-specs.sh
 
+    - name: Cache Cypress binary
+      id: cypress-cache
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+      with:
+        path: ~/.cache/Cypress
+        key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+    - name: Install frontend dependencies
+      run: yarn install --immutable --immutable-cache
+
+    - name: Install Cypress binary
+      if: steps.cypress-cache.outputs.cache-hit != 'true'
+      run: npx cypress install
+
+    - name: Verify Cypress
+      run: npx cypress verify
+
     - name: Run Cypress
       uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8 # v7
       with:
+        install: false
         build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'

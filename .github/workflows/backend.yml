@@ -92,6 +92,11 @@ jobs:
         with:
           node-version: "26.x"
 
+      - name: Enable Corepack
+        run: |
+          npm i -g corepack
+          corepack enable
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

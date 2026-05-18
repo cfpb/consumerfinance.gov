@@ -109,9 +109,12 @@ COPY cfgov/unprocessed ./cfgov/unprocessed
 COPY config  ./config/
 COPY esbuild  ./esbuild/
 COPY scripts ./scripts/
-COPY npm-packages-offline-cache ./npm-packages-offline-cache/
+COPY .yarnrc.yml ./.yarnrc.yml
+COPY .yarn/cache ./.yarn/cache
 
 # Build the front-end
+RUN npm install -g corepack
+RUN corepack enable
 RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     yarn cache clean && \
     rm -rf \
@@ -122,7 +125,7 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
         config \
         esbuild \
         scripts \
-        npm-packages-offline-cache \
+        .yarn/cache \
         node_modules
 
 

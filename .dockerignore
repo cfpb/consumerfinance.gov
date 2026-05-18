@@ -7,11 +7,11 @@
 !esbuild
 !requirements
 !scripts
-!npm-packages-offline-cache
+!.yarn/cache
 
 # ...and these files
 !.npmrc
-!.yarnrc
+!.yarnrc.yml
 !docker-entrypoint.sh
 !dump-data.sh
 !Dockerfile
