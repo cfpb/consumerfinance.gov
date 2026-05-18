@@ -10,38 +10,6 @@
     "is_jumbo": true
 } -%}
 
-{%- set answers_heading = "Encuentre respuestas a sus preguntas sobre finanzas" -%}
-
-{%- set topics = {
-    "cards": [
-        {
-            "icon": "credit-report",
-            "text": "Informes y puntajes de crédito",
-            "url": "/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",
-        },
-        {
-            "icon": "debt-collection",
-            "text": "Cobro de deudas",
-            "url": "/es/herramientas-del-consumidor/cobro-de-deudas/",
-        },
-        {
-            "icon": "money-transfer",
-            "text": "Transferencias de dinero",
-            "url": "/es/herramientas-del-consumidor/transferencias-de-dinero/",
-        },
-        {
-            "icon": "bank",
-            "text": "Cuentas y servicios bancarios",
-            "url": "/es/herramientas-del-consumidor/cuentas-bancarias/",
-        },
-        {
-            "icon": "arrow-right-round",
-            "text": "Ver todos los temas de dinero",
-            "url": "/es/herramientas-del-consumidor/",
-        }
-    ],
-} -%}
-
 <!-- {%- set highlights_heading = "Bureau highlights" -%} -->
 
 {%- set highlights = [
@@ -65,14 +33,17 @@
     {
         "heading": "La CFPB le protege",
         "content": "<ul><li><strong>+6.8 millones</strong> de quejas de los consumidores fueron respondidas</li><li><strong>+$21 billones</strong> en alivio financiero fueron entregados como resultado de las acciones de la CFPB</li><li><strong>+205 millones</strong> de personas son elegibles para recibir ayuda financiera</li></ul>" | safe,
-        "link_text": "",
-        "link_url": ""
+        "links": []
     },
     {
         "heading": "Le protegemos del trato injusto",
         "content": "<p>Parte integral de nuestra misión es defender al consumidor y asegurarnos de sea tratado de forma justa dentro del mercado financiero.</p>" | safe,
-        "link_text": "Lea nuestras publicaciones y sepa cómo trabajamos para protegerle",
-        "link_url": "/activity-log/?title=&language=es&from_date=&to_date="
+        "links": [
+            {
+                "link_text": "Lea nuestras publicaciones y sepa cómo trabajamos para protegerle",
+                "link_url": "/activity-log/?title=&language=es&from_date=&to_date="
+            }
+        ]
     }
 ] -%}
 

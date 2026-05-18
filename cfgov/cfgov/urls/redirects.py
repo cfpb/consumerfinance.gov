@@ -13,6 +13,9 @@ perm(
     "/enforcement/payments-harmed-consumers/payments-by-case/$1",
 )
 
+# Temporarily redirect all blog posts to the blog landing page
+temp(r"(about-us/)?blog/.+", "/about-us/blog/")
+
 # Permanent redirects that exceed Wagtail's 255-character limit for fields
 perm(
     r"askcfpb/194/i-used-the-title-services-and-lenders-title-insurance-companies-or-owners-title-insurance-company-listed-by-my-lender-on-my-gfe-but-was-charged-more-than-10-percent-more-than-my-gfe-said-i-would-be-now-my-lender-wont-pay-me-back-what-can-i-do.html",

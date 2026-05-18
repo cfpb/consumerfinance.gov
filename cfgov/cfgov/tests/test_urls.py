@@ -114,9 +114,9 @@ class TestAFewRedirects(SimpleTestCase):
                 "/compliance/consumer-cards-resources/foo/bar",
             ),
             (
-                "/blog/category/jobs/foo/bar",
-                301,
-                "/about-us/blog/?filter1_topics=careers",
+                "/about-us/blog/foo/bar",
+                302,
+                "/about-us/blog/",
             ),
             (
                 "/owning-a-home/process/foo/bar",

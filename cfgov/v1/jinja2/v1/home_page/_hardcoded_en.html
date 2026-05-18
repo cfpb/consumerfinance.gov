@@ -1,6 +1,6 @@
 {%- set hero = {
-    "heading": "<strong>On your side</strong> through life’s financial moments." | safe,
-    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to making sure you are treated fairly by banks, lenders and other financial institutions.",
+    "heading": "Lorem ipusm dolor sit amet consectetur",
+    "body": "The CFPB works to create and support innovative and resilient consumer financial markets where consumers can choose the products and services that meet their individual needs.",
     "image": {
         "url": static( "apps/homepage/img/hero.jpg" ),
         "height": 575,
@@ -10,91 +10,85 @@
     "is_jumbo": true
 } -%}
 
-{%- set answers_heading = "Find answers to your money questions" -%}
-
-{%- set topics = {
-    "cards": [
-        {
-            "icon": "credit-report",
-            "text": "Credit reports",
-            "url": "/consumer-tools/credit-reports-and-scores/",
-        },
-        {
-            "icon": "debt-collection",
-            "text": "Debt collection",
-            "url": "/consumer-tools/debt-collection/",
-        },
-        {
-            "icon": "mortgage",
-            "text": "Mortgages",
-            "url": "/consumer-tools/mortgages/",
-        },
-        {
-            "icon": "credit-card",
-            "text": "Credit cards",
-            "url": "/consumer-tools/credit-cards/",
-        },
-        {
-            "icon": "arrow-right-round",
-            "text": "See all money topics",
-            "url": "/consumer-tools/",
-        }
-    ],
-} -%}
-
 <!-- {%- set highlights_heading = "Bureau highlights" -%} -->
 
 {%- set highlights = [
     {
-        "img_src": static( "apps/homepage/img/putting-green_housing-counselor.png" ),
+        "img_src": static( "apps/homepage/img/icon-credit-report.png" ),
         "card_type": "highlight",
-        "heading": "Talk with an expert about your housing needs for free",
-        "link_text": "Find a housing counselor",
-        "link_url": "/find-a-housing-counselor/"
+        "heading": "CFPB accomplishments under Acting Director Vought",
+        "link_text": "Read the 2025 report",
+        "link_url": "/data-research/research-reports/semi-annual-report-october-2024-december-2025/"
     },
     {
-        "img_src": static( "apps/homepage/img/putting-green_submit-a-complaint.png" ),
+        "img_src": static( "apps/homepage/img/icon-regulation.png" ),
         "card_type": "highlight",
-        "heading": "Submit a complaint about a financial product or service",
-        "link_text": "Start a complaint",
-        "link_url": "/complaint/"
+        "heading": "CFPB vision, mission, and values",
+        "link_text": "Read the 2026-2030 strategic plan",
+        "link_url": "/rules-policy/notice-opportunities-comment/open-notices/we-invite-your-feedback-on-our-draft-strategic-plan-for-fy-2026-2030/"
     },
 ] -%}
 
 {%- set announcements = [
     {
-        "heading": "The CFPB is standing up for you",
-        "content": "<ul><li><strong>6.8 million+</strong> consumer complaints sent for response</li><li><strong>$21 billion+</strong> in financial relief as a result of CFPB actions</li><li><strong>205 million+</strong> people eligible for financial relief</li></ul>" | safe,
-        "link_text": "",
-        "link_url": ""
+        "heading": "Our deregulatory agenda",
+        "content": "The CFPB aims to make rules governing consumer finance markets more effective and efficient",
+        "links": [
+            {
+                "link_text": "Learn about the CFPB’s actions",
+                "link_url": "/rules-policy/"
+            }
+        ]
     },
     {
-        "heading": "Protecting you from junk fees",
-        "content": "<p>The CFPB is working to save households billions of dollars a year by reducing exploitative junk fees charged by banks and financial companies.</p>" | safe,
-        "link_text": "Read about junk fees",
-        "link_url": "/rules-policy/junk-fees/"
+        "heading": "Supervision",
+        "content": "Overview of the CFPB’s supervision process, including the CFPB Supervision Humility Pledge",
+        "links": [
+            {
+                "link_text": "Learn about CFPB supervision",
+                "link_url": "/compliance/supervision-examinations/"
+            },
+            {
+                "link_text": "Read the Supervision Humility Pledge",
+                "link_url": "https://files.consumerfinance.gov/f/documents/cfpb_examiner-humility-pledge_2025-11.pdf"
+            }
+        ]
+    },
+    {
+        "heading": "Enforcement",
+        "content": "Overview of the CFPB’s enforcement principles",
+        "links": [
+            {
+                "link_text": "Learn about CFPB enforcement",
+                "link_url": "/enforcement/"
+            },
+            {
+                "link_text": "Read our Enforcement principles",
+                "link_url": "/enforcement/enforcement-principles/"
+            }
+        ]
     }
 ] -%}
 
-{%- set breakout_cards_heading = "Get help planning for future goals" -%}
+{%- set breakout_cards_heading = "Help when you need it" -%}
 
 {%- set breakout_cards = [
     {
         "card_type": "breakout",
-        "link_text": "Buy a house",
-        "link_url": "/owning-a-home/",
-        "img_src": static( "apps/homepage/img/key-house.png" ),
+        "link_text": "Servicemembers and veterans",
+        "link_url": "/consumer-tools/military-financial-lifecycle/",
+        "img_src": static( "apps/homepage/img/servicemembers_and_veterans.png" ),
     },
     {
         "card_type": "breakout",
-        "link_text": "Pay for college",
-        "link_url": "/paying-for-college/",
-        "img_src": static( "apps/homepage/img/graduate.png" ),
+        "link_text": "Older Americans",
+        "link_url": "/consumer-tools/educator-tools/resources-for-older-adults/",
+        "img_src": static( "apps/homepage/img/older_americans.png" ),
     },
     {
         "card_type": "breakout",
-        "link_text": "Get an auto loan",
-        "link_url": "/consumer-tools/getting-an-auto-loan/",
-        "img_src": static( "apps/homepage/img/key-car.png" )
+        "link_text": "Debanking",
+        "link_url": "/fair-lending/",
+        "img_src": static( "apps/homepage/img/debanking.png" )
     }
 ] -%}
