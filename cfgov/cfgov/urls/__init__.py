@@ -31,11 +31,19 @@ from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
 from v1.sitemap import Sitemap
 
-from .redirect_helpers import urlpatterns as redirect_urlpatterns
 from .views import empty_200_response, handle_error
 
 
 urlpatterns = [
+    # Redirect all requests under /f/ to the public-facing S3 domain,
+    # usually files.consumerfinance.gov.
+    re_path(
+        r"^f/(?P<path>.*)$",
+        RedirectView.as_view(
+            url=f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/f/%(path)s",
+            permanent=False,
+        ),
+    ),
     re_path(r"^search/", SearchView.as_view(), name="searchgov"),
     re_path(
         "^es/buscar/", SearchView.as_view(language="es"), name="searchgov_es"
@@ -549,9 +557,6 @@ if settings.DEBUG:
         )
     except ImportError:
         pass
-
-# Redirect URLs come before any other Django URLs.
-urlpatterns = redirect_urlpatterns + urlpatterns
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(re_path(r"", include(wagtailsharing_urls)))

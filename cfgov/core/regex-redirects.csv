@@ -1,0 +1,237 @@
+# Regex redirects, implemented by core.middleware.RedirectMiddleware.
+#
+# Format: pattern,target_url,status_code
+#
+# Use $1, $2, etc. for capture group substitution, or ${1}, ${2}, etc. when
+# capture group is followed by digits.
+#
+# Blank lines and lines starting with # are ignored.
+#
+# For simple path-based redirects, use redirects.csv instead.
+pattern,target_url,status_code
+
+# DO NOT REMOVE. Redirect to auto-create vanity URLs for Payments to Harmed Consumers
+/payments/(.*),/enforcement/payments-harmed-consumers/payments-by-case/$1,301
+
+# Temporarily redirect all blog posts to the blog landing page
+/(about-us/)?blog/.+,/about-us/blog/,302
+
+# Redirects intended to catch sub-pages
+/practitioner-resources/(.*),/consumer-tools/educator-tools/$1,301
+/rules-policy/innovation/(.*),/rules-policy/competition-innovation/$1,301
+/policy-compliance/amicus/(.*),/compliance/amicus/$1,301
+/policy-compliance/enforcement/(.*),/enforcement/$1,301
+/policy-compliance/rulemaking/(.*),/rules-policy/$1,301
+/policy-compliance/guidance/(.*),/compliance/$1,301
+/owning-a-home/process/(.*),/owning-a-home/$1,301
+
+# Redirect to temporarily fix iRegs 404s
+/rules-policy/regulations/\d{4}/(\d{4}/.*),/rules-policy/regulations/$1,301
+
+# eRegs
+# See discussion: https://GHE/eregs/eRegs-Notes/issues/2103#issuecomment-149183
+/eregulations/(.*)2015-26607_20180101(.*),/eregulations/${1}2017-18284_20180101$2,302
+
+# (english) Ask CFPB no longer has special print pages
+/askcfpb/(\d+)/(.+)\.print.html,/askcfpb/$1/$2.html,301
+
+# Reggie 2.0
+/policy-compliance/guidance/(ability-repay-qualified-mortgage-rule/|equal-credit-opportunity-act-valuation-rule/|rural-and-underserved-counties-list/|secure-fair-enforcement-for-mortgage-licensing-act/.*|mortserv/.*),/compliance/compliance-resources/mortgage-resources/$1,301
+/policy-compliance/guidance/(fair-credit-reporting-act/.*|equal-credit-opportunity-act/.*),/compliance/compliance-resources/other-applicable-requirements/$1,301
+
+# 9/30/20 IA work, policy and compliance changes
+/policy-compliance/guidance/(other-applicable-requirements/.*|consumer-lending-resources/.*|consumer-cards-resources/.*|deposit-accounts-resources/.*|mortgage-resources/.*),/compliance/compliance-resources/$1,301
+/oped/(.*),/opeds/$1,301
+/speech/(.*),/speeches/$1,301
+
+# Know Before You Owe
+/kbyo(.*),/know-before-you-owe$1,301
+/knowbeforeyouowe(.*),/know-before-you-owe$1,301
+/(.*)/realestateprofessionals(.*),$1/real-estate-professionals$2,301
+/owning-a-home/monthly-payment-worksheet/*,/owning-a-home/resources/monthly_payment_worksheet.pdf,301
+
+# redirects associated with the v1 project
+/leadership-calendar/(?!cfpb-leadership.json),/about-us/the-bureau/leadership-calendar/,301
+/jobs/detail/.*,/careers/current-openings/,301
+/jobs/(?!supervision/),/about-us/careers/,301
+
+# Legacy /credit-cards pages
+#   Redirect most to data-research
+/credit-cards/(?!agreements)(?!credit-card-act)(?!definitions)(?!knowbeforeyouowe)(?!college-agreements).*,/data-research/credit-card-data/,301
+/foia/(?!quarterly)(.*),/foia-requests/$1,301
+
+# strip pagination from legacy blog and category URL's
+/blog/(.+)/page/(\d+),/blog/$1/,301
+
+# Legacy blog category URL's
+/blog/category/mortgages/.*,/about-us/blog/?filter1_topics=mortgages,301
+/blog/category/mortgages/mortgage-closing-mortgages/.*,/about-us/blog/?filter1_topics=mortgage-closing,301
+/blog/category/mortgages/reverse-mortgages/.*,/about-us/blog/?filter1_topics=reverse-mortgages,301
+/blog/category/students/.*,/about-us/blog/?filter1_topics=students,301
+/blog/category/student-loans/.*,/about-us/blog/?filter1_topics=student-loans,301
+/blog/category/financial-education/.*,/about-us/blog/?filter1_topics=financial-education,301
+/blog/category/servicemembers/.*,/about-us/blog/?filter1_topics=servicemembers,301
+/blog/category/older-americans/.*,/about-us/blog/?filter1_topics=older-americans,301
+/blog/category/featured/.*,/about-us/blog/?filter1_topics=featured,301
+/blog/category/rulemaking/.*,/about-us/blog/?filter1_topics=rulemaking,301
+/blog/category/enforcement/.*,/about-us/blog/?filter1_topics=enforcement,301
+/blog/category/know-before-you-owe/.*,/about-us/blog/?filter1_topics=know-before-you-owe,301
+/blog/category/video/.*,/about-us/blog/?filter1_topics=video,301
+/blog/category/video/livestream/.*,/about-us/blog/?filter1_topics=livestream,301
+/blog/category/credit-cards/.*,/about-us/blog/?filter1_topics=credit-cards,301
+/blog/category/building-the-agency/.*,/about-us/blog/?filter1_topics=about-the-bureau,301
+/blog/category/mortgage-disclosure/.*,/about-us/blog/?filter1_topics=mortgage-disclosure,301
+/blog/category/about-the-bureau/.*,/about-us/blog/?filter1_topics=about-the-bureau,301
+/blog/category/about-the-bureau/technology/.*,/about-us/blog/?filter1_topics=technology,301
+/blog/category/outreach/.*,/about-us/blog/?filter1_topics=outreach,301
+/blog/category/consumer-advisory-board/.*,/about-us/blog/?filter1_topics=consumer-advisory-board,301
+/blog/category/consumer-advisory/.*,/about-us/blog/?filter1_topics=consumer-advisory,301
+/blog/category/consumer-protection/.*,/about-us/blog/?filter1_topics=financial-education,301
+/blog/category/debt-collection-2/.*,/about-us/blog/?filter1_topics=debt-collection,301
+/blog/category/consumer-response/.*,/about-us/blog/?filter1_topics=consumer-response,301
+/blog/category/complaints/.*,/about-us/blog/?filter1_topics=complaints,301
+/blog/category/consumer-voice/.*,/about-us/blog/,301
+/blog/category/bureau-milestones/.*,/about-us/blog/?filter1_topics=bureau-milestones,301
+/blog/category/payday-loans/.*,/about-us/blog/?filter1_topics=payday-loans,301
+/blog/category/financial-empowerment/.*,/about-us/blog/?filter1_topics=financial-empowerment,301
+/blog/category/fair-lending/.*,/about-us/blog/?filter1_topics=fair-lending,301
+/blog/category/open-gov/.*,/about-us/blog/?filter1_topics=open-government,301
+/blog/category/data/.*,/about-us/blog/?filter1_topics=data,301
+/blog/category/research/.*,/about-us/blog/?filter1_topics=research,301
+/blog/category/credit-scores/.*,/about-us/blog/?filter1_topics=credit-reporting,301
+/blog/category/credit-report/.*,/about-us/blog/?filter1_topics=credit-reporting,301
+/blog/category/checking/.*,/about-us/blog/?filter1_topics=checking,301
+/blog/category/save-the-date/.*,/about-us/blog/?filter1_topics=save-the-date,301
+/blog/category/field-hearing/.*,/about-us/blog/?filter1_topics=field-hearing,301
+/blog/category/supervision/.*,/about-us/blog/?filter1_topics=supervision,301
+/blog/category/supervision/nonbanks/.*,/about-us/blog/?filter1_topics=nonbanks,301
+/blog/category/supervision/bank-supervision-supervision/.*,/about-us/blog/?filter1_topics=bank-supervision,301
+/blog/category/remittances/.*,/about-us/blog/?filter1_topics=money-transfers,301
+/blog/category/private-student-loans/.*,/about-us/blog/?filter1_topics=student-loans,301
+/blog/category/scams/.*,/about-us/blog/?filter1_topics=scams,301
+/blog/category/uncategorized/.*,/about-us/blog/,301
+/blog/category/website/.*,/about-us/blog/?filter1_topics=online-resources,301
+/blog/category/national-consumer-protection-week/.*,/about-us/blog/?filter1_topics=national-consumer-protection-week,301
+/blog/category/parents/.*,/about-us/blog/?filter1_topics=parents,301
+/blog/category/everyone-has-a-story/.*,/about-us/blog/?filter1_topics=everyone-has-a-story,301
+/blog/category/consumer-engagement/.*,/about-us/blog/?filter1_topics=consumer-engagement,301
+/blog/category/tell-your-story/.*,/about-us/blog/?filter1_topics=everyone-has-a-story,301
+/blog/category/auto-loans/.*,/about-us/blog/?filter1_topics=auto-loans,301
+/blog/category/credit-unions/.*,/about-us/blog/?filter1_topics=credit-unions,301
+/blog/category/arbitration/.*,/about-us/blog/?filter1_topics=arbitration,301
+/blog/category/saving/.*,/about-us/blog/?filter1_topics=saving,301
+/blog/category/community-banks/.*,/about-us/blog/?filter1_topics=community-banks,301
+/blog/category/open-for-suggestions/.*,/about-us/blog/?filter1_topics=open-for-suggestions,301
+/blog/category/explainer/.*,/about-us/blog/?filter1_topics=explainer,301
+/blog/category/cfpb-ombudsman/.*,/about-us/blog/?filter1_topics=cfpb-ombudsman,301
+/blog/category/ecoa/.*,/about-us/blog/?filter1_topics=ecoa,301
+/blog/category/prepaid-cards/.*,/about-us/blog/?filter1_topics=prepaid-cards,301
+/blog/category/consumer-story/.*,/about-us/blog/?filter1_topics=consumer-story,301
+/blog/category/military/.*,/about-us/blog/?filter1_topics=servicemembers,301
+/blog/category/academic-research-council/.*,/about-us/blog/?filter1_topics=academic-research-council,301
+/blog/category/our-team/.*,/about-us/blog/?filter1_topics=about-the-bureau,301
+/blog/category/credit-card-act/.*,/about-us/blog/?filter1_topics=credit-cards,301
+/blog/category/overdrafts/.*,/about-us/blog/?filter1_topics=overdrafts,301
+/blog/category/jobs/.*,/about-us/blog/?filter1_topics=careers,301
+/blog/category/debit-cards/.*,/about-us/blog/?filter1_topics=debit-cards,301
+/blog/category/project-catalyst/.*,/about-us/blog/?filter1_topics=project-catalyst,301
+/blog/category/fraud/.*,/about-us/blog/?filter1_topics=fraud,301
+/blog/category/foreclosure/.*,/about-us/blog/?filter1_topics=foreclosure,301
+/blog/category/young-americans/.*,/about-us/blog/?filter1_topics=youth,301
+/blog/category/medical-debt/.*,/about-us/blog/?filter1_topics=medical-debt,301
+/blog/category/youth/.*,/about-us/blog/?filter1_topics=youth,301
+/blog/category/financial-literacy-month/.*,/about-us/blog/?filter1_topics=financial-literacy-month,301
+/blog/category/mortgage-closing/.*,/about-us/blog/?filter1_topics=mortgage-closing,301
+/blog/category/regulations/.*,/about-us/blog/?filter1_topics=regulations,301
+/blog/category/community-bank-advisory-council/.*,/about-us/blog/?filter1_topics=community-bank-advisory-council,301
+/blog/category/bank-supervision/.*,/about-us/blog/?filter1_topics=supervision,301
+/blog/category/equal-opportunity/.*,/about-us/blog/?filter1_topics=equal-opportunity,301
+/blog/category/from-the-director/.*,/about-us/blog/?filter1_topics=from-the-director,301
+/blog/category/compliance/.*,/about-us/blog/?filter1_topics=compliance,301
+/blog/category/tribal-governments/.*,/about-us/blog/?filter1_topics=tribal-governments,301
+/blog/category/doing-business-with-us/.*,/about-us/blog/?filter1_topics=procurement,301
+/blog/category/taxes/.*,/about-us/blog/?filter1_topics=taxes,301
+/blog/category/banking-3/.*,/about-us/blog/?filter1_topics=banking,301
+/blog/category/predatory-lending/.*,/about-us/blog/?filter1_topics=student-loans,301
+/blog/category/mymoney-gov/.*,/about-us/blog/,301
+/blog/category/financial-crisis/.*,/about-us/blog/,301
+/blog/category/speech/.*,/newsroom/?filter_category=speech,301
+/blog/category/access-to-finance/.*,/about-us/blog/?filter1_topics=access-to-finance,301
+/blog/category/civil-penalty-fund/.*,/about-us/blog/?filter1_topics=civil-penalty-fund,301
+/blog/category/spanish/.*,/about-us/blog/?filter1_topics=cfpb-en-espanol,301
+/blog/category/small-business/.*,/about-us/blog/,301
+/blog/category/disability/.*,/about-us/blog/?filter1_topics=persons-with-disabilities,301
+/blog/category/this-week/.*,/about-us/blog/?filter1_topics=about-the-bureau,301
+/blog/category/faith-based-community/.*,/about-us/blog/?filter1_topics=outreach,301
+/blog/category/home-equity-loan/.*,/about-us/blog/?filter1_topics=home-equity-loan,301
+/blog/category/fair-housing-act/.*,/about-us/blog/,301
+/blog/category/small-business-review/.*,/about-us/blog/?filter1_topics=small-business-review,301
+/blog/category/design/.*,/about-us/blog/?filter1_topics=design,301
+/blog/category/partnerships/.*,/about-us/blog/,301
+/blog/category/fair-credit-reporting-act/.*,/about-us/blog/?filter1_topics=credit-reporting,301
+/blog/category/consumers-with-disabilities/.*,/about-us/blog/?filter1_topics=persons-with-disabilities,301
+/blog/category/money-transfers/.*,/about-us/blog/?filter1_topics=money-transfers,301
+/blog/category/diversity/.*,/about-us/blog/?filter1_topics=diversity,301
+/blog/category/security/.*,/about-us/blog/?filter1_topics=security,301
+/blog/category/mobile-financial-services/.*,/about-us/blog/?filter1_topics=mobile-financial-services,301
+/blog/category/equal-credit-opportunity-act/.*,/about-us/blog/,301
+/blog/category/fair-debt-collection-practices-act/.*,/about-us/blog/,301
+/blog/category/real-estate-settlement-procedures-act/.*,/about-us/blog/,301
+/blog/category/truth-in-lending-act/.*,/about-us/blog/,301
+/blog/category/virtual-currency/.*,/about-us/blog/?filter1_topics=virtual-currency,301
+/blog/category/equal-treatment/.*,/about-us/blog/?filter1_topics=discrimination,301
+
+# Redirect old FinEd Resources downloads to their new Wagtail sublanding pages
+/money-as-you-grow/(.*)\.pdf,/consumer-tools/money-as-you-grow/,301
+/library-resources/(.*)\.(docx|pdf|png|txt|zip),/consumer-tools/educator-tools/library-resources/,301
+/tax-preparer-resources/(.*)\.(docx|pdf|png|txt|zip),/consumer-tools/educator-tools/resources-for-tax-preparers/,301
+
+# Auto Loans vanity URL
+/auto-?loans?/,/consumer-tools/auto-loans/,301
+
+# Prepaid consumer resource page vanity URL
+/prepaids?/,/consumer-tools/prepaid-cards/?utm_source=prepaid&utm_medium=redirect&utm_campaign=PrepaidRedirects,301
+
+# Prepaid disclosure files redirect
+/prepaid-?disclosure-?files/,https://github.com/cfpb/prepaid-disclosure-files,301
+
+# Money as You Grow
+/parents?/,/consumer-tools/money-as-you-grow/,301
+/money-?as-?you-?grow(.*),/consumer-tools/money-as-you-grow$1,301
+(/consumer-tools/educator-tools/youth-financial-education/curriculum-review/).+,$1,301
+/consumer-tools/educator-tools/youth-financial-education/survey/3-5.*,https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_youth-financial-capability-survey-elementary_school.pdf,301
+/consumer-tools/educator-tools/youth-financial-education/survey/6-8.*,https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_youth-financial-capability-survey-middle_school.pdf,301
+/consumer-tools/educator-tools/youth-financial-education/survey/9-12.*,https://files.consumerfinance.gov/f/documents/cfpb_building_blocks_youth-financial-capability-survey-high_school.pdf,301
+
+# We have URLs at the end of sentences on printed material and occasionally people type the period that follows the URL as part of it.
+/(.*)\\.,/$1,301
+
+# Redirects associated with moving Everyone Has a Story to Wagtail
+## Redirect URLS in the form of: /yourstory/slug
+##                               /yourstory/slug/
+##                               /yourstory
+##                               /yourstory/
+/yourstory/([^/]+)(/*),/consumer-tools/everyone-has-a-story/$1/,301
+
+## Redirect the previous canonical URL, along with all children whose slug has not changed
+/everyone-has-a-story(.*),/consumer-tools/everyone-has-a-story$1,301
+
+## Shorter URL for Debt Collection Stories
+/debt-?collection-?stories,/consumer-tools/everyone-has-a-story/debt-collection/,301
+
+## Redirect main sublanding page, Librarian Training, and Program Ideas, which all have the same slug
+/library-resources(.*),/consumer-tools/educator-tools/library-resources$1,301
+
+## Sending-money moved under Consumer Tools, along with all children whose slug has not changed
+/sending-money(.*),/consumer-tools/sending-money$1,301
+/servicemembers/(.*),/consumer-tools/educator-tools/servicemembers/$1,301
+
+# Common misspellings
+/(.*)morgage(.*),$1mortgage$2,302
+
+# Redirects, requested by Rachael Keeler in July 2019
+# https://GHE/CFGOV/platform/issues/3484
+/about-us/advisory-groups/(.*),/rules-policy/advisory-committees/$1,301
+/askcfpb/search/(.*),/ask-cfpb/search/$1,301
+/how-to-prepare-your-finances-for-buying-a-home/(.*),/owning-a-home/prepare/,301
+/wp-content/uploads/(.*),https://files.consumerfinance.gov/f/$1,301
