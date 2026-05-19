@@ -8,7 +8,6 @@ from django.test import (
 )
 
 from cfgov import urls
-from cfgov.urls.redirect_helpers import perm, temp
 
 
 # Allowlist is a list of *strings* that match the beginning of a regex string.
@@ -71,23 +70,6 @@ class TestBetaRefreshEndpoint(TestCase):
     def test_beta_testing_endpoint_is_no_cache_when_enabled(self):
         response = self.client.get("/beta_external_testing/")
         self.assertEqual(response["Akamai-Cache-Control"], "no-store")
-
-
-class RedirectHelperTests(SimpleTestCase):
-    def setUp(self):
-        self.redirects = []
-
-    def test_perm(self):
-        pattern = perm(r"old", "new", append_to=self.redirects)
-        self.assertEqual(self.redirects, [pattern])
-        self.assertEqual(pattern.pattern.regex.pattern, "^old$")
-        self.assertTrue(pattern.callback.view_initkwargs["permanent"])
-
-    def test_temp(self):
-        pattern = temp(r"old", "new", append_to=self.redirects)
-        self.assertEqual(self.redirects, [pattern])
-        self.assertEqual(pattern.pattern.regex.pattern, "^old$")
-        self.assertFalse(pattern.callback.view_initkwargs["permanent"])
 
 
 class TestAFewRedirects(SimpleTestCase):
