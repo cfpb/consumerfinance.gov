@@ -159,7 +159,7 @@ class TestCSVFileValidation(SimpleTestCase):
                 )
                 try:
                     re.compile(f"^{pattern}$")
-                except re.error as e:
+                except re.error as e:  # pragma: nocover
                     self.fail(f"invalid regex '{pattern}': {e}")
                 self.assertTrue(
                     target.startswith("/")
