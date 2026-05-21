@@ -11,21 +11,13 @@
 @use '@cfpb/cfpb-design-system/src/' as *;
 @use '@cfpb/cfpb-design-system/src/components/cfpb-tooltips/tooltip' as *;
 
-// Enhancements that are on a migration path to being added to CF.
-// CF Core
+// Enhancements that are on a migration path to being added to the DS.
 @use 'enhancements/utilities' as *;
-
-// CF Typography
 @use 'enhancements/typography' as *;
-
-// CF Layout
 @use 'enhancements/layout' as *;
-
-// CF Forms
 @use 'enhancements/forms' as *;
-
-// CF Tables
 @use 'enhancements/tables' as *;
+@use 'enhancements/heroes' as *;
 
 /* Base patterns
    ========================================================================== */

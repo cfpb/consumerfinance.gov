@@ -71,9 +71,11 @@
                 <br> {{ value.heading_continued }}
                 {% endif %}
             </h1>
+            {% if value.body %}
             <div class="m-hero__subhead">
                 {{ value.body | safe }}
             </div>
+            {% endif %}
         </div>
         <div class="m-hero__image-wrapper">
         {% if img %}

@@ -1,0 +1,16 @@
+@use '@cfpb/cfpb-design-system/src/elements/abstracts' as *;
+
+.m-hero--jumbo {
+  // Large desktop.
+  @include respond-to-min($bp-lg-min) {
+    // Override the existing selector in the DS.
+    .m-hero__heading {
+      @include heading-1($is-responsive: false);
+    }
+
+    // TODO: Migrate this selector into the DS and replace the above.
+    .m-hero__heading:has(+ .m-hero__subhead) {
+      @include u-superheading;
+    }
+  }
+}
