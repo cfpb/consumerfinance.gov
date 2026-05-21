@@ -128,6 +128,7 @@ MIDDLEWARE = (
     "django.middleware.http.ConditionalGetMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "core.middleware.RedirectMiddleware",
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

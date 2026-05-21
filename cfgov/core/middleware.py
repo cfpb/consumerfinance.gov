@@ -1,6 +1,9 @@
+import csv
 import re
+from pathlib import Path
 
 from django.conf import settings
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.middleware.csrf import CsrfViewMiddleware
 from django.shortcuts import redirect
 from django.utils import translation
@@ -152,3 +155,114 @@ class PathBasedCsrfViewMiddleware(CsrfViewMiddleware):
         return super().process_view(
             request, callback, callback_args, callback_kwargs
         )
+
+
+class RedirectMiddleware:
+    """Handle redirects defined in CSV files.
+
+    Loads exact-match redirects from redirects.csv and regular expression
+    redirects from regex_redirects.csv.
+    """
+
+    CSV_DIR = Path(__file__).resolve().parent
+
+    # Regex redirect targets can look like /path/$1 or /path{1}123
+    # for cases where the target has a number next to the substitution.
+    CAPTURE_GROUP_RE = re.compile(r"\$\{(\d+)\}|\$(\d+)")
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.exact_redirects = self._load_exact_redirects()
+        self.regex_redirects = self._load_regex_redirects()
+
+    def _read_csv(self, filename):
+        """Read redirects from a CSV.
+
+        Expected format: from_path,to_url,status_code
+
+        from_path should not have a leading slash.
+        """
+        filepath = self.CSV_DIR / filename
+
+        if not filepath.exists():
+            return []
+
+        with filepath.open(encoding="utf-8") as f:
+            reader = csv.reader(
+                line
+                for line in f
+                if line.strip() and not line.strip().startswith("#")
+            )
+            next(reader, None)  # Skip header row
+
+            return [
+                (row[0].strip(), row[1].strip(), int(row[2].strip()))
+                for row in reader
+            ]
+
+    def _load_exact_redirects(self):
+        """Load basic path-based redirects from redirects.csv.
+
+        Expected format: redirect_from,redirect_to,status_code
+
+        Our SelfHealingMiddleware (above) always tries lowercasing request
+        paths, so we can similarly lowercase our redirect sources.
+
+        Returns {redirect_from: (redirect_to, status_code)}.
+        """
+        return {
+            source.lower(): (target, status)
+            for source, target, status in self._read_csv("redirects.csv")
+        }
+
+    def _load_regex_redirects(self):
+        """Load regex redirects from regex-redirects.csv
+
+        Expected format: redirect_from_pattern,redirect_to,status_code
+
+        redirect_from may have capture groups: /path/from/(.*)
+
+        redirect_to may use those groups /redirected/to/$1 or
+        /redirected/to/${1}123 for cases where the destination URL has digits
+        adjacent to the substituted text.
+
+        Returns list of (from_pattern, redirect_to_template, status_code).
+        """
+        return [
+            (
+                re.compile(f"^{pattern}$", re.IGNORECASE),
+                self.CAPTURE_GROUP_RE.sub(
+                    lambda m: f"\\g<{m.group(1) or m.group(2)}>", target
+                ),
+                status_code,
+            )
+            for pattern, target, status_code in self._read_csv(
+                "regex-redirects.csv"
+            )
+        ]
+
+    def _redirect(self, url, status_code):
+        if status_code == 301:
+            return HttpResponsePermanentRedirect(url)
+        return HttpResponseRedirect(url)
+
+    def __call__(self, request):
+        path = request.path
+
+        # Try exact match first.
+        match = self.exact_redirects.get(path.lower())
+
+        if match:
+            return self._redirect(*match)
+
+        # Try regex patterns next.
+        for compiled, target_template, status_code in self.regex_redirects:
+            regex_match = compiled.match(path)
+
+            if regex_match:
+                return self._redirect(
+                    regex_match.expand(target_template), status_code
+                )
+
+        # No redirects match, continue with regular request handling.
+        return self.get_response(request)
