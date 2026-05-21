@@ -16,6 +16,9 @@ pattern,target_url,status_code
 # Temporarily redirect all blog posts to the blog landing page
 /(about-us/)?blog/.+,/about-us/blog/,302
 
+# Temporarily redirect all language hub pages to /language/
+/language/.+,/language/,302
+
 # Redirects intended to catch sub-pages
 /practitioner-resources/(.*),/consumer-tools/educator-tools/$1,301
 /rules-policy/innovation/(.*),/rules-policy/competition-innovation/$1,301
