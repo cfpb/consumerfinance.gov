@@ -29,9 +29,11 @@ content__main--flush-inner
                     {% for highlight in hardcoded.highlights %}
                     <div class="content-l__col content-l__col-1-2">
                         <div class="m-info-unit">
+                            {%- if highlight.img_src -%}
                             <div style="padding-bottom:.25em;">
                                 <img style="max-height:2.5em;" src="{{ highlight.img_src }}" alt="" width="60" height="40">
                             </div>
+                            {%- endif -%}
                             <div class="m-info-unit__heading-text">
                                 <h2 class="h3">{{ highlight.heading }}</h2>
                             </div>
