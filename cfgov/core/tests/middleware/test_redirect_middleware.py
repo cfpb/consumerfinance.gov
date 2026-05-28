@@ -39,6 +39,13 @@ class TestRedirectMiddleware(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b"OK")
 
+    def test_dummy_request_passes_through(self):
+        request = RequestFactory().get("/retirement/")
+        request.is_dummy = True  # type: ignore
+        response = self.middleware(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"OK")
+
     def test_regex_with_capture_group(self):
         request = RequestFactory().get("/payments/some-case/")
         response = self.middleware(request)
