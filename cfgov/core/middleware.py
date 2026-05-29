@@ -247,6 +247,12 @@ class RedirectMiddleware:
         return HttpResponseRedirect(url)
 
     def __call__(self, request):
+        # Don't apply this middleware to URLs matching pages being previewed
+        # in the Wagtail page editor.
+        # https://github.com/wagtail/wagtail/blob/v7.0.6/wagtail/models/preview.py#L35-L36
+        if getattr(request, "is_dummy", False):
+            return self.get_response(request)
+
         path = request.path
 
         # Try exact match first.
