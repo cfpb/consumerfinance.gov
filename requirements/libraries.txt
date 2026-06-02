@@ -42,4 +42,4 @@ wagtailcharts==0.6.2
 whitenoise==6.7.0
 
 # This package is installed from GitHub.
-https://github.com/cfpb/ccdb5-api/releases/download/1.9/ccdb5_api-1.9-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.10/ccdb5_api-1.10-py3-none-any.whl
