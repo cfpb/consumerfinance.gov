@@ -19,6 +19,12 @@
 {% block pre_content -%}{% endblock %}
 
 {% block content_main %}
+    {%- if page.in_archive %}
+      <div class="u-mb15">
+        {%- include 'v1/includes/blocks/archived-banner.html' -%}
+      </div>
+    {% endif -%}
+
     {% if page.has_hero -%}
         {% import 'v1/includes/molecules/translation-links.html' as translation_links with context %}
         {{ translation_links.render(modifier_classes='block--flush-top') }}
