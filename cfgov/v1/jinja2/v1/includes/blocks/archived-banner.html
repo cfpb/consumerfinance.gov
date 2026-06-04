@@ -1,0 +1,13 @@
+{% import 'v1/includes/molecules/banner.html' as banner %}
+
+{{- banner.render(
+    is_dark=true,
+    message='Archived content',
+    explanation=(
+      'This is archived content from the Consumer Financial Protection Bureau website. '
+      'The information here may be outdated and links may no longer function. '
+      'Please contact '
+      '<a href="mailto:CFPB_website@consumerfinance.gov">CFPB_website@consumerfinance.gov</a> '
+      'if you have any questions about the archive.'
+    ) | safe
+) }}

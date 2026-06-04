@@ -16,6 +16,7 @@ from v1.admin_views import (
 )
 from v1.models import InternalDocsSettings
 from v1.template_debug import (
+    archived_banner_test_cases,
     call_to_action_test_cases,
     contact_us_table_test_cases,
     crc_table_test_cases,
@@ -372,6 +373,14 @@ def clean_up_report_menu_items(request, report_menu_items):
 
 
 register_snippet(BannerViewSet)
+
+
+register_template_debug(
+    "v1",
+    "archived_banner",
+    "v1/includes/blocks/archived-banner.html",
+    archived_banner_test_cases,
+)
 
 
 register_template_debug(
