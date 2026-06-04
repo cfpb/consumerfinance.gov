@@ -819,3 +819,7 @@ if os.getenv("ENABLE_ES_LOGGING"):
 PERMISSIONS_POLICY = {
     "interest-cohort": [],
 }
+
+# This part of the website contains archived content.
+# All URLs starting with /archive/ will show an "archived" banner.
+ARCHIVE_BASE_PATH = "archive"
