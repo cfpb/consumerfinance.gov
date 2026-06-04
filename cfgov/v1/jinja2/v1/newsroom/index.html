@@ -2,11 +2,11 @@
 
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{%- if page.in_archive %}
-    {% block content_intro scoped -%}
+{% block content_intro scoped -%}
+    {%- if page.in_archive %}
         {%- include 'v1/includes/blocks/archived-banner.html' -%}
-    {%- endblock %}
-{% endif -%}
+    {% endif -%}
+{%- endblock %}
 
 {% block content_main %}
     {% for block in page.header -%}

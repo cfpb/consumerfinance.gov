@@ -1,10 +1,11 @@
 {% extends 'v1/blog/blog_page.html' %}
 
-{%- if page.in_archive %}
-    {% block content_intro scoped -%}
+
+{% block content_intro scoped -%}
+    {%- if page.in_archive %}
         {%- include 'v1/includes/blocks/archived-banner.html' -%}
-    {%- endblock %}
-{% endif -%}
+    {% endif -%}
+{%- endblock %}
 
 {% block content_main %}
     {% import 'v1/includes/molecules/notification.html' as notification %}
