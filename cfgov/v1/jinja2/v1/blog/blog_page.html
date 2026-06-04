@@ -15,13 +15,13 @@
           content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
-{% block content_main %}
-    {%- if page.in_archive %}
-      <div class="u-mb15">
+{%- if page.in_archive %}
+    {% block content_intro scoped -%}
         {%- include 'v1/includes/blocks/archived-banner.html' -%}
-      </div>
-    {% endif -%}
+    {%- endblock %}
+{% endif -%}
 
+{% block content_main %}
     {% include 'v1/includes/article.html' %}
     {% block post_article_content %}
         <div class="block

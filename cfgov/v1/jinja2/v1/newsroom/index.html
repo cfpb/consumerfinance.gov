@@ -2,13 +2,13 @@
 
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_main %}
-    {%- if page.in_archive %}
-      <div class="u-mb15">
+{%- if page.in_archive %}
+    {% block content_intro scoped -%}
         {%- include 'v1/includes/blocks/archived-banner.html' -%}
-      </div>
-    {% endif -%}
+    {%- endblock %}
+{% endif -%}
 
+{% block content_main %}
     {% for block in page.header -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block

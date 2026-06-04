@@ -1,11 +1,12 @@
 {% extends 'v1/blog/blog_page.html' %}
 
+{%- if page.in_archive %}
+    {% block content_intro scoped -%}
+        {%- include 'v1/includes/blocks/archived-banner.html' -%}
+    {%- endblock %}
+{% endif -%}
+
 {% block content_main %}
-
-    {%- if page.in_archive %}
-      {%- include 'v1/includes/blocks/archived-banner.html' -%}
-    {% endif -%}
-
     {% import 'v1/includes/molecules/notification.html' as notification %}
     {% set canonical_archive_url = 'https://wayback.archive-it.org/23462/20241001120000/' ~ request.build_absolute_uri(request.path) | lower %}
 
