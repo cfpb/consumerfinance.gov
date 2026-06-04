@@ -466,13 +466,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-design-system@npm:5.6.1":
-  version: 5.6.1
-  resolution: "@cfpb/cfpb-design-system@npm:5.6.1"
+"@cfpb/cfpb-design-system@npm:5.6.2":
+  version: 5.6.2
+  resolution: "@cfpb/cfpb-design-system@npm:5.6.2"
   dependencies:
     "@fontsource-variable/source-sans-3": "npm:5.2.9"
     tippy.js: "npm:6.3.7"
-  checksum: 10c0/96022325c688ba59e4978698f66f93be750118823c541a75f799791fd67624070ab24df808f7547c4fac35a085cae0b856e00716cf76f9b88e989e952d4cb13b
+  checksum: 10c0/80d1e22725fefac3c272182d6db0df5e2d05e4c257ea69a324240077e9895bf0882a1e1710acc3db2e7758fad357ef2b622a6229c85298057e906aa5b98349df
   languageName: node
   linkType: hard
 
@@ -3197,7 +3197,7 @@ __metadata:
   dependencies:
     "@cfpb/browserslist-config": "npm:0.0.6"
     "@cfpb/cfpb-analytics": "npm:0.3.2"
-    "@cfpb/cfpb-design-system": "npm:5.6.1"
+    "@cfpb/cfpb-design-system": "npm:5.6.2"
     "@csstools/postcss-sass": "npm:5.1.1"
     "@csstools/sass-import-resolve": "npm:1.0.0"
     "@eslint/js": "npm:10.0.1"
