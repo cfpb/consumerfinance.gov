@@ -634,3 +634,8 @@ class TestCFGOVPageArchive(TestCase):
         self.assertTrue(
             CFGOVPage(url_path="/home/test-archive/foo/").in_archive
         )
+
+        with override_settings(ARCHIVE_BASE_PATH="*"):
+            self.assertTrue(CFGOVPage(url_path="/home/").in_archive)
+            self.assertTrue(CFGOVPage(url_path="/home/foo/").in_archive)
+            self.assertTrue(CFGOVPage(url_path="/home/foo/bar/").in_archive)

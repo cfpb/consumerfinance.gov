@@ -822,4 +822,5 @@ PERMISSIONS_POLICY = {
 
 # This part of the website contains archived content.
 # All URLs starting with /archive/ will show an "archived" banner.
-ARCHIVE_BASE_PATH = "archive"
+# Set this locally to "*" for testing purposes only, to enable site-wide.
+ARCHIVE_BASE_PATH = "/archive/"

@@ -433,9 +433,15 @@ class CFGOVPage(Page):
     def in_archive(self) -> bool:
         """Returns boolean indicating whether page lives in site archive area.
 
+        Uses settings.ARCHIVE_BASE_PATH to determine site archive area.
+        If this is set to "*", applies to all pages.
+
         Uses Page.url_path which starts with the root page slug (e.g. /cfgov/).
         Pages under /archive/ will have a url_path of e.g. /cfgov/archive/.
         """
+        if settings.ARCHIVE_BASE_PATH == "*":
+            return True
+
         path_parts = self.url_path.strip("/").split("/")
         return (
             len(path_parts) > 1 and path_parts[1] == settings.ARCHIVE_BASE_PATH
