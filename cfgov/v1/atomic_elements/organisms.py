@@ -217,8 +217,22 @@ class RelatedPosts(blocks.StructBlock):
 
         return context
 
-    @staticmethod
-    def related_posts(page, value):
+    # Pull in related items from children of certain pages on the site.
+    RELATED_POST_SOURCES = {
+        "relate_posts": ("blog", ["about-us/blog/"]),
+        "relate_newsroom": ("newsroom", ["about-us/newsroom/"]),
+        # Events are pulled from both future and past events.
+        "relate_events": (
+            "events",
+            [
+                "about-us/events/",
+                "about-us/events/archive-past-events/",
+            ],
+        ),
+    }
+
+    @classmethod
+    def related_posts(cls, page, value):
         from v1.models.learn_page import AbstractFilterPage
 
         def tag_set(related_page):
@@ -233,68 +247,74 @@ class RelatedPosts(blocks.StructBlock):
                 if current_tag_set.issubset(tag_set(page))
             ]
 
-        related_types = []
-        related_items = []
-        if value.get("relate_posts"):
-            related_types.append("blog")
-        if value.get("relate_newsroom"):
-            related_types.append("newsroom")
-        if value.get("relate_events"):
-            related_types.append("events")
-        if not related_types:
-            return related_items
+        # These source types are configured via the relate_posts,
+        # relate_newsroom, and relate_events options on the RelatedPosts block.
+        selected_sources = [
+            (page_type, paths)
+            for key, (page_type, paths) in cls.RELATED_POST_SOURCES.items()
+            if value.get(key)
+        ]
 
-        tags = page.tags.all()
-        tag_filtering = value["tag_filtering"]
-        specific_categories = value["specific_categories"]
-        limit = int(value["limit"])
+        # If there are no selected sources or the page doesn't live in a Site,
+        # there can be no related posts.
+        if not selected_sources or not (site := page.get_site()):
+            return []
+
+        # Start with all AbstractFilter pages on the site.
         queryset = (
-            AbstractFilterPage.objects.live()
+            AbstractFilterPage.objects.in_site(site)
             .exclude(id=page.id)
             .filter(language=page.language)
             .order_by("-date_published")
             .distinct()
+            .live()
             .specific()
         )
 
-        for parent in related_types:  # blog, newsroom or events
-            # Include children of this slug that match at least 1 tag
-            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            if tag_filtering == "ignore":
-                filters = children
-            else:
-                filters = children & Q(("tags__in", tags))
+        # If we're filtering by tags, make sure pages match at least one tag.
+        tags = page.tags.all()
+        tag_filtering = value["tag_filtering"]
 
-            if parent == "events":
-                # Include archived events matches
-                archive = Page.objects.get(slug="archive-past-events")
-                children = Page.objects.child_of_q(archive)
-                if tag_filtering == "ignore":
-                    filters |= children
-                else:
-                    filters |= children & Q(("tags__in", tags))
+        if (tag_filtering != "ignore") and tags:
+            queryset = queryset.filter(tags__in=tags)
 
+        # Now build up our related posts list by iterating over each source
+        # one at a time. We need to do it this way because the RelatedPosts
+        # block tries to provide results from each selected source.
+        specific_categories = value["specific_categories"]
+        limit = int(value["limit"])
+        site_root_path = site.root_page.url_path
+
+        related_items = []
+        for page_type, paths in selected_sources:
+            # Include only children of the parent page(s), if they exist.
+            child_q = Q()
+            for path in paths:
+                child_q |= Q(url_path__startswith=site_root_path + path)
+
+            # Filter by any additional categories specified.
             if specific_categories:
-                # Filter by any additional categories specified
                 categories = ref.get_appropriate_categories(
-                    specific_categories=specific_categories, page_type=parent
+                    specific_categories=specific_categories,
+                    page_type=page_type,
                 )
                 if categories:
-                    filters &= Q(("categories__name__in", categories))
+                    child_q &= Q(categories__name__in=categories)
 
-            related_queryset = queryset.filter(filters)
+            related_queryset = queryset.filter(child_q)
 
-            if tag_filtering == "all":
-                # By default, we need to match at least one tag
-                # If specified in the admin, change this to match ALL tags
+            # Enforce that all tags match, if specified in block configuration.
+            if (tag_filtering == "all") and tags:
                 related_queryset = match_all_topic_tags(related_queryset, tags)
 
-            if related_queryset:
+            posts = related_queryset[:limit]
+
+            if posts:
                 related_items.append(
                     {
-                        "title": parent.title(),
-                        "icon": ref.get_category_icon(parent),
-                        "posts": related_queryset[:limit],
+                        "title": page_type.title(),
+                        "icon": ref.get_category_icon(page_type),
+                        "posts": posts,
                     }
                 )
 

@@ -1,445 +1,220 @@
-import datetime as dt
 import re
 
 from django.test import RequestFactory, TestCase
+from django.utils import timezone
 
 from wagtail.models import Page, Site
 
-import zoneinfo
-
+from core.testutils.test_cases import WagtailPageTreeTestCase
 from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.blog_page import BlogPage
 from v1.models.learn_page import EventPage
 from v1.models.newsroom_page import NewsroomPage
-from v1.tests.wagtail_pages import helpers
 
 
-class RelatedPostsTestCase(TestCase):
-    def setUp(self):
-        # add some authors to a CFGOV page and give it some tags
+class RelatedPostsTestCase(WagtailPageTreeTestCase):
+    @classmethod
+    def get_page_tree(cls):
+        now = timezone.now()
 
-        self.author1 = "Some Author"
-        self.author2 = "Another Person"
-        self.author3 = "A Third Author"
-        self.page_with_authors = CFGOVPage(title="a cfgov page with authors")
-        helpers.save_new_page(self.page_with_authors)
+        return [
+            (
+                Page(title="About us"),
+                [
+                    Page(title="Blog"),
+                    [
+                        BlogPage(title="Blog 1", live=True),
+                        BlogPage(title="Blog 2", live=True),
+                    ],
+                    Page(title="Newsroom"),
+                    [
+                        NewsroomPage(title="Newsroom 1", live=True),
+                        NewsroomPage(title="Newsroom 2", live=True),
+                        NewsroomPage(title="Newsroom 3", live=False),
+                    ],
+                    Page(title="Events"),
+                    [
+                        EventPage(title="Event 1", live=True, start_dt=now),
+                        EventPage(title="Event 2", live=True, start_dt=now),
+                        Page(title="Archive past events"),
+                        [
+                            EventPage(
+                                title="Event 3",
+                                live=True,
+                                start_dt=now,
+                            )
+                        ],
+                    ],
+                ],
+                Page(title="Activity log"),
+                BlogPage(title="BlogPage that lives in the wrong place"),
+            ),
+        ]
 
-        self.page_with_authors.authors.add(self.author1)
-        self.page_with_authors.authors.add(self.author2)
-        self.page_with_authors.authors.add(self.author3)
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
 
-        self.page_with_authors.tags.add("tag 1")
-        self.page_with_authors.tags.add("tag 2")
+        # Page tags and categories can't be set at creation time, so they need
+        # to be added after the page tree has been created.
+        blog1 = BlogPage.objects.get(slug="blog-1")
+        blog1.tags.add("foo", "bar")
+        blog1.save()
 
-        # set up parent pages for the different types of related
-        # posts we can have
+        blog2 = BlogPage.objects.get(slug="blog-2")
+        blog2.tags.add("foo", "bar")
+        blog2.save()
 
-        self.blog_parent = CFGOVPage(slug="blog", title="blog parent")
-        self.newsroom_parent = CFGOVPage(
-            slug="newsroom", title="newsroom parent"
-        )
-        self.events_parent = CFGOVPage(slug="events", title="events parent")
-        self.archive_events_parent = CFGOVPage(
-            slug="archive-past-events", title="archive past events parent"
-        )
-        self.activity_log = CFGOVPage(
-            slug="activity-log", title="activity log"
-        )
+        newsroom1 = NewsroomPage.objects.get(slug="newsroom-1")
+        newsroom1.tags.add("foo")
+        newsroom1.categories.add(CFGOVPageCategory(name="speech"))
+        newsroom1.save()
 
-        helpers.save_new_page(self.blog_parent)
-        helpers.save_new_page(self.newsroom_parent)
-        helpers.save_new_page(self.events_parent)
-        helpers.save_new_page(self.archive_events_parent)
-        helpers.save_new_page(self.activity_log)
+    def _related_posts_value(self, **kwargs):
+        return dict(RelatedPosts().to_python(kwargs))
 
-        # set up children of the parent pages and give them some tags
-        # and some categories
-
-        self.blog_child1 = BlogPage(
-            title="blog child 1", date_published=dt.date(2016, 9, 1)
-        )
-        self.blog_child1.tags.add("tag 1")
-        self.blog_child1.categories.add(
-            CFGOVPageCategory(name="info-for-consumers")
-        )
-
-        self.blog_child2 = BlogPage(
-            title="blog child 2", date_published=dt.date(2016, 9, 2)
-        )
-        self.blog_child2.tags.add("tag 2")
-        self.blog_child2.categories.add(
-            CFGOVPageCategory(name="policy-compliance")
-        )
-
-        self.blog_child3 = BlogPage(
-            title="blog child 3", date_published=dt.date(2016, 9, 3)
-        )
-        self.blog_child3.tags.add("tag 3")
-        self.blog_child3.categories.add(
-            CFGOVPageCategory(name="policy-compliance")
-        )
-
-        self.newsroom_child1 = NewsroomPage(
-            title="newsroom child 1", date_published=dt.date(2016, 9, 2)
-        )
-        self.newsroom_child1.tags.add("tag 1")
-        self.newsroom_child1.tags.add("tag 2")
-        self.newsroom_child1.categories.add(CFGOVPageCategory(name="op-ed"))
-
-        self.newsroom_child2 = NewsroomPage(
-            title="newsroom child 2", date_published=dt.date(2016, 9, 3)
-        )
-        self.newsroom_child2.tags.add("tag 2")
-        self.newsroom_child2.categories.add(
-            CFGOVPageCategory(name="some-other-category")
-        )
-
-        self.events_child1 = EventPage(
-            title="events child 1",
-            date_published=dt.date(2016, 9, 7),
-            start_dt=dt.datetime.now(zoneinfo.ZoneInfo("UTC")),
-        )
-        self.events_child1.tags.add("tag 1")
-
-        self.events_child2 = EventPage(
-            title="events child 2",
-            date_published=dt.date(2016, 9, 5),
-            start_dt=dt.datetime.now(zoneinfo.ZoneInfo("UTC")),
-        )
-        self.events_child2.tags.add("tag 2")
-
-        helpers.save_new_page(self.blog_child1, self.blog_parent)
-        helpers.save_new_page(self.blog_child2, self.blog_parent)
-        helpers.save_new_page(self.blog_child3, self.blog_parent)
-        helpers.save_new_page(self.newsroom_child1, self.newsroom_parent)
-        helpers.save_new_page(self.newsroom_child2, self.newsroom_parent)
-        helpers.save_new_page(self.events_child1, self.events_parent)
-
-        # mock a stream block that dictates how to retrieve the related posts
-        # note that because of the way that the related_posts_category_lookup
-        # function works i.e. by consulting a hard-coded object, the
-        # specific_categories slot of the dict has to be something that it can
-        # actually find.
-        self.block_value = {
-            "limit": 3,
-            "show_heading": True,
-            "header_title": "Further reading",
-            "relate_posts": False,
-            "relate_newsroom": False,
-            "relate_events": False,
-            "specific_categories": [],
-            "tag_filtering": "any",
-        }
-
-    def test_no_related_posts(self):
+    def test_page_not_in_site_has_no_related_posts(self):
         self.assertEqual(
             RelatedPosts.related_posts(
-                self.page_with_authors, self.block_value
+                BlogPage(title="This was never added to a Site"),
+                self._related_posts_value(),
             ),
             [],
         )
 
-    def test_related_posts_blog(self):
-        """
-        Tests whether related posts from the blog from the supplied specific
-        categories are retrieved. We expect there to be two such posts from
-        the blog because we added two such posts in the setup. There should
-        be no other posts in either of the other categories.
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["relate_newsroom"] = False
-        self.block_value["relate_events"] = False
-        self.block_value["specific_categories"] = [
-            "Info for Consumers",
-            "Policy &amp; Compliance",
-        ]
-
+    def test_ignore_tags(self):
         related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
+            BlogPage.objects.get(slug="blog-1"),
+            self._related_posts_value(tag_filtering="ignore"),
         )
 
+        # Blog has one related post besides the one to which we are relating.
+        self.assertEqual(related_posts[0]["title"], "Blog")
+        self.assertEqual(related_posts[0]["icon"], "speech-bubble")
+        self.assertQuerySetEqual(
+            related_posts[0]["posts"],
+            BlogPage.objects.filter(slug__in=["blog-2"]),
+        )
+
+        # Newsroom has 2 related posts, excluding the non-live post.
+        self.assertEqual(related_posts[1]["title"], "Newsroom")
+        self.assertEqual(related_posts[1]["icon"], "newspaper")
+        self.assertQuerySetEqual(
+            related_posts[1]["posts"],
+            NewsroomPage.objects.filter(slug__in=["newsroom-1", "newsroom-2"]),
+        )
+
+        # Events has 3 related posts, including the nested archived one.
+        self.assertEqual(related_posts[2]["title"], "Events")
+        self.assertEqual(related_posts[2]["icon"], "date")
+        self.assertQuerySetEqual(
+            related_posts[2]["posts"],
+            EventPage.objects.filter(
+                slug__in=["event-1", "event-2", "event-3"]
+            ),
+        )
+
+    def test_limit(self):
+        related_posts = RelatedPosts.related_posts(
+            BlogPage.objects.get(slug="blog-1"),
+            self._related_posts_value(tag_filtering="ignore", limit=1),
+        )
+
+        # The limit gets applied per-source.
+        self.assertQuerySetEqual(
+            related_posts[0]["posts"],
+            BlogPage.objects.filter(slug__in=["blog-2"]),
+        )
+        self.assertQuerySetEqual(
+            related_posts[1]["posts"],
+            NewsroomPage.objects.filter(slug__in=["newsroom-1"]),
+        )
+        self.assertQuerySetEqual(
+            related_posts[2]["posts"],
+            EventPage.objects.filter(slug__in=["event-1"]),
+        )
+
+    def test_any_tags(self):
+        related_posts = RelatedPosts.related_posts(
+            BlogPage.objects.get(slug="blog-1"),
+            self._related_posts_value(tag_filtering="any"),
+        )
+
+        # Blog has one related post with the same tags.
+        self.assertEqual(related_posts[0]["title"], "Blog")
+        self.assertQuerySetEqual(
+            related_posts[0]["posts"],
+            BlogPage.objects.filter(slug__in=["blog-2"]),
+        )
+
+        # Newsroom has only 1 related post with any of the same tags.
+        self.assertEqual(related_posts[1]["title"], "Newsroom")
+        self.assertQuerySetEqual(
+            related_posts[1]["posts"],
+            NewsroomPage.objects.filter(slug__in=["newsroom-1"]),
+        )
+
+        # Events has no related posts with any of the same tags, so it doesn't
+        # show up in the related posts structure.
+        self.assertEqual(len(related_posts), 2)
+
+    def test_all_tags(self):
+        related_posts = RelatedPosts.related_posts(
+            BlogPage.objects.get(slug="blog-1"),
+            self._related_posts_value(tag_filtering="all"),
+        )
+
+        # Blog has one related post with all the same tags.
+        self.assertEqual(related_posts[0]["title"], "Blog")
+        self.assertQuerySetEqual(
+            related_posts[0]["posts"],
+            BlogPage.objects.filter(slug__in=["blog-2"]),
+        )
+
+        # Neither Newsroom nor Events have any related posts with all of the
+        # same tags, so they don't show up in the related posts structure.
         self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Blog",
-                "icon": "speech-bubble",
-                "posts": [self.blog_child2, self.blog_child1],
-            },
-        )
 
-    def test_related_posts_blog_limit(self):
-        """
-        Tests whether related posts from the blog from the supplied specific
-        categories are retrieved, subject to supplied limit. We expect there
-        to be one such post from the blog, that post should be the one with
-        the most recent publication date, and no other categories
-        (newsroom, events) to have, any posts in them.
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["relate_newsroom"] = False
-        self.block_value["relate_events"] = False
-        self.block_value["limit"] = 1
-        self.block_value["specific_categories"] = [
-            "Info for Consumers",
-            "Policy &amp; Compliance",
-        ]
-
+    def test_categories(self):
         related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
+            BlogPage.objects.get(slug="blog-1"),
+            self._related_posts_value(
+                tag_filtering="ignore", specific_categories=["Speech"]
+            ),
         )
 
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Blog",
-                "icon": "speech-bubble",
-                "posts": [self.blog_child2],
-            },
+        # Blog doesn't have this category, so it isn't filtered.
+        self.assertQuerySetEqual(
+            related_posts[0]["posts"],
+            BlogPage.objects.filter(slug__in=["blog-2"]),
         )
 
-    def test_related_posts_tag_filtering_all(self):
-        """
-        Tests whether related posts are retrieved if the 'tag_filtering' option
-        is set to 'all', and that the only posts retrieved match ALL of the
-        tags on the calling page.
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["relate_newsroom"] = True
-        self.block_value["relate_events"] = True
-        self.block_value["tag_filtering"] = "all"
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
+        # Newsroom has only one related post with the right category.
+        self.assertEqual(related_posts[1]["title"], "Newsroom")
+        self.assertQuerySetEqual(
+            related_posts[1]["posts"],
+            NewsroomPage.objects.filter(slug__in=["newsroom-1"]),
         )
 
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Newsroom",
-                "icon": "newspaper",
-                "posts": [self.newsroom_child1],
-            },
-        )
-
-    def test_related_posts_tag_filtering_any(self):
-        """
-        Tests whether related posts are retrieved if, when the 'tag_filtering'
-        option is set to 'any', they match at least one of the tags on the
-        calling page.
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["tag_filtering"] = "any"
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Blog",
-                "icon": "speech-bubble",
-                "posts": [self.blog_child2, self.blog_child1],
-            },
-        )
-
-    def test_related_posts_tag_filtering_ignore(self):
-        """
-        Tests whether all related posts are retrieved if the 'tag_filtering'
-        option is set to 'ignore', regardless of the tags on the calling page.
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["tag_filtering"] = "ignore"
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Blog",
-                "icon": "speech-bubble",
-                "posts": [
-                    self.blog_child3,
-                    self.blog_child2,
-                    self.blog_child1,
-                ],
-            },
-        )
-
-    def test_related_posts_newsroom(self):
-        """
-        Tests whether related posts from the newsroom for the supplied specific
-        categories are retrieved. We expect there to be one such post from
-        the newsroom; we added two newsroom children but one of them should not
-        match. We also expect that no other categories (newsroom, events) have
-        any posts in them.
-        """
-
-        self.block_value["relate_posts"] = False
-        self.block_value["relate_newsroom"] = True
-        self.block_value["relate_events"] = False
-        self.block_value["specific_categories"] = ["Op-Ed"]
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Newsroom",
-                "icon": "newspaper",
-                "posts": [self.newsroom_child1],
-            },
-        )
-
-    def test_related_posts_events(self):
-        """
-        Tests whether related posts from events are retrieved. Events have
-        no specific categories associated with them so it doesn't matter what
-        that value is set to. We expect there to be one such post from
-        events because we added one child to the events parent. We also expect
-        that no other categories (newsroom, blog) have any posts in them.
-        """
-
-        self.block_value["relate_posts"] = False
-        self.block_value["relate_newsroom"] = False
-        self.block_value["relate_events"] = True
-        self.block_value["specific_categories"] = [
-            "anything",
-            "can",
-            "be",
-            "here",
-        ]
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Events",
-                "icon": "date",
-                "posts": [self.events_child1],
-            },
-        )
-
-    def test_related_posts_events_archive(self):
-        """
-        Tests whether related posts from archived events are retrieved.
-        Events have no specific categories associated with them so it
-        doesn't matter what that value is set to. Here, we save an
-        archived event child, and thus we expect that we should retrieve
-        both the original event child and the archive event child.
-        We also expect that no other categories (newsroom, blog) have
-        any posts in them.
-        """
-        helpers.save_new_page(self.events_child2, self.archive_events_parent)
-
-        self.block_value["relate_posts"] = False
-        self.block_value["relate_newsroom"] = False
-        self.block_value["relate_events"] = True
-        self.block_value["specific_categories"] = [
-            "anything",
-            "can",
-            "be",
-            "here",
-        ]
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 1)
-        self.assertEqual(
-            related_posts[0],
-            {
-                "title": "Events",
-                "icon": "date",
-                "posts": [self.events_child1, self.events_child2],
-            },
-        )
-
-    def test_related_posts_all(self):
-        """
-        We test whether all the different posts are retrieved. This is
-        basically the logical AND of the blog, newsroom, and events
-        tests. We expect to retrieve all the blog, newsroom, and events
-        posts (two, one, and one of each, respectively).
-        """
-
-        self.block_value["relate_posts"] = True
-        self.block_value["relate_newsroom"] = True
-        self.block_value["relate_events"] = True
-        self.block_value["specific_categories"] = [
-            "Info for Consumers",
-            "Policy &amp; Compliance",
-            "Op-Ed",
-        ]
-
-        related_posts = RelatedPosts.related_posts(
-            self.page_with_authors, self.block_value
-        )
-
-        self.assertEqual(len(related_posts), 3)
-        self.assertEqual(
-            related_posts,
-            [
-                {
-                    "title": "Blog",
-                    "icon": "speech-bubble",
-                    "posts": [self.blog_child2, self.blog_child1],
-                },
-                {
-                    "title": "Newsroom",
-                    "icon": "newspaper",
-                    "posts": [self.newsroom_child1],
-                },
-                {
-                    "title": "Events",
-                    "icon": "date",
-                    "posts": [self.events_child1],
-                },
-            ],
+        # Event also doesn't have this category, so it isn't filtered.
+        self.assertQuerySetEqual(
+            related_posts[2]["posts"],
+            EventPage.objects.filter(
+                slug__in=["event-1", "event-2", "event-3"]
+            ),
         )
 
     def test_related_posts_rendering(self):
-        block_value = {
-            "tag_filtering": "",
-            "alternate_view_more_url": None,
-            "limit": 3,
-            "relate_events": True,
-            "relate_newsroom": True,
-            "relate_posts": True,
-            "specific_categories": [],
-        }
+        html = RelatedPosts().render(
+            self._related_posts_value(),
+            context={
+                "page": BlogPage.objects.get(slug="blog-1"),
+                "request": RequestFactory().get("/"),
+            },
+        )
 
-        context = {
-            "page": self.page_with_authors,
-            "request": RequestFactory().get("/"),
-        }
-
-        html = RelatedPosts().render(block_value, context=context)
-
-        # Rendered HTML should contain 5 results, because the limit only
-        # applies to each type of post, not the total number.
-        self.assertEqual(len(re.findall("m-list__item", html)), 5)
+        self.assertEqual(len(re.findall("m-list__item", html)), 2)
 
 
 class TestGenerateViewMoreUrl(TestCase):
