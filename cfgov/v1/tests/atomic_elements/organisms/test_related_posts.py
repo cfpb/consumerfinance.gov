@@ -1,4 +1,5 @@
 import re
+from datetime import timedelta
 
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
@@ -17,6 +18,8 @@ class RelatedPostsTestCase(WagtailPageTreeTestCase):
     @classmethod
     def get_page_tree(cls):
         now = timezone.now()
+        yesterday = now - timedelta(days=1)
+        two_days_ago = yesterday - timedelta(days=1)
 
         return [
             (
@@ -24,24 +27,45 @@ class RelatedPostsTestCase(WagtailPageTreeTestCase):
                 [
                     Page(title="Blog"),
                     [
-                        BlogPage(title="Blog 1", live=True),
-                        BlogPage(title="Blog 2", live=True),
+                        BlogPage(
+                            title="Blog 1", live=True, date_published=now
+                        ),
+                        BlogPage(
+                            title="Blog 2", live=True, date_published=yesterday
+                        ),
                     ],
                     Page(title="Newsroom"),
                     [
-                        NewsroomPage(title="Newsroom 1", live=True),
-                        NewsroomPage(title="Newsroom 2", live=True),
+                        NewsroomPage(
+                            title="Newsroom 1", live=True, date_published=now
+                        ),
+                        NewsroomPage(
+                            title="Newsroom 2",
+                            live=True,
+                            date_published=yesterday,
+                        ),
                         NewsroomPage(title="Newsroom 3", live=False),
                     ],
                     Page(title="Events"),
                     [
-                        EventPage(title="Event 1", live=True, start_dt=now),
-                        EventPage(title="Event 2", live=True, start_dt=now),
+                        EventPage(
+                            title="Event 1",
+                            live=True,
+                            date_published=now,
+                            start_dt=now,
+                        ),
+                        EventPage(
+                            title="Event 2",
+                            live=True,
+                            date_published=yesterday,
+                            start_dt=now,
+                        ),
                         Page(title="Archive past events"),
                         [
                             EventPage(
                                 title="Event 3",
                                 live=True,
+                                date_published=two_days_ago,
                                 start_dt=now,
                             )
                         ],
