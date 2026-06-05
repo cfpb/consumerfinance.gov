@@ -38,6 +38,17 @@ def encode_url(params):
     return API_ENDPOINT.format(urlencode(params))
 
 
+def strip_title_suffix(title):
+    """Remove the ' | Consumer Financial Protection Bureau' from the end
+    of search result titles. Becuase one or more words may be enclosed by
+    \ue000 and \ue001 characters if they match a search term, we have to be
+    a little flexible with the regex.
+    """
+    suffix_regex = r" \| .*"
+    cleaned_title = re.sub(suffix_regex, "", title)
+    return cleaned_title
+
+
 class SearchView(TranslatedTemplateView):
     template_name = "searchgov/index.html"
 
@@ -95,7 +106,7 @@ class SearchView(TranslatedTemplateView):
                     # Post proprocess results
                     for res in results:
                         # Strip " | CFPB" suffix
-                        res["title"] = re.sub(r" \| .*", "", res["title"])
+                        res["title"] = strip_title_suffix(res["title"])
 
                 else:
                     count = 0

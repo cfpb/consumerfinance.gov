@@ -8,6 +8,7 @@ from searchgov.views import (
     encode_url,
     get_affiliate,
     get_api_key,
+    strip_title_suffix,
 )
 
 
@@ -37,6 +38,14 @@ class EncodeUrlTestCase(TestCase):
             encode_url({"query": "term&does=encode"}),
             API_ENDPOINT.format("query=term%26does%3Dencode"),
         )
+
+
+class StripTitleSuffixTestCase(TestCase):
+    def test_strip_suffix(self):
+        cleaned_title = strip_title_suffix(
+            "Page Title | Consumer Financial Protection Bureau"
+        )
+        self.assertEqual(cleaned_title, "Page Title")
 
 
 class JsonTestCase(TestCase):
