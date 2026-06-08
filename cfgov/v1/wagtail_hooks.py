@@ -378,7 +378,7 @@ register_snippet(BannerViewSet)
 register_template_debug(
     "v1",
     "archived_banner",
-    "v1/includes/blocks/archived-banner.html",
+    "v1/includes/blocks/banner-archived.html",
     archived_banner_test_cases,
 )
 

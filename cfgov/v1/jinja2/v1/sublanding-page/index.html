@@ -4,7 +4,7 @@
 
 {% block content_intro -%}
     {%- if page.in_archive %}
-        {%- include 'v1/includes/blocks/archived-banner.html' -%}
+        {%- include 'v1/includes/blocks/banner-archived.html' -%}
     {% endif -%}
     {% for block in page.header -%}
         {% import 'v1/includes/templates/render_block.html' as render_block with context %}
