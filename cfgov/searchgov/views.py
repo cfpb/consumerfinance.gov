@@ -1,7 +1,5 @@
 import math
-from base64 import b32decode
-from binascii import Error
-from html import unescape
+import re
 from urllib.parse import urlencode
 
 from django.conf import settings
@@ -40,12 +38,15 @@ def encode_url(params):
     return API_ENDPOINT.format(urlencode(params))
 
 
-def recreate_unencoded(parts):
-    return ", ".join(parts).capitalize()
-
-
-def decode_meta(encoded):
-    return unescape(b32decode(encoded.upper()).decode("utf-8"))
+def strip_title_suffix(title):
+    """Remove the ' | Consumer Financial Protection Bureau' from the end
+    of search result titles. Becuase one or more words may be enclosed by
+    \ue000 and \ue001 characters if they match a search term, we have to be
+    a little flexible with the regex.
+    """
+    suffix_regex = r" \| .*"
+    cleaned_title = re.sub(suffix_regex, "", title)
+    return cleaned_title
 
 
 class SearchView(TranslatedTemplateView):
@@ -72,7 +73,6 @@ class SearchView(TranslatedTemplateView):
             response = requests.get(
                 encode_url(
                     {
-                        "include_facets": "true",
                         "affiliate": affiliate,
                         "access_key": api_key,
                         "limit": RESULTS_PER_PAGE,
@@ -105,21 +105,8 @@ class SearchView(TranslatedTemplateView):
 
                     # Post proprocess results
                     for res in results:
-                        # Strip | CFPB suffix
-                        encoded_list = res.get("searchgov_custom2")
-                        if encoded_list:
-                            # Hack due to search.gov caching old data
-                            try:
-                                res["description"] = decode_meta(
-                                    encoded_list[0]
-                                )
-                            # binascii Error points to likely unencoded data
-                            except Error:
-                                res["description"] = recreate_unencoded(
-                                    encoded_list
-                                )
-                        else:
-                            res["description"] = res["snippet"]
+                        # Strip " | CFPB" suffix
+                        res["title"] = strip_title_suffix(res["title"])
 
                 else:
                     count = 0
