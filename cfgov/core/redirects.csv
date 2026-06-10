@@ -17,6 +17,42 @@ source_path,target_url,status_code
 /consumer-tools/sending-money/ar/,/consumer-tools/sending-money/,302
 /consumer-tools/sending-money/ht/,/consumer-tools/sending-money/,302
 
+# Temporarily redirect Spanish Buying a House pages to their English equivalent
+/es/comprar-una-casa/,/owning-a-home/,302
+/es/comprar-una-casa/prepararse/,/owning-a-home/prepare/,302
+/es/comprar-una-casa/prepararse/ponga-en-orden-su-situacion-financiera/,/owning-a-home/prepare/get-your-money-situation-in-order/,302
+/es/comprar-una-casa/prepararse/calcule-cuanto-quiere-gastar/,/owning-a-home/prepare/figure-out-how-much-you-want-to-spend/,302
+/es/comprar-una-casa/prepararse/considere-si-es-el-momento-adecuado-para-comprar/,/owning-a-home/prepare/consider-whether-its-the-right-time-for-you-to-buy/,302
+/es/comprar-una-casa/prepararse/crear-un-paquete-de-solicitud-de-prestamo/,/owning-a-home/prepare/create-a-loan-application-packet/,302
+/es/comprar-una-casa/explorando/,/owning-a-home/explore/,302
+/es/comprar-una-casa/explorando/conozca-los-costos-de-los-prestamos/,/owning-a-home/explore/learn-about-loan-costs/,302
+/es/comprar-una-casa/explorando/comprenda-los-diferentes-tipos-de-prestamos-disponibles/,/owning-a-home/explore/understand-the-different-kinds-of-loans-available/,302
+/es/comprar-una-casa/explorando/comuniquese-con-varios-prestamistas/,/owning-a-home/explore/contact-multiple-lenders/,302
+/es/comprar-una-casa/explorando/reuna-y-actualice-su-documentacion/,/owning-a-home/explore/gather-and-update-your-paperwork/,302
+/es/comprar-una-casa/explorando/obtener-una-carta-de-preaprobacion/,/owning-a-home/explore/get-a-preapproval-letter/,302
+/es/comprar-una-casa/explorando/seleccione-el-tipo-de-prestamo-que-se-ajuste-a-sus-necesidades/,/owning-a-home/explore/select-the-kind-of-loan-that-fits-your-needs/,302
+/es/comprar-una-casa/explorando/encuentre-la-casa-adecuada/,/owning-a-home/explore/find-the-right-home/,302
+/es/comprar-una-casa/elegir/,/owning-a-home/compare/,302
+/es/comprar-una-casa/elegir/solicite-y-revise-multiples-estimaciones-de-prestamos/,/owning-a-home/compare/request-and-review-multiple-loan-estimates/,302
+/es/comprar-una-casa/elegir/compare-y-negocie-sus-ofertas-de-prestamos/,/owning-a-home/compare/compare-loan-estimates/,302
+/es/comprar-una-casa/elegir/elija-una-oferta-de-prestamo/,/owning-a-home/compare/choose-loan-offer/,302
+/es/comprar-una-casa/cierre/,/owning-a-home/close/,302
+/es/comprar-una-casa/cierre/presente-los-documentos-y-responda-a-las-solicitudes-del-prestamista/,/owning-a-home/close/submit-documents-and-answer-requests-from-the-lender/,302
+/es/comprar-una-casa/cierre/programe-una-inspeccion-de-la-vivienda/,/owning-a-home/close/schedule-a-home-inspection/,302
+/es/comprar-una-casa/cierre/busque-un-seguro-de-propietario-de-vivienda/,/owning-a-home/close/shop-for-homeowners-insurance/,302
+/es/comprar-una-casa/cierre/compre-seguros-de-titulo-y-otros-servicios-de-cierre/,/owning-a-home/close/shop-for-title-insurance-and-other-closing-services/,302
+/es/comprar-una-casa/cierre/este-atento-a-las-estimaciones-de-prestamos-revisadas/,/owning-a-home/close/look-out-for-revised-loan-estimates/,302
+/es/comprar-una-casa/cierre/revise-los-documentos-antes-del-cierre/,/owning-a-home/close/review-documents-before-closing/,302
+/es/comprar-una-casa/cierre/cerrar-el-trato/,/owning-a-home/close/close-the-deal/,302
+/es/comprar-una-casa/cierre/despues-del-cierre/,/owning-a-home/close/after-closing/,302
+/es/comprar-una-casa/prestamos-de-la-fha/,/owning-a-home/fha-loans/,302
+/es/comprar-una-casa/fuentes/,/owning-a-home/sources/,302
+/es/comprar-una-casa/programas-de-prestamos-especiales/,/owning-a-home/special-loan-programs/,302
+/es/comprar-una-casa/prestamos-convencionales/,/owning-a-home/conventional-loans/,302
+/es/prepararse-para-comprar-casa/cuentas-bancarias/,/owning-a-home/,302
+/es/prepararse-para-comprar-casa/credito/,/owning-a-home/,302
+/es/prepararse-para-comprar-casa/hipotecas/,/owning-a-home/,302
+
 # Permanent redirects that exceed Wagtail's 255-character limit for fields
 /askcfpb/194/i-used-the-title-services-and-lenders-title-insurance-companies-or-owners-title-insurance-company-listed-by-my-lender-on-my-gfe-but-was-charged-more-than-10-percent-more-than-my-gfe-said-i-would-be-now-my-lender-wont-pay-me-back-what-can-i-do.html,/ask-cfpb/can-my-final-mortgage-costs-increase-from-what-was-on-my-loan-estimate-en-172/,301
 /askcfpb/191/my-lender-or-broker-gave-me-a-gfe-for-15-year-loan-but-when-i-got-to-the-closing-the-documents-said-it-was-a-30-year-loan-my-lender-or-broker-said-not-to-worry-i-can-refinance-later-but-thats-not-in-any-of-my-paperwork-and-i-dont-want-to-close-a-loan-whos.html,/ask-cfpb/my-rate-or-the-fees-changed-between-my-loan-estimate-and-my-closing-disclosure-what-do-i-do-en-184/,301
