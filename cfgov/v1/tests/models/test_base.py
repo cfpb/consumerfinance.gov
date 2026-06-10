@@ -1,6 +1,6 @@
 import json
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.test.client import RequestFactory
 
 from wagtail import blocks
@@ -621,3 +621,21 @@ class TestCFGOVPageTranslations(TestCase):
                 },
             ],
         )
+
+
+@override_settings(ARCHIVE_BASE_PATH="test-archive")
+class TestCFGOVPageArchive(TestCase):
+    def test_in_archive(self):
+        self.assertFalse(CFGOVPage(url_path="/home/").in_archive)
+        self.assertFalse(CFGOVPage(url_path="/home/foo/").in_archive)
+        self.assertFalse(CFGOVPage(url_path="/home/foo/bar/").in_archive)
+
+        self.assertTrue(CFGOVPage(url_path="/home/test-archive/").in_archive)
+        self.assertTrue(
+            CFGOVPage(url_path="/home/test-archive/foo/").in_archive
+        )
+
+        with override_settings(ARCHIVE_BASE_PATH="*"):
+            self.assertTrue(CFGOVPage(url_path="/home/").in_archive)
+            self.assertTrue(CFGOVPage(url_path="/home/foo/").in_archive)
+            self.assertTrue(CFGOVPage(url_path="/home/foo/bar/").in_archive)

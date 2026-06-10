@@ -15,6 +15,12 @@
           content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
+{% block content_intro scoped -%}
+    {%- if page.in_archive %}
+        {%- include 'v1/includes/blocks/banner-archived.html' -%}
+    {% endif -%}
+{%- endblock %}
+
 {% block content_main %}
     {% include 'v1/includes/article.html' %}
     {% block post_article_content %}
