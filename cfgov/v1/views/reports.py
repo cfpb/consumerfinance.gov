@@ -86,7 +86,7 @@ def generate_filename(type):
 
 
 class PageMetadataReportView(PageReportView):
-    header_icon = "doc-empty-inverse"
+    header_icon = "doc-full-inverse"
     page_title = "Page Metadata (for Live Pages)"
 
     list_export = PageReportView.list_export + [

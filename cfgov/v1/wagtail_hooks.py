@@ -128,7 +128,7 @@ def register_django_admin_menu_item():
     return StaffOnlyMenuItem(
         "Django Admin",
         reverse("admin:index"),
-        classname="icon icon-redirect",
+        icon_name="glasses",
         order=99999,
     )
 
@@ -138,7 +138,7 @@ def register_page_metadata_report_menu_item():
     return MenuItem(
         "Page Metadata",
         reverse("page_metadata_report"),
-        classname="icon icon-" + PageMetadataReportView.header_icon,
+        icon_name=PageMetadataReportView.header_icon,
     )
 
 
@@ -163,7 +163,7 @@ def register_page_drafts_report_menu_item():
     return MenuItem(
         "Draft Pages",
         reverse("page_drafts_report"),
-        classname="icon icon-" + DraftReportView.header_icon,
+        icon_name=DraftReportView.header_icon,
     )
 
 
@@ -188,7 +188,7 @@ def register_documents_report_menu_item():
     return MenuItem(
         "Documents",
         reverse("documents_report"),
-        classname="icon icon-" + DocumentsReportView.header_icon,
+        icon_name=DocumentsReportView.header_icon,
     )
 
 
@@ -213,7 +213,7 @@ def register_enforcements_actions_report_menu_item():
     return MenuItem(
         "Enforcement Actions",
         reverse("enforcement_report"),
-        classname="icon icon-" + EnforcementActionsReportView.header_icon,
+        icon_name=EnforcementActionsReportView.header_icon,
     )
 
 
@@ -238,7 +238,7 @@ def register_images_report_menu_item():
     return MenuItem(
         "Images",
         reverse("images_report"),
-        classname="icon icon-" + ImagesReportView.header_icon,
+        icon_name=ImagesReportView.header_icon,
     )
 
 
@@ -263,7 +263,7 @@ def register_ask_report_menu_item():
     return MenuItem(
         "Ask CFPB",
         reverse("ask_report"),
-        classname="icon icon-" + AskReportView.header_icon,
+        icon_name=AskReportView.header_icon,
     )
 
 
@@ -288,7 +288,7 @@ def register_category_icons_report_menu_item():
     return MenuItem(
         "Category Icons",
         reverse("category_icons_report"),
-        classname="icon icon-" + CategoryIconReportView.header_icon,
+        icon_name=CategoryIconReportView.header_icon,
     )
 
 
@@ -313,7 +313,7 @@ def register_translated_pages_report_menu_item():
     return MenuItem(
         "Translated Pages",
         reverse("translated_pages_report"),
-        classname="icon icon-" + TranslatedPagesReportView.header_icon,
+        icon_name=TranslatedPagesReportView.header_icon,
     )
 
 
