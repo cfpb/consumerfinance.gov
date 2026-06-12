@@ -6,8 +6,16 @@ from operator import itemgetter
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.aggregates import StringAgg
-from django.db.models import Case, CharField, DurationField, F, Value, When
-from django.db.models.functions import ExtractDay, Now
+from django.db.models import (
+    Case,
+    CharField,
+    DurationField,
+    ExpressionWrapper,
+    F,
+    Value,
+    When,
+)
+from django.db.models.functions import Coalesce, ExtractDay, Now
 from django.utils import html as html_util
 
 from wagtail.admin.filters import WagtailFilterSet
@@ -470,19 +478,32 @@ class TranslatedPagesReportView(PageReportView):
         return context
 
 
-class ActiveUsersReportView(ReportView):
-    page_title = "Active Users"
+class AllUsersReportFilterSet(WagtailFilterSet):
+    is_active = django_filters.ChoiceFilter(
+        choices=[(True, "Active"), (False, "Inactive")],
+        empty_label="All users",
+    )
+
+    class Meta:
+        model = get_user_model()
+        fields = ["is_active"]
+
+
+class AllUsersReportView(ReportView):
+    page_title = "All Users"
     header_icon = "user"
-    index_url_name = "active_users_report"
-    index_results_url_name = "active_users_report_results"
-    results_template_name = "v1/active_users_report.html"
+    index_url_name = "all_users_report"
+    index_results_url_name = "all_users_report_results"
+    results_template_name = "v1/all_users_report.html"
     paginate_by = 0
+    filterset_class = AllUsersReportFilterSet
 
     list_export = [
         "first_name",
         "last_name",
         "username",
         "email",
+        "active",
         "access_level",
         "group_names",
         "date_joined",
@@ -493,19 +514,30 @@ class ActiveUsersReportView(ReportView):
     def get_queryset(self):
         return (
             get_user_model()
-            .objects.filter(is_active=True)
-            .annotate(
-                group_names=StringAgg("groups__name", ", "),
+            .objects.annotate(
+                active=Case(
+                    When(is_active=True, then=Value("Active")),
+                    default=Value("Inactive"),
+                    output_field=CharField(),
+                ),
                 access_level=Case(
                     When(is_superuser=True, then=Value("Superuser")),
                     When(is_staff=True, then=Value("Staff")),
                     default=Value("Regular"),
                     output_field=CharField(),
                 ),
-                days_inactive=ExtractDay(
-                    Now() - F("last_login"),
-                    output_field=DurationField(),
+                group_names=StringAgg("groups__name", ", "),
+                days_inactive=Coalesce(
+                    ExtractDay(
+                        ExpressionWrapper(
+                            Now() - F("last_login"),
+                            output_field=DurationField(),
+                        )
+                    ),
+                    # Sentinel value for users who've never logged in
+                    Value(-1),
                 ),
             )
+            .order_by("last_name")
             .prefetch_related("groups")
         )

@@ -26,7 +26,7 @@ from v1.models import (
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
-    ActiveUsersReportView,
+    AllUsersReportView,
     AskReportView,
     CategoryIconReportView,
     DocumentsReportView,
@@ -289,7 +289,7 @@ class TestTranslatedPagesReport(TestCase, WagtailTestUtils):
         self.assertContains(response, "No pages found.")
 
 
-class TestActiveUsersReport(TestCase):
+class TestAllUsersReport(TestCase):
     def test_get_queryset(self):
         User = get_user_model()
         test_user = User(
@@ -297,6 +297,6 @@ class TestActiveUsersReport(TestCase):
         )
         test_user.save()
 
-        report_users = ActiveUsersReportView().get_queryset()
-        self.assertGreater(len(User.objects.all()), len(report_users))
-        self.assertNotIn(test_user, report_users)
+        report_users = AllUsersReportView().get_queryset()
+        self.assertEqual(len(User.objects.all()), len(report_users))
+        self.assertIn(test_user, report_users)
