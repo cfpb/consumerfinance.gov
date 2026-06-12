@@ -9,7 +9,11 @@
                     <th>Last name</th>
                     <th>Username</th>
                     <th>Email</th>
+                    <th>Access Level</th>
+                    <th>Groups</th>
+                    <th>Date Joined</th>
                     <th>Last login</th>
+                    <th>Days Inactive</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +23,11 @@
                         <td>{{ user.last_name }}</td>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.access_level }}</td>
+                        <td>{{ user.group_names }}</td>
+                        <td>{{ user.date_joined }}</td>
                         <td>{{ user.last_login|date }} {{ user.last_login|time }}</td>
+                        <td>{{ user.days_inactive }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

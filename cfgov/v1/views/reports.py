@@ -5,6 +5,9 @@ from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.aggregates import StringAgg
+from django.db.models import Case, CharField, DurationField, F, Value, When
+from django.db.models.functions import ExtractDay, Now
 from django.utils import html as html_util
 
 from wagtail.admin.filters import WagtailFilterSet
@@ -480,8 +483,29 @@ class ActiveUsersReportView(ReportView):
         "last_name",
         "username",
         "email",
+        "access_level",
+        "group_names",
+        "date_joined",
         "last_login",
+        "days_inactive",
     ]
 
     def get_queryset(self):
-        return get_user_model().objects.filter(is_active=True)
+        return (
+            get_user_model()
+            .objects.filter(is_active=True)
+            .annotate(
+                group_names=StringAgg("groups__name", ", "),
+                access_level=Case(
+                    When(is_superuser=True, then=Value("Superuser")),
+                    When(is_staff=True, then=Value("Staff")),
+                    default=Value("Regular"),
+                    output_field=CharField(),
+                ),
+                days_inactive=ExtractDay(
+                    Now() - F("last_login"),
+                    output_field=DurationField(),
+                ),
+            )
+            .prefetch_related("groups")
+        )
