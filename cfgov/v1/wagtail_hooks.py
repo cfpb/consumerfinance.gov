@@ -338,7 +338,7 @@ def register_all_users_report_menu_item():
     return MenuItem(
         "All Users",
         reverse("all_users_report"),
-        classname="icon icon-" + AllUsersReportView.header_icon,
+        icon_name=AllUsersReportView.header_icon,
     )
 
 
