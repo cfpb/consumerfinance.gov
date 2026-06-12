@@ -1,8 +1,9 @@
 import json
-from datetime import date
+from datetime import date, timedelta
 from operator import itemgetter
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -26,7 +27,7 @@ from v1.models import (
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
-    ActiveUsersReportView,
+    AllUsersReportView,
     AskReportView,
     CategoryIconReportView,
     DocumentsReportView,
@@ -289,7 +290,7 @@ class TestTranslatedPagesReport(TestCase, WagtailTestUtils):
         self.assertContains(response, "No pages found.")
 
 
-class TestActiveUsersReport(TestCase):
+class TestAllUsersReport(TestCase):
     def test_get_queryset(self):
         User = get_user_model()
         test_user = User(
@@ -297,6 +298,63 @@ class TestActiveUsersReport(TestCase):
         )
         test_user.save()
 
-        report_users = ActiveUsersReportView().get_queryset()
-        self.assertGreater(len(User.objects.all()), len(report_users))
-        self.assertNotIn(test_user, report_users)
+        report_users = AllUsersReportView().get_queryset()
+        self.assertEqual(len(User.objects.all()), len(report_users))
+        self.assertIn(test_user, report_users)
+
+    def test_active(self):
+        User = get_user_model()
+        active_user = User.objects.create(username="active", is_active=True)
+        inactive_user = User.objects.create(
+            username="inactive", is_active=False
+        )
+
+        qs = AllUsersReportView().get_queryset()
+
+        self.assertEqual(qs.get(pk=active_user.pk).active, "Active")
+        self.assertEqual(qs.get(pk=inactive_user.pk).active, "Inactive")
+
+    def test_days_inactive(self):
+        User = get_user_model()
+        never_logged_in_user = User.objects.create(
+            username="never", last_login=None
+        )
+        logged_in_user = User.objects.create(
+            username="sometimes",
+            last_login=timezone.now() - timedelta(days=10),
+        )
+
+        qs = AllUsersReportView().get_queryset()
+
+        # Days could either be 9 or 10 depending on time
+        self.assertIn(qs.get(pk=logged_in_user.pk).days_inactive, (9, 10))
+
+        # Will be the -1 sentinel
+        self.assertEqual(qs.get(pk=never_logged_in_user.pk).days_inactive, -1)
+
+    def test_access_level(self):
+        User = get_user_model()
+        regular_user = User.objects.create(username="regular")
+        staff_user = User.objects.create(username="staff", is_staff=True)
+        super_user = User.objects.create(
+            username="super", is_superuser=True, is_staff=True
+        )
+
+        qs = AllUsersReportView().get_queryset()
+
+        self.assertEqual(qs.get(pk=super_user.pk).access_level, "Superuser")
+        self.assertEqual(qs.get(pk=staff_user.pk).access_level, "Staff")
+        self.assertEqual(qs.get(pk=regular_user.pk).access_level, "Regular")
+
+    def test_groups(self):
+        User = get_user_model()
+        grouped_user = User.objects.create(username="grouped")
+        grouped_user.groups.add(
+            Group.objects.create(name="First"),
+            Group.objects.create(name="Second"),
+        )
+
+        qs = AllUsersReportView().get_queryset()
+
+        self.assertIn("First", qs.get(pk=grouped_user.pk).group_names)
+        self.assertIn("Second", qs.get(pk=grouped_user.pk).group_names)

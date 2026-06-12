@@ -1,0 +1,40 @@
+{% extends 'wagtailadmin/reports/base_page_report_results.html' %}
+
+{% block results %}
+      <table class="listing">
+          <thead>
+              <tr>
+                  <th>First name</th>
+                  <th>Last name</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Active?</th>
+                  <th>Access Level</th>
+                  <th>Groups</th>
+                  <th>Date Joined</th>
+                  <th>Last login</th>
+                  <th>Days Inactive</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for user in object_list %}
+                  <tr>
+                      <td>{{ user.first_name }}</td>
+                      <td>{{ user.last_name }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.active }}</td>
+                      <td>{{ user.access_level }}</td>
+                      <td>{{ user.group_names }}</td>
+                      <td>{{ user.date_joined }}</td>
+                      <td>{{ user.last_login|date }} {{ user.last_login|time }}</td>
+                      <td>{{ user.days_inactive }}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+{% endblock %}
+
+{% block no_results_message %}
+  <p>No users found.</p>
+{% endblock %}
