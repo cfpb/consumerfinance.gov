@@ -354,6 +354,14 @@ urlpatterns = [
         ),
     ),
     re_path(
+        r"^regulations3k-service-worker.js$",
+        TemplateView.as_view(
+            template_name="regulations3k-service-worker.js",
+            content_type="application/javascript",
+        ),
+        name="regulations3k-service-worker.js",
+    ),
+    re_path(
         r"^sitemap\.xml$",
         akamai_no_store(sitemap),
         {"sitemaps": {"site": Sitemap}},

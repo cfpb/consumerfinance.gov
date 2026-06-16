@@ -45,6 +45,11 @@ async function copy(baseConfig) {
     `${modules}/@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2`,
     `${baseConfig.outdir}/fonts/source-sans-3-latin-wght-normal.woff2`,
   );
+
+  copyFile(
+    `${unprocessed}/unregister.js`,
+    `${baseConfig.outdir}/regulations3k-service-worker.js`
+  )
 }
 
 export { copy };
