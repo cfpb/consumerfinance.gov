@@ -53,6 +53,35 @@ source_path,target_url,status_code
 /es/prepararse-para-comprar-casa/credito/,/owning-a-home/,302
 /es/prepararse-para-comprar-casa/hipotecas/,/owning-a-home/,302
 
+# Temporarily redirect Spanish housing pages to their English equivalent
+/es/vivienda/,/housing/,302
+/es/vivienda/inseguridad-habitacional/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/,/housing/housing-insecurity/help-for-homeowners/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/salga-con-cuidado-de-su-aplazamiento-de-pagos-por-un-tiempo-determinado/,/housing/housing-insecurity/help-for-homeowners/exit-your-forbearance-carefully/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/como-trabajar-con-su-administrador-hipotecario/,/housing/housing-insecurity/help-for-homeowners/how-to-work-with-your-servicer/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/protecciones-para-prestatarios-de-hipotecas-inversas/,/housing/housing-insecurity/help-for-homeowners/protections-for-reverse-mortgage-borrowers/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/evite-la-ejecucion-hipotecaria/,/housing/housing-insecurity/help-for-homeowners/avoid-foreclosure/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/administre-su-dinero-durante-un-aplazamiento-de-pagos-por-un-tiempo-determinado/,/housing/housing-insecurity/help-for-homeowners/manage-your-money-during-forbearance/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/ayuda-del-fondo-de-asistencia-a-los-propietarios-de-viviendas/,/housing/housing-insecurity/help-for-homeowners/get-homeowner-assistance-fund-help/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-propietarios-de-viviendas/protecciones-para-los-miembros-de-las-fuerzas-armadas-y-veteranos/,/housing/housing-insecurity/help-for-homeowners/protections-for-servicemembers-and-veterans/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-inquilinos/,/housing/housing-insecurity/help-for-renters/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-inquilinos/sus-derechos-como-inquilino-y-frente-al-cobro-de-deudas/,/housing/housing-insecurity/help-for-renters/your-tenant-debt-collection-rights/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-inquilinos/que-hacer-si-se-enfrenta-a-un-desalojo/,/housing/housing-insecurity/help-for-renters/what-to-do-if-youre-facing-eviction/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-inquilinos/inicie-una-conversacion-sobre-el-plan-de-pago-del-alquiler/,/housing/housing-insecurity/help-for-renters/start-a-conversation-about-rent-repayment/,302
+/es/vivienda/inseguridad-habitacional/ayuda-para-inquilinos/obtenga-ayuda-para-pagar-el-alquiler-y-las-facturas/,/housing/housing-insecurity/help-for-renters/get-help-paying-rent-and-bills/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/protecciones-arrendatarios/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/protecciones-arrendatarios/existe-ayuda-disponible-inquilinos/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/protecciones-arrendatarios/protecciones-contra-desalojo-cdc/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/protecciones-arrendatarios/asistencia-de-emergencia-a-inquilinos/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/asistencia-propietarios-de-vivienda/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/asistencia-propietarios-de-vivienda/solicite-aplazamiento-alivio-de-hipoteca/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/asistencia-propietarios-de-vivienda/sepa-sobre-aplazamiento/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/asistencia-para-arrendadores/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/asistencia-hipotecas-y-viviendas/protecciones-a-inquilinos-covid-19/,/housing/housing-insecurity/,302
+/es/vivienda/inseguridad-habitacional/ayuda-si-ha-perdido-su-vivienda/,/housing/housing-insecurity/lost-housing/,302
+/es/vivienda/consejos-para-administrar-los-prestamos-y-creditos-familiares/,/consumer-tools/educator-tools/adult-financial-education/tips-for-managing-family-lending-and-borrowing/,302
+
 # Permanent redirects that exceed Wagtail's 255-character limit for fields
 /askcfpb/194/i-used-the-title-services-and-lenders-title-insurance-companies-or-owners-title-insurance-company-listed-by-my-lender-on-my-gfe-but-was-charged-more-than-10-percent-more-than-my-gfe-said-i-would-be-now-my-lender-wont-pay-me-back-what-can-i-do.html,/ask-cfpb/can-my-final-mortgage-costs-increase-from-what-was-on-my-loan-estimate-en-172/,301
 /askcfpb/191/my-lender-or-broker-gave-me-a-gfe-for-15-year-loan-but-when-i-got-to-the-closing-the-documents-said-it-was-a-30-year-loan-my-lender-or-broker-said-not-to-worry-i-can-refinance-later-but-thats-not-in-any-of-my-paperwork-and-i-dont-want-to-close-a-loan-whos.html,/ask-cfpb/my-rate-or-the-fees-changed-between-my-loan-estimate-and-my-closing-disclosure-what-do-i-do-en-184/,301
