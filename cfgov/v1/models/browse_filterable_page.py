@@ -113,4 +113,8 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(BrowseFilterablePage):
     template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]
-    subpage_types = ["NewsroomPage"]
+    # TODO: Remove "LegacyNewsroomPage" after archived pages move
+    subpage_types = [
+        "NewsroomPage",
+        "LegacyNewsroomPage",
+    ]
