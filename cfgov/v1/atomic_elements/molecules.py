@@ -11,6 +11,28 @@ from v1.blocks import AnchorLink, HeadingBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
+class CardBlock(blocks.StructBlock):
+    card_type = blocks.ChoiceBlock(
+        choices=[
+            ("topic", "Topic"),
+            ("topic-action", "Topic Action"),
+            ("breakout", "Breakout"),
+        ],
+        required=False,
+        help_text="Choose the specialized card type.",
+    )
+    icon = blocks.CharBlock(required=False)
+    image = ImageChooserBlock(required=False)
+    header = blocks.CharBlock(required=False)
+    text = blocks.CharBlock(required=False)
+    link_text = blocks.CharBlock()
+    link_url = blocks.CharBlock()
+
+    class Meta:
+        icon = "image"
+        template = "v1/includes/molecules/cardb.html"
+
+
 class InfoUnit(blocks.StructBlock):
     image = atoms.ImageBasic(
         required=False,

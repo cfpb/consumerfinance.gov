@@ -1,0 +1,73 @@
+{# ==========================================================================
+
+   Card
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a Card molecule, which displays a link
+   with optional heading, icon, text, or image.
+
+   value.card_type: (Optional) The type of card. Values can be:
+                    topic, topic-action, breakout
+
+   value.icon:      (Optional) Name of an icon. See list of available icon names at:
+                    https://cfpb.github.io/design-system/foundation/iconography.
+
+   value.image      (Optional) If using a breakout card, required. The image to breakout.
+
+   value.heading:   (Optional) Card heading.
+
+   value.text:      (Optional) Card body text.
+
+   value.link_text: Card link text.
+
+   value.link_url:  Card link URL.
+
+   ========================================================================== #}
+
+{# We want to make the whole card clickable. #}
+<article class="m-card
+                {%- if value.card_type == 'topic' %} m-card--topic{% endif %}
+                {%- if value.card_type == 'topic-action' %} m-card--topic m-card--topic-action{% endif %}
+                {%- if value.card_type == 'breakout' %} m-card--breakout{% endif %}">
+    <a href="{{ value.link_url }}">
+        {% if value.heading %}
+        <h3 class="m-card__heading">
+            {% if value.icon -%}
+                <span class="m-card__icon">{{ svg_icon( value.icon ) }}</span>
+            {%- endif %}
+            {% if value.heading -%}
+                {{ value.heading }}
+            {%- else -%}
+                <span class="u-visually-hidden">{{ value.link_text }}</span>
+            {%- endif %}
+        </h3>
+        {% else %}
+            {% if value.icon -%}
+                <div class="m-card__icon">{{ svg_icon( value.icon ) }}</div>
+            {%- endif %}
+        {% endif %}
+
+        {% if value.text %}
+          <p>{{ value.text }}</p>
+        {% endif %}
+        {% if value.card_type  == 'breakout' %}
+        <img class="m-card__img"
+             loading="lazy"
+             src="{{ value.image.get_rendition('original').url}}"
+             alt="">
+        {% endif %}
+
+        {% if value.card_type  == 'breakout' %}
+        <div class="m-card__inner-wrapper">
+        {% endif %}
+            <div class="m-card__footer">
+                <span>{{ value.link_text }}</span>
+            </div>
+        {% if value.card_type  == 'breakout' %}
+        </div>
+        {% endif %}
+        </a>
+</article>
