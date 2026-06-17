@@ -1,11 +1,11 @@
-self.addEventListener('install', () => {
+globalThis.addEventListener('install', () => {
   // Force the waiting service worker to become the active service worker immediately
-  self.skipWaiting(); 
+  globalThis.skipWaiting(); 
 });
 
-self.addEventListener('activate', () => {
+globalThis.addEventListener('activate', () => {
   // Unregister itself from the browser
-  self.registration.unregister()
+  globalThis.registration.unregister()
     .then(() => {
       // Clear all caches associated with this domain
       return caches.keys();
@@ -17,7 +17,7 @@ self.addEventListener('activate', () => {
     })
     .then(() => {
       // Force all open tabs/clients to reload to apply changes immediately
-      return self.clients.matchAll({ type: 'window' });
+      return globalThis.clients.matchAll({ type: 'window' });
     })
     .then((clients) => {
       clients.forEach((client) => {
