@@ -1,17 +1,27 @@
 @use 'sass:math';
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
-.m-pill--archived {
+.m-pill {
   display: inline-block;
+  // Mobile only.
   @include respond-to-max($bp-xs-max) {
     display: block;
   }
   width: fit-content;
   height: 100%;
   padding: math.div(5px, $base-font-size-px) + rem math.div(7px, $base-font-size-px) + rem;
+  margin-right: math.div(5px, $base-font-size-px) + rem;
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    margin-right: 0;
+    margin-bottom: math.div(5px, $base-font-size-px) + rem;
+  }
   @include heading-6($has-margin-bottom: false, $has-margin-top: false);
-  background-color: var(--teal-mid-dark);
   border-radius: $btn-border-radius-size;
-  color: var(--white);
   line-height: 1;
+
+  &--archived {
+    background-color: var(--teal-mid-dark);
+    color: var(--white);
+  }
 }
