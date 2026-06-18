@@ -43,30 +43,6 @@
             {{ page.overview }}
         </p>
         {% endif %}
-        <aside class="search-bar">
-            <form method="get" action=".">
-                <label for="ask-search" class="a-label h4">
-                    {{ _('Narrow your results') }}
-                </label>
-                <div class="m-form-field">
-                    <input
-                        class="a-text-input a-text-input--full"
-                        type="text"
-                        aria-label="{{ _('Search term') }}"
-                        name="search_term"
-                        value="{{ search_term }}">
-                        <button class="a-btn" id="ask-search" type="submit">
-                            {{ _('Search') }}
-                        </button>
-                        <a class="a-btn a-btn--link a-btn--warning"
-                           href=".">
-                            {{ _('Clear search') }}
-                        </a>
-                </div>
-            </form>
-        </aside>
-
-        <p class="results-message">{{ results_message }}</p>
 
         <section class="results">
             <div class="page-links">
@@ -81,11 +57,22 @@
             </div>
         </section>
         {% if not page.portal_category %}
-        <div class="block block--flush-bottom block--padded-bottom">
-            <p class="ask-search-link h4">
-                <span>{{ _("Don't see what you're looking for?") }}</span>
-                <a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a>
-            </p>
+        <div class="m-notification
+            m-notification--visible
+            m-notification--success">
+            {{ svg_icon('help-round') }}
+            <div class="m-notification__content">
+                <div class="m-notification__message">{{ _('Can't find what you're looking for?') }}</div>
+                <ul class="m-list m-list--links">
+                    <li class="m-list__item">
+                        <a class="a-link a-link--jump" href="{{ _('/search/') }}">
+                            <span class="a-link__text">
+                              {{ _('Search all of consumerfinance.gov') }}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         {% endif %}
     {% endif %}
