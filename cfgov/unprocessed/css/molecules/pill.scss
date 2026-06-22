@@ -2,23 +2,21 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 .m-pill {
+  @include heading-6($has-margin-bottom: false, $has-margin-top: false);
   display: inline-block;
-  // Mobile only.
-  @include respond-to-max($bp-xs-max) {
-    display: block;
-  }
   width: fit-content;
   height: 100%;
   padding: math.div(5px, $base-font-size-px) + rem math.div(7px, $base-font-size-px) + rem;
   margin-right: math.div(5px, $base-font-size-px) + rem;
+  border-radius: $btn-border-radius-size;
+  line-height: 1;
+
   // Mobile only.
   @include respond-to-max($bp-xs-max) {
+    display: block;
     margin-right: 0;
     margin-bottom: math.div(5px, $base-font-size-px) + rem;
   }
-  @include heading-6($has-margin-bottom: false, $has-margin-top: false);
-  border-radius: $btn-border-radius-size;
-  line-height: 1;
 
   &--archived {
     background-color: var(--teal-mid-dark);
