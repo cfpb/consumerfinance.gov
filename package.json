@@ -68,6 +68,9 @@
     "build": "node ./esbuild/build.js",
     "cy": "./scripts/cypress.sh"
   },
+  "resolutions": {
+    "undici": ">=8.5.0"
+  },
   "prettier": {
     "singleQuote": true
   },
