@@ -9,8 +9,8 @@
   window.cfpbIssuers = [
   {%- for issuer in issuers -%}
    {
-    value:"{{issuer.slug}}",
-    label:"{{issuer.name}}"
+    value: {{ issuer.slug | tojson }},
+    label: {{ issuer.name | tojson }}
    }{{ "," if not loop.last else "" }}
   {%- endfor -%}
   ]
