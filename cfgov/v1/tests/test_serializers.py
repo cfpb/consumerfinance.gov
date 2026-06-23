@@ -37,6 +37,7 @@ class FilterablePageSerializerTests(TestCase):
         blog.categories.add(
             CFGOVPageCategory(name="info-for-consumers"),
             CFGOVPageCategory(name="at-the-cfpb"),
+            CFGOVPageCategory(name="invalid-category"),
         )
         blog.tags.add("Payments", "Mortgages")
 
