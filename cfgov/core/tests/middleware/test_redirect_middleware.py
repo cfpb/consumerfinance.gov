@@ -58,8 +58,10 @@ class TestRedirectMiddleware(SimpleTestCase):
     def test_regex_blog_category(self):
         request = RequestFactory().get("/blog/category/mortgages/foo")
         response = self.middleware(request)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response["Location"], "/about-us/blog/")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
+            response["Location"], "/about-us/blog/?filter1_topics=mortgages"
+        )
 
     def test_regex_no_match(self):
         request = RequestFactory().get("/not-a-pattern/")

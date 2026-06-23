@@ -96,11 +96,6 @@ class TestAFewRedirects(SimpleTestCase):
                 "/compliance/consumer-cards-resources/foo/bar",
             ),
             (
-                "/about-us/blog/foo/bar",
-                302,
-                "/about-us/blog/",
-            ),
-            (
                 "/owning-a-home/process/foo/bar",
                 301,
                 "/owning-a-home/foo/bar",
