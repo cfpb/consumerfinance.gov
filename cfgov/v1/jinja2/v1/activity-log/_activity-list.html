@@ -1,4 +1,5 @@
 {% import 'v1/includes/macros/category-slug.html' as category_slug %}
+{% import 'v1/includes/molecules/pill-archived.html' as pill_archived %}
 
 {% macro render(posts) %}
     {% set page_url = pageurl(page) %}
@@ -30,11 +31,18 @@
                     {% endif %}
                 </td>
                 <td class="u-w65pct">
+                    {% if post.in_archive -%}
+                        <div class="o-heading-archived">
+                            {{ pill_archived }}
+                    {%- endif %}
                     <a href="{{ post.url }}">
                         <span class="h4 u-mb0">
                             {{- post.preview_title -}}
                         </span>
                     </a>
+                    {% if post.in_archive -%}
+                        </div>
+                    {%- endif %}
                 </td>
                 <td class="u-w15pct">
                     {% import 'v1/includes/macros/time.html' as time %}

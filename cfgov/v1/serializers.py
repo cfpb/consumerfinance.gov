@@ -28,6 +28,7 @@ class FilterPageSerializer(serializers.Serializer):
     title = serializers.ReadOnlyField()
     url = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
+    in_archive = serializers.ReadOnlyField()
 
     def get_categories(self, page):
         category_mapping = dict(CFGOVPageCategory.name.field.flatchoices)

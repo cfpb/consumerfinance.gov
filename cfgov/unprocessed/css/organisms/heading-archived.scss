@@ -1,0 +1,13 @@
+@use 'sass:math';
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+.o-heading-archived {
+  display: flex;
+  column-gap: math.div(5px, $base-font-size-px) + rem;
+
+  // Mobile only.
+  @include respond-to-max($bp-xs-max) {
+    flex-direction: column;
+    row-gap: math.div(5px, $base-font-size-px) + rem;
+  }
+}
