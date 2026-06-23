@@ -13,9 +13,6 @@ pattern,target_url,status_code
 # DO NOT REMOVE. Redirect to auto-create vanity URLs for Payments to Harmed Consumers
 /payments/(.*),/enforcement/payments-harmed-consumers/payments-by-case/$1,301
 
-# Temporarily redirect all blog posts to the blog landing page
-/(about-us/)?blog/.+,/about-us/blog/,302
-
 # Temporarily redirect all non-English pages to their English equivalent
 /language/.*,/,302
 
