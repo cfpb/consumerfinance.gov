@@ -3,11 +3,10 @@
 
 .o-heading-archived {
   display: flex;
-  column-gap: math.div(5px, $base-font-size-px) + rem;
+  gap: math.div(5px, $base-font-size-px) + rem;
 
   // Mobile only.
   @include respond-to-max($bp-xs-max) {
     flex-direction: column;
-    row-gap: math.div(5px, $base-font-size-px) + rem;
   }
 }
