@@ -36,7 +36,15 @@ class FilterPageSerializer(serializers.Serializer):
         categories = []
         for category in page.categories.all():
             category_slug = category.name
-            category_name = category_mapping[category_slug]
+            category_name = category_mapping.get(category_slug)
+
+            # This can happen if a page was assigned a category that was
+            # subsequently removed from the list in v1.ref.categories. The
+            # obsolete category slug is still associated with the page in the
+            # database, but there's no category name to display. Skip it.
+            if category_name is None:
+                continue
+
             categories.append(
                 {
                     "slug": category_slug,
