@@ -20,13 +20,13 @@
   {%- set url = replace_url(result.url, domain) %}
   <div class="search-result">
     <article>
-      {% if url_in_archive(url) -%}
-      <div class="o-heading-archived">
-        {{ pill_archived }}
-      </div>
-      {%- endif %}
       <a href="{{url}}">
-        <h3 class="h4 u-mb0">{{bold_matches(result.title)}}</h3>
+        <h3 class="h4 u-mb0">
+          {%- if url_in_archive(url) -%}
+            {{  pill_archived  }}
+          {%- endif -%}
+          {{bold_matches(result.title)}}
+        </h3>
         <div class="search-result__url u-mb5">{{url}}</div>
       </a>
       <p>{{bold_matches(result[key])}}</p>
