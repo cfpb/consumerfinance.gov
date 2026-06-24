@@ -7,29 +7,29 @@
     {%- elif char == "\ue001" -%}
       </b>
     {%- else -%}
-      {{char}}
+      {{ char }}
     {%- endif -%}
   {% endfor %}
 {%- endmacro -%}
 
 {%- macro replace_url(url, domain) -%}
-  {{url.replace("https://www.consumerfinance.gov", domain)}}
+  {{ url.replace("https://www.consumerfinance.gov", domain) }}
 {%- endmacro -%}
 
 {%- macro render(result, domain, key="snippet") -%}
   {%- set url = replace_url(result.url, domain) %}
   <div class="search-result">
     <article>
-      <a href="{{url}}">
+      <a href="{{ url }}">
         <h3 class="h4 u-mb0">
           {%- if url_in_archive(url) -%}
-            {{  pill_archived  }}
+            {{ pill_archived }}
           {%- endif -%}
-          {{bold_matches(result.title)}}
+          {{ bold_matches(result.title) }}
         </h3>
-        <div class="search-result__url u-mb5">{{url}}</div>
+        <div class="search-result__url u-mb5">{{ url }}</div>
       </a>
-      <p>{{bold_matches(result[key])}}</p>
+      <p>{{ bold_matches(result[key]) }}</p>
     </article>
   </div>
 {%- endmacro -%}
