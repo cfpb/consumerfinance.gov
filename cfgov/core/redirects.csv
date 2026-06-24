@@ -120,6 +120,16 @@ source_path,target_url,status_code
 /es/desastres-y-emergencias/preparese-antes-de-que-ocurra-un-desastre-o-una-emergencia/,/consumer-tools/disasters-and-emergencies/get-prepared-before-disaster-emergency-strikes/,302
 /es/desastres-y-emergencias/empiece-a-recuperarse-y-reconstruir-su-vida-financiera/,/consumer-tools/disasters-and-emergencies/start-recovering-and-rebuilding-your-financial-life/,302
 
+# Temporarily redirect one-off Spanish pages to their English equivalent
+/es/comprar-casa/,/mortgage/,302
+/es/opciones-de-ahorro-con-el-reembolso-de-sus-taxes/,/consumer-tools/guide-to-filing-your-taxes/,302
+/es/salir-del-aplazamiento-que-hacer-ahora/,/housing/housing-insecurity/help-for-homeowners/exit-your-forbearance-carefully/,302
+/es/ayuda-para-pagar-renta/,/housing/housing-insecurity/help-for-renters/get-help-paying-rent-and-bills/,302
+/es/planee-para-salir-del-aplazamiento/,/housing/housing-insecurity/help-for-homeowners/exit-your-forbearance-carefully/,302
+/es/propietarios-preparandose-para-salir-del-aplazamiento/,/housing/housing-insecurity/help-for-homeowners/exit-your-forbearance-carefully/,302
+/es/propietario-opciones-para-salir-del-aplazamiento/,/housing/housing-insecurity/help-for-homeowners/exit-your-forbearance-carefully/,302
+/es/sepa-mas/,/learnmore/,302
+
 # Permanent redirects that exceed Wagtail's 255-character limit for fields
 /askcfpb/194/i-used-the-title-services-and-lenders-title-insurance-companies-or-owners-title-insurance-company-listed-by-my-lender-on-my-gfe-but-was-charged-more-than-10-percent-more-than-my-gfe-said-i-would-be-now-my-lender-wont-pay-me-back-what-can-i-do.html,/ask-cfpb/can-my-final-mortgage-costs-increase-from-what-was-on-my-loan-estimate-en-172/,301
 /askcfpb/191/my-lender-or-broker-gave-me-a-gfe-for-15-year-loan-but-when-i-got-to-the-closing-the-documents-said-it-was-a-30-year-loan-my-lender-or-broker-said-not-to-worry-i-can-refinance-later-but-thats-not-in-any-of-my-paperwork-and-i-dont-want-to-close-a-loan-whos.html,/ask-cfpb/my-rate-or-the-fees-changed-between-my-loan-estimate-and-my-closing-disclosure-what-do-i-do-en-184/,301
