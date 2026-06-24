@@ -3,6 +3,7 @@ from jinja2.ext import Extension
 
 from v1.templatetags.app_urls import app_page_url, app_url
 from v1.util import ref
+from v1.util.archive import url_in_archive
 from v1.util.util import get_unique_id
 
 from .datetimes import DatetimesExtension
@@ -65,6 +66,7 @@ class V1Extension(Extension):
                 "unique_id_in_context": pass_context(unique_id_in_context),
                 "app_url": app_url,
                 "app_page_url": app_page_url,
+                "url_in_archive": url_in_archive,
             }
         )
 
