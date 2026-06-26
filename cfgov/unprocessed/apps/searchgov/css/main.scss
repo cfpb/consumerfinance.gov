@@ -23,6 +23,10 @@
     color: var(--black);
   }
 
+  .m-pill {
+    margin-right: math.div(5px, $base-font-size-px) + rem;
+  }
+
   &__url {
     margin-top: math.div(4px, $base-font-size-px) + rem;
     color: var(--gray-dark);

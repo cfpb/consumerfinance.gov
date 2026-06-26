@@ -37,6 +37,7 @@ class FilterablePageSerializerTests(TestCase):
         blog.categories.add(
             CFGOVPageCategory(name="info-for-consumers"),
             CFGOVPageCategory(name="at-the-cfpb"),
+            CFGOVPageCategory(name="invalid-category"),
         )
         blog.tags.add("Payments", "Mortgages")
 
@@ -61,6 +62,7 @@ class FilterablePageSerializerTests(TestCase):
                 "full_url": "http://localhost/blog/",
                 "image_alt": "",
                 "image_url": None,
+                "in_archive": False,
                 "is_blog": True,
                 "is_event": False,
                 "is_report": False,
@@ -105,6 +107,7 @@ class FilterablePageSerializerTests(TestCase):
                 "full_url": "http://localhost/event/",
                 "image_alt": "",
                 "image_url": None,
+                "in_archive": False,
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,
@@ -142,6 +145,7 @@ class FilterablePageSerializerTests(TestCase):
                     "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
                     "-77.039628,38.898238,12/276x155?access_token=None"
                 ),
+                "in_archive": False,
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,
@@ -181,6 +185,7 @@ class FilterablePageSerializerTests(TestCase):
                 "full_url": "http://localhost/event/",
                 "image_alt": "Venue image alt text",
                 "image_url": "/f/images/event-serialization.width-540.png",
+                "in_archive": False,
                 "is_blog": False,
                 "is_event": True,
                 "is_report": False,

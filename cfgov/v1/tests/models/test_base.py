@@ -623,7 +623,7 @@ class TestCFGOVPageTranslations(TestCase):
         )
 
 
-@override_settings(ARCHIVE_BASE_PATH="test-archive")
+@override_settings(ARCHIVE_BASE_PATH="/test-archive/")
 class TestCFGOVPageArchive(TestCase):
     def test_in_archive(self):
         self.assertFalse(CFGOVPage(url_path="/home/").in_archive)
