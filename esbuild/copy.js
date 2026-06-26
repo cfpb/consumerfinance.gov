@@ -48,8 +48,8 @@ async function copy(baseConfig) {
 
   copyFile(
     `${unprocessed}/unregister.js`,
-    `${baseConfig.outdir}/regulations3k-service-worker.js`
-  )
+    `${baseConfig.outdir}/regulations3k-service-worker.js`,
+  );
 }
 
 export { copy };

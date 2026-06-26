@@ -1,18 +1,19 @@
 globalThis.addEventListener('install', () => {
   // Force the waiting service worker to become the active service worker immediately
-  globalThis.skipWaiting(); 
+  globalThis.skipWaiting();
 });
 
 globalThis.addEventListener('activate', () => {
   // Unregister itself from the browser
-  globalThis.registration.unregister()
+  globalThis.registration
+    .unregister()
     .then(() => {
       // Clear all caches associated with this domain
       return caches.keys();
     })
     .then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => caches.delete(cacheName))
+        cacheNames.map((cacheName) => caches.delete(cacheName)),
       );
     })
     .then(() => {

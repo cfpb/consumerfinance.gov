@@ -11,14 +11,22 @@ const loadPaths = [
   './node_modules/',
 ];
 
-// Convert scss to css…
+/**
+ * Convert SCSS to CSS.
+ * @param {string} filePath - The absolute file system path.
+ */
 async function compileSass(filePath) {
   const result = sass.compile(filePath, { loadPaths });
   return result.css;
 }
 
-// … Process css.
+// … Process CSS.
 const postCssProcessor = postcss([autoprefixer, cssnano]);
+
+/**
+ * @param {string} source - Raw CSS, either from SCSS or from disk.
+ * @param {string} from - The absolute file system path.
+ */
 async function processCss(source, from) {
   return postCssProcessor.process(source, { from });
 }
