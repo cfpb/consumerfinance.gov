@@ -390,6 +390,13 @@ source_path,target_url,status_code
 /es/desastres-y-emergencias/preparese-antes-de-que-ocurra-un-desastre-o-una-emergencia/,/consumer-tools/disasters-and-emergencies/get-prepared-before-disaster-emergency-strikes/,302
 /es/desastres-y-emergencias/empiece-a-recuperarse-y-reconstruir-su-vida-financiera/,/consumer-tools/disasters-and-emergencies/start-recovering-and-rebuilding-your-financial-life/,302
 
+# Temporarily redirect Spanish tools to their English equivalent
+/es/herramientas-del-consumidor/bienestar-financiero/,/consumer-tools/financial-well-being/,302
+/es/herramientas-del-consumidor/bienestar-financiero/mas-sobre/,/consumer-tools/financial-well-being/about/,302
+/es/herramientas-del-consumidor/jubilacion/,/consumer-tools/retirement/,302
+/es/herramientas-del-consumidor/jubilacion/antes-de-solicitar/,/consumer-tools/retirement/before-you-claim/,302
+/es/herramientas-del-consumidor/jubilacion/antes-de-solicitar/mas-sobre/,/consumer-tools/retirement/before-you-claim/,302
+
 # Temporarily redirect one-off Spanish pages to their English equivalent
 /es/comprar-casa/,/mortgage/,302
 /es/opciones-de-ahorro-con-el-reembolso-de-sus-taxes/,/consumer-tools/guide-to-filing-your-taxes/,302
