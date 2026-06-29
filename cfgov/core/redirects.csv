@@ -287,6 +287,13 @@ source_path,target_url,status_code
 /consumer-tools/sending-money/ar/,/consumer-tools/sending-money/,302
 /consumer-tools/sending-money/ht/,/consumer-tools/sending-money/,302
 
+# Temporarily redirect Spanish homepage and about us pages to their English equivalent
+/es/,/,302
+/es/quienes-somos/,/about-us/,302
+/es/quienes-somos/la-oficina/,/about-us/the-bureau/,302
+/es/quienes-somos/prestamos-pequenos-negocios/,/about-us/small-business-lending/,302
+/es/enviar-una-queja/,/complaint/,302
+
 # Temporarily redirect Spanish Buying a House pages to their English equivalent
 /es/comprar-una-casa/,/owning-a-home/,302
 /es/comprar-una-casa/prepararse/,/owning-a-home/prepare/,302
