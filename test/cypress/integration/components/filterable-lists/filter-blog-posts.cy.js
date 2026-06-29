@@ -7,7 +7,10 @@ import { FilterableListControl } from './filterable-list-control-helpers.cy.js';
 const blog = new FilterableListControl();
 const filter = new Filter();
 
-describe('Filter Blog Posts based on content', () => {
+/* TODO: All blog posts have been archived, so none of these tests will work.
+   We can refactor this to use the newsroom instead, which does still have posts.
+   For now, we'll just skip these tests so rest of the suite can still run. */
+xdescribe('Filter Blog Posts based on content', () => {
   beforeEach(() => {
     cy.visit('/about-us/blog/');
   });

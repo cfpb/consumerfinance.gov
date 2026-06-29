@@ -2,7 +2,10 @@ import { Multiselect } from './multiselect-helpers.cy.js';
 
 let multiselect;
 
-describe('I should be able to select using the multiselect', () => {
+/* TODO: All blog posts have been archived, so none of these tests will work.
+   We can refactor this to use the newsroom instead, which does still have posts.
+   For now, we'll just skip these tests so rest of the suite can still run. */
+xdescribe('I should be able to select using the multiselect', () => {
   beforeEach(() => {
     cy.visit('/about-us/blog/');
     multiselect = new Multiselect('Topic');

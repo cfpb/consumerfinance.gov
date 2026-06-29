@@ -53,10 +53,6 @@ const directories = [
     'consumer-tools/find-a-housing-counselor',
   ],
   [
-    ['cfgov/unprocessed/apps/ask-cfpb', 'cfgov/ask_cfpb'],
-    'consumer-tools/obtener-respuestas',
-  ],
-  [
     [
       'cfgov/unprocessed/apps/owning-a-home',
       'cfgov/jinja2/owning-a-home',
