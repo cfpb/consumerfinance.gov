@@ -13,10 +13,13 @@ from retirement_api.views import (
 )
 
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
+# TODO: URLs will no longer resolve so reverse is not needed.
+# We'll keep the test commented out for now so it will still
+# be here when we remove the full app.
+# try:
+#     from django.urls import reverse
+# except ImportError:
+#     from django.core.urlresolvers import reverse
 
 
 today = datetime.datetime.now().date()
@@ -47,10 +50,12 @@ class ViewTests(TestCase):
     req_invalid.GET["income"] = "x"
     return_keys = ["data", "error"]
 
-    def test_base_view(self):
-        url = reverse("retirement_api_es:claiming")
-        response = self.client.get(url)
-        self.assertTrue(response.status_code == 200)
+    # TODO: This URL will no longer resolve. We'll keep the test commented
+    # out for now so it will still be here when we remove the full app.
+    # def test_base_view(self):
+    #     url = reverse("retirement_api_en:claiming")
+    #     response = self.client.get(url)
+    #     self.assertTrue(response.status_code == 200)
 
     def test_param_check(self):
         self.assertEqual(param_check(self.req_good, "dob"), "1955-05-05")
@@ -123,7 +128,9 @@ class ViewTests(TestCase):
         response = estimator(request, dob="1955-05-05")
         self.assertTrue(response.status_code == 400)
 
-    def test_about_pages(self):
-        url = reverse("retirement_api_es:about")
-        response = self.client.get(url)
-        self.assertTrue(response.status_code == 200)
+    # TODO: This URL will no longer resolve. We'll keep the test commented
+    # out for now so it will still be here when we remove the full app.
+    # def test_about_pages(self):
+    #     url = reverse("retirement_api_en:about")
+    #     response = self.client.get(url)
+    #     self.assertTrue(response.status_code == 200)
