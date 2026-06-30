@@ -61,12 +61,9 @@ class SublandingFilterablePage(AbstractFilterablePage, CFGOVPage):
         "searchable using standard search filters module."
     )
 
-    # TODO: Remove "LegacyBlogPage", "NewsroomPage" after archived pages move
     subpage_types = [
         "DocumentDetailPage",
         "BlogPage",
-        "LegacyBlogPage",
-        "NewsroomPage",
     ]
 
 
