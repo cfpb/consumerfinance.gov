@@ -6,7 +6,8 @@
   display: inline-block;
   width: fit-content;
   height: 100%;
-  padding: math.div(5px, $base-font-size-px) + rem math.div(7px, $base-font-size-px) + rem;
+  padding: math.div(5px, $base-font-size-px) + rem
+    math.div(7px, $base-font-size-px) + rem;
   border-radius: $btn-border-radius-size;
   line-height: 1;
 
