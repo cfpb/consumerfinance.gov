@@ -68,9 +68,11 @@ class CcdbSearch extends LitElement {
   render() {
     const mountId = this.mountId || DEFAULT_MOUNT_ID;
     return html`
-      ${this.cssHref
-        ? html`<link rel="stylesheet" href=${this.cssHref} />`
-        : null}
+      ${
+        this.cssHref
+          ? html`<link rel="stylesheet" href=${this.cssHref} />`
+          : null
+      }
       <div class="ccdb-search">
         <div id=${mountId}></div>
       </div>
