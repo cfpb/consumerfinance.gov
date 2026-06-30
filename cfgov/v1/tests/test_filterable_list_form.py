@@ -173,21 +173,55 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
     def test_first_page_date(self):
         form = self.setUpFilterableForm()
         self.assertEqual(form.first_page_date(), self.blog1.date_published)
-        form.all_filterable_results = []
+        form.aggregations.hits.total.value = []
         self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
     def test_get_topics_sorts_alphabetically(self):
         form = self.setUpFilterableForm()
 
         self.assertEqual(
-            list(form.get_filterable_topics([self.blog1.pk])),
+            list(form.get_filterable_topics(["foo"])),
             [("foo", "foo")],
         )
 
         self.assertEqual(
-            list(form.get_filterable_topics([self.blog1.pk, self.blog2.pk])),
+            list(form.get_filterable_topics(["foo", "blah"])),
             [("blah", "blah"), ("foo", "foo")],
         )
+
+    def test_get_filterable_topics_makes_single_db_query(self):
+        form = self.setUpFilterableForm()
+        with self.assertNumQueries(1):
+            list(form.get_filterable_topics(["foo", "blah"]))
+
+    def test_topics_choices_built_from_aggregation(self):
+        form = self.setUpFilterableForm()
+        self.assertEqual(
+            sorted(form.fields["topics"].choices),
+            [("bar", "bar"), ("blah", "blah"), ("foo", "foo")],
+        )
+
+    def test_form_construction_issues_single_opensearch_request(self):
+        # Constructing the form should make exactly one OpenSearch request
+        # to fetch aggregations needed to build the filter options.
+        site_root = Site.objects.get(is_default_site=True).root_page
+        search = FilterablePagesDocumentSearch(site_root)
+        with self.assertNumElasticsearchRequests(1):
+            FilterableListForm(filterable_search=search)
+
+    def test_has_unfiltered_results(self):
+        form = self.setUpFilterableForm()
+        self.assertTrue(form.has_unfiltered_results())
+
+    def test_get_page_set_pagination_request_count(self):
+        # Fetching a page of results takes two search requests: one count (for
+        # the paginator) and one source-excluded search that returns only the
+        # document IDs needed to build the database queryset.
+        form = self.setUpFilterableForm(data={"categories": []})
+        page_set = form.get_page_set()
+        with self.assertNumElasticsearchRequests(2):
+            page_set.count()
+            page_set[0:25].to_queryset()
 
 
 @override_settings(OPENSEARCH_DSL_AUTOSYNC=True)

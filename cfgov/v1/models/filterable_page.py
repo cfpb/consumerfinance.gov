@@ -136,20 +136,15 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
 
         return search
 
-    def get_cache_key_prefix(self, request=None):
-        return self.get_url(request=request)
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         filterable_search = self.get_filterable_search()
-        has_unfiltered_results = filterable_search.count() > 0
 
         form = self.get_form_class()(
             form_data,
             filterable_search=filterable_search,
-            cache_key_prefix=self.get_cache_key_prefix(request),
         )
         form_valid = form.is_valid()
 
@@ -157,7 +152,7 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
             {
                 "form": form,
                 "form_valid": form_valid,
-                "has_unfiltered_results": has_unfiltered_results,
+                "has_unfiltered_results": form.has_unfiltered_results(),
                 "has_active_filters": has_active_filters,
             }
         )

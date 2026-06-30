@@ -2,6 +2,7 @@ import os
 import re
 import socket
 import sys
+from contextlib import contextmanager
 from unittest import SkipTest
 from unittest.mock import patch
 
@@ -18,6 +19,7 @@ from wagtail.signals import (
 
 from django_opensearch_dsl.signals import RealTimeSignalProcessor
 from opensearchpy import analyzer, token_filter, tokenizer
+from opensearchpy.transport import Transport
 
 from search.models import Synonym
 
@@ -92,6 +94,7 @@ class ElasticsearchTestsMixin:
     - Skips all tests if running locally without Elasticsearch.
     - Makes Elasticsearch updates blocking.
     - Provides a helper method to simplify the search_index command.
+    - Provides a helper method to count Elasticsearch requests in tests.
     """
 
     @classmethod
@@ -159,6 +162,36 @@ class ElasticsearchTestsMixin:
             force=True,
             stdout=stdout,
         )
+
+    class RequestCounter:
+        def __init__(self):
+            self.count = 0
+
+    @contextmanager
+    def assertNumElasticsearchRequests(self, expected):
+        """Count Elasticsearch HTTP requests made within the context.
+
+        Use this in tests to count how many ES requests are made.
+
+        class MyTests(ElasticsearchTestsMixin):
+            def test_something(self):
+                with self.assertNumElasticsearchRequests(2):
+                    make_requests_to_elasticsearch()
+        """
+
+        counter = self.RequestCounter()
+        original_perform_request = Transport.perform_request
+
+        def counting_perform_request(self, *args, **kwargs):
+            counter.count += 1
+            return original_perform_request(self, *args, **kwargs)
+
+        with patch.object(
+            Transport, "perform_request", counting_perform_request
+        ):
+            yield
+
+        self.assertEqual(counter.count, expected)
 
 
 class WagtailSignalProcessor(RealTimeSignalProcessor):
