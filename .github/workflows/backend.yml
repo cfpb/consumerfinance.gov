@@ -13,6 +13,7 @@ on:
   push:
     branches:
       - main
+      - optimize/filterable-list-search
 
 jobs:
   backend:

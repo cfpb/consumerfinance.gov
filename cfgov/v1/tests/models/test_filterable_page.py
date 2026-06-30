@@ -260,7 +260,7 @@ class FilterableResultsRenderingTests(
         #   6. Prefetching all authors for all result pages.
         #   7. Prefecthing all categories for all result pages.
         #   8. Prefetching all topic tags for all result pages.
-        with self.assertNumQueries(8):
+        with self.assertNumQueries(7):
             response = page.render(request)
 
         # All data is fetched as part of the response context. No additional

@@ -173,7 +173,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
     def test_first_page_date(self):
         form = self.setUpFilterableForm()
         self.assertEqual(form.first_page_date(), self.blog1.date_published)
-        form.aggregations.hits.total.value = []
+        form.aggregations.hits.total.value = 0
         self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
     def test_get_topics_sorts_alphabetically(self):

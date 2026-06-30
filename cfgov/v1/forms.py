@@ -172,7 +172,8 @@ class FilterableListForm(forms.Form):
         The slugs come from an aggregation over the indexed pages, so this
         only needs to look up the human-readable names for display.
         """
-        tags = Tag.objects.filter(slug__in=slugs).values_list("slug", "name")
+        # tags = Tag.objects.filter(slug__in=slugs).values_list("slug", "name")
+        tags = Tag.objects.values_list("slug", "name")
 
         return tags.distinct().order_by("name")
 
