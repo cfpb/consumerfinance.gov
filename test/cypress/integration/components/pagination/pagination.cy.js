@@ -3,7 +3,7 @@ import { Pagination } from './pagination-helpers.cy.js';
 const page = new Pagination();
 
 /* TODO: All blog posts have been archived, so none of these tests will work.
-   We can refactor this to use the newsroom instead, which does still have posts.
+   We can refactor to use another section that does still have posts instead.
    For now, we'll just skip these tests so rest of the suite can still run. */
 xdescribe('Pagination molecule to navigate on the filterable pages', () => {
   it('should be able to navigate to the next page', () => {
