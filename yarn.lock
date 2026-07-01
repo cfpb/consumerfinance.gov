@@ -423,10 +423,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/browserslist-config@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@cfpb/browserslist-config@npm:0.0.6"
-  checksum: 10c0/ce3460a1c2b3e66c10bac70102f239e746324f781a5ed42372a82295393b8087ed9ad1d0960fbb5738b64231aba87005090634102a137b96f54365397cbc7b12
+"@cfpb/browserslist-config@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@cfpb/browserslist-config@npm:0.0.7"
+  checksum: 10c0/7fb74ea0a5530766c0489dff2f0e2ee7932d224aa3a38914736c95f00c60c0030414b8c651a28eedb687f48397245848f3a981139928828c0369017bc1079bcf
   languageName: node
   linkType: hard
 
@@ -3222,7 +3222,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "consumerfinance.gov@workspace:."
   dependencies:
-    "@cfpb/browserslist-config": "npm:0.0.6"
+    "@cfpb/browserslist-config": "npm:0.0.7"
     "@cfpb/cfpb-analytics": "npm:0.3.2"
     "@cfpb/cfpb-design-system": "npm:5.6.2"
     "@csstools/postcss-sass": "npm:5.1.1"
