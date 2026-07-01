@@ -9,6 +9,7 @@ register = template.Library()
 
 
 @register.simple_tag()
-def svg_icon(name: str) -> SafeString:
+def svg_icon(name: str, spin: bool = False) -> SafeString:
+    spin_attr = " spin" if spin else ""
     """Return cfpb-icon web component."""
-    return mark_safe(f'<cfpb-icon name="{name}"></cfpb-icon>')
+    return mark_safe(f'<cfpb-icon name="{name}"{spin_attr}></cfpb-icon>')
