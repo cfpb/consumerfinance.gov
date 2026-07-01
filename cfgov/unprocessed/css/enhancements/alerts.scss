@@ -1,0 +1,22 @@
+@use '@cfpb/cfpb-design-system/src/abstracts' as *;
+
+// TODO: Remove these styles when form level alerts are moved to <cfpb-alert>.
+.m-notification--error cfpb-icon {
+  color: var(--red);
+}
+
+.m-notification--warning cfpb-icon {
+  color: var(--gold);
+}
+
+.m-notification--success cfpb-icon {
+  color: var(--green);
+}
+
+.m-notification cfpb-icon {
+  // Tablet and above.
+  @include respond-to-min($bp-sm-min) {
+    // Increase the icon size.
+    font-size: 1.125rem; // 18px
+  }
+}
