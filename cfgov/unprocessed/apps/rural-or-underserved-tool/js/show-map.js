@@ -9,9 +9,6 @@ import {
   getNextEls,
 } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
-import MINUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/minus-round.svg';
-
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 const mapIdString = 'mapbox://styles/mapbox/streets-v11';
@@ -82,7 +79,10 @@ resultsMapDom.addEventListener('click', function (evt) {
       removeClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(toggleMapLink, `Hide map ${MINUS_ROUND_ICON}`);
+      changeElHTML(
+        toggleMapLink,
+        `Hide map <cfpb-icon name="minus-round"></cfpb-icon>`,
+      );
 
       // only show initiate the map the first time
       if (isMapShown === false) {
@@ -115,7 +115,10 @@ resultsMapDom.addEventListener('click', function (evt) {
       addClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(toggleMapLink, `Show map ${PLUS_ROUND_ICON}`);
+      changeElHTML(
+        toggleMapLink,
+        `Show map <cfpb-icon="plus-round"></cfpb-icon>`,
+      );
     }
   }
 });

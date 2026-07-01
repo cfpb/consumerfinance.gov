@@ -132,13 +132,13 @@ class TestParseLinks(TestCase):
         """Non gov links get external link icon."""
         link = '<body><a href="https://google.com">external link</a></body>'
         output = parse_links(link)
-        self.assertIn("cf-icon-svg", output)
+        self.assertIn("cfpb-icon", output)
 
     def test_gov_link(self):
         """External gov links get external link icon."""
         link = '<body><a href="https://www.fdic.gov/bar">gov link</a></body>'
         output = parse_links(link)
-        self.assertIn("cf-icon-svg", output)
+        self.assertIn("cfpb-icon", output)
 
     def test_internal_link(self):
         """Internal links do not get external link icon."""
@@ -148,19 +148,19 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(link)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_files_get_download_icon(self):
         file_types = ["pdf", "doc", "docx", "xls", "xlsx", "csv", "zip"]
         for file_type in file_types:
             link = f'<body><a href="/something.{file_type}">link</a></body>'
             output = parse_links(link)
-            self.assertIn("cf-icon-svg", output)
+            self.assertIn("cfpb-icon", output)
 
     def test_different_case_pdf_link_gets_download_icon(self):
         link = '<body><a href="/something.PDF">link</a></body>'
         output = parse_links(link)
-        self.assertIn("cf-icon-svg", output)
+        self.assertIn("cfpb-icon", output)
 
     def test_rich_text_links_get_expanded(self):
         page = CFGOVPage(title="foo bar", slug="foo-bar")
@@ -184,7 +184,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_external_link_outside_body_with_attributes(self):
         s = """
@@ -193,7 +193,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_external_link_with_attribute(self):
         s = """
@@ -202,12 +202,12 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertIn("cf-icon-svg", output)
+        self.assertIn("cfpb-icon", output)
 
     def test_external_link_with_img(self):
         s = '<body><a href="https://somewhere"><img src="some.png"></a></body>'
         output = parse_links(s)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_external_link_with_background_img(self):
         s = """
@@ -218,12 +218,12 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_external_link_with_header(self):
         s = '<body><a href="https://somewhere"><h3>Header</h3></a></body>'
         output = parse_links(s)
-        self.assertNotIn("cf-icon-svg", output)
+        self.assertNotIn("cfpb-icon", output)
 
     def test_multiline_external_gov_link(self):
         s = """
@@ -236,7 +236,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertIn("cf-icon-svg", output)
+        self.assertIn("cfpb-icon", output)
 
     def test_multiple_links(self):
         s = """
@@ -252,7 +252,7 @@ class TestParseLinks(TestCase):
     def check_after_parse_links_has_this_many_svgs(self, count, s):
         output = parse_links(s)
         soup = BeautifulSoup(output, "html.parser")
-        self.assertEqual(len(soup.find_all("svg")), count)
+        self.assertEqual(len(soup.find_all("cfpb-icon")), count)
 
     def test_link_ending_with_svg_doesnt_get_another_svg(self):
         self.check_after_parse_links_has_this_many_svgs(
@@ -260,7 +260,7 @@ class TestParseLinks(TestCase):
             "<body>"
             '<a href="https://external.gov">'
             "<span>Text before icon</span>"
-            "<svg>something</svg>"
+            '<cfpb-icon name="external-link"></cfpb-icon>'
             "</a>"
             "</body>",
         )
@@ -271,7 +271,7 @@ class TestParseLinks(TestCase):
             "<body>"
             '<a href="https://external.gov">'
             "<span>Text before icon</span> "
-            "<svg>something</svg>   \n\t"
+            '<cfpb-icon name="external-link"></cfpb-icon>   \n\t'
             "</a>"
             "</body>",
         )
@@ -281,7 +281,8 @@ class TestParseLinks(TestCase):
             2,
             "<body>"
             '<a href="https://external.gov">'
-            "<span><svg>something</svg> Text after icon</span>"
+            '<span><cfpb-icon name="external-link"></cfpb-icon>'
+            " Text after icon</span>"
             "</a>"
             "</body>",
         )
@@ -291,7 +292,7 @@ class TestParseLinks(TestCase):
             2,
             "<body>"
             '<a href="https://external.gov">'
-            "<svg>something</svg>"
+            '<cfpb-icon name="external-link"></cfpb-icon>'
             "<span>Text after icon</span>"
             "</a>"
             "</body>",

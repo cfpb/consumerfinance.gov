@@ -227,10 +227,11 @@ def add_link_markup(tag, request_path):
         # Sets the icon to indicate you're downloading a file
         icon = "download"
 
-    # If the tag already ends in an SVG, we never want to append an icon.
-    # If it has one or more SVGs but other content comes after them, we still
-    # want to add one.
-    svgs = tag.find_all("svg")
+    # If the tag already ends in a <cfpb-icon>,
+    # we never want to append an icon.
+    # If it has one or more <cfpb-icon> elements,
+    # but other content comes after them, we still want to add one.
+    svgs = tag.find_all("cfpb-icon")
     if svgs:
         last_svg = svgs[-1]
         if not any(

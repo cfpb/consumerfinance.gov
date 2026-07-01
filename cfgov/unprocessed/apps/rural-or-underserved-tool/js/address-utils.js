@@ -1,7 +1,5 @@
 import { addEl, removeClass } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
-
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.
  * @param {string} address - An address.
@@ -104,7 +102,7 @@ function render(result) {
          data-lat="${result.x}"
          data-lon="${result.y}"
          data-id="loc-${result.id}">
-          Show map ${PLUS_ROUND_ICON}`;
+          Show map <cfpb-icon name="plus-round"></cfpb-icon>`;
   }
   rowHTML += '</td></tr>';
   // add the map if needed

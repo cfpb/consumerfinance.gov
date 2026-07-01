@@ -13,13 +13,13 @@ $print-gap: 0.3125in;
   display: flex;
   gap: math.div(5px, $base-font-size-px) + rem;
 
-  & > .cf-icon-svg {
+  & > cfpb-icon {
     flex: none;
-    fill: var(--gray);
+    color: var(--gray);
   }
 
   // Only adding left padding if an icon is present.
-  .cf-icon-svg + &__link {
+  cfpb-icon + &__link {
     flex-grow: 1;
   }
 
