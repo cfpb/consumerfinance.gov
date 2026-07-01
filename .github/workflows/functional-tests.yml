@@ -36,19 +36,19 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       with:
         fetch-depth: 2
 
     - run: corepack enable
     - name: Set up Node
-      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
           node-version: '26.x'
           cache: yarn
 
     - name: Set up Python
-      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
       with:
         python-version: 3.13
 
@@ -73,7 +73,7 @@ jobs:
 
     - name: Cache Cypress binary
       id: cypress-cache
-      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ~/.cache/Cypress
         key: cypress-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
@@ -89,7 +89,7 @@ jobs:
       run: npx cypress verify
 
     - name: Run Cypress
-      uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8 # v7
+      uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7.4.1
       with:
         install: false
         build: yarn build
@@ -100,7 +100,7 @@ jobs:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           CYPRESS_ENVIRONMENT: github
     - name: Store any Cypress failure screenshots
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       if: failure()
       with:
         name: cypress_failure_screenshots
