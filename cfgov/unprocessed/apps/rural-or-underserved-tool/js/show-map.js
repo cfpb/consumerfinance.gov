@@ -54,10 +54,12 @@ function initializeMap() {
 const resultsMapDom = document.querySelector('#results');
 resultsMapDom.addEventListener('click', function (evt) {
   const target = evt.target;
-  let toggleMapLink = target;
+  const linkText = target;
+  let toggleMapLink = target.parentNode;
   if (hasClass(target.parentNode, 'js-load-map')) {
     toggleMapLink = target.parentNode;
   }
+  const icon = toggleMapLink.querySelector('cfpb-icon');
 
   if (hasClass(toggleMapLink, 'js-load-map')) {
     evt.preventDefault();
@@ -79,10 +81,8 @@ resultsMapDom.addEventListener('click', function (evt) {
       removeClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(
-        toggleMapLink,
-        `Hide map <cfpb-icon name="minus-round"></cfpb-icon>`,
-      );
+      changeElHTML(linkText, `Hide map`);
+      icon.setAttribute('name', 'minus-round');
 
       // only show initiate the map the first time
       if (isMapShown === false) {
@@ -115,10 +115,8 @@ resultsMapDom.addEventListener('click', function (evt) {
       addClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(
-        toggleMapLink,
-        `Show map <cfpb-icon="plus-round"></cfpb-icon>`,
-      );
+      changeElHTML(linkText, `Show map`);
+      icon.setAttribute('name', 'plus-round');
     }
   }
 });

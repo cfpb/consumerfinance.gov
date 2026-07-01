@@ -97,12 +97,12 @@ function render(result) {
   if (rural !== '-') {
     rowHTML = `${rowHTML}
       <a href="#"
-         class="no-decoration hide-print js-load-map right"
+         class="a-link no-decoration hide-print js-load-map right"
          data-map="false"
          data-lat="${result.x}"
          data-lon="${result.y}"
          data-id="loc-${result.id}">
-          Show map <cfpb-icon name="plus-round"></cfpb-icon>`;
+          <span class="a-link__text">Show map</span> <cfpb-icon name="plus-round"></cfpb-icon>`;
   }
   rowHTML += '</td></tr>';
   // add the map if needed
