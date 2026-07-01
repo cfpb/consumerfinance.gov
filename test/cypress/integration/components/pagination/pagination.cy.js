@@ -1,30 +1,27 @@
 import { Pagination } from './pagination-helpers.cy.js';
 
-const page = new Pagination();
+const pagination = new Pagination();
 
-/* TODO: All blog posts have been archived, so none of these tests will work.
-   We can refactor this to use the newsroom instead, which does still have posts.
-   For now, we'll just skip these tests so rest of the suite can still run. */
-xdescribe('Pagination molecule to navigate on the filterable pages', () => {
+describe('Pagination molecule to navigate on the filterable pages', () => {
   it('should be able to navigate to the next page', () => {
-    cy.visit('/about-us/blog/');
+    cy.visit('/about-us/newsroom/');
     // When I click on the "next" button
-    page.clickButton('next');
+    pagination.clickButton('next');
     // Then the page url should contain "page=2"
     cy.url().should('include', 'page=2');
   });
   it('should be able to navigate to the previous page', () => {
-    cy.visit('/about-us/blog/?page=2');
-    page.clickButton('prev');
+    cy.visit('/about-us/newsroom/?page=2');
+    pagination.clickButton('prev');
     // Then the page url should contain "page=1"
     cy.url().should('include', 'page=1');
   });
   it('should be able to navigate to a specific page', () => {
-    cy.visit('/about-us/blog/');
+    cy.visit('/about-us/newsroom/');
     // When I enter "3" in the page input field
-    page.enter('3');
+    pagination.enter('3');
     // And I click on the "submit" button
-    page.clickButton('submit');
+    pagination.clickButton('submit');
     // Then the page url should contain "page=3"
     cy.url().should('include', 'page=3');
   });

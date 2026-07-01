@@ -3,9 +3,9 @@ export class Pagination {
     return cy.get(`.m-pagination__btn-${name}`).click({ force: true });
   }
 
-  enter(name) {
+  enter(pageNum) {
     cy.get('#m-pagination__current-page-0').clear({ force: true });
-    cy.get('#m-pagination__current-page-0').type(name);
+    cy.get('#m-pagination__current-page-0').type(pageNum);
     cy.get('.m-pagination').within(() => {
       cy.get('.m-pagination__form').submit();
     });
