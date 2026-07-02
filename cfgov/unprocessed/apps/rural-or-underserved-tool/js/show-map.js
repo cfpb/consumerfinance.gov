@@ -54,12 +54,26 @@ function initializeMap() {
 const resultsMapDom = document.querySelector('#results');
 resultsMapDom.addEventListener('click', function (evt) {
   const target = evt.target;
-  const linkText = target;
-  let toggleMapLink = target.parentNode;
-  if (hasClass(target.parentNode, 'js-load-map')) {
+  let toggleMapLink;
+  let linkText;
+  let icon;
+
+  if (target.tagName === 'CFPB-ICON') {
+    // Icon was clicked.
     toggleMapLink = target.parentNode;
+    linkText = toggleMapLink.querySelector('.a-link__text');
+    icon = target;
+  } else if (hasClass(target, 'js-load-map')) {
+    // Gap between icon and text was clicked.
+    toggleMapLink = target;
+    linkText = toggleMapLink.querySelector('.a-link__text');
+    icon = toggleMapLink.querySelector('cfpb-icon');
+  } else if (hasClass(target, 'a-link__text')) {
+    // Link text was clicked.
+    toggleMapLink = target.parentNode;
+    linkText = target;
+    icon = toggleMapLink.querySelector('cfpb-icon');
   }
-  const icon = toggleMapLink.querySelector('cfpb-icon');
 
   if (hasClass(toggleMapLink, 'js-load-map')) {
     evt.preventDefault();
