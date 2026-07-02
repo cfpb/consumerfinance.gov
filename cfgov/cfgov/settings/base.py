@@ -339,6 +339,7 @@ OPENSEARCH_DSL = {
         ),
         "use_ssl": True,
         "verify_certs": not os.getenv("OPENSEARCH_DSL_SKIP_CERT_VERIFICATION"),
+        "pool_maxsize": int(os.getenv("ES_POOL_MAXSIZE", "1")),
     }
 }
 
