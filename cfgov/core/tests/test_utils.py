@@ -215,7 +215,7 @@ class LinkUtilsTests(SimpleTestCase):
         url = "https://example.com"
         tag = (
             f'<a class="a-link" href="{url}">'
-            "<svg></svg>"
+            "<cfpb-icon></cfpb-icon>"
             '<span class="a-link__text">foo</span>'
             "</a>"
         )
@@ -224,7 +224,7 @@ class LinkUtilsTests(SimpleTestCase):
         expected_html = (
             '<a class="a-link" '
             f'href="{url}">'
-            "<svg></svg>"
+            "<cfpb-icon></cfpb-icon>"
             '<span class="a-link__text">foo</span> '
             f"{self.external_link_icon}"
             "</a>"

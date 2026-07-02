@@ -9,9 +9,6 @@ import {
   getNextEls,
 } from './dom-tools.js';
 
-import PLUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/plus-round.svg';
-import MINUS_ROUND_ICON from '@cfpb/cfpb-design-system/icons/minus-round.svg';
-
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 const mapIdString = 'mapbox://styles/mapbox/streets-v11';
@@ -57,9 +54,25 @@ function initializeMap() {
 const resultsMapDom = document.querySelector('#results');
 resultsMapDom.addEventListener('click', function (evt) {
   const target = evt.target;
-  let toggleMapLink = target;
-  if (hasClass(target.parentNode, 'js-load-map')) {
+  let toggleMapLink;
+  let linkText;
+  let icon;
+
+  if (target.tagName === 'CFPB-ICON') {
+    // Icon was clicked.
     toggleMapLink = target.parentNode;
+    linkText = toggleMapLink.querySelector('.a-link__text');
+    icon = target;
+  } else if (hasClass(target, 'js-load-map')) {
+    // Gap between icon and text was clicked.
+    toggleMapLink = target;
+    linkText = toggleMapLink.querySelector('.a-link__text');
+    icon = toggleMapLink.querySelector('cfpb-icon');
+  } else if (hasClass(target, 'a-link__text')) {
+    // Link text was clicked.
+    toggleMapLink = target.parentNode;
+    linkText = target;
+    icon = toggleMapLink.querySelector('cfpb-icon');
   }
 
   if (hasClass(toggleMapLink, 'js-load-map')) {
@@ -82,7 +95,8 @@ resultsMapDom.addEventListener('click', function (evt) {
       removeClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(toggleMapLink, `Hide map ${MINUS_ROUND_ICON}`);
+      changeElHTML(linkText, `Hide map`);
+      icon.setAttribute('name', 'minus-round');
 
       // only show initiate the map the first time
       if (isMapShown === false) {
@@ -115,7 +129,8 @@ resultsMapDom.addEventListener('click', function (evt) {
       addClass(mapRow, 'u-hidden');
 
       // change text
-      changeElHTML(toggleMapLink, `Show map ${PLUS_ROUND_ICON}`);
+      changeElHTML(linkText, `Show map`);
+      icon.setAttribute('name', 'plus-round');
     }
   }
 });

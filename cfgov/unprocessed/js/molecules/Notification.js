@@ -1,7 +1,4 @@
 import { checkDom, setInitFlag } from '@cfpb/cfpb-design-system';
-import SUCCESS_ICON from '@cfpb/cfpb-design-system/icons/approved-round.svg';
-import WARNING_ICON from '@cfpb/cfpb-design-system/icons/warning-round.svg';
-import ERROR_ICON from '@cfpb/cfpb-design-system/icons/error-round.svg';
 
 /**
  * Constants for the state of this Notification.
@@ -11,9 +8,9 @@ const WARNING = 'warning';
 const ERROR = 'error';
 
 const ICON = {};
-ICON[SUCCESS] = SUCCESS_ICON;
-ICON[WARNING] = WARNING_ICON;
-ICON[ERROR] = ERROR_ICON;
+ICON[SUCCESS] = SUCCESS;
+ICON[WARNING] = WARNING;
+ICON[ERROR] = ERROR;
 
 const BASE_CLASS = 'm-notification';
 // Constants for the Notification modifiers.
@@ -110,13 +107,9 @@ function Notification(element) {
     classList.add(`${BASE_CLASS}--${type}`);
     _currentType = type;
 
-    // Replace <svg> element with contents of type_ICON.
-    const currentIcon = _dom.querySelector('.cf-icon-svg');
-    const newIconSetup = document.createElement('div');
-    newIconSetup.innerHTML = ICON[type];
-    const newIcon = newIconSetup.firstChild;
-
-    _dom.replaceChild(newIcon, currentIcon);
+    // Replace <cfpb-icon> name attribute with new name.
+    const currentIcon = _dom.querySelector('cfpb-icon');
+    currentIcon.setAttribute('name', type);
 
     return this;
   }

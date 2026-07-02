@@ -96,8 +96,8 @@ $menu-link-hover-bar-px: 5px;
   &:hover {
     @include u-bar-left(var(--green), -$menu-link-hover-bar-px - 8px);
 
-    .cf-icon-svg {
-      fill: var(--black);
+    cfpb-icon {
+      color: var(--black);
     }
   }
 }
@@ -119,8 +119,8 @@ $menu-link-hover-bar-px: 5px;
     // This is for the link with icon, which is
     // combined with this helper because the
     // hover bar doesn't need separate treatment.
-    .cf-icon-svg {
-      fill: var(--black);
+    cfpb-icon {
+      color: var(--black);
     }
   }
 }
@@ -241,8 +241,8 @@ $menu-link-hover-bar-px: 5px;
     // Ensure desktop up/down arrow link icons don't appear at mobile.
     &-link {
       width: 100%;
-      &-icon-closed .cf-icon-svg,
-      &-icon-open .cf-icon-svg {
+      &-icon-closed cfpb-icon,
+      &-icon-open cfpb-icon {
         display: none;
       }
     }
@@ -259,7 +259,7 @@ $menu-link-hover-bar-px: 5px;
       }
 
       // Show the icons in featured links.
-      & .cf-icon-svg {
+      & cfpb-icon {
         display: inline;
         color: var(--pacific);
         margin-right: 6px;
@@ -417,7 +417,7 @@ $menu-link-hover-bar-px: 5px;
           outline: 1px dotted var(--pacific);
         }
 
-        .cf-icon-svg {
+        cfpb-icon {
           margin-right: 0.6em;
         }
 
@@ -493,8 +493,8 @@ $menu-link-hover-bar-px: 5px;
           top: 50%;
           transform: translateY(-50%);
 
-          .cf-icon-svg {
-            fill: var(--green);
+          cfpb-icon {
+            color: var(--green);
           }
         }
 
@@ -757,8 +757,8 @@ $menu-link-hover-bar-px: 5px;
           }
         }
 
-        &-icon-closed .cf-icon-svg,
-        &-icon-open .cf-icon-svg {
+        &-icon-closed cfpb-icon,
+        &-icon-open cfpb-icon {
           position: absolute;
 
           // Adjusts position by 4px to accommodate longer titles.
@@ -767,15 +767,15 @@ $menu-link-hover-bar-px: 5px;
           font-size: math.div(10px, $base-font-size-px) + em;
         }
 
-        &-icon-closed .cf-icon-svg {
+        &-icon-closed cfpb-icon {
           display: inline-block;
         }
 
-        &[aria-expanded='true'] &-icon-open .cf-icon-svg {
+        &[aria-expanded='true'] &-icon-open cfpb-icon {
           display: inline-block;
         }
 
-        &[aria-expanded='true'] &-icon-closed .cf-icon-svg {
+        &[aria-expanded='true'] &-icon-closed cfpb-icon {
           display: none;
         }
 
@@ -950,7 +950,7 @@ $menu-link-hover-bar-px: 5px;
         @include u-hover-link-featured-desktop;
         @include u-focus-link-featured-desktop;
 
-        & .cf-icon-svg {
+        & cfpb-icon {
           color: var(--gold);
           width: 100%;
           max-width: math.div(16px, $base-font-size-px) + rem;
@@ -1032,7 +1032,7 @@ $menu-link-hover-bar-px: 5px;
 }
 
 .o-mega-menu__content-2-item--has-icon {
-  .cf-icon-svg:nth-child(3) {
+  cfpb-icon:nth-child(3) {
     margin-left: -20px;
     transform: translateX(25px);
   }

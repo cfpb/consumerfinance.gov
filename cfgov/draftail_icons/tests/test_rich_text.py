@@ -9,11 +9,13 @@ from wagtail.admin.rich_text.converters.contentstate import (
 
 from draftjs_exporter.dom import DOM
 
-from core.tests.templatetags.test_svg_icon import VALID_SVG
 from draftail_icons.rich_text import (
     IconEntityElementHandler,
     icon_entity_decorator,
 )
+
+
+VALID_SVG = '<cfpb-icon name="piggy-bank"></cfpb-icon>'
 
 
 class IconEntityDecoratorTestCase(SimpleTestCase):

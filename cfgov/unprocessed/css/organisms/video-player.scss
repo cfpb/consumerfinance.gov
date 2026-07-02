@@ -197,7 +197,7 @@ $standard-btn-height-px: 36px;
     }
   }
 
-  & > .cf-icon-svg {
+  & > cfpb-icon {
     // Size and position visually centers the play arrow.
     position: absolute;
     left: 55%;
@@ -294,8 +294,8 @@ button.o-video-player__play-btn,
 }
 
 .o-video-player .m-social-media {
-  .cf-icon-svg {
-    fill: var(--white);
+  cfpb-icon {
+    color: var(--white);
   }
 
   .m-social-media__icons {

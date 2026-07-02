@@ -45,12 +45,8 @@ STATICFILES_FINDERS += [
 ]
 
 STATICFILES_DIRS += [
-    PROJECT_ROOT.joinpath("core", "testutils", "staticfiles"),
+    PROJECT_ROOT.joinpath("core", "testutils"),
 ]
-
-MOCK_STATICFILES_PATTERNS = {
-    "icons/*.svg": "icons/placeholder.svg",
-}
 
 FLAG_SOURCES = ("flags.sources.SettingsFlagsSource",)
 
