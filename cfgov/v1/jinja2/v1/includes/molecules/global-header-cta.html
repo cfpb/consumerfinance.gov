@@ -19,9 +19,9 @@
         {% set complaint_link = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
         {# TODO: Padding should be on link, not CTA itself #}
     <div class="m-global-header-cta">
-        <a href="{{ complaint_link }}">
+        <a class="a-link" href="{{ complaint_link }}">
             {{ svg_icon('complaint') }}
-            {{ _('Submit a Complaint') }}
+            <span class="a-link__text">{{ _('Submit a Complaint') }}</span>
         </a>
     </div>
     {% endif %}
