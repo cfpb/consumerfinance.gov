@@ -21,7 +21,7 @@ class ActualContentTypeBaker(baker.Baker):
     This baker ensures created ContenType fields default to the ContentType of
     their models.
 
-    This can be overwriten by passing content_type as an explicit value to
+    This can be overwritten by passing content_type as an explicit value to
     baker.make() or baker.prepare().
     """
 
