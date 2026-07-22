@@ -221,20 +221,36 @@ class FilterablePagesDocumentSearch:
             self._count = self.search_obj.count()
         return self._count
 
-    def get_raw_results(self):
-        """Get the Elasticsearch DSL Response object for current results.
+    TOPICS_AGGREGATION_SIZE = 10000
+    LANGUAGES_AGGREGATION_SIZE = 100
+
+    def get_aggregations(self):
+        """Get the aggregations used to build the filterable form's options.
+
+        Only aggregations are needed to populate the form's topic, language,
+        and date filters, so this makes a 0-size search that doesn't actually
+        return any document content.
 
         This can be called any time, before, between, or after calls to
         filter() or search().
-
-        See the Elasticsearch DSL documentation for more on the Response
-        object:
-        https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html#response
         """
-        search = self.search_obj[0 : self.count()]
+        search = self.search_obj[0:0]
+
+        # Aggregate the distinct topics (by tag slug) in the result.
+        search.aggs.bucket(
+            "topics",
+            "terms",
+            field="tags.slug",
+            size=self.TOPICS_AGGREGATION_SIZE,
+        )
 
         # Aggregate unique languages in the result.
-        search.aggs.bucket("languages", "terms", field="language")
+        search.aggs.bucket(
+            "languages",
+            "terms",
+            field="language",
+            size=self.LANGUAGES_AGGREGATION_SIZE,
+        )
 
         # Determine the earliest page date.
         search.aggs.metric("min_start_date", "min", field="start_date")

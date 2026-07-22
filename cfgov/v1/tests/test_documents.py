@@ -10,7 +10,9 @@ from wagtail.models import Page, Site
 from dateutil.relativedelta import relativedelta
 
 from core.testutils.test_cases import WagtailPageTreeTestCase
-from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from search.elasticsearch_helpers import (
+    ElasticsearchTestsMixin,
+)
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch,
@@ -187,10 +189,16 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         self.assertEqual(search.search(title="child1").count(), 2)
         self.assertEqual(search.search(title="child3").count(), 0)
 
-    def test_get_raw_results(self):
+    def test_get_aggregations_fetches_no_documents(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
-        results = search.get_raw_results()
-        self.assertEqual(len(results.hits), 2)
+
+        with self.assertNumElasticsearchRequests(1):
+            results = search.get_aggregations()
+            self.assertEqual(len(results.hits), 0)
+            self.assertEqual(results.hits.total.value, 2)
+            self.assertIn("topics", results.aggregations)
+            self.assertIn("languages", results.aggregations)
+            self.assertIn("min_start_date", results.aggregations)
 
     # Mocking is necessary here because unfortunately it's not currently
     # possible to use override_settings with DOD autosync. See

@@ -3,7 +3,6 @@ from operator import itemgetter
 
 from django import forms
 from django.conf import settings
-from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
@@ -128,56 +127,20 @@ class FilterableListForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.filterable_search = kwargs.pop("filterable_search")
 
-        # This cache key is used for caching the topics, page_ids,
-        # and the full set of Elasticsearch results for this form used to
-        # generate them.
-        # Default the cache key prefix to this form's hash if it's not
-        # provided.
-        self.cache_key_prefix = kwargs.pop("cache_key_prefix", hash(self))
-
         super().__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get("categories"))
 
-        self.all_filterable_results = self.get_all_filterable_results()
-        page_ids = self.get_all_page_ids()
-        self.set_topics(page_ids)
+        # When the form is created, it needs to make a request to the search
+        # backend to be able to populate some of its fields: topics, languages,
+        # and the minimum page date.
+        self.aggregations = self.filterable_search.get_aggregations()
+
+        self.set_topics()
         self.set_languages()
 
-    def get_all_filterable_results(self):
-        """Get all filterable document results from Elasticsearch
-
-        This set of results is used to populate the list of all page_ids,
-        below, which is in turn used for populating the topics
-        relevant to those pages.
-
-        This first document in this result set is also used to determine the
-        earliest post date, also below, when a to_date is given but
-        from_date is not.
-        """
-        # Cache the full list of filterable results. This avoids having to
-        # generate the same list with every request. When a filterable page is
-        # is saved, the cache key for this fix prefix will be deleted.
-        all_filterable_results = cache.get(
-            f"{self.cache_key_prefix}-all_filterable_results"
-        )
-        if not all_filterable_results:
-            all_filterable_results = self.filterable_search.get_raw_results()
-            cache.set(
-                f"{self.cache_key_prefix}-all_filterable_results",
-                all_filterable_results,
-            )
-        return all_filterable_results
-
-    def get_all_page_ids(self):
-        """Return a list of all possible filterable page ids"""
-        page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
-        if not page_ids:
-            page_ids = [
-                result.meta.id for result in self.all_filterable_results
-            ]
-            cache.set(f"{self.cache_key_prefix}-page_ids", page_ids)
-        return page_ids
+    def has_unfiltered_results(self):
+        return self.aggregations.hits.total.value > 0
 
     def get_page_set(self):
         self.filterable_search.filter(
@@ -193,40 +156,37 @@ class FilterableListForm(forms.Form):
         return results
 
     def first_page_date(self):
-        if not self.all_filterable_results:
+        if not self.has_unfiltered_results():
             return date(2010, 1, 1)
 
         min_start_date = parser.parse(
-            self.all_filterable_results.aggregations.min_start_date.value_as_string
+            self.aggregations.aggregations.min_start_date.value_as_string
         )
 
         return min_start_date.date()
 
     @staticmethod
-    def get_filterable_topics(page_ids):
-        """Given a set of page IDs, return the list of filterable topics"""
-        tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
-        ).values_list("slug", "name")
+    def get_filterable_topics(slugs):
+        """Given a set of tag slugs, return the list of filterable topics.
+
+        The slugs come from an aggregation over the indexed pages, so this
+        only needs to look up the human-readable names for display.
+        """
+        tags = Tag.objects.filter(slug__in=slugs).values_list("slug", "name")
 
         return tags.distinct().order_by("name")
 
-    def set_topics(self, page_ids):
-        # Cache the topics for this filterable list form to avoid
-        # repeated database lookups of the same data.
-        topics = cache.get(f"{self.cache_key_prefix}-topics")
-        if not topics:
-            topics = self.get_filterable_topics(page_ids)
-            cache.set(f"{self.cache_key_prefix}-topics", topics)
-
-        self.fields["topics"].choices = topics
+    def set_topics(self):
+        slugs = [
+            bucket.key
+            for bucket in (self.aggregations.aggregations.topics.buckets)
+        ]
+        self.fields["topics"].choices = self.get_filterable_topics(slugs)
 
     # Populate language choices
     def set_languages(self):
         # Get the list of codes in the full set of searchable pages.
-        language_aggregation = (
-            self.all_filterable_results.aggregations.languages
-        )
+        language_aggregation = self.aggregations.aggregations.languages
         language_codes = {b.key for b in language_aggregation.buckets}
 
         # Grab the language names from the reference list.

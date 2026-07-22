@@ -31,7 +31,7 @@
     border-bottom: 1px solid var(--gray-40);
 
     /* This is to allow vertical overlap with the languages */
-    .a-tagline {
+    cfpb-tagline {
       float: left;
     }
 
@@ -42,7 +42,7 @@
       }
 
       /* Prevent spacing issues since the languages aren't displayed */
-      .a-tagline {
+      cfpb-tagline {
         float: none;
       }
     }

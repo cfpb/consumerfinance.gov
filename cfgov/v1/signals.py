@@ -1,6 +1,5 @@
 from itertools import chain
 
-from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -62,17 +61,11 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         chain(filterable_list_pages, category_filterable_list_pages)
     )
 
-    cache_tags_to_purge = []
-    for filterable_list_page in filterable_list_pages:
-        cache_key_prefix = filterable_list_page.get_cache_key_prefix()
-
-        # Delete internal cache for the filterable list page
-        cache.delete(f"{cache_key_prefix}-all_filterable_results")
-        cache.delete(f"{cache_key_prefix}-page_ids")
-        cache.delete(f"{cache_key_prefix}-topics")
-
-        # Add the filterable list's slug to the list of cache tags to purge
-        cache_tags_to_purge.append(filterable_list_page.slug)
+    # Collect each filterable list page's slug as a CDN cache tag to purge.
+    cache_tags_to_purge = [
+        filterable_list_page.slug
+        for filterable_list_page in filterable_list_pages
+    ]
 
     # Get the cache backend and purge filterable list page cache tags if this
     # page belongs to any

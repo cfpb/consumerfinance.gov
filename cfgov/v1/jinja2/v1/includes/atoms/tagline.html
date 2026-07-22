@@ -1,25 +1,24 @@
 
 {# ==========================================================================
 
-   tagline.render()
+  tagline.render()
 
-   ==========================================================================
+  ==========================================================================
 
-   Description:
+  Description:
 
-   Render HTML for the United States government site tagline.
+  Render HTML for the United States government site tagline.
 
-   is_large: Whether to use a larger font-size for the tagline text.
+  is_large: Whether to use a larger font-size for the tagline text.
 
-   ========================================================================== #}
+  ========================================================================== #}
 
 {% macro render( is_large ) %}
-<div class="a-tagline{{ ' a-tagline--large' if is_large else '' }}"
-     aria-label="{{ _('Official website of the') }} {{ _('United States government') }}">
-   <span class="u-usa-flag"></span>
-   <div class="a-tagline__text">
-      {{ _('An official website of the') }}
-      <span class="u-nowrap">{{ _('United States government') }}</span>
-   </div>
-</div>
+{# TODO: The aria-label is set within the shadowdom, 
+   but isn't translated, so we're adding it again here for the translation. #}
+<cfpb-tagline{% if is_large %} islarge{% endif %}
+  aria-label="{{ _('Official website of the') }} {{ _('United States government') }}">
+  {{ _('An official website of the') }}
+  <span class="u-nowrap">{{ _('United States government') }}</span>
+</cfpb-tagline>
 {% endmacro %}

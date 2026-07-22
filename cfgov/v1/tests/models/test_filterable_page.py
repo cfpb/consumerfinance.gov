@@ -238,29 +238,17 @@ class FilterableResultsRenderingTests(
         page = self.page_tree[0]
         request = RequestFactory().get("/")
 
-        # Page rendering requires 8 database queries in total.
+        # Page rendering requires 7 database queries in total.
+        # We start with a list of matching page IDs from an OpenSearch query.
         #
-        # 2 are needed for Wagtail page URL generation:
-        #
-        #   1. Fetching Wagtail Site root paths.
-        #   2. Fetching the root page of the default Wagtail Site.
-        #
-        # 1 is needed to render our filterable form:
-        #
-        #   3. Retrieving the list of page tags to populate the form topic
-        #      choices.
-        #
-        # 2 are needed to fetch page results from the database:
-        #
-        #   4. Fetching Page content types based on search result IDs.
-        #   5. Fetching specific Page model instances.
-        #
-        # 3 are needed for efficient page rendering:
-        #
-        #   6. Prefetching all authors for all result pages.
-        #   7. Prefecthing all categories for all result pages.
-        #   8. Prefetching all topic tags for all result pages.
-        with self.assertNumQueries(8):
+        #   1. django-opensearch-dsl fetches AbstractFilterPages matching those
+        #      page IDs.
+        #   2. Our custom SearchResultsPaginator then fetches the specific()
+        #      versions of those pages.
+        #   3,4,5. The paginator does a prefetch_related for authors,
+        #      categories, and tags.
+        #   6,7. Lookups for Wagtail Site root paths to render full page URLs.
+        with self.assertNumQueries(7):
             response = page.render(request)
 
         # All data is fetched as part of the response context. No additional

@@ -8,7 +8,7 @@ export class GlobalSearch {
   }
 
   footerTagline() {
-    return cy.get('.o-footer .a-tagline');
+    return cy.get('.o-footer cfpb-tagline');
   }
 
   trigger() {

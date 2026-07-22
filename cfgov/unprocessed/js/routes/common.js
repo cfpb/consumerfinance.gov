@@ -8,6 +8,7 @@ import {
   setSharedConfig,
   CfpbFileUpload,
   CfpbIcon,
+  CfpbTagline,
 } from '@cfpb/cfpb-design-system';
 
 setSharedConfig({
@@ -16,6 +17,7 @@ setSharedConfig({
 
 CfpbFileUpload.init();
 CfpbIcon.init();
+CfpbTagline.init();
 
 // Organisms.
 import { Footer } from '../organisms/Footer.js';

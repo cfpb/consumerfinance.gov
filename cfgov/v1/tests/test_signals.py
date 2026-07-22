@@ -1,5 +1,3 @@
-from unittest import mock
-
 from django.test import TestCase, override_settings
 
 from wagtail.models import Site
@@ -53,31 +51,18 @@ class FilterableListInvalidationTestCase(TestCase):
         # Reset cache purged URLs after each test
         MOCK_PURGED[:] = []
 
-    @mock.patch("v1.signals.cache")
-    def test_invalidate_filterable_list_caches(
-        self,
-        mock_cache,
-    ):
+    def test_invalidate_filterable_list_caches(self):
         invalidate_filterable_list_caches(None, instance=self.blog_page)
 
-        for cache_key_prefix in (
-            self.filterable_list_page.get_cache_key_prefix(),
-            self.category_filterable_list_page.get_cache_key_prefix(),
-        ):
-            mock_cache.delete.assert_any_call(
-                f"{cache_key_prefix}-all_filterable_results"
-            )
-            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-page_ids")
-            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-topics")
-
+        # The CDN cache for each filterable list page the blog page belongs to
+        # is purged by the page's slug.
         self.assertIn(self.filterable_list_page.slug, MOCK_PURGED)
+        self.assertIn(self.category_filterable_list_page.slug, MOCK_PURGED)
 
-    @mock.patch("django.core.cache.cache")
-    def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):
+    def test_invalidate_filterable_list_caches_does_nothing(self):
         invalidate_filterable_list_caches(
             None, instance=self.non_filterable_page
         )
-        mock_cache.delete.assert_not_called()
         self.assertEqual(MOCK_PURGED, [])
 
 
