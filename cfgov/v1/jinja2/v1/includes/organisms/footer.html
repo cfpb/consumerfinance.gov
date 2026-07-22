@@ -35,56 +35,57 @@
                 </a>
             </div>
 
-            <ul class="o-footer__nav-list m-list">
-                {% if language == 'es' %}
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/es/herramientas-del-consumidor/">Para consumidores</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/es/obtener-respuestas/">Obtener respuestas</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/es/enviar-una-queja/">Enviar una queja</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/es/quienes-somos/">Quiénes somos</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/es/comprar-casa/">Comprar casa</a>
-                    </li>
-                {% else %}
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/about-us/">
-                            About Us
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/about-us/contact-us/">
-                            Contact Us
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/about-us/careers/">
-                            Careers
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/about-us/events/">
-                            Events
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/enforcement/information-industry-whistleblowers/">
-                            Industry Whistleblowers
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/cfpb-ombudsman/">
-                            CFPB Ombudsman
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
+            <cfpb-list horizontal gap="wide" color-theme="dark">
+            {% if language == 'es' %}
+                <cfpb-link size="h4" no-underline>
+                    <a href="/es/herramientas-del-consumidor/">Para consumidores</a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/es/obtener-respuestas/">Obtener respuestas</a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/es/enviar-una-queja/">Enviar una queja</a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/es/quienes-somos/">Quiénes somos</a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/es/comprar-casa/">Comprar casa</a>
+                </cfpb-link>
+            {% else %}
+                <cfpb-link size="h4" no-underline>
+                    <a href="/about-us/">
+                        About Us
+                    </a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/about-us/contact-us/">
+                        Contact Us
+                    </a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/about-us/careers/">
+                        Careers
+                    </a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/about-us/events/">
+                        Events
+                    </a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/enforcement/information-industry-whistleblowers/">
+                        Industry Whistleblowers
+                    </a>
+                </cfpb-link>
+                <cfpb-link size="h4" no-underline>
+                    <a href="/cfpb-ombudsman/">
+                        CFPB Ombudsman
+                    </a>
+                </cfpb-link>
+            {% endif %}
+            </cfpb-list>
+
             <div class="block
                         block--flush-top
                         block--flush-bottom
@@ -100,57 +101,58 @@
         {% endif %}
 
         <div class="o-footer-middle-left">
-
-            <div class="o-footer__col">
-                <ul class="o-footer__list m-list">
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/foia-requests/">
-                            FOIA
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link"
-                           href="/privacy/website-privacy-policy/">
-                            Website Privacy Policy & Legal Notices
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/accessibility/">
-                            Accessibility
-                        </a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/office-civil-rights/no-fear-act-cummings-act/">
-                            No FEAR Act &amp; Cummings Act
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>{# END .o-footer-middle-left #}
+            <cfpb-list color-theme="dark">
+                
+                <cfpb-link>
+                    <a href="/foia-requests/">
+                        FOIA
+                    </a>
+                </cfpb-link>
+                <cfpb-link>
+                    <a href="/privacy/website-privacy-policy/">
+                        Website Privacy Policy & Legal Notices
+                    </a>
+                </cfpb-link>
+                <cfpb-link>
+                    <a href="/accessibility/">
+                        Accessibility
+                    </a>
+                </cfpb-link>
+                <cfpb-link>
+                    <a href="/office-civil-rights/no-fear-act-cummings-act/">
+                        No FEAR Act &amp; Cummings Act
+                    </a>
+                </cfpb-link>
+            </cfpb-list>
+        </div>
 
         <div class="o-footer-middle-right">
-                <ul class="o-footer__list m-list">
-                    <li class="m-list__item">
-                        <a class="m-list__link"
-                           href="{{ _('https://www.usa.gov/') }}">{{ _('USA.gov') }}</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link"
-                           href="https://oig.federalreserve.gov/">Office of Inspector General</a>
-                    </li>
-                    <li class="m-list__item">
-                        <a class="m-list__link"
-                           href="https://archive-it.org/organizations/2800">Public Archive</a>
-                    </li>
-                    {% if language == 'es'%}
-                    <li class="m-list__item">
-                        <a class="m-list__link" href="/cfpb-ombudsman/">
-                            CFPB Ombudsman
-                        </a>
-                     </li>
-                    {% endif %}
-                </ul>
-        </div>{# END .o-footer-middle-right #}
+            <cfpb-list color-theme="dark">
+                
+                <cfpb-link no-top-border>
+                    <a href="{{ _('https://www.usa.gov/') }}">
+                        {{ _('USA.gov') }}
+                    </a>
+                </cfpb-link>
+                <cfpb-link>
+                    <a href="https://oig.federalreserve.gov/">
+                        Office of Inspector General
+                    </a>
+                </cfpb-link>
+                <cfpb-link>
+                    <a href="https://archive-it.org/organizations/2800">
+                        Public Archive
+                    </a>
+                </cfpb-link>
+                {% if language == 'es'%}
+                <cfpb-link>
+                    <a href="/cfpb-ombudsman/">
+                        CFPB Ombudsman
+                    </a>
+                    </cfpb-link>
+                {% endif %}
+            </cfpb-list>
+        </div>
 
         <div class="o-footer-post">
             {{ tagline.render( is_large=true ) }}

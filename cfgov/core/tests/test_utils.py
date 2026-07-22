@@ -7,10 +7,12 @@ from core.utils import (
     ASK_CFPB_LINKS,
     NON_CFPB_LINKS,
     UNSAFE_CHARACTERS,
+    add_cfpb_link_markup,
     add_link_markup,
     extract_answers_from_request,
     format_file_size,
     get_body_html,
+    get_cfpb_link_tags,
     get_link_tags,
     make_safe,
     text_matches_href,
@@ -77,6 +79,61 @@ class FormatFileSizeTests(SimpleTestCase):
         self.assertEqual(format_file_size(1024 * 9000000000), "8 TB")
 
 
+class CfpbLinkUtilsTests(SimpleTestCase):
+    def test_get_cfpb_link_tags(self):
+        self.assertEqual(
+            get_cfpb_link_tags(
+                'outer <cfpb-link><a href="">inner</a></cfpb-link>'
+            ),
+            ['<cfpb-link><a href="">inner</a></cfpb-link>'],
+        )
+
+    def test_add_cfpb_link_markup_invalid(self):
+        tag = "not a valid tag"
+        path = "/about-us/blog/"
+        self.assertIsNone(add_cfpb_link_markup(tag, path))
+
+    def test_add_cfpb_link_markup_anchor(self):
+        tag = '<cfpb-link><a href="/about-us/blog/#anchor">bar</a></cfpb-link>'
+        path = "/about-us/blog/"
+        self.assertEqual(
+            add_cfpb_link_markup(tag, path),
+            '<cfpb-link><a href="#anchor">bar</a></cfpb-link>',
+        )
+
+    def check_external_cfpb_link(self, url):
+        tag = f'<cfpb-link><a href="{url}">foo</a></cfpb-link>'
+        path = "/about-us/blog/"
+
+        expected_html = (
+            '<cfpb-link link-variant="external">'
+            f'<a href="{url}">foo</a></cfpb-link>'
+        )
+        expected_tag = BeautifulSoup(expected_html, "html.parser")
+
+        self.assertEqual(add_cfpb_link_markup(tag, path), str(expected_tag))
+
+    def check_download_cfpb_link(self, url):
+        tag = f'<cfpb-link><a href="{url}">foo</a></cfpb-link>'
+        path = "/about-us/blog/"
+
+        expected_html = (
+            '<cfpb-link link-variant="download">'
+            f'<a href="{url}">foo</a></cfpb-link>'
+        )
+        expected_tag = BeautifulSoup(expected_html, "html.parser")
+
+        self.assertEqual(add_cfpb_link_markup(tag, path), str(expected_tag))
+
+    def test_usa_gov(self):
+        url = "https://www.usa.gov"
+        self.check_external_cfpb_link(url)
+
+    def test_test_pdf(self):
+        url = "test.pdf"
+        self.check_download_cfpb_link(url)
+
+
 class LinkUtilsTests(SimpleTestCase):
     @classmethod
     def setUpClass(cls):
@@ -136,6 +193,12 @@ class LinkUtilsTests(SimpleTestCase):
             [
                 "<a  >inner</a>",
             ],
+        )
+
+    def test_get_link_tags_does_not_match_wc(self):
+        self.assertEqual(
+            get_link_tags('outer <cfpb-link><a href="">inner</a></cfpb-link>'),
+            [],
         )
 
     def test_add_link_markup_invalid(self):

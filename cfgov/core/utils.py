@@ -59,6 +59,9 @@ BODY_TAG_RE = re.compile(TAG_RE.format(tag_name="body"))
 # Match <a…>…</a>
 A_TAG_RE = re.compile(TAG_RE.format(tag_name="a"))
 
+# Match <cfpb-link>…</cfpb-link>
+CFPB_LINK_TAG_RE = re.compile(TAG_RE.format(tag_name="cfpb-link"))
+
 # If a link contains these elements, it should *not* get an icon
 ICONLESS_LINK_CHILD_ELEMENTS = [
     "img",
@@ -89,6 +92,8 @@ UNSAFE_CHARACTERS = [
 ]
 
 MAX_CHARS = 75
+
+BEAUTIFUL_SOUP_PARSER = "html.parser"
 
 
 def make_safe(term):
@@ -128,7 +133,18 @@ def get_body_html(html):
 
 
 def get_link_tags(html):
-    return A_TAG_RE.findall(html)
+    without_components = re.sub(
+        r"<cfpb-link\b[^>]*>.*?</cfpb-link>",
+        "",
+        html,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    links = A_TAG_RE.findall(without_components)
+    return links
+
+
+def get_cfpb_link_tags(html):
+    return CFPB_LINK_TAG_RE.findall(html)
 
 
 def text_matches_href(text, href):
@@ -177,6 +193,42 @@ def text_matches_href(text, href):
     return normalize((text or "").strip()) == normalize((href or "").strip())
 
 
+def add_cfpb_link_markup(tag, request_path):
+    """Add necessary attributes to the given cfpb-link.
+
+    Return cfpb-link if modified.
+    """
+    soup = BeautifulSoup(tag, BEAUTIFUL_SOUP_PARSER)
+    tag = soup.find("cfpb-link")
+
+    if tag is None:
+        return None
+
+    a_tag = tag.find("a")
+    href = a_tag["href"]
+
+    if request_path is not None:
+        # Strips the path of the current page from hrefs that are internal page
+        # anchor links.
+        # TODO: Remove that functionality when we get to Wagtail>=2.7, which
+        # adds the ability to create anchor links.
+        in_page_anchor_pattern = request_path + "#"
+        if a_tag["href"].startswith(in_page_anchor_pattern):
+            # Strip current path from in-page anchor links
+            a_tag["href"] = href.replace(request_path, "")
+            return str(tag)
+
+    if NON_CFPB_LINKS.match(href):
+        # Sets the icon to indicate you're leaving consumerfinance.gov
+        tag["link-variant"] = "external"
+
+    elif DOWNLOAD_LINKS.search(href):
+        # Sets the icon to indicate you're downloading a file
+        tag["link-variant"] = "download"
+
+    return str(tag)
+
+
 def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
@@ -190,7 +242,7 @@ def add_link_markup(tag, request_path):
     """
     icon = False
 
-    soup = BeautifulSoup(tag, "html.parser")
+    soup = BeautifulSoup(tag, BEAUTIFUL_SOUP_PARSER)
     tag = soup.find("a", href=True)
 
     if tag is None:
@@ -253,7 +305,7 @@ def add_link_markup(tag, request_path):
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll("span", icon_classes)
 
-    icon_soup = BeautifulSoup(svg_icon(icon), "html.parser")
+    icon_soup = BeautifulSoup(svg_icon(icon), BEAUTIFUL_SOUP_PARSER)
 
     # If this is an <a class="a-btn"> tag without a span inside, we want to
     # add proper markup so that the link appears as a button with the icon on

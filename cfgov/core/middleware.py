@@ -11,7 +11,13 @@ from django.utils.encoding import force_str
 
 from wagtail.rich_text import expand_db_html
 
-from core.utils import add_link_markup, get_body_html, get_link_tags
+from core.utils import (
+    add_cfpb_link_markup,
+    add_link_markup,
+    get_body_html,
+    get_cfpb_link_tags,
+    get_link_tags,
+)
 
 
 class DownstreamCacheControlMiddleware:
@@ -49,6 +55,12 @@ def parse_links(html, request_path=None, encoding=None):
     link_tags = get_link_tags(body_html)
     for tag in link_tags:
         tag_with_markup = add_link_markup(tag, request_path)
+        if tag_with_markup:
+            expanded_html = expanded_html.replace(tag, tag_with_markup)
+
+    cfpb_link_tags = get_cfpb_link_tags(body_html)
+    for tag in cfpb_link_tags:
+        tag_with_markup = add_cfpb_link_markup(tag, request_path)
         if tag_with_markup:
             expanded_html = expanded_html.replace(tag, tag_with_markup)
 

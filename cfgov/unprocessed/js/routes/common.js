@@ -8,6 +8,8 @@ import {
   setSharedConfig,
   CfpbFileUpload,
   CfpbIcon,
+  CfpbList,
+  CfpbLink,
   CfpbTagline,
 } from '@cfpb/cfpb-design-system';
 
@@ -17,6 +19,8 @@ setSharedConfig({
 
 CfpbFileUpload.init();
 CfpbIcon.init();
+CfpbList.init();
+CfpbLink.init();
 CfpbTagline.init();
 
 // Organisms.
