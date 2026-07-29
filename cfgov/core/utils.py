@@ -279,7 +279,7 @@ def add_link_markup(tag, request_path):
         # Sets the icon to indicate you're downloading a file
         icon = "download"
 
-    # If the tag already ends in a <cfpb-icon>,
+    # If the tag already ends in an <cfpb-icon>,
     # we never want to append an icon.
     # If it has one or more <cfpb-icon> elements,
     # but other content comes after them, we still want to add one.
