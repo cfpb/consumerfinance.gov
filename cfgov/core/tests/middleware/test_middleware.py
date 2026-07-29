@@ -132,13 +132,13 @@ class TestParseLinks(TestCase):
         """Non gov links get external link icon."""
         link = '<body><a href="https://google.com">external link</a></body>'
         output = parse_links(link)
-        self.assertIn("cfpb-icon", output)
+        self.assertIn('cfpb-icon name="external-link"', output)
 
     def test_gov_link(self):
         """External gov links get external link icon."""
         link = '<body><a href="https://www.fdic.gov/bar">gov link</a></body>'
         output = parse_links(link)
-        self.assertIn("cfpb-icon", output)
+        self.assertIn('cfpb-icon name="external-link"', output)
 
     def test_internal_link(self):
         """Internal links do not get external link icon."""
@@ -155,12 +155,12 @@ class TestParseLinks(TestCase):
         for file_type in file_types:
             link = f'<body><a href="/something.{file_type}">link</a></body>'
             output = parse_links(link)
-            self.assertIn("cfpb-icon", output)
+            self.assertIn('cfpb-icon name="download"', output)
 
     def test_different_case_pdf_link_gets_download_icon(self):
         link = '<body><a href="/something.PDF">link</a></body>'
         output = parse_links(link)
-        self.assertIn("cfpb-icon", output)
+        self.assertIn('cfpb-icon name="download"', output)
 
     def test_rich_text_links_get_expanded(self):
         page = CFGOVPage(title="foo bar", slug="foo-bar")
@@ -184,7 +184,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("cfpb-icon", output)
+        self.assertNotIn('cfpb-icon name="external-link"', output)
 
     def test_external_link_outside_body_with_attributes(self):
         s = """
@@ -193,7 +193,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertNotIn("cfpb-icon", output)
+        self.assertNotIn('cfpb-icon name="external-link"', output)
 
     def test_external_link_with_attribute(self):
         s = """
@@ -202,7 +202,7 @@ class TestParseLinks(TestCase):
         </body>
         """
         output = parse_links(s)
-        self.assertIn("cfpb-icon", output)
+        self.assertIn('cfpb-icon name="external-link"', output)
 
     def test_external_link_with_img(self):
         s = '<body><a href="https://somewhere"><img src="some.png"></a></body>'
