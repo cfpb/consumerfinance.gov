@@ -1,4 +1,3 @@
-import logging
 
 from django import template
 from django.utils.safestring import SafeString, mark_safe
