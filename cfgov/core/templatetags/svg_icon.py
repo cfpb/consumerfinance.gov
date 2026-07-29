@@ -4,7 +4,6 @@ from django import template
 from django.utils.safestring import SafeString, mark_safe
 
 
-logger = logging.getLogger(__name__)
 register = template.Library()
 
 
