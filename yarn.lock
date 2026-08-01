@@ -466,14 +466,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-design-system@npm:5.8.1":
-  version: 5.8.1
-  resolution: "@cfpb/cfpb-design-system@npm:5.8.1"
+"@cfpb/cfpb-design-system@npm:5.8.2":
+  version: 5.8.2
+  resolution: "@cfpb/cfpb-design-system@npm:5.8.2"
   dependencies:
-    "@fontsource-variable/source-sans-3": "npm:5.2.9"
+    "@fontsource-variable/source-sans-3": "npm:5.3.0"
     lit: "npm:3.3.3"
     tippy.js: "npm:6.3.7"
-  checksum: 10c0/1df06102f9c46ae55e633dcefe64868c84011ee84b938ed36795393f631c751f9d0e447f581378ae40e2e1945c6aaedc1d77d6d3771ab147703360397f21828d
+  checksum: 10c0/c67ee315a27f60478195be2d89c37c4580cb923301694126fda5c371e61d6b0f130dde52e0d7e052ef4031832acd9aff0b9402f7e059b63913bcd5ddac1a66a2
   languageName: node
   linkType: hard
 
@@ -1133,6 +1133,13 @@ __metadata:
   version: 5.2.9
   resolution: "@fontsource-variable/source-sans-3@npm:5.2.9"
   checksum: 10c0/d3d428e5d592ef99ebaa975838af21770f0bc754f98e0185f2be6f7329b7bdca7f0579770bae5abb82513adf38fb6262b2c33a57d3edb68cab20b01671a8f34c
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/source-sans-3@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/source-sans-3@npm:5.3.0"
+  checksum: 10c0/8cc54fa29ea56713924dc97d39274dd26e83c9305365bfe6d663bebdff41795863996441c47a9e14660a2da7f77dfe7ae9a5fe324297d01271d48b4534a878e2
   languageName: node
   linkType: hard
 
@@ -3238,7 +3245,7 @@ __metadata:
   dependencies:
     "@cfpb/browserslist-config": "npm:0.0.7"
     "@cfpb/cfpb-analytics": "npm:0.3.2"
-    "@cfpb/cfpb-design-system": "npm:5.8.1"
+    "@cfpb/cfpb-design-system": "npm:5.8.2"
     "@csstools/postcss-sass": "npm:5.1.1"
     "@csstools/sass-import-resolve": "npm:1.0.0"
     "@eslint/js": "npm:10.0.1"
