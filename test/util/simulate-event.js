@@ -15,7 +15,6 @@ function simulateEvent(eventType, target, eventOption = {}) {
       event = new MouseEvent(eventType, {
         bubbles: true,
         cancelable: true,
-        view: window,
       });
       break;
     }

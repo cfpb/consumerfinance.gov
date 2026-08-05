@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { init as FooterButtonInit } from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
@@ -59,7 +58,7 @@ describe('footer-button', () => {
     'button should scroll when clicked ' +
       'and requestAnimationFrame is not supported',
     () => {
-      jest.spyOn(window, 'scrollTo');
+      vi.spyOn(window, 'scrollTo');
       delete window.requestAnimationFrame;
       window.scrollY = 10;
       FooterButtonInit();

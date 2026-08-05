@@ -1,7 +1,10 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-import { jest } from '@jest/globals';
 import defaultActionCreators from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
+
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
+const fetchMocker = createFetchMock(vi);
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+fetchMocker.enableMocks();
 
 const mockAPIResponse = {
   getMetroData: () => {
@@ -99,7 +102,7 @@ describe('Mortgage Performance default action creators', () => {
 
   describe('getMetroData', () => {
     beforeEach(() => {
-      global.fetch = jest.fn(() =>
+      global.fetch = vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getMetroData()),
         }),
@@ -117,7 +120,7 @@ describe('Mortgage Performance default action creators', () => {
 
   describe('getNonMetroData', () => {
     beforeEach(() => {
-      global.fetch = jest.fn(() =>
+      global.fetch = vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getNonMetroData()),
         }),
@@ -133,7 +136,7 @@ describe('Mortgage Performance default action creators', () => {
     });
 
     it('should dispatch actions to fetch non-metros', async () => {
-      const dispatch = jest.fn();
+      const dispatch = vi.fn();
       await defaultActionCreators().fetchNonMetros('AL', true)(dispatch);
       expect(dispatch).toHaveBeenCalledTimes(4);
       await defaultActionCreators().fetchNonMetros('CA', true)(dispatch);

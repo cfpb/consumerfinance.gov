@@ -1,11 +1,14 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import {
   processNotice,
   processNotices,
 } from '../../../../../cfgov/unprocessed/apps/regulations3k/js/recent-notices.js';
+
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
+const fetchMocker = createFetchMock(vi);
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+fetchMocker.enableMocks();
 
 const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>
@@ -13,7 +16,7 @@ const HTML_SNIPPET = `
 
 // Mock console logging
 delete global.console;
-global.console = { error: jest.fn(), log: jest.fn() };
+global.console = { error: vi.fn(), log: vi.fn() };
 
 describe('The Regs3K search page', () => {
   beforeEach(() => {

@@ -9,6 +9,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import pluginCypress from 'eslint-plugin-cypress';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import vitestGlobals from 'eslint-plugin-vitest-globals';
 
 export default defineConfig([
   { ignores: ['.tox', 'cfgov/static_built', 'collectstatic'] },
@@ -18,13 +19,14 @@ export default defineConfig([
   jsxA11y.flatConfigs.recommended,
   reactPlugin.configs.flat.recommended,
   pluginCypress.configs.recommended,
+  vitestGlobals.configs['flat/recommended'],
   eslintConfigPrettier,
 
   {
     languageOptions: {
       ecmaVersion: 2023,
       parserOptions: { ecmaFeatures: { jsx: true } },
-      globals: { ...globals.browser, ...globals.node, ...globals.jest },
+      globals: { ...globals.browser, ...globals.node },
     },
     settings: {
       'import/resolver': {

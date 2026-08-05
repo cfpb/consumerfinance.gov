@@ -1,3 +1,3 @@
-const spy = jest.fn();
+const spy = vi.fn();
 
 module.exports = spy;

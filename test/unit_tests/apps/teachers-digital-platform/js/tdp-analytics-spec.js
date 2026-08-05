@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import {
   bindAnalytics,
@@ -204,14 +203,14 @@ describe('The TDP custom analytics', () => {
     window.dispatchEvent(event);
 
     const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
+      open: vi.fn(),
+      send: vi.fn(),
       readyState: 4,
       status: 200,
-      onreadystatechange: jest.fn(),
+      onreadystatechange: vi.fn(),
       responseText: [],
     };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    global.XMLHttpRequest = vi.fn(() => mockXHR);
   });
 
   it('should not throw any errors on bind', () => {
@@ -220,7 +219,7 @@ describe('The TDP custom analytics', () => {
 
   it('should send an analytics event when a filter is clicked', () => {
     const filterTag = document.querySelector('.results__filters .a-tag-filter');
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     bindAnalytics(spy);
 
@@ -231,7 +230,7 @@ describe('The TDP custom analytics', () => {
 
   it('should send an analytics event when next pagination button is clicked', () => {
     const paginationButton = document.querySelector('.m-pagination__btn-next');
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     bindAnalytics(spy);
 
@@ -242,7 +241,7 @@ describe('The TDP custom analytics', () => {
 
   it('should send an analytics event when an expandable is clicked', () => {
     const expandable = document.querySelector('.o-expandable__header');
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     bindAnalytics(spy);
 
@@ -253,7 +252,7 @@ describe('The TDP custom analytics', () => {
 
   it('should send an analytics event when no search results are found', () => {
     document.body.innerHTML = EMPTY_SEARCH_HTML;
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     bindAnalytics(spy);
 

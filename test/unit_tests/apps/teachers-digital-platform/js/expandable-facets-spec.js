@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
@@ -47,7 +46,7 @@ const HTML_SNIPPET = `
 `;
 
 const xhr = global.XMLHttpRequest;
-global.console = { error: jest.fn(), log: jest.fn() };
+global.console = { error: vi.fn(), log: vi.fn() };
 
 describe('Expandable facets', () => {
   beforeEach(() => {
@@ -69,14 +68,14 @@ describe('Expandable facets', () => {
     efBody = document.querySelector('.o-expandable-facets__content');
 
     const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
+      open: vi.fn(),
+      send: vi.fn(),
       readyState: 4,
       status: 200,
-      onreadystatechange: jest.fn(),
+      onreadystatechange: vi.fn(),
       responseText: [],
     };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    global.XMLHttpRequest = vi.fn(() => mockXHR);
   });
 
   it('should not throw any errors on init', () => {

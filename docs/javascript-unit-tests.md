@@ -3,7 +3,7 @@
 This page provides instructions for writing and running
 JavaScript (JS) unit tests in consumerfinance.gov.
 
-[Jest](https://jestjs.io/docs/en/getting-started) is the framework we use
+[Vitest](https://vitest.dev/guide/) is the framework we use
 for writing and running JavaScript unit tests.
 If you’re not familiar with it,
 it would be a good idea to peruse their docs before diving in here.
@@ -33,13 +33,13 @@ it would be a good idea to peruse their docs before diving in here.
 To run all of the unit tests:
 
 ```bash
-yarn jest
+yarn test
 ```
 
 To first lint all files and then run tests:
 
 ```bash
-yarn test
+yarn lint && yarn test
 ```
 
 !!! note
@@ -48,19 +48,19 @@ yarn test
 
     ```bash
     # Single test file:
-    yarn jest Notification-spec.js
+    yarn test Notification-spec.js
     # Equivalent to:
-    yarn jest test/unit_tests/js/molecules/Notification-spec.js
+    yarn test test/unit_tests/js/molecules/Notification-spec.js
 
     # Directory:
-    yarn jest organisms
+    yarn test organisms
     # Equivalent to:
-    yarn jest test/unit_tests/js/organisms
+    yarn test test/unit_tests/js/organisms
 
     ```
 
-Because we invoke jest directly, you can pass any command-line args it accepts
-to filter your output or to target specific tests [see the docs for more](https://jestjs.io/docs/cli).
+Because we invoke vitest directly, you can pass any command-line args it accepts
+to filter your output or to target specific tests [see the docs for more](https://vitest.dev/guide/cli).
 
 ## Where to find tests
 
@@ -172,7 +172,7 @@ to save and commit your changes.
 1. Run your sample test using
 
    ```bash
-   yarn jest sample-spec.js
+   yarn test sample-spec.js
    ```
 
    (substituting your own filename).
@@ -228,8 +228,8 @@ on how to implement `import` for different use cases.
 
 #### The `describe` function
 
-In Jest (whose syntax is based on Jasmine),
-[`describe` blocks](https://jestjs.io/docs/en/api#describename-fn)
+In Vitest,
+[`describe` blocks](https://vitest.dev/api/describe)
 serve as organizational structures that you can use
 to outline the methods you need in your JS module.
 
@@ -294,12 +294,12 @@ during the refactor stage of writing code.
 
 Within a `describe` block, individual tests are encapsulated by `it` methods,
 which is an alias of
-[Jest’s `test` method](https://jestjs.io/docs/en/api#testname-fn-timeout).
+[Vitest' `test` method](https://vitest.dev/api/test.html).
 
 Each test must include one or more assertions (usually only one)
 that confirm that the result of executing some code is what you expected.
-These are called [“matchers”](https://jestjs.io/docs/en/using-matchers)
-in Jest parlance, and they all follow this format:
+These are called [“matchers”](https://vitest.dev/guide/learn/matchers)
+in Vitest parlance, and they all follow this format:
 
 ```js
 expect(someValue).someKindOfComparisonWith(someOtherValue);
@@ -337,9 +337,9 @@ that we defined in the tests.
 
 There are many kinds of assertions you can use
 besides the simple equality comparison of `toBe`.
-See [the Jest Using Matchers guide](https://jestjs.io/docs/en/using-matchers)
+See [the Vitest Using Matchers guide](https://vitest.dev/guide/learn/matchers)
 for a primer on them and
-[the Jest `expect` API docs](https://jestjs.io/docs/en/expect)
+[the Vitest `expect` API docs](https://vitest.dev/api/expect.html)
 for the full list of its matchers.
 
 ### Providing test data
@@ -360,7 +360,7 @@ if each test requires different markup.
 
 If you will need to leverage the same test data across different tests,
 Jest has setup and teardown methods, such as
-[`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup),
+[`beforeEach` and `afterEach`](https://vitest.dev/api/test.html#test-beforeeach), or [`beforeAll` and `afterAll`](https://vitest.dev/api/test.html#test-beforeall),
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
 For example, the tests in
@@ -369,7 +369,7 @@ use both `beforeAll` and `beforeEach` inside the root `describe` block to
 do a variable definition for all tests at the beginning of the suite
 and reset the `dataLayer` before each test, respectively.
 
-[Check out the Jest documentation on “Setup and teardown” methods.](https://jestjs.io/docs/en/setup-teardown)
+[Check out the Jest documentation on “Setup and teardown” methods.](https://vitest.dev/guide/learn/setup-teardown)
 
 A common structure when the DOM is involved
 is to create a constant representing an HTML snippet to test,
@@ -402,8 +402,8 @@ and use `expect` to check that you receive the desired result.
 
 ### Testing DOM manipulation
 
-[Jest](https://jestjs.io/en/), the JavaScript testing framework we use,
-[includes jsdom](https://jestjs.io/docs/en/configuration#testenvironment-string),
+[Vitest](https://vitest.dev), the JavaScript testing framework we use,
+[includes jsdom](https://vitest.dev/config/environment),
 which simulates a DOM environment as if you were in the browser.
 This means that we can call any
 [DOM API](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)

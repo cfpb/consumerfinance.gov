@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import {
   getSearchValues,
   serializeFormFields,
@@ -67,7 +66,7 @@ describe('The Regs3K search utils', () => {
   });
 
   it('should replace the browser history', () => {
-    const rs = (global.history.replaceState = jest.fn());
+    const rs = (global.history.replaceState = vi.fn());
     expect(rs.mock.calls.length).toEqual(0);
 
     updateUrl('foo', 'bar');

@@ -24,5 +24,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --immutable-cache
 
+      - name: Lint JavaScript
+        run: yarn run lint
+
       - name: Test JavaScript
         run: yarn run test

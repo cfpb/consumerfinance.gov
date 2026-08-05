@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/chart.js';
 
 const mockAPIResponse = {
@@ -55,71 +54,71 @@ const mockAPIResponse = {
 
 describe('Mortgage Performance chart action creators', () => {
   it('should dispatch actions to fetch metro states', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
       }),
     );
 
-    let dispatch = jest.fn();
+    let dispatch = vi.fn();
     await actions.fetchMetroStates('AL', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(2);
-    dispatch = jest.fn();
+    dispatch = vi.fn();
     await actions.fetchMetroStates('CA', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(2);
   });
 
   it('should dispatch actions to fetch non-metro states', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getNonMetroData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchNonMetroStates('WY', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(2);
   });
 
   it('should dispatch actions to fetch county states', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchCountyStates('CA', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(2);
   });
 
   it('should dispatch actions to fetch states', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getStateData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchStates('CA', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(3);
   });
 
   it('should dispatch actions to fetch metros', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchMetros('AL', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(actions.fetchMetros('AK', true)).toThrow();
   });
 
   it('should fail on bad metro state abbr', () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
       }),
@@ -129,37 +128,37 @@ describe('Mortgage Performance chart action creators', () => {
   });
 
   it('should not require national data to be included with metros', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getMetroData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchMetros('AL', false)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(4);
   });
 
   it('should dispatch actions to fetch counties', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchCounties('AL', true)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(4);
   });
 
   it('should not require national data to be included with counties', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockAPIResponse.getCountyData),
       }),
     );
 
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     await actions.fetchCounties('AL', false)(dispatch);
     expect(dispatch).toHaveBeenCalledTimes(4);
   });

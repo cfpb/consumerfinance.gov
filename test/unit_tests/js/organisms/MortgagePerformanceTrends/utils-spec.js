@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
-global.fetch = jest.fn((url) =>
+global.fetch = vi.fn((url) =>
   Promise.resolve({
-    json: jest.fn(() => Promise.resolve({ mock: url })),
+    json: vi.fn(() => Promise.resolve({ mock: url })),
   }),
 );
 
@@ -51,30 +50,30 @@ describe('Mortgage Performance utilities', () => {
   });
 
   it('should get metro data', () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     utils.getMetroData(cb).then(() => {
-      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_msa_meta' });
+      expect(cb).toHaveBeenCalledWith({ mock: BASE_URL + 'state_msa_meta' });
     });
   });
 
   it('should get non-metro data', () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     utils.getNonMetroData(cb).then(() => {
-      expect(cb).toBeCalledWith({ mock: BASE_URL + 'non_msa_fips' });
+      expect(cb).toHaveBeenCalledWith({ mock: BASE_URL + 'non_msa_fips' });
     });
   });
 
   it('should get county data', () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     utils.getCountyData(cb).then(() => {
-      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_county_meta' });
+      expect(cb).toHaveBeenCalledWith({ mock: BASE_URL + 'state_county_meta' });
     });
   });
 
   it('should get state data', () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     utils.getStateData(cb).then(() => {
-      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_meta' });
+      expect(cb).toHaveBeenCalledWith({ mock: BASE_URL + 'state_meta' });
     });
   });
 

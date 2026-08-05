@@ -1,7 +1,9 @@
 # Ignore all
+
 **
 
 # ...except these directories
+
 !cfgov
 !config
 !esbuild
@@ -10,6 +12,7 @@
 !.yarn/cache
 
 # ...and these files
+
 !.npmrc
 !.yarnrc.yml
 !docker-entrypoint.sh
@@ -18,12 +21,13 @@
 !frontend.sh
 !index.sh
 !initial-data.sh
-!jest.config.js
+!vitest.config.js
 !package.json
 !refresh-data.sh
 !test.sql.gz
 !yarn.lock
 
 # ...but DO ignore these others
+
 cfgov/f
 cfgov/static_built
