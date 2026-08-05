@@ -62,7 +62,7 @@ def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = datetime.date.today().strftime("%B %Y")
     thru_month_formatted = parser.parse(thru_month).strftime("%B %Y")
-    csv_url = f"{PUBLIC_DOWNLOAD_BUCKET}/{DOWNLOAD_KEY}/{slug}.csv"
+    csv_url = f"https://{PUBLIC_DOWNLOAD_BUCKET}/{DOWNLOAD_KEY}/{slug}.csv"
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name="download_files"
     )
