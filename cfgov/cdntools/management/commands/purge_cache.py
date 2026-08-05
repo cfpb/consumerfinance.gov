@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--backend",
+            action="extend",
             nargs="+",
             help="Limit the purge to the given frontend cache backend name",
         )
@@ -22,11 +23,13 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             "--cache-tag",
+            action="extend",
             nargs="+",
             help="The cache tag to invalidate (can specify multiple).",
         )
         parser.add_argument(
             "--url",
+            action="extend",
             nargs="+",
             help=(
                 "The full URL for the page cache to invalidate "
