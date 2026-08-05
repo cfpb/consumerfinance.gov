@@ -53,10 +53,8 @@ const Icon = (props) => {
   // static files path. This will render the ICON "entity" with the svg in
   // the editor.
   var icon_name = data['icon-name'];
-  var icon_url = `/static/icons/${icon_name}.svg`;
-  return window.React.createElement('img', {
-    src: icon_url,
-    'data-icon-name': icon_name,
+  return window.React.createElement('cfpb-icon', {
+    name: icon_name,
   });
 };
 

@@ -32,12 +32,12 @@ xdescribe('Planning your Social Security', () => {
     cy.url().should('contain', '/es');
   });
 
-  it('should display tool tip in step one after clicking svg tip icon', () => {
+  it('should display tool tip in step one after clicking tip icon', () => {
     cy.get('#claiming-social-security #tooltip-container').should(
       'not.be.visible',
     );
     cy.get(
-      '#claiming-social-security #step-one-form .cf-icon-svg--help-round',
+      '#claiming-social-security #step-one-form cfpb-icon[name="help-round"]',
     ).click();
     cy.get('#claiming-social-security #tooltip-container').should('be.visible');
   });

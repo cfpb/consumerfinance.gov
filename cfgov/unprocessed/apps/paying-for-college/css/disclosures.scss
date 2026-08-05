@@ -382,7 +382,7 @@ $bp-graph-cols-min: 740px;
     margin-top: math.div(5px, $base-font-size-px) + em;
     display: none;
 
-    & > .cf-icon-svg {
+    & > cfpb-icon {
       color: var(--red-80);
       margin-right: math.div(5px, $base-font-size-px) + em;
     }

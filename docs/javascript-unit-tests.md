@@ -433,12 +433,9 @@ function _setType(type) {
     classList.add(`${BASE_CLASS}___${type}`);
     _currentType = type;
 
-    // Replace <svg> element with contents of type_ICON
-    const currentIcon = _dom.querySelector('.cf-icon-svg');
-    const newIconSetup = document.createElement('div');
-    newIconSetup.innerHTML = ICON[type];
-    const newIcon = newIconSetup.firstChild;
-    _dom.replaceChild(newIcon, currentIcon);
+    // Replace <cfpb-icon> name attribute with new name.
+    const currentIcon = _dom.querySelector('cfpb-icon');
+    currentIcon.setAttribute('name', type);
   } else {
     throw new Error(`${type} is not a supported notification type!`);
   }

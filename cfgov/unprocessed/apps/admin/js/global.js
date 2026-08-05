@@ -1,3 +1,12 @@
+// Import web components so that they are available in the Wagtail editor.
+import { setSharedConfig, CfpbIcon } from '@cfpb/cfpb-design-system';
+
+setSharedConfig({
+  iconPath: '/static/icons/',
+});
+
+CfpbIcon.init();
+
 // This is a workaround to an issue in fbjs.
 // See https://github.com/facebook/fbjs/issues/290
 // eslint-disable-next-line no-global-assign

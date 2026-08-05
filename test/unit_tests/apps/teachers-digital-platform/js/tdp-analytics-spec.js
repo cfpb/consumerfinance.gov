@@ -147,7 +147,7 @@ const HTML_SNIPPET = `
     <nav class="m-pagination" role="navigation" aria-label="Pagination">
         <a class="a-btn m-pagination__btn-prev"
            href="?page=21#pagination_content">
-            {% include icons/left.svg %}
+            <cfpb-icon name="left"></cfpb-icon>
             <span>Previous</span>
         </a>
         <form class="m-pagination__form"
@@ -177,7 +177,7 @@ const HTML_SNIPPET = `
         <a class="a-btn m-pagination__btn-next"
            href="?page=23#pagination_content">
             <span>Next</span>
-            {% include icons/right.svg %}
+            <cfpb-icon name="right"></cfpb-icon>
         </a>
     </nav>
   </div>

@@ -9,7 +9,7 @@
 @use '@cfpb/cfpb-design-system/src/abstracts' as *;
 
 #claiming-social-security {
-  .input-labels__block .cf-icon-svg {
+  .input-labels__block cfpb-icon {
     margin-top: 1px;
   }
 
