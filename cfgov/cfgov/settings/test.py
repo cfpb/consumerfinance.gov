@@ -40,10 +40,6 @@ BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 GOVDELIVERY_API = "core.govdelivery.MockGovDelivery"
 
-STATICFILES_DIRS += [
-    PROJECT_ROOT.joinpath("core", "testutils"),
-]
-
 FLAG_SOURCES = ("flags.sources.SettingsFlagsSource",)
 
 # We use a custom MEDIA_ROOT for testing so that tests that create images and
