@@ -28,6 +28,17 @@ class PurgeCacheTestCase(TestCase):
         self.assertIn("https://server/bar", MOCK_PURGED)
         self.assertIn("https://server/foo", MOCK_PURGED)
 
+    def test_purge_with_multiple_url_params(self):
+        call_command(
+            "purge_cache",
+            "--url",
+            "https://server/foo",
+            "--url",
+            "https://server/bar",
+        )
+        self.assertIn("https://server/bar", MOCK_PURGED)
+        self.assertIn("https://server/foo", MOCK_PURGED)
+
     def test_purge_with_cache_tag(self):
         call_command(
             "purge_cache",
@@ -37,6 +48,19 @@ class PurgeCacheTestCase(TestCase):
                 "complaints",
                 "foo",
             ],
+        )
+        self.assertIn("complaints", MOCK_PURGED)
+        self.assertIn("foo", MOCK_PURGED)
+
+    def test_purge_with_multiple_cache_tag_params(self):
+        call_command(
+            "purge_cache",
+            "--backend",
+            "akamai",
+            "--cache-tag",
+            "complaints",
+            "--cache-tag",
+            "foo",
         )
         self.assertIn("complaints", MOCK_PURGED)
         self.assertIn("foo", MOCK_PURGED)
@@ -63,6 +87,18 @@ class PurgeCacheTestCase(TestCase):
         err = StringIO()
         call_command("purge_cache", "--all", "--backend", "other", stderr=err)
         self.assertIn("Cannot purge all from backend: other", err.getvalue())
+
+    def test_purge_with_multiple_backend_params(self):
+        call_command(
+            "purge_cache",
+            "--backend",
+            "akamai",
+            "--backend",
+            "other",
+            "--url",
+            "https://server/foo",
+        )
+        self.assertIn("https://server/foo", MOCK_PURGED)
 
     def test_purge_nebackend(self):
         err = StringIO()
