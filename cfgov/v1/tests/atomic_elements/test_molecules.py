@@ -1,9 +1,12 @@
+import datetime
 from io import StringIO
 
+from django.template import engines
 from django.test import SimpleTestCase, TestCase
 
 from wagtail.blocks import StreamValue
 from wagtail.blocks.struct_block import StructBlockValidationError
+from wagtail.test.utils.wagtail_tests import WagtailTestUtils
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -295,3 +298,136 @@ class RSSFeedTests(TestCase):
 
         html = self.render(context={"page": child_page})
         self.assertHTMLContainsLinkToPageFeed(html, child_page)
+
+
+class PaginationTests(WagtailTestUtils, SimpleTestCase):
+    def setUp(self):
+        self.jinja_engine = engines["wagtail-env"]
+        self.template_source = """
+{% import "v1/includes/molecules/pagination.html" as pagination %}
+{{ pagination.render(
+    total_pages, current_page, fragment_id, index, extra_params
+) }}
+""".strip()
+
+    def render(self, **kwargs):
+        template = self.jinja_engine.from_string(self.template_source)
+        return template.render(kwargs)
+
+    def test_no_output_when_only_one_page(self):
+        html = self.render(total_pages=1, current_page=1)
+        self.assertEqual(html.strip(), "")
+
+    def test_no_output_when_current_page_beyond_total(self):
+        html = self.render(total_pages=3, current_page=4)
+        self.assertEqual(html.strip(), "")
+
+    def test_middle_page_has_both_prev_and_next_links(self):
+        html = self.render(total_pages=3, current_page=2)
+        self.assertTagInHTML(
+            '<a class="a-btn m-pagination__btn-prev" href="?page=1">', html
+        )
+        self.assertTagInHTML(
+            '<a class="a-btn m-pagination__btn-next" href="?page=3">', html
+        )
+
+    def test_first_page_disables_prev_link(self):
+        html = self.render(total_pages=3, current_page=1)
+        self.assertTagInHTML(
+            '<a class="a-btn a-btn--disabled m-pagination__btn-prev">', html
+        )
+        self.assertTagInHTML(
+            '<a class="a-btn m-pagination__btn-next" href="?page=2">', html
+        )
+
+    def test_last_page_disables_next_link(self):
+        html = self.render(total_pages=3, current_page=3)
+        self.assertTagInHTML(
+            '<a class="a-btn m-pagination__btn-prev" href="?page=2">', html
+        )
+        self.assertTagInHTML(
+            '<a class="a-btn a-btn--disabled m-pagination__btn-next">', html
+        )
+
+    def test_fragment_id_appended_to_links(self):
+        html = self.render(
+            total_pages=3, current_page=2, fragment_id="my-results"
+        )
+        self.assertIn('href="?page=1#my-results">', html)
+        self.assertIn('href="?page=3#my-results">', html)
+
+    def test_index_used_in_current_page_field_id(self):
+        html = self.render(total_pages=3, current_page=2, index=7)
+        self.assertIn('id="m-pagination__current-page-7"', html)
+
+    def test_string_extra_param_included_in_links_and_hidden_field(self):
+        html = self.render(
+            total_pages=3, current_page=2, extra_params={"q": "hello world"}
+        )
+        self.assertIn('href="?page=1&q=hello world">', html)
+        self.assertIn('href="?page=3&q=hello world">', html)
+        self.assertTagInHTML(
+            '<input type="hidden" name="q" value="hello world">', html
+        )
+
+    def test_list_extra_param_repeated_for_each_value(self):
+        html = self.render(
+            total_pages=3,
+            current_page=2,
+            extra_params={"categories": ["a", "b"]},
+        )
+        self.assertIn('href="?page=1&categories=a&categories=b">', html)
+        self.assertTagInHTML(
+            '<input type="hidden" name="categories" value="a">', html
+        )
+        self.assertTagInHTML(
+            '<input type="hidden" name="categories" value="b">', html
+        )
+
+    def test_empty_list_extra_param_produces_nothing(self):
+        html = self.render(
+            total_pages=3, current_page=2, extra_params={"categories": []}
+        )
+        self.assertNotIn("categories", html)
+
+    def test_non_string_scalar_extra_param_is_stringified(self):
+        html = self.render(
+            total_pages=3, current_page=2, extra_params={"results": 50}
+        )
+        self.assertIn("results=50", html)
+
+    def test_date_extra_param_is_stringified(self):
+        html = self.render(
+            total_pages=3,
+            current_page=2,
+            extra_params={"from_date": datetime.date(2024, 1, 15)},
+        )
+        self.assertIn("from_date=2024-01-15", html)
+
+    def test_none_and_empty_string_extra_params_are_omitted(self):
+        html = self.render(
+            total_pages=3,
+            current_page=2,
+            extra_params={"from_date": None, "title": ""},
+        )
+        self.assertNotIn("from_date", html)
+        self.assertNotIn("title", html)
+
+    def test_page_and_partial_keys_are_always_excluded(self):
+        html = self.render(
+            total_pages=3,
+            current_page=2,
+            extra_params={"page": 99, "partial": True, "q": "hi"},
+        )
+        self.assertNotIn("page=99", html)
+        self.assertNotIn("partial", html)
+        self.assertIn("q=hi", html)
+
+    def test_extra_param_values_are_html_escaped(self):
+        html = self.render(
+            total_pages=3,
+            current_page=2,
+            extra_params={"q": '"><script>alert(1)</script>'},
+        )
+        self.assertNotIn("<script>", html)
+        self.assertIn("&#34;&gt;&lt;script&gt;alert(1)&lt;/script&gt;", html)

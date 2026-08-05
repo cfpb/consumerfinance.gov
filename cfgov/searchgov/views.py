@@ -120,6 +120,7 @@ class SearchView(TranslatedTemplateView):
             "current_page": current_page,
             "recommended": recommended,
             "results": results,
+            "pagination_params": {"q": query} if query else {},
         }
 
         if form.cleaned_data.get("format") == "json":

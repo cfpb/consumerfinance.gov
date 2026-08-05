@@ -259,3 +259,26 @@ class FilterableResultsRenderingTests(
         #   2. Fetching any banners associated with the page.
         with self.assertNumQueries(2):
             response.render()
+
+    def test_pagination_params_preserves_original_categories(self):
+        page = self.page_tree[0]
+        request = RequestFactory().get("/?categories=blog")
+
+        context = page.get_context(request)
+
+        self.assertEqual(context["pagination_params"]["categories"], ["blog"])
+
+    def test_pagination_params_uses_cleaned_dates(self):
+        page = self.page_tree[0]
+        request = RequestFactory().get("/?to_date=2016")
+
+        context = page.get_context(request)
+        cleaned_data = context["form"].cleaned_data
+
+        self.assertEqual(
+            context["pagination_params"]["to_date"], cleaned_data["to_date"]
+        )
+        self.assertEqual(
+            context["pagination_params"]["from_date"],
+            cleaned_data["from_date"],
+        )

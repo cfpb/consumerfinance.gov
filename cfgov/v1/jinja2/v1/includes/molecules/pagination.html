@@ -20,13 +20,34 @@
    index:        A unique number given to render the form and its fields with.
                  Default is 0.
 
+   extra_params: A dict of additional query parameters to carry forward onto
+                 the prev/next/page links, e.g. the caller's active search or
+                 filter values. Each value may be a single string or a list
+                 of strings (for repeated params).
+
    ========================================================================== #}
 
-{% macro render(total_pages, current_page, fragment_id='', index=0) %}
+{%- macro render(
+    total_pages, current_page, fragment_id='', index=0, extra_params=none
+) %}
 {% if total_pages > 1 and current_page <= total_pages %}
-{% from 'v1/includes/macros/util/url_parameters.html' import url_parameters %}
 
 {% set fragment_id = '#' + fragment_id if fragment_id else '' %}
+
+{%- set pairs = [] %}
+{%- for key, values in (extra_params or {}).items() if key not in ('page', 'partial') %}
+    {%- for value in (
+        [values] if values is string or values is not iterable else values
+    ) %}
+        {%- if value is not none and value != '' %}
+            {%- do pairs.append((key, value)) %}
+        {%- endif %}
+    {%- endfor %}
+{%- endfor -%}
+
+{%- set extra_qs %}
+    {%- for key, value in pairs %}&{{ key }}={{ value }}{% endfor %}
+{%- endset -%}
 
     <nav class="m-pagination"
          role="navigation"
@@ -36,7 +57,7 @@
         <a class="a-btn
                   m-pagination__btn-prev"
            href="?page={{ (current_page - 1) ~
-                          url_parameters(request.GET) ~
+                          extra_qs ~
                           fragment_id }}">
         {%- else %}
         <a class="a-btn
@@ -48,15 +69,9 @@
         </a>
 
         <form class="m-pagination__form" action="{{ fragment_id }}">
-            {% for (key, value_as_list) in request.GET.lists() %}
-                {% for list_item in value_as_list %}
-                    {% if list_item != '' and key != 'page' %}
-                        <input type="hidden"
-                               name="{{ key }}"
-                               value="{{ list_item }}">
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
+            {% for key, value in pairs -%}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {%- endfor %}
             <label class="m-pagination__label">
                 {{ _('Page') }}
                 <span class="u-visually-hidden">
@@ -85,7 +100,7 @@
         <a class="a-btn
                   m-pagination__btn-next"
            href="?page={{ (current_page + 1) ~
-                          url_parameters(request.GET) ~
+                          extra_qs ~
                           fragment_id }}">
         {%- else %}
         <a class="a-btn

@@ -175,10 +175,18 @@ class AbstractFilterablePage(ShareableRoutablePageMixin, models.Model):
             filtered_qs_page, many=True, context={"request": request}
         )
 
+        # cleaned_data["categories"] is expanded from shorthand groups
+        # like "blog" into a set of subcategory slugs, which is what the
+        # search backend filters on. Pagination query strings should include
+        # the original shorthand, not the expanded set.
+        pagination_params = dict(form.cleaned_data)
+        pagination_params["categories"] = form.data.get("categories", [])
+
         return {
             "paginator": paginator,
             "page_number": filtered_qs_page.number,
             "results": serializer.data,
+            "pagination_params": pagination_params,
         }
 
     def set_do_not_index(self, field, value):

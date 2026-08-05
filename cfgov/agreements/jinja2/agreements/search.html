@@ -49,7 +49,7 @@
         </div>
         {% if page.has_next() or page.has_previous() %}
         <div class="block block--flush-top block--flush-bottom block--padded-top">
-            {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+            {% import 'v1/includes/molecules/pagination.html' as pagination %}
             {{ pagination.render(
                 page.paginator.num_pages,
                 page.number,
