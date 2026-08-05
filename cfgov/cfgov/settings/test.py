@@ -40,10 +40,6 @@ BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 GOVDELIVERY_API = "core.govdelivery.MockGovDelivery"
 
-STATICFILES_FINDERS += [
-    "core.testutils.mock_staticfiles.MockStaticfilesFinder",
-]
-
 STATICFILES_DIRS += [
     PROJECT_ROOT.joinpath("core", "testutils"),
 ]
