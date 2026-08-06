@@ -1,6 +1,6 @@
-const dispatch = jest.fn();
-const subscribe = jest.fn();
-const getState = jest.fn();
+const dispatch = vi.fn();
+const subscribe = vi.fn();
+const getState = vi.fn();
 let subscriberFn;
 let state = {};
 

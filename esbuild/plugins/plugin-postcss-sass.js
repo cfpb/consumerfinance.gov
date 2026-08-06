@@ -14,6 +14,7 @@ const loadPaths = [
 /**
  * Convert SCSS to CSS.
  * @param {string} filePath - The absolute file system path.
+ * @returns {string} Converted CSS text.
  */
 async function compileSass(filePath) {
   const result = sass.compile(filePath, { loadPaths });
@@ -26,6 +27,7 @@ const postCssProcessor = postcss([autoprefixer, cssnano]);
 /**
  * @param {string} source - Raw CSS, either from SCSS or from disk.
  * @param {string} from - The absolute file system path.
+ * @returns {Promise} Returns a LazyResult Promise proxy from postcss.process.
  */
 async function processCss(source, from) {
   return postCssProcessor.process(source, { from });

@@ -1,9 +1,12 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
 import '../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js';
+
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
+const fetchMocker = createFetchMock(vi);
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+fetchMocker.enableMocks();
 
 const HTML_SNIPPET = `
   <form action="/search" data-js-hook="behavior_submit-search">
@@ -45,7 +48,7 @@ const HTML_SNIPPET = `
   <div id="regs3k-results"></div>
 `;
 
-global.console = { error: jest.fn(), log: jest.fn() };
+global.console = { error: vi.fn(), log: vi.fn() };
 
 describe('The Regs3K search page', () => {
   beforeEach(() => {
@@ -60,7 +63,7 @@ describe('The Regs3K search page', () => {
   it('should handle search form submissions', () => {
     const implSymbol = Object.getOwnPropertySymbols(window.location)[0];
 
-    const assign = jest
+    const assign = vi
       .spyOn(window.location[implSymbol], 'assign')
       .mockImplementation(() => {});
 
@@ -69,7 +72,9 @@ describe('The Regs3K search page', () => {
 
       simulateEvent('submit', form);
 
-      expect(assign).toBeCalledWith('http://localhost/?q=money&regs=1002');
+      expect(assign).toHaveBeenCalledWith(
+        'http://localhost/?q=money&regs=1002',
+      );
     } finally {
       assign.mockRestore();
     }

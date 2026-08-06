@@ -15,7 +15,7 @@ const props = [
 
 for (let i = 0; i < props.length; i++) {
   const propName = props[i];
-  chartMock[propName] = jest.fn(() => chartMock);
+  chartMock[propName] = vi.fn(() => chartMock);
 }
 
 export default chartMock;

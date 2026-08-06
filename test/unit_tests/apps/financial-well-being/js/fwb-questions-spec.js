@@ -1,7 +1,6 @@
 import fwbQuestions from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-questions.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
-import { jest } from '@jest/globals';
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 let formDom;
 let submitBtnDom;

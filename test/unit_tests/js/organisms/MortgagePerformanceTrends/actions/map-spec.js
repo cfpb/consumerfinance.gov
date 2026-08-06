@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
 const mockAPIResponse = {
@@ -69,7 +68,7 @@ describe('Mortgage Performance map action creators', () => {
 
   describe('getMetroData', () => {
     beforeEach(() => {
-      global.fetch = jest.fn(() =>
+      global.fetch = vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getMetroData()),
         }),
@@ -77,7 +76,7 @@ describe('Mortgage Performance map action creators', () => {
     });
 
     xit('should dispatch actions to fetch metros', async () => {
-      const dispatch = jest.fn();
+      const dispatch = vi.fn();
       await actions.fetchMetros('AL', true)(dispatch);
       expect(dispatch).toHaveBeenCalledTimes(3);
     });
@@ -87,7 +86,7 @@ describe('Mortgage Performance map action creators', () => {
     });
 
     it('should not require map zoom after fetching metros', async () => {
-      const dispatch = jest.fn();
+      const dispatch = vi.fn();
       await actions.fetchMetros('AL', false)(dispatch);
       expect(dispatch).toHaveBeenCalledTimes(2);
     });
@@ -95,7 +94,7 @@ describe('Mortgage Performance map action creators', () => {
 
   describe('getCountyData', () => {
     beforeEach(() => {
-      global.fetch = jest.fn(() =>
+      global.fetch = vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(mockAPIResponse.getCountyData()),
         }),
@@ -103,13 +102,13 @@ describe('Mortgage Performance map action creators', () => {
     });
 
     it('should dispatch actions to fetch counties', async () => {
-      const dispatch = jest.fn();
+      const dispatch = vi.fn();
       await actions.fetchCounties('AL', true)(dispatch);
       expect(dispatch).toHaveBeenCalledTimes(3);
     });
 
     xit('should not require map zoom after fetching counties', async () => {
-      const dispatch = jest.fn();
+      const dispatch = vi.fn();
       await actions.fetchCounties('AL', false)(dispatch);
       expect(dispatch).toHaveBeenCalledTimes(2);
     });

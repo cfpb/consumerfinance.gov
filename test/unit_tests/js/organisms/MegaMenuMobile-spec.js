@@ -7,20 +7,19 @@ describe('MegaMenuMobile', () => {
   let megaMenu;
 
   beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 420,
+    });
+
     document.body.innerHTML = HTML_SNIPPET;
     navElem = document.querySelector('.o-mega-menu');
-    window.innerWidth = 420;
     megaMenu = new MegaMenu(navElem);
     megaMenu.init();
   });
 
   describe('sub-menu click handler', () => {
-    /* CAUTION: With the addition of manually firing the transitionend event
-       for some reason this test fails if it's not the first test.
-       Revisit changing the order of this test when JSDom supports transition
-       events fully.
-       See https://github.com/jsdom/jsdom/issues/1781
-    */
     it('should expand on the first level sub-menu button click', (done) => {
       const menuTrigger = navElem.querySelector('.o-mega-menu__trigger');
       const subTrigger = navElem.querySelector(
@@ -35,18 +34,11 @@ describe('MegaMenuMobile', () => {
        */
       function resolveFirstClick() {
         simulateEvent('click', subTrigger);
-
-        /* The transitionend event should fire on its own,
-           but for some reason the transitionend event is not firing within JSDom.
-           In a future JSDom update this should be revisited.
-           See https://github.com/jsdom/jsdom/issues/1781
-        */
-        const event = new Event('transitionend');
-        event.propertyName = 'transform';
-        firstPanel.dispatchEvent(event);
-
         isExpanded = firstPanel.getAttribute('data-open');
-        expect(isExpanded).toEqual('true');
+        setTimeout(() => {
+          expect(isExpanded).toEqual('true');
+          done();
+        }, 200);
 
         window.setTimeout(resolveSecondClick, 200);
       }
@@ -55,15 +47,6 @@ describe('MegaMenuMobile', () => {
        * Resolve second click.
        */
       function resolveSecondClick() {
-        /* The transitionend event should fire on its own,
-           but for some reason the transitionend event is not firing within JSDom.
-           In a future JSDom update this should be revisited.
-           See https://github.com/jsdom/jsdom/issues/1781
-        */
-        const event = new Event('transitionend');
-        event.propertyName = 'transform';
-        secondPanel.dispatchEvent(event);
-
         isExpanded = secondPanel.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
         done();

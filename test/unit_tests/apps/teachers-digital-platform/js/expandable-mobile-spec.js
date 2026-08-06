@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import beforeExpandableTransitionInit, {
   setInnerWidth,
   MOBILE_COLLAPSED_CLASS,
@@ -43,7 +42,7 @@ const HTML_SNIPPET = `
   </div>
 `;
 
-global.console = { error: jest.fn(), log: jest.fn() };
+global.console = { error: vi.fn(), log: vi.fn() };
 
 let expandableDiv;
 const OPEN_DEFAULT_CLASS = 'o-expandable__content--onload-open';

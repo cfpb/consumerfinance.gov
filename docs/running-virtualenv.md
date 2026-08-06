@@ -127,8 +127,7 @@ The following yarn tasks are available:
 yarn build               # Build the JavaScript, SCSS, and frontend assets.
 yarn watch               # Run the build then watch JS and SCSS changes
 yarn lint                # Run frontend linting
-yarn jest                # Run frontend tests
-yarn test                # Run both
+yarn test                # Run frontend tests
 yarn cy                  # Run Cypress integration tests
 ```
 

@@ -1,8 +1,11 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js';
+
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
+const fetchMocker = createFetchMock(vi);
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+fetchMocker.enableMocks();
 
 const HTML_SNIPPET = `
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
@@ -147,7 +150,7 @@ const HTML_SNIPPET = `
   </div>
 `;
 
-global.console = { error: jest.fn(), log: jest.fn() };
+global.console = { error: vi.fn(), log: vi.fn() };
 
 describe('The TDP search page', () => {
   beforeEach(() => {

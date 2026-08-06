@@ -5,9 +5,12 @@ import {
   updateDataFromApi,
 } from '../../../../../../cfgov/unprocessed/apps/retirement/js/data';
 import { r1, r2, r3 } from './responses.js';
-import fetchMock from 'jest-fetch-mock';
 
-fetchMock.enableMocks();
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
+const fetchMocker = createFetchMock(vi);
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+fetchMocker.enableMocks();
 
 describe('fetchApiData', function () {
   it('fetches data', function () {

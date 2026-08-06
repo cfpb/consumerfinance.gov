@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import {
   debounce,
   getCommentMarker,
@@ -52,14 +51,17 @@ const HTML_SNIPPET3 = `
 describe('The Regs3K permalinks utils', () => {
   describe('Debounce', () => {
     beforeEach(() => {
-      global.spy = (done) => {
-        if (done) done();
-      };
+      vi.useFakeTimers();
+      global.spy = vi.fn();
     });
 
-    it('should only call a function once within a given timespan', (done) => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('should only call a function once within a given timespan', () => {
       const event = new Event('resize', { bubbles: true, cancelable: true });
-      jest.spyOn(global, 'spy');
+      vi.spyOn(global, 'spy');
 
       debounce('resize', 100, global.spy);
 
@@ -68,16 +70,15 @@ describe('The Regs3K permalinks utils', () => {
       window.dispatchEvent(event);
       window.dispatchEvent(event);
 
+      vi.advanceTimersByTime(200);
+
       // It should have only been called once
-      setTimeout(() => {
-        expect(global.spy).toHaveBeenCalledTimes(1);
-        done();
-      }, 200);
+      expect(global.spy).toHaveBeenCalledTimes(1);
     });
 
-    it("should not call a function if the timespan hasn't passed", (done) => {
+    it("should not call a function if the timespan hasn't passed", () => {
       const event = new Event('scroll', { bubbles: true, cancelable: true });
-      jest.spyOn(global, 'spy');
+      vi.spyOn(global, 'spy');
 
       debounce('scroll', 1000, global.spy);
 
@@ -86,10 +87,9 @@ describe('The Regs3K permalinks utils', () => {
       window.dispatchEvent(event);
       window.dispatchEvent(event);
 
-      setTimeout(() => {
-        expect(global.spy).toHaveBeenCalledTimes(0);
-        done();
-      }, 200);
+      vi.advanceTimersByTime(200);
+
+      expect(global.spy).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -173,17 +173,25 @@ describe('The Regs3K permalinks utils', () => {
 
   describe('URL hash updater', () => {
     it('should update add the paragraph ID to the URL', () => {
-      global.history.replaceState = jest.fn();
+      global.history.replaceState = vi.fn();
 
       document.body.innerHTML = HTML_SNIPPET1;
       updateParagraphPositions();
       updateUrlHash();
-      expect(global.history.replaceState).toBeCalledWith(null, null, '#z-14-i');
+      expect(global.history.replaceState).toHaveBeenCalledWith(
+        null,
+        null,
+        '#z-14-i',
+      );
 
       document.body.innerHTML = HTML_SNIPPET2;
       updateParagraphPositions();
       updateUrlHash();
-      expect(global.history.replaceState).toBeCalledWith(null, null, '#e');
+      expect(global.history.replaceState).toHaveBeenCalledWith(
+        null,
+        null,
+        '#e',
+      );
     });
   });
 
