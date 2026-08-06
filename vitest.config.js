@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitest/config';
-import path from 'node:path';
 
 const dirname = import.meta.dirname;
 
