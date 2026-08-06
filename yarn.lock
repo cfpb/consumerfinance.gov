@@ -2581,12 +2581,12 @@ __metadata:
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-cypress: "npm:6.4.3"
     eslint-plugin-import: "npm:2.32.0"
-    eslint-plugin-jsdoc: "npm:63.3.2"
+    eslint-plugin-jsdoc: "npm:63.3.3"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.5"
     eslint-plugin-vitest-globals: "npm:1.6.1"
     fancy-log: "npm:2.0.0"
-    globals: "npm:17.8.0"
+    globals: "npm:17.9.0"
     highcharts: "npm:7.2.2"
     jsdom: "npm:30.0.1"
     lit: "npm:3.3.3"
@@ -3873,9 +3873,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:63.3.2":
-  version: 63.3.2
-  resolution: "eslint-plugin-jsdoc@npm:63.3.2"
+"eslint-plugin-jsdoc@npm:63.3.3":
+  version: 63.3.3
+  resolution: "eslint-plugin-jsdoc@npm:63.3.3"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.91.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
@@ -3893,7 +3893,7 @@ __metadata:
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10c0/bc0649d035b84d4f01d620289c58994b57e6d541c84250c4bcfc71a1e64ed8fdbc359ec181ba9fdcb3b2339642840d6f77339047f6d821ec1cb756a090672612
+  checksum: 10c0/cf137600ecde40dafd65f82f0b425fb92c36f31da807990f2645a745e497ecd07c468b9eab0848c7acecf3fb4d22a6af3a65a76f001dfd496cf7fc2d4a26913c
   languageName: node
   linkType: hard
 
@@ -4562,7 +4562,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:17.8.0, globals@npm:^17.7.0":
+"globals@npm:17.9.0":
+  version: 17.9.0
+  resolution: "globals@npm:17.9.0"
+  checksum: 10c0/776116bffb916e462d548c26a44c9a5d8f4e551935a883991e9f5d68cbcb21b63e4c688e36bbc564f97d3025e304d8b2bb0a611ecf944825aeee164898dcfbdd
+  languageName: node
+  linkType: hard
+
+"globals@npm:^17.7.0":
   version: 17.8.0
   resolution: "globals@npm:17.8.0"
   checksum: 10c0/e31b36cef3befd446487674dc6ca7b8f8e62a3b76aadd975dbf80ffa732366b3ac58df8941999eb6b1406d97480103711db85d2a49c955da47ff5ec688bee9b5
