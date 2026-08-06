@@ -370,7 +370,7 @@ use both `beforeAll` and `beforeEach` inside the root `describe` block to
 do a variable definition for all tests at the beginning of the suite
 and reset the `dataLayer` before each test, respectively.
 
-[Check out the Jest documentation on “Setup and teardown” methods.](https://vitest.dev/guide/learn/setup-teardown)
+[Check out the Vitest documentation on “Setup and teardown” methods.](https://vitest.dev/guide/learn/setup-teardown)
 
 A common structure when the DOM is involved
 is to create a constant representing an HTML snippet to test,
