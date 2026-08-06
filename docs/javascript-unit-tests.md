@@ -359,7 +359,7 @@ if each test requires different markup.
 #### Setup and teardown methods
 
 If you will need to leverage the same test data across different tests,
-Jest has setup and teardown methods, such as
+Vitest has setup and teardown methods, such as
 [`beforeEach` and `afterEach`](https://vitest.dev/api/test.html#test-beforeeach), or [`beforeAll` and `afterAll`](https://vitest.dev/api/test.html#test-beforeall),
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
