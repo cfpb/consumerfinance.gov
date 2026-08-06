@@ -206,7 +206,8 @@ for additional commands to run tests.
 ### File structure (basic layout of a test file)
 
 In order to make the `sample-spec.js` more meaningful to your own use case,
-you’ll need to know how to structure a unit test using Jest methods.
+In order to make the `sample-spec.js` more meaningful to your own use case,
+you’ll need to know how to structure a unit test using Vitest methods.
 Let’s take a look at the structure of our very basic sample test file.
 
 #### Loading dependencies
