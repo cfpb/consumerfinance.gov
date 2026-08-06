@@ -172,7 +172,7 @@
                 <h1 id="javascript-unit-tests">JavaScript Unit Tests<a class="headerlink" href="#javascript-unit-tests" title="Permanent link">¶</a></h1>
 <p>This page provides instructions for writing and running
 JavaScript (JS) unit tests in consumerfinance.gov.</p>
-<p><a href="https://jestjs.io/docs/en/getting-started">Jest</a> is the framework we use
+<p><a href="https://vitest.dev/guide/">Vitest</a> is the framework we use
 for writing and running JavaScript unit tests.
 If you’re not familiar with it,
 it would be a good idea to peruse their docs before diving in here.</p>
@@ -198,25 +198,25 @@ it would be a good idea to peruse their docs before diving in here.</p>
 </ol>
 <h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
 <p>To run all of the unit tests:</p>
-<pre class="highlight"><code class="language-bash">yarn jest</code></pre>
-<p>To first lint all files and then run tests:</p>
 <pre class="highlight"><code class="language-bash">yarn test</code></pre>
+<p>To first lint all files and then run tests:</p>
+<pre class="highlight"><code class="language-bash">yarn lint &amp;&amp; yarn test</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To run a single test, or a directory of tests, you can run, for example:</p>
 <pre class="highlight"><code class="language-bash"># Single test file:
-yarn jest Notification-spec.js
+yarn test Notification-spec.js
 # Equivalent to:
-yarn jest test/unit_tests/js/molecules/Notification-spec.js
+yarn test test/unit_tests/js/molecules/Notification-spec.js
 
 # Directory:
-yarn jest organisms
+yarn test organisms
 # Equivalent to:
-yarn jest test/unit_tests/js/organisms
+yarn test test/unit_tests/js/organisms
 </code></pre>
 </div>
-<p>Because we invoke jest directly, you can pass any command-line args it accepts
-to filter your output or to target specific tests <a href="https://jestjs.io/docs/cli">see the docs for more</a>.</p>
+<p>Because we invoke vitest directly, you can pass any command-line args it accepts
+to filter your output or to target specific tests <a href="https://vitest.dev/guide/cli">see the docs for more</a>.</p>
 <h2 id="where-to-find-tests">Where to find tests<a class="headerlink" href="#where-to-find-tests" title="Permanent link">¶</a></h2>
 <p>The following links list out the main directories containing tests
 (as of January 2019, this page’s initial publication date).</p>
@@ -307,7 +307,7 @@ to save and commit your changes.</p>
 <ol>
 <li>Run your sample test using</li>
 </ol>
-<pre class="highlight"><code class="language-bash">yarn jest sample-spec.js</code></pre>
+<pre class="highlight"><code class="language-bash">yarn test sample-spec.js</code></pre>
 <p>(substituting your own filename).</p>
 <p>You should see output like this:</p>
 <p><img alt="Console output for failing unit test: &quot;sample should return a string with expected value&quot;" src="../img/js-unit-test-output-fail.png" /></p>
@@ -330,7 +330,8 @@ to save and commit your changes.</p>
 for additional commands to run tests.</p>
 <h3 id="file-structure-basic-layout-of-a-test-file">File structure (basic layout of a test file)<a class="headerlink" href="#file-structure-basic-layout-of-a-test-file" title="Permanent link">¶</a></h3>
 <p>In order to make the <code>sample-spec.js</code> more meaningful to your own use case,
-you’ll need to know how to structure a unit test using Jest methods.
+In order to make the <code>sample-spec.js</code> more meaningful to your own use case,
+you’ll need to know how to structure a unit test using Vitest methods.
 Let’s take a look at the structure of our very basic sample test file.</p>
 <h4 id="loading-dependencies">Loading dependencies<a class="headerlink" href="#loading-dependencies" title="Permanent link">¶</a></h4>
 <p>Line 1 of any spec file will use an <code>import</code> statement to
@@ -344,8 +345,8 @@ import { sample } from '../../../../cfgov/unprocessed/js/modules/sample.js';</co
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">Read the <code>import</code> reference guide on MDN</a>
 on how to implement <code>import</code> for different use cases.</p>
 <h4 id="the-describe-function">The <code>describe</code> function<a class="headerlink" href="#the-describe-function" title="Permanent link">¶</a></h4>
-<p>In Jest (whose syntax is based on Jasmine),
-<a href="https://jestjs.io/docs/en/api#describename-fn"><code>describe</code> blocks</a>
+<p>In Vitest,
+<a href="https://vitest.dev/api/describe"><code>describe</code> blocks</a>
 serve as organizational structures that you can use
 to outline the methods you need in your JS module.</p>
 <p>The root <code>describe</code> method is where we put
@@ -394,11 +395,11 @@ during the refactor stage of writing code.</p>
 <h4 id="individual-tests">Individual tests<a class="headerlink" href="#individual-tests" title="Permanent link">¶</a></h4>
 <p>Within a <code>describe</code> block, individual tests are encapsulated by <code>it</code> methods,
 which is an alias of
-<a href="https://jestjs.io/docs/en/api#testname-fn-timeout">Jest’s <code>test</code> method</a>.</p>
+<a href="https://vitest.dev/api/test.html">Vitest' <code>test</code> method</a>.</p>
 <p>Each test must include one or more assertions (usually only one)
 that confirm that the result of executing some code is what you expected.
-These are called <a href="https://jestjs.io/docs/en/using-matchers">“matchers”</a>
-in Jest parlance, and they all follow this format:</p>
+These are called <a href="https://vitest.dev/guide/learn/matchers">“matchers”</a>
+in Vitest parlance, and they all follow this format:</p>
 <pre class="highlight"><code class="language-js">expect(someValue).someKindOfComparisonWith(someOtherValue);</code></pre>
 <p>For example, let’s take another look at the sample tests we wrote above:</p>
 <pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
@@ -427,9 +428,9 @@ match <em>(<code>toBe</code>)</em> the <code>sampleString</code> and <code>sampl
 that we defined in the tests.</p>
 <p>There are many kinds of assertions you can use
 besides the simple equality comparison of <code>toBe</code>.
-See <a href="https://jestjs.io/docs/en/using-matchers">the Jest Using Matchers guide</a>
+See <a href="https://vitest.dev/guide/learn/matchers">the Vitest Using Matchers guide</a>
 for a primer on them and
-<a href="https://jestjs.io/docs/en/expect">the Jest <code>expect</code> API docs</a>
+<a href="https://vitest.dev/api/expect.html">the Vitest <code>expect</code> API docs</a>
 for the full list of its matchers.</p>
 <h3 id="providing-test-data">Providing test data<a class="headerlink" href="#providing-test-data" title="Permanent link">¶</a></h3>
 <p>The first principle of test data for unit tests is to
@@ -443,8 +444,8 @@ This can include HTML markup for DOM manipulation tests,
 if each test requires different markup.</p>
 <h4 id="setup-and-teardown-methods">Setup and teardown methods<a class="headerlink" href="#setup-and-teardown-methods" title="Permanent link">¶</a></h4>
 <p>If you will need to leverage the same test data across different tests,
-Jest has setup and teardown methods, such as
-<a href="https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests"><code>beforeEach</code> and <code>afterEach</code></a>, or <a href="https://jestjs.io/docs/en/setup-teardown#one-time-setup"><code>beforeAll</code> and <code>afterAll</code></a>,
+Vitest has setup and teardown methods, such as
+<a href="https://vitest.dev/api/test.html#test-beforeeach"><code>beforeEach</code> and <code>afterEach</code></a>, or <a href="https://vitest.dev/api/test.html#test-beforeall"><code>beforeAll</code> and <code>afterAll</code></a>,
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
 For example, the tests in
@@ -452,7 +453,7 @@ For example, the tests in
 use both <code>beforeAll</code> and <code>beforeEach</code> inside the root <code>describe</code> block to
 do a variable definition for all tests at the beginning of the suite
 and reset the <code>dataLayer</code> before each test, respectively.</p>
-<p><a href="https://jestjs.io/docs/en/setup-teardown">Check out the Jest documentation on “Setup and teardown” methods.</a></p>
+<p><a href="https://vitest.dev/guide/learn/setup-teardown">Check out the Vitest documentation on “Setup and teardown” methods.</a></p>
 <p>A common structure when the DOM is involved
 is to create a constant representing an HTML snippet to test,
 then – in a <code>beforeEach</code> or <code>beforeAll</code>
@@ -477,8 +478,8 @@ Inside each <code>it</code>, invoke the function
 with the input described in the <code>it</code> statement
 and use <code>expect</code> to check that you receive the desired result.</p>
 <h3 id="testing-dom-manipulation">Testing DOM manipulation<a class="headerlink" href="#testing-dom-manipulation" title="Permanent link">¶</a></h3>
-<p><a href="https://jestjs.io/en/">Jest</a>, the JavaScript testing framework we use,
-<a href="https://jestjs.io/docs/en/configuration#testenvironment-string">includes jsdom</a>,
+<p><a href="https://vitest.dev">Vitest</a>, the JavaScript testing framework we use,
+<a href="https://vitest.dev/config/environment">includes jsdom</a>,
 which simulates a DOM environment as if you were in the browser.
 This means that we can call any
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM API</a>
