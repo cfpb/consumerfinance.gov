@@ -40,11 +40,12 @@
     .reg-checkbox {
       display: inline-block;
     }
-    .num-results {
-      float: right;
-    }
     .o-form__group {
       margin-bottom: 0;
+    }
+    .m-list--col-2 li {
+      display: flex;
+      justify-content: space-between;
     }
 
     // TODO: Create sidebar filter pattern and remove expandable customizations.

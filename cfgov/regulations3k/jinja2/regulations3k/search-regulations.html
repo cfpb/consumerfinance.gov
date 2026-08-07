@@ -75,7 +75,7 @@
                         <input type="hidden" name="q" value="{{ page.results.search_query }}">
                         {% endif %}
                         <p> </p>
-                        <ul class="m-list m-list--unstyled">
+                        <ul class="m-list m-list--unstyled m-list--col-2">
                         {% for reg in page.results.all_regs %}
                             {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
                             <li>
@@ -87,7 +87,7 @@
                                     'name': 'regs',
                                     'selected': reg.selected
                                 }) }}
-                                <div class="num-results">{{ reg.num_results }}</div>
+                                <div>{{ reg.num_results }}</div>
                             </li>
                         {% endfor %}
                         </ul>
