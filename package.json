@@ -33,7 +33,7 @@
     "number-to-words": "1.2.4",
     "papaparse": "5.5.3",
     "patternomaly": "1.3.2",
-    "postcss": "8.5.24",
+    "postcss": "8.5.26",
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
@@ -47,11 +47,11 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-cypress": "6.4.3",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "63.3.2",
+    "eslint-plugin-jsdoc": "63.3.3",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-vitest-globals": "1.6.1",
-    "globals": "17.8.0",
+    "globals": "17.9.0",
     "jsdom": "30.0.1",
     "prettier": "3.9.6",
     "stylelint": "17.14.1",
@@ -75,5 +75,5 @@
     "cfgov/unprocessed/apps/*"
   ],
   "type": "module",
-  "packageManager": "yarn@4.17.0"
+  "packageManager": "yarn@4.18.0"
 }
