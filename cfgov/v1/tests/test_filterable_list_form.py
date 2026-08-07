@@ -26,7 +26,7 @@ from v1.models import (
     EventPage,
 )
 from v1.tests.wagtail_pages.helpers import publish_page
-from v1.util.categories import clean_categories
+from v1.util.categories import expand_shorthand_categories
 
 
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
@@ -135,12 +135,10 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("from_date", form._errors)
 
-    def test_clean_categories_converts_blog_subcategories_correctly(self):
-        form = self.setUpFilterableForm()
-        form.data = {"categories": ["blog"]}
-        clean_categories(selected_categories=form.data.get("categories"))
+    def test_expand_shorthand_categories_expands_blog_correctly(self):
+        result = expand_shorthand_categories(["blog"])
         self.assertEqual(
-            form.data["categories"],
+            result,
             [
                 "blog",
                 "at-the-cfpb",
@@ -151,12 +149,10 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
             ],
         )
 
-    def test_clean_categories_converts_reports_subcategories_correctly(self):
-        form = self.setUpFilterableForm()
-        form.data = {"categories": ["research-reports"]}
-        clean_categories(selected_categories=form.data.get("categories"))
+    def test_expand_shorthand_categories_expands_reports_correctly(self):
+        result = expand_shorthand_categories(["research-reports"])
         self.assertEqual(
-            form.data["categories"],
+            result,
             [
                 "research-reports",
                 "consumer-complaint",
@@ -169,6 +165,11 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
                 "issue-spotlight",
             ],
         )
+
+    def test_expand_shorthand_categories_does_not_mutate_input(self):
+        original = ["blog"]
+        expand_shorthand_categories(original)
+        self.assertEqual(original, ["blog"])
 
     def test_first_page_date(self):
         form = self.setUpFilterableForm()

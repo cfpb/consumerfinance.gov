@@ -115,6 +115,10 @@ class ActivityIndexPage(CFGOVPage):
             return {"facets": []}
 
         data = self.search_form.cleaned_data
+        pagination_params = {
+            key: data.get(key)
+            for key in ("q", "grade_level", "activity_duration", "topic")
+        }
         all_facets = copy.copy(self.activity_setups.facet_setup)
         selected_facets = {}
         card_setup = self.activity_setups.ordered_cards
@@ -145,6 +149,7 @@ class ActivityIndexPage(CFGOVPage):
                 "current_page": current_page,
                 "paginator": paginator,
                 "show_filters": bool(selected_facets),
+                "pagination_params": pagination_params,
             }
             return context_update
 
@@ -216,6 +221,7 @@ class ActivityIndexPage(CFGOVPage):
             "current_page": current_page,
             "paginator": paginator,
             "show_filters": bool(selected_facets),
+            "pagination_params": pagination_params,
         }
         return context_update
 

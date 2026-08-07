@@ -1,6 +1,6 @@
 {% import 'v1/includes/atoms/tag-filter.html' as tag %}
 {% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
-{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% import 'v1/includes/molecules/pagination.html' as pagination %}
 
 <div class="results__header">
     {% if current_count and current_count > 0 %}
@@ -51,6 +51,6 @@
     {% endfor %}
 </div>
 <div class="results__paginator">
-    {{ pagination.render( paginator.num_pages, current_page, '', '' ) }}
+    {{ pagination.render( paginator.num_pages, current_page, '', '', pagination_params ) }}
 </div>
 {% endif %}

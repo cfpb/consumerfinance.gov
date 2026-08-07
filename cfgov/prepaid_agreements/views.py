@@ -137,6 +137,12 @@ def index(request):
     paginator = Paginator(products.all(), 25)
     page = paginator.get_page(page_number)
 
+    pagination_params = dict(filters)
+    if search_term:
+        pagination_params["q"] = search_term
+    if search_field:
+        pagination_params["search_field"] = search_field
+
     return TemplateResponse(
         request,
         "prepaid_agreements/index.html",
@@ -153,6 +159,7 @@ def index(request):
             "search_field": search_field,
             "disclaimer_text": get_disclaimer_text(),
             "support_text": get_support_text(),
+            "pagination_params": pagination_params,
         },
     )
 

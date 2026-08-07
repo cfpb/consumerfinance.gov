@@ -2,7 +2,7 @@
 {% import 'v1/includes/atoms/radio-button.html' as radio %}
 {% import 'v1/includes/atoms/tag-filter.html' as tag %}
 {% import 'prepaid_agreements//search_result_item.html' as search_item %}
-{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% import 'v1/includes/molecules/pagination.html' as pagination %}
 {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% if current_count and current_count > 0  %}
@@ -168,7 +168,7 @@
     <div class="results__paginator">
         {% if paginator.num_pages > 1 %}
             <div class="block block--flush-top">
-                {{ pagination.render( paginator.num_pages, current_page, '', '' ) }}
+                {{ pagination.render( paginator.num_pages, current_page, '', '', pagination_params ) }}
             </div>
         {% endif %}
     </div>
