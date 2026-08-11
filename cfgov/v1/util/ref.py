@@ -233,6 +233,7 @@ def page_type_choices():
             "Recent updates",
             (
                 ("blog", "Blog"),
+                ("letter", "Letter"),
                 ("op-ed", "Op-ed"),
                 ("press-release", "Press release"),
                 ("research-publication", "Office of Research Publication"),
