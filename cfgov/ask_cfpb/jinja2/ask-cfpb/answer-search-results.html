@@ -1,4 +1,4 @@
-{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% import 'v1/includes/molecules/pagination.html' as pagination %}
 {% import 'ask-cfpb/_ask-search.html' as ask_search with context %}
 
 {% extends 'v1/layouts/layout-2-1.html' %}
@@ -52,7 +52,8 @@
                         paginator.num_pages,
                         current_page | int,
                         '',
-                        index
+                        index,
+                        pagination_params
                     ) }}
                 </div>
 

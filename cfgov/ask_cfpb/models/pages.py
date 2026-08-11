@@ -289,6 +289,11 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
                 "pages": paginator.page(page_number),
                 "paginator": paginator,
                 "current_page": page_number,
+                "pagination_params": (
+                    {"search_term": search.search_term}
+                    if search.search_term
+                    else {}
+                ),
             }
         )
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
@@ -377,6 +382,12 @@ class AnswerResultsPage(CFGOVPage):
         )
         context["about_us"] = get_standard_text(self.language, "about_us")
         context["disclaimer"] = get_standard_text(self.language, "disclaimer")
+
+        # AnswerResultsPage.query is set by ask_cfpb.views.ask_search for
+        # cases where the user is making a query-based search.
+        query = getattr(self, "query", None)
+        context["pagination_params"] = {"q": query} if query else {}
+
         return context
 
 

@@ -13,7 +13,7 @@ from taggit.models import Tag
 
 from v1.models import enforcement_action_page
 from v1.util import ERROR_MESSAGES, ref
-from v1.util.categories import clean_categories
+from v1.util.categories import expand_shorthand_categories
 from v1.util.datetimes import end_of_time_period
 
 
@@ -129,8 +129,6 @@ class FilterableListForm(forms.Form):
 
         super().__init__(*args, **kwargs)
 
-        clean_categories(selected_categories=self.data.get("categories"))
-
         # When the form is created, it needs to make a request to the search
         # backend to be able to populate some of its fields: topics, languages,
         # and the minimum page date.
@@ -138,6 +136,10 @@ class FilterableListForm(forms.Form):
 
         self.set_topics()
         self.set_languages()
+
+    def clean_categories(self):
+        """Expand category shorthand into appropriate subcategories."""
+        return expand_shorthand_categories(self.cleaned_data.get("categories"))
 
     def has_unfiltered_results(self):
         return self.aggregations.hits.total.value > 0

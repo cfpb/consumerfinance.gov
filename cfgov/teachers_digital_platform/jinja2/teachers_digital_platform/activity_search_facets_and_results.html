@@ -1,5 +1,5 @@
 {% import 'v1/includes/atoms/tag-filter.html' as tag %}
-{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% import 'v1/includes/molecules/pagination.html' as pagination %}
 {% from 'teachers_digital_platform/tdp_expandable.html' import expandable with context %}
 
 {% macro build_filter_section(name) %}
@@ -162,7 +162,7 @@
             </ul>
         </div>
         <div class="results__footer">
-            {{ pagination.render( paginator.num_pages, current_page, 'tdp-search-facets-and-results', '' ) }}
+            {{ pagination.render( paginator.num_pages, current_page, 'tdp-search-facets-and-results', '', pagination_params ) }}
             <div class="o-well">
                 Activities align with the My Money Five principles introduced by the statutorily created federal Financial Literacy and Education Commission.
             </div>

@@ -186,13 +186,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/ccdb5-ui@npm:2.19.3":
-  version: 2.19.3
-  resolution: "@cfpb/ccdb5-ui@npm:2.19.3"
+"@cfpb/ccdb5-ui@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@cfpb/ccdb5-ui@npm:2.20.0"
   dependencies:
-    "@cfpb/cfpb-design-system": "npm:^5.8.0"
-    "@cfpb/design-system-react": "npm:^1.0.8"
-    "@fontsource-variable/source-sans-3": "npm:5.2.9"
+    "@cfpb/cfpb-design-system": "npm:^5.8.2"
+    "@cfpb/design-system-react": "npm:^2.0.2"
+    "@fontsource-variable/source-sans-3": "npm:5.3.0"
     "@reduxjs/toolkit": "npm:^2.12.0"
     britecharts: "git+https://github.com/cfpb/cfpb-britecharts.git#v2.6"
     d3: "npm:^7.9.0"
@@ -201,17 +201,18 @@ __metadata:
     highcharts: "npm:13.0.0"
     history: "npm:^5.3.0"
     intro.js: "npm:7.2.0"
+    lit: "npm:^3.3.3"
     prop-types: "npm:^15.8.1"
     query-string: "npm:^9.4.1"
-    react: "npm:^19.2.7"
+    react: "npm:^19.2.8"
     react-bootstrap: "npm:^2.10.10"
     react-bootstrap-typeahead: "npm:^6.4.1"
-    react-dom: "npm:^19.2.7"
+    react-dom: "npm:^19.2.8"
     react-fast-compare: "npm:^3.2.2"
     react-modal: "npm:^3.16.3"
     react-redux: "npm:^9.3.0"
-    react-router: "npm:^7.18.1"
-  checksum: 10c0/bbafc11f349f99fad750cf321bfd28c8ade1136a9244129d9b3955966152b919312e6943afbd5f71db7427284a64f98f215113a2fc44c6b7c5649f97e8803f36
+    react-router: "npm:^7.18.2"
+  checksum: 10c0/b4a86ce7916ce7b2c3e73bd2aaa141f7b9e796814ac90e0ddd2dbc3f293d8a9719c222646aa32e6be360252ea5a3ceacd737dae7247c0e8daac312386d6a3ec4
   languageName: node
   linkType: hard
 
@@ -222,7 +223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-design-system@npm:5.8.2, @cfpb/cfpb-design-system@npm:^5.8.0":
+"@cfpb/cfpb-design-system@npm:5.8.2, @cfpb/cfpb-design-system@npm:^5.8.2":
   version: 5.8.2
   resolution: "@cfpb/cfpb-design-system@npm:5.8.2"
   dependencies:
@@ -233,18 +234,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/design-system-react@npm:^1.0.8":
-  version: 1.0.8
-  resolution: "@cfpb/design-system-react@npm:1.0.8"
+"@cfpb/design-system-react@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@cfpb/design-system-react@npm:2.0.2"
   dependencies:
     react-select: "npm:^5.10.2"
   peerDependencies:
-    "@cfpb/cfpb-design-system": 5.8.0
+    "@cfpb/cfpb-design-system": 5.8.1
     lit: ^3.3.3
-    react: 19.2.7
-    react-dom: ^19.2.3
-    react-router: ^8.1.0
-  checksum: 10c0/024cd933a79f459ba6176efdfac65554c9cc5bdd20f75ebc2bccab86475198a6a2ea627ed3315d9a68110ad5aedca12f098965cc87e08c88723accfa5e8c690b
+    react: ^19.2.8
+    react-dom: ^19.2.8
+  checksum: 10c0/ebe781a9d4ed09ddc528f76b5a54521c70d321fe2cef0ceb36759e5882a952bdac6b2af0767291548952c22ab18064dfb202b2f275f9d5709eb9d38fb209206d
   languageName: node
   linkType: hard
 
@@ -873,13 +873,6 @@ __metadata:
   version: 0.2.12
   resolution: "@floating-ui/utils@npm:0.2.12"
   checksum: 10c0/bb910b90d56991a62011afaf5f8e0c4b7fb6dab69403f4dd17fbd6eb25560b28d533dff9791f270b4f459852e9006a1077b5d73cbedb5e34d9424afc6a828314
-  languageName: node
-  linkType: hard
-
-"@fontsource-variable/source-sans-3@npm:5.2.9":
-  version: 5.2.9
-  resolution: "@fontsource-variable/source-sans-3@npm:5.2.9"
-  checksum: 10c0/d3d428e5d592ef99ebaa975838af21770f0bc754f98e0185f2be6f7329b7bdca7f0579770bae5abb82513adf38fb6262b2c33a57d3edb68cab20b01671a8f34c
   languageName: node
   linkType: hard
 
@@ -2348,7 +2341,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ccdb5-ui@workspace:cfgov/unprocessed/apps/ccdb-search"
   dependencies:
-    "@cfpb/ccdb5-ui": "npm:2.19.3"
+    "@cfpb/ccdb5-ui": "npm:2.20.0"
   languageName: unknown
   linkType: soft
 
@@ -5746,7 +5739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:3.3.3":
+"lit@npm:3.3.3, lit@npm:^3.3.3":
   version: 3.3.3
   resolution: "lit@npm:3.3.3"
   dependencies:
@@ -7076,14 +7069,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.2.7":
-  version: 19.2.7
-  resolution: "react-dom@npm:19.2.7"
+"react-dom@npm:^19.2.8":
+  version: 19.2.8
+  resolution: "react-dom@npm:19.2.8"
   dependencies:
     scheduler: "npm:^0.27.0"
   peerDependencies:
-    react: ^19.2.7
-  checksum: 10c0/970ff600f6e80d47d39e2f226f12f226173b3cba3382efc97c5f0cd663de9af38c7a4c11c213fb936094faeac83060d660247accaa96b752180d5b951b9cfecb
+    react: ^19.2.8
+  checksum: 10c0/41ba2247b76f687fcfe5bbc99f514d6b851d8c8041c2f5ded36ed05bd7fdc5208cacbac9de51e3e6633e77f96f44cec9f0d4a5a55184dba4e00738f224439134
   languageName: node
   linkType: hard
 
@@ -7142,9 +7135,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.18.1":
-  version: 7.18.1
-  resolution: "react-router@npm:7.18.1"
+"react-router@npm:^7.18.2":
+  version: 7.18.2
+  resolution: "react-router@npm:7.18.2"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -7154,7 +7147,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/1a559de58d656bad5565f2232e4f4fab7e9f5282dfaf95bc24f195a06e7e85b281077fe5c21ed3ff527e3d90d930447e0d0bb0f0713950d2a56ad0f0377a7d09
+  checksum: 10c0/513b04adf020fcf95124557418e003d16b175765045332858d5817b045e49dfe33b529c4871c57b0cddf24fa5432589ffc45d1a9a5b398b069f02adb755fab15
   languageName: node
   linkType: hard
 
@@ -7262,10 +7255,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.2.7":
-  version: 19.2.7
-  resolution: "react@npm:19.2.7"
-  checksum: 10c0/0bd0e2f1bbd4ba97561c6597bf8a5fec05e6476fe61e165c1065598d16668efc6715205599c94d3ddd49d36cb0f21cbf1b9bcc18ee840b805ce222c3e8d558ac
+"react@npm:^19.2.8":
+  version: 19.2.8
+  resolution: "react@npm:19.2.8"
+  checksum: 10c0/5f86bdb56426652fd6d989d30a6f2e603c057272c47c9ca3a3fbe190a3a39ee9ccce937d63cfc039717abed1b8891d6a499134bc35311acc07eafdacd86537cd
   languageName: node
   linkType: hard
 

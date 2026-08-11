@@ -109,10 +109,11 @@
 
                 {% if paginator.num_pages > 1 %}
                     <div class="block block--flush-top block--flush-bottom block--padded-top">
-                        {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+                        {% import 'v1/includes/molecules/pagination.html' as pagination %}
                         {{ pagination.render(
                             paginator.num_pages,
-                            page_number
+                            page_number,
+                            extra_params=pagination_params
                         ) }}
                     </div>
                 {% endif %}
