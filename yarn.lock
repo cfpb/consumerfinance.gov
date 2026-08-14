@@ -223,7 +223,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-design-system@npm:5.9.0, @cfpb/cfpb-design-system@npm:^5.8.2":
+"@cfpb/cfpb-design-system@npm:5.10.0":
+  version: 5.10.0
+  resolution: "@cfpb/cfpb-design-system@npm:5.10.0"
+  dependencies:
+    "@fontsource-variable/source-sans-3": "npm:5.3.0"
+    lit: "npm:3.3.3"
+    tippy.js: "npm:6.3.7"
+  checksum: 10c0/47138ca358a0dc72fb40af548ae75b35167214de2df87a59d8777ce0608608ccd3c61a4c006a3c2e419bb6fc37e73e91f7d720a92c741b18b52289cf61d61d0f
+  languageName: node
+  linkType: hard
+
+"@cfpb/cfpb-design-system@npm:^5.8.2":
   version: 5.9.0
   resolution: "@cfpb/cfpb-design-system@npm:5.9.0"
   dependencies:
@@ -548,16 +559,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@es-joy/jsdoccomment@npm:~0.93.2":
-  version: 0.93.2
-  resolution: "@es-joy/jsdoccomment@npm:0.93.2"
+"@es-joy/jsdoccomment@npm:~0.95.0":
+  version: 0.95.0
+  resolution: "@es-joy/jsdoccomment@npm:0.95.0"
   dependencies:
     "@types/estree": "npm:^1.0.9"
-    "@typescript-eslint/types": "npm:^8.66.0"
+    "@typescript-eslint/types": "npm:^8.67.0"
     comment-parser: "npm:1.4.8"
     esquery: "npm:^1.7.0"
-    jsdoc-type-pratt-parser: "npm:~9.0.1"
-  checksum: 10c0/41201c38df187b70cc5b84a760f2851e1b187324caf76c551d3fe52feeb30ad6d4d5e3ef20ed025473a71d2a71e75f214da5b4971834aacde14839812b60923b
+    jsdoc-type-pratt-parser: "npm:~9.1.1"
+  checksum: 10c0/aa6f4d7dd70fd6c299b64b7f86e5ca8578e07d67a4556b34430c1d5a7446c56848ad88e1d8525b6d575677ca98725a903ab5c8211e256f50f96c3fbe68242164
   languageName: node
   linkType: hard
 
@@ -1610,10 +1621,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:^8.66.0":
-  version: 8.66.0
-  resolution: "@typescript-eslint/types@npm:8.66.0"
-  checksum: 10c0/cc3f77a9a4e2ee997f0b660e8d31d2e45f3b4a16000f8d4349c85cd50b6a902b71272055116cc01f9cfae063a9d31e8b533e6051334fb345fdf753805014c6b5
+"@typescript-eslint/types@npm:^8.67.0":
+  version: 8.67.0
+  resolution: "@typescript-eslint/types@npm:8.67.0"
+  checksum: 10c0/b892a00d4cbea9604a0abf6eedd0ea019b27df4220a1d90e0035101cb4f846722c9e3eeadce40b423c1e0240709bbc787c6ca49bcc4f8c25ba23b4bd0436492a
   languageName: node
   linkType: hard
 
@@ -2558,7 +2569,7 @@ __metadata:
   dependencies:
     "@cfpb/browserslist-config": "npm:0.0.7"
     "@cfpb/cfpb-analytics": "npm:0.3.2"
-    "@cfpb/cfpb-design-system": "npm:5.9.0"
+    "@cfpb/cfpb-design-system": "npm:5.10.0"
     "@csstools/postcss-sass": "npm:5.1.1"
     "@csstools/sass-import-resolve": "npm:1.0.0"
     "@eslint/js": "npm:10.0.1"
@@ -2566,7 +2577,7 @@ __metadata:
     autoprefixer: "npm:10.5.4"
     axe-core: "npm:4.13.0"
     cssnano: "npm:8.0.2"
-    cypress: "npm:15.20.0"
+    cypress: "npm:15.20.1"
     cypress-axe: "npm:1.7.0"
     cypress-fail-fast: "npm:8.1.0"
     esbuild: "npm:0.28.2"
@@ -2574,12 +2585,12 @@ __metadata:
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-cypress: "npm:7.0.0"
     eslint-plugin-import: "npm:2.32.0"
-    eslint-plugin-jsdoc: "npm:64.0.2"
+    eslint-plugin-jsdoc: "npm:64.1.0"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.5"
     eslint-plugin-vitest-globals: "npm:1.6.1"
     fancy-log: "npm:2.0.0"
-    globals: "npm:17.9.0"
+    globals: "npm:17.10.0"
     highcharts: "npm:7.2.2"
     jsdom: "npm:30.0.1"
     lit: "npm:3.3.3"
@@ -2827,9 +2838,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:15.20.0":
-  version: 15.20.0
-  resolution: "cypress@npm:15.20.0"
+"cypress@npm:15.20.1":
+  version: 15.20.1
+  resolution: "cypress@npm:15.20.1"
   dependencies:
     "@cypress/request": "npm:^4.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -2871,7 +2882,7 @@ __metadata:
     yauzl: "npm:^3.3.1"
   bin:
     cypress: bin/cypress
-  checksum: 10c0/31cb2bbc4e560ca11543c434ed246e933764c4d84f3c0e689a1d62ed892f4290830b46056ac7f02f7dc1ddd66b366d387bf3c6dca00072b5074424f5c7e41ede
+  checksum: 10c0/35ae3824ca0038dcc8d92acf62fe12a1a22ece34c42a7834e6d45989ae822b2278605dec6bb1ebdea495f347db4b5b9daec848f65f180eb830a61da025eb34ed
   languageName: node
   linkType: hard
 
@@ -3872,11 +3883,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:64.0.2":
-  version: 64.0.2
-  resolution: "eslint-plugin-jsdoc@npm:64.0.2"
+"eslint-plugin-jsdoc@npm:64.1.0":
+  version: 64.1.0
+  resolution: "eslint-plugin-jsdoc@npm:64.1.0"
   dependencies:
-    "@es-joy/jsdoccomment": "npm:~0.93.2"
+    "@es-joy/jsdoccomment": "npm:~0.95.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
     are-docs-informative: "npm:^0.1.1"
     comment-parser: "npm:1.4.8"
@@ -3892,7 +3903,7 @@ __metadata:
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10c0/120607d0e0546abcac71382aa95702d61e14d85b4e38a7faeaddcf2969506340009fbc54009198e16c7b679e12dc543bac9e6807ffe67838b2b6a0357e836b5c
+  checksum: 10c0/cbde7fa3c3bb70f13c95a371ca85efba62eac4ac322802d58a2127e678959f93f4ce0e13212cd70d3abbb1407eab814afa0590ddaf6723a9b306494d6eb3fabb
   languageName: node
   linkType: hard
 
@@ -4561,7 +4572,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:17.9.0, globals@npm:^17.9.0":
+"globals@npm:17.10.0":
+  version: 17.10.0
+  resolution: "globals@npm:17.10.0"
+  checksum: 10c0/b1035f63a1070ebb4361096bb8d0037d0d6bb5a023618ab6307ac1a635fd8daeafbd161f6ebbcc5e2f25b364919beed66788f374c46b07135a9abf3c7ac9a245
+  languageName: node
+  linkType: hard
+
+"globals@npm:^17.9.0":
   version: 17.9.0
   resolution: "globals@npm:17.9.0"
   checksum: 10c0/776116bffb916e462d548c26a44c9a5d8f4e551935a883991e9f5d68cbcb21b63e4c688e36bbc564f97d3025e304d8b2bb0a611ecf944825aeee164898dcfbdd
@@ -5347,12 +5365,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdoc-type-pratt-parser@npm:~9.0.1":
-  version: 9.0.1
-  resolution: "jsdoc-type-pratt-parser@npm:9.0.1"
+"jsdoc-type-pratt-parser@npm:~9.1.1":
+  version: 9.1.1
+  resolution: "jsdoc-type-pratt-parser@npm:9.1.1"
   dependencies:
     "@types/estree": "npm:^1.0.9"
-  checksum: 10c0/34342bf8adb797cac0d733a23df08e2247865bf95085008f3fc8ead6ba9daf867b11f81588dfcd94633539a1d4a09f60d2b919d8e2e7f6549c33f4f7e3a96391
+  checksum: 10c0/a37030f06c22949e204eaa1bfa85ca183e1895afb379e4e236631e9071e1870738a64af77065ab5f97ca1a4cc7506182576d40382d7490331a1905f9e1d14be7
   languageName: node
   linkType: hard
 
