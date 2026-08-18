@@ -1,6 +1,6 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 {% import 'v1/includes/templates/render_block.html' as render_block with context %}
-{% import 'ask-cfpb/_ask-search.html' as ask_search with context %}
+{% import 'v1/includes/molecules/notification.html' as notification with context %}
 
 {% set read_answer_text = _('Read answer') %}
 
@@ -26,21 +26,28 @@
         {{ translation_links.render(modifier_classes='block--flush-top') }}
 
         {% for block in page.content %}
-            {% if block.block_type == 'notification' %}
-                {% set has_notification = true %}
-                {% include_block block %}
-            {% endif %}
-        {% endfor %}
-
-        <section class="ask-search block block--sub{% if has_notification == false %} block--flush-top{% endif %}">
-            {{ ask_search.render( language=page.language, is_subsection=False ) }}
-        </section>
-
-        {% for block in page.content %}
             {% if block.block_type != 'notification' %}
                 {% include_block block %}
             {% endif %}
         {% endfor %}
+    </div>
+
+    <div class="m-notification
+            m-notification--visible
+            m-notification--success">
+        {{ svg_icon('help-round') }}
+        <div class="m-notification__content">
+            <div class="m-notification__message">{{ _('Can\'t find what you\'re looking for?') }}</div>
+            <ul class="m-list m-list--links">
+                <li class="m-list__item">
+                    <a class="a-link a-link--jump" href="{{ _('/search/') }}">
+                        <span class="a-link__text">
+                          {{ _('Search all of consumerfinance.gov') }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 {% endblock %}
