@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import postcss from 'postcss';
-import cssnano from 'cssnano';
+import cssnano from 'cssnano/src/index.js';
 import autoprefixer from 'autoprefixer';
 import * as sass from 'sass';
 
