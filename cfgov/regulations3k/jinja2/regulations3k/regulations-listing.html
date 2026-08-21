@@ -20,22 +20,25 @@
 {% if regulations.exists() %}
 <div id="regulations-listing">
     <h4>{{ value.heading or 'Table of contents' }}</h4>
-    <ul>
+    <ul class="m-list m-list--links">
         {% for regulation in regulations %}
-        <li class="h4">
-            <a href="{{ regulation.url }}">
-                <span class="title-num">{{ regulation.title }}</span>
+        <li class="m-list__item">
+            <a class="a-link a-link--jump" href="{{ regulation.url }}">
+                <span class="a-link__text">{{ regulation.title }}</span>
             </a>
             {% if regulation.regulation.future_versions %}
-            <ul>
-            {% for version in regulation.regulation.future_versions %}
-                <li class="new-version">New amendments effective 
-                    <a href="{{ regulation.url }}{{ version.effective_date|string }}/">
-                    {{ ap_date(version.effective_date) }}
-                    </a>
-                </li>
-            {% endfor %}
-            </ul>
+            <div class="new-version">
+                <h5>New amendments effective</h5>
+                <ul class="m-list m-list--links">
+                {% for version in regulation.regulation.future_versions %}
+                    <li class="m-list__item">
+                        <a class="a-link a-link--jump" href="{{ regulation.url }}{{ version.effective_date|string }}/">
+                            <span class="a-link__text">{{ ap_date(version.effective_date) }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
             {% endif %}
 
         </li>
