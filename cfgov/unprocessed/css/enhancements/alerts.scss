@@ -13,6 +13,14 @@
   color: var(--green);
 }
 
+.o-banner--dark {
+  .m-notification--error cfpb-icon,
+  .m-notification--warning cfpb-icon,
+  .m-notification--success cfpb-icon {
+    color: var(--white);
+  }
+}
+
 .m-notification cfpb-icon {
   // Tablet and above.
   @include respond-to-min($bp-sm-min) {
