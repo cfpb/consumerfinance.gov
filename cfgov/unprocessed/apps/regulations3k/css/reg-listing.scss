@@ -7,32 +7,28 @@
    ========================================================================== */
 
 #regulations-listing {
-  margin: (math.div(45px, $base-font-size-px) + em) 0
-    (math.div(60px, $base-font-size-px) + em);
+  // TODO - Standardize a nested list link pattern.
+  .new-version {
+    margin-top: math.div(10px, $base-font-size-px) + rem;
 
-  > ul {
-    margin-bottom: math.div(30px, $base-font-size-px) + em;
-    padding-left: 0;
+    h5 {
+      margin-bottom: math.div(10px, $base-font-size-px) + rem;
+    }
 
-    > li {
-      border-bottom: 1px solid var(--gray);
-      list-style-type: none;
-      padding-bottom: math.div(15px, $base-font-size-px) + em;
+    a {
+      margin-left: math.div(-30px, $base-font-size-px) + rem;
+      padding-left: math.div(30px, $base-font-size-px) + rem;
 
-      &:first-child {
-        border-top: 1px solid var(--gray);
-        padding-top: math.div(15px, $base-font-size-px) + em;
+      &:hover:before {
+        border: none;
       }
     }
 
-    .new-version {
+    li {
       font-size: math.div($size-v, $base-font-size-px) + em;
       font-weight: normal;
       list-style-type: square;
+      margin-left: math.div(30px, $base-font-size-px) + rem;
     }
-  }
-
-  a {
-    border: 0;
   }
 }
