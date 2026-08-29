@@ -1,0 +1,40 @@
+{% extends "v1/layouts/layout-full.html" %}
+
+{% import "v1/includes/organisms/card-group.html" as card_group with context %}
+
+{% block title -%}
+    {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/homepage/css/main.css') }}">
+{% endblock %}
+
+{% block content_main_modifiers -%}
+content__main--flush-inner alternate-homepage
+{%- endblock %}
+
+{% block content_intro %}
+    <div class="alternate-homepage">
+      <section class="u-content-level-1">
+      {% include_block page.hero %}
+          <section class="o-well">
+            {% include_block page.highlights %}
+          </section>
+      </section>
+    </div>
+{% endblock %}
+
+{% block content_main %}
+    <section class="block">
+      {% include_block page.topics %}
+    </section>
+    <section class="block u-content-level-2">
+      {% include_block page.callouts %}
+    </section>
+    <hr>
+    <section class="block u-content-level-3">
+      {% include_block page.breakouts %}
+    </section>
+{% endblock content_main %}
