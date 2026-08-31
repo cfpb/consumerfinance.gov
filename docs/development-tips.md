@@ -19,6 +19,36 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
     After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
+## Serving a local frontend build in Docker
+
+Our Docker image builds the frontend when the image is built,
+and stores the result in `/srv/cfgov-static-built` inside the container.
+Django serves assets from there, so a plain `docker compose up` works without
+requiring a local frontend build.
+
+That location lives outside of the container's `/src/consumerfinance.gov` working directory,
+which `docker-compose.override.yml` replaces with a mount of your local repository.
+This means that the assets built into the image aren't hidden by, and don't get confused with,
+anything in your local `cfgov/static_built`.
+
+If you're working on the frontend, you'll instead want Django to ignore that build
+and serve the assets that you build yourself. Uncomment this line in your `.env` file
+to clear the path to the prebuilt assets:
+
+```sh
+export PREBUILT_STATIC_PATH=
+```
+
+and restart the container. With this variable unset, Django will read assets from the
+`cfgov/static_built` directory in your mounted repository.
+`yarn build` and `yarn watch` will then reflect changes on your local machine.
+
+!!! note
+
+    Only our Docker image ships prebuilt assets via the `PREBUILT_STATIC_PATH` variable.
+    If you run the site outside of Docker, in a virtualenv, nothing should set that variable.
+    Django will read from `cfgov/static_built` in that case as well.
+
 ## Adding new Javascript entrypoints
 
 - In order to build standalone javascript files that are to be included in a template, they

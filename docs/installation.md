@@ -153,6 +153,13 @@ to assist developers with linting without thinking.
 
 !!! note
 
+    If you're running the site in Docker, you can skip this section.
+    Our Docker image builds the frontend for you, and Django serves those assets. See
+    [serving a local frontend build in Docker](development-tips.md#serving-a-local-frontend-build-in-docker)
+    if you're working on the frontend and want Docker to serve assets that you build yourself.
+
+!!! note
+
     Our frontend requires [Node](https://nodejs.org/en/)
     with
     [Yarn](https://yarnpkg.com/).

@@ -15,6 +15,12 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
 
+# Location of built frontend assets.
+# Defaults to cfgov/static_built but can be overridden, as we do in Docker.
+STATIC_BUILT_PATH = Path(
+    os.getenv("PREBUILT_STATIC_PATH") or PROJECT_ROOT / "static_built"
+)
+
 # Templates that are not scoped to specific Django apps will live here
 GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
@@ -177,7 +183,6 @@ TEMPLATES = [
         # Look for Jinja2 templates in these directories
         "DIRS": [
             GLOBAL_TEMPLATE_ROOT,
-            PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
         "APP_DIRS": True,
@@ -285,7 +290,7 @@ STORAGES = {
 
 # Add the frontend build output to static files.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.joinpath("static_built"),
+    STATIC_BUILT_PATH,
 ]
 
 # Collect static files into, and serve them from, cfgov/collectstatic,
