@@ -12,7 +12,7 @@ services:
       - opensearch_data:/usr/share/opensearch/data/
     environment:
       discovery.type: single-node
-      OPENSEARCH_JAVA_OPTS: '-Xms512m -Xmx512m'
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
       # Disables the need for an admin password and TLS.
       # We only ever run this locally in development.
       DISABLE_SECURITY_PLUGIN: true
@@ -58,3 +58,6 @@ services:
       ES_HOST: opensearch
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       COMPLAINT_ES_INDEX: complaint-public
+    env_file:
+      - path: .env
+        required: false

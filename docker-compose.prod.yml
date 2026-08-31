@@ -2,9 +2,9 @@ volumes:
   postgres_data:
 
 services:
-  elasticsearch:
+  opensearch:
     environment:
-      ES_JAVA_OPTS: '-Xms1g -Xmx1g'
+      OPENSEARCH_JAVA_OPTS: "-Xms1g -Xmx1g"
 
   python:
     image: cfgov_python:prod
@@ -19,5 +19,8 @@ services:
       SECRET_KEY: abcdefghijklmnopqrstuvwxyz
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
       GUNICORN_RELOAD: 1
+    env_file:
+      - path: .env
+        required: false
     ports:
-      - '8000:8000'
+      - "8000:8000"
