@@ -29,8 +29,8 @@ from core.views import (
     CacheTaggedTemplateView,
     empty_200_response,
     govdelivery_subscribe,
-    handle_error,
 )
+from core.views.errors import handle_error
 from housing_counselor.views import HousingCounselorView
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
