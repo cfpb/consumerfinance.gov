@@ -1,4 +1,5 @@
 import json
+from unittest import mock
 
 from django.core.exceptions import ImproperlyConfigured
 from django.test import RequestFactory, TestCase, override_settings
@@ -9,6 +10,7 @@ from core.views import (
     CacheTaggedTemplateView,
     TranslatedTemplateView,
     govdelivery_subscribe,
+    handle_error,
 )
 
 
@@ -172,3 +174,33 @@ class CacheTaggedTemplateViewTestCase(TestCase):
         )
         with self.assertRaises(ImproperlyConfigured):
             view(request)
+
+
+class HandleErrorTestCase(TestCase):
+    def setUp(self):
+        self.request = RequestFactory().get("/")
+
+    def test_handle_error(self):
+        with mock.patch("core.views.render") as mock_render:
+            handle_error(404, self.request)
+
+        mock_render.assert_called_with(
+            self.request,
+            "v1/layouts/404.html",
+            context={"request": self.request},
+            status=404,
+        )
+
+    def test_error_while_handling_404_should_be_raised(self):
+        with mock.patch(
+            "core.views.render", side_effect=RuntimeError
+        ), self.assertRaises(RuntimeError):
+            handle_error(404, self.request)
+
+    def test_error_while_handling_500_should_log_plain_text_response(self):
+        with mock.patch("core.views.render", side_effect=RuntimeError):
+            result = handle_error(500, self.request)
+            self.assertIn(
+                b"This request could not be processed", result.content
+            )
+            self.assertIn(b"HTTP Error 500.", result.content)

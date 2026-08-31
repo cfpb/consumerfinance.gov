@@ -25,13 +25,16 @@ from ask_cfpb.views import (
     view_answer,
 )
 from core.decorators import akamai_no_store
-from core.views import CacheTaggedTemplateView, govdelivery_subscribe
+from core.views import (
+    CacheTaggedTemplateView,
+    empty_200_response,
+    govdelivery_subscribe,
+    handle_error,
+)
 from housing_counselor.views import HousingCounselorView
 from regulations3k.views import redirect_eregs
 from searchgov.views import SearchView
 from v1.sitemap import Sitemap
-
-from .views import empty_200_response, handle_error
 
 
 urlpatterns = [

@@ -1,13 +1,4 @@
-from unittest import mock
-
-from django.test import (
-    RequestFactory,
-    SimpleTestCase,
-    TestCase,
-    override_settings,
-)
-
-from cfgov import urls
+from django.test import SimpleTestCase, TestCase, override_settings
 
 
 # Allowlist is a list of *strings* that match the beginning of a regex string.
@@ -24,36 +15,6 @@ ADMIN_URL_ALLOWLIST = [
     "^password/",
     "^tasks/",
 ]
-
-
-class HandleErrorTestCase(TestCase):
-    def setUp(self):
-        self.request = RequestFactory().get("/")
-
-    def test_handle_error(self):
-        with mock.patch("cfgov.urls.views.render") as mock_render:
-            urls.handle_error(404, self.request)
-
-        mock_render.assert_called_with(
-            self.request,
-            "v1/layouts/404.html",
-            context={"request": self.request},
-            status=404,
-        )
-
-    def test_error_while_handling_404_should_be_raised(self):
-        with mock.patch(
-            "cfgov.urls.views.render", side_effect=RuntimeError
-        ), self.assertRaises(RuntimeError):
-            urls.handler404(self.request)
-
-    def test_error_while_handling_500_should_log_plain_text_response(self):
-        with mock.patch("cfgov.urls.views.render", side_effect=RuntimeError):
-            result = urls.handler500(self.request)
-            self.assertIn(
-                b"This request could not be processed", result.content
-            )
-            self.assertIn(b"HTTP Error 500.", result.content)
 
 
 class TestBetaRefreshEndpoint(TestCase):
