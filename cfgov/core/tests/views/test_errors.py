@@ -71,7 +71,7 @@ class ErrorHandlerTestCase(TestCase):
                 "type": "about:blank",
                 "title": "Not Found",
                 "status": 404,
-                "instance": f"/does%20not%20exist/",
+                "instance": "/does%20not%20exist/",
             },
         )
 
