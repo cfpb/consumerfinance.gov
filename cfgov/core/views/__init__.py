@@ -1,7 +1,7 @@
 import logging
 
 from django.core.exceptions import ImproperlyConfigured
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import activate, get_language
 from django.views.decorators.http import require_http_methods
@@ -93,3 +93,7 @@ class CacheTaggedTemplateView(TemplateView):
                 "'cache_tag' or an implementation of 'get_cache_tag()'"
             )
         return self.cache_tag
+
+
+def empty_200_response(request, *args, **kwargs):
+    return HttpResponse(status=200)

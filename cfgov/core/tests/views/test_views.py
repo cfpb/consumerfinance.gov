@@ -1,18 +1,19 @@
 import json
 
 from django.core.exceptions import ImproperlyConfigured
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, SimpleTestCase, override_settings
 from django.urls import reverse
 
 from core.govdelivery import MockGovDelivery
 from core.views import (
     CacheTaggedTemplateView,
     TranslatedTemplateView,
+    empty_200_response,
     govdelivery_subscribe,
 )
 
 
-class GovDeliverySubscribeTest(TestCase):
+class GovDeliverySubscribeTest(SimpleTestCase):
     def setUp(self):
         self.factory = RequestFactory()
 
@@ -138,7 +139,7 @@ class GovDeliverySubscribeTest(TestCase):
         self.check_subscribe(self.assertRedirectSuccess, include_answers=True)
 
 
-class TranslatedTemplateViewTestCase(TestCase):
+class TranslatedTemplateViewTestCase(SimpleTestCase):
     def test_language_activation(self):
         request = RequestFactory().get("/")
 
@@ -153,7 +154,7 @@ class TranslatedTemplateViewTestCase(TestCase):
         self.assertEqual(response.context_data["current_language"], "es")
 
 
-class CacheTaggedTemplateViewTestCase(TestCase):
+class CacheTaggedTemplateViewTestCase(SimpleTestCase):
     def test_cache_tag(self):
         request = RequestFactory().get("/")
 
@@ -172,3 +173,10 @@ class CacheTaggedTemplateViewTestCase(TestCase):
         )
         with self.assertRaises(ImproperlyConfigured):
             view(request)
+
+
+class Empty200ResponseTest(SimpleTestCase):
+    def test_empty_response(self):
+        request = RequestFactory().get("/")
+        response = empty_200_response(request)
+        self.assertEqual(response.status_code, 200)
