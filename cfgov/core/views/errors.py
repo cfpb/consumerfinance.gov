@@ -1,21 +1,6 @@
-from http import HTTPStatus
-from urllib.parse import quote
-
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.utils.cache import patch_vary_headers
-
-
-HTML = "text/html"
-JSON = "application/json"
-# https://www.rfc-editor.org/rfc/rfc9457
-PROBLEM_JSON = "application/problem+json"
-TEXT = "text/plain"
-
-# Clients sending "Accept: */*" get the first entry in this list.
-# Default to full HTML page, but also support simpler responses when possible.
-ERROR_RESPONSE_TYPES = [HTML, JSON, PROBLEM_JSON, TEXT]
 
 
 def _is_simple_404_path(path):
@@ -32,31 +17,6 @@ def _is_simple_404_path(path):
     ]
 
     return path.startswith(tuple(prefixes))
-
-
-def _problem_json_error(code, request):
-    """An RFC 9457 problem details response.
-
-    https://www.rfc-editor.org/rfc/rfc9457
-    """
-    return JsonResponse(
-        {
-            "type": "about:blank",
-            "title": HTTPStatus(code).phrase,
-            "status": code,
-            "instance": quote(request.path),
-        },
-        status=code,
-        content_type=PROBLEM_JSON,
-    )
-
-
-def _text_error(code):
-    return HttpResponse(
-        f"{code} {HTTPStatus(code).phrase}\n".encode(),
-        status=code,
-        content_type="text/plain; charset=utf-8",
-    )
 
 
 def _html_error(code, request):
@@ -91,20 +51,5 @@ def handle_error(code, request, exception=None):
             status=404, content_type="text/plain; charset=utf-8"
         )
 
-    # Return a different response type for different Accept: headers.
-    media_type = request.get_preferred_type(ERROR_RESPONSE_TYPES)
-
-    if media_type in (JSON, PROBLEM_JSON):
-        response = _problem_json_error(code, request)
-    elif media_type == HTML:
-        response = _html_error(code, request)
-    else:
-        # Either the client asked for text/plain, or it accepts nothing we
-        # can produce. Plain text is the safest thing to send.
-        response = _text_error(code)
-
-    # Make sure anything that might be caching this response knows to vary its
-    # cache by the Accept header.
-    patch_vary_headers(response, ("Accept",))
-
-    return response
+    # Otherwise return the full HTML error page.
+    return _html_error(code, request)

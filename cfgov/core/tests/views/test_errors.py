@@ -1,4 +1,3 @@
-import json
 from unittest import mock
 
 from django.http import HttpResponse
@@ -46,67 +45,23 @@ BROWSER_ACCEPT = (
 
 @override_settings(DEBUG=False)
 class ErrorHandlerTestCase(TestCase):
-    def get(self, path, accept=None):
-        headers = {"accept": accept} if accept else {}
-        return self.client.get(path, headers=headers)
-
     def test_well_known_probe_gets_empty_response(self):
-        response = self.get("/.well-known/passkey-endpoints")
+        response = self.client.get("/.well-known/passkey-endpoints")
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b"")
         self.assertEqual(response["Content-Type"], "text/plain; charset=utf-8")
 
     def test_missing_static_file_gets_empty_response(self):
-        response = self.get("/static/does-not-exist.css")
+        response = self.client.get("/static/does-not-exist.css")
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b"")
 
-    def test_json_client_gets_problem_details(self):
-        response = self.get("/does not exist/", accept="application/json")
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response["Content-Type"], "application/problem+json")
-        self.assertEqual(
-            json.loads(response.content),
-            {
-                "type": "about:blank",
-                "title": "Not Found",
-                "status": 404,
-                "instance": "/does%20not%20exist/",
-            },
-        )
-
-    def test_browser_gets_full_html_page(self):
-        response = self.get("/does-not-exist/", accept=BROWSER_ACCEPT)
+    def test_other_404s_get_full_html_page(self):
+        response = self.client.get("/does-not-exist/")
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response["Content-Type"], "text/html; charset=utf-8")
         self.assertContains(response, "404: Page not found", status_code=404)
 
-    def test_wildcard_accept_gets_html(self):
-        response = self.get("/does-not-exist/", accept="*/*")
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response["Content-Type"], "text/html; charset=utf-8")
-
-    def test_text_client_gets_plain_text(self):
-        response = self.get("/does-not-exist/", accept="text/plain")
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response["Content-Type"], "text/plain; charset=utf-8")
-        self.assertEqual(response.content, b"404 Not Found\n")
-
-    def test_unsupported_accept_gets_plain_text(self):
-        response = self.get(
-            "/does-not-exist/", accept="application/vnd.unsupported"
-        )
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response["Content-Type"], "text/plain; charset=utf-8")
-
-    def test_negotiated_responses_vary_on_accept(self):
-        for accept in (BROWSER_ACCEPT, "application/json", "text/plain"):
-            with self.subTest(accept=accept):
-                response = self.get("/does-not-exist/", accept=accept)
-                self.assertIn("Accept", response["Vary"])
-
     def test_content_404_still_gets_the_full_html_page(self):
-        response = self.get(
-            "/about-us/newsroom/does-not-exist/", accept=BROWSER_ACCEPT
-        )
+        response = self.client.get("/about-us/newsroom/does-not-exist/")
         self.assertContains(response, "404: Page not found", status_code=404)
