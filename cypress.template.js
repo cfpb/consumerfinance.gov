@@ -33,4 +33,11 @@ export default defineConfig({
   expose: {
     ENVIRONMENT: 'local-machine',
   },
+  retries: {
+    /* Sometimes a flaky test will fail in `cypress run`, which will cause
+       all subsequent tests to be pending. Retry a failing test twice to
+       make sure it's not just flaky. */
+    runMode: 2,
+    openMode: 0,
+  }
 });
