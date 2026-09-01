@@ -8,7 +8,7 @@ export class Footer {
   }
 
   navList() {
-    return this.footer().get('.o-footer__nav-list');
+    return this.footer().get('.o-footer__pre cfpb-list');
   }
 
   middle(position) {
@@ -17,7 +17,7 @@ export class Footer {
 
   links() {
     return cy.get(
-      '.o-footer__nav-list a, .o-footer-middle-left a,' +
+      '.o-footer__pre cfpb-list, .o-footer-middle-left a,' +
         ' .o-footer-middle-right a, .m-social-media__icons a',
     );
   }
