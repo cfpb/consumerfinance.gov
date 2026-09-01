@@ -17,7 +17,7 @@ export class Footer {
 
   links() {
     return cy.get(
-      '.o-footer__pre cfpb-list, .o-footer-middle-left a,' +
+      '.o-footer__pre cfpb-list a, .o-footer-middle-left a,' +
         ' .o-footer-middle-right a, .m-social-media__icons a',
     );
   }
