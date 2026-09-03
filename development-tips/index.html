@@ -121,6 +121,8 @@
         
             <li><a class="toctree-l4" href="#main-front-end-templateasset-locations">Main front-end template/asset locations</a></li>
         
+            <li><a class="toctree-l4" href="#serving-a-local-frontend-build-in-docker">Serving a local frontend build in Docker</a></li>
+        
             <li><a class="toctree-l4" href="#adding-new-javascript-entrypoints">Adding new Javascript entrypoints</a></li>
         
             <li><a class="toctree-l4" href="#installing-new-front-end-dependencies">Installing new front-end dependencies</a></li>
@@ -183,6 +185,28 @@ Feel free to <a href="https://editorconfig.org/#download">install a plugin</a> f
 <p class="admonition-title">Note</p>
 <p>After running <code>yarn build</code> (or <code>./setup.sh</code>) the site's assets are copied over to <code>cfgov/static_built</code>,
 ready to be served by Django.</p>
+</div>
+<h2 id="serving-a-local-frontend-build-in-docker">Serving a local frontend build in Docker<a class="headerlink" href="#serving-a-local-frontend-build-in-docker" title="Permanent link">¶</a></h2>
+<p>Our Docker image builds the frontend when the image is built,
+and stores the result in <code>/srv/cfgov-static-built</code> inside the container.
+Django serves assets from there, so a plain <code>docker compose up</code> works without
+requiring a local frontend build.</p>
+<p>That location lives outside of the container's <code>/src/consumerfinance.gov</code> working directory,
+which <code>docker-compose.override.yml</code> replaces with a mount of your local repository.
+This means that the assets built into the image aren't hidden by, and don't get confused with,
+anything in your local <code>cfgov/static_built</code>.</p>
+<p>If you're working on the frontend, you'll instead want Django to ignore that build
+and serve the assets that you build yourself. Uncomment this line in your <code>.env</code> file
+to clear the path to the prebuilt assets:</p>
+<pre class="highlight"><code class="language-sh">export PREBUILT_STATIC_PATH=</code></pre>
+<p>and restart the container. With this variable unset, Django will read assets from the
+<code>cfgov/static_built</code> directory in your mounted repository.
+<code>yarn build</code> and <code>yarn watch</code> will then reflect changes on your local machine.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only our Docker image ships prebuilt assets via the <code>PREBUILT_STATIC_PATH</code> variable.
+If you run the site outside of Docker, in a virtualenv, nothing should set that variable.
+Django will read from <code>cfgov/static_built</code> in that case as well.</p>
 </div>
 <h2 id="adding-new-javascript-entrypoints">Adding new Javascript entrypoints<a class="headerlink" href="#adding-new-javascript-entrypoints" title="Permanent link">¶</a></h2>
 <ul>
