@@ -223,14 +223,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-design-system@npm:5.10.0":
-  version: 5.10.0
-  resolution: "@cfpb/cfpb-design-system@npm:5.10.0"
+"@cfpb/cfpb-design-system@npm:5.10.2":
+  version: 5.10.2
+  resolution: "@cfpb/cfpb-design-system@npm:5.10.2"
   dependencies:
     "@fontsource-variable/source-sans-3": "npm:5.3.0"
     lit: "npm:3.3.3"
     tippy.js: "npm:6.3.7"
-  checksum: 10c0/47138ca358a0dc72fb40af548ae75b35167214de2df87a59d8777ce0608608ccd3c61a4c006a3c2e419bb6fc37e73e91f7d720a92c741b18b52289cf61d61d0f
+  checksum: 10c0/a4e2d9cb368883db2edc4c13779aee67ee281f3178fd9ed0e9d6d464616a363c0c7403556b2432013eab85a2a34de7069502a52591962ca72ec94e4d40403f73
   languageName: node
   linkType: hard
 
@@ -2645,7 +2645,7 @@ __metadata:
   dependencies:
     "@cfpb/browserslist-config": "npm:0.0.7"
     "@cfpb/cfpb-analytics": "npm:0.3.2"
-    "@cfpb/cfpb-design-system": "npm:5.10.0"
+    "@cfpb/cfpb-design-system": "npm:5.10.2"
     "@eslint/js": "npm:10.0.1"
     "@vitest/coverage-v8": "npm:4.1.11"
     autoprefixer: "npm:10.5.4"
