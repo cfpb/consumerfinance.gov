@@ -19,8 +19,6 @@ standalone() {
 }
 
 dockerized() {
-    ./frontend.sh $2
-
     ENVVAR=.env
     if [ ! -f $ENVVAR ]; then
         echo 'Creating default environment variables...'

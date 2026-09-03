@@ -35,6 +35,9 @@ ENV PYTHONUNBUFFERED=1
 # Set the APP_HOME, our working directory
 ENV APP_HOME=/src/consumerfinance.gov
 
+# Where frontend assets get built by the node-builder stage below
+ENV PREBUILT_STATIC_PATH=/srv/cfgov-static-built
+
 # Add our top-level Python path to the PYTHONPATH
 ENV PYTHONPATH=${APP_HOME}/cfgov
 
@@ -146,7 +149,7 @@ RUN pip install -r requirements/local.txt
 # these files do not change.
 COPY cfgov ./cfgov/
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
-COPY --from=node-builder ${APP_HOME} ${APP_HOME}
+COPY --from=node-builder ${APP_HOME}/cfgov/static_built ${PREBUILT_STATIC_PATH}
 
 # Run our initial data entrypoint script
 ENTRYPOINT ["./docker-entrypoint.sh"]
@@ -179,7 +182,7 @@ COPY index.sh .
 COPY test.sql.gz .
 
 # Copy our static build over from node-builder
-COPY --from=node-builder ${APP_HOME} ${APP_HOME}
+COPY --from=node-builder ${APP_HOME}/cfgov/static_built ${PREBUILT_STATIC_PATH}
 
 # Delete unprocessed frontend code, which was only needed by node-builder.
 # This avoids false positive image vulnerabilities in source Node packages.
