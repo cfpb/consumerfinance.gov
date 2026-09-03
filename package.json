@@ -19,7 +19,7 @@
   "dependencies": {
     "@cfpb/browserslist-config": "0.0.7",
     "@cfpb/cfpb-analytics": "0.3.2",
-    "@cfpb/cfpb-design-system": "5.10.0",
+    "@cfpb/cfpb-design-system": "5.10.2",
     "autoprefixer": "10.5.4",
     "cssnano": "8.0.10",
     "esbuild": "0.28.2",
