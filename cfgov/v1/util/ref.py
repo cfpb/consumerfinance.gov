@@ -114,6 +114,7 @@ categories = [
             ("report", "Report"),
             ("log", "Log"),
             ("record", "Record"),
+            ("narratives", "Narratives"),
         ),
     ),
     (
