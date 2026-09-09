@@ -249,7 +249,7 @@
                 "hasEmail": "mailto:devops@cfpb.gov"
             },
             "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
-           "distribution": [
+            "distribution": [
                 {
                     "@type": "dcat:Distribution",
                     "accessURL": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
@@ -288,8 +288,6 @@
                 "fn": "devops@cfpb.gov",
                 "hasEmail": "mailto:devops@cfpb.gov"
             },
-
-
             "description": "The TCCP is a semi-annual survey on the terms of credit card plans offered by over 150 financial institutions.  Twice per year, the Bureau is required by law to collect certain credit card price and availability information from a sample of credit card issuers and report this information to Congress and the public.  The largest credit card issuers in the country are required to participate in the survey as well as a sample of geographically diverse issuers.",
             "distribution": [
                 {
@@ -317,8 +315,8 @@
             },
             "spatial": "United States",
             "title": "Terms of Credit Card Plans (TCCP) Survey"
-          },
-          {
+        },
+        {
             "@type": "dcat:Dataset",
             "accessLevel": "public",
             "accrualPeriodicity": "R/P3M",
@@ -330,9 +328,7 @@
                 "fn": "devops@cfpb.gov",
                 "hasEmail": "mailto:devops@cfpb.gov"
             },
-            
-
-	    "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
+            "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
             "distribution": [
                 {
                     "@type": "dcat:Distribution",
@@ -340,26 +336,27 @@
                     "description": "The Credit Card Agreements (CCA) database includes credit card agreements from more than 600 card issuers. These agreements include general terms and conditions, pricing, and fee information and are collected quarterly pursuant to requirements in the CARD Act.",
                     "title": "Credit Card Agreements Database"
                 }
-            ], "identifier": "CCAD",
-      		"keyword": [
-        	"agreements",
-        	"credit card",
-        	"card",
-        	"database"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/credit-cards/agreements/",
-      "modified": "2021-03-31",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Credit Card Agreements Database"
-      },
-      {
+            ],
+            "identifier": "CCAD",
+            "keyword": [
+                "agreements",
+                "credit card",
+                "card",
+                "database"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/credit-cards/agreements/",
+            "modified": "2021-03-31",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Credit Card Agreements Database"
+        },
+        {
             "@type": "dcat:Dataset",
             "accessLevel": "public",
             "accrualPeriodicity": "R/P3M",
@@ -371,8 +368,7 @@
                 "fn": "devops@cfpb.gov",
                 "hasEmail": "mailto:devops@cfpb.gov"
             },       
-   
-	    "description": "While federal student loans from the U.S. Department of Education and private financial institutions are the major ways in which students borrow, this report examines a financial product that is less familiar to many students and families: a tuition payment plan.",
+            "description": "While federal student loans from the U.S. Department of Education and private financial institutions are the major ways in which students borrow, this report examines a financial product that is less familiar to many students and families: a tuition payment plan.",
             "distribution": [
                 {
                     "@type": "dcat:Distribution",
@@ -383,24 +379,24 @@
             ],
             "identifier": "TPPHE",
             "keyword": [
-            "tuition",
-            "payment plans",
-            "higher education",
-            "student loan"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/tuition-payment-plans-in-higher-education/", 
-      "modified": "2024-09-14",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Tuition Payment Plans in Higher Education"
-      }, 
-      {
+                "tuition",
+                "payment plans",
+                "higher education",
+                "student loan"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/tuition-payment-plans-in-higher-education/", 
+            "modified": "2024-09-14",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Tuition Payment Plans in Higher Education"
+        }, 
+        {
             "@type": "dcat:Dataset",
             "accessLevel": "public",
             "accrualPeriodicity": "R/P3M",
@@ -411,9 +407,8 @@
                 "@type": "vcard:Contact",
                 "fn": "devops@cfpb.gov",
                 "hasEmail": "mailto:devops@cfpb.gov"
-            },       
-   
-	    "description": "This page presents information about banking products provided to college students pursuant to agreements between institutions of higher education and financial service providers and governed in part by the Department of Education's cash management regulations.",
+            },
+            "description": "This page presents information about banking products provided to college students pursuant to agreements between institutions of higher education and financial service providers and governed in part by the Department of Education's cash management regulations.",
             "distribution": [
                 {
                     "@type": "dcat:Distribution",
@@ -424,25 +419,25 @@
             ],
             "identifier": "CDPMA",
             "keyword": [
-            "deposit",
-            "product marketing",
-            "agreements",
-            "data",
-            "college"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/deposit-product-marketing-agreements-and-data/",
-      "modified": "2022-06-30",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "College Banking Agreements and Related Data"
-     }, 
-      {
+                "deposit",
+                "product marketing",
+                "agreements",
+                "data",
+                "college"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/deposit-product-marketing-agreements-and-data/",
+            "modified": "2022-06-30",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "College Banking Agreements and Related Data"
+        }, 
+        {
             "@type": "dcat:Dataset",
             "accessLevel": "public",
             "accrualPeriodicity": "R/P3M",
@@ -453,9 +448,8 @@
                 "@type": "vcard:Contact",
                 "fn": "devops@cfpb.gov",
                 "hasEmail": "mailto:devops@cfpb.gov"
-            },       
-   
-	    "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
+            },
+            "description": "K-12 schools are increasingly offering families the option to pay school-related expenses online via third-party payment processors, presenting new costs and challenges for users.",
             "distribution": [
                 {
                     "@type": "dcat:Distribution",
@@ -466,23 +460,112 @@
             ],
             "identifier": "CEPK12S",
             "keyword": [
-            "cost",
-            "payment",
-            "electronic",
-            "schools",
-            "k12"
-      ],
-      "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
-      "modified": "2022-07-25",
-      "programCode": [
-        "000:000"
-      ],
-      "publisher": {
-        "@type": "org:Organization",
-        "name": "Consumer Financial Protection Bureau"
-      },
-      "spatial": "United States",
-      "title": "Costs of Electronic Payments in K-12 Schools"
-     }
+                "cost",
+                "payment",
+                "electronic",
+                "schools",
+                "k12"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/research-reports/issue-spotlight-costs-of-electronic-payments-in-k-12-schools/",
+            "modified": "2022-07-25",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Costs of Electronic Payments in K-12 Schools"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "description": "The Consumer Financial Protection Bureau’s (CFPB’s) Making Ends Meet (MEM) survey program is a general financial survey conducted regularly by the Office of Research at the CFPB. The surveys cover financial decision-making, perceptions, expectations, well-being, marketing and usage of different consumer finance products. The Making Ends Meet Survey program is a series of general financial surveys that examine consumers’ evolving financial status. The CFPB uses these surveys to produce a regular report on consumers’ financial conditions, as well as additional ad-hoc research reports. The surveys cover financial decision-making, perceptions, expectations, well-being, marketing and usage of different consumer finance products.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/making-ends-meet-survey-data/",
+                    "description": "The Consumer Financial Protection Bureau’s (CFPB’s) Making Ends Meet (MEM) survey program is a general financial survey conducted regularly by the Office of Research at the CFPB. The surveys cover financial decision-making, perceptions, expectations, well-being, marketing and usage of different consumer finance products. The Making Ends Meet Survey program is a series of general financial surveys that examine consumers’ evolving financial status. The CFPB uses these surveys to produce a regular report on consumers’ financial conditions, as well as additional ad-hoc research reports. The surveys cover financial decision-making, perceptions, expectations, well-being, marketing and usage of different consumer finance products.",
+                    "title": "Making Ends Meet Survey Data"
+                }
+            ],
+            "identifier": "MEM",
+            "keyword": [
+                "consumer",
+                "finance",
+                "making",
+                "end",
+                "meets",
+                "well-being",
+                "financial decision-making",
+                "consumer finance products"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/making-ends-meet-survey-data/",
+            "modified": "2025-08-14",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "Making Ends Meet Survey Data"
+        },
+        {
+            "@type": "dcat:Dataset",
+            "accessLevel": "public",
+            "accrualPeriodicity": "R/P1Y",
+            "bureauCode": [
+                "581:00"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "devops@cfpb.gov",
+                "hasEmail": "mailto:devops@cfpb.gov"
+            },
+            "description": "In 2024, the Consumer Financial Protection Bureau (CFPB) conducted the National Age Friendly Banking Survey (NAFBS) to improve understanding of consumers’ experiences with banks and credit unions, specifically focusing on differences among people in different age groups. This nationally representative survey of adults (ages 18 and older) in the United States with bank or credit union accounts measured experiences with financial institutions at all ages, allowing for comparisons by age groups.",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "accessURL": "https://www.consumerfinance.gov/data-research/national-age-friendly-banking-survey-data/",
+                    "description": "In 2024, the Consumer Financial Protection Bureau (CFPB) conducted the National Age Friendly Banking Survey (NAFBS) to improve understanding of consumers’ experiences with banks and credit unions, specifically focusing on differences among people in different age groups. This nationally representative survey of adults (ages 18 and older) in the United States with bank or credit union accounts measured experiences with financial institutions at all ages, allowing for comparisons by age groups.",
+                    "title": "National Age-Friendly Banking Survey Data"
+                }
+            ],
+            "identifier": "NABS",
+            "keyword": [
+                "consumer",
+                "finance",
+                "national",
+                "age friendly",
+                "banking",
+                "survey",
+                "consumer experience",
+                "credit unions",
+                "banks"
+            ],
+            "landingPage": "https://www.consumerfinance.gov/data-research/national-age-friendly-banking-survey-data/",
+            "modified": "2026-03-10",
+            "programCode": [
+                "000:000"
+            ],
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "Consumer Financial Protection Bureau"
+            },
+            "spatial": "United States",
+            "title": "National Age-Friendly Banking Survey Data"
+        }
   ]
 }
