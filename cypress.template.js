@@ -39,5 +39,5 @@ export default defineConfig({
        make sure it's not just flaky. */
     runMode: 2,
     openMode: 0,
-  }
+  },
 });
