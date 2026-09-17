@@ -10,8 +10,6 @@ const jsPaths = [
   // header and footer
   `${routes}/common.js`,
 
-  // js for entire sub-paths
-  `${routes}/credit-cards/single.js`,
   // js for specific pages, based on url
   `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
 
