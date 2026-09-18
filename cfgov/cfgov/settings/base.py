@@ -183,6 +183,7 @@ TEMPLATES = [
         # Look for Jinja2 templates in these directories
         "DIRS": [
             GLOBAL_TEMPLATE_ROOT,
+            STATIC_BUILT_PATH,
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
         "APP_DIRS": True,

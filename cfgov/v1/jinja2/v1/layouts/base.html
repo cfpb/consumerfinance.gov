@@ -294,19 +294,6 @@ itemscope itemtype="https://schema.org/FAQPage"
           {# Include site-wide JavaScript. #}
           var s = [ '{{ static('js/routes/common.js') }}' ];
           {#
-            Check and include template-level JavaScript.
-            Template-level JavaScript applies to all pages under the URL scheme
-            www.consumerfinance.gov/[app-url]/
-            and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
-          #}
-          {% macro template_js() %}
-            {% include 'js/routes/' + app_url(request) + '/single.js' ignore missing %}
-          {% endmacro %}
-          {% set js_source = template_js() | trim %}
-          {% if js_source | length > 0 %}
-            s.push( '{{ static('js/routes/' + app_url(request) + '/single.js') }}' );
-          {% endif %}
-          {#
             Check and include component-level JavaScript.
             Component-level JavaScript adds scripts appearing in
             unprocessed/js/routes/on-demand/[component].js
