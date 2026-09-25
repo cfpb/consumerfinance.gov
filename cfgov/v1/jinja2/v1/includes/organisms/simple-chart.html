@@ -9,20 +9,18 @@
    Create a chart organism with data
 
    ========================================================================== #}
-{% macro make_download_href(download_source, data_source) -%}
-  {% if download_source %}
-    {{download_source}}
-  {% elif "https://" in data_source %}
-    {{data_source}}
-  {% endif %}
-{%- endmacro %}
 
-{% if request.served_by_wagtail_sharing %}
-{% set data_location = value.data_source.replace('production', 'staging') %}
-{% else %}
-{% set data_location = value.data_source %}
-{% endif %}
+{%- set data_source = value.data_source %}
+{%- set data_source_is_url = "https://" in data_source %}
+{%- set download_file = value.download_file or (data_source if data_source_is_url) %}
 
+{%- if request.served_by_wagtail_sharing -%}
+  {%- set download_file = download_file.replace('production', 'staging') %}
+
+  {%- if data_source_is_url %}
+    {%- set data_source = data_source.replace('production', 'staging') %}
+  {%- endif %}
+{%- endif %}
 
 <div class="o-simple-chart">
     {% if value.figure_number %}
@@ -42,7 +40,7 @@
     <div class="o-simple-chart__target"
          data-projected-months="{{ value.projected_months }}"
          data-chart-type="{{ value.chart_type }}"
-         data-source='{{ data_location }}'
+         data-source='{{ data_source }}'
          data-default-series="{{ value.show_all_series_by_default }}"
          data-series='{{ value.data_series }}'
          data-x-axis-source='{{ value.x_axis_source }}'
@@ -62,14 +60,11 @@
     <p class="m-chart-footnote block block--sub block--border-top">
         {% if value.source_credits %}<strong>Source:</strong> {{value.source_credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
-        {% if value.download_text %}
-          {% set href =  make_download_href(value.download_file, data_location) %}
-          {% if href %}
-            <strong>Download:</strong>
-            <a href="{{href}}">
-              {{value.download_text}}</a><br>
-          {% endif %}
-        {% endif %}
+        {% if value.download_text and download_file -%}
+          <strong>Download:</strong>
+          <a href="{{ download_file }}">
+            {{ value.download_text }}</a><br>
+        {%- endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
 </div>
