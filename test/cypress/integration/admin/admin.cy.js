@@ -2,6 +2,15 @@ import { AdminPage } from './admin-helpers.cy.js';
 
 const admin = new AdminPage();
 
+// Grant Chrome copy/paste permission
+Cypress.automation('remote:debugger:protocol', {
+  command: 'Browser.grantPermissions',
+  params: {
+    permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+    origin: window.location.origin,
+  },
+});
+
 describe('Admin', () => {
   beforeEach(() => {
     /* We can be reasonably sure that the Wagtail admin is being used on a
@@ -107,9 +116,7 @@ describe('Admin', () => {
   });
 });
 
-// Access to the clipboard works consistently in Electron but asks the user for
-// permission in other browsers, like Chrome. Only run these tests in Electron.
-describe('Pasting into tables', { browser: 'electron' }, () => {
+describe('Pasting into tables', () => {
   beforeEach(() => {
     admin.login();
     admin.addSublandingPage();
