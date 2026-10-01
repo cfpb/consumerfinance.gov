@@ -120,7 +120,6 @@ INSTALLED_APPS = (
     "wagtail_draftail_anchors",
     "django_filters",
     "django_htmx",
-    "wagtail_content_audit",
     "mozilla_django_oidc",
     "draftail_icons",
     "wagtail_footnotes",
