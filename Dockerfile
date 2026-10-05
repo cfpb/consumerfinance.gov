@@ -71,7 +71,7 @@ RUN \
     && \
     apk add --no-cache --virtual .backend-deps \
         bash \
-        postgresql \
+        postgresql-client \
     && \
     pip install --upgrade pip setuptools wheel && \
     pip install -r requirements/${REQUIREMENTS} && \
