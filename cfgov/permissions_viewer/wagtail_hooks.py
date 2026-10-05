@@ -2,7 +2,7 @@ from django.urls import reverse
 
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
-from wagtail.users.widgets import UserListingButton
+from wagtail.admin.widgets import Button
 
 
 try:
@@ -37,10 +37,10 @@ def register_settings_menu_item():
 
 @hooks.register("register_user_listing_buttons")
 def user_listing_buttons(user, request_user):
-    yield UserListingButton(
+    yield Button(
         "View Permissions",
         reverse("permissions:user", args=[user.pk]),
-        classname="button-secondary",
         attrs={"title": "View permissions for this user"},
+        icon_name="lock-open",
         priority=15,
     )

@@ -39,7 +39,7 @@ export class AdminPage {
   }
 
   filters() {
-    return cy.get('.w-filter-button');
+    return cy.get('#filters-drilldown');
   }
 
   openDocumentsLibrary() {
