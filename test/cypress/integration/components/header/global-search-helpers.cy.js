@@ -16,7 +16,7 @@ export class GlobalSearch {
   }
 
   content() {
-    return this.globalSearchMenu('content');
+    return this.globalSearch('.m-global-search__content-form');
   }
 
   input() {
