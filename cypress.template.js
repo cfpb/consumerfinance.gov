@@ -2,8 +2,7 @@ import { defineConfig } from 'cypress';
 import cypressFailFast from 'cypress-fail-fast/plugin';
 
 export default defineConfig({
-  allowCypressEnv: false,
-  experimentalMemoryManagement: true,
+  defaultBrowser: 'chrome',
   screenshotOnRunFailure: true,
   fixturesFolder: 'test/cypress/fixtures',
   videosFolder: 'test/cypress/videos',
