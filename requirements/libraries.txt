@@ -36,9 +36,6 @@ wagtail-inventory==3.4
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.17
 wagtail-treemodeladmin==1.12.0
-# TODO: We no longer use wagtailmedia and can remove it as a requirement,
-# but we need to update the test database and squash migrations first
-wagtailmedia==0.19.1
 wagtailcharts==0.6.3
 whitenoise==6.7.0
 
