@@ -85,3 +85,13 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
 
     class Media:
         js = ["email-signup.js"]
+
+
+class RemovedMediaChooserBlock(blocks.Block):
+    """Placeholder for wagtailmedia's AbstractMediaChooserBlock.
+
+    This block is only referenced by historical v1 migrations, from before the
+    audio player's media chooser was replaced with a URLBlock in migration
+    0026. It exists so that those migrations can be loaded without needing to
+    install wagtailmedia.
+    """
