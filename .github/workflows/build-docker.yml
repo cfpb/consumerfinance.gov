@@ -17,7 +17,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: cfpb/actions/docker-build-push@1ed507b96522475e6d11e5af41c55251b16f19a6
+      - uses: cfpb/actions/docker-build-push@14cfddeabf21df8a4960fae221b6a982e5d4f244
         with:
           image-name: cfgov
           token: ${{ secrets.GITHUB_TOKEN }}
+          scan: true
+          scan-mode: ${{ github.event_name == 'pull_request' && 'enforce' || 'report' }}
+          scanner-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          scanner-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
