@@ -11,16 +11,21 @@ table_name = "flags_flagstate"
 index_name = "idx_16728_flags_flagstate_name_1d90a1cb81205552_uniq"
 
 
-# nosec used here to suppress Bandit warning about this raw SQL.
-# https://bandit.readthedocs.io/en/1.7.8/plugins/b608_hardcoded_sql_expressions.html
-sql = f"""
+sql_template = """
 DO $$ BEGIN
     IF EXISTS (SELECT FROM pg_indexes WHERE indexname='{index_name}') THEN
         DROP INDEX {index_name};
         ALTER TABLE {table_name} ADD CONSTRAINT {index_name} UNIQUE(name, condition, value);
     END IF;
 END $$;
-""".strip()  # nosec B608
+""".strip()
+
+
+# Skip SQL if this is being run against a non-PostgreSQL database.
+def fix_index(apps, schema_editor):
+    if schema_editor.connection.vendor == "postgresql":
+        sql = sql_template.format(index_name=index_name, table_name=table_name)
+        schema_editor.execute(sql)
 
 
 class Migration(migrations.Migration):
@@ -33,5 +38,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL(sql, migrations.RunSQL.noop, elidable=True)
+        migrations.RunPython(
+            fix_index, migrations.RunPython.noop, elidable=True,
+        )
     ]
