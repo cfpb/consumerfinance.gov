@@ -1,0 +1,131 @@
+{
+  "books": "1250",
+  "city": "College Park",
+  "cohortRankByControl": {
+    "grad_rate": {
+      "cohort_count": 521,
+      "percentile_rank": 98
+    },
+    "median_total_debt": {
+      "cohort_count": 568,
+      "percentile_rank": 64
+    },
+    "repay_3yr": {
+      "cohort_count": 565,
+      "percentile_rank": 92
+    }
+  },
+  "cohortRankByHighestDegree": {
+    "grad_rate": {
+      "cohort_count": 1621,
+      "percentile_rank": 96
+    },
+    "median_total_debt": {
+      "cohort_count": 1851,
+      "percentile_rank": 51
+    },
+    "repay_3yr": {
+      "cohort_count": 1850,
+      "percentile_rank": 90
+    }
+  },
+  "cohortRankByState": {
+    "grad_rate": {
+      "cohort_count": 27,
+      "percentile_rank": 96
+    },
+    "median_total_debt": {
+      "cohort_count": 29,
+      "percentile_rank": 41
+    },
+    "repay_3yr": {
+      "cohort_count": 28,
+      "percentile_rank": 86
+    }
+  },
+  "control": "Public",
+  "defaultRate": "0.021",
+  "enrollment": 30184,
+  "gradRate": "0.857",
+  "highestDegree": "Graduate degree",
+  "medianAnnualPay": 62900,
+  "medianAnnualPay6Yr": 47200,
+  "medianMonthlyDebt": "197.19",
+  "medianTotalDebt": "15750.0",
+  "netPriceAvg": 18457,
+  "netPriceAvgSlices": {
+    "0_30k": 7980,
+    "110k_plus": 24339,
+    "30k_48k": 12367,
+    "48k_75k": 17149,
+    "75k_110k": 22474
+  },
+  "nicknames": "",
+  "offersPerkins": true,
+  "onCampusAvail": "Yes",
+  "online": false,
+  "otherOffCampus": "4172",
+  "otherOnCampus": "2492",
+  "otherWFamily": "4172",
+  "predominantDegree": "Bachelor's degree",
+  "programCodes": {
+    "graduate": [],
+    "undergrad": [
+      {
+        "code": "4502-3",
+        "level": "Bachelor's degree",
+        "name": "Anthropology",
+        "salary": 33700
+      }
+    ]
+  },
+  "programCount": 24,
+  "programsPopular": [
+    "Social Sciences",
+    "Engineering",
+    "Business, Management, Marketing, and Related Support Services",
+    "Computer and Information Sciences and Support Services",
+    "Biological and Biomedical Sciences",
+    "Communication, Journalism, and Related Programs",
+    "Health Professions and Related Programs",
+    "Psychology",
+    "Parks, Recreation, Leisure, and Fitness Studies",
+    "Agriculture, Agriculture Operations, and Related Sciences",
+    "Visual and Performing Arts",
+    "Mathematics and Statistics",
+    "English Language and Literature/Letters",
+    "Physical Sciences",
+    "Family and Consumer Sciences/Human Sciences",
+    "Education",
+    "Foreign Languages, Literatures, and Linguistics",
+    "History",
+    "Area, Ethnic, Cultural, Gender, and Group Studies",
+    "Architecture and Related Services",
+    "Natural Resources and Conservation",
+    "Philosophy and Religious Studies",
+    "Multi/Interdisciplinary Studies",
+    "Public Administration and Social Service Professions"
+  ],
+  "rateAssociateTransfer": null,
+  "rateDefault": "0.021",
+  "rateGraduation": "0.857",
+  "rateRepay3yr": "0.7939938250",
+  "region": "SO",
+  "repay3yr": "0.7939938250",
+  "roomBrdOffCampus": "14314",
+  "roomBrdOnCampus": "12809",
+  "school": "University of Maryland-College Park",
+  "schoolID": 163286,
+  "schoolSalary": 62900,
+  "settlementSchool": "demo",
+  "state": "MD",
+  "tuitionGradInDis": "12906",
+  "tuitionGradInS": "12906",
+  "tuitionGradOss": "27864",
+  "tuitionUnderInDis": "8651",
+  "tuitionUnderInS": 10595,
+  "tuitionUnderOoss": 35216,
+  "underInvestigation": false,
+  "url": "www.umd.edu",
+  "zip5": "20742"
+}
