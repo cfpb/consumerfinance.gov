@@ -186,9 +186,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/ccdb5-ui@npm:2.23.8":
-  version: 2.23.8
-  resolution: "@cfpb/ccdb5-ui@npm:2.23.8"
+"@cfpb/ccdb5-ui@npm:2.24.0":
+  version: 2.24.0
+  resolution: "@cfpb/ccdb5-ui@npm:2.24.0"
   dependencies:
     "@cfpb/cfpb-design-system": "npm:5.10.2"
     "@cfpb/design-system-react": "npm:2.0.3"
@@ -208,7 +208,7 @@ __metadata:
     react-modal: "npm:^3.16.3"
     react-redux: "npm:^9.3.0"
     react-router: "npm:^7.18.3"
-  checksum: 10c0/2e6a62bb0823ba6ba67192c8489d0c38c17ebe087c90a614b91c3ae74bf071de0fc14f711192ab78af4be2a988d84b0ff0ad69f381492b19bdfad2d14e0a0159
+  checksum: 10c0/4695339234b8e689778d71c8b68718a32fc91900e6b925971daf9fb21ddbddba6827f1f7515144e227041eb136c495cc44ca92628240f40da76d03e02c22c3f3
   languageName: node
   linkType: hard
 
@@ -2461,7 +2461,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ccdb5-ui@workspace:cfgov/unprocessed/apps/ccdb-search"
   dependencies:
-    "@cfpb/ccdb5-ui": "npm:2.23.8"
+    "@cfpb/ccdb5-ui": "npm:2.24.0"
   languageName: unknown
   linkType: soft
 
