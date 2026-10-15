@@ -64,10 +64,7 @@ describe('Header', () => {
   describe('on mobile', () => {
     beforeEach(() => {
       cy.viewport(480, 800);
-      // For now, we can't test this against the homepage
-      // TODO: Restore this line when the homepage is restored.
-      // cy.visit('/');
-      cy.visit('/data-research/consumer-complaints/');
+      cy.visit('/');
     });
     it('clicking from the mega-menu tab to the global search', () => {
       // When I click on the root hamburger menu.
