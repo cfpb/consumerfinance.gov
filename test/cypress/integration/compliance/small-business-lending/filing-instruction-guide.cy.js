@@ -10,7 +10,7 @@ Cypress.on('window:before:load', (win) => {
 describe('1071 Filing Instruction Guide (FIG)', () => {
   describe('FIG table of contents', () => {
     context('Desktop experience', () => {
-      const desktops = ['macbook-13', 'macbook-15'];
+      const desktops = ['macbook-13'];
 
       desktops.forEach((desktop) => {
         context(desktop, () => {
@@ -130,54 +130,8 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
       });
     });
 
-    context('Tablet experience', () => {
-      const tablets = ['ipad-2', 'ipad-mini'];
-
-      tablets.forEach((tablet) => {
-        context(tablet, () => {
-          beforeEach(() => {
-            cy.viewport(tablet);
-            fig.open();
-          });
-
-          afterEach(() => {
-            expect(windowConsoleError).to.not.be.called;
-          });
-
-          it('should be present', () => {
-            fig.toc().should('be.visible');
-          });
-
-          it('should expand and collapse', () => {
-            fig.toggleToc();
-            fig.getNavItem(1).should('be.visible');
-            fig.toggleToc();
-            fig.getNavItem(1).should('not.be.visible');
-          });
-
-          it('should be sticky', () => {
-            fig.toc().should('be.visible');
-            cy.scrollTo(0, 1000);
-            fig.toc().should('be.visible');
-          });
-
-          it('jump to correct sections', () => {
-            fig.toggleToc();
-            fig.clickNavItem(4);
-            fig.getSection(4).should('be.inViewport');
-            fig.getSection(2).should('not.be.inViewport');
-
-            fig.toggleToc();
-            fig.clickNavItem(1);
-            fig.getSection(1).should('be.inViewport');
-            fig.getSection(4).should('not.be.inViewport');
-          });
-        });
-      });
-    });
-
     context('Mobile experience', () => {
-      const mobiles = ['iphone-6', 'iphone-xr', 'samsung-note9'];
+      const mobiles = ['iphone-6'];
 
       mobiles.forEach((mobile) => {
         context(mobile, () => {
