@@ -371,6 +371,10 @@ GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
 # Removes wagtail version update check banner from admin page
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
+# Disable editor autosave (on by default since Wagtail 7.3). Do not enable
+# until all cf.gov page save actions have been made compatible with autosave.
+WAGTAIL_AUTOSAVE_INTERVAL = 0
+
 # Email
 ADMINS = admin_emails(os.environ.get("ADMIN_EMAILS"))
 
