@@ -71,8 +71,8 @@ def output_csv(filepath, headings, bs_rows):
             writer.writerow(
                 [
                     cell.text.replace(",", "").strip()
-                    for cell in row.findAll("td")
-                    if row.findAll("td")
+                    for cell in row.find_all("td")
+                    if row.find_all("td")
                 ]
             )
 
@@ -82,8 +82,8 @@ def output_json(filepath, headings, bs_rows):
     for row in bs_rows:
         cells = [
             cell.text.replace(",", "").strip()
-            for cell in row.findAll("td")
-            if row.findAll("td")
+            for cell in row.find_all("td")
+            if row.find_all("td")
         ]
         if len(cells) == 2:
             json_out[cells[0]] = cells[1]
@@ -124,8 +124,8 @@ def update_example_reduction():
     ]
     soup = make_soup(url)
     if soup:
-        table = soup.findAll("table")[5].find("table")
-        rows = [row for row in table.findAll("tr") if row.findAll("td")]
+        table = soup.find_all("table")[5].find("table")
+        rows = [row for row in table.find_all("tr") if row.find_all("td")]
         output_csv(outcsv, headings, rows)
         log.info(f"updated {outcsv} with {len(rows)} rows")
         output_json(outjson, headings, rows)
@@ -139,12 +139,12 @@ def update_awi_series():
     headings = ["Year", "Index"]
     soup = make_soup(url)
     if soup:
-        tables = soup.findAll("table")[1].findAll("table")
+        tables = soup.find_all("table")[1].find_all("table")
         rows = []
         log.info(f"found {len(tables)} tables")
         for table in tables:
             rows.extend(
-                [row for row in table.findAll("tr") if row.findAll("td")]
+                [row for row in table.find_all("tr") if row.find_all("td")]
             )
         output_csv(outcsv, headings, rows)
         log.info(f"updated {outcsv} with {len(rows)} rows")
@@ -160,11 +160,13 @@ def update_cola():
     soup = make_soup(url)
     if soup:
         [s.extract() for s in soup("small")]
-        tables = soup.findAll("table")[-3:]
+        tables = soup.find_all("table")[-3:]
     rows = []
     log.info(f"found {len(tables)} tables")
     for table in tables:
-        rows.extend([row for row in table.findAll("tr") if row.findAll("td")])
+        rows.extend(
+            [row for row in table.find_all("tr") if row.find_all("td")]
+        )
     output_csv(outcsv, headings, rows)
     log.info(f"updated {outcsv} with {len(rows)} rows")
     output_json(outjson, headings, rows)
@@ -192,7 +194,7 @@ def update_life():
         if not table:
             log.info(f"couldn't find table at {url}")
         else:
-            rows = table.findAll("tr")[2:]
+            rows = table.find_all("tr")[2:]
             if len(rows) > 100:
                 output_csv(outcsv, headings, rows)
                 msg += f"updated {outcsv} with {len(rows)} rows"

@@ -75,8 +75,8 @@ def pre_process_tags(paragraph_element):
     first_tag = paragraph_element.find("I")
     if first_tag:
         bold_content = first_tag.text
-        first_tag.replaceWith(f"**{bold_content}**")
+        first_tag.replace_with(f"**{bold_content}**")
     for element in paragraph_element.find_all("I"):
         i_content = element.text
-        element.replaceWith(f"*{i_content}*")
+        element.replace_with(f"*{i_content}*")
     return paragraph_element

@@ -45,17 +45,17 @@ def extract_static_links(page_content):
     soup = bs(page_content, "html.parser")
     static_js = [
         link.get("src")
-        for link in soup.findAll("script")
+        for link in soup.find_all("script")
         if link.get("src") and "static" in link.get("src")
     ]
     static_images = [
         image.get("src")
-        for image in soup.findAll("img")
+        for image in soup.find_all("img")
         if image.get("src") and "static" in image.get("src")
     ]
     static_css = [
         link.get("href")
-        for link in soup.findAll("link")
+        for link in soup.find_all("link")
         if link.get("href") and "static" in link.get("href")
     ]
     return static_js + static_images + static_css
