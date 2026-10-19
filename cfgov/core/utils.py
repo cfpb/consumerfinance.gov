@@ -231,7 +231,7 @@ def add_cfpb_link_markup(tag, request_path):
 
 def wrap_contents(tag, wrapper):
     """Move all of a tag's children into a wrapper, then append the wrapper."""
-    for child in tag.contents:
+    for child in list(tag.contents):
         wrapper.append(child.extract())
     tag.append(wrapper)
     return wrapper
