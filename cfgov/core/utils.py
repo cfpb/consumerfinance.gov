@@ -231,7 +231,7 @@ def add_cfpb_link_markup(tag, request_path):
 
 def wrap_contents(tag, wrapper):
     """Move all of a tag's children into a wrapper, then append the wrapper."""
-    for child in list(tag.contents):
+    for child in tag.contents:
         wrapper.append(child.extract())
     tag.append(wrapper)
     return wrapper
@@ -319,7 +319,7 @@ def add_link_markup(tag, request_path):
     # add proper markup so that the link appears as a button with the icon on
     # the right side.
     if not spans and "a-btn" in class_attrs:
-        span = wrap_contents(tag, soup.new_tag("span"))
+        wrap_contents(tag, soup.new_tag("span"))
         tag.append(icon_soup)
 
     # Otherwise, either modify an existing <span> or add a new one so that
