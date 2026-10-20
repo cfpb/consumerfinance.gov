@@ -60,8 +60,6 @@ INSTALLED_APPS = (
     "localflavor",
     "modelcluster",
     "taggit",
-    "dal",
-    "dal_select2",
     "wagtailinventory",
     "wagtailsharing",
     "flags",
