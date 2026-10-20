@@ -40,11 +40,13 @@ class AnswerPageSearch:
             search = self.base_query.filter("term", language=self.language)
 
         if self.search_term != "":
+            # Leave results in search relevance order.
             search = search.query(
                 "match", text={"query": self.search_term, "operator": "AND"}
             )
-
-        search = search.sort("answer_id")
+        else:
+            # Use a stable order for results without a query (portal pages).
+            search = search.sort("answer_id")
 
         total_results = search.count()
         search = search[0:total_results]

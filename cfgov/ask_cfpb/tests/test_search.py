@@ -108,32 +108,54 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             "What is money?\nMoney makes the world go round.",
         )
 
-    def test_answerpage_search_default_id_sort_order(self):
-        for page in [
-            AnswerPage(
-                **{k: f"test-{letter}" for k in ("title", "slug", "question")},
-                live=True,
-                answer_base=make_answer(),
+    def make_answer_pages(self, questions):
+        for i, question in enumerate(questions):
+            self.ROOT_PAGE.add_child(
+                instance=AnswerPage(
+                    title=f"test-{i}",
+                    slug=f"test-{i}",
+                    question=question,
+                    live=True,
+                    answer_base=make_answer(),
+                )
             )
-            for letter in "abc"
-        ]:
-            self.ROOT_PAGE.add_child(instance=page)
 
         self.rebuild_elasticsearch_index(
             AnswerPageDocument.Index.name, stdout=StringIO()
         )
 
-        results = AnswerPageSearch("test").search()
+    def test_answerpage_search_without_query_sorts_by_id(self):
+        self.make_answer_pages(["test a", "test b", "test c"])
+
+        results = AnswerPageSearch("").search()
         ordered_ids = list(
             [
                 str(answer_page_document.answer_id)
                 for answer_page_document in results["results"]
             ]
         )
-        sorted_ids = list(ordered_ids)
-        sorted_ids.sort()
 
-        self.assertEqual(ordered_ids, sorted_ids)
+        self.assertEqual(len(ordered_ids), 3)
+        self.assertEqual(ordered_ids, sorted(ordered_ids))
+
+    def test_answerpage_search_with_query_sorts_by_relevance(self):
+        self.make_answer_pages(
+            [
+                "Can a debt collector contact me at work about a mortgage?",
+                "What is a mortgage?",
+            ]
+        )
+
+        results = AnswerPageSearch("mortgage").search()["results"]
+
+        # The second page has the higher ID but is the better match.
+        self.assertEqual(
+            [result.autocomplete for result in results],
+            [
+                "What is a mortgage?",
+                "Can a debt collector contact me at work about a mortgage?",
+            ],
+        )
 
     def test_AnswerPage_suggest(self):
         test_answer_page = AnswerPage(

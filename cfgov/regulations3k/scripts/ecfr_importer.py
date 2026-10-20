@@ -277,10 +277,10 @@ def parse_appendix_paragraphs(p_elements, id_type, label):
         p = pre_process_tags(p_element)
         if id_type == "section":
             p_content = parse_ids(p.text, label) + "\n"
-            p.replaceWith(lint_paragraph(p_content))
+            p.replace_with(lint_paragraph(p_content))
         else:
             p_content = LEVEL_STATE.parse_appendix_graph(p, label) + "\n"
-            p.replaceWith(lint_paragraph(p_content))
+            p.replace_with(lint_paragraph(p_content))
 
 
 def parse_sections(section_list, part, subpart):
@@ -322,25 +322,25 @@ def parse_appendix_elements(appendix_soup, label):
     for i, table_soup in enumerate(tables):
         table_label = f"{{table-{label}-{i}}}"
         if set_table(table_soup, table_label):
-            table_soup.replaceWith(f"\n{table_label}\n")
+            table_soup.replace_with(f"\n{table_label}\n")
     for form_line in appendix_soup.find_all("FP-DASH"):
         form_line.string = form_line.text.replace("\n", "") + "__\n"
     for i, image in enumerate(appendix_soup.find_all("img")):
         ref = "![image-{}-{}]({})".format(label, i + 1, image.get("src"))
-        image.replaceWith(f"\n{ref}\n")
+        image.replace_with(f"\n{ref}\n")
     LEVEL_STATE.current_id = ""
     id_type = LEVEL_STATE.sniff_appendix_id_type(paragraphs)
     for citation in appendix_soup.find_all("CITA"):
-        citation.replaceWith("")
+        citation.replace_with("")
     for tag in HEADLINE_MAP:
         subheds = appendix_soup.find_all(tag)
         for subhed in subheds:
             hed_content = HEADLINE_MAP[tag].format(subhed.text.strip())
-            subhed.replaceWith(hed_content)
+            subhed.replace_with(hed_content)
     if id_type is None:
         for p in paragraphs:
             pre_process_tags(p)
-            p.replaceWith(p.text + "\n")
+            p.replace_with(p.text + "\n")
     else:
         parse_appendix_paragraphs(paragraphs, id_type, label)
     result = appendix_soup.text
@@ -386,7 +386,7 @@ def parse_appendices(appendices, part):
     for i, _appendix in enumerate(appendices):
         n_value = _appendix["N"]
         head = _appendix.find("HEAD").text.strip()
-        _appendix.find("HEAD").replaceWith("")
+        _appendix.find("HEAD").replace_with("")
         default_label = int_to_alpha(i + 1).upper()
         label = get_appendix_label(n_value, head, default_label)
         if PAYLOAD.interp_refs and label in PAYLOAD.interp_refs:
@@ -527,7 +527,7 @@ def parse_interps(interp_div, part, subpart):
 
     section_headings = [
         tag
-        for tag in interp_div.find("HEAD").findNextSiblings()
+        for tag in interp_div.find("HEAD").find_next_siblings()
         if (
             tag.name in ["HD1", "HD2", "HD3"]
             and divine_interp_tag_use(tag, part.part_number)
@@ -556,7 +556,7 @@ def parse_interps(interp_div, part, subpart):
             see = f"see({section_label}-1-Interp)"
             ref = {section_label: {"1": see}}
             PAYLOAD.interp_refs.update(ref)
-        for element in section_heading.findNextSiblings():
+        for element in section_heading.find_next_siblings():
             if element in section_headings:
                 section.save()
                 PAYLOAD.interpretations.append(section)

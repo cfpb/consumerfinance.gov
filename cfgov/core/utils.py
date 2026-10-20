@@ -229,6 +229,14 @@ def add_cfpb_link_markup(tag, request_path):
     return str(tag)
 
 
+def wrap_contents(tag, wrapper):
+    """Move all of a tag's children into a wrapper, then append the wrapper."""
+    for child in list(tag.contents):
+        wrapper.append(child.extract())
+    tag.append(wrapper)
+    return wrapper
+
+
 def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
@@ -303,7 +311,7 @@ def add_link_markup(tag, request_path):
         return str_tag if str_tag != original_tag else None
 
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
-    spans = tag.findAll("span", icon_classes)
+    spans = tag.find_all("span", icon_classes)
 
     icon_soup = BeautifulSoup(svg_icon(icon), BEAUTIFUL_SOUP_PARSER)
 
@@ -311,14 +319,8 @@ def add_link_markup(tag, request_path):
     # add proper markup so that the link appears as a button with the icon on
     # the right side.
     if not spans and "a-btn" in class_attrs:
-        span = soup.new_tag("span")
-        # Set the span's contents to whatever is in the `<a>` currently
-        span.contents = list(tag.contents)
-        # Remove that stuff from the `<a>`
-        tag.clear()
-        # Add the span back in
-        tag.append(span)
-        tag.contents.append(icon_soup)
+        wrap_contents(tag, soup.new_tag("span"))
+        tag.append(icon_soup)
 
     # Otherwise, either modify an existing <span> or add a new one so that
     # it has the proper non-button link classes, and then add the icon after
@@ -333,11 +335,7 @@ def add_link_markup(tag, request_path):
         if spans:
             span = spans[-1]
         else:
-            span = soup.new_tag("span", **icon_classes)
-            span.contents = list(tag.contents)
-
-            tag.clear()
-            tag.append(span)
+            span = wrap_contents(tag, soup.new_tag("span", **icon_classes))
 
         # Whether we used an existing text span with a-link__text or added a
         # new one, we want to make sure that the link text doesn't include any
@@ -347,10 +345,12 @@ def add_link_markup(tag, request_path):
         # tags like <a> text with <strong>other</strong> tag </a> but not tags
         # like <a> text with <strong>other tag with whitespace </strong></a>.
         if span.contents:
-            if isinstance(span.contents[0], NavigableString):
-                span.contents[0] = NavigableString(span.contents[0].lstrip())
-            if isinstance(span.contents[-1], NavigableString):
-                span.contents[-1] = NavigableString(span.contents[-1].rstrip())
+            first = span.contents[0]
+            if isinstance(first, NavigableString):
+                first.replace_with(NavigableString(first.lstrip()))
+            last = span.contents[-1]
+            if isinstance(last, NavigableString):
+                last.replace_with(NavigableString(last.rstrip()))
 
         tag.append(" ")
         tag.append(icon_soup)
