@@ -64,7 +64,7 @@ def strip_html(content):
 def process_enforcement_action_page_content(page_content):
     content = ""
     soup = BeautifulSoup(str(page_content), "html.parser")
-    para = soup.findAll(["p", "h5"])
+    para = soup.find_all(["p", "h5"])
     for p in para:
         content += p.get_text()
         link = p.find("a", href=True)

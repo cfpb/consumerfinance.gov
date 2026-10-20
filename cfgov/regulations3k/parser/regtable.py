@@ -49,7 +49,7 @@ class RegTable:
 
         def test_row(row):
             """Determine whether a row is a header row or a body row."""
-            cells = row.findChildren()
+            cells = row.find_all()
             if cells[0].name == "TH":
                 return "header"
             if cells[0].name == "TD":

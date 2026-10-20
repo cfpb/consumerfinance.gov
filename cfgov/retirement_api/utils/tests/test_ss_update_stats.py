@@ -65,7 +65,7 @@ class UpdateSsStatsTests(TestCase):
         with open(self.life_page) as f:
             mockpage = f.read()
         table = bs(mockpage, "html.parser").find("table").find("table")
-        rows = table.findAll("tr")[2:]
+        rows = table.find_all("tr")[2:]
         output_csv(mockpath, self.life_headings, rows)
         self.assertTrue(os.path.isfile(mockpath))
         with open(mockpath) as f:
@@ -99,7 +99,7 @@ class UpdateSsStatsTests(TestCase):
         with open(self.life_page) as f:
             mockpage = f.read()
         table = bs(mockpage, "html.parser").find("table").find("table")
-        rows = table.findAll("tr")[2:]
+        rows = table.find_all("tr")[2:]
         output_json(mockpath, self.life_headings, rows)
         self.assertTrue(os.path.isfile(mockpath))
         with open(mockpath) as f:
