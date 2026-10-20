@@ -23,7 +23,6 @@ opensearch-py==3.0.0
 psycopg2-binary==2.9.10
 python-dateutil==2.9.0
 regdown==1.1.1
-s3transfer==0.10.2
 urllib3==2.8.0
 wagtail-autocomplete==0.12.1
 wagtail_draftail_anchors==0.7.0
