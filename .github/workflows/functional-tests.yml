@@ -89,7 +89,7 @@ jobs:
       run: npx cypress verify
 
     - name: Run Cypress
-      uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7.4.1
+      uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
       with:
         install: false
         build: yarn build

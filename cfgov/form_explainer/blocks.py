@@ -37,11 +37,17 @@ class ImageMapCoordinates(blocks.StructBlock):
     def clean(self, value):
         cleaned = super().clean(value)
         errors = {}
-        if cleaned.get("left") + cleaned.get("width") > 100:
+
+        def exceeds_100(a, b):
+            a = cleaned.get(a)
+            b = cleaned.get(b)
+            return a is not None and b is not None and a + b > 100
+
+        if exceeds_100("left", "width"):
             errors["left"] = errors["width"] = ErrorList(
                 ["Sum of left and width values should not exceed 100."]
             )
-        if cleaned.get("top") + cleaned.get("height") > 100:
+        if exceeds_100("top", "height"):
             errors["top"] = errors["height"] = ErrorList(
                 ["Sum of top and height values should not exceed 100."]
             )

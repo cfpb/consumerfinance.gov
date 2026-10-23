@@ -16,7 +16,8 @@
         ],
         "path": "0001",
         "url_path": "/",
-        "slug": "root"
+        "slug": "root",
+        "locale": 1
     }
 },
 {

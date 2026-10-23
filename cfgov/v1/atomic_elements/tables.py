@@ -2,10 +2,10 @@ from django import forms
 from django.utils.functional import cached_property
 
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.telepath import register
 
 from wagtail_footnotes.blocks import RichTextBlockWithFootnotes
 

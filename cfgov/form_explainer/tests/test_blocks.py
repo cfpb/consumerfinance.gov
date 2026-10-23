@@ -49,3 +49,12 @@ class ImageMapCoordinatesTestCase(TestCase):
                 "when top/height and left/width sums are less than or equal "
                 "to 100 and all values are between 0 and 100."
             )
+
+    def test_draft_validation_allows_missing_coordinates(self):
+        # In Wagtail 7.4 or later, blocks marked as required may be empty when
+        # saving drafts, which means that clean() has to handle missing values.
+        block = ImageMapCoordinates()
+        value = block.to_python(
+            {"left": None, "top": 10, "width": 10, "height": None}
+        )
+        block.clean_deferred(value)
