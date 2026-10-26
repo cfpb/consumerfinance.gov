@@ -3,8 +3,8 @@ from functools import cached_property
 from django import forms
 
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks.struct_block import StructBlockAdapter
-from wagtail.telepath import register
 
 from v1.atomic_elements import molecules, organisms, schema
 
