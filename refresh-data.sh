@@ -28,8 +28,12 @@ check_data() {
 }
 
 refresh_data() {
+    # cfpb schema name is hardcoded in dump-data.sh.
+    echo 'Dropping existing cfpb schema'
+    echo 'DROP SCHEMA IF EXISTS cfpb CASCADE;' \
+        | cfgov/manage.py dbshell -- -v ON_ERROR_STOP=1 > /dev/null
     echo 'Importing refresh db'
-    gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell > /dev/null
+    gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell -- -v ON_ERROR_STOP=1 > /dev/null
 }
 
 initial_data() {
