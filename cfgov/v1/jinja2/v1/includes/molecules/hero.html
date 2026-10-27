@@ -66,7 +66,7 @@
                 {{- ' m-hero--jumbo' if value.is_jumbo else '' }}">
     <div class="m-hero__wrapper">
         <div class="m-hero__text">
-            <h1 class="m-hero__heading">{{ value.heading }}
+            <h1 class="m-hero__heading">{{ value.heading | safe }}
                 {% if value.heading_continued %}
                 <br> {{ value.heading_continued }}
                 {% endif %}
