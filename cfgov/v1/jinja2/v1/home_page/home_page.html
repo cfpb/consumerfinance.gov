@@ -39,14 +39,16 @@ content__main--flush-inner
                             </div>
                             <div class="m-info-unit__content">
                                 <ul class="m-list m-list--links u-mt15">
+                                    {% for link in highlight.links %}
                                     <li class="m-list__item">
                                         <a class="a-link a-link--jump"
-                                            href="{{ highlight.link_url }}">
+                                            href="{{ link.link_url }}">
                                             <span class="a-link__text">
-                                                {{- highlight.link_text -}}
+                                                {{- link.link_text -}}
                                             </span>
                                         </a>
                                     </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
