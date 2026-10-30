@@ -159,6 +159,10 @@ class TimeseriesViewTests(django.test.TestCase):
             total=2674,
         )
 
+    def assert200ResponseWithCacheTag(self, response):
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Edge-Cache-Tag"], "mpt")
+
     def test_metadata_request(self):
         response = self.client.get(
             reverse(
@@ -166,14 +170,14 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"meta_name": "sampling_dates"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertIn("2008-01-01", json.loads(response.content))
 
     def test_metadata_request_bad_meta_name(self):
         response = self.client.get(
             reverse("data_research_api_metadata", kwargs={"meta_name": "xxx"})
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "No metadata object found.")
 
     def test_national_timeseries_30_89(self):
@@ -183,7 +187,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"days_late": "30-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_national_timeseries_90(self):
         response = self.client.get(
@@ -192,7 +196,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_state_timeseries_30_89(self):
         response = self.client.get(
@@ -201,7 +205,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12", "days_late": "30-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_state_timeseries_90(self):
         response = self.client.get(
@@ -210,7 +214,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_msa_timeseries_30_89(self):
         response = self.client.get(
@@ -219,7 +223,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "35840", "days_late": "30-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_msa_timeseries_90(self):
         response = self.client.get(
@@ -228,7 +232,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "35840", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_msa_timeseries_90_below_threshold(self):
         response = self.client.get(
@@ -237,7 +241,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "16220", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "not valid")
 
     def test_non_msa_timeseries_30_89(self):
@@ -247,7 +251,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12-non", "days_late": "30-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_non_msa_timeseries_90(self):
         response = self.client.get(
@@ -256,7 +260,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12-non", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_county_timeseries_30_89(self):
         response = self.client.get(
@@ -265,7 +269,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12081", "days_late": "30-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_county_timeseries_90(self):
         response = self.client.get(
@@ -274,7 +278,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12081", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_timeseries_bad_fips(self):
         response = self.client.get(
@@ -283,7 +287,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "99999", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "FIPS code not found")
 
     def test_map_data_bad_date(self):
@@ -297,7 +301,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "Invalid year-month pair")
 
     def test_map_data_disallowed_delinquency_digit(self):
@@ -324,7 +328,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "Unknown delinquency range")
 
     def test_timeseries_disallowed_delinquency_range(self):
@@ -334,7 +338,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12081", "days_late": "38-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "Unknown delinquency range")
 
     def test_national_timeseries_disallowed_delinquency_range(self):
@@ -344,7 +348,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"days_late": "38-89"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "Unknown delinquency range")
 
     def test_map_data_unknown_geo(self):
@@ -358,7 +362,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "Unkown geographic unit")
 
     def test_county_map_data_30_89(self):
@@ -372,7 +376,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         response_data = json.loads(response.content)
         self.assertEqual(
             sorted(response_data.get("data").get("12081").keys()),
@@ -390,7 +394,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         response_data = json.loads(response.content)
         self.assertEqual(
             sorted(response_data.get("data").get("12081").keys()),
@@ -408,7 +412,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_msa_map_data_90(self):
         response = self.client.get(
@@ -421,7 +425,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_map_view_msa_below_threshold(self):
         """The view should deliver a below-threshold MSA with value of None"""
@@ -439,7 +443,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         msa_value = json.loads(response.content)["data"][msa.fips]["value"]
         self.assertIs(msa_value, None)
 
@@ -459,7 +463,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         msa_value = json.loads(response.content)["data"][non_msa.fips]["value"]
         self.assertIs(msa_value, None)
 
@@ -474,7 +478,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_national_map_data_90(self):
         response = self.client.get(
@@ -487,7 +491,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 },
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
 
     def test_county_timeseries_data_invalid(self):
         county = County.objects.get(fips="12081")
@@ -499,5 +503,5 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={"fips": "12081", "days_late": "90"},
             )
         )
-        self.assertEqual(response.status_code, 200)
+        self.assert200ResponseWithCacheTag(response)
         self.assertContains(response, "County is below display threshold")
