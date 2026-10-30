@@ -7119,14 +7119,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"retirement@workspace:cfgov/unprocessed/apps/retirement":
-  version: 0.0.0-use.local
-  resolution: "retirement@workspace:cfgov/unprocessed/apps/retirement"
-  dependencies:
-    jquery: "npm:3.6.1"
-  languageName: unknown
-  linkType: soft
-
 "reusify@npm:^1.0.4":
   version: 1.1.0
   resolution: "reusify@npm:1.1.0"
