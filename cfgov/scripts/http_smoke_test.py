@@ -128,7 +128,6 @@ APPS = [
     "/consumer-tools/money-as-you-grow/",
     "/consumer-tools/prepaid-cards/",
     "/consumer-tools/retirement/before-you-claim/",
-    "/consumer-tools/retirement/retirement-api/estimator/1-1-1970/99000/",
     "/consumer-tools/sending-money/",
     "/data-research/",
     "/data-research/cfpb-research-conference/",
