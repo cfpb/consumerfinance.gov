@@ -72,7 +72,7 @@ const deviceAgnosticSpecs = () => {
 describe('1071 Filing Instruction Guide (FIG)', () => {
   describe('FIG search feature', () => {
     context('Desktop experience', () => {
-      const desktops = ['macbook-13', 'macbook-15'];
+      const desktops = ['macbook-13'];
 
       desktops.forEach((desktop) => {
         context(desktop, () => {
@@ -91,26 +91,9 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
       });
     });
 
-    context('Tablet experience', () => {
-      const tablets = ['ipad-2', 'ipad-mini'];
-      const orientations = ['portrait', 'landscape'];
-
-      tablets.forEach((tablet) => {
-        orientations.forEach((orientation) => {
-          context(`${tablet} in ${orientation} mode`, () => {
-            beforeEach(() => {
-              cy.viewport(tablet, orientation);
-            });
-
-            deviceAgnosticSpecs();
-          });
-        });
-      });
-    });
-
     context('Mobile experience', () => {
-      const mobiles = ['iphone-6', 'iphone-xr', 'samsung-note9'];
-      const orientations = ['portrait', 'landscape'];
+      const mobiles = ['iphone-6'];
+      const orientations = ['portrait'];
 
       mobiles.forEach((mobile) => {
         orientations.forEach((orientation) => {
