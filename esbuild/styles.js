@@ -19,7 +19,6 @@ const styledApps = [
   'paying-for-college',
   'prepaid-agreements',
   'regulations3k',
-  'retirement',
   'rural-or-underserved-tool',
   'teachers-digital-platform',
   'filing-instruction-guide',

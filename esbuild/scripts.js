@@ -35,7 +35,6 @@ const jsPaths = [
   `${apps}/regulations3k/js/permalinks.js`,
   `${apps}/regulations3k/js/recent-notices.js`,
   `${apps}/regulations3k/js/search.js`,
-  `${apps}/retirement/js/index.js`,
   `${apps}/rural-or-underserved-tool/js/common.js`,
   `${apps}/teachers-digital-platform/js/index.js`,
   `${apps}/filing-instruction-guide/js/fig-init.js`,
