@@ -30,14 +30,6 @@ const directories = [
     'consumer-tools/ask-cfpb',
   ],
   [
-    [
-      'cfgov/unprocessed/apps/retirement',
-      'cfgov/retirement_api',
-      'cfgov/unprocessed/js/modules/util/format.js',
-    ],
-    'consumer-tools/before-you-claim',
-  ],
-  [
     ['cfgov/unprocessed/js/modules/util/web-storage-proxy'],
     'consumer-tools/credit-cards',
   ],

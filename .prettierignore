@@ -1,7 +1,6 @@
 .github/
 .tox/
 cfgov/data_research/data/
-cfgov/retirement_api/data/
 cfgov/static_built/
 **/fixtures/
 collectstatic/
