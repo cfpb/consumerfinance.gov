@@ -23,12 +23,28 @@ from data_research.models import (
 DAYS_LATE_RANGE = ["30-89", "90"]
 
 
-class MetaData(APIView):
+class MortgagePerformanceAPIView(APIView):
     """
-    View for delivering mortgage metadata based on latest data update.
+    Base view for mortgage performance API responses.
+
+    Adds an Edge-Cache-Tag header so that cached responses can be purged
+    from Akamai using tag "mpt".
     """
 
     renderer_classes = (JSONRenderer,)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(
+            request, response, *args, **kwargs
+        )
+        response["Edge-Cache-Tag"] = "mpt"
+        return response
+
+
+class MetaData(MortgagePerformanceAPIView):
+    """
+    View for delivering mortgage metadata based on latest data update.
+    """
 
     def get(self, request, meta_name):
         try:
@@ -39,13 +55,11 @@ class MetaData(APIView):
         return Response(meta_json)
 
 
-class TimeSeriesNational(APIView):
+class TimeSeriesNational(MortgagePerformanceAPIView):
     """
     View for delivering national time-series data
     from the mortgage performance dataset.
     """
-
-    renderer_classes = (JSONRenderer,)  # , rfc_renderers.CSVRenderer)
 
     def get(self, request, days_late):
         if days_late not in DAYS_LATE_RANGE:
@@ -58,13 +72,11 @@ class TimeSeriesNational(APIView):
         return Response(data)
 
 
-class TimeSeriesData(APIView):
+class TimeSeriesData(MortgagePerformanceAPIView):
     """
     View for delivering geo-based time-series data
     from the mortgage performance dataset.
     """
-
-    renderer_classes = (JSONRenderer,)
 
     def get(self, request, days_late, fips):
         """
@@ -147,13 +159,11 @@ def validate_year_month(year_month):
     return datetime.date(year, month, 1)
 
 
-class MapData(APIView):
+class MapData(MortgagePerformanceAPIView):
     """
     View for delivering geo-based map data by date
     from the mortgage performance dataset.
     """
-
-    renderer_classes = (JSONRenderer,)
 
     def get(self, request, days_late, geo, year_month):
         date = validate_year_month(year_month)
