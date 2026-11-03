@@ -132,7 +132,7 @@ There are a few things to avoid to make sure the strings are picked up by `makem
 
 ```diff
 - _(f"Hello {world_name}")
-+ _("Hello %(world_name)s" % {'world_name': world_name})
++ _("Hello %(world_name)s") % {'world_name': world_name}
 ```
 
 Django's documentation [has some additional information on the limitations of translatable strings and gettext](https://docs.djangoproject.com/en/stable/topics/i18n/translation/#standard-translation).
@@ -151,12 +151,10 @@ mystring = gettext_noop("Hello World!")
 {{ _(mystring) }}
 ```
 
-### Do ensure gettext is relatively recent
+### Do use the same gettext version as CI
 
-Django's `makemessages` and `compilemessages` management commands invoke GNU gettext to generate the message files. gettext versions below 0.20 had an issue where they will bring creation dates forward from the text `.po` file into the binary `.mo` file. This can break our pull request check to ensure that translations have been updated. To check the version of gettext Django will use, run:
+Django's `makemessages` and `compilemessages` management commands invoke GNU gettext to generate the message files. Different gettext versions can produce different output, which will fail our pull request check to ensure that translations have been updated. The version CI uses is set in `.github/workflows/backend.yml`. To check the version of gettext Django will use, run:
 
 ```shell
 gettext -V
 ```
-
-Our CentOS 7 Docker container unfortunately uses an older version of gettext. If the `validate-translations` check on pull requests fails, please try to run `makemessages` and `compilemessages` [in a local virtualenv](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-consumerfinancegov-virtualenv).
