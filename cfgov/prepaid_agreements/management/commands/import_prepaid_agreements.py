@@ -69,7 +69,9 @@ def import_agreements_data(agreements_data, base_url):
         created_time = datetime.strptime(
             item["created_date"], "%Y-%m-%d %H:%M:%S"
         )
-        created_time = created_time.replace(tzinfo=zoneinfo.ZoneInfo("EST"))
+        created_time = created_time.replace(
+            tzinfo=zoneinfo.ZoneInfo("America/New_York")
+        )
 
         product_id = (
             item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
