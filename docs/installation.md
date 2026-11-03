@@ -102,12 +102,6 @@ Activating the virtualenv is necessary before using it in the future as well:
 pyenv activate consumerfinance.gov
 ```
 
-Once activated, our Python CI requirements can be installed in the virtualenv:
-
-```sh
-pip install -r requirements/ci.txt
-```
-
 !!! note "Use local for application-specific python version"
 
     To set the virtualenv in the future for this project, run:
