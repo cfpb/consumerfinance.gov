@@ -101,7 +101,7 @@ jobs:
 
       - name: Prepare test coverage
         if: matrix.toxenv == 'unittest'
-        run: tox exec -e unittest -- coverage xml
+        run: tox exec -e unittest -- coverage xml -o "$GITHUB_WORKSPACE/coverage.xml"
 
       - name: Store test coverage
         # Submit coverage from our prefered tox run only
