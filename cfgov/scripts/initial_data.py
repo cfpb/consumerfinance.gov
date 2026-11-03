@@ -51,7 +51,7 @@ def run():
             slug="cfgov",
             live=True,
             last_published_at=datetime(
-                2010, 7, 21, tzinfo=ZoneInfo("US/Eastern")
+                2010, 7, 21, tzinfo=ZoneInfo("America/New_York")
             ),
         )
 
