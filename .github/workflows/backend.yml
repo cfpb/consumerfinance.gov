@@ -56,7 +56,7 @@ jobs:
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ${{ github.workspace }}/gettext-install
-          key: ${{ runner.os }}-gettext-0.25
+          key: ${{ runner.os }}-gettext-0.25-included-libxml
 
       - name: Install gettext for translations
         if: matrix.toxenv == 'validate-translations'
@@ -65,7 +65,7 @@ jobs:
             curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.25.tar.gz
             tar xzvf gettext-0.25.tar.gz
             cd gettext-0.25
-            ./configure --prefix=${{ github.workspace }}/gettext-install
+            ./configure --prefix=${{ github.workspace }}/gettext-install --with-included-libxml
             make -j$(nproc)
             make install
           fi
