@@ -6,7 +6,7 @@ from django.utils.timezone import make_aware
 import zoneinfo
 
 
-eastern = zoneinfo.ZoneInfo("US/Eastern")
+eastern = zoneinfo.ZoneInfo("America/New_York")
 
 
 class FilterableFeed(Feed):
