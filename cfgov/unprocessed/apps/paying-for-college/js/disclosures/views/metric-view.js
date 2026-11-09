@@ -94,7 +94,7 @@ const metricView = {
 
   /**
    * Helper function that updates the value or text of an element
-   * @param {object} $ele - jQuery object of the element to update
+   * @param {object} $ele - Query object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} format - Type of number, for formatting
    */
@@ -110,7 +110,7 @@ const metricView = {
 
   /**
    * Fixes overlapping points on a bar graph
-   * @param {object} $graph - jQuery object of the graph containing the points
+   * @param {object} $graph - Query object of the graph containing the points
    */
   fixOverlap: function ($graph) {
     const $school = $graph.find('[data-bar-graph_number="you"]');
@@ -163,7 +163,7 @@ const metricView = {
 
   /**
    * Sets text of each point on a bar graph (or a class if a point is missing)
-   * @param {object} $graph - jQuery object of the graph containing the points
+   * @param {object} $graph - Query object of the graph containing the points
    */
   setGraphValues: function ($graph) {
     const $school = $graph.find('[data-bar-graph_number="you"]');
@@ -184,7 +184,7 @@ const metricView = {
 
   /**
    * Sets the position of each point on a bar graph
-   * @param {object} $graph - jQuery object of the graph containing the points
+   * @param {object} $graph - Query object of the graph containing the points
    */
   setGraphPositions: function ($graph) {
     // schoolValue, nationalValue, $school, $national
@@ -274,7 +274,7 @@ const metricView = {
 
   /**
    * Adds the correct classes to metric notification boxes.
-   * @param {object} $notification - jQuery object of the notification box.
+   * @param {object} $notification - Query object of the notification box.
    * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function ($notification, notificationClasses) {
@@ -284,7 +284,7 @@ const metricView = {
 
   /**
    * Hides the metric notification boxes for settlement schools.
-   * @param {object} $notification - jQuery object of the notification box.
+   * @param {object} $notification - Query object of the notification box.
    */
   hideNotificationClasses: function ($notification) {
     $notification.attr('class', 'metric__notification');
@@ -388,7 +388,7 @@ const metricView = {
 
   /**
    * Updates graph content with source - Program or School.
-   * @param {object} $graph - jQuery object of the graph containing the points.
+   * @param {object} $graph - Query object of the graph containing the points.
    */
   setGraphSources: function ($graph) {
     const metricKey = $graph.attr('data-metric');
@@ -407,7 +407,7 @@ const metricView = {
 
   /**
    * Updates view for settlement schools.
-   * @param {object} $graph - jQuery object of the graph.
+   * @param {object} $graph - Query object of the graph.
    */
   updateForSettlement: function ($graph) {
     const $notification = $graph.siblings('.metric__notification');

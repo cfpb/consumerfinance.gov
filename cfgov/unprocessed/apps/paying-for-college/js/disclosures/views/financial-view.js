@@ -157,7 +157,7 @@ const financialView = {
 
   /**
    * Helper function that updates the value or text of an element
-   * @param {object} $ele - jQuery object of the element to update
+   * @param {object} $ele - Query object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
    */
@@ -185,7 +185,7 @@ const financialView = {
   /**
    * Helper function that updates all percent elements in the financial view
    * @param {object} values - financial model values
-   * @param {object} $percents - jQuery object of the percentage elements
+   * @param {object} $percents - Query object of the percentage elements
    */
   updatePercentages: function (values, $percents) {
     $percents.not('#' + financialView.currentInput).each((elem) => {
@@ -199,7 +199,7 @@ const financialView = {
    * Helper function that updates all non-percent, non-privateLoan elements
    * in the financial view
    * @param {object} values - financial model values
-   * @param {object} $leftovers - jQuery object of the "leftover" elements
+   * @param {object} $leftovers - Query object of the "leftover" elements
    */
   updateLeftovers: function (values, $leftovers) {
     $leftovers.each((elem) => {
@@ -221,7 +221,7 @@ const financialView = {
   /**
    * Helper function that updates all private loan values in the financial view
    * @param {object} values - financial model values
-   * @param {object} $privateLoans - jQuery object of the private loan elements
+   * @param {object} $privateLoans - Query object of the private loan elements
    */
   updatePrivateLoans: function (values, $privateLoans) {
     $privateLoans.each((elem) => {
@@ -576,7 +576,7 @@ const financialView = {
   /**
    * Helper function to indicate that a offer summary line item has
    * successfully recalculated.
-   * @param {object} $elem - jQuery object of the recalculated summary element.
+   * @param {object} $elem - Query object of the recalculated summary element.
    */
   addSummaryRecalculationMessage: function ($elem) {
     $('.recalculating-mobile').text('Updating...');
@@ -590,7 +590,7 @@ const financialView = {
 
   /**
    * Helper function to remove all indicators that data has recalculated.
-   * @param {object} element - jQuery object of the recalculated summary element
+   * @param {object} element - Query object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
   removeRecalculationMessage: function (element, value) {
