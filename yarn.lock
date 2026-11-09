@@ -4799,13 +4799,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:3.6.1":
-  version: 3.6.1
-  resolution: "jquery@npm:3.6.1"
-  checksum: 10c0/5867ba6c9f4eecb8e55965288799b2569f83cdac5f97602d6ae17959c3ff17e728dc7c6f75e607e00d235bfb41d6c730b61953a0052046e67784e2fb5edd151c
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^10.0.0":
   version: 10.0.0
   resolution: "js-tokens@npm:10.0.0"
@@ -5862,7 +5855,6 @@ __metadata:
   resolution: "paying-for-college@workspace:cfgov/unprocessed/apps/paying-for-college"
   dependencies:
     "@cfpb/student-debt-calculator": "npm:3.0.2"
-    jquery: "npm:3.6.1"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     react-tooltip: "npm:5.26.4"
