@@ -12,9 +12,6 @@ import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-// import stickyKit from '../utils/sticky-kit-esm.js';
-// stickyKit($);
-
 /**
  * Convert a numerical number to a word.
  * @param {string} num - A numeric number from 0 through 6.
@@ -659,7 +656,6 @@ const financialView = {
             window.location.hash = '#info-wrong';
             analyticsSendEvent({ action: 'Step Completed', label: hrefText });
           }
-          // financialView.stickySummariesListener();
           financialView.$verifyControls.hide();
         });
       });
@@ -905,38 +901,6 @@ const financialView = {
       });
     });
   },
-
-  /**
-   * Stick the sidebar aid offer summaries to the viewport top
-   * if the summaries are in the inline-block sidebar column
-   */
-  // stickySummariesListener: function () {
-  //   const $stickyOffers = $('.offer-part__summary-wrapper');
-  //   const $win = $(window);
-
-  //   if ($win.width() >= 600 && $stickyOffers.data('sticky_kit') !== true) {
-  //     // Attach event handler
-  //     $stickyOffers.trigger('sticky_kit:detach');
-  //     $stickyOffers
-  //       .stick_in_parent()
-  //       .on('sticky_kit:bottom', function (evt) {
-  //         $(evt.target).addClass('is__bottomed');
-  //       })
-  //       .on('sticky_kit:unbottom', function (evt) {
-  //         $(evt.target).removeClass('is__bottomed');
-  //       });
-  //   } else if ($win.width() < 600) {
-  //     $stickyOffers.trigger('sticky_kit:detach');
-  //   }
-
-  //   // On resize, check if event handler should be attached
-  //   $win.on('resize', function () {
-  //     clearTimeout(financialView.resizeTimer);
-  //     financialView.resizeTimer = setTimeout(function () {
-  //       financialView.stickySummariesListener();
-  //     }, 250);
-  //   });
-  // },
 
   /**
    * Listener for clicks on the repayment toggles
