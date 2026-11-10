@@ -681,16 +681,6 @@ $bp-graph-cols-min: 740px;
     @include respond-to-min($bp-med-min) {
       @include u-grid-column(4);
       @include u-grid-push(1);
-
-      &.is__stuck {
-        @include u-grid-column(4);
-        @include u-grid-push(7);
-        margin-left: -20px;
-      }
-
-      &.is__stuck.is__bottomed {
-        margin-left: 0;
-      }
     }
 
     .line-item {

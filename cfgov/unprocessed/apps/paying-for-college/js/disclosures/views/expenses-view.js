@@ -20,7 +20,7 @@ const expensesView = {
 
   /**
    * Helper function that updates the value or text of an element
-   * @param {object} $ele - jQuery object of the element to update
+   * @param {object} $ele - Query object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
    */
@@ -91,7 +91,7 @@ const expensesView = {
   /**
    * Helper function to indicate that a offer summary line item has
    * successfully recalculated
-   * @param {object} element - jQuery object of the recalculated summary element
+   * @param {object} element - Query object of the recalculated summary element
    */
   addSummaryRecalculationMessage: function (element) {
     element.siblings().hide();
@@ -100,7 +100,7 @@ const expensesView = {
 
   /**
    * Helper function to remove all indicators that data has recalculated
-   * @param {object} element - jQuery object of the recalculated summary element
+   * @param {object} element - Query object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
   removeRecalculationMessage: function (element, value) {
