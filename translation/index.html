@@ -231,7 +231,7 @@ django-admin compilemessages</code></pre>
 + {{ _("Hello World!") }}</code></pre>
 <h4 id="do-not-use-f-strings-in-python-calls-to-gettext">Do not use f-strings in Python calls to gettext:<a class="headerlink" href="#do-not-use-f-strings-in-python-calls-to-gettext" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-diff">- _(f"Hello {world_name}")
-+ _("Hello %(world_name)s" % {'world_name': world_name})</code></pre>
++ _("Hello %(world_name)s") % {'world_name': world_name}</code></pre>
 <p>Django's documentation <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#standard-translation">has some additional information on the limitations of translatable strings and gettext</a>.</p>
 <h4 id="do-mark-variable-strings-for-translation-with-gettext_noop">Do mark variable strings for translation with <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a><a class="headerlink" href="#do-mark-variable-strings-for-translation-with-gettext_noop" title="Permanent link">¶</a></h4>
 <p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/stable/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
@@ -239,10 +239,9 @@ django-admin compilemessages</code></pre>
 
 mystring = gettext_noop("Hello World!")</code></pre>
 <pre class="highlight"><code class="language-jinja">{{ _(mystring) }}</code></pre>
-<h3 id="do-ensure-gettext-is-relatively-recent">Do ensure gettext is relatively recent<a class="headerlink" href="#do-ensure-gettext-is-relatively-recent" title="Permanent link">¶</a></h3>
-<p>Django's <code>makemessages</code> and <code>compilemessages</code> management commands invoke GNU gettext to generate the message files. gettext versions below 0.20 had an issue where they will bring creation dates forward from the text <code>.po</code> file into the binary <code>.mo</code> file. This can break our pull request check to ensure that translations have been updated. To check the version of gettext Django will use, run:</p>
+<h3 id="do-use-the-same-gettext-version-as-ci">Do use the same gettext version as CI<a class="headerlink" href="#do-use-the-same-gettext-version-as-ci" title="Permanent link">¶</a></h3>
+<p>Django's <code>makemessages</code> and <code>compilemessages</code> management commands invoke GNU gettext to generate the message files. Different gettext versions can produce different output, which will fail our pull request check to ensure that translations have been updated. The version CI uses is set in <code>.github/workflows/backend.yml</code>. To check the version of gettext Django will use, run:</p>
 <pre class="highlight"><code class="language-shell">gettext -V</code></pre>
-<p>Our CentOS 7 Docker container unfortunately uses an older version of gettext. If the <code>validate-translations</code> check on pull requests fails, please try to run <code>makemessages</code> and <code>compilemessages</code> <a href="https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-consumerfinancegov-virtualenv">in a local virtualenv</a>.</p>
               
             </div>
           </div><footer>
