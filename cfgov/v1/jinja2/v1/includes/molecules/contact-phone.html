@@ -10,11 +10,11 @@
 
    value:                  Object defined from a StreamField block.
 
-   value.fax:              (Optional) A fax number.
-
    value.phones:           An array containing objects with phone number details.
 
    value.phones[i].number: A phone number.
+
+   value.phones[i].is_fax: (Optional) Whether the number is a fax number.
 
    value.phones[i].vanity: (Optional) An associated vanity phone number.
 
@@ -24,16 +24,11 @@
 
 {% from 'v1/includes/macros/util/format/contact.html' import format_phone as format_phone %}
 <div class="m-contact m-contact-phone">
-    {# TODO: Update fax param name to is_fax to make clear it's a boolean. #}
-    {% if value.fax == true %}
-        {% set icon = 'fax' %}
-        {% set label = 'Fax' %}
-    {% else %}
-        {% set icon = 'phone' %}
-        {% set label = 'Phone' %}
-    {% endif %}
-    <span class="h5">{{ svg_icon(icon) }} {{ label }}</span>
     {% for phone in value.phones %}
+    <span class="h5">
+        {{ svg_icon('fax' if phone.is_fax else 'phone') }}
+        {{ 'Fax' if phone.is_fax else 'Phone' }}
+    </span>
     <p>
         <a href="tel:{{ phone.number }}">
             {{- format_phone(phone.number) -}}
