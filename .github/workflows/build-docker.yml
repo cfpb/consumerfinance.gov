@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: cfpb/actions/docker-build-push@14cfddeabf21df8a4960fae221b6a982e5d4f244
+      - uses: cfpb/actions/docker-build-push@3b6780d1abd133be8aa93da8af78d874d0b52ad6
         with:
           image-name: cfgov
           token: ${{ secrets.GITHUB_TOKEN }}
