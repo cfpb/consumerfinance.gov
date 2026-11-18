@@ -80,7 +80,7 @@ tr.data + tr[class=''] {
 }
 
 // Prevent clicking of the SVG in "Show map" from blocking clicks of the toggle.
-.js-load-map svg {
+.js-load-map cfpb-icon {
   pointer-events: none;
 }
 

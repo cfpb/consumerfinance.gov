@@ -62,9 +62,8 @@
     }
   }
 
-  // Remove underline from PDF abbreviation and icons in links.
-  & abbr,
-  & svg {
+  // Remove underline from PDF abbreviation.
+  & abbr {
     border-bottom: none;
     text-decoration: none;
   }
