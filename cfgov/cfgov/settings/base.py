@@ -822,11 +822,6 @@ if os.getenv("ENABLE_ES_LOGGING"):
         "propagate": False,
     }
 
-# Opt out of Google's Federated Learning of Cohorts approach to tracking
-PERMISSIONS_POLICY = {
-    "interest-cohort": [],
-}
-
 # This part of the website contains archived content.
 # All URLs starting with /archive/ will show an "archived" banner.
 # Set this locally to "*" for testing purposes only, to enable site-wide.
