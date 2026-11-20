@@ -283,9 +283,6 @@ def phone_number_format_validator():
 
 
 class ContactPhone(blocks.StructBlock):
-    fax = blocks.BooleanBlock(
-        default=False, required=False, label="Is this number a fax?"
-    )
     phones = blocks.ListBlock(
         blocks.StructBlock(
             [
@@ -297,6 +294,14 @@ class ContactPhone(blocks.StructBlock):
                             "Do not include spaces or dashes. Ex. 8554112372"
                         ),
                         validators=[phone_number_format_validator()],
+                    ),
+                ),
+                (
+                    "is_fax",
+                    blocks.BooleanBlock(
+                        default=False,
+                        required=False,
+                        label="Is this number a fax?",
                     ),
                 ),
                 ("extension", blocks.CharBlock(max_length=4, required=False)),
