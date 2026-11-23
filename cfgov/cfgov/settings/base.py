@@ -124,7 +124,6 @@ INSTALLED_APPS = (
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
-    "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -821,11 +820,6 @@ if os.getenv("ENABLE_ES_LOGGING"):
         "level": "INFO",
         "propagate": False,
     }
-
-# Opt out of Google's Federated Learning of Cohorts approach to tracking
-PERMISSIONS_POLICY = {
-    "interest-cohort": [],
-}
 
 # This part of the website contains archived content.
 # All URLs starting with /archive/ will show an "archived" banner.
