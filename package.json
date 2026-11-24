@@ -47,7 +47,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-vitest-globals": "1.6.1",
     "globals": "17.13.0",
-    "jsdom": "30.0.1",
+    "jsdom": "31.0.1",
     "prettier": "3.9.10",
     "stylelint": "17.16.0",
     "stylelint-config-standard-scss": "17.0.0",

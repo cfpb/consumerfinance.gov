@@ -61,22 +61,33 @@ describe('The Regs3K search page', () => {
   });
 
   it('should handle search form submissions', () => {
-    const implSymbol = Object.getOwnPropertySymbols(window.location)[0];
+    // const implSymbol = Reflect.ownKeys(window.location).find(
+    //   (key) => typeof key === 'symbol'
+    // );
 
-    const assign = vi
-      .spyOn(window.location[implSymbol], 'assign')
-      .mockImplementation(() => {});
+    // const assign = vi
+    //   .spyOn(window.location[implSymbol], 'assign')
+    //   .mockImplementation(() => {});
+
+    const assignMock = vi.fn();
+    vi.stubGlobal('location', {
+      ...window.location,
+      assign: assignMock,
+    });
 
     try {
       const form = document.querySelector('form');
+      window.location.assign('http://localhost/');
 
       simulateEvent('submit', form);
 
-      expect(assign).toHaveBeenCalledWith(
+      expect(assignMock).toHaveBeenCalledWith(
         'http://localhost/?q=money&regs=1002',
       );
     } finally {
-      assign.mockRestore();
+      // assign.mockRestore();
+      vi.unstubAllGlobals();
+      assignMock.mockClear();
     }
   });
 

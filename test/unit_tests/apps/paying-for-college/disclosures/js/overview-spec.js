@@ -15,13 +15,10 @@ import {
 
 describe('Disclosures', () => {
   beforeAll(() => {
-    const implSymbol = Object.getOwnPropertySymbols(window.location)[0];
-
-    window.location[implSymbol].__defineGetter__(
-      'search',
-      () =>
-        '?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30%27;#info-right',
-    );
+    vi.stubGlobal('location', {
+      ...window.location,
+        search: '?iped=133465&pid=5287&oid=ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE&totl=45000&tuit=38976&hous=3000&book=650&tran=500&othr=500&pelg=1500&schg=2000&stag=2000&othg=100&ta=3000&mta=3000&gib=3000&wkst=3000&parl=14000&perl=3000&subl=15000&unsl=2000&ppl=1000&gpl=1000&prvl=3000&prvi=4.55&prvf=1.01&insl=3000&insi=4.55&inst=8&leng=30%27;#info-right',
+    });
   });
 
   beforeEach(() => {
