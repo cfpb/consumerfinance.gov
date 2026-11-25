@@ -13,11 +13,11 @@ contact_phone = {
             {
                 "tty": "",
                 "number": "5151234567",
+                "is_fax": True,
                 "extension": "1234",
                 "vanity": "",
             }
         ],
-        "fax": True,
     },
 }
 contact_address = {

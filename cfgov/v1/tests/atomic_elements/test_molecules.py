@@ -13,6 +13,7 @@ from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.atomic_elements.molecules import (
     ContactEmail,
     ContactHyperlink,
+    ContactPhone,
     RSSFeed,
     TextIntroduction,
 )
@@ -188,6 +189,32 @@ class ContactEmailTests(SimpleTestCase):
         self.assertInHTML(
             '<a href="mailto:foo@example.com">Bar</a>', block.render(value)
         )
+
+
+class ContactPhoneTests(SimpleTestCase):
+    def render(self, phones):
+        block = ContactPhone()
+        return block.render(block.to_python({"phones": phones}))
+
+    def test_render_phone(self):
+        html = self.render([{"number": "5551234567"}])
+        self.assertIn("Phone", html)
+        self.assertNotIn("Fax", html)
+        self.assertInHTML('<a href="tel:5551234567">(555) 123-4567</a>', html)
+
+    def test_render_fax_applies_to_each_number_individually(self):
+        html = self.render(
+            [
+                {"number": "5551110000"},
+                {"number": "5552220000", "is_fax": True},
+                {"number": "5553330000", "is_fax": False},
+            ]
+        )
+        self.assertEqual(html.count("Phone"), 2)
+        self.assertEqual(html.count("Fax"), 1)
+        self.assertLess(html.index("5551110000"), html.index("Fax"))
+        self.assertLess(html.index("Fax"), html.index("5552220000"))
+        self.assertLess(html.index("5552220000"), html.rindex("Phone"))
 
 
 class ContactHyperlinkTests(SimpleTestCase):
